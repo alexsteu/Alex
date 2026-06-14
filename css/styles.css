@@ -1,0 +1,317 @@
+/* ============================================================
+   Journal Santé — Design System
+   Mobile-first, dark, iOS-friendly PWA
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --bg:        #0f0f13;
+  --bg-grad:   radial-gradient(120% 80% at 50% -10%, #1a1a2e 0%, #0f0f13 55%);
+  --surface:   #16161f;
+  --surface-2: #1e1e2e;
+  --surface-3: #25253a;
+  --hairline:  rgba(255, 255, 255, 0.08);
+  --hairline-2:rgba(255, 255, 255, 0.14);
+
+  /* Text */
+  --text:   #e8e6f0;
+  --muted:  #8a8a9a;
+  --muted-2:#5d5d6e;
+
+  /* Brand + status */
+  --primary:    #7c6af7;
+  --primary-12: rgba(124, 106, 247, 0.12);
+  --primary-22: rgba(124, 106, 247, 0.22);
+  --primary-35: rgba(124, 106, 247, 0.35);
+  --green:  #22c55e;
+  --orange: #f59e0b;
+  --red:    #ef4444;
+  --lime:   #84cc16;
+  --blue:   #38bdf8;
+
+  /* Geometry */
+  --radius:    18px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+
+  /* Layout */
+  --maxw: 480px;
+  --tabbar-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, 'SF Pro Display', system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  background-image: var(--bg-grad);
+  background-attachment: fixed;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+input, textarea, select { font: inherit; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* ---- App frame ------------------------------------------------ */
+.app {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  min-height: 100%;
+  padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 14px);
+}
+
+.screen { padding: 14px 16px; display: flex; flex-direction: column; gap: 14px; }
+.screen-enter { animation: screenIn 0.32s var(--ease); }
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Header --------------------------------------------------- */
+.header {
+  position: sticky; top: 0; z-index: 20;
+  padding: calc(var(--safe-top) + 14px) 18px 14px;
+  background: rgba(15, 15, 19, 0.72);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border-bottom: 1px solid var(--hairline);
+}
+.header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.header-eyebrow { font-size: 10px; letter-spacing: 3px; color: var(--primary); text-transform: uppercase; font-weight: 700; }
+.header-date { font-size: 20px; font-weight: 800; margin-top: 2px; letter-spacing: -0.3px; }
+.header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* Segmented day switcher */
+.segment {
+  display: inline-flex; background: var(--surface-2); border-radius: var(--radius-pill);
+  padding: 3px; margin-top: 12px; gap: 2px;
+}
+.segment button {
+  padding: 7px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600;
+  color: var(--muted); transition: color 0.2s, background 0.25s var(--ease); position: relative;
+}
+.segment button.active { color: #fff; background: var(--primary); box-shadow: 0 4px 14px var(--primary-35); }
+
+/* ---- Cards ---------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.card-title { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.card-title .emoji { font-size: 17px; }
+.card-sub { font-size: 11.5px; color: var(--muted-2); margin-top: 3px; }
+.card > .card-head { margin-bottom: 12px; }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; }
+.spread { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* ---- Dashboard rings ----------------------------------------- */
+.rings { display: flex; gap: 12px; }
+.ring-card {
+  flex: 1; background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.ring { position: relative; width: 96px; height: 96px; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-track { fill: none; stroke: var(--surface-3); stroke-width: 10; }
+.ring-fill  { fill: none; stroke-width: 10; stroke-linecap: round;
+  transition: stroke-dashoffset 0.9s var(--ease); }
+.ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring-value { font-size: 22px; font-weight: 800; line-height: 1; letter-spacing: -0.5px; }
+.ring-unit { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.ring-label { font-size: 12px; color: var(--muted); font-weight: 600; }
+
+/* Mini stat tiles */
+.tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.tile {
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius);
+  padding: 14px; display: flex; flex-direction: column; gap: 6px;
+}
+.tile-label { font-size: 11px; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.tile-value { font-size: 20px; font-weight: 800; letter-spacing: -0.4px; }
+.tile-value small { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+/* ---- Belly scale --------------------------------------------- */
+.belly-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
+.belly-btn {
+  aspect-ratio: 1; border-radius: 10px; font-size: 13px; font-weight: 700;
+  background: var(--surface-2); color: var(--muted);
+  transition: transform 0.12s var(--ease), background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.belly-btn:active { transform: scale(0.88); }
+.feedback { margin-top: 10px; font-size: 13px; font-weight: 600; }
+
+/* ---- Mood ----------------------------------------------------- */
+.mood-row { display: flex; gap: 8px; }
+.mood-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 4px; border-radius: 14px; background: var(--surface-2); color: var(--text);
+  transition: transform 0.12s var(--ease), background 0.2s, box-shadow 0.2s;
+}
+.mood-btn:active { transform: scale(0.9); }
+.mood-btn.active { background: var(--primary-22); box-shadow: inset 0 0 0 2px var(--primary); }
+.mood-emoji { font-size: 24px; filter: saturate(1.1); }
+.mood-label { font-size: 10px; color: var(--muted); font-weight: 600; }
+
+/* ---- Chips (muscles, segmented yes/no) ----------------------- */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  padding: 8px 13px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600;
+  background: var(--surface-2); color: var(--muted);
+  transition: transform 0.12s var(--ease), background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.chip:active { transform: scale(0.94); }
+.chip.active { background: var(--primary-22); color: var(--primary); box-shadow: inset 0 0 0 1.5px var(--primary); }
+
+.toggle-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.toggle {
+  flex: 1; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 14px;
+  background: var(--surface-2); color: var(--muted);
+  transition: transform 0.12s var(--ease), background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+.toggle:active { transform: scale(0.96); }
+.toggle.on  { background: rgba(34,197,94,0.15);  color: var(--green); box-shadow: inset 0 0 0 2px var(--green); }
+.toggle.off { background: rgba(239,68,68,0.15);  color: var(--red);   box-shadow: inset 0 0 0 2px var(--red); }
+
+/* ---- Fields --------------------------------------------------- */
+.field-label { font-size: 11px; color: var(--muted); font-weight: 600; margin-bottom: 6px; display: block; }
+input[type=time], input[type=number], input[type=text], input[type=date], textarea, select {
+  width: 100%; background: var(--bg); border: 1px solid var(--hairline-2); border-radius: 10px;
+  color: var(--text); padding: 11px 12px; font-size: 15px; transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-12); outline: none; }
+input[type=time]::-webkit-calendar-picker-indicator { filter: invert(0.65); }
+textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
+
+/* ---- Progress bar -------------------------------------------- */
+.bar { height: 9px; background: var(--bg); border-radius: 6px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; transition: width 0.7s var(--ease); }
+
+/* ---- List items (meals / proteins) --------------------------- */
+.item {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--surface-2); border-radius: 12px; padding: 11px 13px; margin-top: 8px;
+  animation: itemIn 0.28s var(--ease);
+}
+@keyframes itemIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.item-main { min-width: 0; }
+.item-title { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.item-amount { font-weight: 800; color: var(--primary); font-size: 16px; white-space: nowrap; }
+.icon-btn { color: var(--muted-2); font-size: 18px; padding: 4px 6px; line-height: 1; transition: color 0.2s, transform 0.12s; }
+.icon-btn:active { transform: scale(0.85); color: var(--red); }
+
+/* ---- Buttons -------------------------------------------------- */
+.btn {
+  width: 100%; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 700;
+  transition: transform 0.12s var(--ease), filter 0.2s, opacity 0.2s; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.btn:active { transform: scale(0.97); }
+.btn[disabled] { opacity: 0.55; pointer-events: none; }
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 6px 18px var(--primary-35); }
+.btn-soft { background: var(--primary-22); color: var(--primary); }
+.btn-ghost { background: var(--surface-2); color: var(--text); }
+.btn-dashed { background: transparent; box-shadow: inset 0 0 0 1.5px var(--hairline-2); color: var(--muted); }
+.btn-dashed-primary { background: transparent; box-shadow: inset 0 0 0 1.5px var(--primary-35); color: var(--primary); }
+.btn-row { display: flex; gap: 8px; }
+.btn-row .btn { width: auto; flex: 1; }
+
+/* Floating add button */
+.fab {
+  position: fixed; right: max(16px, env(safe-area-inset-right));
+  bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 16px);
+  width: 56px; height: 56px; border-radius: 50%; z-index: 30;
+  background: var(--primary); color: #fff; font-size: 26px; font-weight: 300;
+  box-shadow: 0 8px 26px var(--primary-35); display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s var(--ease);
+}
+.fab:active { transform: scale(0.9); }
+
+/* ---- Tab bar -------------------------------------------------- */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  height: calc(var(--tabbar-h) + var(--safe-bottom)); padding-bottom: var(--safe-bottom);
+  background: rgba(18, 18, 26, 0.82);
+  backdrop-filter: saturate(160%) blur(18px); -webkit-backdrop-filter: saturate(160%) blur(18px);
+  border-top: 1px solid var(--hairline);
+  display: flex; max-width: var(--maxw); margin: 0 auto;
+}
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  color: var(--muted-2); font-size: 10px; font-weight: 600; transition: color 0.2s;
+}
+.tab .tab-ico { font-size: 21px; transition: transform 0.2s var(--ease); }
+.tab.active { color: var(--primary); }
+.tab.active .tab-ico { transform: translateY(-1px) scale(1.08); }
+
+/* ---- History -------------------------------------------------- */
+.hist-item { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 14px 15px; }
+.hist-date { font-weight: 700; font-size: 14px; margin-bottom: 10px; text-transform: capitalize; }
+.hist-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+.tag { border-radius: var(--radius-pill); padding: 5px 11px; font-size: 12px; font-weight: 600; }
+.hist-notes { margin-top: 10px; font-size: 12.5px; color: var(--muted); font-style: italic; line-height: 1.4; }
+
+/* ---- Charts --------------------------------------------------- */
+.chart-card { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 16px; }
+.chart-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.chart-title { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 7px; }
+.chart-now { font-size: 13px; font-weight: 700; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart-axis { font-size: 9px; fill: var(--muted-2); }
+.legend { font-size: 11px; color: var(--muted); margin-top: 8px; display: flex; gap: 14px; flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+/* ---- Misc ----------------------------------------------------- */
+.empty { text-align: center; color: var(--muted-2); padding: 48px 16px; font-size: 14px; line-height: 1.6; }
+.error { color: var(--red); font-size: 12px; margin-top: 8px; }
+.muted { color: var(--muted); }
+.hint { font-size: 11.5px; color: var(--muted-2); margin-top: 8px; line-height: 1.45; }
+.divider { height: 1px; background: var(--hairline); margin: 4px 0; }
+
+/* ---- Toast ---------------------------------------------------- */
+.toast {
+  position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 22px);
+  transform: translateX(-50%) translateY(20px); z-index: 60;
+  background: var(--surface-3); color: var(--text); padding: 11px 18px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 600; box-shadow: var(--shadow); border: 1px solid var(--hairline-2);
+  opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s var(--ease); max-width: 88%;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---- Spinner -------------------------------------------------- */
+.spin { display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor;
+  border-right-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Pop / celebrate ----------------------------------------- */
+.pop { animation: pop 0.4s var(--ease); }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.14); } 100% { transform: scale(1); } }
+
+.confetti { position: fixed; inset: 0; pointer-events: none; z-index: 70; overflow: hidden; }
+.confetti i {
+  position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 2px;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Journal Santé">
+<title>Journal Santé</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    background: #0f0f13;
+    color: #e8e6f0;
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea { font-family: inherit; }
+
+  #app { max-width: 480px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid #ffffff10;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .header-label { font-size: 10px; letter-spacing: 3px; color: #7c6af7; text-transform: uppercase; margin-bottom: 4px; }
+  .header-date { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .header-badges { display: flex; gap: 8px; margin-bottom: 10px; }
+  .badge { background: #7c6af720; border-radius: 8px; padding: 5px 10px; font-size: 11px; }
+  .day-switcher { display: flex; gap: 8px; }
+  .day-btn { padding: 6px 14px; border-radius: 20px; border: none; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+  .day-btn.active { background: #7c6af7; color: #fff; }
+  .day-btn.inactive { background: #ffffff10; color: #888; }
+
+  /* Tabs */
+  .tabs { display: flex; background: #16161f; border-bottom: 1px solid #ffffff10; }
+  .tab-btn { flex: 1; padding: 12px; border: none; background: transparent; font-size: 14px; transition: all 0.2s; }
+  .tab-btn.active { color: #7c6af7; font-weight: 700; border-bottom: 2px solid #7c6af7; }
+  .tab-btn.inactive { color: #888; border-bottom: 2px solid transparent; }
+
+  /* Content */
+  .content { padding: 14px 16px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* Section */
+  .section { background: #16161f; border-radius: 16px; padding: 14px; border: 1px solid #ffffff08; }
+  .section-title { font-weight: 700; font-size: 15px; margin-bottom: 10px; }
+  .section-subtitle { font-size: 11px; color: #666; margin-bottom: 10px; margin-top: -6px; }
+
+  /* Belly */
+  .belly-grid { display: flex; gap: 7px; flex-wrap: wrap; }
+  .belly-btn { width: 38px; height: 38px; border-radius: 10px; border: none; font-size: 14px; font-weight: 600; transition: all 0.15s; }
+
+  /* Mood */
+  .mood-row { display: flex; gap: 8px; }
+  .mood-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 10px; border-radius: 12px; border: none; background: #1e1e2e; color: #e8e6f0; transition: all 0.15s; }
+  .mood-btn.active { background: #7c6af730; outline: 2px solid #7c6af7; }
+  .mood-emoji { font-size: 22px; }
+  .mood-label { font-size: 10px; color: #aaa; }
+
+  /* Sport */
+  .sport-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .sport-btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-weight: 600; font-size: 14px; transition: all 0.15s; }
+  .muscle-grid { display: flex; gap: 7px; flex-wrap: wrap; }
+  .muscle-btn { padding: 6px 11px; border-radius: 20px; border: none; font-size: 13px; transition: all 0.15s; }
+  .muscle-btn.active { background: #7c6af730; outline: 2px solid #7c6af7; color: #7c6af7; }
+  .muscle-btn.inactive { background: #1e1e2e; color: #888; }
+
+  /* Sleep / Weed */
+  .two-col { display: flex; gap: 10px; }
+  .two-col > div { flex: 1; }
+  .field-label { font-size: 11px; color: #888; margin-bottom: 5px; }
+  input[type=time], input[type=number], input[type=text], textarea {
+    background: #0f0f13; border: 1px solid #ffffff15; border-radius: 8px;
+    color: #e8e6f0; padding: 9px 11px; font-size: 14px; width: 100%;
+  }
+  input[type=time]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
+  .sleep-result { margin-top: 8px; font-size: 13px; }
+
+  /* Meals */
+  .meal-item { background: #1e1e2e; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .meal-desc { font-weight: 600; font-size: 14px; }
+  .meal-time { font-size: 11px; color: #888; margin-top: 2px; }
+  .delete-btn { background: none; border: none; color: #555; font-size: 18px; padding: 0 4px; }
+  .meal-add { background: #1e1e2e; border-radius: 12px; padding: 12px; }
+  .meal-inputs { display: flex; gap: 8px; margin-bottom: 8px; }
+  .meal-inputs input[type=time] { flex: 0 0 auto; width: 105px; }
+  .meal-inputs input[type=text] { flex: 1; }
+  .btn-row { display: flex; gap: 8px; }
+  .btn-photo { flex: 1; padding: 9px; border-radius: 8px; border: 1px dashed #ffffff20; background: transparent; color: #aaa; font-size: 12px; }
+  .btn-add { flex: 1; padding: 9px; border-radius: 8px; border: none; background: #7c6af730; color: #7c6af7; font-weight: 600; font-size: 13px; }
+
+  /* Proteins */
+  .protein-header { display: flex; justify-content: space-between; margin-bottom: 6px; align-items: flex-end; }
+  .protein-total { font-size: 28px; font-weight: 800; }
+  .protein-goal { font-size: 13px; color: #888; }
+  .progress-bar { height: 8px; background: #0f0f13; border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+  .protein-remaining { font-size: 12px; color: #888; margin-bottom: 12px; }
+  .protein-item { background: #1e1e2e; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .protein-desc { font-weight: 600; font-size: 14px; }
+  .protein-detail { font-size: 11px; color: #888; margin-top: 2px; }
+  .protein-amount { font-weight: 700; color: #7c6af7; font-size: 16px; }
+  .protein-btns { display: flex; gap: 8px; margin-top: 4px; }
+  .btn-photo-protein { flex: 1; padding: 11px; border-radius: 12px; border: 2px dashed #7c6af750; background: transparent; color: #7c6af7; font-size: 13px; font-weight: 600; }
+  .btn-manual { padding: 11px 14px; border-radius: 12px; border: 2px dashed #ffffff15; background: transparent; color: #aaa; font-size: 13px; font-weight: 600; }
+  .manual-form { background: #1e1e2e; border-radius: 12px; padding: 12px; margin-bottom: 8px; }
+  .manual-inputs { display: flex; gap: 8px; margin-bottom: 8px; }
+  .manual-inputs input:first-child { flex: 1; }
+  .manual-inputs input:last-child { width: 60px; }
+
+  /* History */
+  .hist-item { background: #1a1a2e; border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; border: 1px solid #ffffff08; }
+  .hist-date { font-weight: 700; margin-bottom: 8px; font-size: 15px; }
+  .hist-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 600; }
+  .hist-notes { margin-top: 8px; font-size: 12px; color: #888; font-style: italic; }
+
+  /* Notes */
+  textarea { resize: vertical; }
+
+  /* Error */
+  .error { color: #ef4444; font-size: 12px; margin-top: 6px; }
+
+  /* Export */
+  .export-section { background: #16161f; border-radius: 16px; padding: 14px; border: 1px solid #ffffff08; }
+  .export-btn { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #7c6af720; color: #7c6af7; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .import-btn { width: 100%; padding: 12px; border-radius: 10px; border: 1px dashed #ffffff20; background: transparent; color: #888; font-size: 14px; font-weight: 600; }
+
+  .empty { text-align: center; color: #555; padding: 40px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const STORAGE_KEY = 'journal-sante-v1';
+const PROTEIN_GOAL = 130;
+const START_DATE = '2026-06-15';
+const END_DATE = '2026-07-06';
+const MOODS = [
+  { emoji: '😁', label: 'Super' },
+  { emoji: '🙂', label: 'Bien' },
+  { emoji: '😐', label: 'Moyen' },
+  { emoji: '😔', label: 'Bof' },
+  { emoji: '😤', label: 'Mal' },
+];
+const MUSCLES = ['Pecs', 'Dos', 'Épaules', 'Bras', 'Jambes', 'Abdos', 'Full body', 'Cardio'];
+
+// --- State ---
+let state = {
+  data: {},
+  tab: 'journal',
+  editingDay: getDateKey(0),
+  analyzing: false,
+  analyzeError: '',
+  analyzingMeal: false,
+  mealAnalyzeError: '',
+  showManual: false,
+  manualDesc: '',
+  manualAmount: '',
+  mealTime: '',
+  mealDesc: '',
+};
+
+function getDateKey(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + (offset || 0));
+  return d.toISOString().split('T')[0];
+}
+
+function formatDateLabel(key) {
+  const today = getDateKey(0);
+  const yesterday = getDateKey(-1);
+  const opts = { weekday: 'long', day: 'numeric', month: 'long' };
+  if (key === today) return new Date().toLocaleDateString('fr-FR', opts);
+  if (key === yesterday) return 'Hier — ' + new Date(key + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+  return new Date(key + 'T12:00:00').toLocaleDateString('fr-FR', opts);
+}
+
+function getDaysSinceStart() {
+  return Math.max(1, Math.floor((new Date() - new Date(START_DATE)) / 86400000) + 1);
+}
+function getDaysRemaining() {
+  return Math.max(0, Math.floor((new Date(END_DATE) - new Date()) / 86400000));
+}
+
+function loadData() {
+  try { state.data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { state.data = {}; }
+}
+function saveData() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); } catch {}
+}
+function getDay(key) {
+  return state.data[key] || { belly: null, sport: null, muscles: [], weedFirst: '', weedCount: '', mood: null, proteins: [], meals: [], sleepTime: '', wakeTime: '', notes: '' };
+}
+function updateDay(key, patch) {
+  state.data[key] = { ...getDay(key), ...patch };
+  saveData();
+  render();
+}
+
+// --- API ---
+async function analyzePhoto(file, target) {
+  const base64 = await new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+  const prompt = target === 'protein'
+    ? 'Analyse ce plat et estime la quantité de protéines en grammes. Réponds UNIQUEMENT en JSON, sans markdown, sans backticks, format exact: {"description": "nom du plat en 3 mots max", "proteins": 35, "detail": "explication courte en 1 phrase"}'
+    : 'Identifie ce plat en quelques mots. Réponds UNIQUEMENT en JSON, sans markdown, sans backticks, format exact: {"description": "nom du plat en 3 mots max", "proteins": 30, "detail": "estimation protéines en 1 phrase"}';
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6', max_tokens: 500,
+      messages: [{ role: 'user', content: [
+        { type: 'image', source: { type: 'base64', media_type: file.type || 'image/jpeg', data: base64 } },
+        { type: 'text', text: prompt }
+      ]}]
+    })
+  });
+  const result = await response.json();
+  const text = (result.content || []).find(b => b.type === 'text')?.text || '';
+  return JSON.parse(text.replace(/```json|```/g, '').trim());
+}
+
+// --- Export/Import ---
+function exportData() {
+  const json = JSON.stringify(state.data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'journal-sante-backup.json';
+  a.click(); URL.revokeObjectURL(url);
+}
+function importData(file) {
+  const r = new FileReader();
+  r.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      state.data = { ...state.data, ...parsed };
+      saveData(); render();
+      alert('Données importées !');
+    } catch { alert('Fichier invalide.'); }
+  };
+  r.readAsText(file);
+}
+
+// --- Render ---
+function render() {
+  const app = document.getElementById('app');
+  const editKey = state.editingDay;
+  const day = getDay(editKey);
+  const totalProt = (day.proteins || []).reduce((s, p) => s + (p.amount || 0), 0);
+  const protPct = Math.min(100, Math.round((totalProt / PROTEIN_GOAL) * 100));
+  const protColor = protPct >= 100 ? '#22c55e' : protPct >= 60 ? '#7c6af7' : '#f59e0b';
+  const historyDays = Object.keys(state.data)
+    .filter(k => k !== getDateKey(0) && k !== getDateKey(-1))
+    .sort((a, b) => b.localeCompare(a));
+
+  function sleepDuration(s, w) {
+    if (!s || !w) return null;
+    const [sh, sm] = s.split(':').map(Number);
+    const [wh, wm] = w.split(':').map(Number);
+    let mins = (wh * 60 + wm) - (sh * 60 + sm);
+    if (mins < 0) mins += 1440;
+    return { h: Math.floor(mins / 60), m: mins % 60 };
+  }
+
+  const dur = sleepDuration(day.sleepTime, day.wakeTime);
+
+  app.innerHTML = `
+  <div class="header">
+    <div class="header-label">Journal Santé</div>
+    <div class="header-date">${formatDateLabel(editKey)}</div>
+    <div class="header-badges">
+      <div class="badge">🎯 J${getDaysSinceStart()}/21 lactose</div>
+      <div class="badge">⏳ ${getDaysRemaining()}j restants</div>
+    </div>
+    <div class="day-switcher">
+      <button class="day-btn ${editKey === getDateKey(0) ? 'active' : 'inactive'}" onclick="switchDay(0)">Aujourd'hui</button>
+      <button class="day-btn ${editKey === getDateKey(-1) ? 'active' : 'inactive'}" onclick="switchDay(-1)">Hier</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn ${state.tab === 'journal' ? 'active' : 'inactive'}" onclick="switchTab('journal')">Journal</button>
+    <button class="tab-btn ${state.tab === 'history' ? 'active' : 'inactive'}" onclick="switchTab('history')">Historique</button>
+  </div>
+
+  ${state.tab === 'journal' ? `
+  <div class="content">
+
+    <!-- Sommeil -->
+    <div class="section">
+      <div class="section-title">😴 Sommeil</div>
+      <div class="two-col">
+        <div>
+          <div class="field-label">Couché à</div>
+          <input type="time" value="${day.sleepTime || ''}" onchange="update('sleepTime', this.value)">
+        </div>
+        <div>
+          <div class="field-label">Levé à</div>
+          <input type="time" value="${day.wakeTime || ''}" onchange="update('wakeTime', this.value)">
+        </div>
+      </div>
+      ${dur ? `<div class="sleep-result" style="color:${dur.h >= 7 ? '#22c55e' : dur.h >= 6 ? '#f59e0b' : '#ef4444'}">⏱ ${dur.h}h${dur.m > 0 ? dur.m + 'min' : ''} de sommeil</div>` : ''}
+    </div>
+
+    <!-- Ventre -->
+    <div class="section">
+      <div class="section-title">🫃 Ventre</div>
+      <div class="section-subtitle">Gonflement (1 = plat, 10 = explosion)</div>
+      <div class="belly-grid">
+        ${[1,2,3,4,5,6,7,8,9,10].map(n => {
+          const active = day.belly === n;
+          const c = n <= 3 ? '#22c55e' : n <= 6 ? '#f59e0b' : '#ef4444';
+          return `<button class="belly-btn" onclick="update('belly',${n})" style="background:${active ? c : '#1e1e2e'};color:${active ? '#fff' : '#888'}">${n}</button>`;
+        }).join('')}
+      </div>
+      ${day.belly ? `<div style="margin-top:8px;font-size:13px;color:${day.belly <= 3 ? '#22c55e' : day.belly <= 6 ? '#f59e0b' : '#ef4444'}">${day.belly <= 3 ? '✨ Ventre calme' : day.belly <= 6 ? '⚡ Gonflement modéré' : '🔥 Gros gonflement'}</div>` : ''}
+    </div>
+
+    <!-- Humeur -->
+    <div class="section">
+      <div class="section-title">🧠 Humeur</div>
+      <div class="mood-row">
+        ${MOODS.map(m => `
+          <button class="mood-btn ${day.mood === m.label ? 'active' : ''}" onclick="update('mood','${m.label}')">
+            <span class="mood-emoji">${m.emoji}</span>
+            <span class="mood-label">${m.label}</span>
+          </button>`).join('')}
+      </div>
+    </div>
+
+    <!-- Sport -->
+    <div class="section">
+      <div class="section-title">💪 Sport</div>
+      <div class="sport-row">
+        <button class="sport-btn" onclick="update('sport',true)" style="background:${day.sport === true ? '#22c55e20' : '#1e1e2e'};color:${day.sport === true ? '#22c55e' : '#888'};outline:${day.sport === true ? '2px solid #22c55e' : 'none'}">✅ Oui</button>
+        <button class="sport-btn" onclick="setSportNo()" style="background:${day.sport === false ? '#ef444420' : '#1e1e2e'};color:${day.sport === false ? '#ef4444' : '#888'};outline:${day.sport === false ? '2px solid #ef4444' : 'none'}">❌ Non</button>
+      </div>
+      ${day.sport ? `<div class="muscle-grid">
+        ${MUSCLES.map(m => {
+          const sel = (day.muscles||[]).includes(m);
+          return `<button class="muscle-btn ${sel ? 'active' : 'inactive'}" onclick="toggleMuscle('${m}')">${m}</button>`;
+        }).join('')}
+      </div>` : ''}
+    </div>
+
+    <!-- Cannabis -->
+    <div class="section">
+      <div class="section-title">🌿 Cannabis</div>
+      <div class="two-col">
+        <div>
+          <div class="field-label">1er bedo à</div>
+          <input type="time" value="${day.weedFirst || ''}" onchange="update('weedFirst', this.value)">
+        </div>
+        <div>
+          <div class="field-label">Nombre total</div>
+          <input type="number" min="0" max="30" value="${day.weedCount || ''}" placeholder="ex: 4" onchange="update('weedCount', this.value)">
+        </div>
+      </div>
+      ${(day.weedFirst || day.weedCount) ? `<div style="margin-top:8px;font-size:12px;color:#84cc16">${day.weedFirst ? 'Premier à ' + day.weedFirst : ''}${day.weedFirst && day.weedCount ? ' · ' : ''}${day.weedCount ? day.weedCount + ' bedos au total' : ''}</div>` : ''}
+    </div>
+
+    <!-- Repas -->
+    <div class="section">
+      <div class="section-title">🍽️ Repas du jour</div>
+      ${(day.meals||[]).map(meal => `
+        <div class="meal-item">
+          <div>
+            <div class="meal-desc">${meal.desc}</div>
+            <div class="meal-time">🕐 ${meal.time}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteMeal('${meal.id}')">✕</button>
+        </div>`).join('')}
+      <div class="meal-add">
+        <div class="meal-inputs">
+          <input type="time" id="mealTime" value="${state.mealTime || ''}" onchange="state.mealTime=this.value">
+          <input type="text" id="mealDesc" value="${state.mealDesc || ''}" placeholder="Nom du repas..." onchange="state.mealDesc=this.value">
+        </div>
+        <div class="btn-row">
+          <button class="btn-photo" onclick="triggerMealPhoto()">${state.analyzingMeal ? '⏳ Analyse...' : '📸 Photo'}</button>
+          <button class="btn-add" onclick="addMeal()">+ Ajouter</button>
+        </div>
+        ${state.mealAnalyzeError ? `<div class="error">${state.mealAnalyzeError}</div>` : ''}
+      </div>
+    </div>
+
+    <!-- Protéines -->
+    <div class="section">
+      <div class="section-title">🥩 Protéines</div>
+      <div class="section-subtitle">Objectif : ${PROTEIN_GOAL}g par jour</div>
+      <div class="protein-header">
+        <span class="protein-total" style="color:${protPct >= 100 ? '#22c55e' : '#e8e6f0'}">${totalProt}g</span>
+        <span class="protein-goal">/ ${PROTEIN_GOAL}g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${protPct}%;background:${protColor}"></div></div>
+      <div class="protein-remaining">${protPct >= 100 ? '🎉 Objectif atteint !' : 'Il manque ' + (PROTEIN_GOAL - totalProt) + 'g'}</div>
+
+      ${(day.proteins||[]).map(p => `
+        <div class="protein-item">
+          <div>
+            <div class="protein-desc">${p.description}</div>
+            <div class="protein-detail">${p.detail} · ${p.time}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="protein-amount">+${p.amount}g</span>
+            <button class="delete-btn" onclick="deleteProtein('${p.id}')">✕</button>
+          </div>
+        </div>`).join('')}
+
+      ${state.showManual ? `
+        <div class="manual-form">
+          <div class="manual-inputs">
+            <input type="text" id="manualDesc" value="${state.manualDesc}" placeholder="Repas (ex: poulet grillé)" oninput="state.manualDesc=this.value">
+            <input type="number" id="manualAmount" value="${state.manualAmount}" placeholder="g" oninput="state.manualAmount=this.value">
+          </div>
+          <div class="btn-row">
+            <button class="btn-photo" onclick="state.showManual=false;render()">Annuler</button>
+            <button class="btn-add" onclick="addManualProtein()">Ajouter</button>
+          </div>
+        </div>` : ''}
+
+      <div class="protein-btns">
+        <button class="btn-photo-protein" onclick="triggerProteinPhoto()" ${state.analyzing ? 'disabled' : ''}>${state.analyzing ? '⏳ Analyse...' : '📸 Photo → protéines'}</button>
+        <button class="btn-manual" onclick="state.showManual=true;render()">✏️ Manuel</button>
+      </div>
+      ${state.analyzeError ? `<div class="error">${state.analyzeError}</div>` : ''}
+    </div>
+
+    <!-- Notes -->
+    <div class="section">
+      <div class="section-title">📝 Notes</div>
+      <textarea rows="3" placeholder="Ressenti, observations..." onchange="update('notes',this.value)">${day.notes || ''}</textarea>
+    </div>
+
+    <!-- Export -->
+    <div class="section">
+      <div class="section-title">💾 Sauvegarde</div>
+      <button class="export-btn" onclick="exportData()">📤 Exporter mes données</button>
+      <button class="import-btn" onclick="triggerImport()">📥 Importer une sauvegarde</button>
+    </div>
+
+  </div>
+  ` : `
+  <div class="content">
+    ${historyDays.length === 0 ? '<div class="empty">Pas encore d\'historique<br>Reviens demain 👋</div>' : ''}
+    ${historyDays.map(key => {
+      const d = getDay(key);
+      const prot = (d.proteins||[]).reduce((s,p)=>s+p.amount,0);
+      const date = new Date(key+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+      const sd = sleepDuration(d.sleepTime, d.wakeTime);
+      return `<div class="hist-item">
+        <div class="hist-date">${date}</div>
+        <div class="hist-tags">
+          ${d.belly ? `<span class="tag" style="background:${d.belly<=3?'#22c55e':d.belly<=6?'#f59e0b':'#ef4444'}20;color:${d.belly<=3?'#22c55e':d.belly<=6?'#f59e0b':'#ef4444'}">🫃 ${d.belly}/10</span>` : ''}
+          ${d.mood ? `<span class="tag" style="background:#7c6af720;color:#7c6af7">🧠 ${d.mood}</span>` : ''}
+          ${d.sport===true ? `<span class="tag" style="background:#22c55e20;color:#22c55e">💪 ${(d.muscles||[]).join(', ')||'Sport'}</span>` : ''}
+          ${d.sport===false ? `<span class="tag" style="background:#55555520;color:#888">😴 Repos</span>` : ''}
+          ${d.weedFirst ? `<span class="tag" style="background:#84cc1620;color:#84cc16">🌿 ${d.weedFirst}${d.weedCount?' · '+d.weedCount+'x':''}</span>` : ''}
+          ${prot>0 ? `<span class="tag" style="background:${prot>=PROTEIN_GOAL?'#22c55e':'#f59e0b'}20;color:${prot>=PROTEIN_GOAL?'#22c55e':'#f59e0b'}">🥩 ${prot}g</span>` : ''}
+          ${sd ? `<span class="tag" style="background:${sd.h>=7?'#22c55e':'#f59e0b'}20;color:${sd.h>=7?'#22c55e':'#f59e0b'}">😴 ${sd.h}h</span>` : ''}
+        </div>
+        ${d.notes ? `<div class="hist-notes">"${d.notes}"</div>` : ''}
+      </div>`;
+    }).join('')}
+  </div>
+  `}
+
+  <input type="file" id="photoProtein" accept="image/*" capture="environment" style="display:none" onchange="handleProteinPhoto(this)">
+  <input type="file" id="photoMeal" accept="image/*" capture="environment" style="display:none" onchange="handleMealPhoto(this)">
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this.files[0])">
+  `;
+}
+
+// --- Actions ---
+function switchDay(offset) { state.editingDay = getDateKey(offset); render(); }
+function switchTab(t) { state.tab = t; render(); }
+function update(field, value) { updateDay(state.editingDay, { [field]: value }); }
+function setSportNo() { updateDay(state.editingDay, { sport: false, muscles: [] }); }
+function toggleMuscle(m) {
+  const day = getDay(state.editingDay);
+  const muscles = day.muscles || [];
+  updateDay(state.editingDay, { muscles: muscles.includes(m) ? muscles.filter(x=>x!==m) : [...muscles, m] });
+}
+function deleteMeal(id) {
+  const day = getDay(state.editingDay);
+  updateDay(state.editingDay, { meals: day.meals.filter(x => String(x.id) !== String(id)) });
+}
+function deleteProtein(id) {
+  const day = getDay(state.editingDay);
+  updateDay(state.editingDay, { proteins: day.proteins.filter(x => String(x.id) !== String(id)) });
+}
+function addMeal() {
+  const time = document.getElementById('mealTime')?.value || state.mealTime || '';
+  const desc = document.getElementById('mealDesc')?.value || state.mealDesc || '';
+  if (!time && !desc) return;
+  const day = getDay(state.editingDay);
+  updateDay(state.editingDay, { meals: [...(day.meals||[]), { id: Date.now(), time: time||'--:--', desc: desc||'Repas' }] });
+  state.mealTime = ''; state.mealDesc = '';
+}
+function addManualProtein() {
+  const amount = parseInt(state.manualAmount);
+  if (!amount || amount <= 0) return;
+  const day = getDay(state.editingDay);
+  const entry = { id: Date.now(), description: state.manualDesc||'Repas', amount, detail: 'Ajout manuel', time: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}) };
+  updateDay(state.editingDay, { proteins: [...(day.proteins||[]), entry] });
+  state.manualDesc = ''; state.manualAmount = ''; state.showManual = false;
+}
+function triggerProteinPhoto() { document.getElementById('photoProtein').click(); }
+function triggerMealPhoto() { document.getElementById('photoMeal').click(); }
+function triggerImport() { document.getElementById('importFile').click(); }
+
+async function handleProteinPhoto(input) {
+  const file = input.files[0]; if (!file) return;
+  state.analyzing = true; state.analyzeError = ''; render();
+  try {
+    const parsed = await analyzePhoto(file, 'protein');
+    const day = getDay(state.editingDay);
+    const entry = { id: Date.now(), description: parsed.description, amount: parsed.proteins, detail: parsed.detail, time: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}) };
+    state.analyzing = false;
+    updateDay(state.editingDay, { proteins: [...(day.proteins||[]), entry] });
+  } catch { state.analyzing = false; state.analyzeError = 'Erreur analyse, réessaie.'; render(); }
+  input.value = '';
+}
+async function handleMealPhoto(input) {
+  const file = input.files[0]; if (!file) return;
+  state.analyzingMeal = true; state.mealAnalyzeError = ''; render();
+  try {
+    const parsed = await analyzePhoto(file, 'meal');
+    state.mealDesc = parsed.description; state.analyzingMeal = false; render();
+  } catch { state.analyzingMeal = false; state.mealAnalyzeError = 'Erreur analyse, réessaie.'; render(); }
+  input.value = '';
+}
+
+// --- Init ---
+loadData();
+render();
+</script>
+</body>
+</html>

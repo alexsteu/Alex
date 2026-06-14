@@ -1,0 +1,15 @@
+{
+  "name": "journal-sante",
+  "version": "2.0.0",
+  "private": true,
+  "description": "PWA de suivi santé personnel (ventre, humeur, sport, protéines, sommeil) avec analyse photo par IA.",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "npx serve .",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": ">=0.65.0"
+  }
+}
