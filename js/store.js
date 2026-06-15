@@ -19,6 +19,7 @@ const DEFAULT_SETTINGS = {
   challengeStart: '2026-06-15',
   challengeDuration: 21,
   quote: '',
+  sectionOrder: ['sleep', 'belly', 'mood', 'sport', 'cannabis', 'meals', 'proteins', 'notes'],
 };
 
 function emptyDay(date) {

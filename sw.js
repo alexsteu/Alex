@@ -5,7 +5,7 @@
    - Network-only pour /api/ (l'IA a besoin du réseau)
    ============================================================ */
 
-const CACHE = 'journal-sante-v4';
+const CACHE = 'journal-sante-v5';
 const SHELL = [
   './',
   './index.html',

@@ -9,6 +9,26 @@ import { lineChart, barChart, sleepChart } from './charts.js';
 
 const COL = { primary:'#7c6af7', green:'#34c759', orange:'#ff9500', red:'#ff3b30', lime:'#5fb709', blue:'#007aff' };
 
+// Sections réordonnables de l'onglet Aujourd'hui (ordre par défaut)
+const SECTION_META = {
+  sleep:    { emoji: '😴', label: 'Sommeil' },
+  belly:    { emoji: '🫃', label: 'Ventre' },
+  mood:     { emoji: '🧠', label: 'Humeur' },
+  sport:    { emoji: '💪', label: 'Sport' },
+  cannabis: { emoji: '🌿', label: 'Cannabis' },
+  meals:    { emoji: '🍽️', label: 'Repas' },
+  proteins: { emoji: '🥩', label: 'Protéines' },
+  notes:    { emoji: '📝', label: 'Notes' },
+};
+const SECTION_IDS = Object.keys(SECTION_META);
+
+// Ordre stocké, réconcilié avec les sections connues (robuste aux évolutions)
+function orderedSectionIds() {
+  const stored = Array.isArray(S.settings().sectionOrder) ? S.settings().sectionOrder : [];
+  const kept = stored.filter(id => SECTION_IDS.includes(id));
+  return [...kept, ...SECTION_IDS.filter(id => !kept.includes(id))];
+}
+
 const ui = {
   tab: 'today',
   editingDay: S.dateKey(0),
@@ -91,6 +111,127 @@ function viewToday() {
   const protColor = protPct >= 100 ? COL.green : protPct >= 60 ? COL.primary : COL.orange;
   const dur = S.sleepDuration(day.sleepTime, day.wakeTime);
 
+  const sections = {
+    sleep: `<div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">😴</span> Sommeil</div></div>
+      <div class="row">
+        <div><label class="field-label">Couché à</label><input type="time" data-field="sleepTime" value="${esc(day.sleepTime)}"></div>
+        <div><label class="field-label">Levé à</label><input type="time" data-field="wakeTime" value="${esc(day.wakeTime)}"></div>
+      </div>
+      ${dur ? `<div class="feedback" style="color:${sleepColor(dur.h)}">⏱ ${dur.h}h${dur.m ? String(dur.m).padStart(2,'0') : ''} de sommeil</div>` : ''}
+    </div>`,
+
+    belly: `<div class="card">
+      <div class="card-head">
+        <div class="card-title"><span class="emoji">🫃</span> Ventre</div>
+        <div class="card-sub">Gonflement — 1 = plat, 10 = explosion</div>
+      </div>
+      <div class="belly-grid">
+        ${[1,2,3,4,5,6,7,8,9,10].map(n => {
+          const active = day.belly === n;
+          const c = bellyColor(n);
+          return `<button class="belly-btn" data-act="belly" data-arg="${n}"
+            style="${active ? `background:${c};color:#fff;box-shadow:0 4px 12px ${c}66` : ''}">${n}</button>`;
+        }).join('')}
+      </div>
+      ${day.belly ? `<div class="feedback" style="color:${bellyColor(day.belly)}">${day.belly<=3?'✨ Ventre calme':day.belly<=6?'⚡ Gonflement modéré':'🔥 Gros gonflement'}</div>` : ''}
+    </div>`,
+
+    mood: `<div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">🧠</span> Humeur</div></div>
+      <div class="mood-row">
+        ${S.MOODS.map(m => `
+          <button class="mood-btn ${day.mood === m.label ? 'active' : ''}" data-act="mood" data-arg="${esc(m.label)}">
+            <span class="mood-emoji">${m.emoji}</span><span class="mood-label">${m.label}</span>
+          </button>`).join('')}
+      </div>
+    </div>`,
+
+    sport: `<div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">💪</span> Sport</div></div>
+      <div class="toggle-row">
+        <button class="toggle ${day.sport === true ? 'on' : ''}" data-act="sport-yes">✅ Oui</button>
+        <button class="toggle ${day.sport === false ? 'off' : ''}" data-act="sport-no">❌ Non</button>
+      </div>
+      ${day.sport ? `<div class="chips">
+        ${S.MUSCLES.map(mu => `<button class="chip ${(day.muscles||[]).includes(mu) ? 'active' : ''}" data-act="muscle" data-arg="${esc(mu)}">${mu}</button>`).join('')}
+      </div>` : ''}
+    </div>`,
+
+    cannabis: `<div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">🌿</span> Cannabis</div></div>
+      <div class="row">
+        <div><label class="field-label">1er bedo à</label><input type="time" data-field="weedFirst" value="${esc(day.weedFirst)}"></div>
+        <div><label class="field-label">Nombre total</label><input type="number" min="0" max="30" inputmode="numeric" placeholder="ex: 4" data-field="weedCount" value="${esc(day.weedCount)}"></div>
+      </div>
+      ${(day.weedFirst || day.weedCount) ? `<div class="feedback" style="color:${COL.lime}">${day.weedFirst ? 'Premier à '+esc(day.weedFirst) : ''}${day.weedFirst && day.weedCount ? ' · ' : ''}${day.weedCount ? esc(day.weedCount)+' au total' : ''}</div>` : ''}
+    </div>`,
+
+    meals: `<div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">🍽️</span> Repas du jour</div></div>
+      ${(day.meals||[]).map(m => `
+        <div class="item">
+          <div class="item-main"><div class="item-title">${esc(m.desc)}</div><div class="item-meta">🕐 ${esc(m.time)}</div></div>
+          <button class="icon-btn" data-act="del-meal" data-arg="${m.id}">✕</button>
+        </div>`).join('')}
+      <div style="margin-top:10px">
+        <div class="row" style="margin-bottom:8px">
+          <div style="flex:0 0 110px"><input type="time" data-state="mealTime" value="${esc(ui.mealTime)}"></div>
+          <div><input type="text" data-state="mealDesc" placeholder="Nom du repas…" value="${esc(ui.mealDesc)}"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-dashed" data-act="meal-photo" ${ui.analyzingMeal ? 'disabled' : ''}>${ui.analyzingMeal ? '<span class="spin"></span> Analyse…' : '📸 Photo'}</button>
+          <button class="btn btn-soft" data-act="meal-add">＋ Ajouter</button>
+        </div>
+        ${ui.errorMeal ? `<div class="error">${esc(ui.errorMeal)}</div>` : ''}
+      </div>
+    </div>`,
+
+    proteins: `<div class="card">
+      <div class="card-head">
+        <div class="card-title"><span class="emoji">🥩</span> Protéines</div>
+        <div class="card-sub">Objectif : ${goal} g par jour</div>
+      </div>
+      <div class="spread" style="align-items:flex-end;margin-bottom:8px">
+        <div style="font-size:30px;font-weight:800;letter-spacing:-1px;color:${protPct>=100?COL.green:'var(--text)'}">${totalProt}<span style="font-size:15px;color:var(--muted);font-weight:600"> g</span></div>
+        <div class="muted" style="font-size:13px">${protPct>=100 ? '🎉 Objectif atteint !' : 'Reste '+(goal-totalProt)+' g'}</div>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${protPct}%;background:${protColor}"></div></div>
+
+      ${(day.proteins||[]).map(p => `
+        <div class="item">
+          <div class="item-main"><div class="item-title">${esc(p.description)}</div><div class="item-meta">${esc(p.detail)}${p.detail && p.time ? ' · ' : ''}${esc(p.time)}</div></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="item-amount">+${p.amount} g</span>
+            <button class="icon-btn" data-act="del-protein" data-arg="${p.id}">✕</button>
+          </div>
+        </div>`).join('')}
+
+      ${ui.showManual ? `
+        <div class="item" style="display:block">
+          <div class="row" style="margin-bottom:8px">
+            <div style="flex:1"><input type="text" data-state="manualDesc" placeholder="Repas (ex: poulet grillé)" value="${esc(ui.manualDesc)}"></div>
+            <div style="flex:0 0 72px"><input type="number" inputmode="numeric" data-state="manualAmount" placeholder="g" value="${esc(ui.manualAmount)}"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost" data-act="manual-cancel">Annuler</button>
+            <button class="btn btn-soft" data-act="manual-add">Ajouter</button>
+          </div>
+        </div>` : ''}
+
+      <div class="btn-row" style="margin-top:10px">
+        <button class="btn btn-dashed-primary" data-act="protein-photo" ${ui.analyzing ? 'disabled' : ''}>${ui.analyzing ? '<span class="spin"></span> Analyse…' : '📸 Photo → protéines'}</button>
+        <button class="btn btn-dashed" data-act="manual-open" style="flex:0 0 auto;padding-left:16px;padding-right:16px">✏️ Manuel</button>
+      </div>
+      ${ui.errorProtein ? `<div class="error">${esc(ui.errorProtein)}</div>` : ''}
+    </div>`,
+
+    notes: `<div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">📝</span> Notes</div></div>
+      <textarea rows="3" data-field="notes" placeholder="Ressenti, observations…">${esc(day.notes)}</textarea>
+    </div>`,
+  };
+
   return `
   ${header(`
     <div class="header-top">
@@ -133,132 +274,7 @@ function viewToday() {
     ${isToday && S.hasContent(S.getDay(S.dateKey(-1))) ? `
       <button class="btn btn-ghost" data-act="dup-yesterday">⧉ Copier les infos d'hier</button>` : ''}
 
-    <!-- Sommeil -->
-    <div class="card">
-      <div class="card-head"><div class="card-title"><span class="emoji">😴</span> Sommeil</div></div>
-      <div class="row">
-        <div><label class="field-label">Couché à</label><input type="time" data-field="sleepTime" value="${esc(day.sleepTime)}"></div>
-        <div><label class="field-label">Levé à</label><input type="time" data-field="wakeTime" value="${esc(day.wakeTime)}"></div>
-      </div>
-      ${dur ? `<div class="feedback" style="color:${sleepColor(dur.h)}">⏱ ${dur.h}h${dur.m ? String(dur.m).padStart(2,'0') : ''} de sommeil</div>` : ''}
-    </div>
-
-    <!-- Ventre -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-title"><span class="emoji">🫃</span> Ventre</div>
-        <div class="card-sub">Gonflement — 1 = plat, 10 = explosion</div>
-      </div>
-      <div class="belly-grid">
-        ${[1,2,3,4,5,6,7,8,9,10].map(n => {
-          const active = day.belly === n;
-          const c = bellyColor(n);
-          return `<button class="belly-btn" data-act="belly" data-arg="${n}"
-            style="${active ? `background:${c};color:#fff;box-shadow:0 4px 12px ${c}66` : ''}">${n}</button>`;
-        }).join('')}
-      </div>
-      ${day.belly ? `<div class="feedback" style="color:${bellyColor(day.belly)}">${day.belly<=3?'✨ Ventre calme':day.belly<=6?'⚡ Gonflement modéré':'🔥 Gros gonflement'}</div>` : ''}
-    </div>
-
-    <!-- Humeur -->
-    <div class="card">
-      <div class="card-head"><div class="card-title"><span class="emoji">🧠</span> Humeur</div></div>
-      <div class="mood-row">
-        ${S.MOODS.map(m => `
-          <button class="mood-btn ${day.mood === m.label ? 'active' : ''}" data-act="mood" data-arg="${esc(m.label)}">
-            <span class="mood-emoji">${m.emoji}</span><span class="mood-label">${m.label}</span>
-          </button>`).join('')}
-      </div>
-    </div>
-
-    <!-- Sport -->
-    <div class="card">
-      <div class="card-head"><div class="card-title"><span class="emoji">💪</span> Sport</div></div>
-      <div class="toggle-row">
-        <button class="toggle ${day.sport === true ? 'on' : ''}" data-act="sport-yes">✅ Oui</button>
-        <button class="toggle ${day.sport === false ? 'off' : ''}" data-act="sport-no">❌ Non</button>
-      </div>
-      ${day.sport ? `<div class="chips">
-        ${S.MUSCLES.map(mu => `<button class="chip ${(day.muscles||[]).includes(mu) ? 'active' : ''}" data-act="muscle" data-arg="${esc(mu)}">${mu}</button>`).join('')}
-      </div>` : ''}
-    </div>
-
-    <!-- Cannabis -->
-    <div class="card">
-      <div class="card-head"><div class="card-title"><span class="emoji">🌿</span> Cannabis</div></div>
-      <div class="row">
-        <div><label class="field-label">1er bedo à</label><input type="time" data-field="weedFirst" value="${esc(day.weedFirst)}"></div>
-        <div><label class="field-label">Nombre total</label><input type="number" min="0" max="30" inputmode="numeric" placeholder="ex: 4" data-field="weedCount" value="${esc(day.weedCount)}"></div>
-      </div>
-      ${(day.weedFirst || day.weedCount) ? `<div class="feedback" style="color:${COL.lime}">${day.weedFirst ? 'Premier à '+esc(day.weedFirst) : ''}${day.weedFirst && day.weedCount ? ' · ' : ''}${day.weedCount ? esc(day.weedCount)+' au total' : ''}</div>` : ''}
-    </div>
-
-    <!-- Repas -->
-    <div class="card">
-      <div class="card-head"><div class="card-title"><span class="emoji">🍽️</span> Repas du jour</div></div>
-      ${(day.meals||[]).map(m => `
-        <div class="item">
-          <div class="item-main"><div class="item-title">${esc(m.desc)}</div><div class="item-meta">🕐 ${esc(m.time)}</div></div>
-          <button class="icon-btn" data-act="del-meal" data-arg="${m.id}">✕</button>
-        </div>`).join('')}
-      <div style="margin-top:10px">
-        <div class="row" style="margin-bottom:8px">
-          <div style="flex:0 0 110px"><input type="time" data-state="mealTime" value="${esc(ui.mealTime)}"></div>
-          <div><input type="text" data-state="mealDesc" placeholder="Nom du repas…" value="${esc(ui.mealDesc)}"></div>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-dashed" data-act="meal-photo" ${ui.analyzingMeal ? 'disabled' : ''}>${ui.analyzingMeal ? '<span class="spin"></span> Analyse…' : '📸 Photo'}</button>
-          <button class="btn btn-soft" data-act="meal-add">＋ Ajouter</button>
-        </div>
-        ${ui.errorMeal ? `<div class="error">${esc(ui.errorMeal)}</div>` : ''}
-      </div>
-    </div>
-
-    <!-- Protéines -->
-    <div class="card">
-      <div class="card-head">
-        <div class="card-title"><span class="emoji">🥩</span> Protéines</div>
-        <div class="card-sub">Objectif : ${goal} g par jour</div>
-      </div>
-      <div class="spread" style="align-items:flex-end;margin-bottom:8px">
-        <div style="font-size:30px;font-weight:800;letter-spacing:-1px;color:${protPct>=100?COL.green:'var(--text)'}">${totalProt}<span style="font-size:15px;color:var(--muted);font-weight:600"> g</span></div>
-        <div class="muted" style="font-size:13px">${protPct>=100 ? '🎉 Objectif atteint !' : 'Reste '+(goal-totalProt)+' g'}</div>
-      </div>
-      <div class="bar"><div class="bar-fill" style="width:${protPct}%;background:${protColor}"></div></div>
-
-      ${(day.proteins||[]).map(p => `
-        <div class="item">
-          <div class="item-main"><div class="item-title">${esc(p.description)}</div><div class="item-meta">${esc(p.detail)}${p.detail && p.time ? ' · ' : ''}${esc(p.time)}</div></div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="item-amount">+${p.amount} g</span>
-            <button class="icon-btn" data-act="del-protein" data-arg="${p.id}">✕</button>
-          </div>
-        </div>`).join('')}
-
-      ${ui.showManual ? `
-        <div class="item" style="display:block">
-          <div class="row" style="margin-bottom:8px">
-            <div style="flex:1"><input type="text" data-state="manualDesc" placeholder="Repas (ex: poulet grillé)" value="${esc(ui.manualDesc)}"></div>
-            <div style="flex:0 0 72px"><input type="number" inputmode="numeric" data-state="manualAmount" placeholder="g" value="${esc(ui.manualAmount)}"></div>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-ghost" data-act="manual-cancel">Annuler</button>
-            <button class="btn btn-soft" data-act="manual-add">Ajouter</button>
-          </div>
-        </div>` : ''}
-
-      <div class="btn-row" style="margin-top:10px">
-        <button class="btn btn-dashed-primary" data-act="protein-photo" ${ui.analyzing ? 'disabled' : ''}>${ui.analyzing ? '<span class="spin"></span> Analyse…' : '📸 Photo → protéines'}</button>
-        <button class="btn btn-dashed" data-act="manual-open" style="flex:0 0 auto;padding-left:16px;padding-right:16px">✏️ Manuel</button>
-      </div>
-      ${ui.errorProtein ? `<div class="error">${esc(ui.errorProtein)}</div>` : ''}
-    </div>
-
-    <!-- Notes -->
-    <div class="card">
-      <div class="card-head"><div class="card-title"><span class="emoji">📝</span> Notes</div></div>
-      <textarea rows="3" data-field="notes" placeholder="Ressenti, observations…">${esc(day.notes)}</textarea>
-    </div>
+    ${orderedSectionIds().map(id => sections[id]).join('')}
 
   </div>`;
 }
@@ -371,6 +387,18 @@ function viewSettings() {
     </div>
 
     <div class="card">
+      <div class="card-head"><div class="card-title"><span class="emoji">↕️</span> Ordre des sections</div><div class="card-sub">Réorganise les sections de l'onglet Aujourd'hui</div></div>
+      ${orderedSectionIds().map((id, i, arr) => `
+        <div class="reorder-row">
+          <span class="reorder-label">${SECTION_META[id].emoji} ${SECTION_META[id].label}</span>
+          <div class="reorder-btns">
+            <button class="reorder-btn" data-act="sec-up" data-arg="${id}" ${i === 0 ? 'disabled' : ''}>↑</button>
+            <button class="reorder-btn" data-act="sec-down" data-arg="${id}" ${i === arr.length - 1 ? 'disabled' : ''}>↓</button>
+          </div>
+        </div>`).join('')}
+    </div>
+
+    <div class="card">
       <div class="card-head"><div class="card-title"><span class="emoji">💾</span> Sauvegarde</div><div class="card-sub">${dayCount} journée(s) enregistrée(s) sur cet appareil</div></div>
       <button class="btn btn-soft" data-act="export" style="margin-bottom:8px">📤 Exporter mes données</button>
       <button class="btn btn-dashed" data-act="import">📥 Importer une sauvegarde</button>
@@ -472,6 +500,17 @@ async function handleAction(act, arg, el) {
       rest.proteins = (rest.proteins||[]).map(p => ({ ...p, id: S.newId() }));
       await S.updateDay(key, rest);
       toast('Copié depuis hier'); render(); return;
+    }
+
+    case 'sec-up':
+    case 'sec-down': {
+      const order = orderedSectionIds();
+      const i = order.indexOf(arg);
+      const j = act === 'sec-up' ? i - 1 : i + 1;
+      if (i < 0 || j < 0 || j >= order.length) return;
+      [order[i], order[j]] = [order[j], order[i]];
+      await S.setSetting('sectionOrder', order);
+      render(); return;
     }
 
     case 'quote-edit':   ui.quoteDraft = S.settings().quote || ''; ui.editingQuote = true; render(); return;
