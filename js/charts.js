@@ -77,7 +77,7 @@ export function lineChart(points, { color = '#7c6af7', min, max, fill = true } =
     ${fill ? `<path d="${area}" fill="url(#${id})"/>` : ''}
     <path d="${line}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
     ${dots}
-    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4" fill="${color}" stroke="#0f0f13" stroke-width="2"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4" fill="${color}" stroke="#ffffff" stroke-width="2"/>
     ${dayLabels(points)}
   </svg>`;
 }

@@ -7,7 +7,7 @@ import { analyzePhoto } from './ai.js';
 import { exportData, importData } from './backup.js';
 import { lineChart, barChart } from './charts.js';
 
-const COL = { primary:'#7c6af7', green:'#22c55e', orange:'#f59e0b', red:'#ef4444', lime:'#84cc16', blue:'#38bdf8' };
+const COL = { primary:'#7c6af7', green:'#34c759', orange:'#ff9500', red:'#ff3b30', lime:'#5fb709', blue:'#007aff' };
 
 const ui = {
   tab: 'today',
@@ -311,7 +311,7 @@ function viewHistory() {
             ${d.belly ? tag(0, bellyColor(d.belly), `🫃 ${d.belly}/10`) : ''}
             ${d.mood ? tag(0, COL.primary, `🧠 ${esc(d.mood)}`) : ''}
             ${d.sport === true ? tag(0, COL.green, `💪 ${esc((d.muscles||[]).join(', ') || 'Sport')}`) : ''}
-            ${d.sport === false ? `<span class="tag" style="background:#ffffff10;color:var(--muted)">😴 Repos</span>` : ''}
+            ${d.sport === false ? `<span class="tag" style="background:rgba(0,0,0,0.06);color:var(--muted)">😴 Repos</span>` : ''}
             ${d.weedFirst || d.weedCount ? tag(0, COL.lime, `🌿 ${esc(d.weedFirst || '')}${d.weedFirst && d.weedCount ? ' · ' : ''}${d.weedCount ? esc(d.weedCount)+'×' : ''}`) : ''}
             ${prot > 0 ? tag(0, prot >= goal ? COL.green : COL.orange, `🥩 ${prot} g`) : ''}
             ${sd ? tag(0, sleepColor(sd.h), `😴 ${sd.h}h${sd.m?String(sd.m).padStart(2,'0'):''}`) : ''}
