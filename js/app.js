@@ -330,7 +330,7 @@ function viewHistory() {
    ============================================================ */
 function viewSettings() {
   const s = S.settings();
-  const dayCount = S.historyKeys().length + [S.dateKey(0), S.dateKey(-1)].filter(k => S.hasContent(S.getDay(k))).length;
+  const dayCount = S.historyKeys().length + (S.hasContent(S.getDay(S.dateKey(0))) ? 1 : 0);
   return `
   ${header(`<div class="header-eyebrow">Préférences</div><div class="header-date">Réglages</div>`)}
   <div class="screen screen-enter">

@@ -146,11 +146,11 @@ export function lastNDays(n) {
   return out;
 }
 
-/* ---- Historique : jours passés (hors aujourd'hui/hier) ------- */
+/* ---- Historique : jours passés (y compris hier, hors aujourd'hui) ---- */
 export function historyKeys() {
-  const today = dateKey(0), yest = dateKey(-1);
+  const today = dateKey(0);
   return Object.keys(store.days)
-    .filter(k => k !== today && k !== yest)
+    .filter(k => k !== today)
     .filter(k => hasContent(store.days[k]))
     .sort((a, b) => b.localeCompare(a));
 }
