@@ -5,7 +5,7 @@
    - Network-only pour /api/ (l'IA a besoin du réseau)
    ============================================================ */
 
-const CACHE = 'journal-sante-v5';
+const CACHE = 'journal-sante-v6';
 const SHELL = [
   './',
   './index.html',
@@ -21,6 +21,10 @@ const SHELL = [
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
 ];
+
+self.addEventListener('message', e => {
+  if (e.data === 'skip-waiting') self.skipWaiting();
+});
 
 self.addEventListener('install', e => {
   e.waitUntil(

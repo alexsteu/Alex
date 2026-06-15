@@ -587,7 +587,28 @@ async function start() {
   await S.init();
   render();
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    // Mise à jour automatique : quand une nouvelle version est déployée,
+    // le nouveau service worker prend la main et on recharge la page une fois.
+    let hadController = !!navigator.serviceWorker.controller;
+    let reloading = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController) { hadController = true; return; } // 1re installation : pas de reload
+      if (reloading) return;
+      reloading = true;
+      location.reload();
+    });
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').then(reg => {
+        reg.addEventListener('updatefound', () => {
+          const sw = reg.installing;
+          if (sw) sw.addEventListener('statechange', () => {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) sw.postMessage('skip-waiting');
+          });
+        });
+        // Vérifie les mises à jour à chaque ouverture
+        reg.update().catch(() => {});
+      }).catch(() => {});
+    });
   }
 }
 start();
