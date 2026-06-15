@@ -18,6 +18,7 @@ const DEFAULT_SETTINGS = {
   challengeName: 'Sans lactose',
   challengeStart: '2026-06-15',
   challengeDuration: 21,
+  quote: '',
 };
 
 function emptyDay(date) {

@@ -114,6 +114,47 @@ export function barChart(points, { color = '#38bdf8', min = 0, max, goal } = {})
   </svg>`;
 }
 
+/**
+ * Graphe de sommeil : une barre verticale par jour, du coucher au lever.
+ * L'axe vertical représente l'heure (de 18 h le soir à 12 h le lendemain).
+ * points: [{ key, sleepTime, wakeTime }]
+ */
+export function sleepChart(points, { color = '#007aff' } = {}) {
+  const n = points.length;
+  const has = points.some(p => p.sleepTime && p.wakeTime);
+  if (!has) {
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet"><text x="${W/2}" y="${H/2}" text-anchor="middle" class="chart-axis">Pas encore de données</text></svg>`;
+  }
+  const SPAN = 18; // heures, de 18:00 (0) à 12:00 le lendemain (18)
+  const nh = t => { const [h, m] = t.split(':').map(Number); return (((h * 60 + m) - 18 * 60 + 1440) % 1440) / 60; };
+  const Y = v => PAD_T + Math.min(Math.max(v, 0), SPAN) / SPAN * (H - PAD_T - PAD_B);
+
+  let grid = '';
+  for (const [v, lbl] of [[4, '22 h'], [8, '00 h'], [12, '04 h'], [16, '08 h']]) {
+    const yy = Y(v);
+    grid += `<line x1="${PAD_L}" y1="${yy.toFixed(1)}" x2="${W - PAD_R}" y2="${yy.toFixed(1)}" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>`;
+    grid += `<text class="chart-axis" x="${PAD_L - 5}" y="${(yy + 3).toFixed(1)}" text-anchor="end">${lbl}</text>`;
+  }
+
+  const bw = Math.max(7, (W - PAD_L - PAD_R) / n * 0.5);
+  let bars = '';
+  points.forEach((p, i) => {
+    if (!p.sleepTime || !p.wakeTime) return;
+    let b = nh(p.sleepTime), w = nh(p.wakeTime);
+    if (w < b) w = b; // garde-fou
+    const cx = x(i, n);
+    const y1 = Y(b), y2 = Y(w);
+    const top = Math.min(y1, y2), h = Math.max(3, Math.abs(y2 - y1));
+    bars += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="${(bw / 2).toFixed(1)}" fill="${color}" opacity="0.9"/>`;
+  });
+
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
+    ${grid}
+    ${bars}
+    ${dayLabels(points)}
+  </svg>`;
+}
+
 /* Courbe lissée (Catmull-Rom -> Bézier) */
 function smoothPath(pts) {
   if (pts.length === 1) {

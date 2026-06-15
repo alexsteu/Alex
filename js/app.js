@@ -5,7 +5,7 @@
 import * as S from './store.js';
 import { analyzePhoto } from './ai.js';
 import { exportData, importData } from './backup.js';
-import { lineChart, barChart } from './charts.js';
+import { lineChart, barChart, sleepChart } from './charts.js';
 
 const COL = { primary:'#7c6af7', green:'#34c759', orange:'#ff9500', red:'#ff3b30', lime:'#5fb709', blue:'#007aff' };
 
@@ -19,6 +19,7 @@ const ui = {
   showManual: false,
   mealTime: '', mealDesc: '',
   manualDesc: '', manualAmount: '',
+  editingQuote: false, quoteDraft: '',
 };
 
 const $app = document.getElementById('app');
@@ -106,6 +107,22 @@ function viewToday() {
   `)}
 
   <div class="screen screen-enter">
+
+    <!-- Citation -->
+    <div class="quote-card">
+      ${ui.editingQuote ? `
+        <textarea rows="2" data-state="quoteDraft" placeholder="Ta citation inspirante…">${esc(ui.quoteDraft)}</textarea>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn btn-ghost" data-act="quote-cancel">Annuler</button>
+          <button class="btn btn-soft" data-act="quote-save">Enregistrer</button>
+        </div>
+      ` : `
+        <button class="quote-display" data-act="quote-edit">
+          <span class="quote-mark">“</span>
+          <span class="quote-text ${S.settings().quote ? '' : 'empty'}">${S.settings().quote ? esc(S.settings().quote) : 'Touche pour ajouter une citation inspirante ✨'}</span>
+        </button>
+      `}
+    </div>
 
     <!-- Dashboard -->
     <div class="rings">
@@ -256,9 +273,11 @@ function viewTrends() {
 
   const belly   = days.map(d => ({ key: d.key, value: d.day.belly ?? null }));
   const protein = days.map(d => ({ key: d.key, value: S.hasContent(d.day) || (d.day.proteins||[]).length ? S.proteinTotal(d.day) : null }));
-  const sleep   = days.map(d => { const s = S.sleepDuration(d.day.sleepTime, d.day.wakeTime); return { key: d.key, value: s ? +(s.total/60).toFixed(1) : null }; });
   const mood    = days.map(d => ({ key: d.key, value: S.moodScore(d.day.mood) }));
   const weed    = days.map(d => ({ key: d.key, value: d.day.weedCount ? Number(d.day.weedCount) : null }));
+  const sleepPts = days.map(d => ({ key: d.key, sleepTime: d.day.sleepTime, wakeTime: d.day.wakeTime }));
+  const lastSleep = [...days].reverse().find(d => d.day.sleepTime && d.day.wakeTime);
+  const sleepNow = lastSleep ? `${lastSleep.day.sleepTime} → ${lastSleep.day.wakeTime}` : '—';
 
   const lastVal = arr => { const v = [...arr].reverse().find(p => p.value != null); return v ? v.value : '—'; };
 
@@ -278,8 +297,8 @@ function viewTrends() {
     ${card('🥩', 'Protéines', lastVal(protein) + ' g', barChart(protein, { color: COL.primary, min: 0, goal }),
         `<span><i class="dot" style="background:${COL.primary}"></i>par jour</span><span><i class="dot" style="background:${COL.green}"></i>objectif ${goal} g</span>`)}
     ${card('🫃', 'Ventre (gonflement)', lastVal(belly) + '/10', lineChart(belly, { color: COL.orange, min: 1, max: 10 }))}
-    ${card('😴', 'Sommeil', (lastVal(sleep) === '—' ? '—' : lastVal(sleep) + ' h'), barChart(sleep, { color: COL.blue, min: 0, goal: 7 }),
-        `<span><i class="dot" style="background:${COL.blue}"></i>heures</span><span><i class="dot" style="background:${COL.green}"></i>cible 7 h</span>`)}
+    ${card('😴', 'Sommeil', sleepNow, sleepChart(sleepPts, { color: COL.blue }),
+        `<span><i class="dot" style="background:${COL.blue}"></i>coucher → lever</span>`)}
     ${card('🧠', 'Humeur', moodEmoji(lastVal(mood)), lineChart(mood, { color: COL.green, min: 1, max: 5 }))}
     ${card('🌿', 'Cannabis', (lastVal(weed) === '—' ? '—' : lastVal(weed) + '/j'), barChart(weed, { color: COL.lime, min: 0 }))}
     <div class="hint">💡 Compare les courbes pour repérer des liens : p. ex. les jours à fort gonflement, ou l'effet du cannabis sur ton sommeil.</div>
@@ -454,6 +473,10 @@ async function handleAction(act, arg, el) {
       await S.updateDay(key, rest);
       toast('Copié depuis hier'); render(); return;
     }
+
+    case 'quote-edit':   ui.quoteDraft = S.settings().quote || ''; ui.editingQuote = true; render(); return;
+    case 'quote-cancel': ui.editingQuote = false; ui.quoteDraft = ''; render(); return;
+    case 'quote-save':   await S.setSetting('quote', (ui.quoteDraft || '').trim()); ui.editingQuote = false; toast('Citation enregistrée ✨'); render(); return;
 
     case 'export': exportData(); toast('Sauvegarde téléchargée 📤'); return;
     case 'import': document.getElementById('importFile').click(); return;
