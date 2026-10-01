@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>oonde — motion design</title>
+<style>
+@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:400;src:url(fonts/inter-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:500;src:url(fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:600;src:url(fonts/inter-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:700;src:url(fonts/inter-latin-700-normal.woff2) format("woff2")}
+
+:root{
+  --bg:#F1FAF6; --ink:#0A2B27; --muted:#62807A; --line:#E3F0EB;
+  --mint:#2ED3A0; --teal:#0BA5A4; --deep:#07807C; --soft:#E1F8EF;
+  --star:#FFB524; --red:#E5584A;
+  --grad:linear-gradient(120deg,#2ED3A0 0%,#0BA5A4 100%);
+  --shadow:0 34px 80px -24px rgba(8,70,60,.28),0 10px 26px -10px rgba(8,70,60,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:Inter,"Noto Color Emoji",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+.a{position:absolute}
+.emo{font-family:"Noto Color Emoji";line-height:1}
+svg{display:block}
+
+/* ---------- fond ---------- */
+.blob{position:absolute;left:0;top:0;width:1300px;height:1300px;border-radius:50%}
+#blob1{background:radial-gradient(circle,rgba(46,211,160,.30) 0%,rgba(46,211,160,0) 62%)}
+#blob2{background:radial-gradient(circle,rgba(11,165,164,.22) 0%,rgba(11,165,164,0) 62%)}
+#blob3{background:radial-gradient(circle,rgba(170,236,120,.24) 0%,rgba(170,236,120,0) 62%)}
+#dots{position:absolute;inset:0;background-image:radial-gradient(rgba(10,43,39,.075) 2.2px,transparent 2.8px);background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 45%,#000 20%,transparent 80%)}
+
+/* ---------- logo du haut ---------- */
+#toplogoWrap{left:0;width:1080px;top:206px;display:flex;justify-content:center}
+#toplogo{position:relative;height:70px;padding:0 32px 0 20px;display:flex;align-items:center;gap:12px;background:#fff;border-radius:35px;
+  box-shadow:0 14px 30px -12px rgba(8,70,60,.28);font:700 40px/1 Poppins;letter-spacing:-1.2px;color:var(--ink)}
+#toplogo svg{width:40px;height:40px}
+
+/* ---------- titres ---------- */
+#heads{left:40px;width:1000px;top:322px;height:220px}
+.head{position:absolute;left:0;top:0;width:1000px;text-align:center;font:700 80px/1.1 Poppins;letter-spacing:-2.4px;color:var(--ink)}
+.line{display:block;white-space:nowrap}
+.wm{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .05em .16em;margin-bottom:-.16em}
+.wi{display:inline-block}
+.hl{background:linear-gradient(100deg,#19C98F 0%,#0BA5A4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ghost{color:#8FA8A2;display:inline-block}
+
+/* ---------- recherche ---------- */
+#search{left:80px;top:626px;width:920px;height:106px;border-radius:53px;background:#fff;display:flex;align-items:center;padding:0 42px;box-shadow:var(--shadow)}
+#search svg{width:46px;height:46px;flex:none;margin-right:24px}
+#typed{font:500 38px/1 Inter;color:var(--ink);white-space:pre}
+#caret{width:4px;height:48px;background:var(--teal);border-radius:2px;margin-left:4px}
+
+#results{left:80px;top:760px;width:920px;height:724px;border-radius:40px;background:#fff;box-shadow:var(--shadow)}
+#map{left:0;top:0;width:920px;height:170px;border-radius:40px 40px 0 0;overflow:hidden}
+.pin{position:absolute;width:32px;height:32px;margin:-16px 0 0 -16px;border-radius:50%;background:#5C7C75;border:5px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.18)}
+.pin.m0{background:#BAC8C4}
+.pin.m1{background:var(--grad)}
+.pring{position:absolute;width:32px;height:32px;margin:-16px 0 0 -16px;border-radius:50%;border:3px solid var(--teal)}
+
+.row{position:absolute;left:0;top:0;width:920px;height:108px;border-radius:26px}
+.row .rk{left:36px;top:27px;width:54px;height:54px;border-radius:50%;background:#EDF5F2;font:700 26px/54px Poppins;text-align:center;color:var(--ink)}
+.row .nm{left:116px;top:16px;font:600 33px/1.2 Inter;color:var(--ink);letter-spacing:-.3px}
+.row .meta{left:116px;top:62px;display:flex;align-items:center;gap:10px;font:500 24px/1 Inter;color:var(--muted)}
+.row .meta b{color:var(--ink);font-weight:700}
+.row .th{right:36px;top:16px;width:76px;height:76px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:42px}
+.row .dv{left:116px;right:36px;bottom:0;height:2px;background:var(--line)}
+.stars{position:relative;display:inline-block;flex:none}
+.stars .s0,.stars .s1{position:absolute;left:0;top:0;display:flex;overflow:hidden;white-space:nowrap}
+.stars svg{flex:none}
+.stars .s0 svg{fill:#DCE6E3}
+.stars .s1 svg{fill:var(--star)}
+.tag{font:600 22px/1 Inter;padding:8px 14px;border-radius:14px;display:flex;align-items:center;gap:6px}
+.tag svg{width:20px;height:20px}
+.tag.bad{background:#FDECEA;color:var(--red)}
+.tag.good{background:var(--soft);color:var(--deep)}
+
+#r-marco{z-index:5}
+#r-marco .layer{position:absolute;inset:0;border-radius:26px}
+#r-marco .before{background:#fff;outline:3px dashed rgba(229,88,74,.75);outline-offset:-7px}
+#r-marco .before .nm{color:#7D948F}
+#r-marco .before .th{background:#E9EFED}
+#r-marco .after{background:#EEFBF6;border:3px solid var(--mint)}
+#r-marco .after .rk{background:var(--grad);color:#fff;top:24px;left:33px}
+#r-marco .after .nm{font-weight:700;top:13px;left:113px}
+#r-marco .after .meta{top:59px;left:113px}
+#r-marco .after .th{top:13px;right:33px}
+
+#sep{left:0;top:522px;width:920px;height:50px;display:flex;align-items:center;justify-content:center;gap:16px}
+#sep i{width:10px;height:10px;border-radius:50%;background:#C5D4D0}
+#footer{left:0;top:650px;width:920px;display:flex;justify-content:center}
+.okpill{display:flex;align-items:center;gap:10px;background:var(--soft);color:var(--deep);font:600 26px/1 Inter;padding:13px 24px;border-radius:26px}
+.okpill svg{width:26px;height:26px}
+#rowRing{left:80px;top:946px;width:920px;height:108px;border-radius:26px;border:5px solid var(--mint)}
+
+#calloutWrap{left:656px;top:1246px}
+#callout{position:relative;background:var(--ink);color:#fff;font:600 31px/1 Poppins;padding:18px 28px;border-radius:28px;transform-origin:30% 100%;white-space:nowrap}
+#callout:after{content:"";position:absolute;left:44px;bottom:-14px;border:14px solid transparent;border-bottom:0;border-top-color:var(--ink)}
+
+.pt{position:absolute;left:0;top:0;border-radius:50%}
+
+/* ---------- fiche ---------- */
+#profile{left:80px;top:600px;width:920px;height:905px;border-radius:40px;background:#fff;box-shadow:var(--shadow)}
+.cover{left:0;top:0;width:920px;height:280px;border-radius:40px 40px 0 0;overflow:hidden;background:#E9EFED}
+.cover-before{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#97ABA6;font:600 28px/1 Inter}
+.cover-before svg{width:64px;height:64px}
+.tile{position:absolute;display:flex;align-items:center;justify-content:center}
+#t1{left:0;top:0;width:560px;height:280px;background:linear-gradient(135deg,#FFE6CB,#FFC9A6);font-size:150px}
+#t2{left:566px;top:0;width:354px;height:137px;background:linear-gradient(135deg,#FFF4CC,#FFDE8E);font-size:74px}
+#t3{left:566px;top:143px;width:354px;height:137px;background:linear-gradient(135deg,#FFE3DC,#FFBFB2);font-size:74px}
+#stamp{right:26px;top:24px;background:var(--grad);color:#fff;font:600 26px/1 Poppins;padding:14px 22px;border-radius:24px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px -8px rgba(8,120,110,.55)}
+#stamp svg{width:26px;height:26px}
+.p-name{left:48px;top:304px;font:700 58px/1.1 Poppins;letter-spacing:-1.4px}
+.p-sub{left:50px;top:378px;font:500 27px/1 Inter;color:var(--muted)}
+.p-rating{left:48px;top:428px;display:flex;align-items:center;gap:16px}
+#p-score{font:700 60px/1 Poppins;letter-spacing:-1px;width:96px}
+#p-count{font:500 28px/1 Inter;color:var(--muted)}
+.ring{left:698px;top:298px;width:182px;height:182px}
+.ring svg{width:182px;height:182px;transform:rotate(-90deg)}
+.ring-num{position:absolute;inset:0;display:flex;align-items:baseline;justify-content:center;padding-top:58px}
+.ring-num b{font:700 56px/1 Poppins;letter-spacing:-1.5px}
+.ring-num small{font:600 22px/1 Inter;color:var(--muted);margin-left:2px}
+.ring-lbl{left:698px;top:490px;width:182px;text-align:center;font:600 22px/1 Inter;color:var(--muted)}
+.p-div{left:48px;top:540px;width:824px;height:2px;background:var(--line)}
+.ck{left:48px;width:824px;height:66px}
+.ck .box{left:0;top:7px;width:52px;height:52px;border-radius:50%;border:3px solid #D3E0DC}
+.ck .fill{left:0;top:7px;width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px -6px rgba(11,165,164,.6)}
+.ck .fill svg{width:32px;height:32px;color:#fff}
+.ck .lbl{left:76px;top:0;font:600 33px/66px Inter;color:var(--ink)}
+.ck .gain{right:0;top:15px;font:700 24px/1 Inter;color:var(--deep);background:var(--soft);padding:9px 14px;border-radius:12px}
+
+/* ---------- chat IA ---------- */
+#chat{left:80px;top:610px;width:920px;height:724px;border-radius:40px;background:#fff;box-shadow:var(--shadow)}
+.c-head{left:0;top:0;width:920px;height:106px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 36px}
+.c-ico{width:60px;height:60px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
+.c-ico svg{width:34px;height:34px}
+.c-title{font:700 34px/1 Inter;letter-spacing:-.4px}
+.c-tag{margin-left:auto;font:600 22px/1 Inter;color:var(--muted);background:#EEF4F2;padding:10px 16px;border-radius:14px}
+#ububWrap{right:40px;top:138px}
+#ubub{position:relative;max-width:640px;background:#EDF4F1;border-radius:36px 36px 10px 36px;padding:24px 32px;font:500 34px/1.35 Inter;transform-origin:100% 100%}
+#aiAv{left:36px;top:318px;width:56px;height:56px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center}
+#aiAv svg{width:30px;height:30px}
+#dotsT{left:116px;top:336px;display:flex;gap:10px}
+#dotsT i{width:16px;height:16px;border-radius:50%;background:#9DB4AE}
+#aiText{left:116px;top:314px;width:770px;font:400 34px/1.47 Inter;color:var(--ink)}
+.aw{display:inline-block;white-space:pre}
+.chipName{display:inline-block;background:var(--grad);color:#fff;font-weight:700;border-radius:12px;padding:0 12px;margin-right:4px}
+#place{left:116px;top:530px;width:770px;height:150px;border:2px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 16px 34px -18px rgba(8,70,60,.3)}
+#place .th{left:20px;top:18px;width:110px;height:110px;border-radius:24px;background:linear-gradient(135deg,#FFE6CB,#FFC9A6);display:flex;align-items:center;justify-content:center;font-size:62px}
+#place .nm{left:152px;top:28px;font:700 38px/1 Poppins;letter-spacing:-.8px}
+#place .meta{left:152px;top:84px;display:flex;align-items:center;gap:10px;font:500 25px/1 Inter;color:var(--muted)}
+#place .meta b{color:var(--ink)}
+#reco{right:22px;top:24px;background:var(--grad);color:#fff;font:600 23px/1 Poppins;padding:11px 16px;border-radius:16px;display:flex;align-items:center;gap:6px}
+#reco svg{width:22px;height:22px}
+#chips{left:0;top:1372px;width:1080px;display:flex;justify-content:center;align-items:center;gap:14px}
+#chips .lab{font:600 27px/1 Inter;color:var(--muted);margin-right:4px}
+.chip{display:flex;align-items:center;gap:8px;background:#fff;border-radius:28px;padding:14px 22px;font:600 27px/1 Inter;box-shadow:0 10px 24px -12px rgba(8,70,60,.3)}
+.chip svg{width:24px;height:24px;color:var(--teal)}
+
+/* ---------- transitions + fin ---------- */
+.ring1{position:absolute;left:0;top:0;border-radius:50%}
+#flood{left:-610px;top:-190px;width:2300px;height:2300px;border-radius:50%;background:radial-gradient(circle at 50% 42%,#38DFA8 0%,#14BCA8 40%,#08928F 100%)}
+#end{left:0;top:0;width:1080px;height:1920px}
+#endDots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 2.2px,transparent 2.8px);background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 45% at 50% 50%,#000 10%,transparent 75%)}
+#logo{left:0;top:700px;width:1080px;text-align:center;font:800 236px/1 Poppins;letter-spacing:-9px;color:#fff;white-space:nowrap}
+#logo .L{display:inline-block}
+#logo .bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+.lring{position:absolute;left:0;top:0;border-radius:50%;border:7px solid rgba(255,255,255,.75)}
+#slogan{left:0;top:1025px;width:1080px;text-align:center;color:#fff}
+#slogan .s1{font:700 74px/1.1 Poppins;letter-spacing:-2px}
+#slogan .s2{font:500 48px/1.2 Poppins;letter-spacing:-.6px;opacity:.92;margin-top:10px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bg" class="a" style="inset:0">
+    <div class="blob" id="blob1"></div><div class="blob" id="blob2"></div><div class="blob" id="blob3"></div>
+    <div id="dots"></div>
+  </div>
+
+  <div id="heads" class="a"></div>
+
+  <div id="toplogoWrap" class="a"><div id="toplogo"><span id="tlMark"></span>oonde</div></div>
+
+  <!-- Scènes 1 & 3 : recherche Google locale -->
+  <div id="search" class="a">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#0BA5A4" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+    <span id="typed"></span><span id="caret"></span>
+  </div>
+  <div id="results" class="a">
+    <div id="map" class="a">
+      <svg viewBox="0 0 920 170" width="920" height="170">
+        <rect width="920" height="170" fill="#E3F2EC"/>
+        <path d="M630 -5h220v78q0 30-30 30H660q-30 0-30-30z" fill="#CDEDDC"/>
+        <path d="M-5 118 Q110 96 210 136 T430 175 H-5Z" fill="#CBE8EE"/>
+        <g stroke="#F6FBF9" stroke-width="7" fill="none"><path d="M0 28H920"/><path d="M455 0V170"/><path d="M130 0V100"/><path d="M760 112H920"/><path d="M560 120H700"/></g>
+        <g stroke="#fff" stroke-width="17" fill="none" stroke-linecap="round"><path d="M-10 72C200 58 300 98 520 82S800 52 930 70"/><path d="M300 -10C322 62 288 118 332 182"/><path d="M598 182C622 120 702 88 764 -10"/></g>
+      </svg>
+      <div class="pin" id="pin0" style="left:240px;top:56px"></div>
+      <div class="pin" id="pin1" style="left:548px;top:44px"></div>
+      <div class="pin" id="pin2" style="left:726px;top:126px"></div>
+      <div class="pring" id="pr0" style="left:394px;top:124px"></div>
+      <div class="pring" id="pr1" style="left:394px;top:124px"></div>
+      <div class="pin m0" id="pinM0" style="left:394px;top:124px"></div>
+      <div class="pin m1" id="pinM1" style="left:394px;top:124px"></div>
+    </div>
+    <div id="rows"></div>
+    <div id="sep" class="a"><i></i><i></i><i></i></div>
+    <div class="row" id="r-marco">
+      <div class="layer before" id="mBefore"></div>
+      <div class="layer after" id="mAfter"></div>
+    </div>
+    <div id="footer" class="a"><div class="okpill" id="okpill"><span class="ic-check"></span>Fiche optimisée par oonde</div></div>
+  </div>
+  <div id="rowRing" class="a"></div>
+  <div id="calloutWrap" class="a"><div id="callout">C’est vous ? 👀</div></div>
+  <div id="burst" class="a" style="left:0;top:0"></div>
+
+  <!-- Scène 2 : la fiche Google -->
+  <div id="profile" class="a">
+    <div class="cover a">
+      <div class="cover-before">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg>
+        Aucune photo
+      </div>
+      <div class="tile" id="t1"><span class="emo">🍝</span></div>
+      <div class="tile" id="t2"><span class="emo">🍕</span></div>
+      <div class="tile" id="t3"><span class="emo">🍷</span></div>
+      <div id="stamp" class="a"><span class="ic-check"></span>Fiche optimisée</div>
+    </div>
+    <div class="p-name a">Da Marco</div>
+    <div class="p-sub a">Restaurant italien · €€ · Pâtes fraîches</div>
+    <div class="p-rating a"><span id="p-score">3,9</span><span id="p-stars"></span><span id="p-count">(12 avis)</span></div>
+    <div class="ring a">
+      <svg viewBox="0 0 182 182"><circle cx="91" cy="91" r="76" fill="none" stroke="#E8F2EF" stroke-width="16"/><circle id="ringArc" cx="91" cy="91" r="76" fill="none" stroke="#F29A4A" stroke-width="16" stroke-linecap="round"/></svg>
+      <div class="ring-num"><b id="ringVal">38</b><small>/100</small></div>
+    </div>
+    <div class="ring-lbl a">Score de la fiche</div>
+    <div class="p-div a"></div>
+    <div id="checks"></div>
+  </div>
+
+  <!-- Scène 4 : recommandation par l'IA -->
+  <div id="chat" class="a">
+    <div class="c-head a">
+      <div class="c-ico"><span class="ic-spark"></span></div>
+      <div class="c-title">ChatGPT</div>
+      <div class="c-tag">Recherche IA</div>
+    </div>
+    <div id="ububWrap" class="a"><div id="ubub">Un bon resto italien<br>près de moi ce soir&nbsp;?</div></div>
+    <div id="aiAv" class="a"><span class="ic-spark"></span></div>
+    <div id="dotsT" class="a"><i></i><i></i><i></i></div>
+    <div id="aiText" class="a"></div>
+    <div id="place" class="a">
+      <div class="th a"><span class="emo">🍝</span></div>
+      <div class="nm a">Da Marco</div>
+      <div class="meta a"><span id="placeStars"></span><b>4,8</b><span>(247) · Italien · Ouvert</span></div>
+      <div id="reco" class="a"><span class="ic-check"></span>Recommandé</div>
+    </div>
+  </div>
+  <div id="chips" class="a">
+    <span class="lab" id="chipLab">Aussi sur</span>
+    <span class="chip" id="chip0"><span class="ic-check"></span>Gemini</span>
+    <span class="chip" id="chip1"><span class="ic-check"></span>Perplexity</span>
+    <span class="chip" id="chip2"><span class="ic-check"></span>Copilot</span>
+  </div>
+
+  <!-- Transitions -->
+  <div id="ripA" class="a" style="left:0;top:0"></div>
+  <div id="ripB" class="a" style="left:0;top:0"></div>
+  <div id="flood" class="a"></div>
+
+  <!-- Scène 5 : fin -->
+  <div id="end" class="a">
+    <div id="endDots"></div>
+    <div id="lrings" class="a" style="left:0;top:0"></div>
+    <div id="logo" class="a"><span class="L">o</span><span class="L">o</span><span class="L">n</span><span class="L">d</span><span class="L">e</span><span class="bl" id="baseline"></span></div>
+    <div id="slogan" class="a">
+      <div class="s1" id="sl1"></div>
+      <div class="s2" id="sl2"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Outils =====
+const E = {
+  outCubic: p => 1 - Math.pow(1 - p, 3),
+  inCubic: p => p * p * p,
+  inOutCubic: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  outQuint: p => 1 - Math.pow(1 - p, 5),
+  outBack: p => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+  outExpo: p => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p),
+};
+const clamp = (x, a = 0, b = 1) => x < a ? a : x > b ? b : x;
+const lerp = (a, b, p) => a + (b - a) * p;
+const P = (t, a, d) => clamp((t - a) / d);
+const $ = id => document.getElementById(id);
+function tf(el, x = 0, y = 0, s = 1, o = 1, r = 0) {
+  el.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(4)})` + (r ? ` rotate(${r.toFixed(2)}deg)` : '');
+  o = clamp(o);
+  el.style.opacity = o.toFixed(3);
+  el.style.visibility = o < 0.002 ? 'hidden' : 'visible';
+}
+const fr = n => n.toFixed(1).replace('.', ',');
+function hexLerp(a, b, p) {
+  const pa = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), pb = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16));
+  return 'rgb(' + pa.map((v, i) => Math.round(lerp(v, pb[i], p))).join(',') + ')';
+}
+// pseudo-aléatoire déterministe
+const rnd = i => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+// ===== Icônes =====
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.6l2.85 5.95 6.55.85-4.8 4.55 1.2 6.5L12 17.3l-5.8 3.15 1.2-6.5L2.6 9.4l6.55-.85z"/></svg>';
+const CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.6l4.3 4.3L19 7.2" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const SPARK = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2c.6 4.6 2.9 7.2 8 8-5.1.8-7.4 3.4-8 8-.6-4.6-2.9-7.2-8-8 5.1-.8 7.4-3.4 8-8z"/><path d="M19 14.5c.25 1.9 1.1 2.8 3 3.1-1.9.3-2.75 1.2-3 3.1-.25-1.9-1.1-2.8-3-3.1 1.9-.3 2.75-1.2 3-3.1z" opacity=".8"/></svg>';
+const MARK = '<svg viewBox="0 0 40 40"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2ED3A0"/><stop offset="1" stop-color="#0BA5A4"/></linearGradient></defs><circle cx="20" cy="20" r="6" fill="url(#mg)"/><circle cx="20" cy="20" r="12" fill="none" stroke="url(#mg)" stroke-width="3.4"/><circle cx="20" cy="20" r="18" fill="none" stroke="#2ED3A0" stroke-opacity=".45" stroke-width="2.4"/></svg>';
+document.querySelectorAll('.ic-check').forEach(e => e.outerHTML = CHECK);
+document.querySelectorAll('.ic-spark').forEach(e => e.outerHTML = SPARK);
+$('tlMark').outerHTML = MARK;
+
+function stars(r, size, gap) {
+  const w = 5 * size + 4 * gap;
+  const s =STAR.replace('<svg ', `<svg style="width:${size}px;height:${size}px" `).repeat(5);
+  return `<span class="stars" style="width:${w}px;height:${size}px" data-w="${w}"><span class="s0" style="gap:${gap}px;width:${w}px">${s}</span><span class="s1" style="gap:${gap}px;width:${r / 5 * w}px">${s}</span></span>`;
+}
+
+// ===== Construction =====
+const ROWS = [
+  { id: 'napoli', name: 'Pizzeria Napoli', r: 4.7, n: 312, km: '0,4 km', emo: '🍕', bg: 'linear-gradient(135deg,#FFF3CC,#FFDC8E)' },
+  { id: 'bella', name: 'Trattoria Bella', r: 4.6, n: 205, km: '0,7 km', emo: '🍷', bg: 'linear-gradient(135deg,#FFE3DC,#FFBFB2)' },
+  { id: 'gusto', name: 'Il Gusto', r: 4.5, n: 168, km: '0,9 km', emo: '🥗', bg: 'linear-gradient(135deg,#E4F8DA,#BDEBAE)' },
+];
+const SLOT = [186, 298, 410, 522], MARCO_Y0 = 572, RES_TOP = 760;
+$('rows').innerHTML = ROWS.map(d => `
+  <div class="row" id="r-${d.id}">
+    <div class="rk a">1</div><div class="nm a">${d.name}</div>
+    <div class="meta a">${stars(d.r, 26, 3)}<b>${fr(d.r)}</b><span>(${d.n}) · ${d.km}</span></div>
+    <div class="th a" style="background:${d.bg}"><span class="emo">${d.emo}</span></div>
+    <div class="dv a"></div>
+  </div>`).join('');
+$('mBefore').innerHTML = `
+  <div class="rk a">9</div><div class="nm a">Da Marco</div>
+  <div class="meta a">${stars(3.9, 26, 3)}<b>3,9</b><span>(12)</span><span class="tag bad">Fiche incomplète</span></div>
+  <div class="th a"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#9FB2AD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg></div>`;
+$('mAfter').innerHTML = `
+  <div class="rk a" id="rkM">9</div><div class="nm a">Da Marco</div>
+  <div class="meta a">${stars(4.8, 26, 3)}<b>4,8</b><span>(247)</span><span class="tag good">${CHECK}Optimisée</span></div>
+  <div class="th a" style="background:linear-gradient(135deg,#FFE6CB,#FFC9A6)"><span class="emo">🍝</span></div>`;
+$('p-stars').outerHTML = stars(3.9, 38, 4).replace('class="stars"', 'class="stars" id="pStars"');
+$('placeStars').outerHTML = stars(4.8, 24, 3);
+
+const CHECKS = [
+  ['Photos professionnelles', '+ 32 photos'],
+  ['Horaires & menu à jour', '100 %'],
+  ['Mots-clés & catégories', '+ 18'],
+  ['Avis : réponses & relances', '+ 235'],
+];
+$('checks').innerHTML = CHECKS.map((c, i) => `
+  <div class="ck a" id="ck${i}" style="top:${566 + i * 80}px">
+    <div class="box a"></div><div class="fill a">${CHECK}</div>
+    <div class="lbl a">${c[0]}</div><div class="gain a">${c[1]}</div>
+  </div>`).join('');
+document.querySelectorAll('.ck .fill path').forEach(p => { p.style.strokeDasharray = 24; });
+
+// Titres : "|" = retour ligne, *mot* = dégradé, ~mot~ = fantôme
+const HEADS = [
+  { t: 'Ce soir, un client|cherche un italien…', a: 0.1, b: 1.95 },
+  { t: 'Votre resto est|~invisible~ ?', a: 2.05, b: 3.3 },
+  { t: '*oonde* optimise|votre fiche Google', a: 3.6, b: 6.4 },
+  { t: 'Vous *remontez*|sur Google', a: 6.65, b: 9.35 },
+  { t: 'Et *ChatGPT*|vous recommande', a: 9.65, b: 12.35 },
+];
+function words(text) {
+  return text.split('|').map(line => '<span class="line">' + line.split(' ').map(w =>
+    `<span class="wm"><span class="wi">${w.replace(/\*(.+?)\*/g, '<span class="hl">$1</span>').replace(/~(.+?)~/g, '<span class="ghost">$1</span>')}</span></span>`
+  ).join(' ') + '</span>').join('');
+}
+HEADS.forEach((h, i) => {
+  const el = document.createElement('div');
+  el.className = 'head'; el.innerHTML = words(h.t);
+  $('heads').appendChild(el);
+  h.el = el; h.w = [...el.querySelectorAll('.wi')];
+});
+$('sl1').innerHTML = words('Faites-vous trouver.');
+$('sl2').innerHTML = words('Sur Google et dans les IA.');
+const SLW = [...$('slogan').querySelectorAll('.wi')];
+
+// Réponse IA, mot par mot
+const AI = 'Je vous recommande [Da Marco] 🍝 : pâtes fraîches maison, noté 4,8/5 par 247 clients. Idéal pour ce soir !';
+$('aiText').innerHTML = AI.replace('[Da Marco]', '\u0000').split(' ').map(w =>
+  w === '\u0000' ? '<span class="aw chipName">Da Marco</span>' : `<span class="aw">${w}</span>`).join(' ');
+const AIW = [...$('aiText').querySelectorAll('.aw')];
+
+// Particules
+const PCOL = ['#2ED3A0', '#0BA5A4', '#FFB524', '#A8EB7A', '#19C98F'];
+const PTS = [];
+for (let i = 0; i < 26; i++) {
+  const d = document.createElement('div'); d.className = 'pt';
+  const sz = 10 + rnd(i) * 14; d.style.width = d.style.height = sz + 'px';
+  d.style.background = PCOL[i % PCOL.length];
+  if (i % 3 === 0) d.style.borderRadius = '4px';
+  $('burst').appendChild(d); PTS.push({ el: d, sz, a: (i / 26) * Math.PI * 2 + rnd(i + 9) * .3, k: rnd(i + 3) });
+}
+// Anneaux (ondes)
+function mkRings(parent, n, cls, size, border, color) {
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('div'); d.className = cls;
+    d.style.width = d.style.height = size + 'px';
+    if (border) d.style.border = `${border}px solid ${color}`; else d.style.background = color;
+    parent.appendChild(d); out.push(d);
+  }
+  return out;
+}
+const RIPA = mkRings($('ripA'), 3, 'ring1', 1600, 10, 'rgba(46,211,160,.85)');
+const RIPB = mkRings($('ripB'), 2, 'ring1', 2300, 14, 'rgba(46,211,160,.9)');
+const LR = mkRings($('lrings'), 3, 'lring', 150, 0, '');
+LR.forEach(r => r.style.border = '7px solid rgba(255,255,255,.75)');
+function placeRing(el, cx, cy, size, s, o) {
+  el.style.left = (cx - size / 2) + 'px'; el.style.top = (cy - size / 2) + 'px';
+  tf(el, 0, 0, s, o);
+}
+
+// ===== Rendu à l'instant t (secondes) =====
+const FULL = 'restaurant italien près de moi';
+const RING_C = 2 * Math.PI * 76;
+let O_CX = 0, O_CY = 0, O_D = 150;
+
+function render(t) {
+  // Fond qui respire
+  tf($('blob1'), -420 + Math.sin(t * .35) * 90, -330 + Math.cos(t * .3) * 70);
+  tf($('blob2'), 280 + Math.cos(t * .28) * 90, 640 + Math.sin(t * .33) * 80);
+  tf($('blob3'), -420 + Math.sin(t * .22 + 1) * 80, 1150 + Math.cos(t * .25) * 70);
+
+  // Titres
+  HEADS.forEach(h => {
+    let vis = false;
+    h.w.forEach((w, k) => {
+      const pi = E.outQuint(P(t, h.a + k * 0.06, 0.6)), po = E.inCubic(P(t, h.b + k * 0.03, 0.32));
+      w.style.transform = `translateY(${((1 - pi) * 115 - po * 115).toFixed(2)}%)`;
+      if (pi > 0 && po < 1) vis = true;
+    });
+    h.el.style.visibility = vis ? 'visible' : 'hidden';
+  });
+  const g = HEADS[1].el.querySelector('.ghost');
+  g.style.opacity = (0.3 + 0.45 * (0.5 + 0.5 * Math.sin(t * 8))).toFixed(3);
+  g.style.filter = `blur(${(1.6 * (0.5 - 0.5 * Math.sin(t * 8))).toFixed(2)}px)`;
+
+  // Petit logo en haut
+  {
+    const pi = P(t, 3.5, 0.55), po = E.inCubic(P(t, 12.3, 0.3));
+    tf($('toplogo'), 0, (1 - E.outCubic(pi)) * -24, 0.7 + 0.3 * E.outBack(pi), pi * 3 * (1 - po));
+  }
+
+  // ----- Scènes 1 & 3 : résultats Google -----
+  const s1 = t < 5;
+  {
+    const pi = E.outCubic(P(t, s1 ? 0 : 6.45, 0.45)), po = E.inCubic(P(t, s1 ? 3.2 : 9.35, s1 ? 0.22 : 0.3));
+    tf($('search'), 0, (1 - pi) * 40 - po * 50, (0.96 + 0.04 * pi) * (1 - po * 0.04), pi * (1 - po));
+    const n = s1 ? Math.floor(clamp((t - 0.45) / 1.1) * FULL.length) : FULL.length;
+    $('typed').textContent = FULL.slice(0, n);
+    const typing = t > 0.45 && t < 1.6;
+    $('caret').style.opacity = s1 && (typing || Math.floor(t / 0.45) % 2 === 0) ? 1 : 0;
+
+    const ri = E.outCubic(P(t, s1 ? 1.45 : 6.55, 0.5));
+    tf($('results'), 0, (1 - ri) * 70 - po * 50, (0.97 + 0.03 * ri) * (1 - po * 0.04), ri * (1 - po));
+
+    // Lignes concurrentes
+    const MOVE = [7.8, 7.55, 7.3];
+    ROWS.forEach((d, i) => {
+      const el = $('r-' + d.id);
+      let y, rank, op = 1;
+      if (s1) {
+        const a = E.outCubic(P(t, 1.62 + i * 0.09, 0.45));
+        y = SLOT[i] + (1 - a) * 26; rank = i + 1;
+        op = a * (1 - 0.5 * E.inOutCubic(P(t, 2.3, 0.4)));
+      } else {
+        const mp = E.inOutCubic(P(t, MOVE[i], 0.55));
+        y = lerp(SLOT[i], SLOT[i + 1], mp); rank = i + 1 + (mp > 0.5 ? 1 : 0);
+        op = 1 - 0.25 * P(t, 8.4, 0.4);
+      }
+      tf(el, 0, y, 1, op);
+      el.querySelector('.rk').textContent = rank;
+    });
+    tf($('sep'), 0, 0, 1, s1 ? E.outCubic(P(t, 1.88, 0.4)) : 1 - P(t, 7.1, 0.3));
+
+    // Da Marco
+    const m = $('r-marco');
+    $('mBefore').style.opacity = s1 ? 1 : 0;
+    $('mAfter').style.opacity = s1 ? 0 : 1;
+    if (s1) {
+      const a = E.outCubic(P(t, 1.97, 0.45));
+      tf(m, 0, MARCO_Y0 + (1 - a) * 26, 1, a);
+      m.style.boxShadow = 'none';
+      $('mBefore').style.outlineColor = `rgba(229,88,74,${(0.35 + 0.5 * (0.5 + 0.5 * Math.sin(t * 9))) * P(t, 2.3, 0.3)})`;
+    } else {
+      const pc = E.inOutCubic(P(t, 7.1, 1.3)), lift = Math.sin(Math.PI * pc);
+      tf(m, 0, lerp(MARCO_Y0, SLOT[0], pc), 1 + 0.055 * lift, 1);
+      m.style.boxShadow = `0 ${14 + 34 * lift}px ${34 + 50 * lift}px -16px rgba(11,165,164,${(0.3 + 0.35 * lift).toFixed(3)})`;
+      $('rkM').textContent = Math.round(lerp(9, 1, pc));
+      const rp = P(t, 8.38, 0.55);
+      $('rkM').style.transform = `scale(${(1 + 0.5 * Math.sin(rp * Math.PI) * (1 - rp * 0.4)).toFixed(4)})`;
+    }
+
+    // Épingles de la carte
+    for (let i = 0; i < 3; i++) {
+      const pp = s1 ? E.outBack(P(t, 1.72 + i * 0.08, 0.4)) : 1;
+      tf($('pin' + i), 0, 0, pp * (s1 ? 1 : 1 - 0.2 * P(t, 7.1, 0.3)), s1 ? clamp(pp * 2) : 1 - 0.4 * P(t, 7.1, 0.3));
+    }
+    const pm = s1 ? E.outBack(P(t, 1.98, 0.4)) : 1;
+    const grow = s1 ? 0 : E.outBack(P(t, 7.1, 0.5));
+    tf($('pinM0'), 0, 0, pm * (1 + 0.6 * grow), s1 ? clamp(pm * 2) : 1 - P(t, 7.1, 0.25));
+    tf($('pinM1'), 0, 0, 1 + 0.6 * grow, s1 ? 0 : P(t, 7.1, 0.25));
+    for (let k = 0; k < 2; k++) {
+      const lt = t - 7.3 - k * 0.5;
+      if (s1 || lt < 0) { tf($('pr' + k), 0, 0, 1, 0); continue; }
+      const ph = (lt % 1.0) / 1.0;
+      tf($('pr' + k), 0, 0, 1.4 + 2.6 * E.outCubic(ph), (1 - ph) * 0.9 * (1 - P(t, 9.2, 0.2)));
+    }
+
+    // Pastille « C'est vous ? »
+    const ci = P(t, 2.45, 0.45), co = E.inCubic(P(t, 3.15, 0.22));
+    tf($('callout'), 0, (1 - E.outCubic(ci)) * 24, (0.5 + 0.5 * E.outBack(ci)) * (1 - 0.25 * co), clamp(ci * 3) * (1 - co) * (s1 ? 1 : 0), Math.sin(t * 7) * 3 * ci);
+
+    // Onde + particules à l'arrivée en n°1
+    const rr = P(t, 8.4, 0.75);
+    tf($('rowRing'), 0, 0, 1 + 0.12 * E.outCubic(rr), (rr > 0 && rr < 1 && !s1) ? (1 - rr) * 0.95 * (1 - po) : 0);
+    const bp = P(t, 8.38, 1.0);
+    const cx = 540, cy = RES_TOP + SLOT[0] + 54;
+    PTS.forEach((q, i) => {
+      if (bp <= 0 || bp >= 1 || s1) { tf(q.el, 0, 0, 1, 0); return; }
+      const e = E.outCubic(bp), ca = Math.cos(q.a), sa = Math.sin(q.a);
+      const x = cx + ca * (440 + (130 + q.k * 130) * e) - q.sz / 2;
+      const y = cy + sa * (50 + (120 + q.k * 140) * e) + 120 * bp * bp - q.sz / 2;
+      tf(q.el, x, y, 1 - 0.5 * bp, (1 - bp) * 1.3 * (1 - po), bp * 360 * (q.k - .5));
+    });
+    // Pied de carte
+    const fp = P(t, 8.7, 0.45);
+    tf($('okpill'), 0, (1 - E.outCubic(fp)) * 20, 0.6 + 0.4 * E.outBack(fp), s1 ? 0 : clamp(fp * 3));
+  }
+
+  // Onde de transition 1 → 2 (depuis la ligne Da Marco)
+  RIPA.forEach((r, k) => {
+    const p = P(t, 3.2 + k * 0.1, 0.9);
+    placeRing(r, 540, RES_TOP + MARCO_Y0 + 54, 1600, 0.04 + 0.96 * E.outCubic(p), p > 0 && p < 1 ? (1 - p) * 0.9 : 0);
+  });
+
+  // ----- Scène 2 : la fiche -----
+  {
+    const pe = P(t, 3.42, 0.6), po = E.inCubic(P(t, 6.3, 0.32));
+    const drift = 1 + 0.012 * P(t, 4, 2.3);
+    tf($('profile'), 0, (1 - E.outCubic(pe)) * 300 - po * 70, (0.55 + 0.45 * E.outBack(pe)) * (1 - 0.1 * po) * drift, clamp(pe * 3) * (1 - po));
+    if (t > 3.3 && t < 6.7) {
+      ['t1', 't2', 't3'].forEach((id, k) => {
+        const tp = P(t, 4.0 + k * 0.1, 0.5);
+        tf($(id), 0, 0, 1.3 - 0.3 * E.outCubic(tp), clamp(tp * 2.5));
+      });
+      const T = [4.0, 4.4, 4.8, 5.2];
+      T.forEach((a, k) => {
+        const el = $('ck' + k), cp = P(t, a, 0.4);
+        tf(el.querySelector('.fill'), 0, 0, E.outBack(cp), clamp(cp * 4));
+        el.querySelector('.fill path').style.strokeDashoffset = (24 * (1 - E.outCubic(P(t, a + 0.08, 0.3)))).toFixed(2);
+        el.querySelector('.lbl').style.opacity = (0.45 + 0.55 * clamp(cp * 2)).toFixed(3);
+        const gp = P(t, a + 0.12, 0.4);
+        tf(el.querySelector('.gain'), (1 - E.outCubic(gp)) * 30, 0, 1, gp);
+      });
+      const rp = E.inOutCubic(P(t, 4.4, 1.3));
+      const sc = lerp(3.9, 4.8, rp);
+      $('p-score').textContent = fr(sc);
+      $('p-count').textContent = `(${Math.round(lerp(12, 247, rp))} avis)`;
+      const ps = $('pStars'); ps.querySelector('.s1').style.width = (sc / 5 * ps.dataset.w) + 'px';
+      const sp = E.inOutCubic(P(t, 4.0, 1.7));
+      const v = lerp(38, 96, sp);
+      $('ringVal').textContent = Math.round(v);
+      const arc = $('ringArc');
+      arc.style.strokeDasharray = RING_C.toFixed(2);
+      arc.style.strokeDashoffset = (RING_C * (1 - v / 100)).toFixed(2);
+      arc.style.stroke = hexLerp('#F29A4A', '#19C98F', clamp((v - 38) / 45));
+      const st = P(t, 5.7, 0.45);
+      tf($('stamp'), 0, 0, 1.7 - 0.7 * E.outBack(st), clamp(st * 3), -5 * E.outCubic(st));
+    }
+  }
+
+  // ----- Scène 4 : l'IA recommande -----
+  {
+    const pi = E.outCubic(P(t, 9.55, 0.5)), po = E.inCubic(P(t, 12.45, 0.4));
+    tf($('chat'), 0, (1 - pi) * 90 - po * 40, (0.95 + 0.05 * pi) * (1 - 0.05 * po), pi * (1 - po));
+    if (t > 9.5 && t < 13) {
+      const ub = P(t, 9.92, 0.45);
+      tf($('ubub'), (1 - E.outCubic(ub)) * 40, (1 - E.outCubic(ub)) * 20, 0.8 + 0.2 * E.outBack(ub), clamp(ub * 3));
+      const av = P(t, 10.25, 0.35);
+      tf($('aiAv'), 0, 0, 0.5 + 0.5 * E.outBack(av), clamp(av * 3));
+      const dv = P(t, 10.32, 0.15) * (1 - P(t, 10.75, 0.08));
+      tf($('dotsT'), 0, 0, 1, dv);
+      [...$('dotsT').children].forEach((d, i) => d.style.transform = `translateY(${(-10 * Math.max(0, Math.sin(t * 11 - i * 0.9))).toFixed(2)}px)`);
+      AIW.forEach((w, k) => {
+        const wp = P(t, 10.8 + k * 0.047, 0.22);
+        const chip = w.classList.contains('chipName');
+        w.style.opacity = clamp(wp * (chip ? 3 : 1)).toFixed(3);
+        w.style.transform = chip ? `scale(${(0.6 + 0.4 * E.outBack(P(t, 10.8 + k * 0.047, 0.4))).toFixed(4)})` : `translateY(${((1 - E.outCubic(wp)) * 12).toFixed(2)}px)`;
+      });
+      const pc = P(t, 11.78, 0.5);
+      tf($('place'), 0, (1 - E.outCubic(pc)) * 40, 0.9 + 0.1 * E.outBack(pc), clamp(pc * 3));
+      const rc = P(t, 12.0, 0.4);
+      tf($('reco'), 0, 0, 0.5 + 0.5 * E.outBack(rc), clamp(rc * 3));
+    }
+    const lab = P(t, 11.9, 0.35);
+    tf($('chipLab'), 0, (1 - E.outCubic(lab)) * 16, 1, lab * (1 - po));
+    for (let k = 0; k < 3; k++) {
+      const cp = P(t, 11.98 + k * 0.09, 0.4);
+      tf($('chip' + k), 0, (1 - E.outCubic(cp)) * 24, 0.7 + 0.3 * E.outBack(cp), clamp(cp * 3) * (1 - po));
+    }
+  }
+
+  // ----- Scène 5 : fin -----
+  RIPB.forEach((r, k) => {
+    const p = P(t, 12.28 + k * 0.12, 0.85);
+    placeRing(r, 540, 960, 2300, 0.02 + 0.98 * E.outCubic(p), p > 0 && p < 1 ? (1 - p) : 0);
+  });
+  const fp = E.inOutCubic(P(t, 12.4, 0.65));
+  tf($('flood'), 0, 0, Math.max(fp, 0.001), fp > 0 ? 1 : 0);
+  tf($('end'), 0, 0, 1, t > 12.7 ? 1 : 0);
+  if (t > 12.7) {
+    tf($('endDots'), 0, 0, 1, P(t, 12.9, 0.8));
+    const float = Math.sin((t - 13) * 2.2) * 5;
+    [...$('logo').querySelectorAll('.L')].forEach((l, k) => {
+      const lp = P(t, 12.85 + k * 0.07, 0.6);
+      tf(l, 0, (1 - E.outCubic(lp)) * 110 + float * P(t, 13.6, 0.5), 0.4 + 0.6 * E.outBack(lp), clamp(lp * 2.5));
+    });
+    LR.forEach((r, j) => {
+      const lt = t - 13.2 - j * 0.55;
+      if (lt < 0) { tf(r, 0, 0, 1, 0); return; }
+      const ph = (lt % 1.65) / 1.65;
+      placeRing(r, O_CX, O_CY + float * P(t, 13.6, 0.5), O_D, 1 + 2.4 * E.outCubic(ph), (1 - ph) * 0.8);
+    });
+    SLW.forEach((w, k) => {
+      const pi = E.outQuint(P(t, 13.4 + k * 0.07, 0.6));
+      w.style.transform = `translateY(${((1 - pi) * 115).toFixed(2)}%)`;
+    });
+  }
+}
+
+// Mesure du « o » du logo pour centrer les ondes dessus
+function measure() {
+  const l = $('logo').querySelector('.L');
+  tf($('end'), 0, 0, 1, 1);
+  const r = l.getBoundingClientRect(), base = $('baseline').getBoundingClientRect().top;
+  const c = document.createElement('canvas').getContext('2d');
+  c.font = '800 236px Poppins';
+  const m = c.measureText('o');
+  O_CX = r.left + r.width / 2;
+  O_CY = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+  O_D = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+}
+window.render = render;
+document.fonts.ready.then(() => { measure(); render(0); window.READY = true; });
+</script>
+</body>
+</html>
