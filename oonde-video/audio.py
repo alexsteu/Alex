@@ -187,8 +187,9 @@ for i in range(int(3.5 / 0.5), int(12.4 / 0.5)):
 
 # ---------- sound design ----------
 # frappe clavier
-for k in range(1, 32):
-    add(click(), 0.45 + 1.1 * k / 31, 0.32 + 0.12 * rng.random(), rng.uniform(-0.3, 0.3))
+TYPED = len("garage automobile Lausanne")
+for k in range(1, TYPED + 1):
+    add(click(), 0.45 + 1.1 * k / TYPED, 0.32 + 0.12 * rng.random(), rng.uniform(-0.3, 0.3))
 # apparition des résultats
 for i, t0 in enumerate([1.62, 1.71, 1.80, 1.97]):
     add(pop(480 + 60 * i, 900 + 60 * i), t0, 0.16, -0.2 + 0.13 * i)
@@ -245,6 +246,7 @@ for k, m in enumerate([72, 76, 79, 84, 88]):
     add(marimba(m, 1.2, 0.5), 12.85 + 0.07 * k, 0.15, -0.4 + 0.2 * k)
 for m in (60, 64, 67, 72, 76):
     add(bell(m, 2.6, 1.6), 13.4, 0.07)
+add(pop(560, 1050), 13.82, 0.16)  # pastille oonde.ch
 
 # ---------- mixage ----------
 L += music_l

@@ -112,9 +112,9 @@ svg{display:block}
 .cover-before{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#97ABA6;font:600 28px/1 Inter}
 .cover-before svg{width:64px;height:64px}
 .tile{position:absolute;display:flex;align-items:center;justify-content:center}
-#t1{left:0;top:0;width:560px;height:280px;background:linear-gradient(135deg,#FFE6CB,#FFC9A6);font-size:150px}
+#t1{left:0;top:0;width:560px;height:280px;background:linear-gradient(135deg,#DCF1FF,#B3DAF4);font-size:150px}
 #t2{left:566px;top:0;width:354px;height:137px;background:linear-gradient(135deg,#FFF4CC,#FFDE8E);font-size:74px}
-#t3{left:566px;top:143px;width:354px;height:137px;background:linear-gradient(135deg,#FFE3DC,#FFBFB2);font-size:74px}
+#t3{left:566px;top:143px;width:354px;height:137px;background:linear-gradient(135deg,#E4F8DA,#BDEBAE);font-size:74px}
 #stamp{right:26px;top:24px;background:var(--grad);color:#fff;font:600 26px/1 Poppins;padding:14px 22px;border-radius:24px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px -8px rgba(8,120,110,.55)}
 #stamp svg{width:26px;height:26px}
 .p-name{left:48px;top:304px;font:700 58px/1.1 Poppins;letter-spacing:-1.4px}
@@ -153,7 +153,7 @@ svg{display:block}
 .aw{display:inline-block;white-space:pre}
 .chipName{display:inline-block;background:var(--grad);color:#fff;font-weight:700;border-radius:12px;padding:0 12px;margin-right:4px}
 #place{left:116px;top:530px;width:770px;height:150px;border:2px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 16px 34px -18px rgba(8,70,60,.3)}
-#place .th{left:20px;top:18px;width:110px;height:110px;border-radius:24px;background:linear-gradient(135deg,#FFE6CB,#FFC9A6);display:flex;align-items:center;justify-content:center;font-size:62px}
+#place .th{left:20px;top:18px;width:110px;height:110px;border-radius:24px;background:linear-gradient(135deg,#D9F7EC,#A9EBD3);display:flex;align-items:center;justify-content:center;font-size:62px}
 #place .nm{left:152px;top:28px;font:700 38px/1 Poppins;letter-spacing:-.8px}
 #place .meta{left:152px;top:84px;display:flex;align-items:center;gap:10px;font:500 25px/1 Inter;color:var(--muted)}
 #place .meta b{color:var(--ink)}
@@ -177,6 +177,9 @@ svg{display:block}
 #slogan{left:0;top:1025px;width:1080px;text-align:center;color:#fff}
 #slogan .s1{font:700 74px/1.1 Poppins;letter-spacing:-2px}
 #slogan .s2{font:500 48px/1.2 Poppins;letter-spacing:-.6px;opacity:.92;margin-top:10px}
+#credits{left:0;top:1236px;width:1080px;text-align:center;color:#fff}
+#url{display:inline-block;background:#fff;color:var(--deep);font:700 46px/1 Poppins;letter-spacing:-1px;padding:18px 40px;border-radius:44px;box-shadow:0 16px 40px -14px rgba(0,60,55,.45)}
+#names{font:500 30px/1.3 Inter;opacity:.9;margin-top:28px}
 </style>
 </head>
 <body>
@@ -231,14 +234,14 @@ svg{display:block}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg>
         Aucune photo
       </div>
-      <div class="tile" id="t1"><span class="emo">🍝</span></div>
-      <div class="tile" id="t2"><span class="emo">🍕</span></div>
-      <div class="tile" id="t3"><span class="emo">🍷</span></div>
+      <div class="tile" id="t1"><span class="emo">🚗</span></div>
+      <div class="tile" id="t2"><span class="emo">🔧</span></div>
+      <div class="tile" id="t3"><span class="emo">🧰</span></div>
       <div id="stamp" class="a"><span class="ic-check"></span>Fiche optimisée</div>
     </div>
-    <div class="p-name a">Da Marco</div>
-    <div class="p-sub a">Restaurant italien · €€ · Pâtes fraîches</div>
-    <div class="p-rating a"><span id="p-score">3,9</span><span id="p-stars"></span><span id="p-count">(12 avis)</span></div>
+    <div class="p-name a">Garage Fontana</div>
+    <div class="p-sub a">Garage automobile · Lausanne · Lun – Sam</div>
+    <div class="p-rating a"><span id="p-score">4,3</span><span id="p-stars"></span><span id="p-count">(9 avis)</span></div>
     <div class="ring a">
       <svg viewBox="0 0 182 182"><circle cx="91" cy="91" r="76" fill="none" stroke="#E8F2EF" stroke-width="16"/><circle id="ringArc" cx="91" cy="91" r="76" fill="none" stroke="#F29A4A" stroke-width="16" stroke-linecap="round"/></svg>
       <div class="ring-num"><b id="ringVal">38</b><small>/100</small></div>
@@ -255,14 +258,14 @@ svg{display:block}
       <div class="c-title">ChatGPT</div>
       <div class="c-tag">Recherche IA</div>
     </div>
-    <div id="ububWrap" class="a"><div id="ubub">Un bon resto italien<br>près de moi ce soir&nbsp;?</div></div>
+    <div id="ububWrap" class="a"><div id="ubub">Un garage fiable à Lausanne<br>pour le service de ma voiture&nbsp;?</div></div>
     <div id="aiAv" class="a"><span class="ic-spark"></span></div>
     <div id="dotsT" class="a"><i></i><i></i><i></i></div>
     <div id="aiText" class="a"></div>
     <div id="place" class="a">
-      <div class="th a"><span class="emo">🍝</span></div>
-      <div class="nm a">Da Marco</div>
-      <div class="meta a"><span id="placeStars"></span><b>4,8</b><span>(247) · Italien · Ouvert</span></div>
+      <div class="th a"><span class="emo">🔧</span></div>
+      <div class="nm a">Garage Fontana</div>
+      <div class="meta a"><span id="placeStars"></span><b>4,7</b><span>(31) · Garage · Ouvert</span></div>
       <div id="reco" class="a"><span class="ic-check"></span>Recommandé</div>
     </div>
   </div>
@@ -286,6 +289,10 @@ svg{display:block}
     <div id="slogan" class="a">
       <div class="s1" id="sl1"></div>
       <div class="s2" id="sl2"></div>
+    </div>
+    <div id="credits" class="a">
+      <div id="url">oonde.ch</div>
+      <div id="names">par Alexandre Steudler &amp; Serhat Dogar</div>
     </div>
   </div>
 </div>
@@ -335,9 +342,9 @@ function stars(r, size, gap) {
 
 // ===== Construction =====
 const ROWS = [
-  { id: 'napoli', name: 'Pizzeria Napoli', r: 4.7, n: 312, km: '0,4 km', emo: '🍕', bg: 'linear-gradient(135deg,#FFF3CC,#FFDC8E)' },
-  { id: 'bella', name: 'Trattoria Bella', r: 4.6, n: 205, km: '0,7 km', emo: '🍷', bg: 'linear-gradient(135deg,#FFE3DC,#FFBFB2)' },
-  { id: 'gusto', name: 'Il Gusto', r: 4.5, n: 168, km: '0,9 km', emo: '🥗', bg: 'linear-gradient(135deg,#E4F8DA,#BDEBAE)' },
+  { id: 'g1', name: 'Garage Central', r: 4.7, n: 126, km: '0,6 km', emo: '🚗', bg: 'linear-gradient(135deg,#DCF1FF,#B6DDF6)' },
+  { id: 'g2', name: 'Carrosserie Bel-Air', r: 4.6, n: 88, km: '1,1 km', emo: '🚙', bg: 'linear-gradient(135deg,#FFF3CC,#FFDC8E)' },
+  { id: 'g3', name: 'Lac Auto Services', r: 4.5, n: 64, km: '1,4 km', emo: '🏎️', bg: 'linear-gradient(135deg,#FFE3DC,#FFBFB2)' },
 ];
 const SLOT = [186, 298, 410, 522], MARCO_Y0 = 572, RES_TOP = 760;
 $('rows').innerHTML = ROWS.map(d => `
@@ -348,21 +355,21 @@ $('rows').innerHTML = ROWS.map(d => `
     <div class="dv a"></div>
   </div>`).join('');
 $('mBefore').innerHTML = `
-  <div class="rk a">9</div><div class="nm a">Da Marco</div>
-  <div class="meta a">${stars(3.9, 26, 3)}<b>3,9</b><span>(12)</span><span class="tag bad">Fiche incomplète</span></div>
+  <div class="rk a">9</div><div class="nm a">Garage Fontana</div>
+  <div class="meta a">${stars(4.3, 26, 3)}<b>4,3</b><span>(9)</span><span class="tag bad">Fiche incomplète</span></div>
   <div class="th a"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#9FB2AD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg></div>`;
 $('mAfter').innerHTML = `
-  <div class="rk a" id="rkM">9</div><div class="nm a">Da Marco</div>
-  <div class="meta a">${stars(4.8, 26, 3)}<b>4,8</b><span>(247)</span><span class="tag good">${CHECK}Optimisée</span></div>
-  <div class="th a" style="background:linear-gradient(135deg,#FFE6CB,#FFC9A6)"><span class="emo">🍝</span></div>`;
-$('p-stars').outerHTML = stars(3.9, 38, 4).replace('class="stars"', 'class="stars" id="pStars"');
-$('placeStars').outerHTML = stars(4.8, 24, 3);
+  <div class="rk a" id="rkM">9</div><div class="nm a">Garage Fontana</div>
+  <div class="meta a">${stars(4.7, 26, 3)}<b>4,7</b><span>(31)</span><span class="tag good">${CHECK}Optimisée</span></div>
+  <div class="th a" style="background:linear-gradient(135deg,#D9F7EC,#A9EBD3)"><span class="emo">🔧</span></div>`;
+$('p-stars').outerHTML = stars(4.3, 38, 4).replace('class="stars"', 'class="stars" id="pStars"');
+$('placeStars').outerHTML = stars(4.7, 24, 3);
 
 const CHECKS = [
-  ['Photos professionnelles', '+ 32 photos'],
-  ['Horaires & menu à jour', '100 %'],
-  ['Mots-clés & catégories', '+ 18'],
-  ['Avis : réponses & relances', '+ 235'],
+  ['Catégorie « Garage automobile »', 'Corrigée'],
+  ['Horaires complets', 'Lun – Sam'],
+  ['Site web relié à la fiche', 'Relié'],
+  ['Adresse & téléphone uniformes', '100 %'],
 ];
 $('checks').innerHTML = CHECKS.map((c, i) => `
   <div class="ck a" id="ck${i}" style="top:${566 + i * 80}px">
@@ -373,8 +380,8 @@ document.querySelectorAll('.ck .fill path').forEach(p => { p.style.strokeDasharr
 
 // Titres : "|" = retour ligne, *mot* = dégradé, ~mot~ = fantôme
 const HEADS = [
-  { t: 'Ce soir, un client|cherche un italien…', a: 0.1, b: 1.95 },
-  { t: 'Votre resto est|~invisible~ ?', a: 2.05, b: 3.3 },
+  { t: 'Ce matin, un client|cherche un garage…', a: 0.1, b: 1.95 },
+  { t: 'Votre garage est|~invisible~ ?', a: 2.05, b: 3.3 },
   { t: '*oonde* optimise|votre fiche Google', a: 3.6, b: 6.4 },
   { t: 'Vous *remontez*|sur Google', a: 6.65, b: 9.35 },
   { t: 'Et *ChatGPT*|vous recommande', a: 9.65, b: 12.35 },
@@ -395,9 +402,9 @@ $('sl2').innerHTML = words('Sur Google et dans les IA.');
 const SLW = [...$('slogan').querySelectorAll('.wi')];
 
 // Réponse IA, mot par mot
-const AI = 'Je vous recommande [Da Marco] 🍝 : pâtes fraîches maison, noté 4,8/5 par 247 clients. Idéal pour ce soir !';
-$('aiText').innerHTML = AI.replace('[Da Marco]', '\u0000').split(' ').map(w =>
-  w === '\u0000' ? '<span class="aw chipName">Da Marco</span>' : `<span class="aw">${w}</span>`).join(' ');
+const AI = 'Je vous recommande [Garage Fontana] 🔧 : service, pneus et diagnostic, noté 4,7/5 et ouvert le samedi.';
+$('aiText').innerHTML = AI.replace('[Garage Fontana]', '\u0000').split(' ').map(w =>
+  w === '\u0000' ? '<span class="aw chipName">Garage Fontana</span>' : `<span class="aw">${w}</span>`).join(' ');
 const AIW = [...$('aiText').querySelectorAll('.aw')];
 
 // Particules
@@ -431,7 +438,7 @@ function placeRing(el, cx, cy, size, s, o) {
 }
 
 // ===== Rendu à l'instant t (secondes) =====
-const FULL = 'restaurant italien près de moi';
+const FULL = 'garage automobile Lausanne';
 const RING_C = 2 * Math.PI * 76;
 let O_CX = 0, O_CY = 0, O_D = 150;
 
@@ -493,7 +500,7 @@ function render(t) {
     });
     tf($('sep'), 0, 0, 1, s1 ? E.outCubic(P(t, 1.88, 0.4)) : 1 - P(t, 7.1, 0.3));
 
-    // Da Marco
+    // Le garage client
     const m = $('r-marco');
     $('mBefore').style.opacity = s1 ? 1 : 0;
     $('mAfter').style.opacity = s1 ? 0 : 1;
@@ -548,7 +555,7 @@ function render(t) {
     tf($('okpill'), 0, (1 - E.outCubic(fp)) * 20, 0.6 + 0.4 * E.outBack(fp), s1 ? 0 : clamp(fp * 3));
   }
 
-  // Onde de transition 1 → 2 (depuis la ligne Da Marco)
+  // Onde de transition 1 → 2 (depuis la ligne du garage client)
   RIPA.forEach((r, k) => {
     const p = P(t, 3.2 + k * 0.1, 0.9);
     placeRing(r, 540, RES_TOP + MARCO_Y0 + 54, 1600, 0.04 + 0.96 * E.outCubic(p), p > 0 && p < 1 ? (1 - p) * 0.9 : 0);
@@ -574,9 +581,9 @@ function render(t) {
         tf(el.querySelector('.gain'), (1 - E.outCubic(gp)) * 30, 0, 1, gp);
       });
       const rp = E.inOutCubic(P(t, 4.4, 1.3));
-      const sc = lerp(3.9, 4.8, rp);
+      const sc = lerp(4.3, 4.7, rp);
       $('p-score').textContent = fr(sc);
-      $('p-count').textContent = `(${Math.round(lerp(12, 247, rp))} avis)`;
+      $('p-count').textContent = `(${Math.round(lerp(9, 31, rp))} avis)`;
       const ps = $('pStars'); ps.querySelector('.s1').style.width = (sc / 5 * ps.dataset.w) + 'px';
       const sp = E.inOutCubic(P(t, 4.0, 1.7));
       const v = lerp(38, 96, sp);
@@ -646,6 +653,10 @@ function render(t) {
       const pi = E.outQuint(P(t, 13.4 + k * 0.07, 0.6));
       w.style.transform = `translateY(${((1 - pi) * 115).toFixed(2)}%)`;
     });
+    const up = P(t, 13.8, 0.5);
+    tf($('url'), 0, (1 - E.outCubic(up)) * 30, 0.6 + 0.4 * E.outBack(up), clamp(up * 3));
+    const np = P(t, 14.0, 0.5);
+    tf($('names'), 0, (1 - E.outCubic(np)) * 16, 1, np * 0.9);
   }
 }
 

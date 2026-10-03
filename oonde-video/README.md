@@ -1,15 +1,16 @@
 # oonde — vidéo motion design (9:16, 15 s)
 
-Vidéo verticale (Reels / TikTok / Stories) qui explique oonde à travers l'exemple d'un restaurant italien,
-« Da Marco » :
+Vidéo verticale (Reels / TikTok / Stories) qui explique oonde à travers l'exemple d'un garage lausannois,
+« Garage Fontana » (nom fictif). Les leviers montrés viennent de l'étude sur 1 200 fiches Google en Suisse romande :
+catégorie exacte, horaires complets, site web relié, adresse et téléphone uniformes.
 
 | Temps | Scène |
 |---|---|
-| 0 – 3,3 s | Un client cherche « restaurant italien près de moi » : Da Marco est 9e, avec une fiche incomplète. « Votre resto est invisible ? » |
-| 3,3 – 6,5 s | L'onde oonde passe : photos, horaires, mots-clés et avis cochés, note 3,9 → 4,8, score de la fiche 38 → 96. |
-| 6,5 – 9,5 s | Retour sur Google : Da Marco remonte de la 9e à la 1re place. |
-| 9,5 – 12,4 s | ChatGPT recommande Da Marco (et aussi Gemini, Perplexity, Copilot). |
-| 12,4 – 15 s | Écran de fin : logo **oonde** + « Faites-vous trouver. Sur Google et dans les IA. » |
+| 0 – 3,3 s | Un client cherche « garage automobile Lausanne » : Garage Fontana est 9e, avec une fiche incomplète. « Votre garage est invisible ? » |
+| 3,3 – 6,5 s | L'onde oonde passe : catégorie, horaires, site web et coordonnées corrigés, score de la fiche 38 → 96. |
+| 6,5 – 9,5 s | Retour sur Google : Garage Fontana remonte de la 9e à la 1re place. |
+| 9,5 – 12,4 s | ChatGPT recommande Garage Fontana (et aussi Gemini, Perplexity, Copilot). |
+| 12,4 – 15 s | Écran de fin : logo **oonde**, « Faites-vous trouver. Sur Google et dans les IA. », **oonde.ch**, par Alexandre Steudler & Serhat Dogar. |
 
 ## Fichiers
 
