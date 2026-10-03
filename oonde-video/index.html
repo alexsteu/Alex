@@ -3,81 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1080">
-<title>oonde — motion design</title>
+<title>OONDE — motion design</title>
 <style>
-@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2) format("woff2")}
-@font-face{font-family:Inter;font-weight:400;src:url(fonts/inter-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:Inter;font-weight:500;src:url(fonts/inter-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:Inter;font-weight:600;src:url(fonts/inter-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:Inter;font-weight:700;src:url(fonts/inter-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-weight:500;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-weight:600;src:url(fonts/bricolage-grotesque-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-weight:700;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-weight:800;src:url(fonts/bricolage-grotesque-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-weight:400;src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-weight:500;src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-weight:600;src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-weight:700;src:url(fonts/instrument-sans-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:600;src:url(fonts/ibm-plex-mono-latin-600-normal.woff2) format("woff2")}
 
 :root{
-  --bg:#F1FAF6; --ink:#0A2B27; --muted:#62807A; --line:#E3F0EB;
-  --mint:#2ED3A0; --teal:#0BA5A4; --deep:#07807C; --soft:#E1F8EF;
+  /* Direction artistique « Signal » */
+  --porcelaine:#F5F6F3; --encre:#0E1116; --klein:#2038EC; --klein-soft:#DDE2FF;
+  --brume:#E7EAE5; --gris:#5C6470; --klein-nuit:#8B9BFF;
+  --bg:var(--porcelaine); --ink:var(--encre); --muted:var(--gris); --line:var(--brume);
+  --mint:var(--klein); --teal:var(--klein); --deep:var(--klein); --soft:var(--klein-soft); --grad:var(--klein);
   --star:#FFB524; --red:#E5584A;
-  --grad:linear-gradient(120deg,#2ED3A0 0%,#0BA5A4 100%);
-  --shadow:0 34px 80px -24px rgba(8,70,60,.28),0 10px 26px -10px rgba(8,70,60,.14);
+  --shadow:0 34px 80px -24px rgba(14,17,22,.22),0 10px 26px -10px rgba(14,17,22,.10);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
-body{font-family:Inter,"Noto Color Emoji",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:"Instrument Sans","Noto Color Emoji",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
 .a{position:absolute}
 .emo{font-family:"Noto Color Emoji";line-height:1}
 svg{display:block}
 
 /* ---------- fond ---------- */
-.blob{position:absolute;left:0;top:0;width:1300px;height:1300px;border-radius:50%}
-#blob1{background:radial-gradient(circle,rgba(46,211,160,.30) 0%,rgba(46,211,160,0) 62%)}
-#blob2{background:radial-gradient(circle,rgba(11,165,164,.22) 0%,rgba(11,165,164,0) 62%)}
-#blob3{background:radial-gradient(circle,rgba(170,236,120,.24) 0%,rgba(170,236,120,0) 62%)}
-#dots{position:absolute;inset:0;background-image:radial-gradient(rgba(10,43,39,.075) 2.2px,transparent 2.8px);background-size:46px 46px;
-  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 45%,#000 20%,transparent 80%)}
+#field{position:absolute;inset:0;-webkit-mask-image:radial-gradient(ellipse 85% 65% at 50% 45%,#000 25%,transparent 85%)}
 
 /* ---------- logo du haut ---------- */
 #toplogoWrap{left:0;width:1080px;top:206px;display:flex;justify-content:center}
 #toplogo{position:relative;height:70px;padding:0 32px 0 20px;display:flex;align-items:center;gap:12px;background:#fff;border-radius:35px;
-  box-shadow:0 14px 30px -12px rgba(8,70,60,.28);font:700 40px/1 Poppins;letter-spacing:-1.2px;color:var(--ink)}
+  box-shadow:0 14px 30px -12px rgba(14,17,22,.28);font:700 40px/1 "Bricolage Grotesque";letter-spacing:-.5px;color:var(--ink)}
 #toplogo svg{width:40px;height:40px}
 
 /* ---------- titres ---------- */
 #heads{left:40px;width:1000px;top:322px;height:220px}
-.head{position:absolute;left:0;top:0;width:1000px;text-align:center;font:700 80px/1.1 Poppins;letter-spacing:-2.4px;color:var(--ink)}
+.head{position:absolute;left:0;top:0;width:1000px;text-align:center;font:700 80px/1.1 "Bricolage Grotesque";letter-spacing:-2.4px;color:var(--ink)}
 .line{display:block;white-space:nowrap}
 .wm{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .05em .16em;margin-bottom:-.16em}
 .wi{display:inline-block}
-.hl{background:linear-gradient(100deg,#19C98F 0%,#0BA5A4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ghost{color:#8FA8A2;display:inline-block}
+.hl{color:var(--klein)}
+.ghost{color:#959C95;display:inline-block}
 
 /* ---------- recherche ---------- */
 #search{left:80px;top:626px;width:920px;height:106px;border-radius:53px;background:#fff;display:flex;align-items:center;padding:0 42px;box-shadow:var(--shadow)}
 #search svg{width:46px;height:46px;flex:none;margin-right:24px}
-#typed{font:500 38px/1 Inter;color:var(--ink);white-space:pre}
+#typed{font:500 38px/1 "Instrument Sans";color:var(--ink);white-space:pre}
 #caret{width:4px;height:48px;background:var(--teal);border-radius:2px;margin-left:4px}
 
-#results{left:80px;top:760px;width:920px;height:724px;border-radius:40px;background:#fff;box-shadow:var(--shadow)}
-#map{left:0;top:0;width:920px;height:170px;border-radius:40px 40px 0 0;overflow:hidden}
-.pin{position:absolute;width:32px;height:32px;margin:-16px 0 0 -16px;border-radius:50%;background:#5C7C75;border:5px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.18)}
-.pin.m0{background:#BAC8C4}
+#results{left:80px;top:760px;width:920px;height:724px;border-radius:28px;background:#fff;box-shadow:var(--shadow)}
+#map{left:0;top:0;width:920px;height:170px;border-radius:28px 28px 0 0;overflow:hidden}
+.pin{position:absolute;width:32px;height:32px;margin:-16px 0 0 -16px;border-radius:50%;background:#5C6470;border:5px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.18)}
+.pin.m0{background:#BCC1BA}
 .pin.m1{background:var(--grad)}
 .pring{position:absolute;width:32px;height:32px;margin:-16px 0 0 -16px;border-radius:50%;border:3px solid var(--teal)}
 
 .row{position:absolute;left:0;top:0;width:920px;height:108px;border-radius:26px}
-.row .rk{left:36px;top:27px;width:54px;height:54px;border-radius:50%;background:#EDF5F2;font:700 26px/54px Poppins;text-align:center;color:var(--ink)}
-.row .nm{left:116px;top:16px;font:600 33px/1.2 Inter;color:var(--ink);letter-spacing:-.3px}
-.row .meta{left:116px;top:62px;display:flex;align-items:center;gap:10px;font:500 24px/1 Inter;color:var(--muted)}
+.row .rk{left:36px;top:27px;width:54px;height:54px;border-radius:50%;background:#EFF0EC;font:700 26px/54px "Bricolage Grotesque";text-align:center;color:var(--ink)}
+.row .nm{left:116px;top:16px;font:600 33px/1.2 "Instrument Sans";color:var(--ink);letter-spacing:-.3px}
+.row .meta{left:116px;top:62px;display:flex;align-items:center;gap:10px;font:500 24px/1 "Instrument Sans";color:var(--muted)}
 .row .meta b{color:var(--ink);font-weight:700}
 .row .th{right:36px;top:16px;width:76px;height:76px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:42px}
 .row .dv{left:116px;right:36px;bottom:0;height:2px;background:var(--line)}
 .stars{position:relative;display:inline-block;flex:none}
 .stars .s0,.stars .s1{position:absolute;left:0;top:0;display:flex;overflow:hidden;white-space:nowrap}
 .stars svg{flex:none}
-.stars .s0 svg{fill:#DCE6E3}
+.stars .s0 svg{fill:#DFE2DD}
 .stars .s1 svg{fill:var(--star)}
-.tag{font:600 22px/1 Inter;padding:8px 14px;border-radius:14px;display:flex;align-items:center;gap:6px}
+.tag{font:600 22px/1 "Instrument Sans";padding:8px 14px;border-radius:14px;display:flex;align-items:center;gap:6px}
 .tag svg{width:20px;height:20px}
 .tag.bad{background:#FDECEA;color:var(--red)}
 .tag.good{background:var(--soft);color:var(--deep)}
@@ -85,126 +84,124 @@ svg{display:block}
 #r-marco{z-index:5}
 #r-marco .layer{position:absolute;inset:0;border-radius:26px}
 #r-marco .before{background:#fff;outline:3px dashed rgba(229,88,74,.75);outline-offset:-7px}
-#r-marco .before .nm{color:#7D948F}
-#r-marco .before .th{background:#E9EFED}
-#r-marco .after{background:#EEFBF6;border:3px solid var(--mint)}
+#r-marco .before .nm{color:#80878F}
+#r-marco .before .th{background:#EBEDE9}
+#r-marco .after{background:#F0F2FF;border:3px solid var(--mint)}
 #r-marco .after .rk{background:var(--grad);color:#fff;top:24px;left:33px}
 #r-marco .after .nm{font-weight:700;top:13px;left:113px}
 #r-marco .after .meta{top:59px;left:113px}
 #r-marco .after .th{top:13px;right:33px}
 
 #sep{left:0;top:522px;width:920px;height:50px;display:flex;align-items:center;justify-content:center;gap:16px}
-#sep i{width:10px;height:10px;border-radius:50%;background:#C5D4D0}
+#sep i{width:10px;height:10px;border-radius:50%;background:#C9CDC6}
 #footer{left:0;top:650px;width:920px;display:flex;justify-content:center}
-.okpill{display:flex;align-items:center;gap:10px;background:var(--soft);color:var(--deep);font:600 26px/1 Inter;padding:13px 24px;border-radius:26px}
+.okpill{display:flex;align-items:center;gap:10px;background:var(--soft);color:var(--deep);font:600 26px/1 "Instrument Sans";padding:13px 24px;border-radius:26px}
 .okpill svg{width:26px;height:26px}
 #rowRing{left:80px;top:946px;width:920px;height:108px;border-radius:26px;border:5px solid var(--mint)}
 
 #calloutWrap{left:656px;top:1246px}
-#callout{position:relative;background:var(--ink);color:#fff;font:600 31px/1 Poppins;padding:18px 28px;border-radius:28px;transform-origin:30% 100%;white-space:nowrap}
+#callout{position:relative;background:var(--ink);color:#fff;font:600 31px/1 "Bricolage Grotesque";padding:18px 28px;border-radius:28px;transform-origin:30% 100%;white-space:nowrap}
 #callout:after{content:"";position:absolute;left:44px;bottom:-14px;border:14px solid transparent;border-bottom:0;border-top-color:var(--ink)}
 
 .pt{position:absolute;left:0;top:0;border-radius:50%}
 
 /* ---------- fiche ---------- */
-#profile{left:80px;top:600px;width:920px;height:905px;border-radius:40px;background:#fff;box-shadow:var(--shadow)}
-.cover{left:0;top:0;width:920px;height:280px;border-radius:40px 40px 0 0;overflow:hidden;background:#E9EFED}
-.cover-before{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#97ABA6;font:600 28px/1 Inter}
+#profile{left:80px;top:600px;width:920px;height:905px;border-radius:28px;background:#fff;box-shadow:var(--shadow)}
+.cover{left:0;top:0;width:920px;height:280px;border-radius:28px 28px 0 0;overflow:hidden;background:#EBEDE9}
+.cover-before{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#9AA09A;font:600 28px/1 "Instrument Sans"}
 .cover-before svg{width:64px;height:64px}
 .tile{position:absolute;display:flex;align-items:center;justify-content:center}
 #t1{left:0;top:0;width:560px;height:280px;background:linear-gradient(135deg,#DCF1FF,#B3DAF4);font-size:150px}
 #t2{left:566px;top:0;width:354px;height:137px;background:linear-gradient(135deg,#FFF4CC,#FFDE8E);font-size:74px}
 #t3{left:566px;top:143px;width:354px;height:137px;background:linear-gradient(135deg,#E4F8DA,#BDEBAE);font-size:74px}
-#stamp{right:26px;top:24px;background:var(--grad);color:#fff;font:600 26px/1 Poppins;padding:14px 22px;border-radius:24px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px -8px rgba(8,120,110,.55)}
+#stamp{right:26px;top:24px;background:var(--grad);color:#fff;font:600 26px/1 "Bricolage Grotesque";padding:14px 22px;border-radius:24px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px -8px rgba(32,56,236,.55)}
 #stamp svg{width:26px;height:26px}
-.p-name{left:48px;top:304px;font:700 58px/1.1 Poppins;letter-spacing:-1.4px}
-.p-sub{left:50px;top:378px;font:500 27px/1 Inter;color:var(--muted)}
+.p-name{left:48px;top:304px;font:700 58px/1.1 "Bricolage Grotesque";letter-spacing:-1.4px}
+.p-sub{left:50px;top:378px;font:500 27px/1 "Instrument Sans";color:var(--muted)}
 .p-rating{left:48px;top:428px;display:flex;align-items:center;gap:16px}
-#p-score{font:700 60px/1 Poppins;letter-spacing:-1px;width:96px}
-#p-count{font:500 28px/1 Inter;color:var(--muted)}
+#p-score{font:700 60px/1 "Bricolage Grotesque";letter-spacing:-1px;width:96px}
+#p-count{font:500 28px/1 "Instrument Sans";color:var(--muted)}
 .ring{left:698px;top:298px;width:182px;height:182px}
 .ring svg{width:182px;height:182px;transform:rotate(-90deg)}
 .ring-num{position:absolute;inset:0;display:flex;align-items:baseline;justify-content:center;padding-top:58px}
-.ring-num b{font:700 56px/1 Poppins;letter-spacing:-1.5px}
-.ring-num small{font:600 22px/1 Inter;color:var(--muted);margin-left:2px}
-.ring-lbl{left:698px;top:490px;width:182px;text-align:center;font:600 22px/1 Inter;color:var(--muted)}
+.ring-num b{font:700 56px/1 "Bricolage Grotesque";letter-spacing:-1.5px}
+.ring-num small{font:600 22px/1 "Instrument Sans";color:var(--muted);margin-left:2px}
+.ring-lbl{left:668px;top:492px;width:242px;text-align:center;font:500 18px/1 "IBM Plex Mono";letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .p-div{left:48px;top:540px;width:824px;height:2px;background:var(--line)}
 .ck{left:48px;width:824px;height:66px}
-.ck .box{left:0;top:7px;width:52px;height:52px;border-radius:50%;border:3px solid #D3E0DC}
-.ck .fill{left:0;top:7px;width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px -6px rgba(11,165,164,.6)}
+.ck .box{left:0;top:7px;width:52px;height:52px;border-radius:50%;border:3px solid #D6DAD3}
+.ck .fill{left:0;top:7px;width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px -6px rgba(32,56,236,.6)}
 .ck .fill svg{width:32px;height:32px;color:#fff}
-.ck .lbl{left:76px;top:0;font:600 33px/66px Inter;color:var(--ink)}
-.ck .gain{right:0;top:15px;font:700 24px/1 Inter;color:var(--deep);background:var(--soft);padding:9px 14px;border-radius:12px}
+.ck .lbl{left:76px;top:0;font:600 33px/66px "Instrument Sans";color:var(--ink)}
+.ck .gain{right:0;top:15px;font:700 24px/1 "Instrument Sans";color:var(--deep);background:var(--soft);padding:9px 14px;border-radius:12px}
 
 /* ---------- chat IA ---------- */
-#chat{left:80px;top:610px;width:920px;height:724px;border-radius:40px;background:#fff;box-shadow:var(--shadow)}
+#chat{left:80px;top:610px;width:920px;height:724px;border-radius:28px;background:#fff;box-shadow:var(--shadow)}
 .c-head{left:0;top:0;width:920px;height:106px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:18px;padding:0 36px}
 .c-ico{width:60px;height:60px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
 .c-ico svg{width:34px;height:34px}
-.c-title{font:700 34px/1 Inter;letter-spacing:-.4px}
-.c-tag{margin-left:auto;font:600 22px/1 Inter;color:var(--muted);background:#EEF4F2;padding:10px 16px;border-radius:14px}
+.c-title{font:700 34px/1 "Instrument Sans";letter-spacing:-.4px}
+.c-tag{margin-left:auto;font:500 19px/1 "IBM Plex Mono";letter-spacing:.12em;text-transform:uppercase;color:var(--klein);background:var(--klein-soft);padding:11px 16px;border-radius:12px}
 #ububWrap{right:40px;top:138px}
-#ubub{position:relative;max-width:640px;background:#EDF4F1;border-radius:36px 36px 10px 36px;padding:24px 32px;font:500 34px/1.35 Inter;transform-origin:100% 100%}
+#ubub{position:relative;max-width:640px;background:#EFF0EC;border-radius:36px 36px 10px 36px;padding:24px 32px;font:500 34px/1.35 "Instrument Sans";transform-origin:100% 100%}
 #aiAv{left:36px;top:318px;width:56px;height:56px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center}
 #aiAv svg{width:30px;height:30px}
 #dotsT{left:116px;top:336px;display:flex;gap:10px}
-#dotsT i{width:16px;height:16px;border-radius:50%;background:#9DB4AE}
-#aiText{left:116px;top:314px;width:770px;font:400 34px/1.47 Inter;color:var(--ink)}
+#dotsT i{width:16px;height:16px;border-radius:50%;background:#A3A9A1}
+#aiText{left:116px;top:314px;width:770px;font:400 34px/1.47 "Instrument Sans";color:var(--ink)}
 .aw{display:inline-block;white-space:pre}
 .chipName{display:inline-block;background:var(--grad);color:#fff;font-weight:700;border-radius:12px;padding:0 12px;margin-right:4px}
-#place{left:116px;top:530px;width:770px;height:150px;border:2px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 16px 34px -18px rgba(8,70,60,.3)}
-#place .th{left:20px;top:18px;width:110px;height:110px;border-radius:24px;background:linear-gradient(135deg,#D9F7EC,#A9EBD3);display:flex;align-items:center;justify-content:center;font-size:62px}
-#place .nm{left:152px;top:28px;font:700 38px/1 Poppins;letter-spacing:-.8px}
-#place .meta{left:152px;top:84px;display:flex;align-items:center;gap:10px;font:500 25px/1 Inter;color:var(--muted)}
+#place{left:116px;top:530px;width:770px;height:150px;border:2px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 16px 34px -18px rgba(14,17,22,.3)}
+#place .th{left:20px;top:18px;width:110px;height:110px;border-radius:24px;background:linear-gradient(135deg,#E6EAFF,#C9D1FF);display:flex;align-items:center;justify-content:center;font-size:62px}
+#place .nm{left:152px;top:28px;font:700 38px/1 "Bricolage Grotesque";letter-spacing:-.8px}
+#place .meta{left:152px;top:84px;display:flex;align-items:center;gap:10px;font:500 25px/1 "Instrument Sans";color:var(--muted)}
 #place .meta b{color:var(--ink)}
-#reco{right:22px;top:24px;background:var(--grad);color:#fff;font:600 23px/1 Poppins;padding:11px 16px;border-radius:16px;display:flex;align-items:center;gap:6px}
+#reco{right:22px;top:24px;background:var(--grad);color:#fff;font:600 23px/1 "Bricolage Grotesque";padding:11px 16px;border-radius:16px;display:flex;align-items:center;gap:6px}
 #reco svg{width:22px;height:22px}
 #chips{left:0;top:1372px;width:1080px;display:flex;justify-content:center;align-items:center;gap:14px}
-#chips .lab{font:600 27px/1 Inter;color:var(--muted);margin-right:4px}
-.chip{display:flex;align-items:center;gap:8px;background:#fff;border-radius:28px;padding:14px 22px;font:600 27px/1 Inter;box-shadow:0 10px 24px -12px rgba(8,70,60,.3)}
+#chips .lab{font:500 21px/1 "IBM Plex Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.chip{display:flex;align-items:center;gap:8px;background:#fff;border-radius:28px;padding:14px 22px;font:600 27px/1 "Instrument Sans";box-shadow:0 10px 24px -12px rgba(14,17,22,.3)}
 .chip svg{width:24px;height:24px;color:var(--teal)}
 
 /* ---------- transitions + fin ---------- */
 .ring1{position:absolute;left:0;top:0;border-radius:50%}
-#flood{left:-610px;top:-190px;width:2300px;height:2300px;border-radius:50%;background:radial-gradient(circle at 50% 42%,#38DFA8 0%,#14BCA8 40%,#08928F 100%)}
+#flood{left:-610px;top:-190px;width:2300px;height:2300px;border-radius:50%;background:var(--klein)}
 #end{left:0;top:0;width:1080px;height:1920px}
-#endDots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 2.2px,transparent 2.8px);background-size:46px 46px;
-  -webkit-mask-image:radial-gradient(ellipse 70% 45% at 50% 50%,#000 10%,transparent 75%)}
-#logo{left:0;top:700px;width:1080px;text-align:center;font:800 236px/1 Poppins;letter-spacing:-9px;color:#fff;white-space:nowrap}
+#endField{position:absolute;inset:0;-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 48%,#000 20%,transparent 85%)}
+#logo{left:0;top:760px;width:1080px;display:flex;justify-content:center;align-items:center;font:700 196px/1 "Bricolage Grotesque";letter-spacing:-4px;color:#fff;white-space:nowrap}
 #logo .L{display:inline-block}
-#logo .bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+#ldot{width:64px;height:64px;border-radius:50%;background:#fff;margin-right:38px}
 .lring{position:absolute;left:0;top:0;border-radius:50%;border:7px solid rgba(255,255,255,.75)}
 #slogan{left:0;top:1025px;width:1080px;text-align:center;color:#fff}
-#slogan .s1{font:700 74px/1.1 Poppins;letter-spacing:-2px}
-#slogan .s2{font:500 48px/1.2 Poppins;letter-spacing:-.6px;opacity:.92;margin-top:10px}
+#slogan .s1{font:700 74px/1.1 "Bricolage Grotesque";letter-spacing:-2px}
+#slogan .s2{font:500 48px/1.2 "Bricolage Grotesque";letter-spacing:-.6px;opacity:.92;margin-top:10px}
 #credits{left:0;top:1236px;width:1080px;text-align:center;color:#fff}
-#url{display:inline-block;background:#fff;color:var(--deep);font:700 46px/1 Poppins;letter-spacing:-1px;padding:18px 40px;border-radius:44px;box-shadow:0 16px 40px -14px rgba(0,60,55,.45)}
-#names{font:500 30px/1.3 Inter;opacity:.9;margin-top:28px}
+#url{display:inline-block;background:#fff;color:var(--encre);font:600 44px/1 "Bricolage Grotesque";letter-spacing:-.5px;padding:20px 40px;border-radius:16px;box-shadow:0 16px 40px -14px rgba(8,14,60,.45)}
+#names{font:500 24px/1.3 "IBM Plex Mono";letter-spacing:.14em;text-transform:uppercase;opacity:.9;margin-top:30px}
 </style>
 </head>
 <body>
 <div id="stage">
   <div id="bg" class="a" style="inset:0">
-    <div class="blob" id="blob1"></div><div class="blob" id="blob2"></div><div class="blob" id="blob3"></div>
-    <div id="dots"></div>
+    <canvas id="field" width="1080" height="1920"></canvas>
   </div>
 
   <div id="heads" class="a"></div>
 
-  <div id="toplogoWrap" class="a"><div id="toplogo"><span id="tlMark"></span>oonde</div></div>
+  <div id="toplogoWrap" class="a"><div id="toplogo"><span id="tlMark"></span>OONDE</div></div>
 
   <!-- Scènes 1 & 3 : recherche Google locale -->
   <div id="search" class="a">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#0BA5A4" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="#2038EC" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
     <span id="typed"></span><span id="caret"></span>
   </div>
   <div id="results" class="a">
     <div id="map" class="a">
       <svg viewBox="0 0 920 170" width="920" height="170">
-        <rect width="920" height="170" fill="#E3F2EC"/>
-        <path d="M630 -5h220v78q0 30-30 30H660q-30 0-30-30z" fill="#CDEDDC"/>
-        <path d="M-5 118 Q110 96 210 136 T430 175 H-5Z" fill="#CBE8EE"/>
-        <g stroke="#F6FBF9" stroke-width="7" fill="none"><path d="M0 28H920"/><path d="M455 0V170"/><path d="M130 0V100"/><path d="M760 112H920"/><path d="M560 120H700"/></g>
+        <rect width="920" height="170" fill="#E9ECE6"/>
+        <path d="M630 -5h220v78q0 30-30 30H660q-30 0-30-30z" fill="#DCE5D6"/>
+        <path d="M-5 118 Q110 96 210 136 T430 175 H-5Z" fill="#D6E1EA"/>
+        <g stroke="#F7F8F5" stroke-width="7" fill="none"><path d="M0 28H920"/><path d="M455 0V170"/><path d="M130 0V100"/><path d="M760 112H920"/><path d="M560 120H700"/></g>
         <g stroke="#fff" stroke-width="17" fill="none" stroke-linecap="round"><path d="M-10 72C200 58 300 98 520 82S800 52 930 70"/><path d="M300 -10C322 62 288 118 332 182"/><path d="M598 182C622 120 702 88 764 -10"/></g>
       </svg>
       <div class="pin" id="pin0" style="left:240px;top:56px"></div>
@@ -243,7 +240,7 @@ svg{display:block}
     <div class="p-sub a">Garage automobile · Lausanne · Lun – Sam</div>
     <div class="p-rating a"><span id="p-score">4,3</span><span id="p-stars"></span><span id="p-count">(9 avis)</span></div>
     <div class="ring a">
-      <svg viewBox="0 0 182 182"><circle cx="91" cy="91" r="76" fill="none" stroke="#E8F2EF" stroke-width="16"/><circle id="ringArc" cx="91" cy="91" r="76" fill="none" stroke="#F29A4A" stroke-width="16" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 182 182"><circle cx="91" cy="91" r="76" fill="none" stroke="#ECEEEA" stroke-width="16"/><circle id="ringArc" cx="91" cy="91" r="76" fill="none" stroke="#F29A4A" stroke-width="16" stroke-linecap="round"/></svg>
       <div class="ring-num"><b id="ringVal">38</b><small>/100</small></div>
     </div>
     <div class="ring-lbl a">Score de la fiche</div>
@@ -283,16 +280,16 @@ svg{display:block}
 
   <!-- Scène 5 : fin -->
   <div id="end" class="a">
-    <div id="endDots"></div>
+    <canvas id="endField" width="1080" height="1920"></canvas>
     <div id="lrings" class="a" style="left:0;top:0"></div>
-    <div id="logo" class="a"><span class="L">o</span><span class="L">o</span><span class="L">n</span><span class="L">d</span><span class="L">e</span><span class="bl" id="baseline"></span></div>
+    <div id="logo" class="a"><span class="L" id="ldot"></span><span class="L">O</span><span class="L">O</span><span class="L">N</span><span class="L">D</span><span class="L">E</span></div>
     <div id="slogan" class="a">
       <div class="s1" id="sl1"></div>
       <div class="s2" id="sl2"></div>
     </div>
     <div id="credits" class="a">
-      <div id="url">oonde.ch</div>
-      <div id="names">par Alexandre Steudler &amp; Serhat Dogar</div>
+      <div id="url">@oonde.studio</div>
+      <div id="names">Alexandre Steudler &amp; Serhat Dogar</div>
     </div>
   </div>
 </div>
@@ -329,7 +326,7 @@ const rnd = i => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x 
 const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.6l2.85 5.95 6.55.85-4.8 4.55 1.2 6.5L12 17.3l-5.8 3.15 1.2-6.5L2.6 9.4l6.55-.85z"/></svg>';
 const CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.6l4.3 4.3L19 7.2" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const SPARK = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2c.6 4.6 2.9 7.2 8 8-5.1.8-7.4 3.4-8 8-.6-4.6-2.9-7.2-8-8 5.1-.8 7.4-3.4 8-8z"/><path d="M19 14.5c.25 1.9 1.1 2.8 3 3.1-1.9.3-2.75 1.2-3 3.1-.25-1.9-1.1-2.8-3-3.1 1.9-.3 2.75-1.2 3-3.1z" opacity=".8"/></svg>';
-const MARK = '<svg viewBox="0 0 40 40"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2ED3A0"/><stop offset="1" stop-color="#0BA5A4"/></linearGradient></defs><circle cx="20" cy="20" r="6" fill="url(#mg)"/><circle cx="20" cy="20" r="12" fill="none" stroke="url(#mg)" stroke-width="3.4"/><circle cx="20" cy="20" r="18" fill="none" stroke="#2ED3A0" stroke-opacity=".45" stroke-width="2.4"/></svg>';
+const MARK = '<svg viewBox="0 0 40 40"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2038EC"/><stop offset="1" stop-color="#2038EC"/></linearGradient></defs><circle cx="20" cy="20" r="6" fill="url(#mg)"/><circle cx="20" cy="20" r="12" fill="none" stroke="url(#mg)" stroke-width="3.4"/><circle cx="20" cy="20" r="18" fill="none" stroke="#2038EC" stroke-opacity=".45" stroke-width="2.4"/></svg>';
 document.querySelectorAll('.ic-check').forEach(e => e.outerHTML = CHECK);
 document.querySelectorAll('.ic-spark').forEach(e => e.outerHTML = SPARK);
 $('tlMark').outerHTML = MARK;
@@ -357,11 +354,11 @@ $('rows').innerHTML = ROWS.map(d => `
 $('mBefore').innerHTML = `
   <div class="rk a">9</div><div class="nm a">Garage Fontana</div>
   <div class="meta a">${stars(4.3, 26, 3)}<b>4,3</b><span>(9)</span><span class="tag bad">Fiche incomplète</span></div>
-  <div class="th a"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#9FB2AD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg></div>`;
+  <div class="th a"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#A3A9A1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/><path d="M3 3l18 18"/></svg></div>`;
 $('mAfter').innerHTML = `
   <div class="rk a" id="rkM">9</div><div class="nm a">Garage Fontana</div>
   <div class="meta a">${stars(4.7, 26, 3)}<b>4,7</b><span>(31)</span><span class="tag good">${CHECK}Optimisée</span></div>
-  <div class="th a" style="background:linear-gradient(135deg,#D9F7EC,#A9EBD3)"><span class="emo">🔧</span></div>`;
+  <div class="th a" style="background:linear-gradient(135deg,#E6EAFF,#C9D1FF)"><span class="emo">🔧</span></div>`;
 $('p-stars').outerHTML = stars(4.3, 38, 4).replace('class="stars"', 'class="stars" id="pStars"');
 $('placeStars').outerHTML = stars(4.7, 24, 3);
 
@@ -382,7 +379,7 @@ document.querySelectorAll('.ck .fill path').forEach(p => { p.style.strokeDasharr
 const HEADS = [
   { t: 'Ce matin, un client|cherche un garage…', a: 0.1, b: 1.95 },
   { t: 'Votre garage est|~invisible~ ?', a: 2.05, b: 3.3 },
-  { t: '*oonde* optimise|votre fiche Google', a: 3.6, b: 6.4 },
+  { t: '*OONDE* optimise|votre fiche Google', a: 3.6, b: 6.4 },
   { t: 'Vous *remontez*|sur Google', a: 6.65, b: 9.35 },
   { t: 'Et *ChatGPT*|vous recommande', a: 9.65, b: 12.35 },
 ];
@@ -408,7 +405,7 @@ $('aiText').innerHTML = AI.replace('[Garage Fontana]', '\u0000').split(' ').map(
 const AIW = [...$('aiText').querySelectorAll('.aw')];
 
 // Particules
-const PCOL = ['#2ED3A0', '#0BA5A4', '#FFB524', '#A8EB7A', '#19C98F'];
+const PCOL = ['#2038EC', '#8B9BFF', '#FFB524', '#0E1116', '#DDE2FF'];
 const PTS = [];
 for (let i = 0; i < 26; i++) {
   const d = document.createElement('div'); d.className = 'pt';
@@ -428,8 +425,8 @@ function mkRings(parent, n, cls, size, border, color) {
   }
   return out;
 }
-const RIPA = mkRings($('ripA'), 3, 'ring1', 1600, 10, 'rgba(46,211,160,.85)');
-const RIPB = mkRings($('ripB'), 2, 'ring1', 2300, 14, 'rgba(46,211,160,.9)');
+const RIPA = mkRings($('ripA'), 3, 'ring1', 1600, 10, 'rgba(32,56,236,.85)');
+const RIPB = mkRings($('ripB'), 2, 'ring1', 2300, 14, 'rgba(32,56,236,.9)');
 const LR = mkRings($('lrings'), 3, 'lring', 150, 0, '');
 LR.forEach(r => r.style.border = '7px solid rgba(255,255,255,.75)');
 function placeRing(el, cx, cy, size, s, o) {
@@ -443,10 +440,8 @@ const RING_C = 2 * Math.PI * 76;
 let O_CX = 0, O_CY = 0, O_D = 150;
 
 function render(t) {
-  // Fond qui respire
-  tf($('blob1'), -420 + Math.sin(t * .35) * 90, -330 + Math.cos(t * .3) * 70);
-  tf($('blob2'), 280 + Math.cos(t * .28) * 90, 640 + Math.sin(t * .33) * 80);
-  tf($('blob3'), -420 + Math.sin(t * .22 + 1) * 80, 1150 + Math.cos(t * .25) * 70);
+  // Champ de points en onde diagonale
+  drawField($('field'), t, '14,17,22', 0.16);
 
   // Titres
   HEADS.forEach(h => {
@@ -512,7 +507,7 @@ function render(t) {
     } else {
       const pc = E.inOutCubic(P(t, 7.1, 1.3)), lift = Math.sin(Math.PI * pc);
       tf(m, 0, lerp(MARCO_Y0, SLOT[0], pc), 1 + 0.055 * lift, 1);
-      m.style.boxShadow = `0 ${14 + 34 * lift}px ${34 + 50 * lift}px -16px rgba(11,165,164,${(0.3 + 0.35 * lift).toFixed(3)})`;
+      m.style.boxShadow = `0 ${14 + 34 * lift}px ${34 + 50 * lift}px -16px rgba(32,56,236,${(0.3 + 0.35 * lift).toFixed(3)})`;
       $('rkM').textContent = Math.round(lerp(9, 1, pc));
       const rp = P(t, 8.38, 0.55);
       $('rkM').style.transform = `scale(${(1 + 0.5 * Math.sin(rp * Math.PI) * (1 - rp * 0.4)).toFixed(4)})`;
@@ -591,7 +586,7 @@ function render(t) {
       const arc = $('ringArc');
       arc.style.strokeDasharray = RING_C.toFixed(2);
       arc.style.strokeDashoffset = (RING_C * (1 - v / 100)).toFixed(2);
-      arc.style.stroke = hexLerp('#F29A4A', '#19C98F', clamp((v - 38) / 45));
+      arc.style.stroke = hexLerp('#F29A4A', '#2038EC', clamp((v - 38) / 45));
       const st = P(t, 5.7, 0.45);
       tf($('stamp'), 0, 0, 1.7 - 0.7 * E.outBack(st), clamp(st * 3), -5 * E.outCubic(st));
     }
@@ -637,7 +632,7 @@ function render(t) {
   tf($('flood'), 0, 0, Math.max(fp, 0.001), fp > 0 ? 1 : 0);
   tf($('end'), 0, 0, 1, t > 12.7 ? 1 : 0);
   if (t > 12.7) {
-    tf($('endDots'), 0, 0, 1, P(t, 12.9, 0.8));
+    drawField($('endField'), t, '255,255,255', 0.26 * P(t, 12.9, 0.8));
     const float = Math.sin((t - 13) * 2.2) * 5;
     [...$('logo').querySelectorAll('.L')].forEach((l, k) => {
       const lp = P(t, 12.85 + k * 0.07, 0.6);
@@ -660,17 +655,25 @@ function render(t) {
   }
 }
 
+function drawField(cv, t, rgb, alpha) {
+  const c = cv.getContext('2d');
+  c.clearRect(0, 0, 1080, 1920);
+  c.fillStyle = `rgb(${rgb})`;
+  for (let y = 18; y < 1920; y += 36) for (let x = 18; x < 1080; x += 36) {
+    const w = 0.5 + 0.5 * Math.sin((x + y) * 0.0065 - t * 1.8);
+    c.globalAlpha = alpha * (0.3 + 0.7 * w);
+    c.beginPath(); c.arc(x, y, 1.4 + 1.6 * w, 0, 6.2832); c.fill();
+  }
+}
+
 // Mesure du « o » du logo pour centrer les ondes dessus
 function measure() {
-  const l = $('logo').querySelector('.L');
   tf($('end'), 0, 0, 1, 1);
-  const r = l.getBoundingClientRect(), base = $('baseline').getBoundingClientRect().top;
-  const c = document.createElement('canvas').getContext('2d');
-  c.font = '800 236px Poppins';
-  const m = c.measureText('o');
+  const r = $('ldot').getBoundingClientRect();
   O_CX = r.left + r.width / 2;
-  O_CY = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
-  O_D = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+  O_CY = r.top + r.height / 2;
+  O_D = r.width * 1.6;
+  LR.forEach(ring => { ring.style.width = ring.style.height = O_D + 'px'; });
 }
 window.render = render;
 document.fonts.ready.then(() => { measure(); render(0); window.READY = true; });
