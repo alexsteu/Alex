@@ -1,12 +1,12 @@
-<title>OONDE · Sites internet et fiches Google à La Côte</title>
-<meta name="description" content="OONDE crée le site internet, la fiche Google et les vidéos des commerces de La Côte. Maquette gratuite en 48 heures sur WhatsApp : vous payez seulement si le site vous plaît.">
+<title>OONDE · Sites internet et fiches Google, de Genève à Montreux</title>
+<meta name="description" content="OONDE crée le site internet, la fiche Google et les vidéos des commerces de l'arc lémanique, de Genève à Montreux. Maquette gratuite en 48 heures sur WhatsApp : vous payez seulement si le site vous plaît.">
 {{FONTS}}
 <script>document.documentElement.classList.add('js')</script>
 <style>
 /* DA « Signal », v4 : un seul système. Mêmes cadres, mêmes rayons, même champ de points, du site OONDE jusqu'aux sites qu'on montre. */
 :root{
  --encre:#0E1116;--encre-2:#161B24;--paper:#F5F6F3;--card:#FFFFFF;--ink:#0E1116;--muted:#5C6470;--line:#E4E7E2;--mist:#ECEEF8;
- --klein:#2038EC;--accent:#2038EC;--nuit:#8B9BFF;--wa:#1FA855;
+ --klein:#2038EC;--accent:#2038EC;--nuit:#8B9BFF;--wa:#14803C;
  --display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;--body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
  --ease:cubic-bezier(.22,.61,.2,1);--r:28px;
  --dots:radial-gradient(rgba(139,155,255,.22) 1px,transparent 1.4px) 0 0/18px 18px;
@@ -40,8 +40,8 @@ section{padding-block:96px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--body);text-decoration:none;border-radius:999px;padding:15px 24px;border:1.5px solid transparent;transition:transform .3s var(--ease),background .3s,border-color .3s;cursor:pointer;background:none}
 .btn:hover{transform:translateY(-2px)}
 .btn svg{flex:none}
-.btn-wa{background:var(--wa);color:#fff;box-shadow:0 10px 30px rgba(31,168,85,.28)}
-.btn-wa:hover{background:#178f47}
+.btn-wa{background:var(--wa);color:#fff;box-shadow:0 10px 30px rgba(20,128,60,.32)}
+.btn-wa:hover{background:#0F6B31}
 .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
 .btn-line:hover{border-color:#fff}
 .micro{font-size:14px;color:rgba(255,255,255,.6)}
@@ -181,6 +181,49 @@ section{padding-block:96px}
 .dotsnav button{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.3);padding:0;cursor:pointer;transition:width .3s,background .3s}
 .dotsnav button[aria-current="true"]{width:22px;background:var(--nuit)}
 
+
+/* Bande des communes, en défilement continu */
+.towns{border-top:1px solid rgba(255,255,255,.08);overflow:hidden;padding-block:16px;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.towns div{display:flex;gap:40px;width:max-content;animation:marq 38s linear infinite}
+.towns span{font:600 13px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:40px;white-space:nowrap}
+.towns span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--klein)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* Bento « tout est inclus » : micro-démos vivantes */
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.bx{position:relative;border-radius:var(--r);background:var(--card);border:1px solid var(--line);padding:26px;overflow:hidden;min-height:250px;display:flex;flex-direction:column;isolation:isolate}
+.bx.s3{grid-column:span 3}.bx.s2{grid-column:span 2}.bx.s4{grid-column:span 4}
+@media (max-width:960px){.bx.s3,.bx.s2,.bx.s4{grid-column:span 3}}
+@media (max-width:640px){.bento{grid-template-columns:minmax(0,1fr)}.bx.s3,.bx.s2,.bx.s4{grid-column:auto}.bx{min-height:0}}
+.bx h3{font-size:20px;margin-top:auto;padding-top:20px}
+.bx p{margin:6px 0 0;color:var(--muted);font-size:15px}
+.bx.ink{background:var(--encre);border-color:var(--encre);color:#fff}
+.bx.ink p{color:rgba(255,255,255,.65)}
+.bx.k{background:var(--klein);border-color:var(--klein);color:#fff}
+.bx.k p{color:rgba(255,255,255,.8)}
+/* Projecteur qui suit la souris (cartes) */
+.spot::after{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(32,56,236,.10),transparent 60%)}
+.spot.ink::after,.spot.k::after{background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.12),transparent 60%)}
+.spot:hover::after{opacity:1}
+.gl{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.gl li{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;padding:9px 12px;border-radius:12px;background:var(--mist);opacity:.35;transition:opacity .5s}
+.gl li::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid var(--accent);flex:none;transition:background .4s}
+.gl li.on{opacity:1}.gl li.on::before{background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12l5 5 9-10' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E") center/12px no-repeat}
+.chat{display:flex;flex-direction:column;gap:8px}
+.bub{max-width:85%;padding:9px 13px;border-radius:16px;font-size:14px;line-height:1.35;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.bub.on{opacity:1;transform:none}
+.bub.in{background:rgba(255,255,255,.1);border-bottom-left-radius:4px;align-self:flex-start}
+.bub.out{background:#14803C;border-bottom-right-radius:4px;align-self:flex-end}
+.dom{font:600 clamp(22px,3vw,34px) var(--mono);letter-spacing:-.01em;display:flex;align-items:center;gap:2px;flex-wrap:wrap;overflow-wrap:anywhere}
+.dom .cur{width:2px;height:1.1em;background:currentColor;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.sw{width:64px;height:36px;border-radius:999px;background:rgba(255,255,255,.25);position:relative}
+.sw::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:#fff;transition:transform .5s var(--ease)}
+.sw.on{background:#fff}.sw.on::after{background:var(--klein);transform:translateX(28px)}
+.ai-q{font-size:14px;color:var(--muted);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.ai-a{margin-top:8px;font-size:14px;border-radius:14px;padding:10px 12px;background:var(--mist)}
+.ai-a b{color:var(--accent)}
+
 /* Méthode, compacte */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:0;list-style:none;counter-reset:s;border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
 .steps li{padding:28px;counter-increment:s}
@@ -198,7 +241,7 @@ section{padding-block:96px}
 /* Prix + calcul côte à côte */
 .pricing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
 @media (max-width:900px){.pricing{grid-template-columns:minmax(0,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3.5vw,36px);min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3.5vw,36px);min-width:0;position:relative;overflow:hidden;isolation:isolate}
 .pack{border:2px solid var(--ink);display:flex;flex-direction:column;gap:6px}
 .pack .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .pack .top span{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--klein);padding:5px 10px;border-radius:999px}
@@ -211,7 +254,8 @@ section{padding-block:96px}
 .others li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
 .others li span{color:var(--muted)}
 .others li b{white-space:nowrap}
-.pack .btn{align-self:flex-start;margin-top:auto}
+.pact{margin-top:auto;padding-top:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pact small{font-size:13px;color:var(--muted);line-height:1.4}
 .calc{background:var(--encre);color:#fff;border-color:var(--encre);display:flex;flex-direction:column;gap:22px}
 .calc h3{font-size:22px}
 .rg label{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;font-size:15px;margin-bottom:10px;gap:12px;color:rgba(255,255,255,.85)}
@@ -231,9 +275,9 @@ section{padding-block:96px}
 @media (max-width:900px){.us{grid-template-columns:minmax(0,1fr);gap:28px}}
 .us .lede{margin-top:18px}
 .people{display:grid;gap:14px}
-.person{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:22px;display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:center}
-.avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:20px;color:#fff;background:var(--klein)}
-.avatar.ink{background:var(--encre);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.person{position:relative;overflow:hidden;isolation:isolate;border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:22px;display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:center}
+.avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:-.02em;color:#fff;background:radial-gradient(circle at 30% 25%,#4A5DFF,#2038EC 55%,#1426B8);box-shadow:0 0 0 4px var(--card),0 0 0 5.5px rgba(32,56,236,.35)}
+.avatar.ink{background:radial-gradient(circle at 30% 25%,#2A3140,#0E1116 60%);box-shadow:0 0 0 4px var(--card),0 0 0 5.5px rgba(14,17,22,.25)}
 .person b{display:block;font-family:var(--display);font-size:20px;line-height:1.2}
 .person .role{display:block;color:var(--accent);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
 .person p{margin:6px 0 0;color:var(--muted);font-size:15px}
@@ -273,7 +317,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
 <header class="nav">
  <div class="in">
   <a class="logo" href="#top" aria-label="OONDE, haut de page"><i aria-hidden="true"></i>OONDE</a>
-  <nav aria-label="Sections"><a href="#offres">Nos offres</a><a href="#methode">Méthode</a><a href="#prix">Prix</a><a href="#nous">Qui sommes-nous</a></nav>
+  <nav aria-label="Sections"><a href="#offres">Nos offres</a><a href="#inclus">Inclus</a><a href="#methode">Méthode</a><a href="#prix">Prix</a><a href="#nous">Qui sommes-nous</a></nav>
   <a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}WhatsApp</a>
  </div>
 </header>
@@ -284,9 +328,9 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
  <div class="glow" aria-hidden="true"></div>
  <div class="in">
   <div>
-   <span class="eyebrow">Site · Fiche Google · Vidéo · La Côte</span>
+   <span class="eyebrow">Site · Fiche Google · Vidéo · Arc lémanique</span>
    <h1>Le site qui fait <em>sonner votre téléphone.</em></h1>
-   <p class="sub">On crée le site internet et la fiche Google des commerces de La Côte. Vous voyez votre maquette avant de payer un franc.</p>
+   <p class="sub">On crée le site internet et la fiche Google des commerces, de Genève à Montreux. Vous voyez votre maquette avant de payer un franc.</p>
    <div class="ctas">
     <a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a>
     <a class="btn btn-line" href="#offres">Voir nos offres</a>
@@ -307,6 +351,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
    <p><b>5 jours</b>pour mettre votre commerce au même niveau</p>
   </div>
  </div>
+ <div class="towns" aria-label="Communes servies : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux"><div aria-hidden="true"><span>Genève</span><span>Coppet</span><span>Nyon</span><span>Rolle</span><span>Morges</span><span>Lausanne</span><span>Vevey</span><span>Montreux</span><span>Genève</span><span>Coppet</span><span>Nyon</span><span>Rolle</span><span>Morges</span><span>Lausanne</span><span>Vevey</span><span>Montreux</span></div></div>
 </div>
 
 <section id="offres">
@@ -380,6 +425,22 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
  </div>
 </section>
 
+<section id="inclus" style="padding-top:0">
+ <div class="in">
+  <div class="head rv">
+   <div><span class="eyebrow">Inclus dans le pack</span><h2>Tout ce qui fait venir un client.</h2></div>
+   <p class="lede">Pas d'options cachées. Ce qu'un commerce a besoin pour être trouvé, choisi et contacté, on s'en occupe.</p>
+  </div>
+  <div class="bento">
+   <div class="bx s2 spot rv"><ul class="gl" id="gList"><li>Bonne catégorie</li><li>Horaires à jour</li><li>Photos</li><li>Site relié</li><li>Avis</li></ul><h3>Fiche Google complète</h3><p>Tout ce que Google regarde pour vous montrer.</p></div>
+   <div class="bx s2 ink spot rv"><div class="chat" id="chat"><span class="bub in">Bonjour, vous avez de la place samedi&nbsp;?</span><span class="bub out">Oui, 10 h ou 14 h 30&nbsp;?</span><span class="bub in">14 h 30, parfait 👍</span></div><h3>WhatsApp, pas un formulaire</h3><p>Vos clients vous écrivent en un geste.</p></div>
+   <div class="bx s2 spot rv"><div><div class="ai-q">« Un bon garage à Vevey ? »</div><div class="ai-a">Les assistants citent les commerces dont ils <b>trouvent les informations</b>.</div></div><h3>Lisible par l'IA</h3><p>Des pages claires pour Google et ChatGPT.</p></div>
+   <div class="bx s3 k spot rv"><div class="dom" aria-label="Exemple de domaine : salon-mirabelle.ch"><span id="domTxt" aria-hidden="true"></span><span class="cur" aria-hidden="true"></span></div><h3>Votre nom de domaine, à votre nom</h3><p>Le site, le domaine, les textes et les photos vous appartiennent. Si vous arrêtez, on vous remet tout.</p></div>
+   <div class="bx s3 ink spot rv"><div class="sw" id="sw" aria-hidden="true"></div><h3>Sans engagement</h3><p>20.– par mois, résiliable à la fin de chaque mois. Les petites modifications sont comprises : un prix change, vous nous l'envoyez.</p></div>
+  </div>
+ </div>
+</section>
+
 <section id="methode" style="padding-top:0">
  <div class="in">
   <div class="head rv"><div><span class="eyebrow">Méthode</span><h2>Vous voyez avant de dire oui.</h2></div></div>
@@ -399,7 +460,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
    <p class="lede">Entrez vos propres chiffres. Pas de promesse de notre part : c'est vous qui savez ce que vaut un client.</p>
   </div>
   <div class="pricing">
-   <div class="card pack rv">
+   <div class="card pack spot rv">
     <div class="top"><h3>Site vitrine + fiche Google</h3><span>Pack OONDE</span></div>
     <div class="amount"><b>490.–</b><span>CHF, une fois</span></div>
     <div class="monthly">puis 20.– CHF par mois : hébergement, domaine à votre nom, petites modifications.</div>
@@ -408,7 +469,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
      <li><span>Site cinématique</span><b>Sur devis</b></li>
      <li><span>Vidéos réseaux sociaux</span><b>Sur devis</b></li>
     </ul>
-    <a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a>
+    <div class="pact"><a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a><small>Maquette en 48 h.<br>0.– si elle ne vous plaît pas.</small></div>
    </div>
    <div class="card calc rv">
     <h3>Est-ce rentable pour vous ?</h3>
@@ -434,11 +495,11 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
    <span class="eyebrow">Qui sommes-nous</span>
    <h2 style="margin-top:14px">Deux amis d'ici, un seul interlocuteur.</h2>
    <p class="lede">On s'est rencontrés au gymnase. Le projet de maturité, puis l'organisation d'événements, nous ont appris à travailler ensemble bien avant OONDE. Pas de centre d'appel ni de sous-traitant : vous parlez à ceux qui font votre site, et on peut passer vous voir.</p>
-   <ul class="facts"><li>Amis depuis le gymnase</li><li>Basés à Préverenges</li><li>Réponse le jour même</li></ul>
+   <ul class="facts"><li>Amis depuis le gymnase</li><li>De Genève à Montreux</li><li>Réponse le jour même</li></ul>
   </div>
   <div class="people rv">
-   <div class="person"><span class="avatar" aria-hidden="true">AS</span><div><b>Alexandre Steudler</b><span class="role">Co-fondateur · Sites et IA</span><p>La stratégie et les outils : votre site, votre fiche Google, tout ce qui vous fait trouver.</p></div></div>
-   <div class="person"><span class="avatar ink" aria-hidden="true">SD</span><div><b>Serhat Dogar</b><span class="role">Co-fondateur · Contenu et clients</span><p>L'image et le contact : vos photos, vos vidéos, et le lien avec vous jusqu'à la mise en ligne.</p></div></div>
+   <div class="person spot"><span class="avatar" aria-hidden="true">AS</span><div><b>Alexandre Steudler</b><span class="role">Co-fondateur · Sites et IA</span><p>La stratégie et les outils : votre site, votre fiche Google, tout ce qui vous fait trouver.</p></div></div>
+   <div class="person spot"><span class="avatar ink" aria-hidden="true">SD</span><div><b>Serhat Dogar</b><span class="role">Co-fondateur · Contenu et clients</span><p>L'image et le contact : vos photos, vos vidéos, et le lien avec vous jusqu'à la mise en ligne.</p></div></div>
   </div>
  </div>
 </section>
@@ -473,7 +534,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
 
 <div class="mbar" id="mbar"><a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a></div>
 <footer><div class="in">
- <span><b style="color:var(--ink)">● OONDE</b> · Sites internet, fiches Google et vidéos pour les commerces de La Côte · © 2026</span>
+ <span><b style="color:var(--ink)">● OONDE</b> · Sites internet, fiches Google et vidéos pour les commerces de l'arc lémanique · © 2026</span>
  <nav aria-label="Informations légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav>
 </div></footer>
 
@@ -491,7 +552,7 @@ const T={
  beaute:{label:'Beauté',h:'Prenez soin de vous à {t}.',sub:'Visage, épilation, manucure',sec:'Soins',rows:[['Soin du visage','95.–'],['Manucure','55.–'],['Épilation jambes','60.–']],cta:'Réserver un soin',open:"Ouvert · jusqu'à 19:00",styles:[['#B07A5E','#251A15'],['#B5668B','#26121C'],['#5E8C78','#132019']]},
  artisan:{label:'Artisan',h:'Des travaux bien faits à {t}.',sub:'Peinture, rénovation, dépannage',sec:'Services',rows:[['Devis gratuit','sous 48 h'],['Rénovation','sur mesure'],['Dépannage','7 j / 7']],cta:'Demander un devis',open:'Joignable · 7 h – 19 h',styles:[['#C98A1E','#231A08'],['#2D6E96','#0D1B26'],['#5F7A33','#161D0C']]}
 };
-const TOWNS=['Morges','Rolle','Gland','Nyon','Aubonne','Préverenges'];
+const TOWNS=['Genève','Coppet','Nyon','Rolle','Morges','Lausanne','Vevey','Montreux'];
 function site(el,s){const t=T[s.trade],[c,d]=t.styles[s.style]||t.styles[0];
  el.innerHTML=`<div class="tpl" style="--c:${c};--d:${d}">
   <div class="t-top"><b class="t-logo">${esc(s.name||'Votre commerce')}</b><span class="t-call">${PHONE}</span></div>
@@ -502,7 +563,7 @@ function site(el,s){const t=T[s.trade],[c,d]=t.styles[s.style]||t.styles[0];
   <div class="t-cta">${esc(t.cta)}</div></div>`}
 
 /* Téléphone du hero : le même site type, trois commerces à tour de rôle */
-(()=>{const el=$('heroScreen'),seq=[{trade:'coiffure',town:'Rolle',style:0,name:'Salon Mirabelle'},{trade:'garage',town:'Gland',style:0,name:'Garage des Tilleuls'},{trade:'restaurant',town:'Morges',style:0,name:'Trattoria Nonna Pia'}];
+(()=>{const el=$('heroScreen'),seq=[{trade:'coiffure',town:'Genève',style:0,name:'Salon Mirabelle'},{trade:'garage',town:'Vevey',style:0,name:'Garage des Tilleuls'},{trade:'restaurant',town:'Morges',style:0,name:'Trattoria Nonna Pia'}];
 let i=0;site(el,seq[0]);if(RM)return;
 setInterval(()=>{el.firstElementChild.style.opacity=0;setTimeout(()=>{i=(i+1)%seq.length;site(el,seq[i]);const n=el.firstElementChild;n.style.opacity=0;requestAnimationFrame(()=>requestAnimationFrame(()=>n.style.opacity=1))},450)},4200);})();
 
@@ -564,6 +625,21 @@ function calc(){const val=+v.value,nw=+n.value,cost=490+12*20;
  let cum=0,m=0;while(cum<cost&&m<36){m++;cum+=nw*m*val/12}
  $('oPay').textContent=nw===0?"Sans nouveau client, le site ne se rembourse pas : c'est honnête de le dire.":m<=1?'Le site est remboursé dès le premier mois.':m>=36?'Avec ces chiffres, le site met plus de trois ans à se rembourser.':`Le site est remboursé en ${m} mois environ.`}
 v.addEventListener('input',calc);n.addEventListener('input',calc);calc();})();
+
+
+/* Bento : micro-démos qui s'animent à l'écran */
+(()=>{const run=(el,fn)=>new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();fn()}},{threshold:.4}).observe(el);
+const g=[...$('gList').children];run($('gList'),()=>g.forEach((li,i)=>setTimeout(()=>li.classList.add('on'),RM?0:300+i*380)));
+const b=[...$('chat').children];run($('chat'),()=>b.forEach((x,i)=>setTimeout(()=>x.classList.add('on'),RM?0:300+i*900)));
+const D='salon-mirabelle.ch',d=$('domTxt');if(RM){d.textContent=D}else run(d.parentElement,()=>{let i=0;const t=setInterval(()=>{d.textContent=D.slice(0,++i);if(i>=D.length)clearInterval(t)},90)});
+run($('sw'),()=>setTimeout(()=>$('sw').classList.add('on'),RM?0:500));})();
+
+/* Projecteur qui suit la souris */
+document.querySelectorAll('.spot').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--mx',e.clientX-r.left+'px');el.style.setProperty('--my',e.clientY-r.top+'px')}));
+
+/* Chiffres qui montent */
+(()=>{if(RM)return;document.querySelectorAll('.proof b').forEach(b=>{const m=b.textContent.match(/^(\d+)(.*)$/);if(!m)return;const n=+m[1],rest=m[2];b.textContent='0'+rest;
+new IntersectionObserver((es,o)=>{if(!es[0].isIntersecting)return;o.disconnect();const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1200),e=1-Math.pow(1-k,3);b.textContent=Math.round(n*e)+rest;if(k<1)requestAnimationFrame(f)})(t0)}).observe(b)});})();
 
 /* Apparitions au défilement */
 (()=>{const els=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('on'));return}
