@@ -15,7 +15,7 @@ PAGES = {'mentions-legales': ('Mentions légales', "Éditeur, hébergement et so
 def fill(s, fonts):
     return s.replace('{{FONTS}}', fonts).replace('{{WA_ICON}}', WA_ICON).replace('{{WA}}', WA.replace('&', '&amp;'))
 
-def full(s, theme='#0E1116'):
+def full(s, theme='#111318'):
     i = s.index('<header')
     return ('<!doctype html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
             f'<meta name="theme-color" content="{theme}">\n<link rel="icon" href="favicon.svg" type="image/svg+xml">\n' + s[:i] + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
@@ -40,7 +40,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         for f, p, ws in FACES:
             for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
         for f in FONTDIR.glob('OFL-*.txt'): shutil.copy(f, o / 'fonts')
-        (o / 'favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#0E1116"/><circle cx="16" cy="16" r="6" fill="#2038EC"/></svg>')
+        shutil.copy(D / 'brand' / 'favicon.svg', o / 'favicon.svg')
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Strict-Transport-Security: max-age=31536000\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
         (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{"" if k == "index" else k + ".html"}</loc></url>\n' for k in docs) + '</urlset>\n')

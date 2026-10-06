@@ -1,5 +1,12 @@
+<meta charset="utf-8">
 <title>OONDE · Sites immersifs et sites vitrines, de Genève à Montreux</title>
 <meta name="description" content="OONDE conçoit des sites immersifs, où l'on entre dans votre lieu en faisant défiler, et des sites vitrines reliés à votre fiche Google. Pour les commerces de Genève à Montreux. Maquette gratuite avant tout paiement.">
+<meta property="og:title" content="OONDE · Des sites où vos clients entrent avant de venir">
+<meta property="og:description" content="Sites immersifs et sites vitrines reliés à Google, pour les commerces de Genève à Montreux. Maquette gratuite avant tout paiement.">
+<meta property="og:image" content="https://oonde.ch/img/og.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta name="twitter:card" content="summary_large_image">
 {{FONTS}}
 <script>document.documentElement.classList.add('js')</script>
 <style>
@@ -39,8 +46,8 @@ section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
 /* En-tête */
 .nav{position:sticky;top:0;z-index:20;background:rgba(247,247,244,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.logo{font-weight:600;font-size:18px;letter-spacing:.1em;text-decoration:none;display:flex;align-items:center;gap:9px}
-.logo i{width:8px;height:8px;border-radius:50%;background:var(--klein)}
+.logo{display:flex;align-items:center;text-decoration:none;color:var(--ink)}
+.logo svg{height:22px;width:auto;display:block}
 .nav nav{display:flex;gap:26px;font-size:15px}
 .nav nav a{text-decoration:none;color:var(--muted)}.nav nav a:hover{color:var(--ink)}
 .nav .btn{padding:10px 14px;font-size:14px}
@@ -193,7 +200,29 @@ section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
 .promise b{font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-.02em}
 .promise span{color:var(--muted)}
 
-/* Prix et calcul */
+/* Parcours : deux questions, une recommandation, le message déjà écrit */
+.qz{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:860px){.qz{grid-template-columns:minmax(0,1fr)}}
+.qz h2{margin-top:14px}
+.qz .lede{margin-top:18px;color:var(--soft);max-width:34em}
+.q{margin-top:26px}
+.q .lab{display:block;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.reco{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:14px;position:sticky;top:88px;min-height:320px}
+.reco .mono{color:rgba(255,255,255,.55)}
+.reco h3{font-size:clamp(26px,2.6vw,34px);color:#fff}
+.reco p{color:rgba(255,255,255,.75);font-size:16px}
+.reco .rp{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.18);padding-top:16px;margin-top:4px}
+.reco .rp b{font-size:clamp(34px,3.4vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.reco .rp span{color:rgba(255,255,255,.6);font-size:14.5px;max-width:20em;line-height:1.35}
+.reco .btn{background:#fff;color:var(--ink);border-color:#fff;margin-top:4px;align-self:flex-start}
+.reco .btn:hover{background:#ECEEF0}
+.reco .btn svg{color:var(--wa)}
+.reco .more{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;color:rgba(255,255,255,.7)}
+.reco .more a,.reco .more button{color:#fff;background:none;border:0;padding:0;cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.reco .hint{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.reco .hint span{border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 10px;font-size:13.5px;color:rgba(255,255,255,.75)}
+
+/* Prix */
 .pricing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
 @media (max-width:900px){.pricing{grid-template-columns:minmax(0,1fr)}}
 .plist{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:8px}
@@ -206,18 +235,6 @@ section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
 .lines dt{color:var(--muted)}
 .lines dd{margin:0;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
 .plist .act{margin-top:auto}
-.calc{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:22px}
-.calc h3{font-size:22px}
-.rg label{display:flex;justify-content:space-between;align-items:baseline;font-weight:500;font-size:15px;margin-bottom:10px;gap:12px;color:rgba(255,255,255,.8)}
-.rg output{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.02em}
-.rg input{width:100%;accent-color:#fff}
-.res{border-top:1px solid rgba(255,255,255,.15);padding-top:18px;display:flex;flex-direction:column;gap:12px}
-.res p{color:rgba(255,255,255,.72);font-size:15px}
-.big{font-size:clamp(46px,5.6vw,64px);font-weight:600;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.bar-track{height:8px;border-radius:6px;background:rgba(255,255,255,.14);overflow:hidden}
-.bar-fill{height:100%;background:#fff;border-radius:6px;transition:width .4s var(--ease)}
-.res .pay{font-weight:600;color:#fff}
-.res .calc-note{font-size:12.5px;color:rgba(255,255,255,.5)}
 .small{font-size:13px;color:var(--muted);margin-top:16px}
 
 /* Nous */
@@ -258,7 +275,9 @@ details p{margin:0 0 18px;color:var(--muted);font-size:15.5px;max-width:40em}
 
 /* Pied de page et barre mobile */
 footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
+.fl{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+footer .logo svg{height:18px}
 footer nav{display:flex;flex-wrap:wrap;gap:8px 20px}
 footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:underline}
 .mbar{display:none}
@@ -267,8 +286,8 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
 
 <header class="nav">
  <div class="in">
-  <a class="logo" href="#top" aria-label="OONDE, haut de page"><i aria-hidden="true"></i>OONDE</a>
-  <nav aria-label="Sections"><a href="#immersif">Site immersif</a><a href="#vitrine">Site vitrine</a><a href="#prix">Prix</a><a href="#nous">Qui sommes-nous</a></nav>
+  <a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
+  <nav aria-label="Sections"><a href="#choix">Quel site ?</a><a href="#immersif">Site immersif</a><a href="#vitrine">Site vitrine</a><a href="#prix">Prix</a><a href="#nous">Qui sommes-nous</a></nav>
   <a class="btn" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}WhatsApp</a>
  </div>
 </header>
@@ -282,7 +301,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
    <p class="sub">On conçoit des sites immersifs, où l'on avance dans votre lieu en faisant défiler, et des sites vitrines reliés à votre fiche Google. Pour les commerces de l'arc lémanique. La maquette d'abord, le paiement ensuite.</p>
    <div class="ctas">
     <a class="btn" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Parler de mon projet</a>
-    <a class="lnk" href="#vitrine">Le pack à 490.–</a>
+    <a class="lnk" href="#choix">Quel site pour moi ?</a>
    </div>
   </div>
   <figure class="show">
@@ -295,6 +314,21 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
    </div>
    <figcaption><span><b>Les Grèves, Rolle</b> · logement au bord du lac, maison modélisée en 3D. Démo, lieu fictif.</span><span>Sur le vrai site, c'est le défilement qui fait avancer.</span></figcaption>
   </figure>
+ </div>
+</section>
+
+<section id="choix">
+ <div class="in">
+  <div class="qz">
+   <div class="rv">
+    <span class="mono">Deux questions</span>
+    <h2>Quel site pour vous ?</h2>
+    <p class="lede">On fait deux sites, pas dix. Dites-nous votre activité : on vous indique celui qui convient, son prix, et on prépare votre message. Vous n'avez rien à écrire.</p>
+    <div class="q"><span class="lab">Votre activité</span><div class="chips" id="qAct" role="group" aria-label="Votre activité"></div></div>
+    <div class="q"><span class="lab">Votre commune</span><div class="chips" id="qTown" role="group" aria-label="Votre commune"></div></div>
+   </div>
+   <div class="reco rv" id="reco" aria-live="polite"></div>
+  </div>
  </div>
 </section>
 
@@ -376,7 +410,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
 
 <section id="prix">
  <div class="in">
-  <div class="sec-head rv"><span class="num"></span><div><h2>Des prix écrits noir sur blanc.</h2><p>Pas de forfait caché. Et un calcul honnête : c'est vous qui entrez vos chiffres.</p></div></div>
+  <div class="sec-head rv"><span class="num"></span><div><h2>Deux offres, des prix écrits noir sur blanc.</h2><p>Pas de forfait caché, pas d'engagement. Dans les deux cas, vous voyez la maquette avant de payer.</p></div></div>
   <div class="pricing">
    <div class="plist rv">
     <div class="pl-top"><h3>Site vitrine + fiche Google</h3><span class="mono">Pack</span></div>
@@ -384,23 +418,19 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
     <dl class="lines">
      <div><dt>Hébergement, domaine à votre nom, petites modifications</dt><dd>20.– / mois</dd></div>
      <div><dt>Suivi Google : avis, publications, rapport mensuel</dt><dd>+ 50.– / mois</dd></div>
-     <div><dt>Site immersif, site vitrine inclus</dt><dd>Sur devis</dd></div>
-     <div><dt>Vidéos réseaux sociaux</dt><dd>Sur devis</dd></div>
+     <div><dt>Vidéos courtes pour les réseaux</dt><dd>Sur devis</dd></div>
     </dl>
     <div class="act"><a class="btn" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a><small>Sans engagement.<br>Résiliable chaque mois.</small></div>
    </div>
-   <div class="calc rv">
-    <h3>Est-ce rentable pour vous ?</h3>
-    <div class="rg"><label for="cVal">Ce qu'un client vous rapporte par an <output id="oVal" for="cVal">300 CHF</output></label><input type="range" id="cVal" min="50" max="3000" step="50" value="300"></div>
-    <div class="rg"><label for="cNew">Nouveaux clients par mois grâce à internet <output id="oNew" for="cNew">2</output></label><input type="range" id="cNew" min="0" max="15" step="1" value="2"></div>
-    <div class="res" aria-live="polite">
-     <p>La première année, ces clients représentent</p>
-     <div class="big" id="oGain">3'900 CHF</div>
-     <p>pour un coût de <b id="oCost">730 CHF</b> (490 + 12 × 20).</p>
-     <div class="bar-track" aria-hidden="true"><div class="bar-fill" id="oBar"></div></div>
-     <p class="pay" id="oPay">Le site est remboursé en 5 mois environ.</p>
-     <p class="calc-note">Calcul indicatif basé uniquement sur les chiffres que vous entrez.</p>
-    </div>
+   <div class="plist rv">
+    <div class="pl-top"><h3>Site immersif</h3><span class="mono">Sur mesure</span></div>
+    <div class="amount"><b>Sur devis</b><span>selon le lieu à modéliser ; le site vitrine et la fiche Google sont inclus</span></div>
+    <dl class="lines">
+     <div><dt>Votre lieu modélisé en 3D, visite pilotée par le défilement</dt><dd>Inclus</dd></div>
+     <div><dt>Site vitrine, fiche Google et bouton WhatsApp</dt><dd>Inclus</dd></div>
+     <div><dt>Hébergement, domaine à votre nom, petites modifications</dt><dd>20.– / mois</dd></div>
+    </dl>
+    <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20un%20devis%20pour%20un%20site%20immersif.%20Mon%20lieu%20%3A%20" target="_blank" rel="noopener">{{WA_ICON}}Demander un devis</a><small>Réponse le jour même.<br>Sans engagement.</small></div>
    </div>
   </div>
   <p class="small">Prix en francs suisses. OONDE n'est pas assujetti à la TVA. Détails dans nos <a href="conditions.html">conditions générales</a>.</p>
@@ -452,7 +482,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
 
 <div class="mbar" id="mbar"><a class="btn" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a></div>
 <footer><div class="in">
- <span><b style="color:var(--ink)">OONDE</b> · Sites immersifs, sites vitrines et vidéos pour les commerces de l'arc lémanique · © 2026</span>
+ <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><span>Sites immersifs, sites vitrines et vidéos pour les commerces de l'arc lémanique · © 2026</span></div>
  <nav aria-label="Informations légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav>
 </div></footer>
 
@@ -472,7 +502,7 @@ const T={
  artisan:{label:'Artisan',photo:'img/t-artisan.jpg',h:'Des travaux bien faits à {t}.',sub:'Menuiserie, rénovation, dépannage.',sec:'Services',rows:[['Devis gratuit','sous 48 h'],['Rénovation','sur mesure'],['Dépannage','7 j / 7']],cta:'Demander un devis',open:'Joignable · 7 h – 19 h',hours:'Lu–Ve 7:00–19:00<br>Dépannage 7 j / 7',styles:[['#B9781C','#15171B'],['#2D6E96','#fff'],['#5F7A33','#fff']]}
 };
 const TOWNS=['Genève','Coppet','Nyon','Rolle','Morges','Lausanne','Vevey','Montreux'];
-const slug=n=>(n||'votre-commerce').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'votre-commerce';
+const slug=n=>(n||'votre-commerce').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'votre-commerce';
 function site(el,s,layout){const t=T[s.trade],[c,ct]=t.styles[s.style]||t.styles[0],name=esc(s.name||'Votre commerce'),town=esc(s.town);
  el.innerHTML=`<div class="tpl ${layout}" style="--c:${c};--ct:${ct}">
   <header class="tn"><b>${name}</b><nav><span>${esc(t.sec)}</span><span>Horaires</span><span>Contact</span></nav><span class="tb">${WAI}WhatsApp</span></header>
@@ -504,6 +534,32 @@ try{Object.assign(st,JSON.parse(localStorage.getItem('oonde-essai')||'{}'));$('b
 if(!T[st.trade])st.trade='coiffure';if(!TOWNS.includes(st.town))st.town='Rolle';if(!T[st.trade].styles[st.style])st.style=0;
 draw();
 
+/* Parcours : activité, commune, recommandation. Le choix alimente aussi l'aperçu du site vitrine. */
+const ACT={restaurant:['Restaurant · café','imm',"On entre dans la salle et sur la terrasse avant de réserver. C'est l'argument qui remplit les tables.",'restaurant'],
+ hotel:["Hôtel · chambres d'hôtes",'imm',"Le visiteur traverse les chambres et la vue, puis réserve ce qu'il a déjà vu."],
+ logement:['Logement à louer','imm',"Une visite en ligne du logement, puis la demande : moins de questions, plus de nuits réservées."],
+ immo:['Bien immobilier','imm',"Un bien visité en 3D vaut vingt photos : les acheteurs sérieux arrivent déjà convaincus."],
+ salle:['Salle · atelier · événements','imm',"On parcourt l'espace comme un futur locataire, et la décision se prend sans déplacement."],
+ coiffure:['Coiffure','vit',"Vos prestations, vos prix, vos horaires, et la fiche Google qui vous met sur la carte.",'coiffure'],
+ garage:['Garage','vit',"Vos services et vos tarifs, un bouton pour demander un devis, et la fiche Google reliée.",'garage'],
+ beaute:['Institut · beauté','vit',"Vos soins et vos prix, le rendez-vous par WhatsApp, et la fiche Google reliée.",'beaute'],
+ artisan:['Artisan','vit',"Vos réalisations, vos prestations, un bouton pour demander un devis, et la fiche Google reliée.",'artisan'],
+ autre:['Autre commerce','vit',"Une page claire reliée à Google, c'est ce qui fait sonner le téléphone. On passe à l'immersif si votre lieu le mérite."]};
+const PROD={imm:{t:'Le site immersif',price:'Sur devis',sub:'site vitrine et fiche Google inclus',link:'#immersif',see:'Voir le site immersif',alt:'vit',altT:'Ou commencer par le site vitrine à 490.–',cta:'Demander un devis'},
+ vit:{t:'Le site vitrine, relié à Google',price:'490.–',sub:'une fois, puis 20.– par mois, résiliable',link:'#vitrine',see:'Essayer avec mon nom',alt:'imm',altT:'Ou le site immersif, sur devis',cta:'Ma maquette gratuite'}};
+const q={act:'',town:'',prod:''};
+function qchips(el,items,key){el.innerHTML=items.map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${q[key]===v}">${l}</button>`).join('')}
+function reco(){qchips($('qAct'),Object.entries(ACT).map(([k,v])=>[k,v[0]]),'act');qchips($('qTown'),TOWNS.map(x=>[x,x]).concat([['autre','Ailleurs']]),'town');
+ const r=$('reco');
+ if(!q.act){r.innerHTML=`<span class="mono">Notre conseil</span><h3>Dites-nous votre activité.</h3><p>On vous indique lequel des deux sites convient, son prix, et on prépare votre message WhatsApp.</p><div class="hint"><span>Site immersif · sur devis</span><span>Site vitrine · 490.–</span></div>`;return}
+ const a=ACT[q.act],p=PROD[q.prod||a[1]],town=q.town&&q.town!=='autre'?q.town:'';
+ const msg=p===PROD.imm?`Bonjour OONDE, je voudrais un devis pour un site immersif.\nActivité : ${a[0]}${town?'\nCommune : '+town:''}\nLieu à modéliser : `:`Bonjour OONDE, je voudrais ma maquette gratuite.\nActivité : ${a[0]}${town?'\nCommune : '+town:''}\nNom du commerce : `;
+ r.innerHTML=`<span class="mono">Notre conseil · ${esc(a[0])}${town?' · '+esc(town):''}</span><h3>${p.t}</h3><p>${a[2]}</p><div class="rp"><b>${p.price}</b><span>${p.sub}</span></div><a class="btn" href="${wa(msg)}" target="_blank" rel="noopener">${WAI}${p.cta}</a><div class="more"><a href="${p.link}">${p.see}</a><button type="button" data-alt="${p.alt}">${p.altT}</button></div>`}
+$('qAct').onclick=e=>{const b=e.target.closest('button');if(!b)return;q.act=b.dataset.v;q.prod='';const t=ACT[q.act][3];if(t&&T[t]){st.trade=t;st.style=0;draw()}reco()};
+$('qTown').onclick=e=>{const b=e.target.closest('button');if(!b)return;q.town=b.dataset.v;if(TOWNS.includes(q.town)){st.town=q.town;draw()}reco()};
+$('reco').onclick=e=>{const b=e.target.closest('button[data-alt]');if(!b)return;q.prod=b.dataset.alt;reco()};
+reco();
+
 /* Vidéo du hero : lecture à l'écran seulement, et un curseur qui suit, comme la barre de défilement du vrai site */
 (()=>{const v=$('walk'),th=$('thumb');let on=false;
 new IntersectionObserver(es=>{on=es[0].isIntersecting;if(RM)return;on?v.play().catch(()=>{}):v.pause()},{threshold:.2}).observe(v);
@@ -511,18 +567,6 @@ if(RM)return;(function tick(){if(on&&v.duration)th.style.top=(v.currentTime/v.du
 
 /* Reel : joue seulement à l'écran */
 (()=>{const v=$('reel');new IntersectionObserver(es=>{if(RM)return;es[0].isIntersecting?v.play().catch(()=>{}):v.pause()},{threshold:.4}).observe(v);})();
-
-/* Calculateur */
-(()=>{const v=$('cVal'),n=$('cNew');
-const f=x=>Math.round(x).toLocaleString('fr-CH').replace(/[\s  ’]/g,"'");
-function calc(){const val=+v.value,nw=+n.value,cost=490+12*20;
- let gain=0;for(let m=1;m<=12;m++)gain+=nw*val*(13-m)/12;
- $('oVal').textContent=f(val)+' CHF';$('oNew').textContent=nw;
- $('oGain').textContent=f(gain)+' CHF';$('oCost').textContent=f(cost)+' CHF';
- $('oBar').style.width=Math.min(100,gain?cost/gain*100:100)+'%';
- let cum=0,m=0;while(cum<cost&&m<36){m++;cum+=nw*m*val/12}
- $('oPay').textContent=nw===0?"Sans nouveau client, le site ne se rembourse pas : c'est honnête de le dire.":m<=1?'Le site est remboursé dès le premier mois.':m>=36?'Avec ces chiffres, le site met plus de trois ans à se rembourser.':`Le site est remboursé en ${m} mois environ.`}
-v.addEventListener('input',calc);n.addEventListener('input',calc);calc();})();
 
 /* Apparitions au défilement */
 (()=>{const els=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('on'));return}
