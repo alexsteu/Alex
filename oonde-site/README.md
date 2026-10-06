@@ -1,13 +1,12 @@
-# oonde.ch — site one page
+# oonde.ch — site OONDE
 
-Site d'OONDE, repris du site « Enseigne » (`base/enseigne.html`) et passé à la direction artistique « Signal »
-(porcelaine, encre, bleu Klein ; Bricolage Grotesque, Instrument Sans, IBM Plex Mono).
+Version actuelle : `v2/`. Site recentré sur la vente, contact unique par WhatsApp, pages légales suisses.
 
-Ajouts par rapport à Enseigne : champ de points animé dans le hero, chiffres de l'étude (1 200 fiches Google),
-mention des assistants IA, section « Qui sommes-nous » avec le Reel, coordonnées OONDE (email, téléphone, WhatsApp, Instagram).
+- `v2/home.html` : page d'accueil (source). `v2/legal/*.html` : contenu des pages légales. `v2/legal-layout.html` : leur gabarit.
+- `python3 v2/build.py` génère :
+  - `v2/dist/` : le site prêt à déployer (polices hébergées localement, aucun appel à un service tiers, `_headers` et `sitemap.xml` pour Netlify) ;
+  - `v2/preview/` : la version d'aperçu Claude (Google Fonts).
 
-- `index.html` : le site complet, prêt à déployer, avec `oonde-reel.mp4` à côté.
-- `build.py` : régénère `index.html` et `src/page.html` depuis `base/enseigne.html` + `parts/`.
-- `src/page.html` : la même page sans l'en-tête `<!doctype>`, pour l'aperçu Claude.
+Pour publier : glisser le dossier `v2/dist` sur https://app.netlify.com/drop, puis relier oonde.ch dans Netlify.
 
-Le formulaire envoie vers Netlify Forms (`data-netlify`). Ailleurs, il affiche un message à copier vers WhatsApp ou l'email.
+Ancienne version (base Enseigne + Reel) : `index.html`, `build.py`, `parts/`, `base/`.

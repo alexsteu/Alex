@@ -1,0 +1,507 @@
+<title>OONDE</title>
+<meta name="description" content="OONDE crée le site internet et la fiche Google des commerces de La Côte. Maquette gratuite en 48 heures sur WhatsApp, vous payez seulement si le site vous plaît.">
+{{FONTS}}
+<style>
+/* Concept : DA « Signal ». Une seule action partout (WhatsApp), un téléphone qui montre le résultat, encre et bleu Klein. */
+:root{
+ --encre:#0E1116;--paper:#F5F6F3;--card:#FFFFFF;--ink:#0E1116;--muted:#5C6470;--line:#E7EAE5;--mist:#ECEEF8;
+ --klein:#2038EC;--accent:#2038EC;--on-accent:#FFFFFF;--nuit:#8B9BFF;--wa:#1FA855;
+ --display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;--body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+ --ease:cubic-bezier(.22,.61,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0B0E13;--card:#141922;--ink:#EDEFF2;--muted:#9AA3B0;--line:#232A35;--mist:#161C2B;--accent:#7D8DFF;--on-accent:#0B0E13;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0B0E13;--card:#141922;--ink:#EDEFF2;--muted:#9AA3B0;--line:#232A35;--mist:#161C2B;--accent:#7D8DFF;--on-accent:#0B0E13;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+a{color:inherit}
+.in{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.6vw,48px);font-weight:700}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:26px;height:1.5px;background:currentColor;flex:none}
+.lede{color:var(--muted);max-width:38em;margin:16px 0 0}
+section{padding-block:88px}
+@media (max-width:700px){section{padding-block:60px}}
+:focus-visible{outline:3px solid var(--nuit);outline-offset:3px;border-radius:6px}
+
+/* Boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--body);text-decoration:none;border-radius:12px;padding:15px 22px;border:1.5px solid transparent;transition:transform .3s var(--ease),background .3s var(--ease),border-color .3s}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{flex:none}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-wa:hover{background:#178f47}
+.btn-line{border-color:rgba(255,255,255,.35);color:#fff}
+.btn-line:hover{border-color:#fff}
+.btn-ink{border-color:var(--line);color:var(--ink);background:var(--card)}
+.btn-ink:hover{border-color:var(--ink)}
+
+/* En-tête */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(14,17,22,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.logo{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:9px}
+.logo i{width:12px;height:12px;border-radius:50%;background:var(--klein);box-shadow:0 0 0 0 rgba(139,155,255,.6);animation:ping 2.8s var(--ease) infinite}
+@keyframes ping{70%,100%{box-shadow:0 0 0 10px rgba(139,155,255,0)}}
+.nav nav{display:flex;gap:24px;font-size:15px}
+.nav nav a{text-decoration:none;opacity:.8}.nav nav a:hover{opacity:1}
+.nav .btn{padding:10px 14px;font-size:14px}
+@media (max-width:820px){.nav nav{display:none}}
+
+/* Hero */
+.hero{background:var(--encre);color:#fff;position:relative;overflow:hidden}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.glow{position:absolute;width:560px;height:560px;border-radius:50%;right:-160px;top:-180px;background:radial-gradient(circle,rgba(32,56,236,.5),rgba(32,56,236,0) 65%);pointer-events:none}
+.hero .in{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;align-items:center;padding-block:72px 84px}
+@media (max-width:900px){.hero .in{grid-template-columns:minmax(0,1fr);padding-block:44px 60px}}
+.hero .eyebrow{color:var(--nuit)}
+.hero h1{font-size:clamp(40px,6.4vw,74px);font-weight:800;margin-top:16px}
+.hero h1 em{font-style:normal;color:var(--nuit)}
+.hero .sub{font-size:clamp(18px,2vw,21px);max-width:32em;opacity:.9;margin:22px 0 0}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.promise{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:24px;font-size:15px;opacity:.9;padding:0;list-style:none}
+.promise li::before{content:"✓";color:var(--nuit);font-weight:700;margin-right:7px}
+.towns{margin-top:26px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.6}
+
+/* Téléphone de démonstration */
+.phone-wrap{display:flex;justify-content:center}
+.phone{width:min(280px,72vw);aspect-ratio:9/18.5;border-radius:42px;background:#05070a;padding:12px;box-shadow:0 40px 80px rgba(0,0,0,.45),0 0 0 2px rgba(255,255,255,.08);position:relative}
+.hero .phone{transform:rotate(4deg)}
+.phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);width:84px;height:22px;border-radius:20px;background:#05070a;z-index:3}
+.screen{border-radius:32px;overflow:hidden;height:100%;position:relative;background:#fff}
+.demo{position:absolute;inset:0;display:flex;flex-direction:column;color:#1d1a18;font-family:var(--body)}
+.cycle .demo{opacity:0;animation:cycle 12s infinite}
+.cycle .demo:nth-child(2){animation-delay:4s}.cycle .demo:nth-child(3){animation-delay:8s}
+@keyframes cycle{0%{opacity:0;transform:translateY(12px)}4%,30%{opacity:1;transform:none}34%,100%{opacity:0}}
+.ds-bar{padding:44px 14px 10px;display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700}
+.ds-bar b{font-family:var(--display);font-size:13px}
+.ds-bar span{background:var(--c);color:#fff;border-radius:999px;padding:4px 9px;font-size:10px}
+.ds-hero{margin:0 10px;border-radius:18px;padding:20px 14px;color:#fff;background:var(--g);min-height:40%;display:flex;flex-direction:column;justify-content:flex-end;transition:background .35s}
+.ds-hero small{font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.ds-hero strong{font-family:var(--display);font-size:20px;line-height:1.1;margin-top:6px}
+.ds-hero i{font-style:normal;font-size:11px;opacity:.9;margin-top:6px}
+.ds-rows{padding:12px 12px 0;display:flex;flex-direction:column;gap:7px}
+.ds-row{display:flex;justify-content:space-between;gap:8px;font-size:11px;padding:8px 10px;background:#f4f1ee;border-radius:10px}
+.ds-info{margin:9px 12px 0;padding:9px 10px;border-radius:10px;border:1px dashed #ddd6d0;font-size:10.5px;color:#5b544f;display:flex;justify-content:space-between;gap:8px}
+.ds-cta{margin:12px;margin-top:auto;margin-bottom:16px;background:var(--c);color:#fff;text-align:center;border-radius:999px;padding:11px;font-size:12px;font-weight:700;transition:background .35s}
+@media (prefers-reduced-motion:reduce){.cycle .demo{animation:none}.cycle .demo:first-child{opacity:1}.hero .phone{transform:none}.logo i{animation:none}}
+
+/* Constat */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr);gap:32px}}
+.gbox{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 20px 50px rgba(14,17,22,.08)}
+.gq{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-size:16px}
+.gq::before{content:"";width:13px;height:13px;border:2px solid var(--muted);border-radius:50%;flex:none}
+.caret{display:inline-block;width:2px;height:18px;background:var(--accent);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.res{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.r{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px;border-radius:14px;background:var(--mist)}
+.r .pic{width:40px;height:40px;border-radius:10px;background:var(--encre)}
+.r b{display:block;font-size:15px}.r small{color:var(--muted);font-size:13px}
+.r em{font-style:normal;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--encre);color:#fff}
+.r.ghost{background:transparent;border:1.5px dashed #D4573B}
+.r.ghost .pic{background:var(--line)}
+.r.ghost b{color:#D4573B}
+.r.ghost em{background:transparent;color:#D4573B;border:1px solid #D4573B}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:56px;border-top:1px solid var(--line);padding-top:28px}
+.fig{padding-right:24px}
+.fig+.fig{padding-left:24px;border-left:1px solid var(--line)}
+.fig b{font-family:var(--display);font-size:clamp(40px,5vw,56px);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.fig b small{font-size:.45em;color:var(--accent)}
+.fig p{margin:10px 0 0;color:var(--muted);font-size:15px}
+.src{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin:22px 0 0}
+@media (max-width:700px){.figs{grid-template-columns:minmax(0,1fr);gap:20px}.fig+.fig{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:20px}}
+
+/* Essai */
+.try{background:var(--mist)}
+.try-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;align-items:center;margin-top:36px}
+@media (max-width:900px){.try-grid{grid-template-columns:minmax(0,1fr);gap:28px}#livePhone{order:-1;width:min(230px,62vw);margin:0 auto}}
+.form{display:flex;flex-direction:column;gap:18px;min-width:0}
+.field>label,.field>span{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
+.field input{width:100%;font:500 18px var(--body);padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.field input:focus{outline:none;border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:600 15px var(--body);padding:10px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.swatches{display:flex;gap:10px}
+.swatches button{width:38px;height:38px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line);cursor:pointer;background:var(--g)}
+.swatches button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--accent)}
+.try-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.try-cta small{color:var(--muted);font-size:14px}
+.ds-tabs{display:flex;gap:6px;padding:10px 12px 0}
+.ds-tabs span{font-size:10px;font-weight:700;padding:5px 9px;border-radius:999px;background:#f4f1ee;color:#5b544f}
+.ds-tabs span:first-child{background:var(--c);color:#fff}
+
+/* Avant / après */
+.ba{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);background:var(--card);user-select:none;touch-action:pan-y;aspect-ratio:4/5;max-width:420px;width:100%;margin-inline:auto}
+.ba .pane{position:absolute;inset:0;padding:22px;display:flex;flex-direction:column;gap:12px;background:var(--card)}
+.ba .after{clip-path:inset(0 0 0 var(--x,50%))}
+.ba .lbl{position:absolute;top:14px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;z-index:2}
+.ba .before .lbl{left:14px;background:var(--line);color:var(--muted)}
+.ba .after .lbl{right:14px;background:var(--klein);color:#fff}
+.gm-photo{height:30%;border-radius:14px;background:var(--line);margin-top:30px}
+.after .gm-photo{background:linear-gradient(135deg,#2b2230,#8a5a7a 60%,#e7b7c8)}
+.gm-title{font-family:var(--display);font-size:20px;font-weight:700}
+.gm-stars{color:#E2A400;font-weight:700}
+.gm-btns{display:flex;gap:8px;flex-wrap:wrap}
+.gm-btns span{font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;background:var(--mist)}
+.after .gm-btns span{background:var(--encre);color:#fff}
+.gm-k{font-size:14px;color:var(--muted)}
+.handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:3px;background:var(--klein);z-index:3;transform:translateX(-50%)}
+.handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--klein);color:#fff;display:grid;place-items:center;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.ba input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;margin:0}
+.split p{color:var(--muted);max-width:32em}
+
+/* Étapes */
+.steps-wrap{background:var(--encre);color:#fff}
+.steps-wrap .eyebrow{color:var(--nuit)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:44px;padding:0;list-style:none;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:minmax(0,1fr)}}
+.steps li{border-top:1px solid rgba(255,255,255,.2);padding-top:22px;counter-increment:s}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--display);font-weight:800;font-size:44px;color:var(--nuit);display:block;line-height:1;margin-bottom:14px}
+.steps h3{font-size:21px;margin-bottom:8px}
+.steps p{opacity:.8;margin:0}
+
+/* Offre */
+.price-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:24px;margin-top:40px;align-items:start}
+@media (max-width:900px){.price-grid{grid-template-columns:minmax(0,1fr)}}
+.pack{background:var(--card);border:2px solid var(--ink);border-radius:28px;padding:clamp(24px,4vw,36px);position:relative}
+.pack .tag{position:absolute;top:-14px;left:28px;background:var(--klein);color:#fff;font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:5px 12px}
+.amount{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:12px 0 2px}
+.amount b{font-family:var(--display);font-size:clamp(52px,7vw,76px);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.amount span{color:var(--muted)}
+.monthly{font-weight:600}
+.pack ul{list-style:none;padding:0;margin:22px 0 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px}
+@media (max-width:560px){.pack ul{grid-template-columns:minmax(0,1fr)}}
+.pack li{padding-left:28px;position:relative}
+.pack li::before{content:"";position:absolute;left:2px;top:7px;width:14px;height:8px;border-left:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);transform:rotate(-45deg)}
+.guarantee{background:var(--mist);border-radius:16px;padding:16px 18px;font-weight:600}
+.side{display:flex;flex-direction:column;gap:14px}
+.box{border:1px solid var(--line);border-radius:22px;padding:22px;background:var(--card)}
+.box h3{font-size:18px;margin-bottom:6px}
+.box p{margin:0;color:var(--muted);font-size:15px}
+.box .p{font-weight:600;color:var(--ink);margin-top:10px;display:block}
+.box.roi{background:var(--encre);color:#fff;border-color:var(--encre)}
+.box.roi p{color:rgba(255,255,255,.75)}
+.box.roi b{font-family:var(--display);font-size:30px;display:block;color:#fff;line-height:1.1;margin-bottom:6px}
+.small{font-size:13px;color:var(--muted);margin-top:16px}
+
+/* Nous */
+.people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
+@media (max-width:560px){.people{grid-template-columns:minmax(0,1fr)}}
+.person{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:#fff;background:var(--klein)}
+.person .avatar{color:#fff;font-size:17px}
+.avatar.ink{background:var(--encre);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.person b{display:block;font-family:var(--display);font-size:18px;line-height:1.2}
+.person span{color:var(--muted);font-size:14px}
+
+/* FAQ */
+.faq{max-width:780px;margin-top:32px;display:flex;flex-direction:column;gap:10px}
+details{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:0 22px}
+summary{cursor:pointer;list-style:none;font-weight:600;font-size:18px;padding:18px 0;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--display);color:var(--accent);font-size:22px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin:0 0 20px;color:var(--muted)}
+
+/* Appel final */
+.final{background:var(--klein);color:#fff;border-radius:36px;padding:clamp(32px,6vw,72px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px;align-items:center}
+@media (max-width:900px){.final{grid-template-columns:minmax(0,1fr)}}
+.final h2{font-size:clamp(32px,5vw,56px)}
+.final p{font-size:18px;margin:16px 0 0;max-width:30em;opacity:.9}
+.direct{background:var(--encre);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.direct .btn{width:100%}
+.direct dl{margin:6px 0 0;display:grid;gap:10px}
+.direct dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.direct dd{margin:2px 0 0;font-weight:600;overflow-wrap:anywhere}
+.direct dd a{text-decoration:none;user-select:all}
+.direct dd a:hover{text-decoration:underline}
+
+/* Pied de page et barre mobile */
+footer{padding-block:40px;color:var(--muted);font-size:14px}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:underline}
+.mbar{display:none}
+@media (max-width:700px){.mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(14,17,22,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.mbar .btn{flex:1}footer{padding-bottom:110px}}
+</style>
+
+<header class="nav">
+ <div class="in">
+  <a class="logo" href="#top" aria-label="OONDE, haut de page"><i aria-hidden="true"></i>OONDE</a>
+  <nav aria-label="Sections"><a href="#essai">Essayer</a><a href="#methode">Comment ça marche</a><a href="#offre">Prix</a><a href="#faq">Questions</a></nav>
+  <a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}WhatsApp</a>
+ </div>
+</header>
+
+<main id="top">
+<div class="hero">
+ <canvas id="field" aria-hidden="true"></canvas>
+ <div class="glow" aria-hidden="true"></div>
+ <div class="in">
+  <div>
+   <span class="eyebrow">Site internet et fiche Google · La Côte</span>
+   <h1>Vos clients vous cherchent. <em>Qu'ils vous trouvent.</em></h1>
+   <p class="sub">On crée le site et la fiche Google des coiffeurs, garages, restaurants et artisans. Vous voyez votre maquette avant de payer quoi que ce soit.</p>
+   <div class="ctas">
+    <a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite sur WhatsApp</a>
+    <a class="btn btn-line" href="#offre">Voir le prix</a>
+   </div>
+   <ul class="promise"><li>Maquette en 48 heures</li><li>En ligne en 5 jours</li><li>Payé seulement si ça vous plaît</li></ul>
+   <p class="towns">Préverenges · Morges · Saint-Prex · Rolle · Gland · Nyon · Aubonne</p>
+  </div>
+  <div class="phone-wrap" aria-hidden="true">
+   <div class="phone"><div class="screen cycle">
+    <div class="demo" style="--c:#8a5a7a;--g:linear-gradient(150deg,#2b2230,#8a5a7a)">
+     <div class="ds-bar"><b>Salon Mirabelle</b><span>Appeler</span></div>
+     <div class="ds-hero"><small>Coiffure · Rolle</small><strong>Votre salon à Rolle.</strong><i>Coupes, couleurs et soins</i></div>
+     <div class="ds-rows"><div class="ds-row"><span>Coupe &amp; brushing</span><b>CHF 65</b></div><div class="ds-row"><span>Balayage</span><b>CHF 140</b></div><div class="ds-row"><span>Coupe homme</span><b>CHF 38</b></div></div>
+     <div class="ds-cta">Prendre rendez-vous</div>
+    </div>
+    <div class="demo" style="--c:#1f5f8b;--g:linear-gradient(150deg,#14212b,#1f5f8b)">
+     <div class="ds-bar"><b>Garage des Tilleuls</b><span>Devis</span></div>
+     <div class="ds-hero"><small>Garage · Gland</small><strong>Toutes marques, devis clair.</strong><i>Service, freins, pneus</i></div>
+     <div class="ds-rows"><div class="ds-row"><span>Service selon carnet</span><b>dès 290.–</b></div><div class="ds-row"><span>Changement de pneus</span><b>80.–</b></div><div class="ds-row"><span>Diagnostic</span><b>95.–</b></div></div>
+     <div class="ds-cta">Demander un devis</div>
+    </div>
+    <div class="demo" style="--c:#b4532a;--g:linear-gradient(150deg,#3a2419,#b4532a)">
+     <div class="ds-bar"><b>Trattoria Nonna Pia</b><span>Réserver</span></div>
+     <div class="ds-hero"><small>Restaurant · Morges</small><strong>Pâtes fraîches, au bord du lac.</strong><i>Midi et soir, terrasse</i></div>
+     <div class="ds-rows"><div class="ds-row"><span>Menu du jour</span><b>CHF 21.50</b></div><div class="ds-row"><span>Tagliatelle al ragù</span><b>CHF 26</b></div><div class="ds-row"><span>Tiramisu maison</span><b>CHF 9</b></div></div>
+     <div class="ds-cta">Réserver une table</div>
+    </div>
+   </div></div>
+  </div>
+ </div>
+</div>
+
+<section>
+ <div class="in">
+  <div class="split">
+   <div>
+    <span class="eyebrow">Le constat</span>
+    <h2 style="margin-top:12px">Un nouveau client choisit parmi ceux qu'il voit.</h2>
+    <p class="lede">Avant de venir, il tape « coiffeur Gland » ou « garage Morges » sur son téléphone. Il regarde les photos, les horaires, les prix, puis il appelle. Sans site ni fiche complète, il part chez le voisin, même si vous êtes meilleur.</p>
+   </div>
+   <div class="gbox" aria-label="Exemple de recherche Google">
+    <div class="gq">coiffeur gland<span class="caret" aria-hidden="true"></span></div>
+    <div class="res">
+     <div class="r"><div class="pic"></div><div><b>Salon avec site</b><small>4.8 ★ · Ouvert · Photos, prix</small></div><em>Site</em></div>
+     <div class="r"><div class="pic"></div><div><b>Autre salon avec site</b><small>4.6 ★ · Ouvert · Réservation</small></div><em>Site</em></div>
+     <div class="r ghost"><div class="pic"></div><div><b>Votre commerce</b><small>Pas de site · Fiche incomplète</small></div><em>Invisible</em></div>
+    </div>
+   </div>
+  </div>
+  <div class="figs">
+   <div class="fig"><b>93<small>%</small></b><p>des 5 premiers sur Google Maps ont un site relié à leur fiche</p></div>
+   <div class="fig"><b>100<small>%</small></b><p>des 5 premiers affichent leurs horaires</p></div>
+   <div class="fig"><b>1 200</b><p>fiches Google de garages, restaurants et coiffeurs analysées en Suisse romande</p></div>
+  </div>
+  <p class="src">Étude OONDE, septembre 2026 : 20 premiers résultats Google Maps par ville et par métier.</p>
+ </div>
+</section>
+
+<section class="try" id="essai">
+ <div class="in">
+  <span class="eyebrow">Essayez maintenant</span>
+  <h2 style="margin-top:12px">Votre site, en direct, en 10 secondes.</h2>
+  <p class="lede">Tapez le nom de votre commerce et choisissez votre métier. Si le résultat vous plaît, envoyez-le-nous : on prépare votre vraie maquette.</p>
+  <div class="try-grid">
+   <div class="form">
+    <div class="field"><label for="bName">Nom de votre commerce</label><input id="bName" type="text" maxlength="40" placeholder="Ex. Salon Mirabelle" autocomplete="organization"></div>
+    <div class="field"><span id="lTrade">Votre métier</span><div class="chips" id="bTrade" role="group" aria-labelledby="lTrade"></div></div>
+    <div class="field"><span id="lTown">Votre commune</span><div class="chips" id="bTown" role="group" aria-labelledby="lTown"></div></div>
+    <div class="field"><span id="lStyle">Votre style</span><div class="swatches" id="bStyle" role="group" aria-labelledby="lStyle"></div></div>
+    <div class="try-cta">
+     <a class="btn btn-wa" id="wantIt" href="{{WA}}" target="_blank" rel="noopener">{{WA_ICON}}Recevoir cette maquette</a>
+     <small>Gratuit et sans engagement. Le message part avec vos choix.</small>
+    </div>
+   </div>
+   <div class="phone" id="livePhone" aria-label="Aperçu de votre site"><div class="screen">
+    <div class="demo" id="live">
+     <div class="ds-bar"><b id="lName">Votre commerce</b><span id="lBtn">Appeler</span></div>
+     <div class="ds-hero"><small id="lTag">Coiffure · Rolle</small><strong id="lH">Votre salon à Rolle.</strong><i id="lSub">Coupes, couleurs et soins</i></div>
+     <div class="ds-tabs" id="lTabs"></div>
+     <div class="ds-rows" id="lRows"></div>
+     <div class="ds-info"><span id="lAddr">Rolle · Ouvert aujourd'hui</span><span>★ Avis Google</span></div>
+     <div class="ds-cta" id="lCta">Prendre rendez-vous</div>
+    </div>
+   </div></div>
+  </div>
+ </div>
+</section>
+
+<section id="google">
+ <div class="in split">
+  <div>
+   <span class="eyebrow">Fiche Google Maps</span>
+   <h2 style="margin-top:12px">Le même salon. Deux fiches très différentes.</h2>
+   <p style="margin-top:18px">Glissez le curseur. À gauche, une fiche comme on en voit beaucoup : pas de photo, pas d'horaires, pas de lien. À droite, celle que nous configurons avec votre site.</p>
+   <p>C'est aussi ce que lisent ChatGPT et les autres assistants quand on leur demande « un bon coiffeur à Rolle ».</p>
+  </div>
+  <div class="ba" id="ba">
+   <div class="pane before"><span class="lbl">Avant</span><div class="gm-photo"></div><div class="gm-title">Salon Mirabelle</div><div class="gm-k">Aucun avis · Coiffeur · Horaires inconnus</div><div class="gm-k">Pas de prestations ni de prix</div><div class="gm-btns"><span>Itinéraire</span></div><div class="gm-k">Grand-Rue 12, Rolle · pas de site</div></div>
+   <div class="pane after"><span class="lbl">Après</span><div class="gm-photo"></div><div class="gm-title">Salon Mirabelle</div><div class="gm-k"><span class="gm-stars">4.9 ★★★★★</span> · Coiffeur · Ouvert jusqu'à 18:30</div><div class="gm-k">Coupe dès CHF 38 · Balayage · Soins</div><div class="gm-btns"><span>Appeler</span><span>Itinéraire</span><span>Site web</span></div><div class="gm-k">Grand-Rue 12, Rolle · salon-mirabelle.ch</div></div>
+   <div class="handle"></div>
+   <input type="range" min="0" max="100" value="50" id="baRange" aria-label="Comparer la fiche avant et après">
+  </div>
+ </div>
+</section>
+
+<div class="steps-wrap" id="methode">
+<section>
+ <div class="in">
+  <span class="eyebrow">Comment ça marche</span>
+  <h2 style="margin-top:12px;max-width:16ch">Vous voyez votre site avant de dire oui.</h2>
+  <ol class="steps">
+   <li><h3>Un message WhatsApp</h3><p>Vous nous envoyez le nom de votre commerce. C'est tout. On regarde votre fiche Google et ce que font vos concurrents.</p></li>
+   <li><h3>Votre maquette en 48 heures</h3><p>On vous envoie une maquette de votre site, à votre nom, sur votre téléphone. Gratuitement, sans engagement.</p></li>
+   <li><h3>En ligne en 5 jours</h3><p>Si elle vous plaît, vous nous envoyez photos, prix et horaires. On s'occupe du reste. Vous payez à la mise en ligne.</p></li>
+  </ol>
+ </div>
+</section>
+</div>
+
+<section id="offre">
+ <div class="in">
+  <span class="eyebrow">Le prix</span>
+  <h2 style="margin-top:12px">Un prix clair, sans surprise.</h2>
+  <div class="price-grid">
+   <div class="pack">
+    <span class="tag">Pack OONDE</span>
+    <h3 style="font-size:22px">Site + fiche Google</h3>
+    <div class="amount"><b>490.–</b><span>CHF, une seule fois</span></div>
+    <div class="monthly">puis 20.– CHF par mois, résiliable chaque mois</div>
+    <ul>
+     <li>Site rapide, pensé pour le téléphone</li>
+     <li>Bouton pour appeler ou écrire sur WhatsApp</li>
+     <li>Vos prestations, prix et horaires</li>
+     <li>Plan d'accès et adresse</li>
+     <li>Fiche Google Maps complète</li>
+     <li>Textes rédigés pour vous</li>
+     <li>Nom de domaine à votre nom et hébergement</li>
+     <li>Petites modifications comprises</li>
+    </ul>
+    <div class="guarantee">Vous payez seulement si le site vous plaît. Sinon, vous ne devez rien.</div>
+   </div>
+   <div class="side">
+    <div class="box roi"><b>3 clients</b><p>Si un client vous rapporte 300 CHF par an, trois nouveaux clients suffisent à payer toute la première année (490 + 12 × 20 = 730 CHF).</p></div>
+    <div class="box"><h3>Suivi Google</h3><p>On vous aide à récolter des avis, on publie sur votre fiche et vous recevez un rapport chaque mois.</p><span class="p">50.– CHF / mois, en option</span></div>
+   </div>
+  </div>
+  <p class="small">Prix en francs suisses. OONDE n'est pas assujetti à la TVA. Conditions détaillées dans nos <a href="conditions.html">conditions générales</a>.</p>
+ </div>
+</section>
+
+<section id="nous" style="padding-top:0">
+ <div class="in split">
+  <div>
+   <span class="eyebrow">Qui sommes-nous</span>
+   <h2 style="margin-top:12px">Deux associés d'ici, joignables directement.</h2>
+   <p class="lede">Pas de centre d'appel ni de sous-traitant : vous parlez à ceux qui font votre site. On travaille entre Lausanne et Genève et on peut passer vous voir.</p>
+  </div>
+  <div class="people">
+   <div class="person"><span class="avatar">AS</span><div><b>Alexandre Steudler</b><span>Co-fondateur</span></div></div>
+   <div class="person"><span class="avatar ink">SD</span><div><b>Serhat Dogar</b><span>Co-fondateur</span></div></div>
+  </div>
+ </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+ <div class="in">
+  <span class="eyebrow">Questions</span>
+  <h2 style="margin-top:12px">Ce qu'on nous demande souvent.</h2>
+  <div class="faq">
+   <details><summary>Je dois faire quelque chose ?</summary><p>Presque rien. Vous envoyez quelques photos et vos infos par WhatsApp. On écrit les textes et on s'occupe de la mise en ligne et de Google.</p></details>
+   <details><summary>Et si le site ne me plaît pas ?</summary><p>Vous ne payez rien. Vous voyez la maquette, puis le site terminé, et vous payez seulement s'il vous plaît.</p></details>
+   <details><summary>À qui appartient le site ?</summary><p>À vous. Le nom de domaine est à votre nom, et vos textes et photos restent à vous. Si vous arrêtez, on vous remet tout gratuitement.</p></details>
+   <details><summary>Il y a un engagement ?</summary><p>Non. Les 20.– par mois couvrent l'hébergement, le nom de domaine et les petites modifications. Vous pouvez arrêter à la fin de chaque mois.</p></details>
+   <details><summary>Vous garantissez la première place sur Google ?</summary><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : fiche complète, bonne catégorie, horaires, site relié et avis.</p></details>
+   <details><summary>J'ai déjà une page Facebook ou Instagram.</summary><p>Parfait, on la relie à votre site. Mais Google affiche d'abord les sites et les fiches complètes : c'est là que les nouveaux clients vous trouvent.</p></details>
+  </div>
+ </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+ <div class="in">
+  <div class="final">
+   <div>
+    <h2>Votre maquette, gratuitement, en 48 heures.</h2>
+    <p>Envoyez-nous le nom de votre commerce sur WhatsApp. On vous répond le jour même, et si la maquette ne vous plaît pas, vous ne nous devez rien.</p>
+   </div>
+   <div class="direct">
+    <a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Écrire sur WhatsApp</a>
+    <dl>
+     <div><dt>WhatsApp ou téléphone</dt><dd><a href="tel:+41764882710">+41 76 488 27 10</a></dd></div>
+     <div><dt>Email</dt><dd><a href="mailto:oonde.signal@gmail.com">oonde.signal@gmail.com</a></dd></div>
+     <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/oonde.studio" target="_blank" rel="noopener">@oonde.studio</a></dd></div>
+    </dl>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+
+<div class="mbar"><a class="btn btn-wa" href="{{WA}}" data-wa target="_blank" rel="noopener">{{WA_ICON}}Ma maquette gratuite</a></div>
+<footer><div class="in">
+ <span><b style="color:var(--ink)">● OONDE</b> · Sites internet et fiches Google pour les commerces de La Côte · © 2026</span>
+ <nav aria-label="Informations légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav>
+</div></footer>
+
+<script>
+const WA_NUM='41764882710';
+const wa=t=>'https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(t);
+const T={
+ coiffure:{label:'Coiffure',btn:'Appeler',h:'Votre salon à {t}.',sub:'Coupes, couleurs et soins',tabs:['Prestations','Équipe','Accès'],rows:[['Coupe & brushing','CHF 65'],['Balayage','CHF 140'],['Coupe homme','CHF 38']],cta:'Prendre rendez-vous',styles:[['#8a5a7a','#2b2230'],['#c0607a','#3a1a24'],['#3d6b6b','#162626']]},
+ garage:{label:'Garage',btn:'Devis',h:'Votre garage de confiance à {t}.',sub:'Service, freins, pneus',tabs:['Services','Tarifs','Accès'],rows:[['Service selon carnet','dès 290.–'],['Changement de pneus','80.–'],['Diagnostic','95.–']],cta:'Demander un devis',styles:[['#1f5f8b','#14212b'],['#c2412d','#2a1410'],['#3c4a55','#111518']]},
+ restaurant:{label:'Restaurant',btn:'Réserver',h:'Une bonne table à {t}.',sub:'Midi et soir, terrasse',tabs:['Carte','Menu du jour','Réserver'],rows:[['Menu du jour','CHF 21.50'],['Filets de perche','CHF 34'],['Dessert maison','CHF 9']],cta:'Réserver une table',styles:[['#b4532a','#3a2419'],['#2f6b4f','#132a20'],['#7a2e3b','#2a1015']]},
+ beaute:{label:'Institut de beauté',btn:'Réserver',h:'Prenez soin de vous à {t}.',sub:'Visage, épilation, manucure',tabs:['Soins','Tarifs','Accès'],rows:[['Soin du visage','CHF 95'],['Manucure','CHF 55'],['Épilation jambes','CHF 60']],cta:'Réserver un soin',styles:[['#9a6b4f','#2e2420'],['#b0708a','#2c1820'],['#5f7d6e','#1a2520']]},
+ artisan:{label:'Artisan',btn:'Devis',h:'Des travaux bien faits à {t}.',sub:'Peinture, rénovation, dépannage',tabs:['Réalisations','Services','Contact'],rows:[['Devis gratuit','sous 48 h'],['Rénovation','sur mesure'],['Dépannage','7j/7']],cta:'Demander un devis',styles:[['#b07a1f','#2a1e0a'],['#2d5d7b','#10202b'],['#556b2f','#1a2010']]},
+ boulangerie:{label:'Boulangerie',btn:'Commander',h:'Le bon pain, chaque matin à {t}.',sub:'Pains, pâtisseries, tea-room',tabs:['Produits','Commandes','Horaires'],rows:[['Pain du jour','dès 3.80'],['Croissant','1.90'],['Gâteau sur commande','dès 35.–']],cta:'Commander un gâteau',styles:[['#a0682a','#33240f'],['#b35c4a','#2e1712'],['#6b5a3a','#221c10']]}
+};
+const TOWNS=['Préverenges','Morges','Saint-Prex','Rolle','Gland','Nyon','Aubonne'];
+const st={trade:'coiffure',town:'Rolle',style:0,name:''};
+const $=id=>document.getElementById(id);
+function esc(x){return String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function chips(el,items,key){el.innerHTML=items.map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${st[key]===v}">${l}</button>`).join('');
+ el.onclick=e=>{const b=e.target.closest('button');if(!b)return;st[key]=b.dataset.v;if(key==='trade')st.style=0;draw()}}
+function draw(){
+ const t=T[st.trade],[c,d]=t.styles[st.style];
+ chips($('bTrade'),Object.entries(T).map(([k,v])=>[k,v.label]),'trade');
+ chips($('bTown'),TOWNS.map(x=>[x,x]),'town');
+ $('bStyle').innerHTML=t.styles.map(([a,b],i)=>`<button type="button" aria-label="Style ${i+1}" aria-pressed="${i===st.style}" style="--g:linear-gradient(135deg,${b},${a})" data-i="${i}"></button>`).join('');
+ const live=$('live');live.style.setProperty('--c',c);live.style.setProperty('--g',`linear-gradient(150deg,${d},${c})`);
+ $('lName').textContent=st.name||'Votre commerce';
+ $('lBtn').textContent=t.btn;$('lTag').textContent=`${t.label} · ${st.town}`;
+ $('lH').textContent=t.h.replace('{t}',st.town);$('lSub').textContent=t.sub;
+ $('lTabs').innerHTML=t.tabs.map(x=>`<span>${x}</span>`).join('');
+ $('lRows').innerHTML=t.rows.map(([a,b])=>`<div class="ds-row"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join('');
+ $('lAddr').textContent=`${st.town} · Ouvert aujourd'hui`;$('lCta').textContent=t.cta;
+ $('wantIt').href=wa(`Bonjour OONDE, je voudrais ma maquette gratuite.\nCommerce : ${st.name||'(nom à préciser)'}\nMétier : ${t.label}\nCommune : ${st.town}\nStyle : ${st.style+1}`);
+ try{localStorage.setItem('oonde-essai',JSON.stringify(st))}catch(e){}
+}
+$('bStyle').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.style=+b.dataset.i;draw()};
+$('bName').addEventListener('input',e=>{st.name=e.target.value.trim();draw()});
+try{Object.assign(st,JSON.parse(localStorage.getItem('oonde-essai')||'{}'));$('bName').value=st.name||''}catch(e){}
+if(!T[st.trade])st.trade='coiffure';if(!TOWNS.includes(st.town))st.town='Rolle';
+draw();
+
+/* Champ de points « Signal » */
+(()=>{const c=$('field');const x=c.getContext('2d');const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let W,H,mx=-9999,my=-9999,t=0,vis=true;const G=26;
+function size(){const dpr=Math.min(devicePixelRatio||1,2);W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);draw()}
+function draw(){x.clearRect(0,0,W,H);
+ for(let y=G/2;y<H;y+=G)for(let px=G/2;px<W;px+=G){
+  const w=Math.sin((px+y)*.011-t*1.1)*.5+.5,h=Math.max(0,1-Math.hypot(px-mx,y-my)/170);
+  x.globalAlpha=Math.min(1,.07+w*.16+h*.55);x.fillStyle=h>.05?'#8B9BFF':'#5D6FD9';
+  x.beginPath();x.arc(px,y,.7+w*1.4+h*2,0,6.283);x.fill()}
+ x.globalAlpha=1}
+function loop(){if(vis){t+=.016;draw()}requestAnimationFrame(loop)}
+size();addEventListener('resize',size);
+const hero=c.parentElement;hero.addEventListener('pointermove',e=>{const b=c.getBoundingClientRect();mx=e.clientX-b.left;my=e.clientY-b.top});hero.addEventListener('pointerleave',()=>{mx=my=-9999});
+new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(c);
+if(!RM)loop();})();
+
+/* Avant / après */
+(()=>{const r=$('baRange'),b=$('ba');const set=()=>b.style.setProperty('--x',r.value+'%');r.addEventListener('input',set);set();})();
+</script>
