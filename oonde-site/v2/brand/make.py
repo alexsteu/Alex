@@ -35,8 +35,9 @@ def svg(body, vb='0 0 100 100'):
 out = {
  'logo.svg': logo(INK, LAC), 'logo-white.svg': logo('#FFFFFF', LAC), 'logo-mono.svg': logo(INK, INK), 'logo-mono-white.svg': logo('#FFFFFF', '#FFFFFF'),
  'mark.svg': svg(mark(INK, LAC)), 'mark-white.svg': svg(mark('#FFFFFF', LAC)),
- 'avatar.svg': svg(f'<rect width="100" height="100" fill="{INK}"/>' + mark('#FFFFFF', LAC)),
- 'avatar-light.svg': svg(f'<rect width="100" height="100" fill="{PAPER}"/>' + mark(INK, LAC)),
+ # Avatars : le signe un peu réduit, pour qu'il reste entier une fois rogné en rond par Instagram ou WhatsApp.
+ 'avatar.svg': svg(f'<rect width="100" height="100" fill="{INK}"/><g transform="translate(50 50) scale(.82) translate(-50 -50)">' + mark('#FFFFFF', LAC) + '</g>'),
+ 'avatar-light.svg': svg(f'<rect width="100" height="100" fill="{PAPER}"/><g transform="translate(50 50) scale(.82) translate(-50 -50)">' + mark(INK, LAC) + '</g>'),
  'favicon.svg': f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="{INK}"/><circle cx="16" cy="16" r="9" fill="none" stroke="#FFFFFF" stroke-width="2.6"/><circle cx="16" cy="16" r="3.6" fill="{LAC}"/></svg>',
 }
 for k, v in out.items(): (D / k).write_text(v)
