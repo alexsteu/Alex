@@ -35,6 +35,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         s = fill(s, fonts)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         (o / f'{k}.html').write_text(full(s) if (wrap or k != 'index') else s)
+    shutil.copytree(D / 'img', o / 'img')
     if wrap:
         (o / 'fonts').mkdir()
         for f, p, ws in FACES:
