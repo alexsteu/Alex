@@ -1,148 +1,225 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr-CH">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111318">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta charset="utf-8">
-<title>OONDE · Sites immersifs et sites vitrines, de Genève à Montreux</title>
-<meta name="description" content="OONDE conçoit des sites immersifs, où l'on entre dans votre lieu en faisant défiler, et des sites vitrines reliés à votre fiche Google. Pour les commerces de Genève à Montreux. Maquette gratuite avant tout paiement.">
+<title>Site internet pour commerces, de Genève à Montreux · OONDE</title>
+<meta name="description" content="Site vitrine relié à votre fiche Google, 490.– une fois, ou site immersif de votre lieu. Maquette gratuite en 48 h. Commerces de Genève à Montreux.">
+<link rel="canonical" href="https://oonde.ch/">
 <meta property="og:title" content="OONDE · Des sites où vos clients entrent avant de venir">
-<meta property="og:description" content="Sites immersifs et sites vitrines reliés à Google, pour les commerces de Genève à Montreux. Maquette gratuite avant tout paiement.">
+<meta property="og:description" content="Site vitrine relié à Google pour 490.–, ou site immersif de votre lieu. Maquette gratuite en 48 h, de Genève à Montreux.">
+<meta property="og:url" content="https://oonde.ch/">
 <meta property="og:image" content="https://oonde.ch/img/og.png">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_CH">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Studio web indépendant. Sites vitrines reliés à la fiche Google et sites immersifs pour les commerces et les lieux, de Genève à Montreux.","url":"https://oonde.ch/","telephone":"+41764882710","image":"https://oonde.ch/img/og.png","logo":"https://oonde.ch/favicon.svg","priceRange":"CHF 490 – sur devis","currenciesAccepted":"CHF","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"founder":[{"@type":"Person","name":"Alexandre Steudler","jobTitle":"Co-fondateur, site et Google"},{"@type":"Person","name":"Serhat Dogar","jobTitle":"Co-fondateur, photos, vidéos et suivi"}],"sameAs":["https://www.instagram.com/oonde.studio"],"contactPoint":{"@type":"ContactPoint","contactType":"sales","telephone":"+41764882710","url":"https://wa.me/41764882710","availableLanguage":"fr"},"makesOffer":[{"@type":"Offer","name":"Site vitrine relié à la fiche Google","price":"490","priceCurrency":"CHF","url":"https://oonde.ch/#prix","itemOffered":{"@type":"Service","name":"Site vitrine + fiche Google","serviceType":"Création de site internet","areaServed":"De Genève à Montreux"}},{"@type":"Offer","name":"Site immersif","url":"https://oonde.ch/#immersif","priceSpecification":{"@type":"PriceSpecification","priceCurrency":"CHF","description":"Sur devis, prix et délai sous 48 heures"},"itemOffered":{"@type":"Service","name":"Site immersif","serviceType":"Création de site internet immersif","areaServed":"De Genève à Montreux"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
 <style>@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}</style>
-<script>document.documentElement.classList.add('js')</script>
+<script>document.documentElement.classList.add('js');if(matchMedia('(hover: none)').matches)document.documentElement.classList.add('touch')</script>
 <style>
-/* v6 : fond clair, grille suisse, une seule famille de caractères. Le travail montré en grand, peu de décor. */
+/* v8 : papier, encre, un accent. Peu de choses, chaque détail réglé. Grille 1 144 px, filets 1 px, rayons 8/10/14. */
 :root{
  --paper:#F7F7F4;--ink:#111318;--muted:#6B7078;--soft:#3A3F47;--line:#DCDED8;--card:#FFFFFF;--klein:#2038EC;--wa:#14803C;
+ --pad:clamp(20px,4vw,48px);
  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
  --ease:cubic-bezier(.22,.61,.2,1);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:80px;color-scheme:light}
+html{scroll-padding-top:84px;color-scheme:light}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (max-width:700px){html{scroll-padding-bottom:90px}}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+@media (max-width:760px){body{font-size:16px;line-height:1.5}}
 img,video{display:block;max-width:100%}
 a{color:inherit}
 button{font:inherit;color:inherit}
-p{margin:0}
-.in{max-width:1240px;margin:0 auto;padding-inline:clamp(20px,4vw,48px)}
-h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
-h2{font-size:clamp(34px,4.4vw,56px)}
-h3{font-size:clamp(22px,2.2vw,28px);letter-spacing:-.02em;line-height:1.12}
-.mono{font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
+p{margin:0;text-wrap:pretty}
+.in{max-width:1240px;margin:0 auto;padding-inline:var(--pad)}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
+h2{font-size:clamp(32px,4.2vw,54px);max-width:18ch}
+h3{font-size:clamp(21px,2.1vw,26px);letter-spacing:-.02em;line-height:1.12}
+.mono{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{padding-block:clamp(48px,7vw,96px);border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid var(--klein);outline-offset:3px}
-.js .rv{opacity:0;transform:translateY(12px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.js .rv.on{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}*{animation:none!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:12px;top:12px;z-index:40;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;text-decoration:none;transform:translateY(-200%)}
+.skip:focus-visible{transform:none}
+.sec-head{margin-bottom:clamp(28px,4vw,48px)}
+.sec-head p{margin-top:14px;max-width:40em;color:var(--muted);font-size:18px}
 
-/* Boutons : encre, une seule forme */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 15px var(--sans);text-decoration:none;border-radius:10px;padding:14px 20px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background .25s,transform .25s var(--ease);cursor:pointer;white-space:nowrap}
+/* Boutons : encre, une seule forme ; le mouvement se limite aux changements d'état (120 ms) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 15px var(--sans);text-decoration:none;border-radius:10px;padding:14px 20px;min-height:48px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap}
 .btn:hover{background:#262B33}
 .btn svg{flex:none;color:#5ED489}
 .btn.light{background:var(--card);color:var(--ink);border-color:var(--line)}
 .btn.light:hover{border-color:var(--ink);background:var(--card)}
-.lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--klein);padding-bottom:1px}
-.lnk:hover{color:var(--klein)}
+.btn.light svg{color:var(--wa)}
+.lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:1px}
+.lnk:hover{color:var(--klein);border-color:var(--klein)}
 
-/* En-tête */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,247,244,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+/* En-tête fixe : le logo arrive avec l'entrée */
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);backdrop-filter:saturate(1.1) blur(10px);-webkit-backdrop-filter:saturate(1.1) blur(10px);border-bottom:1px solid var(--line)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--ink)}
 .logo svg{height:22px;width:auto;display:block}
+.js .nav .logo:not(.landed){visibility:hidden}
 .nav nav{display:flex;gap:26px;font-size:15px}
-.nav nav a{text-decoration:none;color:var(--muted)}.nav nav a:hover{color:var(--ink)}
-.nav .btn{padding:10px 14px;font-size:14px}
-@media (max-width:860px){.nav nav{display:none}}
+.nav nav a{text-decoration:none;color:var(--muted);padding:12px 0}.nav nav a:hover{color:var(--ink)}
+.nav .btn{padding:10px 14px;font-size:14px;min-height:40px;transition:opacity .2s,background-color .12s}
+.nav .btn .s{display:none}
+@media (max-width:860px){.nav nav a:not(.keep){display:none}}
+@media (max-width:700px){.nav .in{height:56px}.logo svg{height:20px}.nav .btn .l{display:none}.nav .btn .s{display:inline}.e-cta .nav .btn,.mbar-on .nav .btn{opacity:0;pointer-events:none}}
 
-/* Cadres : navigateur et téléphone, clairs */
+/* Le fil : un trait dans la marge, le point marque où l'on est. Ordinateur large seulement. */
+.fil{display:none}
+@media (min-width:1280px){
+ .js .fil{display:block;position:fixed;top:0;bottom:0;left:max(24px,calc((100vw - 1144px) / 2 - 48px));width:1px;background:var(--line);z-index:15;opacity:0;transition:opacity .3s;pointer-events:none}
+ .js .fil.on{opacity:1}
+ .fil i{position:absolute;left:-4.5px;top:38vh;width:10px;height:10px;border-radius:50%;background:var(--klein);margin-top:-5px}
+ .fil .stops{position:absolute;left:0;top:0;will-change:transform}
+ .fil a{position:absolute;left:0;height:1px;display:flex;align-items:center;gap:10px;text-decoration:none;font:500 13px var(--mono);letter-spacing:.06em;color:var(--muted);white-space:nowrap;pointer-events:auto;transition:color .2s}
+ .fil a::before{content:"";width:8px;height:1px;background:var(--line);flex:none}
+ .fil a:hover{color:var(--ink)}
+ .fil a.cur{color:var(--klein)}
+}
+
+/* Entrée : on avance dans l'onde en faisant défiler ; le point au bout devient le logo, qui rejoint la barre. */
+.entry{position:relative;border-top:0;padding:0}
+.js .entry:not(.still){height:200vh}
+.entry .stage{position:relative;height:100vh;height:100svh;overflow:hidden}
+.js .entry:not(.still) .stage{position:sticky;top:0}
+#onde{position:absolute;inset:0;width:100%;height:100%;display:block}
+.e-ui{position:absolute;inset:0;pointer-events:none}
+.e-ui .in{height:100%;position:relative}
+.e-kick{position:absolute;left:var(--pad);right:var(--pad);top:92px}
+.e-hint{position:absolute;right:var(--pad);bottom:36px;display:flex;align-items:center;gap:12px;font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.e-hint i{display:block;width:1px;height:44px;background:var(--line);position:relative;overflow:hidden}
+.e-hint i::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:var(--ink);animation:ehint 1.6s var(--ease) infinite}
+@keyframes ehint{to{top:110%}}
+.e-bottom{position:absolute;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,56px);display:flex;flex-direction:column;gap:clamp(18px,3vh,28px)}
+.e-title{font-size:clamp(40px,6.4vw,92px);max-width:12ch;line-height:1}
+.e-title .w{display:inline-block}
+.js .entry:not(.still) .e-title .w{opacity:0;transform:translateY(.3em);filter:blur(12px);will-change:transform,opacity,filter}
+.e-end{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:20px 32px;align-items:end}
+.js .entry:not(.still) .e-end{opacity:0;transform:translateY(12px);visibility:hidden}
+.e-end .sub{font-size:clamp(16px,1.35vw,19px);max-width:32em;color:var(--soft)}
+.e-end .ctas{pointer-events:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.e-end .ctas div{display:flex;gap:12px 22px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.e-end small{font-size:13px;color:var(--muted)}
+.e-logo{position:fixed;left:0;top:0;height:0;opacity:0;pointer-events:none;z-index:21;will-change:left,top,height}
+.e-logo svg{display:block;height:100%;width:auto;color:var(--ink)}
+.entry.still .stage{height:auto;min-height:0;padding:clamp(120px,18vh,180px) 0 clamp(40px,7vh,72px)}
+.entry.still #onde,.entry.still .e-hint,.entry.still .e-logo{display:none}
+.entry.still .e-ui,.entry.still .e-kick,.entry.still .e-bottom{position:static}
+.entry.still .e-kick{margin-bottom:22px}
+@media (max-width:760px){
+ .js .entry:not(.still){height:180vh}
+ .e-kick{top:84px}
+ .e-title{font-size:clamp(40px,11.5vw,56px);max-width:11ch}
+ .e-end{grid-template-columns:minmax(0,1fr);gap:16px}
+ .e-end .ctas{align-items:flex-start}
+ .e-end .ctas div{justify-content:flex-start}
+ .e-hint{bottom:24px}.e-hint span{display:none}
+ .e-bottom{bottom:24px}
+}
+@media (max-width:345px){.mbar span{display:none}}   /* très petit écran : le bouton seul, le prix est juste au-dessus dans la page */
+@media (prefers-reduced-motion:reduce){.e-hint i::after{animation:none}*{transition:none!important}}
+
+/* La démo : un cadre de navigateur, la visite, un point Klein qui suit */
 .frame{border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 80px -30px rgba(17,19,24,.35);overflow:hidden}
 .fbar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line);background:#FBFBF9}
 .fbar i{width:10px;height:10px;border-radius:50%;background:#E3E5E0}
-.fbar span{margin-left:12px;flex:1;font:500 12px var(--mono);color:var(--muted);background:#F1F2EE;border-radius:6px;padding:5px 12px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fbar span{margin-left:12px;flex:1;font:500 13px var(--mono);color:#5C6169;background:#F1F2EE;border-radius:6px;padding:5px 12px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fview{position:relative;aspect-ratio:16/10;background:#0E1116;overflow:hidden}
 .fview>video,.fview>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.scrub{position:absolute;top:12px;bottom:12px;right:8px;width:4px;border-radius:4px;background:rgba(255,255,255,.22)}
-.scrub i{position:absolute;left:0;right:0;top:0;height:14%;border-radius:4px;background:#fff}
-.phone{border-radius:34px;background:#111;padding:8px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);aspect-ratio:9/19.2;position:relative;flex:none}
-.phone::before{content:"";position:absolute;top:16px;left:50%;transform:translateX(-50%);width:30%;height:18px;border-radius:18px;background:#111;z-index:5}
-.screen{border-radius:27px;overflow:hidden;height:100%;position:relative;background:#fff}
-.screen>video{width:100%;height:100%;object-fit:cover}
-
-/* Hero : le titre, puis le site immersif en grand */
-.hero{padding:clamp(40px,7vw,88px) 0 0;border-top:0}
-.hero h1{font-size:clamp(42px,7.2vw,104px);max-width:13ch;margin-top:18px}
-.hero h1 em{font-style:normal;color:var(--klein)}
-.hero-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px;align-items:end;margin-top:36px}
-.hero .sub{font-size:clamp(17px,1.5vw,20px);max-width:34em;color:var(--soft)}
-.ctas{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:flex-end}
-@media (max-width:760px){.hero-row{grid-template-columns:minmax(0,1fr);gap:22px;margin-top:26px}.ctas{justify-content:flex-start}}
-.show{margin:clamp(36px,5vw,64px) auto 0;max-width:1140px}
+.scrub{position:absolute;top:14px;bottom:24px;right:12px;width:1px;background:rgba(255,255,255,.35)}
+.scrub i{position:absolute;left:-4.5px;top:0;width:10px;height:10px;border-radius:50%;background:var(--klein)}
+.pp{position:absolute;left:12px;bottom:12px;width:44px;height:44px;border-radius:50%;background:rgba(17,19,24,.72);border:1px solid rgba(255,255,255,.28);color:#fff;display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .2s;padding:0}
+.fview:hover .pp,.pp:focus-visible,.touch .pp{opacity:1}
+.pp svg{width:14px;height:14px;fill:currentColor;display:block}
+.pp .ic-pause,.pp[aria-pressed="true"] .ic-play{display:block}
+.pp .ic-play,.pp[aria-pressed="true"] .ic-pause{display:none}
+.go{position:absolute;inset:0;display:none;place-items:center;background:rgba(10,12,16,.2);color:#fff;border:0;cursor:pointer;font:600 15px var(--sans);padding:0}
+.touch .go{display:grid}
+.go[hidden]{display:none}
+.go span{display:inline-flex;align-items:center;gap:10px;background:rgba(17,19,24,.82);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:12px 18px}
+.go svg{width:14px;height:14px;fill:currentColor}
+.show{margin:0 auto;max-width:1140px}
 .show figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:14px;font-size:14px;color:var(--muted)}
 .show figcaption b{color:var(--ink);font-weight:600}
-.hero .in>.show{padding-bottom:clamp(48px,6.5vw,88px)}
+.cap{font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.cap i{width:8px;height:8px;border-radius:50%;background:var(--klein);flex:none}
+#immersif{border-top:0;padding-top:0}
 
-/* Offres : trois rangées numérotées */
-.sec-head{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start;margin-bottom:clamp(28px,4vw,48px)}
-.sec-head .num{font:500 13px var(--mono);color:var(--klein);padding-top:14px}
-.sec-head p{margin-top:14px;max-width:40em;color:var(--muted);font-size:18px}
-@media (max-width:600px){.sec-head{grid-template-columns:minmax(0,1fr);gap:8px}.sec-head .num{padding:0}}
-.row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,72px);align-items:start}
-@media (max-width:860px){.row{grid-template-columns:minmax(0,1fr)}}
-.txt{display:flex;flex-direction:column;gap:22px;font-size:17px;color:var(--soft)}
-.txt h3{color:var(--ink)}
+/* Rangée texte / encadré */
+.row{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,6vw,88px);align-items:start;margin-top:clamp(40px,5vw,64px)}
+@media (max-width:860px){.row{grid-template-columns:minmax(0,1fr);gap:28px}}
+.txt{display:flex;flex-direction:column;gap:22px;color:var(--soft)}
+.txt h2{color:var(--ink)}
+.txt .lede{color:var(--muted);font-size:18px;max-width:40em;margin-top:-6px}
 .specs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);color:var(--ink)}
-.specs li{padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:baseline;font-size:16px}
-.specs li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--klein);flex:none;transform:translateY(-2px)}
+.specs li{padding:12px 0;border-bottom:1px solid var(--line);font-size:16px}
+.side{display:flex;flex-direction:column;gap:18px;border:1px solid var(--line);border-radius:14px;padding:clamp(22px,2.6vw,32px);background:var(--card)}
+.side h3{font-size:19px}
+.side p{font-size:15.5px;color:var(--muted)}
 .pricebox{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;color:var(--ink)}
 .pricebox b{font-size:clamp(34px,3.4vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 .pricebox span{color:var(--muted);font-size:15px}
 .act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
 .act small{font-size:13.5px;color:var(--muted);line-height:1.4}
-.fact{border-left:2px solid var(--klein);padding-left:16px;font-size:15px;color:var(--muted)}
-.fact b{color:var(--ink);font-weight:600}
-.stills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.stills figure{margin:0;min-width:0}
-.stills figure:first-child{grid-column:1/-1}
-.stills img{border-radius:12px;border:1px solid var(--line);aspect-ratio:16/9;object-fit:cover;width:100%;height:auto;background:#E6E7E2}
-.stills figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
-.stills figcaption b{color:var(--ink);font-weight:600}
 
-/* Configurateur et aperçu du site type */
-.cfg{display:flex;flex-direction:column;gap:18px;border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--card)}
-.cfg label,.cfg .lab{display:block;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.cfg input{width:100%;font:500 17px var(--sans);padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+/* L'outil : métier, commune, nom, couleur ; l'aperçu à droite, le prix dessous */
+.tool{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,64px);align-items:start}
+@media (max-width:860px){.tool{grid-template-columns:minmax(0,1fr);gap:28px}}
+.cfg{display:flex;flex-direction:column;gap:20px;border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--card)}
+.cfg label,.cfg .lab{display:block;font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.cfg input{width:100%;font:500 17px var(--sans);padding:12px 14px;min-height:46px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
 .cfg input:focus{outline:none;border-color:var(--ink)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips button{font-weight:500;font-size:14px;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;transition:border-color .2s}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font-weight:500;font-size:14px;padding:9px 14px;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;transition:border-color .12s,background-color .12s,color .12s}
 .chips button:hover{border-color:var(--ink)}
-.chips button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
-.swatches{display:flex;gap:8px}
-.swatches button{width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);background:var(--g);cursor:pointer}
-.swatches button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
-.cfg-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start}
-@media (max-width:520px){.cfg-row{grid-template-columns:minmax(0,1fr)}}
-.vt{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.chips button[aria-checked="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.swatches{display:flex;gap:10px}
+.swatches button{width:40px;height:40px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);background:var(--g);cursor:pointer;padding:0}
+.swatches button[aria-checked="true"]{box-shadow:0 0 0 2px var(--ink)}
+.result{display:flex;flex-direction:column;gap:18px;scroll-margin-top:84px}
+.vt{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .vt div{display:flex;gap:4px}
-.vt button{font:500 13px var(--sans);padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.vt button{font:500 14px var(--sans);padding:8px 13px;min-height:40px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer}
 .vt button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
-.vt .mono{font-size:11px}
 .preview{position:relative}
-.preview .phone{width:min(300px,80vw);margin:0 auto}
+.preview .phone{width:min(300px,78vw);margin:0 auto}
 .preview[data-v="d"] .phone,.preview[data-v="m"] .frame{display:none}
-@media (max-width:860px){.vt div{display:none}.preview .frame{display:none!important}.preview .phone{display:block!important}}
+.preview .note{text-align:center;font-size:13px;color:var(--muted);margin-top:12px}
+@media (max-width:860px){.vt div{display:none}.preview .frame{display:none!important}.preview .phone{display:block!important;width:260px}}
+.phone{border-radius:34px;background:#111;padding:8px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);aspect-ratio:9/19.2;position:relative;flex:none}
+.screen{border-radius:27px;overflow:hidden;height:100%;position:relative;background:#fff}
+.offer{display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line);padding-top:20px}
+.offer .alt{font-size:15px;color:var(--muted)}
+.offer .alt a{color:var(--ink)}
+.reco{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:14px}
+.reco .mono{color:rgba(255,255,255,.55)}
+.reco h3{font-size:clamp(26px,2.6vw,34px);color:#fff}
+.reco p{color:rgba(255,255,255,.75);font-size:16px;max-width:36em}
+.reco .rp{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.18);padding-top:16px;margin-top:4px}
+.reco .rp b{font-size:clamp(34px,3.4vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.reco .rp span{color:rgba(255,255,255,.6);font-size:14.5px;max-width:22em;line-height:1.35}
+.reco .btn{background:#fff;color:var(--ink);border-color:#fff;margin-top:4px;align-self:flex-start}
+.reco .btn:hover{background:#ECEEF0}
+.reco .btn svg{color:var(--wa)}
+.reco .more{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;color:rgba(255,255,255,.7)}
+.reco .more a,.reco .more button{color:#fff;background:none;border:0;padding:0;cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.reco[hidden],.result [hidden]{display:none}
 
 /* Site type vendu aux clients : une page réelle, photo en grand, réduite à l'échelle du cadre */
 .tpl{position:absolute;top:0;left:0;transform-origin:0 0;background:#fff;color:#15171B;font-family:var(--sans);display:flex;flex-direction:column;--c:#2038EC;--ct:#fff;overflow:hidden}
 .tpl.d{width:1120px;height:700px}
 .tpl.m{width:390px;height:832px}
 .tn{display:flex;align-items:center;justify-content:space-between;gap:24px;flex:none}
-.tn b{font-weight:600;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tn b{font-weight:600;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:58%}
 .tn nav{display:flex;gap:28px;font-size:14px;color:#4B5058}
 .tb{background:var(--c);color:var(--ct);font-weight:600;border-radius:8px;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
 .th{position:relative;background-size:cover;background-position:center;flex:none;overflow:hidden}
@@ -155,13 +232,12 @@ section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
 .to{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 11px}
 .to i{width:7px;height:7px;border-radius:50%;background:#3DDC84}
 .tg{display:grid;flex:1;min-height:0}
-.tg h4{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
+.tk{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
 .tr{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #E8E8E3;font-size:15px}
 .tr b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .ti p{font-size:15px;color:#4B5058;line-height:1.5}
 .tgo{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:#4B5058}
 .tgo i{width:12px;height:12px;border-radius:50%;background:conic-gradient(#4285F4 0 25%,#34A853 0 50%,#FBBC05 0 75%,#EA4335 0);flex:none}
-/* ordinateur */
 .tpl.d .tn{height:68px;padding:0 44px}
 .tpl.d .tn b{font-size:21px}
 .tpl.d .tb{font-size:14px;padding:10px 16px}
@@ -172,7 +248,6 @@ section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
 .tpl.d .th-act{gap:14px;margin-top:22px}
 .tpl.d .th-act .tb{font-size:15px;padding:12px 18px}
 .tpl.d .tg{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;padding:26px 44px 0}
-/* téléphone */
 .tpl.m .tn{height:58px;padding:0 18px}
 .tpl.m .tn b{font-size:17px}
 .tpl.m .tn nav{display:none}
@@ -189,401 +264,496 @@ section{padding-block:clamp(48px,6.5vw,88px);border-top:1px solid var(--line)}
 .tpl.m .tfoot .tb{width:100%;justify-content:center;padding:13px;font-size:14px}
 .tpl.d .tfoot{display:none}
 
-/* Vidéos courtes */
-.reelwrap{display:flex;justify-content:center}
-.reelwrap .phone{width:250px}
-
-/* Méthode */
+/* Méthode : trois étapes datées, la promesse, les engagements écrits */
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0;padding:0;list-style:none;counter-reset:s;border-top:1px solid var(--line)}
 .steps li{padding:26px 28px 26px 0;counter-increment:s;border-right:1px solid var(--line)}
 .steps li+li{padding-left:28px}
 .steps li:last-child{border-right:0}
-.steps li::before{content:counter(s,decimal-leading-zero);font:500 13px var(--mono);color:var(--klein);display:block;margin-bottom:16px}
+.steps li::before{content:counter(s,decimal-leading-zero);font:500 13px var(--mono);color:var(--muted);display:block;margin-bottom:16px}
 .steps h3{font-size:22px;margin-bottom:8px}
 .steps p{color:var(--muted);font-size:15.5px}
-.steps .when{display:inline-block;margin-top:14px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);border:1px solid var(--line);padding:5px 10px;border-radius:6px;background:var(--card)}
-@media (max-width:800px){.steps{grid-template-columns:minmax(0,1fr)}.steps li{border-right:0;border-bottom:1px solid var(--line);padding:22px 0}.steps li+li{padding-left:0}}
+.steps .when{display:block;margin-top:14px;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+@media (max-width:800px){.steps{grid-template-columns:minmax(0,1fr)}.steps li{border-right:0;border-bottom:1px solid var(--line);padding:18px 0}.steps li+li{padding-left:0}.why{margin-top:28px}}
 .promise{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline;font-size:17px}
 .promise b{font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-.02em}
-.promise span{color:var(--muted)}
+.promise span{color:var(--muted);max-width:40em}
+.why{margin-top:40px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,88px);border-top:1px solid var(--line);padding-top:32px;align-items:start}
+@media (max-width:860px){.why{grid-template-columns:minmax(0,1fr);gap:24px}}
+.why h3{font-size:19px;margin-bottom:10px}
+.why p{color:var(--soft);font-size:16px}
+.eng{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+.eng li{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+@media (max-width:600px){.eng{grid-template-columns:minmax(0,1fr)}}
+.why .cg{margin-top:12px;font-size:14px;color:var(--muted)}
 
-/* Parcours : deux questions, une recommandation, le message déjà écrit */
-.qz{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:start}
-@media (max-width:860px){.qz{grid-template-columns:minmax(0,1fr)}}
-.qz h2{margin-top:14px}
-.qz .lede{margin-top:18px;color:var(--soft);max-width:34em}
-.q{margin-top:26px}
-.q .lab{display:block;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.reco{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:14px;position:sticky;top:88px;min-height:320px}
-.reco .mono{color:rgba(255,255,255,.55)}
-.reco h3{font-size:clamp(26px,2.6vw,34px);color:#fff}
-.reco p{color:rgba(255,255,255,.75);font-size:16px}
-.reco .rp{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.18);padding-top:16px;margin-top:4px}
-.reco .rp b{font-size:clamp(34px,3.4vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
-.reco .rp span{color:rgba(255,255,255,.6);font-size:14.5px;max-width:20em;line-height:1.35}
-.reco .btn{background:#fff;color:var(--ink);border-color:#fff;margin-top:4px;align-self:flex-start}
-.reco .btn:hover{background:#ECEEF0}
-.reco .btn svg{color:var(--wa)}
-.reco .more{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;color:rgba(255,255,255,.7)}
-.reco .more a,.reco .more button{color:#fff;background:none;border:0;padding:0;cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:3px;text-align:left}
-.reco .hint{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-.reco .hint span{border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 10px;font-size:13.5px;color:rgba(255,255,255,.75)}
-
-/* Prix */
-.pricing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
+/* Prix : deux cartes alignées rangée par rangée */
+.pricing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.plist{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column}
+@supports (grid-template-rows:subgrid){@media (min-width:901px){.plist{display:grid;grid-template-rows:subgrid;grid-row:span 5;align-content:start}}}
 @media (max-width:900px){.pricing{grid-template-columns:minmax(0,1fr)}}
-.plist{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:8px}
-.pl-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.amount{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:10px}
+.amount{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:14px;min-height:90px;align-content:flex-start}
 .amount b{font-size:clamp(56px,6vw,76px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:1}
-.amount span{color:var(--muted);font-size:15px;max-width:16em;line-height:1.35}
-.lines{margin:18px 0 22px;border-top:1px solid var(--line)}
-.lines div{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.amount.q b{font-size:clamp(34px,3.4vw,44px);letter-spacing:-.03em}
+.amount span{flex-basis:100%;color:var(--muted);font-size:15px;max-width:28em;line-height:1.35}
+.inc{list-style:none;margin:18px 0 0;padding:0}
+.inc .lab{font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.inc li{padding:9px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--soft)}
+.lines{margin:22px 0 0;border-top:1px solid var(--ink)}
+.lines div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
 .lines dt{color:var(--muted)}
 .lines dd{margin:0;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
-.plist .act{margin-top:auto}
+.lines div.tot dt,.lines div.tot dd{color:var(--ink)}
+.plist .act{margin-top:auto;padding-top:24px}
 .small{font-size:13px;color:var(--muted);margin-top:16px}
+.small a{color:var(--ink)}
 
 /* Nous */
-.us{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
-@media (max-width:860px){.us{grid-template-columns:minmax(0,1fr)}}
-.us h2{margin-top:14px}
-.us .lede{margin-top:18px;color:var(--soft);font-size:17px;max-width:34em}
+.us{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,6vw,88px);align-items:start}
+@media (max-width:860px){.us{grid-template-columns:minmax(0,1fr);gap:28px}}
+.us .lede{margin-top:18px;color:var(--soft);max-width:34em}
+.facts{margin-top:20px;font:500 13px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .people{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .people li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
 .av{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-weight:600;font-size:17px;letter-spacing:-.02em;background:var(--card);border:1px solid var(--line);color:var(--muted)}
 .people b{display:block;font-size:19px;font-weight:600;letter-spacing:-.02em}
-.people .role{display:block;font:500 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--klein);margin-top:4px}
+.people .role{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .people p{margin-top:8px;color:var(--muted);font-size:15px}
-.facts{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0;list-style:none}
-.facts li{border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500;background:var(--card)}
 
 /* Questions et contact */
-.close{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:start}
+.close{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,88px);align-items:start}
 @media (max-width:900px){.close{grid-template-columns:minmax(0,1fr)}}
 .faq{margin-top:28px;border-top:1px solid var(--line)}
 details{border-bottom:1px solid var(--line)}
-summary{cursor:pointer;list-style:none;font-weight:600;font-size:17px;padding:16px 0;display:flex;justify-content:space-between;gap:16px}
+summary{cursor:pointer;list-style:none;font-weight:600;font-size:17px;padding:16px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:var(--klein);font-size:22px;line-height:1;font-weight:400}
-details[open] summary::after{content:"–"}
-details p{margin:0 0 18px;color:var(--muted);font-size:15.5px;max-width:40em}
+summary::after{content:"+";color:var(--ink);font-size:22px;line-height:1;font-weight:400;flex:none;transition:transform .22s var(--ease)}
+details.is summary::after{transform:rotate(45deg)}
+.fa{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s var(--ease)}
+details.is .fa{grid-template-rows:1fr}
+.fa>div{overflow:hidden}
+.fa p{margin:0 0 18px;color:var(--muted);font-size:15.5px;max-width:40em}
 .final{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(28px,4vw,44px);position:sticky;top:88px}
-.final h2{font-size:clamp(30px,3.4vw,42px)}
+.final h2{font-size:clamp(30px,3.4vw,42px);color:#fff}
 .final>p{margin:14px 0 22px;color:rgba(255,255,255,.75)}
 .final .btn{width:100%;background:#fff;color:var(--ink);border-color:#fff}
 .final .btn:hover{background:#ECEEF0}
 .final .btn svg{color:var(--wa)}
 .final dl{margin:24px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
-.final dt{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.final dt{font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
 .final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
 .final dd a{text-decoration:none}.final dd a:hover{text-decoration:underline}
 @media (max-width:900px){.final{position:static}}
 
 /* Pied de page et barre mobile */
 footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
-.fl{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+footer .in{display:flex;flex-direction:column;gap:22px}
+.fl{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
 footer .logo svg{height:18px}
 footer nav{display:flex;flex-wrap:wrap;gap:8px 20px}
 footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:underline}
+footer .seo{max-width:70em;font-size:13.5px}
 .mbar{display:none}
-@media (max-width:700px){.mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(247,247,244,.92);border-top:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateY(110%);transition:transform .4s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1}footer{padding-bottom:110px}}
+@media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1}.mbar span{font-size:13px;line-height:1.25;color:var(--muted);text-align:right;max-width:92px}footer{padding-bottom:110px}}
 </style>
 
+<a class="skip" href="#immersif">Passer l’entrée</a>
 </head>
 <body>
 <header class="nav">
  <div class="in">
-  <a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
-  <nav aria-label="Sections"><a href="#choix">Quel site ?</a><a href="#immersif">Site immersif</a><a href="#vitrine">Site vitrine</a><a href="#prix">Prix</a><a href="#nous">Qui sommes-nous</a></nav>
-  <a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%20Mon%20commerce%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>WhatsApp</a>
+  <a class="logo" id="navLogo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
+  <nav aria-label="Sections"><a href="#immersif">Site immersif</a><a href="#essai">Essayer avec mon nom</a><a class="keep" href="#prix">Prix</a><a href="#nous">Qui sommes-nous</a></nav>
+  <a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%0AMon%20commerce%20ou%20mon%20lieu%20%3A%20%0AMa%20commune%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Ma maquette gratuite</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
+<aside class="fil" id="fil" aria-hidden="true"><div class="stops" id="stops"></div><i></i></aside>
 
 <main id="top">
-<section class="hero">
- <div class="in">
-  <p class="mono">Studio web indépendant · Genève → Montreux</p>
-  <h1>Des sites où vos clients <em>entrent</em> avant de venir.</h1>
-  <div class="hero-row">
-   <p class="sub">On conçoit des sites immersifs, où l'on avance dans votre lieu en faisant défiler, et des sites vitrines reliés à votre fiche Google. Pour les commerces de l'arc lémanique. La maquette d'abord, le paiement ensuite.</p>
-   <div class="ctas">
-    <a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%20Mon%20commerce%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Parler de mon projet</a>
-    <a class="lnk" href="#choix">Quel site pour moi ?</a>
-   </div>
-  </div>
-  <figure class="show">
-   <div class="frame">
-    <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span>les-greves.ch</span></div>
-    <div class="fview">
-     <video id="walk" src="img/greves-walk.mp4" poster="img/greves-poster.jpg" muted loop playsinline preload="metadata" aria-label="Démo Les Grèves : en faisant défiler, on remonte l'allée, la porte s'ouvre et l'on traverse le salon jusqu'à la vue sur le lac"></video>
-     <div class="scrub" aria-hidden="true"><i id="thumb"></i></div>
+<section class="entry" id="entry" aria-label="Entrée">
+ <div class="stage">
+  <canvas id="onde" aria-hidden="true"></canvas>
+  <div class="e-ui">
+   <div class="in">
+    <p class="mono e-kick">Sites internet pour commerces et lieux · de Genève à Montreux</p>
+    <div class="e-hint" aria-hidden="true"><span>Faites défiler</span><i></i></div>
+    <div class="e-bottom">
+     <h1 class="e-title"><span class="w">Des sites</span> <span class="w">où vos clients</span> <span class="w">entrent</span> <span class="w">avant de venir.</span></h1>
+     <div class="e-end">
+      <p class="sub">Un site vitrine relié à votre fiche Google, 490.– une fois puis 20.– par mois. Ou un site immersif, où l’on visite votre lieu en faisant défiler, sur devis. La maquette est gratuite, en 48 heures.</p>
+      <div class="ctas">
+       <div><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%0AMon%20commerce%20ou%20mon%20lieu%20%3A%20%0AMa%20commune%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Ma maquette gratuite</a><a class="lnk" href="#prix">Voir les prix</a></div>
+       <small>Sans engagement · Réponse le jour même</small>
+      </div>
+     </div>
     </div>
    </div>
-   <figcaption><span><b>Les Grèves, Rolle</b> · logement au bord du lac, maison modélisée en 3D. Démo, lieu fictif.</span><span>Sur le vrai site, c'est le défilement qui fait avancer.</span></figcaption>
-  </figure>
- </div>
-</section>
-
-<section id="choix">
- <div class="in">
-  <div class="qz">
-   <div class="rv">
-    <span class="mono">Deux questions</span>
-    <h2>Quel site pour vous ?</h2>
-    <p class="lede">On fait deux sites, pas dix. Dites-nous votre activité : on vous indique celui qui convient, son prix, et on prépare votre message. Vous n'avez rien à écrire.</p>
-    <div class="q"><span class="lab">Votre activité</span><div class="chips" id="qAct" role="group" aria-label="Votre activité"></div></div>
-    <div class="q"><span class="lab">Votre commune</span><div class="chips" id="qTown" role="group" aria-label="Votre commune"></div></div>
-   </div>
-   <div class="reco rv" id="reco" aria-live="polite"></div>
   </div>
  </div>
+ <div class="e-logo" id="eLogo" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><defs><clipPath id="wc"><rect id="wr" x="100" y="-10" width="0" height="120"/></clipPath></defs><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><g clip-path="url(#wc)"><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></g></svg></div>
 </section>
 
 <section id="immersif">
  <div class="in">
-  <div class="sec-head rv"><span class="num">01</span><div><h2>Le site immersif.</h2><p>Pour les lieux qui méritent une visite : restaurants, hôtels, logements à louer, biens immobiliers, salles et ateliers.</p></div></div>
-  <div class="row">
-   <div class="txt rv">
-    <p>On filme votre lieu, ou on le reconstruit en 3D. Sur le site, le visiteur avance dans l'entrée en faisant défiler, comme dans un jeu vidéo, puis découvre vos pages : la carte, les prix, la réservation sur WhatsApp.</p>
-    <ul class="specs">
-     <li>Tournage sur place, ou modélisation 3D quand le lieu n'est pas encore prêt</li>
-     <li>Fluide sur téléphone : la qualité s'adapte à l'appareil, image fixe sans WebGL</li>
-     <li>Tout le site vitrine et la fiche Google sont inclus</li>
-     <li>Devis sous 48 heures, maquette d'intention offerte</li>
-    </ul>
-    <div class="pricebox"><b>Sur devis</b><span>selon le lieu et le tournage</span></div>
-    <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20un%20devis%20pour%20un%20site%20immersif.%20Mon%20lieu%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Demander un devis</a><small>Réponse le jour même.</small></div>
+  <figure class="show">
+   <div class="frame">
+    <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span>les-greves.ch · Démo</span></div>
+    <div class="fview">
+     <video id="walk" poster="img/greves-poster.jpg" muted loop playsinline preload="none" aria-label="Démo Les Grèves : on remonte l’allée, la porte s’ouvre et l’on traverse le salon jusqu’à la vue sur le lac"><source src="img/greves-walk-720.mp4" media="(max-width: 760px)"><source src="img/greves-walk.mp4"></video>
+     <div class="scrub" aria-hidden="true"><i id="thumb"></i></div>
+     <button class="pp" id="pp" type="button" aria-pressed="false" aria-label="Mettre en pause"><svg class="ic-pause" viewBox="0 0 14 14"><path d="M2 1h3.5v12H2zM8.5 1H12v12H8.5z"/></svg><svg class="ic-play" viewBox="0 0 14 14"><path d="M3 1l10 6-10 6z"/></svg></button>
+     <button class="go" id="go" type="button"><span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z"/></svg>Lire la démo · 8 s</span></button>
+    </div>
    </div>
-   <div class="stills rv">
-    <figure><img src="img/greves-1.jpg" alt="Démo Les Grèves : l'allée du jardin devant la maison, au coucher du soleil" width="1200" height="675" loading="lazy"><figcaption><b>L'arrivée.</b> Le visiteur remonte l'allée, la porte s'ouvre.</figcaption></figure>
-    <figure><img src="img/greves-2.jpg" alt="Démo Les Grèves : le salon et la baie vitrée sur le lac" width="1200" height="675" loading="lazy"><figcaption><b>Le salon</b>, construit en 3D.</figcaption></figure>
-    <figure><img src="img/trattoria.jpg" alt="Démo Trattoria Nonna Pia : la salle du restaurant, filmée" width="1400" height="782" loading="lazy"><figcaption><b>Trattoria Nonna Pia, Morges</b> : entrée filmée. Démo.</figcaption></figure>
+   <figcaption><span class="cap"><i></i><span id="cap">L’allée</span></span><span><b>Démo · Les Grèves, Rolle</b> · appartement au bord du lac, lieu fictif, modélisé en 3D. Sur le vrai site, c’est votre défilement qui fait avancer.</span></figcaption>
+  </figure>
+  <div class="row">
+   <div class="txt">
+    <h2>Le site immersif : on visite votre lieu en faisant défiler.</h2>
+    <p class="lede">Pour les lieux qui méritent une visite : restaurants, hôtels, logements à louer, biens immobiliers, salles et ateliers.</p>
+    <p>On filme votre lieu, ou on le reconstruit en 3D. Sur le site, le visiteur avance dans l’entrée en faisant défiler, comme dans un jeu vidéo, puis trouve vos pages : la carte, les prix, la réservation sur WhatsApp.</p>
+    <ul class="specs">
+     <li>Tournage sur place, ou modélisation 3D si le lieu n’est pas encore prêt</li>
+     <li>Fluide sur téléphone : la netteté s’adapte à l’appareil ; sur un très vieux téléphone, une belle image fixe remplace la visite</li>
+     <li>Le site vitrine, le bouton WhatsApp et, pour un commerce, la fiche Google sont compris</li>
+     <li>Un premier aperçu de votre lieu, offert avec le devis</li>
+    </ul>
+   </div>
+   <div class="side">
+    <h3>Ce qui fait le prix</h3>
+    <p>La taille du lieu (une salle ou toute une maison), le tournage sur place ou la modélisation 3D, et le nombre de pages derrière la visite. Trois questions sur WhatsApp suffisent pour chiffrer : vous recevez un prix et un délai sous 48 heures.</p>
+    <div class="pricebox"><b>Sur devis</b><span>prix et délai sous 48 heures</span></div>
+    <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20un%20devis%20pour%20un%20site%20immersif.%0ALieu%20%3A%20%28restaurant%2C%20logement%2C%20salle%E2%80%A6%29%0ACommune%20%3A%20%0ATaille%20%3A%20%28nombre%20de%20pi%C3%A8ces%20ou%20de%20salles%29%0ALe%20lieu%20est%20pr%C3%AAt%20%C3%A0%20%C3%AAtre%20film%C3%A9%20%3A%20oui%20/%20non%0AJ%E2%80%99ai%20d%C3%A9j%C3%A0%20des%20photos%20ou%20des%20vid%C3%A9os%20%3A%20oui%20/%20non" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Demander mon devis</a><small>Réponse le jour même.<br>Sans engagement.</small></div>
    </div>
   </div>
  </div>
 </section>
 
-<section id="vitrine">
+<section id="essai">
  <div class="in">
-  <div class="sec-head rv"><span class="num">02</span><div><h2>Le site vitrine, relié à Google.</h2><p>Pour coiffeurs, garages, restaurants, instituts, artisans. Une page claire, vos prix, vos horaires, et un bouton WhatsApp toujours visible. Essayez avec votre nom.</p></div></div>
-  <div class="row">
-   <div class="txt rv">
-    <div class="cfg">
-     <div><label for="bName">Nom de votre commerce</label><input id="bName" type="text" maxlength="32" placeholder="Ex. Salon Mirabelle" autocomplete="organization"></div>
-     <div><span class="lab" id="lTrade">Métier</span><div class="chips" id="bTrade" role="group" aria-labelledby="lTrade"></div></div>
-     <div class="cfg-row">
-      <div><span class="lab" id="lTown">Commune</span><div class="chips" id="bTown" role="group" aria-labelledby="lTown"></div></div>
-      <div><span class="lab" id="lStyle">Couleur</span><div class="swatches" id="bStyle" role="group" aria-labelledby="lStyle"></div></div>
+  <div class="sec-head"><h2>Essayez avec votre nom.</h2><p>Choisissez votre métier et votre commune, tapez votre nom : vous voyez votre site. Le message WhatsApp part avec vos choix, vous n’avez rien à écrire.</p></div>
+  <div class="tool">
+   <div class="cfg">
+    <div><span class="lab" id="lAct">Votre métier</span><div class="chips" id="bAct" role="radiogroup" aria-labelledby="lAct"></div></div>
+    <div><span class="lab" id="lTown">Votre commune</span><div class="chips" id="bTown" role="radiogroup" aria-labelledby="lTown"></div></div>
+    <div><label for="bName">Nom de votre commerce</label><input id="bName" type="text" maxlength="40" placeholder="Ex. Salon Mirabelle" autocomplete="organization" autocapitalize="words" enterkeyhint="done"></div>
+    <div id="swWrap"><span class="lab" id="lStyle">Couleur</span><div class="swatches" id="bStyle" role="radiogroup" aria-labelledby="lStyle"></div></div>
+   </div>
+   <div class="result" id="result">
+    <div id="resPrev">
+     <div class="vt"><span class="mono">Aperçu en direct</span><div role="group" aria-label="Affichage de l’aperçu"><button type="button" data-v="m" aria-pressed="true">Sur téléphone</button><button type="button" data-v="d" aria-pressed="false">Sur ordinateur</button></div></div>
+     <p class="sr" id="prevDesc" aria-live="polite"></p>
+     <div class="preview" id="preview" data-v="m" aria-hidden="true">
+      <div class="frame"><div class="fbar"><i></i><i></i><i></i><span id="liveUrl">votre-commerce.ch</span></div><div class="fview" id="liveDesk"></div></div>
+      <div class="phone"><div class="screen" id="livePhone"></div></div>
+      <p class="note">Exemple : textes et prix à remplacer par les vôtres.</p>
+     </div>
+     <div class="offer">
+      <div class="pricebox"><b>490.–</b><span>une fois, puis 20.– par mois, sans engagement</span></div>
+      <div class="act"><a class="btn" id="wantIt" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%0AMon%20commerce%20ou%20mon%20lieu%20%3A%20%0AMa%20commune%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Recevoir ma maquette gratuite</a><small>Gratuite, en 48 heures.<br>Le message part avec vos choix.</small></div>
+      <p class="alt" id="altLine"></p>
      </div>
     </div>
-    <div class="pricebox"><b>490.–</b><span>puis 20.– par mois, sans engagement</span></div>
-    <div class="act"><a class="btn" id="wantIt" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%20Mon%20commerce%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Recevoir cette maquette</a><small>Gratuite, en 48 heures.<br>Le message part avec vos choix.</small></div>
-    <p class="fact">Sur <b>1 200 fiches Google</b> étudiées en Suisse romande, <b>93 %</b> des cinq premiers sur Google Maps ont un site relié à leur fiche. On relie le vôtre.</p>
-   </div>
-   <div class="rv">
-    <div class="vt"><span class="mono">Aperçu en direct</span><div role="group" aria-label="Affichage de l'aperçu"><button type="button" data-v="d" aria-pressed="true">Sur ordinateur</button><button type="button" data-v="m" aria-pressed="false">Sur téléphone</button></div></div>
-    <div class="preview" id="preview" data-v="d">
-     <div class="frame"><div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span id="liveUrl">votre-commerce.ch</span></div><div class="fview" id="liveDesk"></div></div>
-     <div class="phone"><div class="screen" id="livePhone"></div></div>
-    </div>
+    <div class="reco" id="reco" hidden></div>
    </div>
   </div>
- </div>
-</section>
-
-<section id="videos">
- <div class="in row">
-  <div class="txt rv">
-   <div class="sec-head" style="margin:0"><span class="num">03</span><div><h2 style="font-size:clamp(28px,3vw,40px)">Des vidéos courtes pour les réseaux.</h2><p>Des Reels de quinze secondes à votre image, prêts pour Instagram et TikTok, qui renvoient vers votre site.</p></div></div>
-   <ul class="specs"><li>Format vertical, musique et sous-titres</li><li>À vos couleurs, prêt à publier</li></ul>
-   <div class="pricebox"><b>Sur devis</b><span>selon le nombre de vidéos</span></div>
-   <div class="act"><a class="btn light" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20des%20vid%C3%A9os%20pour%20les%20r%C3%A9seaux.%20Mon%20commerce%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Demander un devis</a></div>
-  </div>
-  <div class="reelwrap rv"><div class="phone"><div class="screen"><video id="reel" src="img/reel.mp4" poster="img/reel.jpg" muted loop playsinline preload="none" aria-label="Vidéo de démonstration pour un garage, nom inventé"></video></div></div></div>
  </div>
 </section>
 
 <section id="methode">
  <div class="in">
-  <div class="sec-head rv"><span class="num"></span><div><h2>Vous voyez avant de dire oui.</h2></div></div>
-  <ol class="steps rv">
-   <li><h3>Un message WhatsApp</h3><p>Le nom de votre commerce, c'est tout. On regarde votre fiche Google et vos concurrents.</p><span class="when">Aujourd'hui</span></li>
-   <li><h3>Votre maquette gratuite</h3><p>À votre nom, sur votre téléphone. Vous ne devez rien.</p><span class="when">Sous 48 heures</span></li>
-   <li><h3>En ligne et sur Google</h3><p>Vous envoyez photos, prix et horaires. On met en ligne et on complète votre fiche.</p><span class="when">En 5 jours</span></li>
+  <div class="sec-head"><h2>Vous voyez la maquette avant de payer.</h2></div>
+  <ol class="steps">
+   <li><h3>Un message WhatsApp</h3><p>Le nom de votre commerce et votre commune. On regarde votre fiche Google et celles de vos concurrents.</p><span class="when">Aujourd’hui</span></li>
+   <li><h3>Votre maquette, gratuite</h3><p>À votre nom, à vos couleurs, sur votre téléphone. Vous ne devez rien, et vous pouvez nous demander de l’effacer.</p><span class="when">Sous 48 heures</span></li>
+   <li><h3>En ligne et sur Google</h3><p>Vous envoyez photos, prix et horaires. On écrit les textes, on met en ligne, on complète votre fiche Google. Vous validez, puis on facture.</p><span class="when">5 jours ouvrables après vos photos</span></li>
   </ol>
-  <div class="promise rv"><b>Vous payez seulement si le site vous plaît.</b><span>Sinon, vous ne nous devez rien. L'abonnement s'arrête quand vous voulez, à la fin du mois.</span></div>
+  <div class="promise"><b>Vous payez seulement si le site vous plaît.</b><span>Facturé à la mise en ligne, après votre validation. Deux séries de corrections comprises. L’abonnement s’arrête quand vous voulez, à la fin du mois, et on vous remet le domaine et les fichiers.</span></div>
+  <div class="why">
+   <div><h3>Pourquoi la maquette est gratuite</h3><p>OONDE est un jeune studio. On ne vous montre pas encore de clients, alors on vous montre votre site : vous jugez sur pièce, pas sur nos promesses.</p></div>
+   <div>
+    <h3>Ce qu’on vous écrit noir sur blanc</h3>
+    <ul class="eng">
+     <li>Maquette gratuite, effacée sur simple demande</li>
+     <li>Facturé à la mise en ligne, seulement si vous validez</li>
+     <li>Deux séries de corrections comprises</li>
+     <li>En ligne 5 jours ouvrables après vos contenus</li>
+     <li>Petites modifications faites sous 3 jours ouvrables</li>
+     <li>Domaine à votre nom ; à la fin, domaine et fichiers remis</li>
+     <li>Résiliation à tout moment, effet à la fin du mois</li>
+     <li>Aucune position sur Google promise</li>
+    </ul>
+    <p class="cg">Tout est dans nos <a href="conditions.html">conditions générales</a>, lisibles en cinq minutes.</p>
+   </div>
+  </div>
  </div>
 </section>
 
 <section id="prix">
  <div class="in">
-  <div class="sec-head rv"><span class="num"></span><div><h2>Deux offres, des prix écrits noir sur blanc.</h2><p>Pas de forfait caché, pas d'engagement. Dans les deux cas, vous voyez la maquette avant de payer.</p></div></div>
+  <div class="sec-head"><h2>Deux offres, des prix écrits noir sur blanc.</h2><p>Pas de frais cachés, pas d’engagement. Dans les deux cas, vous voyez la maquette avant de payer.</p></div>
   <div class="pricing">
-   <div class="plist rv">
-    <div class="pl-top"><h3>Site vitrine + fiche Google</h3><span class="mono">Pack</span></div>
-    <div class="amount"><b>490.–</b><span>CHF, une fois, après validation de la maquette</span></div>
+   <div class="plist">
+    <h3>Site vitrine + fiche Google</h3>
+    <div class="amount"><b>490.–</b><span>CHF, une fois, facturé à la mise en ligne, seulement si vous validez le site</span></div>
+    <ul class="inc">
+     <li class="lab">Compris dans les 490.–</li>
+     <li>Un site d’une page, adapté au téléphone : prestations, prix, horaires, adresse, plan, boutons d’appel et WhatsApp</li>
+     <li>Les textes, écrits par nous à partir de vos informations</li>
+     <li>Votre fiche Google configurée ou mise à jour : catégorie, horaires, photos, lien vers le site</li>
+     <li>Nom de domaine .ch à votre nom, ou raccordement du vôtre</li>
+     <li>Le site terminé pour validation, deux séries de corrections</li>
+     <li>En ligne 5 jours ouvrables après réception de vos photos</li>
+    </ul>
     <dl class="lines">
-     <div><dt>Hébergement, domaine à votre nom, petites modifications</dt><dd>20.– / mois</dd></div>
-     <div><dt>Suivi Google : avis, publications, rapport mensuel</dt><dd>+ 50.– / mois</dd></div>
-     <div><dt>Vidéos courtes pour les réseaux</dt><dd>Sur devis</dd></div>
+     <div><dt>Hébergement, renouvellement du domaine, petites modifications sous 3 jours ouvrables</dt><dd>20.–/mois</dd></div>
+     <div><dt>Suivi Google : réponses à vos avis, publications, rapport mensuel</dt><dd>+ 50.–/mois</dd></div>
+     <div><dt>Vidéos courtes pour les réseaux</dt><dd>sur devis</dd></div>
+     <div class="tot"><dt>Première année, tout compris (490.– + 12 × 20.–)</dt><dd>730.–</dd></div>
     </dl>
-    <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%20Mon%20commerce%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Ma maquette gratuite</a><small>Sans engagement.<br>Résiliable chaque mois.</small></div>
+    <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%0AMon%20commerce%20ou%20mon%20lieu%20%3A%20%0AMa%20commune%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Ma maquette gratuite</a><small>Sans engagement.<br>Ensuite 240.– par an.</small></div>
    </div>
-   <div class="plist rv">
-    <div class="pl-top"><h3>Site immersif</h3><span class="mono">Sur mesure</span></div>
-    <div class="amount"><b>Sur devis</b><span>selon le lieu à modéliser ; le site vitrine et la fiche Google sont inclus</span></div>
+   <div class="plist">
+    <h3>Site immersif</h3>
+    <div class="amount q"><b>Sur devis</b><span>prix et délai sous 48 heures ; le site vitrine et le bouton WhatsApp sont compris</span></div>
+    <ul class="inc">
+     <li class="lab">Compris dans le devis</li>
+     <li>La visite de votre lieu, filmée ou construite en 3D, pilotée par le défilement</li>
+     <li>Le site vitrine complet : vos pages, vos prix, le bouton WhatsApp</li>
+     <li>Pour un commerce, la fiche Google configurée et reliée</li>
+     <li>Un premier aperçu de votre lieu, offert avec le devis</li>
+     <li>Le site terminé pour validation, deux séries de corrections</li>
+    </ul>
     <dl class="lines">
-     <div><dt>Votre lieu modélisé en 3D, visite pilotée par le défilement</dt><dd>Inclus</dd></div>
-     <div><dt>Site vitrine, fiche Google et bouton WhatsApp</dt><dd>Inclus</dd></div>
-     <div><dt>Hébergement, domaine à votre nom, petites modifications</dt><dd>20.– / mois</dd></div>
+     <div><dt>Hébergement, domaine à votre nom, petites modifications</dt><dd>20.–/mois</dd></div>
+     <div><dt>Suivi Google : réponses à vos avis, publications, rapport mensuel</dt><dd>+ 50.–/mois</dd></div>
     </dl>
-    <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20un%20devis%20pour%20un%20site%20immersif.%20Mon%20lieu%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Demander un devis</a><small>Réponse le jour même.<br>Sans engagement.</small></div>
+    <div class="act"><a class="btn light" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20un%20devis%20pour%20un%20site%20immersif.%0ALieu%20%3A%20%28restaurant%2C%20logement%2C%20salle%E2%80%A6%29%0ACommune%20%3A%20%0ATaille%20%3A%20%28nombre%20de%20pi%C3%A8ces%20ou%20de%20salles%29%0ALe%20lieu%20est%20pr%C3%AAt%20%C3%A0%20%C3%AAtre%20film%C3%A9%20%3A%20oui%20/%20non%0AJ%E2%80%99ai%20d%C3%A9j%C3%A0%20des%20photos%20ou%20des%20vid%C3%A9os%20%3A%20oui%20/%20non" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Demander mon devis</a><small>Réponse le jour même.<br>Sans engagement.</small></div>
    </div>
   </div>
-  <p class="small">Prix en francs suisses. OONDE n'est pas assujetti à la TVA. Détails dans nos <a href="conditions.html">conditions générales</a>.</p>
+  <p class="small">Prix en francs suisses. OONDE n’est pas assujetti à la TVA. Détails dans nos <a href="conditions.html">conditions générales</a>.</p>
  </div>
 </section>
 
 <section id="nous">
  <div class="in us">
-  <div class="rv">
-   <span class="mono">Qui sommes-nous</span>
-   <h2>Deux amis d'ici, un seul interlocuteur.</h2>
-   <p class="lede">On s'est rencontrés au gymnase. Le projet de maturité, puis l'organisation d'événements, nous ont appris à travailler ensemble bien avant OONDE. Pas de centre d'appel ni de sous-traitant : vous parlez à ceux qui font votre site, et on peut passer vous voir.</p>
-   <ul class="facts"><li>Amis depuis le gymnase</li><li>De Genève à Montreux</li><li>Réponse le jour même</li></ul>
+  <div>
+   <h2>Deux amis de la région, un seul interlocuteur.</h2>
+   <p class="lede">On s’est rencontrés au gymnase et on travaille ensemble depuis. Pas de centre d’appel ni de sous-traitant : vous parlez à ceux qui font votre site, et on vient vous voir sur place, de Genève à Montreux.</p>
+   <p class="facts">On vient chez vous · Réponse le jour même · Domaine à votre nom</p>
   </div>
-  <ul class="people rv">
-   <li><span class="av" aria-hidden="true">AS</span><div><b>Alexandre Steudler</b><span class="role">Co-fondateur · Sites et IA</span><p>La stratégie et les outils : votre site, votre fiche Google, tout ce qui vous fait trouver.</p></div></li>
-   <li><span class="av" aria-hidden="true">SD</span><div><b>Serhat Dogar</b><span class="role">Co-fondateur · Contenu et clients</span><p>L'image et le contact : vos photos, vos vidéos, et le lien avec vous jusqu'à la mise en ligne.</p></div></li>
+  <ul class="people">
+   <li><span class="av" aria-hidden="true">AS</span><div><b>Alexandre Steudler</b><span class="role">Co-fondateur · Site et Google</span><p>Votre site, votre fiche Google, tout ce qui vous fait trouver.</p></div></li>
+   <li><span class="av" aria-hidden="true">SD</span><div><b>Serhat Dogar</b><span class="role">Co-fondateur · Photos, vidéos et suivi</span><p>Vos images, et le contact avec vous jusqu’à la mise en ligne.</p></div></li>
   </ul>
  </div>
 </section>
 
 <section id="faq">
  <div class="in close">
-  <div class="rv">
-   <span class="mono">Questions</span>
-   <h2 style="margin-top:14px">Ce qu'on nous demande.</h2>
+  <div>
+   <h2>Vos questions.</h2>
    <div class="faq">
-    <details><summary>Je dois faire quelque chose ?</summary><p>Presque rien. Vous envoyez quelques photos et vos infos par WhatsApp. On écrit les textes et on s'occupe de la mise en ligne et de Google.</p></details>
-    <details><summary>Un site immersif, c'est lourd à charger ?</summary><p>Non. La qualité s'adapte à l'appareil : si le téléphone peine, la netteté baisse toute seule, puis remonte. Sans WebGL, on affiche une image fixe. Le site reste rapide.</p></details>
-    <details><summary>À qui appartient le site ?</summary><p>À vous. Le nom de domaine est à votre nom, et vos textes et photos restent à vous. Si vous arrêtez, on vous remet tout gratuitement.</p></details>
-    <details><summary>Il y a un engagement ?</summary><p>Non. Les 20.– par mois couvrent l'hébergement, le nom de domaine et les petites modifications. Vous pouvez arrêter à la fin de chaque mois.</p></details>
-    <details><summary>Vous garantissez la première place sur Google ?</summary><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : fiche complète, bonne catégorie, horaires, site relié et avis.</p></details>
-    <details><summary>Les exemples sont de vrais clients ?</summary><p>Ce sont des démonstrations avec des noms inventés, pour vous montrer ce qu'on sait faire. On a déjà travaillé pour des clients avant OONDE ; le prochain site présenté ici peut être le vôtre.</p></details>
+    <details><summary>Je dois faire quelque chose ?</summary><div class="fa"><div><p>Presque rien. Vous envoyez quelques photos et vos infos par WhatsApp. On écrit les textes et on s’occupe de la mise en ligne et de Google.</p></div></div></details>
+    <details><summary>Une seule page, c’est assez ?</summary><div class="fa"><div><p>Pour un commerce, oui. Vos prestations, vos prix, vos horaires, l’adresse, le plan et le bouton WhatsApp tiennent sur une page bien faite, que vos clients lisent sur leur téléphone, comme celle que vous lisez. S’il vous faut plus (une boutique, une réservation en ligne reliée à un agenda), on vous fait une offre à part.</p></div></div></details>
+    <details><summary>J’ai un agenda en ligne pour les rendez-vous. Et alors ?</summary><div class="fa"><div><p>On met votre lien de réservation sur le bouton « Prendre rendez-vous » du site. Rien ne change pour vous ni pour vos clients.</p></div></div></details>
+    <details><summary>J’ai déjà Instagram, ça ne suffit pas ?</summary><div class="fa"><div><p>Instagram montre vos photos à ceux qui vous suivent déjà. Un site relié à votre fiche Google vous montre à ceux qui cherchent « coiffeur Morges » sans vous connaître, avec vos prix, vos horaires et un bouton pour vous écrire. Les deux se complètent : on met le lien de votre site sur votre profil.</p></div></div></details>
+    <details><summary>Ça coûte combien sur un an ?</summary><div class="fa"><div><p>La première année : 490.– plus 12 × 20.–, soit 730.–. Ensuite, 240.– par an. Le suivi Google est en plus, 50.– par mois, seulement si vous le prenez.</p></div></div></details>
+    <details><summary>Il y a un engagement ?</summary><div class="fa"><div><p>Non. Les 20.– par mois couvrent l’hébergement, le nom de domaine et les petites modifications. Vous pouvez arrêter à la fin de chaque mois.</p></div></div></details>
+    <details><summary>À qui appartient le site ?</summary><div class="fa"><div><p>À vous. Le nom de domaine est à votre nom, et vos textes et photos restent à vous. Si vous arrêtez, on vous remet le domaine et les fichiers gratuitement.</p></div></div></details>
+    <details><summary>Un site immersif, combien de temps et combien ça coûte ?</summary><div class="fa"><div><p>Ça dépend de la taille du lieu et du tournage. On vous envoie un prix et un délai sous 48 heures, après trois questions sur WhatsApp. Le premier aperçu de votre lieu est offert.</p></div></div></details>
+    <details><summary>Un site immersif, c’est lourd à charger ?</summary><div class="fa"><div><p>Non. La netteté s’adapte à l’appareil : si le téléphone peine, elle baisse toute seule, puis remonte. Sur un très vieux téléphone, une image fixe remplace la visite. Le site reste rapide.</p></div></div></details>
+    <details><summary>Vous garantissez la première place sur Google ?</summary><div class="fa"><div><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : fiche complète, bonne catégorie, horaires, site relié et avis.</p></div></div></details>
+    <details><summary>Les exemples sont de vrais clients ?</summary><div class="fa"><div><p>Non, pas encore. Ce sont des démonstrations à noms inventés, marquées « Démo ». OONDE est un jeune studio : c’est pour ça que la maquette est gratuite, vous jugez sur votre propre site. Le premier vrai site présenté ici peut être le vôtre.</p></div></div></details>
+    <details><summary>Vous faites aussi des vidéos ?</summary><div class="fa"><div><p>Oui, en option : des vidéos de quinze secondes, verticales, avec musique et sous-titres, à vos couleurs, prêtes pour Instagram et TikTok, qui renvoient vers votre site. Sur devis, selon le nombre de vidéos. <a href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20des%20vid%C3%A9os%20courtes%20pour%20les%20r%C3%A9seaux.%0AMon%20commerce%20%3A%20%0AMa%20commune%20%3A%20%0ANombre%20de%20vid%C3%A9os%20souhait%C3%A9%20%3A%20" target="_blank" rel="noopener">Demander un devis vidéos</a>.</p></div></div></details>
    </div>
   </div>
-  <div class="final rv" id="contact">
-   <h2>Votre maquette, gratuite, en 48 heures.</h2>
+  <div class="final" id="contact">
+   <h2>Votre maquette gratuite, en 48 heures.</h2>
    <p>Envoyez le nom de votre commerce sur WhatsApp. On répond le jour même.</p>
-   <a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%20Mon%20commerce%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Écrire sur WhatsApp</a>
+   <a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%0AMon%20commerce%20ou%20mon%20lieu%20%3A%20%0AMa%20commune%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Ma maquette gratuite</a>
    <dl>
     <div><dt>WhatsApp ou téléphone</dt><dd><a href="tel:+41764882710">+41 76 488 27 10</a></dd></div>
-    <div><dt>Email</dt><dd><a href="mailto:oonde.signal@gmail.com">oonde.signal@gmail.com</a></dd></div>
     <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/oonde.studio" target="_blank" rel="noopener">@oonde.studio</a></dd></div>
    </dl>
   </div>
  </div>
 </section>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%0AMon%20commerce%20ou%20mon%20lieu%20%3A%20%0AMa%20commune%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Ma maquette gratuite</a><span>490.– · sans engagement</span></nav>
 </main>
 
-<div class="mbar" id="mbar"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%20OONDE%2C%20je%20voudrais%20ma%20maquette%20gratuite.%20Mon%20commerce%20%3A%20" data-wa target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Ma maquette gratuite</a></div>
 <footer><div class="in">
- <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><span>Sites immersifs, sites vitrines et vidéos pour les commerces de l'arc lémanique · © 2026</span></div>
- <nav aria-label="Informations légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav>
+ <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Informations légales"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <p class="seo">OONDE fait des sites internet pour les commerces et les lieux de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux. Coiffeurs, instituts de beauté, garages, artisans, restaurants, hôtels, logements à louer, biens immobiliers. © 2026 OONDE.</p>
 </div></footer>
 
 <script>
 const WA_NUM='41764882710';
 const wa=t=>'https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(t);
 const $=id=>document.getElementById(id);
-const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches,TOUCH=matchMedia('(hover: none)').matches;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+
+/* Entrée : un tunnel d'anneaux d'encre, dessiné en 2D avec une vraie perspective. Le défilement avance la caméra,
+   un ressort amorti lisse le mouvement, et le point Klein au bout devient le logo qui rejoint la barre. */
+(()=>{
+const sec=$('entry'),stage=sec.querySelector('.stage'),cv=$('onde'),navLogo=$('navLogo'),eLogo=$('eLogo'),wr=$('wr');
+const words=[...sec.querySelectorAll('.e-title .w')],hint=sec.querySelector('.e-hint'),end=sec.querySelector('.e-end'),kick=sec.querySelector('.e-kick'),bottom=sec.querySelector('.e-bottom');
+const Q=new URLSearchParams(location.search),FREEZE=Q.has('p')?clamp(+Q.get('p'),0,1):null;
+const ctx=cv.getContext&&cv.getContext('2d');
+if(RM||!ctx){sec.classList.add('still');navLogo.classList.add('landed');return}
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,lerp=(a,b,t)=>a+(b-a)*t;
+const N=34,GAP=2.1,ZN=N*GAP,PS=.78;let PF=.88;   /* PS : le point devient le logo ; PF : le logo part vers la barre */
+let W=0,H=0,dpr=1,f=1,cx=0,cy=0,mob=false,Hl=100,AT=[],pad=20;
+function size(){dpr=Math.min(devicePixelRatio||1,2);W=stage.clientWidth;H=stage.clientHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+ mob=W<760;f=Math.min(W,H)*(mob?1:.9);cx=mob?W*.5:W*.58;cy=H*.46;pad=Math.max(20,Math.min(48,W*.04));PF=.88;
+ Hl=mob?Math.min(W*.26,(W-2*pad)/5.35):Math.min(W*.1,150,(W*.42-pad)/4.85);   /* le mot OONDE (5,35 × la hauteur du O) tient dans l'écran */
+ AT=[.04,.14,.24,.34];
+ if(mob){const st=stage.getBoundingClientRect().top,kb=kick.getBoundingClientRect().bottom-st,bt=bottom.getBoundingClientRect().top-st;
+  /* téléphone : le O se pose dans la bande libre entre l'accroche et le titre ; si elle manque, le titre n'arrive qu'après le vol du logo */
+  if(bt-kb>=Hl*1.4+24){cy=(kb+bt)/2;AT=[-1,-1,-1,-1]}else{cy=H*.4;AT=[PF+.02,PF+.04,PF+.06,PF+.08]}}}
+size();addEventListener('resize',size);
+let mx=0,my=0,ex=0,ey=0;
+addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){mx=(e.clientX/W-.5)*2;my=(e.clientY/H-.5)*2}},{passive:true});
+function draw(p,t){
+ const dS=2*f/Hl,cam=ease(clamp(p/PS,0,1))*(ZN-dS),look=clamp((PS-p)/.2,0,1);
+ ex+=(mx*.4*look-ex)*.05;ey+=(my*.25*look-ey)*.05;
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);ctx.lineCap='round';
+ const drift=(t*.32)%GAP;
+ for(let i=1;i<=N;i++){const last=i===N,z=last?ZN:i*GAP-drift,d=z-cam;if(d<=.12)continue;
+  const k=f/d,sx=cx-ex*k,sy=cy-ey*k,fog=Math.pow(clamp(1-d/(ZN*.78),0,1),1.25)*clamp((d-.12)/1.1,0,1);
+  if(last){const a=Math.max(.18,fog);ctx.strokeStyle=`rgba(17,19,24,${a})`;ctx.lineWidth=.26*k;ctx.beginPath();ctx.arc(sx,sy,.87*k,0,6.2832);ctx.stroke();
+   ctx.fillStyle=`rgba(32,56,236,${a})`;ctx.beginPath();ctx.arc(sx,sy,.34*k,0,6.2832);ctx.fill()}
+  else{ctx.strokeStyle=`rgba(17,19,24,${fog*.7})`;ctx.lineWidth=clamp(.012*k,.6,1.6);ctx.beginPath();ctx.arc(sx,sy,.87*k,0,6.2832);ctx.stroke()}}
+}
+function ui(p){
+ words.forEach((w,i)=>{const u=clamp((p-AT[i])/.12,0,1);w.style.opacity=u;w.style.transform=`translateY(${(1-u)*.3}em)`;w.style.filter=u>=1?'none':`blur(${(1-u)*12}px)`});
+ hint.style.opacity=1-clamp((p-.02)/.08,0,1);
+ const ue=clamp((p-.86)/.1,0,1);end.style.opacity=ue;end.style.transform=`translateY(${(1-ue)*12}px)`;end.style.visibility=ue>0?'visible':'hidden';
+ document.body.classList.toggle('e-cta',p>.86);
+ cv.style.opacity=p<PS?1:1-clamp((p-PS)/.04,0,1);
+ if(p<PS){eLogo.style.opacity=0;kick.style.opacity=1;navLogo.classList.remove('landed');return}
+ /* Le logo apparaît exactement sur le dernier anneau, les lettres sortent de derrière le O, puis il rejoint la barre. */
+ const r=navLogo.querySelector('svg').getBoundingClientRect(),s=stage.getBoundingClientRect(),u=ease(clamp((p-PF)/(1-PF),0,1)),rv=clamp((p-PS-.015)/.06,0,1);
+ /* téléphone : pendant que les lettres sortent, le O glisse à gauche pour que le mot entier soit centré */
+ const x0=(mob?lerp(cx-.5*Hl,(W-5.35*Hl)/2,ease(rv)):cx-.5*Hl)+s.left,y0=cy-.5*Hl+s.top;
+ const lx=lerp(x0,r.left,u),lh=lerp(Hl,r.height,u);
+ eLogo.style.opacity=u>=1?0:1;eLogo.style.left=lx+'px';eLogo.style.top=lerp(y0,r.top,u)+'px';eLogo.style.height=lh+'px';
+ /* Les lettres ne sortent que là où l'écran a la place : sur téléphone, le mot se déroule pendant que le logo glisse vers la barre. */
+ let wv=440*rv;if(mob)wv=Math.min(wv,Math.max(0,(W-pad-lx)*100/lh-100));
+ wr.setAttribute('width',Math.round(wv));
+ if(mob)kick.style.opacity=1-u;   /* téléphone : l'accroche s'efface quand le logo monte prendre sa place */
+ navLogo.classList.toggle('landed',u>=1);
+}
+let target=0,x=FREEZE??0,v=0,last=performance.now(),drawn=-1;
+function tick(now){const dt=Math.min(.05,(now-last)/1000);last=now;const r=sec.getBoundingClientRect(),vis=r.bottom>0&&r.top<H;
+ if(FREEZE==null){target=clamp(-r.top/Math.max(1,r.height-H),0,1);const k=130,c=2*Math.sqrt(k);v+=(k*(target-x)-c*v)*dt;x+=v*dt;if(Math.abs(target-x)<1e-4&&Math.abs(v)<1e-3){x=target;v=0}}
+ if(vis||FREEZE!=null){draw(x,now/1000);ui(x);drawn=x}else if(drawn!==x){ui(x);drawn=x}
+ requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+})();
+
 const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const WAI='<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>';
-/* Les métiers du site type : photo, textes, horaires, trois couleurs (accent, texte sur l'accent) */
+
+/* Les sites types : photo, textes, horaires, trois couleurs nommées (accent, texte sur l'accent, nom) */
 const T={
- coiffure:{label:'Coiffure',photo:'img/t-coiffure.jpg',h:'Votre salon à {t}.',sub:'Coupes, couleurs et soins, sur rendez-vous.',sec:'Prestations',rows:[['Coupe & brushing','65.–'],['Balayage','140.–'],['Coupe homme','38.–']],cta:'Prendre rendez-vous',open:"Ouvert · jusqu'à 18:30",hours:'Ma–Ve 9:00–18:30<br>Sa 9:00–16:00',styles:[['#8A4A78','#fff'],['#1F6F66','#fff'],['#C2A04A','#15171B']]},
- garage:{label:'Garage',photo:'img/t-garage.jpg',h:'Votre garage de confiance à {t}.',sub:'Service, freins, pneus. Toutes marques.',sec:'Tarifs',rows:[['Service selon carnet','dès 290.–'],['Changement de pneus','80.–'],['Diagnostic','95.–']],cta:'Demander un devis',open:"Ouvert · jusqu'à 18:00",hours:'Lu–Ve 7:30–12:00<br>13:30–18:00',styles:[['#2038EC','#fff'],['#D2462E','#fff'],['#15171B','#fff']]},
- restaurant:{label:'Restaurant',photo:'img/t-restaurant.jpg',h:'Une bonne table à {t}.',sub:'Midi et soir, terrasse face au lac.',sec:'Menu du jour',rows:[['Menu du jour','21.50'],['Filets de perche','34.–'],['Dessert maison','9.–']],cta:'Réserver une table',open:"Ouvert · jusqu'à 23:00",hours:'Ma–Di 11:30–14:00<br>18:00–23:00',styles:[['#B8542A','#fff'],['#2F7A52','#fff'],['#8E2F3F','#fff']]},
- beaute:{label:'Beauté',photo:'img/t-beaute.jpg',h:'Prenez soin de vous à {t}.',sub:'Visage, épilation, manucure.',sec:'Soins',rows:[['Soin du visage','95.–'],['Manucure','55.–'],['Épilation jambes','60.–']],cta:'Réserver un soin',open:"Ouvert · jusqu'à 19:00",hours:'Lu–Sa 9:00–19:00',styles:[['#9C6B4F','#fff'],['#A85C82','#fff'],['#3F7A66','#fff']]},
- artisan:{label:'Artisan',photo:'img/t-artisan.jpg',h:'Des travaux bien faits à {t}.',sub:'Menuiserie, rénovation, dépannage.',sec:'Services',rows:[['Devis gratuit','sous 48 h'],['Rénovation','sur mesure'],['Dépannage','7 j / 7']],cta:'Demander un devis',open:'Joignable · 7 h – 19 h',hours:'Lu–Ve 7:00–19:00<br>Dépannage 7 j / 7',styles:[['#B9781C','#15171B'],['#2D6E96','#fff'],['#5F7A33','#fff']]}
+ coiffure:{label:'Coiffure',photo:'img/t-coiffure.jpg',h:'Votre salon à {t}.',sub:'Coupes, couleurs et soins, sur rendez-vous.',sec:'Prestations',rows:[['Coupe & brushing','65.–'],['Balayage','140.–'],['Coupe homme','38.–']],cta:'Prendre rendez-vous',open:'Ouvert · jusqu’à 18:30',hours:'Ma–Ve 9:00–18:30<br>Sa 9:00–16:00',styles:[['#1F6F66','#fff','sapin'],['#8A4A78','#fff','prune'],['#C2A04A','#15171B','miel']]},
+ garage:{label:'Garage',photo:'img/t-garage.jpg',h:'Votre garage de confiance à {t}.',sub:'Service, freins, pneus. Toutes marques.',sec:'Tarifs',rows:[['Service selon carnet','dès 290.–'],['Changement de pneus','80.–'],['Diagnostic','95.–']],cta:'Demander un devis',open:'Ouvert · jusqu’à 18:00',hours:'Lu–Ve 7:30–12:00<br>13:30–18:00',styles:[['#2038EC','#fff','bleu'],['#D2462E','#fff','brique'],['#15171B','#fff','noir']]},
+ restaurant:{label:'Restaurant',photo:'img/t-restaurant.jpg',h:'Une bonne table à {t}.',sub:'Midi et soir, terrasse face au lac.',sec:'Menu du jour',rows:[['Menu du jour','21.50'],['Filets de perche','34.–'],['Dessert maison','9.–']],cta:'Réserver une table',open:'Ouvert · jusqu’à 23:00',hours:'Ma–Di 11:30–14:00<br>18:00–23:00',styles:[['#B8542A','#fff','terre cuite'],['#2F7A52','#fff','olive'],['#8E2F3F','#fff','bordeaux']]},
+ beaute:{label:'Institut',photo:'img/t-beaute.jpg',h:'Prenez soin de vous à {t}.',sub:'Visage, épilation, manucure.',sec:'Soins',rows:[['Soin du visage','95.–'],['Manucure','55.–'],['Épilation jambes','60.–']],cta:'Réserver un soin',open:'Ouvert · jusqu’à 19:00',hours:'Lu–Sa 9:00–19:00',styles:[['#9C6B4F','#fff','noisette'],['#A85C82','#fff','rose'],['#3F7A66','#fff','eucalyptus']]},
+ artisan:{label:'Artisan',photo:'img/t-artisan.jpg',h:'Des travaux bien faits à {t}.',sub:'Menuiserie, rénovation, dépannage.',sec:'Services',rows:[['Devis gratuit','sous 48 h'],['Rénovation','sur mesure'],['Dépannage','7 j / 7']],cta:'Demander un devis',open:'Joignable · 7 h – 19 h',hours:'Lu–Ve 7:00–19:00<br>Dépannage 7 j / 7',styles:[['#B9781C','#15171B','ocre'],['#2D6E96','#fff','bleu acier'],['#5F7A33','#fff','mousse']]}
 };
+/* Les métiers : libellé, site conseillé (vit / imm), une phrase sans promesse, site type s'il existe */
+const ACT={coiffure:['Coiffure','vit','Vos prestations, vos prix, vos horaires, et la fiche Google qui vous met sur la carte.','coiffure'],
+ beaute:['Institut · beauté','vit','Vos soins et vos prix, le rendez-vous par WhatsApp, et la fiche Google reliée.','beaute'],
+ garage:['Garage','vit','Vos services et vos tarifs, un bouton pour demander un devis, et la fiche Google reliée.','garage'],
+ artisan:['Artisan','vit','Vos réalisations, vos prestations, un bouton pour demander un devis, et la fiche Google reliée.','artisan'],
+ restaurant:['Restaurant · café','vit','Votre carte, vos horaires et la réservation sur WhatsApp. Le site vitrine suffit pour commencer ; pour entrer dans la salle, le site immersif.','restaurant'],
+ hotel:['Hôtel · chambres d’hôtes','imm','Le visiteur traverse les chambres et la vue, puis réserve.'],
+ logement:['Logement à louer','imm','Les candidats visitent le logement en ligne avant de vous écrire. Un seul lien à mettre sur vos annonces.'],
+ immo:['Bien immobilier','imm','Les acheteurs parcourent le bien chez eux, avant la visite sur place.'],
+ salle:['Salle · atelier','imm','On parcourt l’espace comme un futur locataire, avec les tarifs et les dates.'],
+ autre:['Autre commerce','vit','Une page claire reliée à votre fiche Google : vos prix, vos horaires, un bouton pour vous écrire.']};
 const TOWNS=['Genève','Coppet','Nyon','Rolle','Morges','Lausanne','Vevey','Montreux'];
-const slug=n=>(n||'votre-commerce').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'votre-commerce';
-function site(el,s,layout){const t=T[s.trade],[c,ct]=t.styles[s.style]||t.styles[0],name=esc(s.name||'Votre commerce'),town=esc(s.town);
+const slug=n=>(n||'votre-commerce').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'votre-commerce';
+function site(el,t,s,layout){const [c,ct]=t.styles[s.style]||t.styles[0],name=esc(s.name||'Votre commerce'),town=esc(s.town);
+ const h=s.town?t.h.replace('{t}',s.town):t.h.replace(' à {t}','');
  el.innerHTML=`<div class="tpl ${layout}" style="--c:${c};--ct:${ct}">
   <header class="tn"><b>${name}</b><nav><span>${esc(t.sec)}</span><span>Horaires</span><span>Contact</span></nav><span class="tb">${WAI}WhatsApp</span></header>
-  <div class="th" style="background-image:url(${t.photo})"><div class="th-in"><span class="tt">${esc(t.label)} · ${town}</span><strong>${esc(t.h.replace('{t}',s.town))}</strong><p>${esc(t.sub)}</p><div class="th-act"><span class="tb">${WAI}${esc(t.cta)}</span><span class="to"><i></i>${esc(t.open)}</span></div></div></div>
-  <div class="tg"><div class="tl"><h4>${esc(t.sec)}</h4>${t.rows.map(([a,b])=>`<div class="tr"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join('')}</div>
-   <div class="ti"><h4>Horaires</h4><p>${t.hours}</p><div class="tgo"><i></i>Avis Google · Itinéraire · ${town}</div></div></div>
+  <div class="th" style="background-image:url(${t.photo})"><div class="th-in"><span class="tt">${esc(t.label)}${town?' · '+town:''}</span><strong>${esc(h)}</strong><p>${esc(t.sub)}</p><div class="th-act"><span class="tb">${WAI}${esc(t.cta)}</span><span class="to"><i></i>${esc(t.open)}</span></div></div></div>
+  <div class="tg"><div class="tl"><div class="tk">${esc(t.sec)}</div>${t.rows.map(([a,b])=>`<div class="tr"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join('')}</div>
+   <div class="ti"><div class="tk">Horaires</div><p>${t.hours}</p><div class="tgo"><i></i>Avis Google · Itinéraire${town?' · '+town:''}</div></div></div>
   <div class="tfoot"><span class="tb">${WAI}${esc(t.cta)}</span></div></div>`;fit(el)}
 /* Le site type est dessiné à taille réelle puis réduit à l'échelle du cadre */
 function fit(el){const n=el.firstElementChild;if(!n)return;const w=n.classList.contains('d')?1120:390;n.style.transform=`scale(${el.clientWidth/w})`}
 new ResizeObserver(es=>es.forEach(e=>fit(e.target))).observe($('liveDesk'));
 new ResizeObserver(es=>es.forEach(e=>fit(e.target))).observe($('livePhone'));
 
-/* Configurateur */
-const st={trade:'coiffure',town:'Rolle',style:0,name:''};
-function chips(el,items,key){el.innerHTML=items.map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${st[key]===v}">${l}</button>`).join('');
- el.onclick=e=>{const b=e.target.closest('button');if(!b)return;st[key]=b.dataset.v;if(key==='trade')st.style=0;draw()}}
-function draw(){const t=T[st.trade];
- chips($('bTrade'),Object.entries(T).map(([k,v])=>[k,v.label]),'trade');
- chips($('bTown'),TOWNS.map(x=>[x,x]),'town');
- $('bStyle').innerHTML=t.styles.map(([a],i)=>`<button type="button" aria-label="Couleur ${i+1}" aria-pressed="${i===st.style}" style="--g:${a}" data-i="${i}"></button>`).join('');
- site($('liveDesk'),st,'d');site($('livePhone'),st,'m');
- $('liveUrl').textContent=slug(st.name)+'.ch';
- $('wantIt').href=wa(`Bonjour OONDE, je voudrais ma maquette gratuite.\nCommerce : ${st.name||'(nom à préciser)'}\nMétier : ${t.label}\nCommune : ${st.town}\nCouleur : ${st.style+1}`);
- try{localStorage.setItem('oonde-essai',JSON.stringify(st))}catch(e){}}
+/* L'outil : un seul état, les boutons existent une fois pour toutes (le focus reste où il est) */
+const st={act:'coiffure',town:'Rolle',style:0,name:'',prod:''};
+function radios(el,items,key,attr){el.innerHTML=items.map(([v,l])=>`<button type="button" role="radio" data-${attr}="${v}" aria-checked="false">${l}</button>`).join('');
+ el.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key))return;const bs=[...el.children],i=bs.indexOf(document.activeElement);if(i<0)return;e.preventDefault();const n=bs[(i+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:bs.length-1))%bs.length];n.focus();n.click()})}
+function press(el,v,attr){[...el.children].forEach(b=>{const on=b.dataset[attr]===String(v);b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1})}
+radios($('bAct'),Object.entries(ACT).map(([k,v])=>[k,v[0]]),'act','v');
+radios($('bTown'),TOWNS.map(x=>[x,x]).concat([['ailleurs','Ailleurs']]),'town','v');
+const MSG_IMM=(label,town)=>`Bonjour OONDE, je voudrais un devis pour un site immersif.\nLieu : ${label}\nCommune : ${town||'à préciser'}\nTaille : (nombre de pièces ou de salles)\nLe lieu est prêt à être filmé : oui / non\nJ’ai déjà des photos ou des vidéos : oui / non`;
+const MSG_VIT=(a,town,tpl)=>`Bonjour OONDE, je voudrais ma maquette gratuite.\nCommerce : ${st.name||'(nom à préciser)'}\nMétier : ${a[0]}\nCommune : ${town||'à préciser'}${tpl?'\nCouleur : '+tpl.styles[st.style][2]:''}`;
+function render(){const a=ACT[st.act],prod=st.prod||a[1],tpl=prod==='vit'&&a[3]?T[a[3]]:null,town=TOWNS.includes(st.town)?st.town:'';
+ press($('bAct'),st.act,'v');press($('bTown'),st.town,'v');
+ const sw=$('swWrap'),bs=$('bStyle');sw.hidden=!tpl;
+ if(tpl){if(bs.dataset.t!==a[3]){const had=bs.contains(document.activeElement);bs.dataset.t=a[3];bs.innerHTML=tpl.styles.map(([c,,n],i)=>`<button type="button" role="radio" aria-label="${esc(n)}" title="${esc(n)}" aria-checked="false" style="--g:${c}" data-i="${i}"></button>`).join('');if(had)bs.children[st.style].focus()}press(bs,st.style,'i')}
+ const r=$('reco'),pv=$('resPrev');
+ if(tpl){pv.hidden=false;r.hidden=true;
+  const s={name:st.name,town,style:st.style};site($('liveDesk'),tpl,s,'d');site($('livePhone'),tpl,s,'m');
+  $('liveUrl').textContent=slug(st.name)+'.ch';
+  $('prevDesc').textContent=`Aperçu : ${st.name||'votre commerce'}, ${a[0].toLowerCase()}${town?' à '+town:''}, couleur ${tpl.styles[st.style][2]}.`;
+  $('wantIt').href=wa(MSG_VIT(a,town,tpl));
+  $('altLine').innerHTML=st.act==='restaurant'?'Votre salle mérite une visite ? <a href="#immersif">Voir le site immersif</a>, sur devis.':'';$('altLine').hidden=st.act!=='restaurant';
+  $('mbarBtn').href=$('wantIt').href}
+ else{pv.hidden=true;r.hidden=false;const who=`<span class="mono">Notre conseil · ${esc(a[0])}${town?' · '+esc(town):''}</span>`;
+  if(prod==='imm')r.innerHTML=`${who}<h3>Le site immersif.</h3><p>${a[2]}</p><div class="rp"><b>Sur devis</b><span>prix et délai sous 48 heures, site vitrine compris</span></div><a class="btn" href="${wa(MSG_IMM(a[0],town))}" target="_blank" rel="noopener">${WAI}Demander mon devis</a><div class="more"><a href="#immersif">Voir un exemple</a><button type="button" data-prod="vit">Ou commencer par le site vitrine à 490.–</button></div>`;
+  else r.innerHTML=`${who}<h3>Le site vitrine, relié à Google.</h3><p>${st.prod?'Une page claire reliée à votre fiche Google : vos prix, vos horaires, un bouton pour vous écrire. On passe à l’immersif quand vous voulez.':a[2]}</p><div class="rp"><b>490.–</b><span>une fois, puis 20.– par mois, sans engagement</span></div><a class="btn" href="${wa(MSG_VIT(a,town,null))}" target="_blank" rel="noopener">${WAI}Recevoir ma maquette gratuite</a><div class="more"><a href="#prix">Voir ce qui est compris</a>${st.prod?'<button type="button" data-prod="">Revenir au site immersif</button>':''}</div>`;
+  $('mbarBtn').href=r.querySelector('.btn').href}
+ try{localStorage.setItem('oonde-essai',JSON.stringify({act:st.act,town:st.town,style:st.style,name:st.name}))}catch(e){}}
+/* Sur téléphone, après un choix, on amène le résultat sous les yeux s'il est hors de l'écran */
+function nudge(){if(innerWidth>860)return;const b=$('result').getBoundingClientRect();if(b.top>innerHeight*.6||b.bottom<innerHeight*.3)$('result').scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})}
+$('bAct').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.act=b.dataset.v;st.prod='';st.style=0;render();nudge()};
+$('bTown').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.town=b.dataset.v;render();nudge()};
+$('bStyle').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.style=+b.dataset.i;render();nudge()};
+$('reco').onclick=e=>{const b=e.target.closest('button[data-prod]');if(!b)return;st.prod=b.dataset.prod;render()};
+$('bName').addEventListener('input',e=>{st.name=e.target.value.trim();render()});
 document.querySelector('.vt div').onclick=e=>{const b=e.target.closest('button');if(!b)return;$('preview').dataset.v=b.dataset.v;[...b.parentElement.children].forEach(x=>x.setAttribute('aria-pressed',x===b))};
-$('bStyle').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.style=+b.dataset.i;draw()};
-$('bName').addEventListener('input',e=>{st.name=e.target.value.trim();draw()});
-try{Object.assign(st,JSON.parse(localStorage.getItem('oonde-essai')||'{}'));$('bName').value=st.name||''}catch(e){}
-if(!T[st.trade])st.trade='coiffure';if(!TOWNS.includes(st.town))st.town='Rolle';if(!T[st.trade].styles[st.style])st.style=0;
-draw();
+try{const m=JSON.parse(localStorage.getItem('oonde-essai')||'{}');if(ACT[m.act])st.act=m.act;if(TOWNS.includes(m.town)||m.town==='ailleurs')st.town=m.town;if(Number.isInteger(m.style))st.style=clamp(m.style,0,2);if(typeof m.name==='string')st.name=m.name.slice(0,40);$('bName').value=st.name}catch(e){}
+render();
 
-/* Parcours : activité, commune, recommandation. Le choix alimente aussi l'aperçu du site vitrine. */
-const ACT={restaurant:['Restaurant · café','imm',"On entre dans la salle et sur la terrasse avant de réserver. C'est l'argument qui remplit les tables.",'restaurant'],
- hotel:["Hôtel · chambres d'hôtes",'imm',"Le visiteur traverse les chambres et la vue, puis réserve ce qu'il a déjà vu."],
- logement:['Logement à louer','imm',"Une visite en ligne du logement, puis la demande : moins de questions, plus de nuits réservées."],
- immo:['Bien immobilier','imm',"Un bien visité en 3D vaut vingt photos : les acheteurs sérieux arrivent déjà convaincus."],
- salle:['Salle · atelier · événements','imm',"On parcourt l'espace comme un futur locataire, et la décision se prend sans déplacement."],
- coiffure:['Coiffure','vit',"Vos prestations, vos prix, vos horaires, et la fiche Google qui vous met sur la carte.",'coiffure'],
- garage:['Garage','vit',"Vos services et vos tarifs, un bouton pour demander un devis, et la fiche Google reliée.",'garage'],
- beaute:['Institut · beauté','vit',"Vos soins et vos prix, le rendez-vous par WhatsApp, et la fiche Google reliée.",'beaute'],
- artisan:['Artisan','vit',"Vos réalisations, vos prestations, un bouton pour demander un devis, et la fiche Google reliée.",'artisan'],
- autre:['Autre commerce','vit',"Une page claire reliée à Google, c'est ce qui fait sonner le téléphone. On passe à l'immersif si votre lieu le mérite."]};
-const PROD={imm:{t:'Le site immersif',price:'Sur devis',sub:'site vitrine et fiche Google inclus',link:'#immersif',see:'Voir le site immersif',alt:'vit',altT:'Ou commencer par le site vitrine à 490.–',cta:'Demander un devis'},
- vit:{t:'Le site vitrine, relié à Google',price:'490.–',sub:'une fois, puis 20.– par mois, résiliable',link:'#vitrine',see:'Essayer avec mon nom',alt:'imm',altT:'Ou le site immersif, sur devis',cta:'Ma maquette gratuite'}};
-const q={act:'',town:'',prod:''};
-function qchips(el,items,key){el.innerHTML=items.map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${q[key]===v}">${l}</button>`).join('')}
-function reco(){qchips($('qAct'),Object.entries(ACT).map(([k,v])=>[k,v[0]]),'act');qchips($('qTown'),TOWNS.map(x=>[x,x]).concat([['autre','Ailleurs']]),'town');
- const r=$('reco');
- if(!q.act){r.innerHTML=`<span class="mono">Notre conseil</span><h3>Dites-nous votre activité.</h3><p>On vous indique lequel des deux sites convient, son prix, et on prépare votre message WhatsApp.</p><div class="hint"><span>Site immersif · sur devis</span><span>Site vitrine · 490.–</span></div>`;return}
- const a=ACT[q.act],p=PROD[q.prod||a[1]],town=q.town&&q.town!=='autre'?q.town:'';
- const msg=p===PROD.imm?`Bonjour OONDE, je voudrais un devis pour un site immersif.\nActivité : ${a[0]}${town?'\nCommune : '+town:''}\nLieu à modéliser : `:`Bonjour OONDE, je voudrais ma maquette gratuite.\nActivité : ${a[0]}${town?'\nCommune : '+town:''}\nNom du commerce : `;
- r.innerHTML=`<span class="mono">Notre conseil · ${esc(a[0])}${town?' · '+esc(town):''}</span><h3>${p.t}</h3><p>${a[2]}</p><div class="rp"><b>${p.price}</b><span>${p.sub}</span></div><a class="btn" href="${wa(msg)}" target="_blank" rel="noopener">${WAI}${p.cta}</a><div class="more"><a href="${p.link}">${p.see}</a><button type="button" data-alt="${p.alt}">${p.altT}</button></div>`}
-$('qAct').onclick=e=>{const b=e.target.closest('button');if(!b)return;q.act=b.dataset.v;q.prod='';const t=ACT[q.act][3];if(t&&T[t]){st.trade=t;st.style=0;draw()}reco()};
-$('qTown').onclick=e=>{const b=e.target.closest('button');if(!b)return;q.town=b.dataset.v;if(TOWNS.includes(q.town)){st.town=q.town;draw()}reco()};
-$('reco').onclick=e=>{const b=e.target.closest('button[data-alt]');if(!b)return;q.prod=b.dataset.alt;reco()};
-reco();
+/* La démo : lecture à l'écran sur ordinateur, au premier toucher sur téléphone ; le point suit, la légende raconte */
+(()=>{const v=$('walk'),th=$('thumb'),cap=$('cap'),pp=$('pp'),go=$('go');const CAPS=[[0,'L’allée'],[.45,'La porte s’ouvre'],[.8,'Le salon, vue sur le lac']];
+ let on=false,paused=false,raf=0;const AUTO=!RM&&!TOUCH;
+ function loop(){if(v.paused)return;const f=v.duration?v.currentTime/v.duration:0;th.style.top=(f*100)+'%';const c=CAPS.filter(x=>f>=x[0]).pop()[1];if(cap.textContent!==c)cap.textContent=c;raf=requestAnimationFrame(loop)}
+ v.addEventListener('play',()=>{cancelAnimationFrame(raf);loop()});
+ const play=()=>v.play().catch(()=>{});
+ new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on&&v.preload==='none')v.preload='auto';if(!AUTO)return;on&&!paused?play():v.pause()},{threshold:.2}).observe(v);
+ go.onclick=()=>{go.hidden=true;paused=false;play();pp.setAttribute('aria-pressed','false');pp.setAttribute('aria-label','Mettre en pause')};
+ pp.onclick=()=>{paused=!v.paused;if(paused)v.pause();else play();pp.setAttribute('aria-pressed',paused);pp.setAttribute('aria-label',paused?'Lire':'Mettre en pause');if(!paused)go.hidden=true};
+})();
 
-/* Vidéo du hero : lecture à l'écran seulement, et un curseur qui suit, comme la barre de défilement du vrai site */
-(()=>{const v=$('walk'),th=$('thumb');let on=false;
-new IntersectionObserver(es=>{on=es[0].isIntersecting;if(RM)return;on?v.play().catch(()=>{}):v.pause()},{threshold:.2}).observe(v);
-if(RM)return;(function tick(){if(on&&v.duration)th.style.top=(v.currentTime/v.duration*86)+'%';requestAnimationFrame(tick)})();})();
+/* Le fil (ordinateur large) : les arrêts défilent avec la page, le point reste sur la ligne de lecture */
+(()=>{const fil=$('fil');if(!matchMedia('(min-width:1280px)').matches)return;
+ const secs=[...document.querySelectorAll('main section[id]')].filter(s=>s.querySelector('h2')),stops=$('stops');
+ stops.innerHTML=secs.map((s,i)=>`<a href="#${s.id}" tabindex="-1"><span>${String(i+1).padStart(2,'0')}</span></a>`).join('');
+ const as=[...stops.children],entry=$('entry');let ys=[];
+ function measure(){ys=secs.map(s=>s.querySelector('h2').getBoundingClientRect().top+scrollY);as.forEach((a,i)=>a.style.top=ys[i]+'px')}
+ function frame(){const y=scrollY,line=y+innerHeight*.38;stops.style.transform=`translateY(${-y}px)`;let cur=-1;ys.forEach((t,i)=>{if(t<=line+24)cur=i});as.forEach((a,i)=>a.classList.toggle('cur',i===cur));fil.classList.toggle('on',y>entry.offsetHeight-innerHeight*.6)}
+ measure();frame();addEventListener('scroll',()=>requestAnimationFrame(frame),{passive:true});addEventListener('resize',()=>{measure();frame()});addEventListener('load',()=>{measure();frame()});
+ setTimeout(()=>{measure();frame()},1500);
+})();
 
-/* Reel : joue seulement à l'écran */
-(()=>{const v=$('reel');new IntersectionObserver(es=>{if(RM)return;es[0].isIntersecting?v.play().catch(()=>{}):v.pause()},{threshold:.4}).observe(v);})();
+/* Questions : ouverture en 220 ms, fermeture aussi (le natif ne sait pas fermer en douceur) */
+document.querySelectorAll('details').forEach(d=>{const s=d.querySelector('summary');s.addEventListener('click',e=>{e.preventDefault();
+ if(d.open){d.classList.remove('is');setTimeout(()=>{if(!d.classList.contains('is'))d.open=false},RM?0:230)}else{d.open=true;requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('is')))}})});
 
-/* Apparitions au défilement */
-(()=>{const els=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('on'));return}
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{rootMargin:'0px 0px -6% 0px'});
-els.forEach(e=>io.observe(e));})();
-
-/* Barre WhatsApp mobile : apparaît après le hero */
-(()=>{const m=$('mbar'),h=document.querySelector('.hero');new IntersectionObserver(es=>m.classList.toggle('on',!es[0].isIntersecting)).observe(h);})();
+/* Barre WhatsApp mobile : arrive quand l'entrée est passée, et le bouton de la barre du haut s'efface */
+(()=>{const m=$('mbar');new IntersectionObserver(es=>{const off=!es[0].isIntersecting;m.classList.toggle('on',off);document.body.classList.toggle('mbar-on',off)}).observe($('entry'));})();
 </script>
 </body>
 </html>
