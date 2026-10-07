@@ -4,9 +4,9 @@ D = pathlib.Path(__file__).parent
 FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
 def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(msg)
-WA = walink("Bonjour OONDE, je voudrais ma maquette gratuite.\nMon commerce ou mon lieu : \nMa commune : ")
-WA_IMM = walink("Bonjour OONDE, je voudrais un devis pour un site immersif.\nLieu : (restaurant, logement, salle…)\nCommune : \nTaille : (nombre de pièces ou de salles)\nLe lieu est prêt à être filmé : oui / non\nJ’ai déjà des photos ou des vidéos : oui / non")
-WA_VID = walink("Bonjour OONDE, je voudrais des vidéos courtes pour les réseaux.\nMon commerce : \nMa commune : \nNombre de vidéos souhaité : ")
+WA = walink("Bonjour, j’aimerais bien recevoir une maquette gratuite pour mon commerce.\nNom et commune : ")
+WA_IMM = walink("Bonjour, j’aimerais un devis pour un site immersif.\nMon lieu (type, commune, taille) : ")
+WA_VID = walink("Bonjour, j’aimerais un devis pour des vidéos courtes (Instagram, TikTok).\nMon commerce et ma commune : ")
 # Le logo inline vient du fichier de marque : encre → currentColor ; la version « clip » révèle les lettres derrière le O.
 _logo = (D / 'brand' / 'logo.svg').read_text()
 _vb = re.search(r'viewBox="([^"]+)"', _logo).group(1)
@@ -68,5 +68,5 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         shutil.copy(D / 'brand' / 'favicon.svg', o / 'favicon.svg')
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Strict-Transport-Security: max-age=31536000\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{"" if k == "index" else k + ".html"}</loc></url>\n' for k in docs) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '  <url><loc>https://oonde.ch/</loc></url>\n' + '</urlset>\n')
 print('ok', sorted(p.name for p in (D / 'dist').iterdir()))
