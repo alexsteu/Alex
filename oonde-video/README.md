@@ -10,7 +10,7 @@ catégorie exacte, horaires complets, site web relié, adresse et téléphone un
 | 3,3 – 6,5 s | L'onde oonde passe : catégorie, horaires, site web et coordonnées corrigés, score de la fiche 38 → 96. |
 | 6,5 – 9,5 s | Retour sur Google : Garage Fontana remonte de la 9e à la 1re place. |
 | 9,5 – 12,4 s | ChatGPT recommande Garage Fontana (et aussi Gemini, Perplexity, Copilot). |
-| 12,4 – 15 s | Écran de fin sur bleu Klein : logo **● OONDE**, « Faites-vous trouver. Sur Google et dans les IA. », **@oonde.studio**, Alexandre Steudler & Serhat Dogar. |
+| 12,4 – 15 s | Écran de fin sur bleu Klein : logo **● OONDE**, « Faites-vous trouver. Sur Google et dans les IA. », **@oonde_studio**, Alexandre Steudler & Serhat Dogar. |
 
 Direction artistique « Signal » (celle du site) : porcelaine `#F5F6F3`, encre `#0E1116`, accent unique bleu Klein `#2038EC`,
 champ de points en onde diagonale, sans dégradés. Le contact affiché est Instagram, car oonde.ch est hors ligne.
