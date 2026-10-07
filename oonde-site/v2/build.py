@@ -64,7 +64,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         (o / 'fonts').mkdir()
         for f, p, ws in FACES:
             for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
-        for f in FONTDIR.glob('OFL-*.txt'): shutil.copy(f, o / 'fonts')
+        for n in ('Instrument-Sans', 'IBM-Plex-Mono'): shutil.copy(FONTDIR / f'OFL-{n}.txt', o / 'fonts')
         shutil.copy(D / 'brand' / 'favicon.svg', o / 'favicon.svg')
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Strict-Transport-Security: max-age=31536000\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')

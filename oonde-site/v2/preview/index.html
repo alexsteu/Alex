@@ -64,7 +64,7 @@ section{padding-block:clamp(48px,7vw,96px);border-top:1px solid var(--line)}
 .nav .btn{padding:10px 14px;font-size:14px;min-height:40px;transition:opacity .2s,background-color .12s}
 .nav .btn .s{display:none}
 @media (max-width:860px){.nav nav a:not(.keep){display:none}}
-@media (max-width:700px){.nav .in{height:56px}.logo svg{height:20px}.nav .btn .l{display:none}.nav .btn .s{display:inline}.e-cta .nav .btn,.mbar-on .nav .btn{opacity:0;pointer-events:none}}
+@media (max-width:700px){.nav .in{height:56px}.logo svg{height:20px}.nav nav{margin-left:auto}.nav .btn .l{display:none}.nav .btn .s{display:inline}.nav .btn{max-width:160px;overflow:hidden;white-space:nowrap;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}.e-cta .nav .btn,.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s .22s}}   /* téléphone : quand la barre du bas prend le relais, le bouton du haut se replie et « Prix » glisse à droite */
 
 /* Le fil : un trait dans la marge, le point marque où l'on est. Ordinateur large seulement. */
 .fil{display:none}
@@ -626,7 +626,8 @@ function ui(p){
  /* Le logo apparaît exactement sur le dernier anneau, les lettres sortent de derrière le O, puis il rejoint la barre. */
  const r=navLogo.querySelector('svg').getBoundingClientRect(),s=stage.getBoundingClientRect(),u=ease(clamp((p-PF)/(1-PF),0,1)),rv=clamp((p-PS-.015)/.06,0,1);
  /* téléphone : pendant que les lettres sortent, le O glisse à gauche pour que le mot entier soit centré */
- const x0=(mob?lerp(cx-.5*Hl,(W-5.35*Hl)/2,ease(rv)):cx-.5*Hl)+s.left,y0=cy-.5*Hl+s.top;
+ /* le point de départ reste fixe dans l'écran : si l'on défile vite, le grand logo ne remonte pas avec la scène par-dessus la barre */
+ const x0=(mob?lerp(cx-.5*Hl,(W-5.35*Hl)/2,ease(rv)):cx-.5*Hl)+s.left,y0=cy-.5*Hl+Math.max(0,s.top);
  const lx=lerp(x0,r.left,u),lh=lerp(Hl,r.height,u);
  eLogo.style.opacity=u>=1?0:1;eLogo.style.left=lx+'px';eLogo.style.top=lerp(y0,r.top,u)+'px';eLogo.style.height=lh+'px';
  /* Les lettres ne sortent que là où l'écran a la place : sur téléphone, le mot se déroule pendant que le logo glisse vers la barre. */
