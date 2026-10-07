@@ -5,7 +5,8 @@ FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
 def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(msg)
 WA = walink("Bonjour, j’aimerais bien recevoir une maquette gratuite pour mon commerce.\nNom et commune : ")
-WA_IMM = walink("Bonjour, j’aimerais un devis pour un site immersif.\nMon lieu (type, commune, taille) : ")
+WA_IMM = walink("Bonjour, j’aimerais connaître le prix d’un site avec visite.\nMon lieu (type, commune, taille) : ")
+WA_DEMO = walink("Bonjour, j’ai vu la démo Les Grèves sur votre site. J’aimerais la même chose pour mon lieu.\nMon lieu (type, commune, taille) : ")
 WA_VID = walink("Bonjour, j’aimerais un devis pour des vidéos courtes (Instagram, TikTok).\nMon commerce et ma commune : ")
 # Le logo inline vient du fichier de marque : encre → currentColor ; MARK = l'anneau et le point seuls.
 _logo = (D / 'brand' / 'logo.svg').read_text()
@@ -14,11 +15,13 @@ _inner = _logo[_logo.index('>') + 1:_logo.rindex('</svg>')].replace('#111318', '
 LOGO = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{_vb}" aria-hidden="true" focusable="false">{_inner}</svg>'
 _i = _inner.index('<path')
 MARK = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">{_inner[:_i]}</svg>'   # la marque seule (anneau + point), qui vole jusqu'à la barre
-GOOGLE = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Instrument+Sans:wght@400;500;600&display=swap">'
+GOOGLE = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=IBM+Plex+Mono:wght@500&family=Instrument+Sans:wght@400;500;600&display=swap">'
 FACES = [('Instrument Sans', 'instrument-sans-latin-%s-normal.woff2', ['400', '500', '600']),
          ('IBM Plex Mono', 'ibm-plex-mono-latin-%s-normal.woff2', ['500'])]   # la 600 n'est utilisée nulle part
+SERIF = [('normal', 'cormorant-garamond-latin-400-normal.woff2'), ('italic', 'cormorant-garamond-latin-400-italic.woff2')]   # le site Les Grèves de la démo (sous-ensemble latin, fonts/ du site)
 PRELOAD = ''.join(f'<link rel="preload" href="fonts/{f}.woff2" as="font" type="font/woff2" crossorigin>' for f in ('instrument-sans-latin-600-normal', 'instrument-sans-latin-400-normal', 'ibm-plex-mono-latin-500-normal'))   # ce que montre le premier écran
-LOCAL = PRELOAD + '<style>' + ''.join(f'@font-face{{font-family:"{f}";src:url(fonts/{p % w}) format("woff2");font-weight:{w};font-display:swap}}' for f, p, ws in FACES for w in ws) + '</style>'
+LOCAL = (PRELOAD + '<style>' + ''.join(f'@font-face{{font-family:"{f}";src:url(fonts/{p % w}) format("woff2");font-weight:{w};font-display:swap}}' for f, p, ws in FACES for w in ws)
+         + ''.join(f'@font-face{{font-family:"Cormorant Garamond";src:url(fonts/{f}) format("woff2");font-weight:400;font-style:{st};font-display:swap}}' for st, f in SERIF) + '</style>')
 PAGES = {'mentions-legales': ('Mentions légales', "Éditeur, hébergement et sources légales du site OONDE.", 'M'),
          'confidentialite': ('Confidentialité', "Comment OONDE traite vos données personnelles, selon la LPD.", 'C'),
          'conditions': ('Conditions générales', "Conditions générales des prestations OONDE : site internet, fiche Google et suivi.", 'G'),
@@ -27,7 +30,7 @@ BODY404 = ('<span class="eyebrow">Erreur 404</span>\n<h1>Cette page n’existe p
            '<p><a href="./">Revenir à l’accueil</a> · <a href="./#prix">Voir les prix</a> · <a href="{{WA}}" target="_blank" rel="noopener">Nous écrire sur WhatsApp</a></p>\n')
 
 def fill(s, fonts):
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_VID}}', WA_VID), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO)]:
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_VID}}', WA_VID), ('{{WA_DEMO}}', WA_DEMO), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)
 
@@ -40,6 +43,8 @@ def typo(s):
         p = re.sub(r'(?<=[\w»)\.\u2013\u2019]) ([?!;:])', '\u202f\\1', p)
         p = re.sub(r'« ', '«\u202f', p)
         p = re.sub(r' »', '\u202f»', p)
+        p = re.sub(r'(?<=\d\.\u2013) (?=\w)', '\u00a0', p)   # 490.– une fois, 20.– par mois
+        p = re.sub(r'(?<=\d) (?=(?:heures|jours|h\b|×))', '\u00a0', p)   # 48 heures, 5 jours
         parts[i] = p
     return ''.join(parts)
 
@@ -70,12 +75,18 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         (o / f'{k}.html').write_text(built[k])
     (o / 'img').mkdir()   # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
-    for f in sorted(set(re.findall(r'img/[\w.-]+\.(?:jpe?g|png|webp|avif|mp4)', ''.join(built.values())))): shutil.copy2(D / f, o / f)
+    html = ''.join(built.values())
+    for f in sorted(set(re.findall(r'img/[\w./-]+\.(?:jpe?g|png|webp|avif|mp4)', html))):
+        (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
+    if 'img/greves/${k}/' in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
+        for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
     if wrap:
         (o / 'fonts').mkdir()
         for f, p, ws in FACES:
             for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
         for n in ('Instrument-Sans', 'IBM-Plex-Mono'): shutil.copy(FONTDIR / f'OFL-{n}.txt', o / 'fonts')
+        for st, f in SERIF: shutil.copy(D / 'fonts' / f, o / 'fonts')
+        shutil.copy(D / 'fonts' / 'OFL-Cormorant-Garamond.txt', o / 'fonts')
         for f in ('favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(D / 'brand' / f, o / f)
         csp = ("default-src 'self'; script-src 'self' " + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))
                + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; "
