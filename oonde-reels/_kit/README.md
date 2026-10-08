@@ -26,7 +26,7 @@ node $K/render.cjs src video.mp4                                 # vidéo muette
 python3 $K/make_audio.py src/cues.json audio.wav                 # son (voir l'en-tête du script)
 python3 $K/mux.py video.mp4 audio.wav NN-slug.mp4                # 2 passes, 48 kHz, −15 LUFS, crête ≤ −1,5 dBTP (affiche la mesure)
 ```
-`render.cjs` affiche `ERREURS PAGE : n` si la page a des erreurs : il faut 0. Prévisualiser une image :
+`render.cjs` affiche `ERREURS PAGE : n` seulement s’il y a des erreurs (aucune ligne = 0 erreur). Prévisualiser une image :
 ouvrir `src/index.html?t=4.2&safe` (le serveur du kit sert `/_kit/`). Carrousel : même gabarit avec
 `#stage` en 1080×1350, une diapo par valeur de `t` (t = 0, 1, 2…), puis `--stills 0,1,2,3,4,5 --out slides`
 (page en `html,body,#stage{height:1350px}` et `render.cjs … --h 1350`). `--q safe` ajoute `?safe` à l’adresse (cadre de sécurité visible sur les images de contrôle).

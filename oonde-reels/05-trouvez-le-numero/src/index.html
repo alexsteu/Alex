@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · Trouvez le numéro</title>
+<link rel="icon" href="data:,">
+<style>
+/* Kit Reels OONDE : DA v7. Polices et logos servis par render.cjs sous /_kit/ */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+.abs{position:absolute;left:0;top:0}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+.nn{margin-left:-.12em}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+
+/* ---------- en-tête (au-dessus de la fenêtre du téléphone) ---------- */
+#hdr{z-index:10}
+.lab{position:absolute;top:300px;font-size:30px;line-height:1;color:var(--muted);white-space:nowrap}
+#labA,#labB{left:82px}
+#demo{left:0;width:940px;text-align:right}
+.ttl{position:absolute;left:78px;top:348px;font:600 102px/1.0 IS;letter-spacing:-.03em;white-space:nowrap}
+#tB{font-size:132px;top:352px}
+#chrono{position:absolute;left:0;top:448px;width:936px;text-align:right;font:600 100px/1 PM;letter-spacing:-.02em;color:var(--klein);white-space:nowrap}
+#chrono .u{font-size:52px;letter-spacing:0;margin-left:10px;color:var(--klein)}
+#chrono .cm{margin:0 -.18em}
+#bar{position:absolute;left:80px;top:584px;width:860px;height:6px;border-radius:3px;background:#E3E4DF;overflow:hidden}
+#barF{position:absolute;left:0;top:0;width:860px;height:6px;border-radius:3px;background:var(--klein);transform-origin:0 0}
+
+/* ---------- fenêtre + téléphone ---------- */
+#win{left:0;top:630px;width:1080px;height:1290px;overflow:hidden;z-index:2}
+#phone{left:200px;top:0;width:680px;height:1439px;border-radius:70px;background:#15171C;transform-origin:0 0;
+  box-shadow:0 0 0 2px #2A2D33 inset,0 34px 70px rgba(17,19,24,.14),0 10px 24px rgba(17,19,24,.09)}
+#screen{position:absolute;left:14px;top:14px;width:652px;height:1411px;border-radius:56px;overflow:hidden;background:#fff}
+#scr{position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0;transform:scale(1.671795)}
+.sb{position:absolute;left:0;top:0;width:390px;height:50px;z-index:7}
+.sb .time{position:absolute;left:44px;top:15px;font:600 16px/1 IS;letter-spacing:-.01em;color:#000}
+.sb .island{position:absolute;left:133px;top:11px;width:124px;height:36px;border-radius:18px;background:#000}
+.sb svg{position:absolute;top:16px}
+.url{position:absolute;left:12px;top:52px;width:366px;height:38px;border-radius:12px;background:#F0F0F2;z-index:7;
+  display:flex;align-items:center;justify-content:center;gap:6px;font:500 14.5px/1 IS;color:#1C1C1E;letter-spacing:-.005em}
+.urlbg{position:absolute;left:0;top:0;width:390px;height:96px;background:#fff;z-index:6}
+.vp{position:absolute;left:0;top:96px;width:390px;height:748px;overflow:hidden;background:#EFEBE6}
+.page{position:absolute;left:0;top:0;width:390px}
+.sbar{position:absolute;right:3px;top:0;width:3px;border-radius:2px;background:rgba(0,0,0,.35);z-index:6}
+
+/* page A : le site d’origine (crédible, pas ridicule) */
+#pA{background:#fff;font-family:'Liberation Sans',Arial,sans-serif;color:#5b5b5b}
+#pA .promo{height:24px;background:#6B2128;color:#F1E3DE;font-size:9.5px;letter-spacing:.05em;display:flex;align-items:center;justify-content:center}
+#pA .hd{position:relative;height:74px;border-bottom:1px solid #E8E2DC}
+#pA .burg{position:absolute;left:16px;top:27px;display:flex;align-items:center;gap:6px;font-size:8.5px;letter-spacing:.1em;color:#777}
+#pA .burg i{display:block;width:16px;height:2px;background:#777;box-shadow:0 5px 0 #777,0 -5px 0 #777}
+#pA .nm{position:absolute;left:0;top:14px;width:390px;text-align:center;font:italic 400 25px/1 'Liberation Serif',serif;color:#6B2128}
+#pA .tg{position:absolute;left:0;top:46px;width:390px;text-align:center;font-size:8px;letter-spacing:.16em;color:#9a8f88;text-transform:uppercase}
+#pA .soc{position:absolute;right:14px;top:28px;display:flex;gap:5px}
+#pA .soc i{display:block;width:13px;height:13px;border-radius:50%;border:1.2px solid #9a8f88;box-sizing:border-box}
+#pA .car{position:relative;height:226px;overflow:hidden;background:#3a1d1a}
+#pA .strip{position:absolute;left:0;top:0;width:1170px;height:226px;display:flex}
+#pA .sl{position:relative;width:390px;height:226px;overflow:hidden;flex:none}
+#pA .sl svg{position:absolute;left:-10px;top:-10px;filter:blur(6px)}
+#pA .sl b{position:absolute;left:0;top:78px;width:390px;text-align:center;font:italic 400 27px/1.15 'Liberation Serif',serif;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+#pA .dots{position:absolute;left:0;bottom:12px;width:390px;display:flex;justify-content:center;gap:6px}
+#pA .dots i{display:block;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)}
+#pA .arr{position:absolute;top:100px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font-size:13px;line-height:21px;text-align:center}
+#pA h3{margin:24px 18px 9px;font:400 22px/1.15 'Liberation Serif',serif;color:#6B2128}
+#pA p{margin:0 18px;font-size:13.5px;line-height:1.6;text-align:justify;hyphens:none}
+#pA .ph{margin:18px 18px 4px;height:190px;overflow:hidden;border:5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+#pA .ph svg{display:block;filter:blur(5px);transform:scale(1.1)}
+#pA .cap{text-align:center;font-size:10.5px;font-style:italic;color:#9a9a9a}
+#pA .lk{display:block;margin:10px 18px 0;color:#6B2128;text-decoration:underline;font-size:13px}
+#pA .gift{margin:14px 18px 0;height:44px;border-radius:3px;background:#6B2128;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+#pA .ft{margin-top:34px;padding:20px 18px 24px;background:#EFEBE6;color:#a19a93;font-size:9px;line-height:1.7}
+#pA .ft .fn{font:italic 400 17px/1 'Liberation Serif',serif;color:#8d7f77;margin-bottom:8px}
+#pA .ft .fl{font-size:8.5px;letter-spacing:.02em;color:#a7a09a;margin-bottom:10px}
+#pA .ft .l1{font-size:9.5px;color:#8f8780}
+#pA .ft .l2{padding-left:12px;font-size:9px;color:#9b938c}
+#pA .ft .l3{padding-left:24px;font-size:11px;color:#8f8780}
+#pA .ft .fh{margin-top:13px;font-size:10px;letter-spacing:.02em;color:#9b938c}
+#pA .ft .fh.f1{margin-top:28px}
+#pA .ft .fx{font-size:9px;color:#a7a09a}
+#pA .ft .map{display:block;margin-top:5px}
+#pA .ft .rs{display:flex;gap:7px;margin-top:5px}
+#pA .ft .rs i{display:block;width:18px;height:18px;border-radius:50%;border:1.2px solid #b3aca5;box-sizing:border-box}
+#pA .ft .pt{display:flex;gap:10px;margin-top:5px}
+#pA .ft .pt i{display:block;width:72px;height:24px;border-radius:3px;background:#E2DDD6}
+#pA .ft .cp{margin-top:14px;font-size:8px;color:#b3aca5}
+#num{white-space:nowrap}
+/* fenêtre « newsletter » (surgit pendant le chrono) */
+#mdl{position:absolute;left:0;top:96px;width:390px;height:748px;background:rgba(30,16,14,.48);z-index:5}
+#mbox{position:absolute;left:28px;top:232px;width:334px;padding:22px 20px 20px;box-sizing:border-box;background:#fff;border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-family:'Liberation Sans',Arial,sans-serif;color:#555;text-align:center}
+#mbox .x{position:absolute;right:12px;top:9px;font-size:18px;color:#999}
+#mbox b{display:block;font:italic 400 23px/1.1 'Liberation Serif',serif;color:#6B2128}
+#mbox p{margin:8px 0 12px;font-size:12px;line-height:1.5}
+#mbox .in{height:34px;border:1px solid #d8d2cc;border-radius:2px;font-size:11.5px;color:#aaa;display:flex;align-items:center;padding-left:10px}
+#mbox .go{margin-top:8px;height:36px;background:#6B2128;color:#fff;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;border-radius:2px}
+
+/* page B : le même commerce, refait (même identité : nom en italique bordeaux) */
+#pB{background:#F7F7F4;color:#111318;font-family:IS;height:748px}
+#pB .hd{display:flex;align-items:center;justify-content:space-between;padding:12px 20px 0;height:30px}
+#pB .nm{font:italic 400 23px/1 'Liberation Serif',serif;color:#6B2128;letter-spacing:0}
+#pB .mn{width:20px;height:11px;border-top:2px solid #111318;border-bottom:2px solid #111318}
+#pB .hero{margin:8px 20px 0;height:118px;border-radius:14px;overflow:hidden}
+#pB .hero svg{display:block}
+#pB .kk{margin:16px 20px 0;font:500 11px/1 PM;letter-spacing:.14em;color:#6B7078;text-transform:uppercase}
+#pB h1{margin:8px 20px 0;font:600 32px/1.02 IS;letter-spacing:-.035em}
+#pB .hrs{margin:12px 20px 0;padding:13px 14px;background:#fff;border:1px solid #DCDED8;border-radius:14px;display:flex;align-items:center;justify-content:space-between;font:600 16px/1 IS;letter-spacing:-.015em}
+#pB .hrs .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#6B2128;margin-right:9px;vertical-align:1px;box-shadow:0 0 0 4px rgba(107,33,40,.12)}
+#pB .hrs span:last-child{font-weight:500;color:#3A3F47}
+#pB .chips{margin:14px 20px 0;display:flex;gap:8px}
+#pB .chips span{height:34px;padding:0 14px;border:1px solid #DCDED8;border-radius:17px;background:#fff;display:flex;align-items:center;font:500 14px/1 IS;color:#3A3F47}
+#pB .chips span.on{border-color:rgba(107,33,40,.45);color:#6B2128}
+#pB .kk2{margin:22px 20px 0;font:500 11px/1 PM;letter-spacing:.14em;color:#6B7078;text-transform:uppercase}
+#pB .cards{margin:10px 20px 0;display:flex;gap:10px}
+#pB .card{flex:1;background:#fff;border:1px solid #DCDED8;border-radius:12px;overflow:hidden}
+#pB .card svg{display:block}
+#pB .card b{display:block;padding:9px 11px 11px;font:600 13.5px/1.15 IS;letter-spacing:-.01em}
+#btn{position:relative;margin:0 16px;height:62px;border-radius:16px;background:#111318;color:#fff;display:flex;align-items:center;gap:11px;padding-left:18px;font:600 20px/1 IS;letter-spacing:-.015em;transform-origin:50% 50%;overflow:hidden}
+#btn .ar{position:absolute;right:22px;top:23px}
+#rip{position:absolute;left:0;top:0;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:1px solid rgba(255,255,255,.4);box-sizing:border-box}
+#touch{position:absolute;left:0;top:0;width:100px;height:100px;margin:-50px 0 0 -50px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(17,19,24,.55) inset;z-index:4}
+
+/* ---------- révélation ---------- */
+#circ{left:0;top:0;width:1080px;height:1920px;z-index:5;overflow:visible}
+#pathL,#again{left:0;top:0;z-index:6;font-size:30px;line-height:1;color:var(--ink);background:#fff;border:1px solid var(--line);padding:15px 20px 13px;border-radius:10px;white-space:nowrap}
+#again{display:flex;align-items:center;gap:14px}
+#again svg{flex:none}
+#pouce{left:0;top:0;z-index:6;font-size:30px;line-height:1;color:var(--ink);white-space:nowrap}
+#fade{left:0;top:630px;width:1080px;height:56px;background:linear-gradient(#F7F7F4,rgba(247,247,244,0));z-index:3}
+#rule{left:0;top:630px;width:1080px;height:1px;background:var(--line);z-index:3}
+
+/* ---------- fin ---------- */
+#end{left:0;top:0;width:1080px;height:1920px;z-index:9}
+#eTitle{position:absolute;left:78px;top:604px;font:600 108px/1.02 IS;letter-spacing:-.03em;white-space:nowrap}
+#ePill{position:absolute;left:80px;top:890px;height:118px;padding:0 48px 0 30px;border-radius:18px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;gap:22px;font:600 46px/1 IS;letter-spacing:-.015em;white-space:nowrap;transform-origin:0 50%}
+#eBio{position:absolute;left:82px;top:1044px;font-size:30px;color:var(--muted);white-space:nowrap}
+#eRule{position:absolute;left:80px;top:1250px;width:860px;height:2px;background:var(--line);transform-origin:0 0}
+#eLogo{position:absolute;left:80px;top:1294px;height:58px}
+#eHandle{position:absolute;left:0;top:1308px;width:940px;text-align:right;font-size:30px;color:var(--soft)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- fenêtre du téléphone -->
+  <div id="win" class="abs">
+    <div id="phone" class="abs">
+      <div id="screen"><div id="scr">
+        <div class="urlbg"></div>
+        <div class="sb">
+          <div class="time">9:41</div>
+          <div class="island"></div>
+          <svg style="left:286px" width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="8" width="3.4" height="4" rx="1" fill="#000"/><rect x="5" y="5.5" width="3.4" height="6.5" rx="1" fill="#000"/><rect x="10" y="3" width="3.4" height="9" rx="1" fill="#000"/><rect x="15" y="0" width="3.4" height="12" rx="1" fill="#000"/></svg>
+          <svg style="left:311px" width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.3c2.4 0 4.6.9 6.2 2.5l1.2-1.2C14 1.6 11.4.5 8.5.5S3 1.6 1.1 3.6l1.2 1.2C3.9 3.2 6.1 2.3 8.5 2.3zm0 3.6c1.4 0 2.7.5 3.7 1.5l1.2-1.2C12.1 4.9 10.4 4.1 8.5 4.1S4.9 4.9 3.6 6.2l1.2 1.2c1-1 2.300-1.5 3.700-1.5zm0 3.6c-.5 0-1 .2-1.3.5l1.3 1.6 1.3-1.6c-.3-.3-.8-.5-1.3-.5z" fill="#000"/></svg>
+          <svg style="left:334px" width="28" height="13" viewBox="0 0 28 13"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="#000" stroke-opacity=".4"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2" fill="#000"/><path d="M25.3 4.3v4.4c.9-.3 1.5-1.2 1.5-2.2s-.6-1.9-1.5-2.2z" fill="#000" fill-opacity=".45"/></svg>
+        </div>
+        <div class="url"><svg width="10" height="13" viewBox="0 0 10 13"><rect x=".5" y="5.2" width="9" height="7.3" rx="1.6" fill="#1C1C1E"/><path d="M2.4 5.6V3.9a2.6 2.6 0 0 1 5.2 0v1.7" fill="none" stroke="#1C1C1E" stroke-width="1.3"/></svg><span>pinte-vermeil.ch</span></div>
+
+        <div class="vp" id="vp">
+          <!-- page A : avant -->
+          <div class="page" id="pA">
+            <div class="promo">Bons cadeaux disponibles · Découvrir ›</div>
+            <div class="hd">
+              <div class="burg"><i></i>MENU</div>
+              <div class="nm">La Pinte Vermeil</div>
+              <div class="tg">Restaurant · Cuisine du terroir</div>
+              <div class="soc"><i></i><i></i><i></i></div>
+            </div>
+            <div class="car">
+              <div class="strip" id="strip">
+                <div class="sl"><svg class="ill" data-v="0" width="410" height="246" viewBox="0 0 410 246"></svg><b>Bienvenue à la<br>Pinte Vermeil</b></div>
+                <div class="sl"><svg class="ill" data-v="1" width="410" height="246" viewBox="0 0 410 246"></svg><b>Une cuisine<br>de saison</b></div>
+                <div class="sl"><svg class="ill" data-v="2" width="410" height="246" viewBox="0 0 410 246"></svg><b>Notre terrasse<br>vous attend</b></div>
+              </div>
+              <div class="arr" style="left:8px">‹</div><div class="arr" style="right:8px">›</div>
+              <div class="dots"><i></i><i></i><i></i></div>
+            </div>
+            <h3>Notre maison</h3>
+            <p>Depuis plus de vingt ans, toute notre équipe a le plaisir de vous accueillir dans un cadre chaleureux et convivial. Fidèles à nos valeurs de tradition et de partage, nous travaillons des produits frais et de saison, choisis avec soin auprès de producteurs de la région. Que vous veniez pour un repas d’affaires, une fête de famille ou un simple apéritif entre amis, nous mettrons tout notre cœur à faire de votre visite un moment unique.</p>
+            <div class="ph"><svg class="ill" data-v="3" width="350" height="190" viewBox="0 0 350 190"></svg></div>
+            <div class="cap">Notre salle</div>
+            <h3>La carte de saison</h3>
+            <p>Notre carte change au fil des saisons. Retrouvez nos menus, nos vins et nos suggestions du moment dans notre brochure.</p>
+            <span class="lk">› Télécharger la carte (PDF)</span>
+            <h3>Bons cadeaux</h3>
+            <p>Faites plaisir à vos proches avec un bon cadeau de la Pinte.</p>
+            <div class="gift">Commander un bon cadeau</div>
+            <h3>Événements</h3>
+            <p>Chaque jeudi soir, soirée fondue. Réservation conseillée.</p>
+            <div class="ft" id="ft">
+              <div class="fn">La Pinte Vermeil</div>
+              <div class="fl">Accueil · La carte · Événements · Bons cadeaux · Presse · Liens</div>
+              <div class="l1">▾ Infos pratiques</div>
+              <div class="l2">▾ Accès et contact</div>
+              <div class="l3">Bus, arrêt Vermeil · Parking public</div>
+              <div class="l3" style="margin-top:7px"><span id="num">Tél. 021 000 00 00</span></div>
+              <div class="fh f1">Plan d’accès</div>
+              <svg class="map" width="330" height="120" viewBox="0 0 330 120"><rect width="330" height="120" rx="3" fill="#E2DDD6"/><path d="M0 84 C80 70 150 92 330 66" stroke="#F4F1EC" stroke-width="9" fill="none"/><path d="M118 0 L140 120" stroke="#F4F1EC" stroke-width="6" fill="none"/><path d="M230 0 C220 40 250 70 238 120" stroke="#F4F1EC" stroke-width="4" fill="none"/><rect x="0" y="100" width="330" height="20" fill="#D6D9D8"/><circle cx="150" cy="40" r="6" fill="#8f8780"/><circle cx="150" cy="40" r="2.2" fill="#E2DDD6"/></svg>
+              <div class="fh">Horaires d’été</div><div class="fx">De juin à fin août : ouvert tous les jours dès 11 h 30.</div>
+              <div class="fh">Suivez-nous</div><div class="rs"><i></i><i></i><i></i></div>
+              <div class="fh">Partenaires</div><div class="pt"><i></i><i></i><i></i></div>
+              <div class="fh">Recrutement</div><div class="fx">Nous engageons pour la saison d’été.</div>
+              <div class="cp">© 2016 La Pinte Vermeil · Mentions légales · Plan du site</div>
+            </div>
+          </div>
+          <!-- page B : après -->
+          <div class="page" id="pB">
+            <div class="hd"><div class="nm">La Pinte Vermeil</div><div class="mn"></div></div>
+            <div class="hero"><svg class="ill" data-v="4" width="350" height="118" viewBox="0 0 350 118"></svg></div>
+            <div class="kk">Restaurant · Vevey</div>
+            <h1>Cuisine du terroir,<br>au bord du lac.</h1>
+            <div class="hrs"><span><i class="dot"></i>Ouvert ce soir</span><span>18 h – 23 h</span></div>
+            <div id="btnwrap" style="margin-top:30px"><div id="btn"><svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#14803C"/><g transform="translate(6.2 6.2) scale(.9)"><path id="waPath" fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></g></svg>Écrire sur WhatsApp<svg class="ar" width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h11M8.5 3.5 13 8l-4.5 4.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div id="rip"></div></div></div>
+            <div class="chips"><span class="on">La carte</span><span>Itinéraire</span><span>Appeler</span></div>
+            <div class="kk2">Cette semaine</div>
+            <div class="cards"><div class="card"><svg class="ill" data-v="1" width="170" height="92" viewBox="0 0 170 92"></svg><b>Filets de perche</b></div><div class="card"><svg class="ill" data-v="2" width="170" height="92" viewBox="0 0 170 92"></svg><b>Soirée fondue, jeudi</b></div></div>
+          </div>
+          <div class="sbar" id="sbar"></div>
+        </div>
+        <div id="mdl"><div id="mbox"><span class="x">×</span><b>Ne manquez rien&nbsp;!</b><p>Inscrivez-vous à notre newsletter et recevez<br>nos actualités et nos offres.</p><div class="in">Votre adresse e-mail</div><div class="go">Je m’inscris</div></div></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- révélation : cercle, chemin, « sous le pouce », toucher -->
+  <svg id="circ" class="abs" viewBox="0 0 1080 1920"><path id="ring" fill="none" stroke="#2038EC" stroke-width="7" stroke-linecap="round"/></svg>
+  <div id="fade" class="abs"></div><div id="rule" class="abs"></div>
+  <div id="pathL" class="abs mono">Pied de page · niveau 3</div>
+  <div id="again" class="abs mono"><span>Il était à l’écran dès <span id="dsec">1,2</span>&nbsp;s</span><svg id="loopic" width="30" height="30" viewBox="0 0 30 30"><path d="M24.5 15a9.5 9.5 0 1 1-2.8-6.7" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M22.6 3.2v6.2h-6.2" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div id="pouce" class="abs mono">Dès le premier écran ↓</div>
+  <div id="touch" class="abs"></div>
+
+  <!-- en-tête -->
+  <div id="hdr" class="abs">
+    <div id="labA" class="lab mono">À vous de jouer</div>
+    <div id="labB" class="lab mono">Après</div>
+    <div id="demo" class="lab mono">Démo · lieu fictif</div>
+    <div id="tA" class="ttl">Trouvez le numéro.<br>3 secondes.</div>
+    <div id="tB" class="ttl">Trouvé<span class="nn">&nbsp;</span>?</div>
+    <div id="tC" class="ttl">Il était<br>tout en bas.</div>
+    <div id="tD" class="ttl">Refait&nbsp;: WhatsApp<br>sous le pouce.</div>
+    <div id="chrono"><span id="cv">3,0</span><span class="u">s</span></div>
+    <div id="bar"><div id="barF"></div></div>
+  </div>
+
+  <!-- fin -->
+  <div id="end" class="abs">
+    <div id="eTitle">Et sur votre site,<br>en combien<span class="nn">&nbsp;</span>?</div>
+    <div id="ePill"><svg width="64" height="64" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#14803C"/><g transform="translate(6.2 6.2) scale(.9)"><use href="#waPath"/></g></svg>Maquette offerte</div>
+    <div id="eBio" class="mono">Sur WhatsApp · lien dans la bio</div>
+    <div id="eRule"></div>
+    <img id="eLogo" src="/_kit/brand/logo.svg" alt="">
+    <div id="eHandle" class="mono">@oonde_studio</div>
+  </div>
+
+  <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  out4: t => 1 - Math.pow(1 - t, 4),
+  in: t => t * t * t,
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  back: t => { const c = 1.4; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
+};
+const show = (el, on) => { el.style.visibility = on ? 'visible' : 'hidden'; };
+
+/* ---------- illustrations (photos floues, sans marque) ---------- */
+function ill(v, w, h) {
+  const P = [
+    ['#5a2a22', '#a8653f', '#e9c08a'], ['#3c2a1e', '#8a5a35', '#d9a86a'], ['#2e3b2a', '#6f7d4e', '#d6c48c'],
+    ['#4a2a24', '#9b6a48', '#e4c7a0'], ['#3b2d26', '#a36b44', '#ecd2a6'],
+  ][v];
+  let s = `<rect width="${w}" height="${h}" fill="${P[0]}"/>`;
+  s += `<rect x="0" y="${h * .55}" width="${w}" height="${h * .45}" fill="${P[1]}"/>`;
+  s += `<ellipse cx="${w * .3}" cy="${h * .66}" rx="${w * .17}" ry="${h * .14}" fill="#f4efe6"/><ellipse cx="${w * .3}" cy="${h * .64}" rx="${w * .09}" ry="${h * .07}" fill="${P[2]}"/>`;
+  s += `<ellipse cx="${w * .7}" cy="${h * .7}" rx="${w * .16}" ry="${h * .13}" fill="#f1ebe1"/><ellipse cx="${w * .7}" cy="${h * .69}" rx="${w * .08}" ry="${h * .06}" fill="#7b8a4a"/>`;
+  s += `<rect x="${w * .48}" y="${h * .3}" width="${w * .04}" height="${h * .3}" rx="4" fill="#d9d2c4" opacity=".8"/>`;
+  s += `<circle cx="${w * .82}" cy="${h * .22}" r="${h * .12}" fill="${P[2]}" opacity=".55"/><circle cx="${w * .15}" cy="${h * .2}" r="${h * .08}" fill="${P[2]}" opacity=".4"/>`;
+  return s;
+}
+document.querySelectorAll('svg.ill').forEach(el => el.innerHTML = ill(+el.dataset.v, +el.getAttribute('width'), +el.getAttribute('height')));
+
+/* ---------- constantes ---------- */
+const S = 652 / 390;            // échelle du site dans l’écran
+const WIN = 630;                 // haut de la fenêtre du téléphone
+const T = {
+  carousel: .12, start: .40, zero: 3.40,
+  L: [[.52, .97], [2.08, 2.53], [2.68, 3.13]], bounce: [3.13, 3.38],   // 3 lancers de doigt + rebond iOS
+  mIn: 1.20, mOut: 1.94,
+  tB: 3.54, zoomA: [4.20, 4.90], tC: 4.84, ring: [4.94, 5.36], path: 5.40, again: 5.90,
+  outA: 7.50, dez: [7.50, 7.84], wipe: [7.84, 8.14], tCout: 7.70, tD: 7.84, cB: 7.96, tap: 8.46, zoomB: [8.58, 9.06], pouce: 8.72,
+  outB: 10.60, end: 10.74, loop: 13.26,
+};
+window.DURATION = 13.68;
+const Z = 3.1, TGT = { cx: 500, cy: 1000 };
+let MAXS = 0, MID = 0, NUM = null, BTN = null;
+
+function init() {
+  const pA = $('#pA');
+  MAXS = pA.offsetHeight - 748;
+  MID = MAXS - 150;
+  // position du numéro dans la page A (unités du site)
+  const n = $('#num'), r0 = pA.getBoundingClientRect(), r = n.getBoundingClientRect();
+  const k = r0.width / 390;
+  NUM = { x: (r.left - r0.left) / k, y: (r.top - r0.top) / k, w: r.width / k, h: r.height / k };
+  // bouton de la page B (unités de l’écran du site : la page commence à y 96)
+  const pB = $('#pB'); show(pB, true);
+  const b0 = pB.getBoundingClientRect(), b = $('#btn').getBoundingClientRect(), kb = b0.width / 390;
+  BTN = { x: (b.left - b0.left) / kb, y: 96 + (b.top - b0.top) / kb, w: b.width / kb, h: b.height / kb };
+  BTN.cx = BTN.x + BTN.w / 2; BTN.cy = BTN.y + BTN.h / 2;
+  window.NUM = NUM; window.BTN = BTN; window.MAXS = MAXS;
+}
+
+// place le point (lx, ly) du téléphone (non mis à l’échelle) au point (cx, cy) de la scène, échelle k
+function place(cx, cy, k, lx, ly, dy = 0) {
+  const x = cx - 200 - k * lx, y = cy - WIN - k * ly + dy;
+  $('#phone').style.transform = `translate(${x}px, ${y}px) scale(${k})`;
+  return { x, y, k };
+}
+const siteToPhone = (sx, sy) => [14 + S * sx, 14 + S * sy];
+// point de l’écran du site (sx, sy) → point de la scène, selon la pose du téléphone
+const onStage = (pose, sx, sy) => [200 + pose.x + pose.k * (14 + S * sx), WIN + pose.y + pose.k * (14 + S * sy)];
+
+function scrollA(t) {
+  const tg = [300, MID, MAXS + 12];
+  let y = 0;
+  T.L.forEach(([a, b], i) => { if (t >= a) y = lerp(y, tg[i], E.out(seg(t, a, b))); });
+  if (t >= T.bounce[0]) y = lerp(y, MAXS, E.inOut(seg(t, T.bounce[0], T.bounce[1])));
+  return y;
+}
+
+// titre : entre en 0,32 s (monte de 34 px), sort en 0,14 s (monte de 30 px)
+function slot(el, t, a, b, aDur = .32) {
+  const pi = a == null ? 1 : E.out(seg(t, a, a + aDur));
+  const po = b == null ? 0 : E.out(seg(t, b, b + .14));
+  const op = pi * (1 - po);
+  show(el, op > .001); el.style.opacity = op;
+  el.style.transform = `translateY(${(1 - pi) * 34 - po * 30}px)`;
+  return op;
+}
+
+function fmt(v) { const s = (Math.round(v * 10) / 10).toFixed(1).split('.'); return `${s[0]}<span class="cm">,</span>${s[1]}`; }
+
+function render(t) {
+  const lp = E.out(seg(t, T.loop + .18, T.loop + .36));      // retour de l’accroche
+  const loopOn = t >= T.loop + .18;
+  const sceneA = t < T.wipe[1] || loopOn;
+  const sceneB = t >= T.wipe[0] && t < T.outB + .3;
+
+  /* ---- en-tête ---- */
+  slot($('#tA'), t, loopOn ? T.loop + .18 : null, loopOn ? null : T.zero + .02, .18);
+  slot($('#tB'), t, T.tB, T.tC - .16);
+  slot($('#tC'), t, T.tC, T.tCout);
+  slot($('#tD'), t, T.tD, T.outB);
+  slot($('#labA'), t, loopOn ? T.loop + .18 : null, loopOn ? null : T.tCout, .18);
+  slot($('#labB'), t, T.tD, T.outB);
+  // étiquette démo : présente tant qu’un commerce est à l’écran (sans interruption entre l’avant et l’après)
+  const dOp = loopOn ? lp : (t < T.loop ? 1 - E.out(seg(t, T.outB, T.outB + .14)) : 0);
+  $('#demo').style.opacity = clamp(dOp); show($('#demo'), dOp > .001);
+
+  /* ---- chrono ---- */
+  const ch = $('#chrono'), cv = $('#cv');
+  let cOp = 0, val = 3, bump = 0;
+  if (t < T.zero + .16 || loopOn) {
+    cOp = loopOn ? lp : 1 - E.out(seg(t, T.zero + .02, T.zero + .16));
+    val = loopOn ? 3 : 3 - clamp(t - T.start, 0, 3);
+    val = Math.ceil(val * 10 - 1e-6) / 10;
+    bump = Math.sin(Math.PI * seg(t, T.start, T.start + .16)) * .06 + Math.sin(Math.PI * seg(t, T.zero, T.zero + .2)) * .1;
+  } else if (t >= T.tD && t < T.outB + .2) {
+    cOp = E.out(seg(t, T.tD + .06, T.tD + .36)) * (1 - E.out(seg(t, T.outB, T.outB + .14)));
+    val = Math.floor(clamp(t - T.cB, 0, .5) * 10 + 1e-6) / 10;
+    bump = Math.sin(Math.PI * seg(t, T.tap, T.tap + .15)) * .06;
+  }
+  if (loopOn) cOp = lp;
+  show(ch, cOp > .001); ch.style.opacity = cOp;
+  cv.innerHTML = fmt(val);
+  ch.style.transformOrigin = '936px 50px';
+  ch.style.transform = `scale(${1 + bump})` + (loopOn ? ` translateY(${(1 - lp) * 34}px)` : '');
+  // mèche : se vide de 3 à 0
+  const bOp = loopOn ? lp : 1 - E.out(seg(t, T.zero + .02, T.zero + .16));
+  show($('#bar'), bOp > .001); $('#bar').style.opacity = bOp;
+  $('#barF').style.transform = `scaleX(${loopOn ? 1 : 1 - clamp((t - T.start) / 3)})`;
+
+  /* ---- téléphone ---- */
+  const phone = $('#phone');
+  const wipeP = E.out(seg(t, T.wipe[0], T.wipe[1]));
+  const showA = sceneA && !(t >= T.wipe[1] && !loopOn);
+  const showB = sceneB && !loopOn;
+  show($('#pA'), showA); show($('#pB'), showB);
+  $('#pB').style.clipPath = (showB && wipeP < 1) ? `inset(0 0 ${((1 - wipeP) * 100).toFixed(2)}% 0)` : 'none';
+  let phOp = 1, fadeOp = 0;
+  const ring = $('#ring');
+  ring.style.opacity = 0; show($('#pathL'), false); show($('#again'), false); show($('#pouce'), false); show($('#touch'), false);
+
+  // carrousel : une diapo à 0,12 s (revient à 0 pour la boucle)
+  const cs = loopOn ? 0 : E.inOut(seg(t, T.carousel, T.carousel + .38));
+  $('#strip').style.transform = `translateX(${-390 * cs}px)`;
+  document.querySelectorAll('#pA .dots i').forEach((d, i) => d.style.background = i === Math.round(cs) ? '#fff' : 'rgba(255,255,255,.45)');
+  const y = loopOn ? 0 : scrollA(t);
+  $('#pA').style.transform = `translateY(${-y}px)`;
+  // indicateur de défilement
+  let vis = 0; for (const [a, b] of T.L) if (t >= a && t <= b + .4 && !loopOn) vis = Math.max(vis, Math.min(seg(t, a, a + .08), 1 - seg(t, b + .25, b + .5)));
+  const H = MAXS + 748, sb = $('#sbar');
+  sb.style.opacity = showB ? 0 : vis; sb.style.height = (748 * 748 / H) + 'px';
+  sb.style.transform = `translateY(${(clamp(y, 0, MAXS) / MAXS) * (748 - 748 * 748 / H)}px)`;
+  // fenêtre newsletter : surgit, puis se ferme
+  const mi = E.out(seg(t, T.mIn, T.mIn + .22)), mo = E.out(seg(t, T.mOut, T.mOut + .14));
+  const mOp = loopOn ? 0 : mi * (1 - mo);
+  show($('#mdl'), mOp > .001); $('#mdl').style.opacity = mOp;
+  $('#mbox').style.transform = `translateY(${(1 - mi) * 24}px) scale(${.96 + .04 * mi - .03 * mo})`;
+  $('#num').style.color = '';
+
+  if (t < T.wipe[1] || loopOn) {
+    // cadrage : pose de base (téléphone à x 200–880, haut à y 680) ↔ zoom ×3,1 sur le numéro
+    const [nx, ny] = siteToPhone(NUM.x + NUM.w / 2, 96 + NUM.y + NUM.h / 2 - MAXS);
+    const dz = E.inOut(seg(t, T.dez[0], T.dez[1]));                       // dézoom inverse
+    const pz = loopOn ? 0 : E.inOut(seg(t, T.zoomA[0], T.zoomA[1])) * (1 - dz);
+    const push = loopOn ? 0 : E.out(seg(t, T.zoomA[1], T.outA)) * .06 * (1 - dz);
+    const baseCx = 200 + nx, baseCy = WIN + 50 + ny;
+    const k = lerp(1, Z, pz) * (1 + push);
+    const cx = lerp(baseCx, TGT.cx, pz), cy = lerp(baseCy, TGT.cy, pz);
+    const ry = loopOn ? (1 - lp) * 40 : 0;
+    place(cx, cy + ry, k, nx, ny);
+    phOp = loopOn ? lp : 1;
+    fadeOp = pz;
+    // cercle autour du numéro
+    if (!loopOn && t >= T.ring[0] && t < T.outA + .2) {
+      const w = NUM.w * S * k, fh = 11 * S * k;
+      const rx = w / 2 + 50, rr = fh / 2 + 34;
+      const p = E.out(seg(t, T.ring[0], T.ring[1]));
+      const a0 = -2.6, turns = 1.12, N = 64;
+      let d = '';
+      for (let i = 0; i <= N; i++) {
+        const a = a0 + (i / N) * Math.PI * 2 * turns;
+        const g = 1 + .035 * (i / N);                            // léger décalage : trait à la main
+        const px = cx + Math.cos(a) * rx * g, py = cy + Math.sin(a) * rr * g - 4;
+        d += (i ? 'L' : 'M') + px.toFixed(1) + ' ' + py.toFixed(1);
+      }
+      ring.setAttribute('d', d);
+      $('#num').style.color = `rgb(${Math.round(lerp(143, 58, p))},${Math.round(lerp(135, 63, p))},${Math.round(lerp(128, 71, p))})`;
+      const L = ring.getTotalLength();
+      ring.style.strokeDasharray = L; ring.style.strokeDashoffset = L * (1 - p);
+      ring.style.opacity = 1 - E.out(seg(t, T.outA, T.outA + .14));
+      ring.setAttribute('transform', `rotate(-3 ${cx} ${cy})`);
+      // étiquette « Pied de page · niveau 3 » : 28 px sous le cercle, alignée sur son bord gauche
+      if (t >= T.path) {
+        const el = $('#pathL'); show(el, true);
+        const q = E.out(seg(t, T.path, T.path + .3));
+        el.style.opacity = q * (1 - E.out(seg(t, T.outA, T.outA + .14)));
+        el.style.transform = `translate(${Math.round(cx - rx * 1.03 - 4)}px, ${Math.round(cy + rr + 24 + (1 - q) * 20)}px)`;
+      }
+      // 2e étiquette : la rejouabilité écrite à l’écran
+      if (t >= T.again) {
+        const el = $('#again'); show(el, true);
+        const q = E.out(seg(t, T.again, T.again + .25));
+        el.style.opacity = q * (1 - E.out(seg(t, T.outA, T.outA + .14)));
+        el.style.transform = `translate(80px, ${1376 + (1 - q) * 16}px) scale(${.97 + .03 * q})`;
+        $('#loopic').style.transform = `rotate(${E.inOut(seg(t, 6.62, 7.12)) * 360}deg)`;
+      }
+    }
+  }
+  if (showB && t >= T.wipe[0]) {
+    // page B : même cadre que l’avant (x 200–880, haut 680), puis zoom sur le bouton
+    const [bx, by] = siteToPhone(BTN.cx, BTN.cy);
+    const k1 = 1.32;
+    const pz = E.inOut(seg(t, T.zoomB[0], T.zoomB[1]));
+    const push = E.out(seg(t, T.zoomB[1], T.outB)) * .025;
+    const fullCx = 200 + bx, fullCy = WIN + 50 + by;
+    const cx = lerp(fullCx, 540, pz), cy = lerp(fullCy, 1300, pz);
+    const k = lerp(1, k1, pz) * (1 + push);
+    const ex = E.out(seg(t, T.outB, T.outB + .14));                     // sortie par le bas (finie avant l’entrée du titre final)
+    const pose = place(cx, cy, k, bx, by, 240 * ex);
+    phOp = 1 - ex;
+    fadeOp = pz * (1 - ex);
+    // le pouce : arrive, appuie, relâche (posé sur la flèche, pas sur le texte)
+    const [tx, ty] = onStage(pose, BTN.x + BTN.w - 42, BTN.cy - 96 + 96);
+    const ta = E.out(seg(t, T.tap - .34, T.tap - .04));
+    const press = Math.sin(Math.PI * seg(t, T.tap, T.tap + .12));
+    const tOut = E.out(seg(t, T.tap + .16, T.tap + .36));
+    const tOp = ta * (1 - tOut);
+    const tc = $('#touch');
+    if (tOp > .001) {
+      show(tc, true); tc.style.opacity = tOp * .35;
+      const dpx = 64 * S * pose.k;
+      tc.style.width = tc.style.height = dpx + 'px'; tc.style.margin = `${-dpx / 2}px 0 0 ${-dpx / 2}px`;
+      tc.style.transform = `translate(${tx}px, ${ty + (1 - ta) * 90}px) scale(${1 - .08 * press})`;
+    }
+    $('#btn').style.transform = `scale(${1 - .03 * press})`;
+    $('#btn').style.filter = `brightness(${1 - .08 * press})`;
+    const rpP = seg(t, T.tap, T.tap + .3), rp = $('#rip');
+    show(rp, rpP > 0 && rpP < 1);
+    rp.style.opacity = 1 - E.in(rpP);
+    rp.style.transform = `translate(${BTN.w - 42}px, ${BTN.h / 2}px) scale(${.6 + E.out(rpP) * 5})`;
+    // « Dès le premier écran ↓ » : aligné sur le bord gauche du bouton, 16 px au-dessus
+    if (t >= T.pouce) {
+      const el = $('#pouce'); show(el, true);
+      const [lx, ly] = onStage(pose, BTN.x, BTN.y);
+      const q = E.out(seg(t, T.pouce, T.pouce + .3));
+      el.style.opacity = q * (1 - E.out(seg(t, T.outB, T.outB + .14)));
+      el.style.transform = `translate(${Math.round(lx + 4)}px, ${Math.round(ly - 16 - 30 + (1 - q) * 16)}px)`;
+    }
+  }
+  show(phone, phOp > .001 && (sceneA || sceneB)); phone.style.opacity = phOp;
+  const fo = clamp(fadeOp);
+  show($('#fade'), fo > .001); show($('#rule'), fo > .001);
+  $('#fade').style.opacity = fo; $('#rule').style.opacity = fo;
+
+  /* ---- fin ---- */
+  const endOn = t >= T.end && t < T.loop + .14;
+  show($('#end'), endOn);
+  if (endOn) {
+    const fo2 = 1 - E.out(seg(t, T.loop, T.loop + .12));
+    $('#end').style.opacity = fo2;
+    rise($('#eTitle'), t, T.end, .32, 34);
+    rise($('#ePill'), t, T.end + .12, .34, 30);
+    rise($('#eBio'), t, T.end + .24, .34, 24);
+    const pr = E.out(seg(t, T.end + .30, T.end + .66));
+    $('#eRule').style.transform = `scaleX(${pr})`;
+    rise($('#eLogo'), t, T.end + .36, .34, 20);
+    rise($('#eHandle'), t, T.end + .36, .34, 20);
+  }
+}
+function rise(el, t, a, d = .45, dy = 40) { const p = E.out(seg(t, a, a + d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; }
+window.render = render;
+
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('600 20px PM'), document.fonts.load('400 40px IS'), document.fonts.load('500 40px IS')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { init(); render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>

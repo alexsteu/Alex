@@ -73,5 +73,41 @@
    "Vers 1 s, le logo du site est coupé à mi-hauteur par le bandeau.",
    "L'étiquette « COIFFURE · MORGES » du site est peu lisible sur la photo : à renforcer sur le site lui-même."
   ]
+ },
+ "05-trouvez-le-numero": {
+  "title": "Trouvez le numéro en 3 secondes",
+  "round": 2,
+  "scores": {
+   "accroche": 8.5,
+   "rythme": 8,
+   "clarte": 7.5,
+   "beaute": 8,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 8
+  },
+  "verdict": "Un jeu : le spectateur cherche le numéro d'un restaurant fictif pendant que le chrono descend, puis on lui montre où il était et le même site refait avec le bouton WhatsApp sous le pouce. Boucle exacte, à revoir pour trouver le numéro soi-même.",
+  "remaining": [
+   "Le site refait affiche une pastille « Appeler » (contact du restaurant fictif, pas d'OONDE) : à valider, sinon on la remplace par « Terrasse ».",
+   "L'étiquette « Il était à l'écran dès 1,2 s » passe un peu vite."
+  ]
+ },
+ "06-carte-en-pdf": {
+  "title": "Votre carte en PDF ?",
+  "round": 2,
+  "scores": {
+   "accroche": 8,
+   "rythme": 8,
+   "clarte": 8,
+   "beaute": 7.5,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 7.9
+  },
+  "verdict": "Pour les restaurants : la carte en PDF qu'on doit zoomer et chercher, puis la même carte en vraie page lisible, avec trois règles courtes. J'ai remplacé « plat du jour » par « plat de saison » pour rester dans ce que nos conditions garantissent.",
+  "remaining": [
+   "À l'écran final, WhatsApp n'apparaît que par son icône : « Écrivez-nous sur WhatsApp » serait plus net.",
+   "À vérifier : que « Maison Vauclaire » ne correspond à aucun restaurant réel."
+  ]
  }
 }

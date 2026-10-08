@@ -60,3 +60,22 @@ Ce qui a fait monter les notes : le chevauchement des titres, un plan qui bouge 
 17. **Écran final** : tout est en place ≥ 1,2 s avant la coupe ; une phrase de plus de 8 mots s'affiche en deux temps lisibles seuls.
 18. **Son** : utiliser `python3 _kit/mux.py video.mp4 audio.wav final.mp4` (deux passes, 48 kHz, crête ≤ −1,5 dBTP, mesure affichée).
 19. Communes de l'outil du site : Coppet y figure (pas Gland) ; elle est citable.
+
+## Tour 2 — Reels 05 (trouvez le numéro, 8,0) et 06 (carte en PDF, 7,9)
+
+Les leçons du tour 1 ont porté : critiques avant correction 6,5-7,0 (contre 6-6,5 au tour 1), notes finales 7,9-8,0.
+
+20. **Ne montrer que ce qu'on garantit** : avant de montrer un service (mise à jour, réservation, délai), vérifier les
+    conditions réelles (/home/claude/alex/oonde-site/v2/legal/conditions.html : modifications sous 3 jours ouvrables).
+    Une animation qui fait les choses « en une seconde » vaut promesse : prendre un exemple compatible (plat de saison,
+    pas plat du jour ; pas de moteur de réservation ni de créneaux : nos sites renvoient vers WhatsApp).
+21. **Le gag du problème se lit sans le son** : une ligne ≥ 44 px dit ce qu'on cherche, un cadre montre où l'on tombe.
+22. **Écran final** : le mot « WhatsApp » écrit en toutes lettres dans la phrase d'appel ≥ 44 px ; compter TOUS les mots,
+    étiquettes mono comprises (8 au plus) ; les étiquettes mono de 30 px sont du décor, pas l'appel.
+23. **Sorties d'objets** : un objet qui sort là où un titre entre est à 0 % d'opacité avant que le titre commence ; sortie en
+    courbe out de 0,15 s au plus (une courbe in reste opaque à mi-parcours → image hybride). Vérifier à 30 i/s chaque
+    changement de plan, et laisser au moins une image vide entre deux titres.
+24. **Avant/après dans un téléphone** : revenir exactement au même cadre que l'avant, puis balayer : l'œil compare sans effort.
+25. **Une phrase qui porte le ressort du Reel** respecte la durée de lecture (mots ÷ 3 + 0,8 s) ou se réduit à 3 mots.
+26. **Noms inventés** : vérifier qu'un nom de démo (et son domaine) ne correspond à aucun commerce réel connu de la région.
+27. Son : `_kit/mux.py` baisse maintenant le limiteur tout seul jusqu'à une crête vraie ≤ −1,5 dBTP et affiche « OK ».
