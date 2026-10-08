@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s3 {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: var(--bg);
+        }
+        #s3 .s3-panel {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        /* --- En-tête --- */
+        #s3 .s3-head-glow {
+          width: 1200px;
+          height: 1200px;
+          left: -60px;
+          top: 360px;
+        }
+        #s3 .s3-head-title {
+          position: absolute;
+          top: 300px;
+          left: 64px;
+          right: 64px;
+          font-size: 270px;
+          color: var(--fg);
+          text-shadow: 10px 10px 0 var(--accent);
+        }
+        #s3 .s3-rule {
+          position: absolute;
+          top: 830px;
+          left: 64px;
+          width: 952px;
+          height: 10px;
+          background: var(--accent);
+        }
+        #s3 .s3-facts {
+          position: absolute;
+          top: 900px;
+          left: 64px;
+          right: 64px;
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+        #s3 .s3-fact {
+          display: block;
+          font-weight: 900;
+          font-size: 64px;
+        }
+        #s3 .s3-fact b {
+          color: var(--gold);
+        }
+        #s3 .s3-count {
+          position: absolute;
+          top: 1220px;
+          left: 64px;
+          right: 64px;
+        }
+        #s3 .s3-count-num {
+          display: block;
+          font-size: 360px;
+          color: var(--accent);
+          transform-origin: 0% 80%;
+          font-variant-numeric: tabular-nums;
+        }
+        #s3 .s3-count-label {
+          display: block;
+          margin-top: 10px;
+          font-size: 34px;
+          color: var(--muted);
+        }
+        /* --- Fiches candidats --- */
+        #s3 .s3-card .s3-ghost {
+          top: 120px;
+          left: -40px;
+          font-size: 520px;
+          transform: rotate(-8deg);
+        }
+        #s3 .s3-card .s3-num {
+          position: absolute;
+          top: 110px;
+          right: 64px;
+          font-size: 30px;
+          color: var(--gold);
+          border: 4px solid var(--gold);
+          padding: 10px 18px;
+        }
+        #s3 .s3-card .s3-glow {
+          width: 900px;
+          height: 900px;
+          left: 90px;
+          top: 160px;
+        }
+        #s3 .s3-card .portrait {
+          left: 220px;
+          top: 200px;
+          width: 640px;
+          height: 768px;
+        }
+        #s3 .s3-card .lt {
+          top: 930px;
+        }
+        #s3 .s3-card .lt-name {
+          font-size: 150px;
+        }
+        #s3 .s3-card .s3-chip {
+          position: absolute;
+          top: 1225px;
+          left: 64px;
+          right: 64px;
+          display: block;
+          font-size: 34px;
+          color: var(--accent);
+          border-top: 4px solid var(--accent);
+          border-bottom: 4px solid var(--accent);
+          padding: 16px 0 12px;
+        }
+        #s3 .s3-card .s3-quote {
+          position: absolute;
+          top: 1360px;
+          left: 64px;
+          right: 64px;
+          font-weight: 900;
+          font-size: 62px;
+          line-height: 1.15;
+        }
+        #s3 .s3-card .s3-quote .hot {
+          color: var(--accent);
+        }
+      </style>
+
+      <div id="s3" data-composition-id="s3-casting" data-width="1080" data-height="1920">
+        <!-- En-tête -->
+        <div class="s3-panel" id="s3-head">
+          <div class="glow s3-head-glow"></div>
+          <div class="s3-head-title display">Le casting</div>
+          <div class="s3-rule"></div>
+          <div class="s3-facts">
+            <span class="s3-fact"><b>3</b> candidats.</span>
+            <span class="s3-fact"><b>1</b> seul déambulateur.</span>
+          </div>
+          <div class="s3-count">
+            <span class="s3-count-num display">0</span>
+            <span class="s3-count-label mono">ans d'expérience cumulée</span>
+          </div>
+        </div>
+
+        <!-- Jeannine -->
+        <div class="s3-panel s3-card" id="s3-c1">
+          <div class="ghost s3-ghost" aria-hidden="true">Jeannine</div>
+          <div class="glow s3-glow"></div>
+          <div class="s3-num mono">Candidate n°1</div>
+          <div class="portrait"><img src="assets/cast/jeannine.svg" alt="Jeannine" /></div>
+          <div class="lt"><span class="lt-name">Jeannine</span><span class="lt-role">87 ans</span></div>
+          <span class="s3-chip mono">3 mariages · 3 enterrements</span>
+          <div class="s3-quote">« Je cherche le 4e. <span class="hot">Il reste de la place dans le caveau.</span> »</div>
+        </div>
+
+        <!-- Marcel -->
+        <div class="s3-panel s3-card" id="s3-c2">
+          <div class="ghost s3-ghost" aria-hidden="true">Marcel</div>
+          <div class="glow s3-glow"></div>
+          <div class="s3-num mono">Candidat n°2</div>
+          <div class="portrait"><img src="assets/cast/marcel.svg" alt="Marcel" /></div>
+          <div class="lt"><span class="lt-name">Marcel</span><span class="lt-role">91 ans</span></div>
+          <span class="s3-chip mono">Champion de pétanque · 1974</span>
+          <div class="s3-quote">« J'suis pas venu pour me faire des amis. <span class="hot">À mon âge, ils meurent tous.</span> »</div>
+        </div>
+
+        <!-- Gisèle -->
+        <div class="s3-panel s3-card" id="s3-c3">
+          <div class="ghost s3-ghost" aria-hidden="true">Gisèle</div>
+          <div class="glow s3-glow"></div>
+          <div class="s3-num mono">Candidate n°3</div>
+          <div class="portrait"><img src="assets/cast/gisele.svg" alt="Gisèle" /></div>
+          <div class="lt"><span class="lt-name">Gisèle</span><span class="lt-role">94 ans · la doyenne</span></div>
+          <span class="s3-chip mono">0 dent · 0 filtre</span>
+          <div class="s3-quote">« Les petites jeunes de 82 ans, je les mange au p'tit-déj. <span class="hot">Sans les dents.</span> »</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const q = (s) => "#s3 " + s;
+          const tl = gsap.timeline({ paused: true });
+
+          // --- En-tête (0 → 1,8 s) ---
+          tl.fromTo(q(".s3-head-glow"), { scale: 0.8 }, { scale: 1.1, duration: 2, ease: "sine.inOut" }, 0);
+          tl.fromTo(q(".s3-head-title"), { x: -1100 }, { x: 0, duration: 0.45, ease: "power4.out" }, 0.05);
+          tl.fromTo(q(".s3-rule"), { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power3.inOut" }, 0.3);
+          tl.fromTo(q(".s3-fact"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(2)", stagger: 0.55 }, 0.2);
+          // Compteur 0 → 272 (87 + 91 + 94), l'échelle grimpe avec la valeur
+          const num = document.querySelector("#s3 .s3-count-num");
+          const c = { v: 0 };
+          tl.fromTo(c, { v: 0 }, {
+            v: 272,
+            duration: 1.0,
+            ease: "power2.out",
+            onUpdate: () => {
+              num.textContent = String(Math.round(c.v));
+            },
+          }, 0.55);
+          tl.fromTo(q(".s3-count-num"), { scale: 0.6 }, { scale: 1, duration: 1.0, ease: "power2.out" }, 0.55);
+          tl.fromTo(q(".s3-count-label"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 0.9);
+
+          // --- Fiches (arrivée avec tampon sonore à 1,8 / 5,3 / 8,8 s) ---
+          const cards = ["#s3-head", "#s3-c1", "#s3-c2", "#s3-c3"];
+          const arrivals = [1.8, 5.3, 8.8];
+          gsap.set(cards.slice(1), { x: 1080, opacity: 0 });
+          arrivals.forEach((t, i) => {
+            const prev = cards[i];
+            const card = cards[i + 1];
+            const sel = (s) => card + " " + s;
+            tl.fromTo(prev, { x: 0 }, { x: -1080, duration: 0.42, ease: "power4.in", immediateRender: false }, t - 0.3);
+            tl.fromTo(card, { x: 1080 }, { x: 0, duration: 0.45, ease: "power4.out", immediateRender: false }, t - 0.15);
+            tl.fromTo(card, { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none", immediateRender: false }, t - 0.15);
+            tl.fromTo(prev, { opacity: 1 }, { opacity: 0, duration: 0.01, ease: "none", immediateRender: false }, t + 0.13);
+            tl.fromTo(sel(".s3-ghost"), { xPercent: 10 }, { xPercent: -14, duration: 3.6, ease: "none" }, t - 0.15);
+            tl.fromTo(sel(".s3-glow"), { scale: 0.85 }, { scale: 1.1, duration: 1.7, ease: "sine.inOut", yoyo: true, repeat: 1 }, t - 0.15);
+            tl.fromTo(sel(".portrait"), { scale: 0.7, rotation: -6 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.8)" }, t);
+            tl.fromTo(sel(".lt-name"), { x: -800 }, { x: 0, duration: 0.4, ease: "power4.out" }, t + 0.15);
+            tl.fromTo(sel(".lt-role"), { x: -800 }, { x: 0, duration: 0.4, ease: "power4.out" }, t + 0.27);
+            tl.fromTo(sel(".s3-num"), { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, t + 0.2);
+            tl.fromTo(sel(".s3-chip"), { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "power2.inOut" }, t + 0.45);
+            tl.fromTo(sel(".s3-quote"), { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, t + 0.75);
+            tl.fromTo(sel(".s3-quote .hot"), { color: "#fff4e8" }, { color: "#ff2e88", duration: 0.2, ease: "none" }, t + 1.6);
+          });
+
+          window.__timelines["s3-casting"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

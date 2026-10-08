@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s4 {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: var(--bg);
+        }
+        #s4 .s4-hazard {
+          position: absolute;
+          top: 90px;
+          left: -100px;
+          width: 1400px;
+          height: 70px;
+          background: repeating-linear-gradient(-45deg, var(--accent) 0 34px, var(--ink) 34px 68px);
+          transform: rotate(-3deg);
+        }
+        #s4 .s4-ticker {
+          position: absolute;
+          top: 182px;
+          left: 0;
+          white-space: nowrap;
+          font-size: 30px;
+          color: var(--gold);
+        }
+        #s4 .s4-title {
+          position: absolute;
+          top: 250px;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-size: 180px;
+          color: var(--fg);
+          text-shadow: 8px 8px 0 var(--accent);
+        }
+        #s4 .s4-split {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1035px;
+          height: 8px;
+          background: var(--accent);
+          transform: rotate(-4deg);
+        }
+        #s4 .s4-glow-a {
+          width: 800px;
+          height: 800px;
+          left: -200px;
+          top: 360px;
+        }
+        #s4 .s4-glow-b {
+          width: 800px;
+          height: 800px;
+          left: 480px;
+          top: 1050px;
+        }
+        #s4 .s4-p1 {
+          left: 20px;
+          top: 470px;
+          width: 450px;
+          height: 540px;
+        }
+        #s4 .s4-p2 {
+          left: 610px;
+          top: 1110px;
+          width: 450px;
+          height: 540px;
+        }
+        #s4 .s4-bubble {
+          position: absolute;
+          width: 560px;
+          background: var(--fg);
+          color: var(--ink);
+          border-radius: 36px;
+          padding: 30px 34px;
+          font-weight: 900;
+          font-size: 46px;
+          line-height: 1.18;
+        }
+        #s4 .s4-bubble::after {
+          content: "";
+          position: absolute;
+          bottom: -34px;
+          width: 0;
+          height: 0;
+          border-left: 26px solid transparent;
+          border-right: 26px solid transparent;
+          border-top: 40px solid var(--fg);
+        }
+        #s4 .s4-b1 {
+          right: 40px;
+          top: 520px;
+        }
+        #s4 .s4-b1::after {
+          left: 50px;
+        }
+        #s4 .s4-b2 {
+          left: 40px;
+          top: 1160px;
+        }
+        #s4 .s4-b2::after {
+          right: 50px;
+        }
+        #s4 .s4-bubble .w {
+          display: inline-block;
+          margin-right: 0.22em;
+        }
+        #s4 .s4-bubble .censor {
+          width: 190px;
+        }
+        #s4 .s4-bubble .censor-bar {
+          border-color: var(--ink);
+        }
+        #s4 .s4-name {
+          position: absolute;
+          font-family: var(--font-display);
+          font-size: 84px;
+          line-height: 1;
+          text-transform: uppercase;
+          background: var(--accent);
+          color: var(--ink);
+          padding: 6px 20px 0;
+        }
+        #s4 .s4-n1 {
+          left: 40px;
+          top: 960px;
+        }
+        #s4 .s4-n2 {
+          right: 40px;
+          top: 1600px;
+        }
+        #s4 .s4-vs {
+          position: absolute;
+          left: 440px;
+          top: 940px;
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          background: var(--gold);
+          color: var(--ink);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: var(--font-display);
+          font-size: 120px;
+          line-height: 1;
+          padding-top: 10px;
+          border: 8px solid var(--ink);
+        }
+        #s4 .s4-stamp {
+          left: 70px;
+          top: 1700px;
+          color: var(--gold);
+          background: rgb(20 7 15 / 88%);
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-size: 64px;
+        }
+        #s4 .s4-stamp span {
+          display: block;
+        }
+      </style>
+
+      <div id="s4" data-composition-id="s4-clash" data-width="1080" data-height="1920">
+        <div class="glow s4-glow-a"></div>
+        <div class="glow s4-glow-b"></div>
+        <div class="s4-hazard"></div>
+        <div class="s4-ticker mono">Alerte drama · Alerte drama · Alerte drama · Alerte drama · Alerte drama · Alerte drama · Alerte drama</div>
+        <div class="s4-title display">Ça clashe au loto</div>
+        <div class="s4-split"></div>
+
+        <div class="portrait s4-p1"><img src="assets/cast/jeannine.svg" alt="Jeannine" /></div>
+        <div class="s4-name s4-n1">Jeannine</div>
+        <div class="s4-bubble s4-b1">
+          <span class="w">Rends-moi</span><span class="w">la</span><span class="w">télécommande,</span><span class="w">espèce</span><span class="w">de</span><span class="w">vieille</span><span class="censor"><span class="censor-bar"></span><span class="censor-bip">BIIIP</span></span><span class="w">!</span>
+        </div>
+
+        <div class="portrait s4-p2"><img src="assets/cast/gisele.svg" alt="Gisèle" /></div>
+        <div class="s4-name s4-n2">Gisèle</div>
+        <div class="s4-bubble s4-b2">
+          <span class="w">Viens</span><span class="w">la</span><span class="w">chercher,</span><span class="w">t'as</span><span class="w">même</span><span class="w">plus</span><span class="w">de</span><span class="censor"><span class="censor-bar"></span><span class="censor-bip">BIIIP</span></span><span class="w">!</span>
+        </div>
+
+        <div class="s4-vs">VS</div>
+
+        <div class="stamp s4-stamp">
+          <span>Bilan : 2 déambulateurs,</span>
+          <span>1 hanche, 0 regret</span>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const q = (s) => "#s4 " + s;
+          const tl = gsap.timeline({ paused: true });
+
+          // Ambiance : bandeau d'alerte, lueurs
+          tl.fromTo(q(".s4-ticker"), { x: 0 }, { x: -900, duration: 7, ease: "none" }, 0);
+          tl.fromTo(q(".s4-hazard"), { xPercent: 0 }, { xPercent: -6, duration: 7, ease: "none" }, 0);
+          tl.fromTo(q(".s4-glow-a"), { scale: 0.85 }, { scale: 1.1, duration: 1.75, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
+          tl.fromTo(q(".s4-glow-b"), { scale: 1.1 }, { scale: 0.85, duration: 1.75, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
+
+          tl.fromTo(q(".s4-title"), { scale: 2.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.in" }, 0.1);
+          tl.fromTo(q(".s4-split"), { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.inOut" }, 0.35);
+
+          // Les deux rivales entrent par les côtés
+          tl.fromTo(q(".s4-p1"), { x: -520 }, { x: 0, duration: 0.5, ease: "power4.out" }, 0.4);
+          tl.fromTo(q(".s4-p2"), { x: 520 }, { x: 0, duration: 0.5, ease: "power4.out" }, 0.55);
+          tl.fromTo(q(".s4-n1"), { x: -600 }, { x: 0, duration: 0.4, ease: "power4.out" }, 0.7);
+          tl.fromTo(q(".s4-n2"), { x: 600 }, { x: 0, duration: 0.4, ease: "power4.out" }, 0.8);
+          tl.fromTo(q(".s4-vs"), { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(2.5)" }, 0.95);
+
+          // Bulle 1 + BIP (global 24,2 s)
+          tl.fromTo(q(".s4-b1"), { scale: 0, transformOrigin: "15% 100%" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 1.4);
+          tl.fromTo(q(".s4-b1 .censor-bar"), { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.1, ease: "power2.out" }, 2.2);
+          tl.fromTo(q(".s4-b1 .censor-bip"), { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "none" }, 2.22);
+          tl.fromTo(q(".s4-p1"), { rotation: 0 }, { rotation: 4, duration: 0.05, ease: "none", yoyo: true, repeat: 7, immediateRender: false }, 2.2);
+
+          // Bulle 2 + BIP (global 26 s)
+          tl.fromTo(q(".s4-b2"), { scale: 0, transformOrigin: "85% 100%" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 3.2);
+          tl.fromTo(q(".s4-b2 .censor-bar"), { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.1, ease: "power2.out" }, 4.0);
+          tl.fromTo(q(".s4-b2 .censor-bip"), { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "none" }, 4.02);
+          tl.fromTo(q(".s4-p2"), { rotation: 0 }, { rotation: -4, duration: 0.05, ease: "none", yoyo: true, repeat: 7, immediateRender: false }, 4.0);
+
+          // Tampon « bilan » (global 27 s)
+          tl.fromTo(q(".s4-stamp"), { scale: 2.4, rotation: -14, opacity: 0 }, { scale: 1, rotation: -5, opacity: 1, duration: 0.22, ease: "power4.in" }, 4.8);
+          tl.fromTo(q(".s4-vs"), { y: 0 }, { y: 10, duration: 0.05, ease: "none", yoyo: true, repeat: 3, immediateRender: false }, 5.02);
+
+          window.__timelines["s4-clash"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

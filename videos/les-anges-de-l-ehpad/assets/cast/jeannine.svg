@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480">
+  <!-- buste : gilet turquoise -->
+  <path d="M40 480 C50 380 110 350 200 350 C290 350 350 380 360 480 Z" fill="#2bb3a3"/>
+  <path d="M170 352 L200 420 L230 352 Z" fill="#f2c4a8"/>
+  <circle cx="200" cy="440" r="7" fill="#fff4e8"/><circle cx="200" cy="465" r="7" fill="#fff4e8"/>
+  <!-- cou -->
+  <rect x="172" y="300" width="56" height="60" rx="20" fill="#e6b294"/>
+  <!-- permanente violette (arrière) -->
+  <g fill="#8e5cd1">
+    <circle cx="110" cy="200" r="48"/><circle cx="290" cy="200" r="48"/>
+    <circle cx="105" cy="255" r="40"/><circle cx="295" cy="255" r="40"/>
+  </g>
+  <!-- visage -->
+  <ellipse cx="200" cy="215" rx="98" ry="112" fill="#f2c4a8"/>
+  <!-- permanente (dessus) -->
+  <g fill="#a374e6">
+    <circle cx="125" cy="130" r="44"/><circle cx="170" cy="100" r="46"/><circle cx="225" cy="98" r="46"/>
+    <circle cx="275" cy="125" r="44"/><circle cx="300" cy="165" r="34"/><circle cx="100" cy="165" r="34"/>
+  </g>
+  <!-- joues -->
+  <circle cx="140" cy="250" r="20" fill="#ff7aa8" opacity=".55"/><circle cx="260" cy="250" r="20" fill="#ff7aa8" opacity=".55"/>
+  <!-- lunettes papillon roses -->
+  <g fill="none" stroke="#ff2e88" stroke-width="9" stroke-linejoin="round">
+    <path d="M118 200 Q120 178 165 182 Q190 186 186 210 Q180 232 150 232 Q120 230 118 200 Z"/>
+    <path d="M282 200 Q280 178 235 182 Q210 186 214 210 Q220 232 250 232 Q280 230 282 200 Z"/>
+    <path d="M186 205 Q200 196 214 205"/>
+  </g>
+  <circle cx="155" cy="208" r="8" fill="#2a1630"/><circle cx="245" cy="208" r="8" fill="#2a1630"/>
+  <!-- sourcils levés (mode drama) -->
+  <path d="M128 168 Q150 150 178 160" stroke="#6b3fa8" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M222 160 Q250 150 272 168" stroke="#6b3fa8" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- nez -->
+  <path d="M200 215 Q192 245 204 250" stroke="#d99a7c" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- bouche : rouge à lèvres, moue outrée -->
+  <ellipse cx="200" cy="285" rx="30" ry="16" fill="#e0115f"/>
+  <ellipse cx="200" cy="287" rx="18" ry="7" fill="#5a0b2c"/>
+  <!-- boucles d'oreilles perles -->
+  <circle cx="104" cy="250" r="11" fill="#fff4e8"/><circle cx="296" cy="250" r="11" fill="#fff4e8"/>
+</svg>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <!-- Adapté du composant de registre HyperFrames « grain-overlay » :
+           le saut de texture est piloté par la timeline (seek-safe) au lieu d'une animation CSS infinie. -->
+      <style>
+        #grain {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          mix-blend-mode: overlay;
+        }
+        #grain .grain-texture {
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+          opacity: 0.22;
+        }
+      </style>
+      <div id="grain" data-composition-id="grain" data-width="1080" data-height="1920">
+        <div class="grain-texture" data-layout-allow-overflow></div>
+      </div>
+      <script>
+        (function () {
+          const offsets = [[0, 0], [-5, -5], [-10, 5], [5, -10], [-5, 15], [-10, 5], [15, 0], [0, 10], [-15, 0], [10, 5]];
+          const tex = document.querySelector("#grain .grain-texture");
+          const state = { t: 0 };
+          const tl = gsap.timeline({ paused: true });
+          tl.to(state, {
+            t: 50,
+            duration: 50,
+            ease: "none",
+            onUpdate: () => {
+              const o = offsets[Math.floor(state.t / 0.05) % offsets.length];
+              tex.style.transform = "translate(" + o[0] + "%, " + o[1] + "%)";
+            },
+          }, 0);
+          window.__timelines["grain"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480">
+  <!-- polo bleu marine -->
+  <path d="M40 480 C50 380 110 350 200 350 C290 350 350 380 360 480 Z" fill="#2c3e8f"/>
+  <path d="M160 352 L200 400 L240 352 Z" fill="#fff4e8"/>
+  <!-- cou -->
+  <rect x="170" y="300" width="60" height="60" rx="20" fill="#d9a07f"/>
+  <!-- oreilles -->
+  <ellipse cx="100" cy="225" rx="22" ry="34" fill="#e8b08e"/><ellipse cx="300" cy="225" rx="22" ry="34" fill="#e8b08e"/>
+  <!-- appareil auditif -->
+  <path d="M302 200 q20 6 14 32" stroke="#ffd23f" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- visage -->
+  <ellipse cx="200" cy="220" rx="100" ry="108" fill="#e8b08e"/>
+  <!-- touffes grises -->
+  <g fill="#d6d3cf"><circle cx="108" cy="180" r="22"/><circle cx="292" cy="180" r="22"/><circle cx="104" cy="200" r="16"/><circle cx="296" cy="200" r="16"/></g>
+  <!-- béret -->
+  <ellipse cx="200" cy="128" rx="112" ry="40" fill="#1d1420"/>
+  <rect x="196" y="72" width="8" height="22" rx="4" fill="#1d1420"/>
+  <!-- sourcils broussailleux, l'air méfiant -->
+  <path d="M130 178 L182 192" stroke="#d6d3cf" stroke-width="14" stroke-linecap="round"/>
+  <path d="M270 178 L218 192" stroke="#d6d3cf" stroke-width="14" stroke-linecap="round"/>
+  <!-- yeux plissés -->
+  <path d="M140 212 Q158 204 176 212" stroke="#2a1630" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M224 212 Q242 204 260 212" stroke="#2a1630" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <!-- nez rouge (pastis ?) -->
+  <ellipse cx="200" cy="245" rx="22" ry="20" fill="#e2765f"/>
+  <!-- moustache -->
+  <path d="M130 282 Q160 258 200 272 Q240 258 270 282 Q240 292 200 282 Q160 292 130 282 Z" fill="#eceae6"/>
+  <!-- bouche -->
+  <path d="M176 300 Q200 292 224 300" stroke="#7a2f2a" stroke-width="6" fill="none" stroke-linecap="round"/>
+</svg>

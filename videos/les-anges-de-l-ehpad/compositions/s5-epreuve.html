@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #s5 {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: var(--bg);
+        }
+        #s5 .s5-grid {
+          position: absolute;
+          inset: -200px;
+          background-image:
+            linear-gradient(rgb(255 46 136 / 14%) 3px, transparent 3px),
+            linear-gradient(90deg, rgb(255 46 136 / 14%) 3px, transparent 3px);
+          background-size: 120px 120px;
+        }
+        #s5 .s5-glow {
+          width: 1000px;
+          height: 1000px;
+          left: 40px;
+          top: 420px;
+        }
+        #s5 .s5-pill {
+          position: absolute;
+          top: 140px;
+          left: 64px;
+          display: block;
+          background: var(--gold);
+          color: var(--ink);
+          font-size: 32px;
+          padding: 12px 22px;
+        }
+        #s5 .s5-head {
+          position: absolute;
+          top: 230px;
+          left: 64px;
+          right: 64px;
+          display: flex;
+          flex-direction: column;
+        }
+        #s5 .s5-h1 {
+          display: block;
+          font-size: 120px;
+          color: var(--fg);
+        }
+        #s5 .s5-h2 {
+          display: block;
+          font-size: 150px;
+          color: var(--accent);
+        }
+        #s5 .s5-p {
+          left: 290px;
+          top: 610px;
+          width: 500px;
+          height: 600px;
+        }
+        #s5 .s5-z {
+          position: absolute;
+          font-family: var(--font-display);
+          color: var(--fg);
+          line-height: 1;
+        }
+        #s5 .s5-z1 {
+          left: 760px;
+          top: 640px;
+          font-size: 90px;
+        }
+        #s5 .s5-z2 {
+          left: 830px;
+          top: 560px;
+          font-size: 120px;
+        }
+        #s5 .s5-z3 {
+          left: 910px;
+          top: 460px;
+          font-size: 150px;
+        }
+        #s5 .s5-chrono {
+          position: absolute;
+          top: 1230px;
+          left: 64px;
+          right: 64px;
+          display: flex;
+          align-items: baseline;
+          gap: 30px;
+        }
+        #s5 .s5-chrono-label {
+          display: block;
+          font-size: 32px;
+          color: var(--muted);
+        }
+        #s5 .s5-chrono-val {
+          display: block;
+          font-size: 220px;
+          color: var(--fg);
+          font-variant-numeric: tabular-nums;
+        }
+        #s5 .s5-stamp {
+          left: 170px;
+          top: 820px;
+          color: var(--accent);
+          background: rgb(20 7 15 / 85%);
+          font-size: 130px;
+        }
+        #s5 .s5-dort {
+          position: absolute;
+          top: 1500px;
+          left: 64px;
+          right: 64px;
+          font-size: 160px;
+          color: var(--gold);
+        }
+        #s5 .s5-verif {
+          position: absolute;
+          top: 1690px;
+          left: 64px;
+          right: 64px;
+          font-weight: 400;
+          font-size: 46px;
+          color: var(--muted);
+        }
+      </style>
+
+      <div id="s5" data-composition-id="s5-epreuve" data-width="1080" data-height="1920">
+        <div class="s5-grid"></div>
+        <div class="glow s5-glow"></div>
+
+        <span class="s5-pill mono">L'épreuve de la semaine</span>
+        <div class="s5-head display">
+          <span class="s5-h1">Rester éveillé devant</span>
+          <span class="s5-h2">Questions pour un champion</span>
+        </div>
+
+        <div class="portrait s5-p"><img src="assets/cast/marcel.svg" alt="Marcel" /></div>
+        <span class="s5-z s5-z1">z</span>
+        <span class="s5-z s5-z2">Z</span>
+        <span class="s5-z s5-z3">Z</span>
+
+        <div class="s5-chrono">
+          <span class="s5-chrono-val display">00:00</span>
+          <span class="s5-chrono-label mono">Chrono · record à battre : 00:52</span>
+        </div>
+
+        <div class="stamp s5-stamp">Marcel : éliminé ?</div>
+        <div class="s5-dort display">… non, il dort.</div>
+        <div class="s5-verif">(On a vérifié deux fois. Il ronfle. Ouf.)</div>
+      </div>
+
+      <script>
+        (function () {
+          const q = (s) => "#s5 " + s;
+          const tl = gsap.timeline({ paused: true });
+
+          tl.fromTo(q(".s5-grid"), { y: 0 }, { y: 120, duration: 7, ease: "none" }, 0);
+          tl.fromTo(q(".s5-glow"), { scale: 0.85 }, { scale: 1.1, duration: 1.75, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
+
+          tl.fromTo(q(".s5-pill"), { x: -600 }, { x: 0, duration: 0.4, ease: "power4.out" }, 0.05);
+          tl.fromTo(q(".s5-h1"), { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 0.25);
+          tl.fromTo(q(".s5-h2"), { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 1.4);
+
+          // Marcel pique du nez
+          tl.fromTo(q(".s5-p"), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.5);
+          tl.fromTo(q(".s5-p"), { rotation: 0 }, { rotation: 9, transformOrigin: "50% 90%", duration: 1.4, ease: "power2.inOut", immediateRender: false }, 1.6);
+          ["s5-z1", "s5-z2", "s5-z3"].forEach((z, i) => {
+            tl.fromTo(q("." + z), { y: 40, opacity: 0, scale: 0.4 }, { y: -30, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" }, 1.9 + i * 0.3);
+            tl.fromTo(q("." + z), { y: -30 }, { y: -60, duration: 0.8, ease: "sine.inOut", yoyo: true, repeat: 3, immediateRender: false }, 2.5 + i * 0.3);
+          });
+
+          // Chrono 00:00 → 00:47
+          const val = document.querySelector("#s5 .s5-chrono-val");
+          const c = { v: 0 };
+          tl.fromTo(q(".s5-chrono"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.9);
+          tl.fromTo(c, { v: 0 }, {
+            v: 47,
+            duration: 2.4,
+            ease: "none",
+            onUpdate: () => {
+              val.textContent = "00:" + String(Math.floor(c.v)).padStart(2, "0");
+            },
+          }, 1.1);
+
+          // « ÉLIMINÉ ? » (tampon global 32,8 s)
+          tl.fromTo(q(".s5-stamp"), { scale: 2.6, rotation: -16, opacity: 0 }, { scale: 1, rotation: -8, opacity: 1, duration: 0.2, ease: "power4.in" }, 3.6);
+          tl.fromTo(q(".s5-p"), { x: 0 }, { x: 12, duration: 0.04, ease: "none", yoyo: true, repeat: 5, immediateRender: false }, 3.8);
+
+          // Scratch : « … non, il dort. » (global 33,9 s)
+          tl.fromTo(q(".s5-stamp"), { opacity: 1 }, { opacity: 0.25, duration: 0.15, ease: "none", immediateRender: false }, 4.9);
+          tl.fromTo(q(".s5-dort"), { x: 1100 }, { x: 0, duration: 0.3, ease: "power4.out" }, 4.9);
+          tl.fromTo(q(".s5-verif"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 5.7);
+
+          window.__timelines["s5-epreuve"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

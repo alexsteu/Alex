@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480">
+  <!-- châle lavande -->
+  <path d="M30 480 C40 370 110 345 200 345 C290 345 360 370 370 480 Z" fill="#b48ad8"/>
+  <path d="M30 480 C60 420 120 395 200 430 C280 395 340 420 370 480 Z" fill="#9a6cc4"/>
+  <!-- collier de perles -->
+  <g fill="#fff4e8">
+    <circle cx="150" cy="372" r="9"/><circle cx="168" cy="384" r="9"/><circle cx="186" cy="391" r="9"/><circle cx="204" cy="393" r="9"/>
+    <circle cx="222" cy="390" r="9"/><circle cx="240" cy="383" r="9"/><circle cx="257" cy="371" r="9"/>
+  </g>
+  <rect x="172" y="300" width="56" height="58" rx="20" fill="#eebfa4"/>
+  <!-- chignon blanc -->
+  <circle cx="200" cy="82" r="46" fill="#f4f1ec"/>
+  <ellipse cx="200" cy="150" rx="112" ry="70" fill="#f4f1ec"/>
+  <!-- visage -->
+  <ellipse cx="200" cy="225" rx="94" ry="104" fill="#f5cdb3"/>
+  <path d="M110 190 Q150 130 200 140 Q250 130 290 190 Q250 160 200 165 Q150 160 110 190 Z" fill="#f4f1ec"/>
+  <!-- rides -->
+  <path d="M150 170 q50 -10 100 0" stroke="#e0aa8c" stroke-width="4" fill="none"/>
+  <!-- énormes lunettes loupe -->
+  <g stroke="#2a1630" stroke-width="8" fill="#ffffff">
+    <circle cx="155" cy="215" r="44"/><circle cx="245" cy="215" r="44"/>
+  </g>
+  <path d="M199 213 h2" stroke="#2a1630" stroke-width="8"/>
+  <circle cx="160" cy="220" r="20" fill="#2a1630"/><circle cx="240" cy="220" r="20" fill="#2a1630"/>
+  <circle cx="167" cy="212" r="6" fill="#fff"/><circle cx="247" cy="212" r="6" fill="#fff"/>
+  <!-- joues -->
+  <circle cx="125" cy="268" r="18" fill="#ff7aa8" opacity=".45"/><circle cx="275" cy="268" r="18" fill="#ff7aa8" opacity=".45"/>
+  <!-- sourire édenté -->
+  <path d="M160 285 Q200 320 240 285 Q200 300 160 285 Z" fill="#5a0b2c"/>
+  <rect x="190" y="290" width="14" height="10" rx="2" fill="#fff4e8"/>
+</svg>
