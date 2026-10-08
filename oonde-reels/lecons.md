@@ -79,3 +79,15 @@ Les leçons du tour 1 ont porté : critiques avant correction 6,5-7,0 (contre 6-
 25. **Une phrase qui porte le ressort du Reel** respecte la durée de lecture (mots ÷ 3 + 0,8 s) ou se réduit à 3 mots.
 26. **Noms inventés** : vérifier qu'un nom de démo (et son domaine) ne correspond à aucun commerce réel connu de la région.
 27. Son : `_kit/mux.py` baisse maintenant le limiteur tout seul jusqu'à une crête vraie ≤ −1,5 dBTP et affiche « OK ».
+
+## Tour 2, suite — Reels 07 (9 gestes ou 2, 7,7) et 08 (3 détails qui datent, 7,9)
+
+28. **Vérifier sur l'appareil réel avant de produire** tout chiffre qui dépend d'un service tiers (lien WhatsApp, Google,
+    Safari). Sinon, formuler ce qui reste vrai dans le pire cas. (07 : le « 2 gestes » dépend du lien wa.me sur iPhone.)
+29. **Le défaut d'un « avant »** se lit sans le son dans un texte ≥ 44 px ; une étiquette mono de 30 px classe, n'explique pas.
+30. **Accroche** : le premier vrai mouvement arrive au plus tard à 2 s, et quelque chose bouge dès 0,6–0,8 s.
+31. **Question de fin à réponse courte** (« 1, 2 ou 3 ? », « oui ou non ? ») : elle fait commenter bien plus qu'une question ouverte.
+32. **Un doigt simulé ne couvre jamais** le mot ou le chiffre qu'il désigne ; aucun badge d'interface sur le texte zoomé.
+33. **Ne pas rapetisser les objets principaux** pour un mouvement de caméra : préférer une coupe sur un plan rapproché.
+34. **Compter les mots de l'écran final sur l'image rendue**, chiffres, compteurs et @ compris.
+35. Entre deux comparaisons, ne jamais ramener le curseur en arrière : sortir l'après d'un bloc, l'avant suivant déjà dessous.

@@ -109,5 +109,43 @@
    "À l'écran final, WhatsApp n'apparaît que par son icône : « Écrivez-nous sur WhatsApp » serait plus net.",
    "À vérifier : que « Maison Vauclaire » ne correspond à aucun restaurant réel."
   ]
+ },
+ "07-9-gestes-ou-2": {
+  "title": "Prendre rendez-vous : 9 gestes ou 2 ?",
+  "round": 2,
+  "scores": {
+   "accroche": 8,
+   "rythme": 7.5,
+   "clarte": 8,
+   "beaute": 7.5,
+   "partage": 7.5,
+   "conformite": 8,
+   "global": 7.7
+  },
+  "verdict": "Deux téléphones côte à côte : sur l'ancien site du Salon Mirabelle (démo), on compte 9 gestes pour prendre rendez-vous ; sur le nouveau, 2 avec WhatsApp. À vérifier avant publication : sur un vrai iPhone, le lien WhatsApp doit ouvrir directement la discussion, sinon on passe à « 9 gestes ou 3 ? ».",
+  "remaining": [
+   "Bloquant : tester le lien WhatsApp des sites OONDE sur un iPhone, depuis Safari (2 ou 3 gestes).",
+   "L'accroche reste immobile 1,5 s avant le premier geste.",
+   "Dans le PDF zoomé, un badge recouvre un mot."
+  ]
+ },
+ "08-3-details-qui-datent": {
+  "title": "3 détails qui datent votre site",
+  "round": 2,
+  "scores": {
+   "accroche": 8,
+   "rythme": 7.5,
+   "clarte": 8,
+   "beaute": 8,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 7.9
+  },
+  "verdict": "Trois mini avant / après liés par le même curseur : « Bienvenue » devient le nom et le métier, le PDF devient une liste, le numéro en image devient un bouton WhatsApp. La question de fin « Et le vôtre : 1, 2 ou 3 ? » invite à commenter.",
+  "remaining": [
+   "La question de fin remplace celle prévue (« Lequel a encore le vôtre ? ») : à valider.",
+   "L'étiquette du détail 3 est un peu petite.",
+   "Un blanc bref entre le bouton WhatsApp et les horaires (0,4 s)."
+  ]
  }
 }
