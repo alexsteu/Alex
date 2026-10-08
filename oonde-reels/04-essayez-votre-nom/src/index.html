@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · 04 Essayez avec votre nom</title>
+<link rel="icon" href="data:,">
+<style>
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+.cover #live{top:226px}.cover #demo{top:318px;right:auto;left:84px;transform-origin:0 50%}.cover .ttl{top:398px}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+
+/* le téléphone (monde) : écran 390 × 888 = barre d'état 44 + page 844 */
+#world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+#phone{position:absolute;left:-11px;top:-11px;width:412px;height:910px;border-radius:57px;background:#15171B;
+  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 30px 60px -34px rgba(17,19,24,.55),0 8px 20px -12px rgba(17,19,24,.25)}
+#screen{position:absolute;left:0;top:0;width:390px;height:888px;border-radius:46px;overflow:hidden;background:#F7F7F4}
+#sbar{position:absolute;left:0;top:0;width:390px;height:44px;background:#F7F7F4}
+#sbar .time{position:absolute;left:38px;top:13px;font:600 16px/18px IS;letter-spacing:-.01em;color:#111318}
+#sbar .isl{position:absolute;left:138px;top:10px;width:114px;height:30px;border-radius:15px;background:#0B0C0F}
+#sbar svg{position:absolute;top:15px}
+#shots{position:absolute;left:0;top:44px;width:390px;height:844px;z-index:0}
+#shots img.hp{left:70px;top:255px;width:250px;height:310px}
+#shots img{position:absolute;left:0;top:0;width:390px;height:844px;display:none}
+#caret{position:absolute;z-index:2;width:2px;height:22px;background:var(--klein);border-radius:1px}
+#hl{position:absolute;z-index:6;left:89px;top:491.5px;width:87px;height:19px;border:1.1px solid var(--klein);border-radius:4px;box-shadow:0 0 0 2px rgba(255,255,255,.55);opacity:0}
+#sheet{position:absolute;z-index:6;left:20px;top:431px;width:186px;padding:6px 0;background:#fff;border:1px solid #DCDED8;border-radius:14px;
+  box-shadow:0 18px 40px -16px rgba(17,19,24,.35),0 2px 8px -4px rgba(17,19,24,.18);transform-origin:30% 100%;opacity:0;display:none}
+#sheet span{display:block;height:25px;margin:0 6px;padding:0 10px;border-radius:8px;font:500 16px/25px IS;letter-spacing:-.01em;color:#111318}
+#sheet span.m{background:rgba(17,19,24,0)}
+#home{position:absolute;left:131px;top:874px;width:128px;height:5px;border-radius:3px;background:rgba(17,19,24,.85)}
+
+/* bandeau du haut : étiquettes et titre de l'étape (au-dessus du téléphone) */
+#band{position:absolute;left:0;top:0;width:1080px;height:640px;z-index:5;
+  background:linear-gradient(#F7F7F4 0,#F7F7F4 568px,rgba(247,247,244,0) 584px)}
+#bline{position:absolute;left:0;top:568px;width:1080px;height:1px;background:#DCDED8}
+#live{position:absolute;left:84px;top:272px;font-size:30px;line-height:36px;color:var(--soft);display:flex;align-items:center;gap:16px}
+#live i{display:block;width:14px;height:14px;border-radius:50%;background:var(--klein)}
+#demo{position:absolute;right:150px;top:262px;font-size:30px;line-height:36px;color:var(--soft);padding:10px 18px 10px 20px;border:2px solid var(--line);border-radius:10px;background:#fff;transform-origin:100% 50%}
+.ttl{position:absolute;left:84px;top:336px;width:860px;font:600 92px/1.02 IS;letter-spacing:-.025em;color:var(--ink);white-space:nowrap}
+
+#fog{position:absolute;left:0;top:1560px;width:1080px;height:360px;z-index:3;background:linear-gradient(rgba(247,247,244,0),#F7F7F4 62%)}
+#tap{position:absolute;left:0;top:0;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;z-index:4;
+  background:rgba(17,19,24,.16);box-shadow:0 0 0 3px rgba(255,255,255,.9),0 6px 18px -6px rgba(17,19,24,.35);opacity:0}
+
+/* écran final */
+#end{position:absolute;inset:0;z-index:6;pointer-events:none}
+#end > *{position:absolute;left:84px}
+#eLogo{top:390px;height:62px}
+#eKick{top:588px;font:500 62px/1.1 IS;letter-spacing:-.02em;color:var(--soft)}
+#eTitle{top:672px;font:600 124px/1.0 IS;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+#eWa{top:996px;display:flex;align-items:center;gap:22px;padding:26px 36px 26px 30px;background:#fff;border:2px solid var(--line);border-radius:14px;
+  font:500 50px/1 IS;letter-spacing:-.015em;color:var(--ink);box-shadow:0 18px 40px -30px rgba(17,19,24,.35)}
+#eWa svg{width:56px;height:56px;color:var(--wa);flex:none}
+#eHandle{top:1178px;font-size:34px;color:var(--muted)}
+#eCur{display:inline-block;width:6px;height:110px;margin-left:12px;vertical-align:-14px;background:var(--klein);border-radius:2px;opacity:0}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="world">
+    <div id="phone">
+      <div style="position:absolute;left:11px;top:11px;width:390px;height:888px">
+        <div id="screen">
+          <div id="sbar">
+            <span class="time">8:15</span><i class="isl"></i>
+            <svg style="left:282px" width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="8" width="3.2" height="4" rx="1" fill="#111318"/><rect x="5" y="5.5" width="3.2" height="6.5" rx="1" fill="#111318"/><rect x="10" y="3" width="3.2" height="9" rx="1" fill="#111318"/><rect x="15" y="0" width="3.2" height="12" rx="1" fill="#111318"/></svg>
+            <svg style="left:307px" width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.2c2.5 0 4.8 1 6.5 2.6l1.3-1.4A11 11 0 0 0 8.5.3 11 11 0 0 0 .7 3.4L2 4.8a9.2 9.2 0 0 1 6.5-2.6zm0 3.6c1.5 0 2.9.6 3.9 1.6l1.3-1.4a7.4 7.4 0 0 0-10.4 0l1.3 1.4c1-1 2.4-1.6 3.9-1.6zm0 3.5c-.6 0-1.1.2-1.5.6L8.5 11.5 10 9.9c-.4-.4-.9-.6-1.5-.6z" fill="#111318"/></svg>
+            <svg style="left:330px" width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="#111318" stroke-opacity=".4"/><rect x="2.2" y="2.2" width="17.5" height="8.6" rx="2.2" fill="#111318"/><path d="M25 4.4v4.2c.8-.3 1.4-1.1 1.4-2.1s-.6-1.8-1.4-2.1z" fill="#111318" fill-opacity=".45"/></svg>
+          </div>
+          <div id="shots"><img data-id="n00" src="cap/n00.jpg" alt=""><img data-id="n01" src="cap/n01.jpg" alt=""><img data-id="n02" src="cap/n02.jpg" alt=""><img data-id="n03" src="cap/n03.jpg" alt=""><img data-id="n04" src="cap/n04.jpg" alt=""><img data-id="n05" src="cap/n05.jpg" alt=""><img data-id="n06" src="cap/n06.jpg" alt=""><img data-id="n07" src="cap/n07.jpg" alt=""><img data-id="n08" src="cap/n08.jpg" alt=""><img data-id="n09" src="cap/n09.jpg" alt=""><img data-id="n10" src="cap/n10.jpg" alt=""><img data-id="n11" src="cap/n11.jpg" alt=""><img data-id="n12" src="cap/n12.jpg" alt=""><img data-id="n13" src="cap/n13.jpg" alt=""><img data-id="n14" src="cap/n14.jpg" alt=""><img data-id="n15" src="cap/n15.jpg" alt=""><img data-id="n99" src="cap/n99.jpg" alt=""><img data-id="act" src="cap/act.jpg" alt=""><img data-id="town" src="cap/town.jpg" alt=""><img data-id="c1" src="cap/c1.jpg" alt=""><img data-id="c2" src="cap/c2.jpg" alt=""><img class="hp" data-hp="n00" src="cap/hp-n00.jpg" alt=""><img class="hp" data-hp="n01" src="cap/hp-n01.jpg" alt=""><img class="hp" data-hp="n02" src="cap/hp-n02.jpg" alt=""><img class="hp" data-hp="n03" src="cap/hp-n03.jpg" alt=""><img class="hp" data-hp="n04" src="cap/hp-n04.jpg" alt=""><img class="hp" data-hp="n05" src="cap/hp-n05.jpg" alt=""><img class="hp" data-hp="n06" src="cap/hp-n06.jpg" alt=""><img class="hp" data-hp="n07" src="cap/hp-n07.jpg" alt=""><img class="hp" data-hp="n08" src="cap/hp-n08.jpg" alt=""><img class="hp" data-hp="n09" src="cap/hp-n09.jpg" alt=""><img class="hp" data-hp="n10" src="cap/hp-n10.jpg" alt=""><img class="hp" data-hp="n11" src="cap/hp-n11.jpg" alt=""><img class="hp" data-hp="n12" src="cap/hp-n12.jpg" alt=""><img class="hp" data-hp="n13" src="cap/hp-n13.jpg" alt=""><img class="hp" data-hp="n14" src="cap/hp-n14.jpg" alt=""><img class="hp" data-hp="n15" src="cap/hp-n15.jpg" alt=""><img class="hp" data-hp="n99" src="cap/hp-n99.jpg" alt=""><img class="hp" data-hp="act" src="cap/hp-act.jpg" alt=""><img class="hp" data-hp="town" src="cap/hp-town.jpg" alt=""><img class="hp" data-hp="c1" src="cap/hp-c1.jpg" alt=""><img class="hp" data-hp="c2" src="cap/hp-c2.jpg" alt=""></div>
+          <i id="caret"></i>
+          <i id="hl"></i><div id="sheet"><span>Genève</span><span>Coppet</span><span>Nyon</span><span>Rolle</span><span class="m">Morges</span><span>Lausanne</span><span>Vevey</span><span>Montreux</span></div><i id="home"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="fog"></div>
+  <div id="tap"></div>
+
+  <div id="band">
+    <i id="bline"></i>
+    <div id="live" class="mono"><i></i>Démonstration</div>
+    <div id="demo" class="mono">Démo · lieu fictif</div>
+    <div class="ttl" id="t1">Tapez le nom<br>de votre commerce.</div>
+    <div class="ttl" id="t2">Choisissez<br>votre métier.</div>
+    <div class="ttl" id="t3">Puis votre<br>commune.</div>
+    <div class="ttl" id="t4">Et votre<br>couleur.</div>
+    <div class="ttl" id="t5">Votre site s’affiche<br>en direct.</div>
+  </div>
+
+  <div id="end">
+    <img id="eLogo" src="/_kit/brand/logo.svg" alt="">
+    <div id="eKick">Votre vrai site,</div>
+    <div id="eTitle">la maquette<br>est <span class="k">offerte.</span><i id="eCur"></i></div>
+    <div id="eWa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Écrivez-nous sur WhatsApp.</div>
+    <div id="eHandle" class="mono">@oonde_studio</div>
+  </div>
+  <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  out5: t => 1 - Math.pow(1 - t, 5),
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  sine: t => .5 - .5 * Math.cos(Math.PI * t),
+  back: t => { const c = 1.4; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
+};
+// ressort doux (amorti critique léger) : 0 → 1
+const spring = (t, w = 15, z = .72) => { if (t <= 0) return 0; const wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t)); };
+
+const META = [{"id": "n00", "input": [20, 99.6, 350, 48], "caret": 35, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 451.3, 201, 8], "hname": [94.5, 464, 201, 19.9], "hsub": [94.5, 488.5, 201, 12.9], "tn": [93.3, 277, 74.3, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n01", "input": [20, 99.6, 350, 48], "caret": 45.6, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 6, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n02", "input": [20, 99.6, 350, 48], "caret": 54.9, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 11.3, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n03", "input": [20, 99.6, 350, 48], "caret": 59.1, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 13.6, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n04", "input": [20, 99.6, 350, 48], "caret": 69.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 19.3, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n05", "input": [20, 99.6, 350, 48], "caret": 79.5, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 25, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n06", "input": [20, 99.6, 350, 48], "caret": 82.8, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 25, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n07", "input": [20, 99.6, 350, 48], "caret": 98.1, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 35.3, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n08", "input": [20, 99.6, 350, 48], "caret": 102.4, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 37.6, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n09", "input": [20, 99.6, 350, 48], "caret": 108.9, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 41.2, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n10", "input": [20, 99.6, 350, 48], "caret": 117.9, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 46.3, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n11", "input": [20, 99.6, 350, 48], "caret": 128.3, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 52.2, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n12", "input": [20, 99.6, 350, 48], "caret": 138, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 57.6, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n13", "input": [20, 99.6, 350, 48], "caret": 142.3, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 60, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n14", "input": [20, 99.6, 350, 48], "caret": 146.5, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 62.3, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n15", "input": [20, 99.6, 350, 48], "caret": 156.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 67.7, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "n99", "input": [20, 99.6, 350, 48], "caret": 156.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 438.4, 201, 8], "hname": [94.5, 451, 201, 19.9], "hsub": [94.5, 475.6, 201, 25.8], "tn": [93.3, 277, 67.7, 14.6], "hbtn": [94.5, 510.6, 74.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "act", "input": [20, 99.6, 350, 48], "caret": 156.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 413.4, 201, 8], "hname": [94.5, 426.1, 201, 19.9], "hsub": [94.5, 450.6, 201, 25.8], "tn": [93.3, 277, 67.7, 14.6], "hbtn": [94.5, 485.6, 110.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "town", "input": [20, 99.6, 350, 48], "caret": 156.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 413.4, 201, 8], "hname": [94.5, 426.1, 201, 19.9], "hsub": [94.5, 450.6, 201, 25.8], "tn": [93.3, 277, 67.7, 14.6], "hbtn": [94.5, 485.6, 110.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "c1", "input": [20, 99.6, 350, 48], "caret": 156.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 413.4, 201, 8], "hname": [94.5, 426.1, 201, 19.9], "hsub": [94.5, 450.6, 201, 25.8], "tn": [93.3, 277, 67.7, 14.6], "hbtn": [94.5, 485.6, 110.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}, {"id": "c2", "input": [20, 99.6, 350, 48], "caret": 156.2, "coiffure": [20, 195.6, 83.6, 44], "town": [20, 607.6, 186, 48], "sw": [[218, 611.6, 44, 44], [272, 611.6, 44, 44], [326, 611.6, 44, 44]], "prev": [75, 259.6, 240, 300], "mbar": [0, 851.1, 390, 71], "offer": [20, 675.6, 350, 103.8], "tag": [94.5, 413.4, 201, 8], "hname": [94.5, 426.1, 201, 19.9], "hsub": [94.5, 450.6, 201, 25.8], "tn": [93.3, 277, 67.7, 14.6], "hbtn": [94.5, 485.6, 110.5, 24.7], "townLab": [20, 579.6, 186, 18], "styleLab": [218, 583.6, 152, 18]}];
+const M = Object.fromEntries(META.map(m => [m.id, m]));
+const IMG = Object.fromEntries([...document.querySelectorAll('#shots img:not(.hp)')].map(i => [i.dataset.id, i]));
+const HP = Object.fromEntries([...document.querySelectorAll('#shots img.hp')].map(i => [i.dataset.hp, i]));
+const SB = 44;                                    // barre d'état : y écran = y page + 44
+
+window.DURATION = 14.6;
+const COVER = new URLSearchParams(location.search).has('cover');
+
+// ---- frappe : « Salon Mirabelle », une lettre par image
+const NAME = 'Salon Mirabelle';
+const KEYS = [0.50, 0.62, 0.74, 0.87, 0.98, 1.15, 1.31, 1.43, 1.55, 1.68, 1.79, 1.92, 2.04, 2.16, 2.29];
+const T_BLUR = 2.95;                              // le champ perd le focus (avant le geste suivant)
+// ---- temps clés (une coupe franche une image après chaque toucher)
+const T_COIF = 3.85, T_SEL = 5.45, T_MOR = 5.82, T_C1 = 7.85, T_C2 = 8.50;
+const RECAP = 9.48, RS = .22;                     // récapitulatif avant / après, coupes de 0,22 s
+const T_EXIT = 11.55, T_END = 11.85, T_LOOP = 14.30;
+// ---- états de la page : [temps, image, balayage de l'aperçu (calque HP, de bas en haut)]
+const STATES = [[0, 'n00', 0], ...KEYS.map((k, i) => [k, 'n' + String(i + 1).padStart(2, '0'), 0]), [T_BLUR, 'n99', 0],
+  [T_COIF + .03, 'act', 1], [T_MOR + .03, 'town', 1], [T_C1 + .03, 'c1', 1], [T_C2 + .03, 'c2', 1],
+  [RECAP, 'n00', 0], [RECAP + RS, 'n15', 0], [RECAP + 2 * RS, 'act', 0], [RECAP + 3 * RS, 'town', 0], [RECAP + 4 * RS, 'c2', 0],
+  [T_LOOP, 'n00', 0]];
+// ---- gestes (doigt) : temps, x/y écran
+const C = M.act;
+const TAPS = [[T_COIF, C.coiffure[0] + C.coiffure[2] / 2, C.coiffure[1] + C.coiffure[3] / 2 + SB],
+  [T_SEL, C.town[0] + C.town[2] * .42, C.town[1] + C.town[3] / 2 + SB],
+  [T_MOR, 20 + 70, 431 + 1 + 6 + 4 * 25 + 12.5],
+  [T_C1, C.sw[1][0] + 22, C.sw[1][1] + 22 + SB], [T_C2, C.sw[2][0] + 22, C.sw[2][1] + 22 + SB]];
+// ---- caméra : k (échelle), point de l'écran (fx, fy) placé en (cx, cy) sur l'image ; k ≤ 3
+const CAM0 = { k: 1.7, fx: 195, fy: 330, cx: 540, cy: 1140 };
+const F_END = { k: 3.0, fx: 195, fy: 454, cx: 540, cy: 1035 };
+const MOVES = [
+  [0.45, 1.40, { k: 2.2, fx: 195, fy: 400, cx: 540, cy: 1160 }, E.sine],      // on s'approche du champ pendant la frappe
+  [1.40, 2.30, { k: 2.45, fx: 195, fy: 455, cx: 540, cy: 965 }, E.inOut] ,    // le nom grandit dans l'aperçu
+  [2.95, 3.55, { k: 2.0, fx: 195, fy: 430, cx: 540, cy: 1028 }, E.inOut],     // les métiers
+  [4.10, 4.65, { k: 3.0, fx: 195, fy: 452, cx: 540, cy: 1040 }, E.inOut],     // dans l'aperçu : la photo
+  [4.75, 5.30, { k: 2.0, fx: 195, fy: 520, cx: 540, cy: 1022 }, E.inOut],     // la commune
+  [5.95, 6.55, { k: 3.0, fx: 160, fy: 498, cx: 540, cy: 1000 }, E.inOut],     // « Votre salon à Morges. »
+  [7.05, 7.60, { k: 2.8, fx: 235, fy: 595, cx: 540, cy: 1040 }, E.inOut],     // aperçu + couleurs dans le même plan
+  [9.00, 9.45, F_END, E.inOut],                                              // le site fini (récapitulatif)
+];
+function cam(t) {
+  if (t >= T_LOOP) t = 0;                         // boucle : retour à l'image t = 0
+  let s = { ...CAM0 };
+  for (const [a, b, to, ease] of MOVES) {
+    if (t <= a) break;
+    const p = ease(seg(t, a, b));
+    s = { k: s.k * Math.pow(to.k / s.k, p), fx: lerp(s.fx, to.fx, p), fy: lerp(s.fy, to.fy, p), cx: lerp(s.cx, to.cx, p), cy: lerp(s.cy, to.cy, p) };
+  }
+  return { k: s.k, tx: s.cx - s.fx * s.k, ty: s.cy - s.fy * s.k };
+}
+
+// ---- titres : [id, entrée, sortie]
+const TTL = [['#t1', -1, 2.95], ['#t2', 3.0, 4.80], ['#t3', 4.85, 7.05], ['#t4', 7.10, 9.05], ['#t5', 9.05, T_EXIT]];
+function title(el, t, a, b) {
+  const pin = a < 0 ? 1 : E.out(seg(t, a + .16, a + .6));
+  const pout = E.inOut(seg(t, b, b + .22));
+  el.style.opacity = Math.min(pin, 1 - pout);
+  el.style.transform = `translateY(${(1 - pin) * 44 - pout * 30}px)`;
+  el.style.display = (t < a || t > b + .3) ? 'none' : 'block';
+}
+
+function render(t) {
+  const loop = E.inOut(seg(t, T_LOOP + .1, T_LOOP + .26)), endOut = E.inOut(seg(t, T_LOOP, T_LOOP + .12));   // fin → image t = 0 (boucle)
+  // téléphone et caméra ; sortie ramassée (0,27 s), recul de 60 px et échelle 0,96
+  let c = cam(t);
+  if (COVER) { const k = 1.8; c = { k, tx: 540 - 195 * k, ty: 1052 - 373.6 * k }; }
+  const exit = t >= T_LOOP ? 0 : E.inOut(seg(t, T_EXIT, T_EXIT + .27));
+  const sc = 1 - .04 * exit;
+  const tx = 540 + (c.tx - 540) * sc, ty = 960 + (c.ty - 960) * sc - exit * 60;
+  $('#world').style.transform = `translate(${tx}px,${ty}px) scale(${c.k * sc})`;
+  $('#world').style.opacity = t >= T_LOOP ? loop : 1 - exit;
+
+  // images de la page : coupe franche ; seul le calque HP de l'aperçu se balaie de bas en haut (0,22 s)
+  let cur = 0; for (let i = 0; i < STATES.length; i++) if (t >= STATES[i][0]) cur = i;
+  if (COVER) cur = STATES.findIndex(s => s[1] === 'c2');
+  for (const id in IMG) { IMG[id].style.display = 'none'; HP[id].style.display = 'none'; HP[id].style.clipPath = 'none'; }
+  const [ta, ida, wipe] = STATES[cur];
+  const p = (wipe && !COVER) ? E.out(seg(t, ta, ta + .22)) : 1;
+  const show = (el, z) => { el.style.display = 'block'; el.style.opacity = 1; el.style.zIndex = z; };
+  show(IMG[ida], 2); show(HP[ida], 4);
+  if (p < 1 && cur > 0) {
+    const pid = STATES[cur - 1][1]; show(HP[pid], 3);
+    HP[ida].style.clipPath = `inset(${((1 - p) * 100).toFixed(2)}% 0 0 0)`;
+  }
+
+  // curseur du champ : fixe pendant la frappe, clignote sinon (cadence 1 s)
+  const m = M[ida] || M.n00, car = $('#caret');
+  const typing = t >= .42 && t <= KEYS[KEYS.length - 1] + .45;
+  const blinkOn = typing || t >= T_LOOP || ((t < .42 ? t : t - (KEYS[KEYS.length - 1] + .45)) % 1.0) < .55;
+  car.style.display = (!COVER && (t < T_BLUR || t >= T_LOOP) && blinkOn) ? 'block' : 'none';
+  car.style.left = (m.caret + 1) + 'px';
+  car.style.top = (m.input[1] + m.input[3] / 2 - 11 + SB) + 'px';
+
+  // gestes : pastille du doigt, appui puis relâche
+  const tap = $('#tap'); tap.style.opacity = 0;
+  for (const [tt, sx, sy] of TAPS) {
+    if (COVER || t < tt - .16 || t > tt + .5) continue;
+    const x = tx + sx * c.k * sc, y = ty + sy * c.k * sc;
+    const pin = E.out(seg(t, tt - .16, tt)), pup = E.out(seg(t, tt + .06, tt + .5));
+    tap.style.left = x + 'px'; tap.style.top = y + 'px';
+    tap.style.opacity = pin * (1 - pup);
+    tap.style.transform = `scale(${(1.35 - .35 * pin) * (1 + .5 * pup)})`;
+  }
+
+  // liste des communes (menu natif dessiné) : s'ouvre au toucher, Morges surligné, se ferme net
+  const sh = $('#sheet');
+  const so = E.out(seg(t, T_SEL + .03, T_SEL + .15)), sc2 = seg(t, T_MOR + .03, T_MOR + .09);
+  sh.style.display = (!COVER && t >= T_SEL && t < T_MOR + .1) ? 'block' : 'none';
+  sh.style.opacity = so * (1 - sc2);
+  sh.style.transform = `scale(${.94 + .06 * so})`;
+  $('#sheet .m').style.background = `rgba(17,19,24,${(.09 * E.out(seg(t, T_MOR - .1, T_MOR))).toFixed(3)})`;
+
+  // bandeau du haut : bord net (filet 1 px) ; pendant l'intro, il reste au-dessus du téléphone
+  for (const [s, a, b] of TTL) title($(s), COVER ? 0 : (t >= T_LOOP ? -.5 : t), a, b);
+  if (t >= T_LOOP) $('#t1').style.opacity = loop;
+  const bandOut = exit;
+  const intro = COVER ? 1 : (t >= T_LOOP ? 0 : E.inOut(seg(t, .45, 1.4)));
+  const gl = COVER ? 612 : lerp(526, 568, intro);
+  $('#band').style.background = `linear-gradient(#F7F7F4 0,#F7F7F4 ${gl}px,rgba(247,247,244,0) ${gl + 16}px)`;
+  $('#bline').style.top = gl + 'px';
+  $('#bline').style.opacity = COVER ? 1 : intro * (1 - exit);
+  $('#live').style.opacity = t >= T_LOOP ? loop : 1 - bandOut;
+  $('#live i').style.opacity = .55 + .45 * Math.cos(t * Math.PI * 1.6) ** 2;
+  const dp = COVER ? 1 : (t >= T_LOOP ? 0 : spring(t - .5, 16, .62));
+  $('#demo').style.opacity = clamp(dp * 1.4) * (1 - exit);       // même sortie que le téléphone
+  $('#demo').style.transform = `scale(${.86 + .14 * dp})`;
+  // « Votre salon à Morges. » : cadre bleu qui se pose (ressort sec)
+  const h = spring(t - 6.50, 15, .7), hOut = E.inOut(seg(t, 6.98, 7.18));
+  $('#hl').style.opacity = COVER ? 0 : clamp(h * 1.6) * (1 - hOut);
+  $('#hl').style.transform = `scale(${1.12 - .12 * h})`;
+
+  // écran final (le téléphone est déjà parti quand le logo arrive)
+  const eOn = !COVER && t >= T_END - .05;
+  $('#end').style.display = eOn ? 'block' : 'none';
+  if (eOn) {
+    $('#end').style.opacity = 1 - endOut;
+    const r = (el, a, dy = 46) => { const q = E.out5(seg(t, a, a + .6)); el.style.opacity = q; el.style.transform = `translateY(${(1 - q) * dy}px)`; };
+    r($('#eLogo'), T_END, 30); r($('#eKick'), T_END + .1); r($('#eTitle'), T_END + .2, 56); r($('#eHandle'), T_END + .75, 24);
+    const w = spring(t - (T_END + .45), 14, .7);
+    $('#eWa').style.opacity = clamp(w * 1.5); $('#eWa').style.transform = `translateY(${(1 - w) * 40}px) scale(${.94 + .06 * w})`;
+    const tc = t - (T_END + .8);                    // curseur Klein après « offerte. » (raccord avec le champ du début)
+    $('#eCur').style.opacity = tc < 0 ? 0 : ((tc % 1.0) < .55 ? 1 : 0);
+  }
+}
+window.render = render;
+
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+if (q.has('cover')) document.body.classList.add('cover');   // couverture : état c2, titre à y ≥ 88 dans le recadrage de la grille
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('400 40px IS'), document.fonts.load('500 40px IS')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>

@@ -24,7 +24,7 @@ node $K/render.cjs src --stills 0.3,1.5,4,9 --out stills         # images clés 
 node $K/render.cjs src --sheet sheet.jpg --n 18                  # planche contact
 node $K/render.cjs src video.mp4                                 # vidéo muette, 30 i/s
 python3 $K/make_audio.py src/cues.json audio.wav                 # son (voir l'en-tête du script)
-ffmpeg -y -i video.mp4 -i audio.wav -c:v copy -af loudnorm=I=-15:TP=-1.5 -c:a aac -b:a 192k -shortest NN-slug.mp4
+python3 $K/mux.py video.mp4 audio.wav NN-slug.mp4                # 2 passes, 48 kHz, −15 LUFS, crête ≤ −1,5 dBTP (affiche la mesure)
 ```
 `render.cjs` affiche `ERREURS PAGE : n` si la page a des erreurs : il faut 0. Prévisualiser une image :
 ouvrir `src/index.html?t=4.2&safe` (le serveur du kit sert `/_kit/`). Carrousel : même gabarit avec

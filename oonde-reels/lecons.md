@@ -43,3 +43,20 @@ Ce qui a fait monter les notes : le chevauchement des titres, un plan qui bouge 
    légende plutôt que promettre l'immédiat.
 10. Kit : un accent est mal dessiné dans `fonts/cormorant-garamond-latin-400-normal.woff2` (sous-ensemble) : éviter cette police
     pour du texte accentué en gros, ou vérifier visuellement.
+
+## Tour 1, suite — Reels 03 (avant/après Mirabelle, 7,7) et 04 (essai du site, 7,3)
+
+11. **Taille réelle avant de rendre** : pour chaque texte qui porte l'argument dans un téléphone dessiné, noter dans script.md
+    sa taille à l'écran (taille CSS × échelle × zoom). Moins de 44 px → agrandir la page (échelle ≈ 2,7 : 16 px CSS → 44 px)
+    ou le reprendre hors du téléphone. Ne pas attendre la critique.
+12. **Nommer le gain** : le titre qui accompagne l'« après » dit le bénéfice concret visible (« Réserver en un geste »,
+    « Horaires lisibles »), pas un constat (« Autre site »). Sans le son, on doit pouvoir répéter le bénéfice.
+13. **Pas d'objet seul sur fond vide plus de 0,3 s**, surtout juste avant l'appel à l'action.
+14. **Toute image peut devenir une vignette** : extraire 5 images au hasard ; aucune ne doit montrer un mot hybride ou coupé
+    (effets de découpe hors des titres), aucun logo coupé à mi-hauteur par un masque.
+15. **L'accroche ne demande jamais un geste impossible** (l'outil du site n'est pas encore en ligne) : « Regardez ce qui se
+    passe quand on tape… ». L'impératif est réservé au vrai geste de la fin (WhatsApp).
+16. **Une démo pas à pas finit par une montée** : récapitulatif avant/après en coupes franches, puis un plan tenu ≥ 1 s.
+17. **Écran final** : tout est en place ≥ 1,2 s avant la coupe ; une phrase de plus de 8 mots s'affiche en deux temps lisibles seuls.
+18. **Son** : utiliser `python3 _kit/mux.py video.mp4 audio.wav final.mp4` (deux passes, 48 kHz, crête ≤ −1,5 dBTP, mesure affichée).
+19. Communes de l'outil du site : Coppet y figure (pas Gland) ; elle est citable.
