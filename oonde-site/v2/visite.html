@@ -1,0 +1,184 @@
+<meta charset="utf-8">
+<title>Site avec visite pour hôtels, chambres d'hôtes et salles, de Genève à Montreux · OONDE</title>
+<meta name="description" content="La Visite : un site où vos clients parcourent votre lieu en faisant défiler, filmé ou reconstruit en 3D. Calendrier Booking ou Airbnb, en français et en anglais. Prix par écrit sous 48 heures.">
+<link rel="canonical" href="https://oonde.ch/visite">
+<meta property="og:title" content="La Visite · Des sites où vos clients entrent avant de venir">
+<meta property="og:description" content="Votre lieu filmé ou reconstruit en 3D : en faisant défiler, vos clients passent la porte et voient la vue. Prix par écrit sous 48 heures, avec une première image 3D offerte.">
+<meta property="og:url" content="https://oonde.ch/visite">
+<meta property="og:image" content="https://oonde.ch/img/og-visite.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Démo Les Grèves : une maison au bord du lac, à l'heure bleue.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="OONDE">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"La Visite","serviceType":"Site internet avec visite filmée ou en 3D","url":"https://oonde.ch/visite","provider":{"@id":"https://oonde.ch/#oonde","@type":"ProfessionalService","name":"OONDE","url":"https://oonde.ch/"},"areaServed":{"@type":"AdministrativeArea","name":"De Genève à Montreux"},"audience":{"@type":"BusinessAudience","name":"Hôtels, chambres d'hôtes, logements de vacances, restaurants, salles, caves"}}</script>
+{{FONTS}}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{INC:base.css}}
+.v-hero{padding:clamp(24px,4vh,48px) 0 16px}
+.v-hero .in{display:flex;flex-direction:column;gap:16px}
+.v-hero .h-xl{font-size:clamp(40px,4.4vw,64px);max-width:20ch;margin:0}
+@media (max-width:700px){.v-go .btn{width:100%}}
+.v-hero .lede{max-width:34em}
+.v-go{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+.v-go .lnk{font-size:16px}
+.v-go .micro{flex-basis:100%}
+.v-go .micro a{color:var(--ink)}
+{{INC:demo.css}}
+/* Trois raisons, puis le prix */
+.why{list-style:none;margin:0;padding:0;display:grid;gap:28px 24px}
+@media (min-width:861px){.why{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.why li{border-top:2px solid var(--ink);padding-top:18px}
+.why b{display:block;font-size:20px;letter-spacing:-.015em;line-height:1.25}
+.why span{display:block;margin-top:10px;color:var(--soft)}
+.v-price{display:grid;gap:32px 24px;align-items:start}
+@media (min-width:901px){.v-price{grid-template-columns:repeat(12,minmax(0,1fr))}.v-price>.txt{grid-column:1/7}.v-price>.steps{grid-column:8/13}}
+.v-price .txt{display:flex;flex-direction:column;gap:18px}
+.steps{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.steps li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:4px 20px;padding:18px 0;border-bottom:1px solid var(--line)}
+.steps .when{grid-column:1/-1;font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.steps h3{font-size:18px;margin:0}
+.steps .amt{font-size:22px;grid-row:2;grid-column:2;margin:0;align-self:baseline}
+.steps p{grid-column:1/-1;font-size:15px;color:var(--muted)}
+.back{margin-top:28px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:var(--card);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 24px}
+.back p{max-width:34em;color:var(--soft)}
+</style>
+
+<a class="skip" href="#demo">Aller au contenu</a>
+<header class="nav">
+ <div class="in">
+  <a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
+  <nav aria-label="Sections"><a class="opt" href="#demo">La démo</a><a href="#prix">Prix</a><a class="opt" href="#questions">Questions</a><a class="opt2" href="{{HOME}}">La Vitrine</a></nav>
+  <a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Connaître mon prix</span><span class="s">WhatsApp</span></a>
+ </div>
+</header>
+
+<main id="top">
+<section class="v-hero" data-hero aria-labelledby="h1">
+ <div class="in">
+  <p class="mono">La Visite · hôtels, chambres d'hôtes, logements, salles</p>
+  <h1 class="h-xl" id="h1">Des sites où vos clients entrent avant de venir.</h1>
+  <p class="lede">On filme votre lieu, ou on le reconstruit en 3D. En faisant défiler, vos clients passent la porte, traversent les pièces et voient la vue. Le bouton Réserver les attend au bout.</p>
+  <div class="v-go"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a><a class="lnk" href="#demo">Voir la démo ↓</a>
+   <p class="micro">Prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte. Vous préférez l'e-mail ? <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a></p></div>
+ </div>
+</section>
+
+<section id="demo" class="v-demo" aria-label="Démo Les Grèves">
+ <div class="walk" id="walk">
+  <div class="w-stage" id="wStage">
+   <div class="in">
+    <div class="frame w-frame">
+     <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span>les-greves.ch · Démo</span></div>
+     <div class="w-view" id="wView" role="group" aria-label="Démo : le site Les Grèves">
+      <div class="w-scene">
+       <picture class="w-poster"><source media="(prefers-reduced-motion: reduce) and (max-width: 760px)" srcset="img/greves/m/f071.webp"><source media="(prefers-reduced-motion: reduce)" srcset="img/greves/d/f095.webp"><source media="(max-width: 760px)" srcset="img/greves/m/f000.webp"><img src="img/greves/d/f000.webp" width="1280" height="800" alt="Démo Les Grèves : une maison en bois au bord du lac, à l'heure bleue, fenêtres allumées" decoding="async" fetchpriority="high"></picture>
+       <canvas class="w-cv" id="wCv" aria-hidden="true"></canvas>
+       <div class="w-shade"></div>
+       <div class="w-ch c1" data-in="-1" data-out=".12"><p class="w-eb">Maison au bord du lac · Rolle</p><p class="w-h">Au bord du Léman.</p><p class="w-hint" aria-hidden="true">FAITES DÉFILER POUR ENTRER ↓</p></div>
+       <div class="w-ch c2" data-in=".30" data-out=".50"><p class="w-eb">02 — Le salon</p><p class="w-h">Un salon face aux Alpes.</p><p class="w-p">Un canapé tourné vers le lac et une baie vitrée de huit mètres.</p></div>
+       <div class="w-ch c3" data-in=".57" data-out="9"><p class="w-eb">03 — La vue</p><p class="w-h">Le lac, <i>depuis le canapé.</i></p>
+        <div class="w-btns"><button type="button" class="w-b1" data-book>Réserver un séjour</button><button type="button" class="w-b2" data-go="1">Voir les dates</button><span class="w-price">dès <b>180.–</b> la nuit</span></div></div>
+       <div class="w-prog" aria-hidden="true"><span data-k="1">01 L’ARRIVÉE</span><span data-k="2">02 LE SALON</span><span data-k="3">03 LA VUE</span><span class="w-pb"><i id="wFill"></i></span></div>
+      </div>
+      <div class="w-bar" id="wBar"><button type="button" class="w-logo" data-go="0">Les Grèves <small>DÉMO</small></button>
+       <nav aria-label="Menu du site Les Grèves"><button type="button" data-go="1">Le logement</button><button type="button" data-go="1">Dates</button><button type="button" data-go=".66">La vue</button></nav>
+       <div class="w-r"><span class="w-lang" aria-hidden="true">FR · EN</span><button type="button" class="w-book" data-book>Réserver</button><span class="w-burger" aria-hidden="true"></span></div></div>
+      <div class="w-site" id="wSite">
+       <div class="w-top"><div><p class="w-eb">Le logement</p><p class="w-t">Plain-pied, posé<br>au bord de l’eau.</p>
+         <p class="w-facts"><span><b>4</b>voyageurs</span><span><b>2</b>chambres</span><span><b>62</b>m²</span><span><b>25</b>m² de terrasse</span></p></div>
+        <div class="w-card"><p class="w-k">TARIF (DÉMO)</p><p class="w-v">dès 180.– <small>la nuit</small></p><button type="button" class="w-go" data-book>Réserver en direct</button><p class="w-n">Sans commission · 2 nuits minimum</p></div></div>
+       <div class="w-ph"><figure><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><figcaption>Le salon et la terrasse, côté lac</figcaption></figure>
+        <div class="w-cal" aria-label="Calendrier de démonstration"><p class="w-k">NOVEMBRE 2026 · DISPONIBILITÉS</p><div class="w-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b>{{CAL}}</div><p class="w-n">Dates barrées : déjà réservées sur Booking ou Airbnb, mises à jour toutes seules.</p></div></div>
+      </div>
+      <div class="w-toast" id="wToast" role="dialog" aria-label="Réservation" hidden><button type="button" class="w-x" id="wX" aria-label="Fermer">×</button><b>Ici, vos clients réservent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande avec les dates, par WhatsApp ou par e-mail, sans commission.<br><a class="btn" id="wWa" href="{{WA_DEMO}}" data-wa="demo" target="_blank" rel="noopener">{{WA_ICON}}Je veux ça pour mon lieu</a></div>
+     </div>
+    </div>
+    <p class="w-cap"><span><b>Démo : Les Grèves, Rolle.</b> Logement inventé, reconstruit en 3D.</span><a href="#pourquoi">Sauter la démo ↓</a></p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="bg-white" id="pourquoi" aria-labelledby="hW">
+ <div class="in">
+  <div class="sec-head"><h2 id="hW">Ce que La Visite fait pour vous.</h2></div>
+  <ul class="why" style="margin-top:36px">
+   <li><b>Des réservations en direct, sans commission.</b><span>Vos clients voient tout avant de venir, puis réservent chez vous, par WhatsApp ou par e-mail. Booking prélève une commission sur chaque réservation, souvent autour de 15 % : réservée en direct, une nuit à 180.– vous rapporte 180.–, au lieu d'environ 153.– après la commission. Vous gardez Booking et Airbnb pour ceux qui y passent.</span></li>
+   <li><b>Pour un logement, votre calendrier Booking ou Airbnb.</b><span>Les dates prises s'affichent toutes seules, et le site est en français et en anglais, pour vos clients d'ici et d'ailleurs.</span></li>
+   <li><b>Votre vrai lieu, filmé ou reconstruit en 3D.</b><span>Prêt à être montré, on le filme. En travaux ou pas encore aménagé, on le reconstruit en 3D. La Vitrine est comprise : vos prix, votre contact, votre fiche Google.</span></li>
+  </ul>
+ </div>
+</section>
+
+<section class="bg-paper" id="prix" aria-labelledby="hP">
+ <div class="in v-price">
+  <div class="txt">
+   <p class="oname"><b>La Visite</b><span>votre lieu, filmé ou en 3D, avec La Vitrine</span></p>
+   <h2 id="hP">Votre prix par écrit, sous 48 heures.</h2>
+   <p class="lede">Le prix dépend du lieu : un studio ne se filme pas comme un hôtel de vingt chambres. Envoyez-nous le type de lieu, la commune et le nombre de pièces ou de chambres. Vous recevez le prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte.</p>
+   <div class="act"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a><p class="micro">On répond le jour même, 7 jours sur 7. <a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p></div>
+  </div>
+  <ol class="steps">
+   <li><span class="when">Aujourd'hui</span><h3>Votre prix et une image 3D</h3><b class="amt">0.–</b><p>Par écrit sous 48 heures. Vous décidez ensuite, sans engagement.</p></li>
+   <li><span class="when">Si vous dites oui</span><h3>Le tournage ou la 3D, et le site</h3><b class="amt">sur devis</b><p>Le montant du devis, ni plus ni moins. On ne commence qu'après votre accord.</p></li>
+   <li><span class="when">Ensuite</span><h3>Hébergement et petites modifications</h3><b class="amt">20.–<small>par mois</small></b><p>Comme La Vitrine. Sans durée minimale, et le site reste à vous.</p></li>
+  </ol>
+ </div>
+</section>
+
+<section class="bg-white sec2" id="questions" aria-labelledby="hQ">
+ <div class="in qa">
+  <h2 class="h-m" id="hQ">Vos questions.</h2>
+  <div class="faq">
+   <details><summary>Mes clients verront un dessin ou mon vrai lieu ?</summary><div class="fa"><div><p>Votre vrai lieu. S'il est prêt à être montré, on le filme. En travaux, vide ou pas encore aménagé, on le reconstruit en 3D, et on choisit avec vous ce qui le montre le plus fidèlement. La démo Les Grèves, elle, est un lieu inventé.</p></div></div></details>
+   <details><summary>Et Booking, Airbnb ?</summary><div class="fa"><div><p>Vous gardez vos annonces et vos réservations où elles sont. Le site affiche votre calendrier, en français et en anglais, et vos clients peuvent aussi réserver en direct, sans commission.</p></div></div></details>
+   <details><summary>Mes clients me trouvent sur Booking : à quoi sert un site ?</summary><div class="fa"><div><p>Beaucoup de voyageurs cherchent votre nom sur Google avant de réserver, pour voir plus de photos ou vous écrire. Ils tombent sur votre site, voient le lieu en entier et peuvent réserver en direct. Et vos anciens clients reviennent chez vous sans passer par une plateforme.</p></div></div></details>
+   <details><summary>Mes hôtes paient comment ?</summary><div class="fa"><div><p>Comme aujourd'hui : le bouton Réserver vous envoie la demande avec les dates, vous confirmez et demandez l'acompte par virement ou TWINT. Un paiement en ligne est possible, sur devis.</p></div></div></details>
+   <details><summary>Et si quelqu'un réserve sur Booking en même temps ?</summary><div class="fa"><div><p>Les dates prises sur Booking ou Airbnb se grisent toutes seules sur votre site, et c'est vous qui confirmez chaque demande directe : pas de double réservation.</p></div></div></details>
+   <details><summary>Ça coûte combien, et c'est prêt quand ?</summary><div class="fa"><div><p>Ça dépend de la taille du lieu et du choix entre film et 3D. Vous recevez le prix par écrit sous 48 heures, avec une première image offerte, et vous décidez ensuite. Le délai de mise en ligne est écrit dans la même offre, à côté du prix : dites-nous votre date (Pâques, l'été), on vous dit si elle est tenable. L'hébergement et les petites modifications coûtent ensuite 20.– par mois, comme La Vitrine.</p></div></div></details>
+   <details><summary>Je suis un restaurant : La Vitrine ou La Visite ?</summary><div class="fa"><div><p>Si on choisit votre restaurant pour sa salle, sa terrasse ou sa vue, La Visite. Si on vient pour la carte et qu'on veut surtout vos horaires et vos prix, <a href="{{HOME}}">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
+  </div>
+ </div>
+</section>
+
+<section class="bg-paper" id="contact" aria-labelledby="hC">
+ <div class="in close">
+  <div>
+   <h2 class="h-m" id="hC">Deux amis de la région. C'est nous qui répondons.</h2>
+   <p class="lede" style="margin-top:18px">Alexandre fait les sites et la 3D ; Serhat filme et fait le suivi. On vient voir votre lieu, de Genève à Montreux, avant de filmer quoi que ce soit.</p>
+   <ul class="people">
+    <li><b>Alexandre Steudler</b><span class="role">sites, 3D et fiche Google</span></li>
+    <li><b>Serhat Dogar</b><span class="role">tournage, vidéos et suivi</span></li>
+   </ul>
+   <div class="back"><p><b>Vous avez un commerce ?</b> Coiffure, onglerie, boulangerie, garage : pour vous, c'est La Vitrine, et vous voyez votre site avant de payer.</p><a class="lnk" href="{{HOME}}">Voir La Vitrine →</a></div>
+  </div>
+  <div class="final">
+   <h2>Parlez-nous de votre lieu.</h2>
+   <p>Prix par écrit sous 48 heures. On répond le jour même, 7 jours sur 7.</p>
+   <a class="btn inv" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a>
+   <p class="alt"><a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon lieu</a><a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p>
+   <div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div>
+   <dl>
+    <div><dt>WhatsApp ou téléphone</dt><dd><a href="tel:+41764882710">+41 76 488 27 10</a></dd></div>
+    <div><dt>E-mail</dt><dd><a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a></dd></div>
+    <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">@oonde_studio</a></dd></div>
+   </dl>
+  </div>
+ </div>
+</section>
+</main>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a></nav>
+
+<footer><div class="in">
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Informations légales"><a href="{{HOME}}">La Vitrine</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <p class="seo">La Visite : sites avec visite filmée ou en 3D pour les chambres d'hôtes, hôtels, logements de vacances, restaurants, salles et caves, de Genève à Montreux. © 2026 OONDE.</p>
+</div></footer>
+
+<script>
+{{INC:core.js}}
+{{INC:demo.js}}
+</script>

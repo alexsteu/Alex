@@ -1,0 +1,163 @@
+<meta charset="utf-8">
+<title>Exemple de site · OONDE</title>
+<meta name="description" content="Un exemple de site pour votre commerce, préparé par OONDE. Textes, prix et photos à remplacer par les vôtres.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Votre site, en exemple · OONDE">
+<meta property="og:description" content="Un exemple de site préparé pour votre commerce. Votre vraie maquette, avec vos prix et vos photos, est offerte en 48 heures.">
+<meta property="og:image" content="https://oonde.ch/img/og-apercu.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Exemple de site pour un commerce, préparé par OONDE.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="OONDE">
+<meta name="twitter:card" content="summary_large_image">
+{{FONTS}}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{INC:base.css}}
+/* L'aperçu en grand : le site d'exemple occupe l'écran, marqué EXEMPLE en haut ; la barre OONDE reste en bas. */
+body{padding-bottom:84px}
+main{padding-top:0}
+.ex{display:flex;align-items:center;justify-content:center;gap:8px 14px;flex-wrap:wrap;background:var(--ink);color:#fff;font-size:13.5px;padding:8px var(--pad);text-align:center}
+.ex b{font:500 11px var(--mono);letter-spacing:.14em;background:#fff;color:var(--ink);border-radius:99px;padding:3px 9px}
+.ex a{color:#fff}
+.s{--c:#1F6F66;--ct:#fff;background:#fff;color:#15171B}
+.s-in{max-width:1120px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
+.s-nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid #ECEDE9}
+.s-nav .s-in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:62px}
+.s-nav b{font-size:20px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-nav nav{display:flex;gap:24px;font-size:15px;color:#4B4F5A}
+.s-nav nav a{color:inherit;text-decoration:none}
+.s-b{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--c);color:var(--ct);border:0;border-radius:99px;padding:12px 20px;font:600 15px var(--sans);cursor:pointer;min-height:44px;white-space:nowrap}
+.s-b.o{background:none;color:inherit;border:1.5px solid currentColor}
+.s-hero{position:relative;min-height:min(78vh,640px);display:flex;align-items:flex-end;color:#fff;background:#222 center/cover no-repeat;background-position:var(--bp,center)}
+.s-hero.solid{background:var(--c)}
+.s-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 30%,rgba(0,0,0,.66))}
+.s-hero.solid::after{display:none}
+.s-hero .s-in{position:relative;z-index:1;width:100%;padding-block:48px}
+.s-tag{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+.s-hero h1{font-size:clamp(40px,7vw,80px);line-height:1;letter-spacing:-.035em;margin:12px 0 0;max-width:13ch;color:#fff}
+.s-hero p{font-size:clamp(17px,2vw,20px);margin-top:14px;max-width:30em;opacity:.95}
+.s-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:26px}
+.s-open{display:inline-flex;align-items:center;gap:8px;font-size:15px}
+.s-open i{width:9px;height:9px;border-radius:50%;background:#4ADE80}
+.s-sec{padding:clamp(48px,8vw,96px) 0}
+.s-sec+.s-sec{border-top:1px solid #ECEDE9}
+.s-sec h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.03em;margin:0 0 24px}
+.s-grid{display:grid;gap:40px 48px}
+@media (min-width:860px){.s-grid{grid-template-columns:1.3fr 1fr}}
+.s-rows{list-style:none;margin:0;padding:0;border-top:1px solid #E4E5E1}
+.s-rows li{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid #E4E5E1;font-size:17px}
+.s-rows b{white-space:nowrap}
+.s-about p{font-size:19px;line-height:1.5;color:#3A3F47}
+.s-about .s-b{margin-top:22px}
+.s-info{display:grid;gap:24px}
+@media (min-width:700px){.s-info{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.s-info>div{background:#F6F6F3;border-radius:14px;padding:22px}
+.s-info h3{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#6B7078;margin:0 0 10px}
+.s-info p{font-size:17px}
+.s-rev{border:1.5px dashed #C9CBD1;background:#fff!important;color:#6B7078}
+.s-foot{background:#15171B;color:rgba(255,255,255,.7);padding:34px 0;font-size:14px}
+.s-foot b{color:#fff}
+.s-toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:40;width:min(420px,calc(100% - 32px));background:#fff;color:var(--ink);border-radius:12px;padding:16px 44px 16px 18px;box-shadow:0 20px 40px -16px rgba(0,0,0,.45);font-size:14.5px}
+.s-toast[hidden]{display:none}
+.s-toast b{display:block;margin-bottom:4px}
+.s-toast button{position:absolute;right:4px;top:4px;width:40px;height:40px;border:0;background:none;font-size:20px;color:#6B7078;cursor:pointer}
+@media (max-width:760px){.s-nav nav{display:none}.s-nav .s-b{padding:10px 14px;font-size:14px}.s-nav b{font-size:18px}}
+/* La suite, écrite par OONDE */
+.next{padding:clamp(56px,8vw,100px) 0}
+.next h2{margin-top:10px}
+.next .why{margin-top:16px}
+.next .path{margin-top:32px}
+.next .go{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.next .sig{margin-top:18px;color:var(--soft)}
+.next .note{margin-top:22px;font-size:14.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+.next .note a{color:var(--ink);font-weight:600}
+.obar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(17,19,24,.97);color:#fff;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.obar .in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0;max-width:1080px}
+.obar{transition:transform .25s}.obar.off{transform:translateY(110%)}
+.obar p{font-size:14px;color:rgba(255,255,255,.75)}
+.obar p b{color:#fff}
+.obar .bt{display:flex;gap:10px;flex:none}
+.obar .btn{min-height:48px;padding:12px 18px;font-size:15px}
+.obar .btn.inv{background:#fff;color:var(--ink);border-color:#fff}
+.obar .sh{background:none;border:1px solid rgba(255,255,255,.4);color:#fff}
+.obar .s{display:none}
+@media (max-width:700px){.obar .l{display:none}.obar .s{display:inline}.obar p{display:none}.obar .bt{flex:1}.obar .bt .btn.inv{flex:1}}
+</style>
+
+<a class="skip" href="#s">Aller au contenu</a>
+<aside class="ex" aria-label="Exemple"><b>EXEMPLE</b><span id="exT">Site d'exemple préparé par OONDE. Textes, prix et photos à remplacer par les vôtres.</span></aside>
+<main>
+<div class="s" id="s">
+ <header class="s-nav"><div class="s-in"><b id="sName">Votre commerce</b><nav aria-label="Menu de l'exemple"><a href="#s-pre" id="sSec">Prestations</a><a href="#s-info">Horaires</a><a href="#s-info">Contact</a></nav><button type="button" class="s-b" data-demo>{{WA_ICON}}WhatsApp</button></div></header>
+ <section class="s-hero" id="sHero"><div class="s-in"><p class="s-tag" id="sTag">Coiffure</p><h1 id="sH">Votre commerce</h1><p id="sSub"></p><div class="s-act"><button type="button" class="s-b" data-demo id="sCta">Prendre rendez-vous</button><span class="s-open"><i></i><span id="sOpen"></span></span></div></div></section>
+ <section class="s-sec" id="s-pre"><div class="s-in s-grid">
+  <div><h2 id="sSec2">Prestations</h2><ul class="s-rows" id="sRows"></ul></div>
+  <div class="s-about"><h2>À propos</h2><p id="sAbout"></p><button type="button" class="s-b o" data-demo id="sCta2">Prendre rendez-vous</button></div>
+ </div></section>
+ <section class="s-sec" id="s-info"><div class="s-in s-info">
+  <div><h3>Horaires</h3><p id="sHours"></p></div>
+  <div><h3>Adresse</h3><p id="sAddr">Votre adresse<br>Votre commune</p></div>
+  <div class="s-rev"><h3>Avis Google</h3><p>Ici, vos vrais avis Google, affichés tels quels.</p></div>
+ </div></section>
+ <footer class="s-foot"><div class="s-in"><b id="sName2">Votre commerce</b> · <span id="sFoot"></span></div></footer>
+</div>
+
+<section class="bg-paper next" aria-labelledby="hN">
+ <div class="in">
+  <p class="mono">OONDE · La Vitrine</p>
+  <h2 id="hN">Ce site vous plaît ? Voici la suite.</h2>
+  <p class="lede why" id="why">Quand on cherche « coiffeur Morges » sur Google, votre fiche mène à ce site, à votre nom, avec vos prix et un bouton pour vous écrire. Rien à préparer : on part de votre fiche Google et de votre Instagram.</p>
+  <ol class="path">
+   <li><span class="when">Aujourd'hui</span><b class="amt">0.–</b><h3>Votre vraie maquette</h3><p>Avec vos textes, vos prix et vos photos. Elle arrive sur votre téléphone en 48 heures.</p></li>
+   <li><span class="when">Si elle vous plaît</span><b class="amt">490.–<small>une fois</small></b><h3>Votre site en ligne</h3><p>Textes écrits par nous, fiche Google reliée, adresse à votre nom, deux séries de corrections.</p></li>
+   <li><span class="when">Ensuite</span><b class="amt">20.–<small>par mois</small></b><h3>On s'en occupe</h3><p>Hébergement, adresse et vos changements faits sous 3 jours ouvrables. Vous arrêtez à la fin de n'importe quel mois.</p></li>
+  </ol>
+  <ul class="guar">
+   <li><b>Payé seulement s'il vous plaît.</b><span>Le site terminé ne vous plaît pas ? Vous ne payez rien.</span></li>
+   <li><b>Sans durée minimale.</b><span>Résiliable à la fin de n'importe quel mois.</span></li>
+   <li><b>Le site est à vous.</b><span>L'adresse est à votre nom. Si vous arrêtez, on vous remet tout, gratuitement.</span></li>
+  </ul>
+  <div class="act go"><a class="btn" id="goLive" href="{{WA}}" target="_blank" rel="noopener">{{WA_ICON}}<span>Je le veux en ligne</span></a><a class="btn light" id="change" href="{{WA}}" target="_blank" rel="noopener">Changer quelque chose</a></div>
+  <p class="sig">Alexandre et Serhat, OONDE. On répond le jour même, 7 jours sur 7, au +41 76 488 27 10.</p>
+  <p class="note"><span>Cette page n'est publiée nulle part : seuls ceux qui ont le lien la voient.</span><a id="edit" href="{{HOME}}#essai">Modifier le nom, le métier ou la couleur</a><a href="{{HOME}}">Découvrir OONDE</a></p>
+ </div>
+</section>
+</main>
+<div class="s-toast" id="toast" role="dialog" aria-label="Exemple" hidden><button type="button" id="tx" aria-label="Fermer">×</button><b>C'est un exemple.</b>Sur votre vrai site, ce bouton ouvre votre WhatsApp, ou votre agenda en ligne (Planity, Salonkee…).</div>
+<nav class="obar" aria-label="OONDE"><div class="in"><p><b>Ce site vous plaît ?</b> On prépare votre vraie maquette, offerte.</p><div class="bt"><a class="btn inv" id="real" href="{{WA}}" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Recevoir ma vraie maquette</span><span class="s">Ma vraie maquette</span></a><button type="button" class="btn sh" id="share" aria-label="Transférer cette page à un associé ou un proche" hidden>Transférer</button></div></div></nav>
+
+<script>
+{{INC:core.js}}
+{{INC:sites.js}}
+(()=>{const q=new URLSearchParams(location.hash.slice(1)),key=T[q.get('m')]?q.get('m'):'coiffure',t=T[key],sv=clamp(+q.get('c')||0,0,2);
+ const name=(q.get('n')||'').slice(0,40),town=TOWNS.includes(q.get('v'))?q.get('v'):'',[c,ct]=t.styles[sv];
+ const s=$('s');s.style.setProperty('--c',c);s.style.setProperty('--ct',ct);
+ const h=town?t.h.replace('{t}',town):t.h.replace(/ (à|de) \{t\}/,''),nm=name||'Votre commerce';
+ document.title=nm+' · Exemple de site · OONDE';
+ $('sName').textContent=nm;$('sName2').textContent=nm;$('sTag').textContent=t.label+(town?' · '+town:'');
+ $('sH').textContent=name||h;$('sSub').textContent=(name?h+' ':'')+t.sub;$('sOpen').textContent=t.open;
+ $('sCta').textContent=t.cta;$('sCta2').textContent=t.cta;$('sSec').textContent=t.sec;$('sSec2').textContent=t.sec;
+ $('sRows').innerHTML=t.rows.map(([a,b])=>`<li><span>${esc(a)}</span><b>${esc(b)}</b></li>`).join('');
+ $('sAbout').textContent=t.about;$('sHours').innerHTML=t.hours;$('sAddr').innerHTML='Votre adresse<br>'+esc(town||'Votre commune');
+ $('sFoot').textContent=t.label+(town?' à '+town:'');
+ const hero=$('sHero');if(t.photo){hero.style.backgroundImage=`url(${innerWidth*(devicePixelRatio||1)>1100?t.photo.replace(".jpg","-l.jpg"):t.photo})`;hero.style.setProperty('--bp',t.bp||'center')}else hero.classList.add('solid');
+ /* les boutons du site d'exemple ne mènent nulle part : ils le disent */
+ const toast=$('toast');document.addEventListener('click',e=>{if(e.target.closest('[data-demo]')){toast.hidden=false;$('tx').focus()}else if(e.target.closest('#tx'))toast.hidden=true});
+ addEventListener('keydown',e=>{if(e.key==='Escape')toast.hidden=true});
+ /* la vraie maquette : le message reprend le lien de cette page, pour qu'on sache ce que la personne a vu */
+ const hi=SRC?HELLO+' J’ai':'Bonjour, j’ai',what=name?' préparé pour '+name:'';
+ $('real').href=wa(`${hi} vu l’exemple de site${what}. J’aimerais recevoir ma vraie maquette, offerte.\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
+ $('goLive').href=wa(`${hi} vu l’exemple de site${what}, et je le veux en ligne. On peut commencer ?\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
+ $('change').href=wa(`${hi} vu l’exemple de site${what}.\n${location.href}\nCe que j’aimerais changer : `);
+ $('why').textContent=`Quand on cherche « ${Q[key]}${town?' '+town:''} » sur Google, votre fiche mène à ce site, à votre nom, avec vos prix et un bouton pour vous écrire. Rien à préparer : on part de votre fiche Google et de votre Instagram.`;
+ if(name)$('exT').textContent='Exemple préparé pour '+name+' par OONDE. Textes, prix et photos à remplacer par les vôtres.';
+ const p=new URLSearchParams();if(name)p.set('n',name);p.set('m',key);if(town)p.set('v',town);if(sv)p.set('c',sv);$('edit').href='{{HOME}}?'+p+'#essai';
+ /* la barre du bas se range quand les boutons de la suite sont à l'écran : un seul bouton plein à la fois */
+ new IntersectionObserver(es=>document.querySelector('.obar').classList.toggle('off',es[0].isIntersecting)).observe(document.querySelector('.next .go'));
+ /* Transférer : le partage du téléphone, sinon WhatsApp avec le lien (pour l'associée, le mari…) */
+ {const b=$('share');b.hidden=false;b.addEventListener('click',()=>{if(navigator.share)navigator.share({title:nm+' · exemple de site',url:location.href}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent('Regarde, un exemple de site pour '+nm+' : '+location.href),'_blank','noopener')})}
+})();
+</script>

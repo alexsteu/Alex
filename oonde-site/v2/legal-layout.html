@@ -36,9 +36,9 @@ footer .in{max-width:760px;margin:0 auto;padding-inline:20px;display:flex;flex-w
 footer a{color:inherit;text-decoration:none}footer a:hover{text-decoration:underline}
 footer a[aria-current]{color:var(--ink);font-weight:600}
 </style>
-<header class="nav"><div class="in"><a class="logo" href="./" aria-label="OONDE, accueil">{{LOGO}}</a><a class="back" href="./"><span aria-hidden="true">‹</span> Retour au site</a></div></header>
+<header class="nav"><div class="in"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><a class="back" href="{{HOME}}"><span aria-hidden="true">‹</span> Retour au site</a></div></header>
 <main class="doc">
 {{BODY}}
 </main>
-<footer><div class="in"><span>OONDE · © 2026</span><a href="mentions-legales.html"{{CUR_M}}>Mentions légales</a><a href="confidentialite.html"{{CUR_C}}>Confidentialité</a><a href="conditions.html"{{CUR_G}}>Conditions générales</a></div></footer>
+<footer><div class="in"><span>OONDE · © 2026</span><a href="{{HOME}}">La Vitrine</a><a href="{{VISITE}}">La Visite</a><a href="mentions-legales.html"{{CUR_M}}>Mentions légales</a><a href="confidentialite.html"{{CUR_C}}>Confidentialité</a><a href="conditions.html"{{CUR_G}}>Conditions générales</a></div></footer>
 <script>document.querySelector('.back').addEventListener('click',e=>{if(document.referrer.startsWith(location.origin+'/')&&history.length>1){e.preventDefault();history.back()}})</script>
