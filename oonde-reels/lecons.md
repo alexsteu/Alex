@@ -91,3 +91,32 @@ Les leçons du tour 1 ont porté : critiques avant correction 6,5-7,0 (contre 6-
 33. **Ne pas rapetisser les objets principaux** pour un mouvement de caméra : préférer une coupe sur un plan rapproché.
 34. **Compter les mots de l'écran final sur l'image rendue**, chiffres, compteurs et @ compris.
 35. Entre deux comparaisons, ne jamais ramener le curseur en arrière : sortir l'après d'un bloc, l'avant suivant déjà dessous.
+
+## Reel 09 — La file jusqu'au tram (plans « réels » générés + motion design)
+
+36. **Avant/après en plans « réels » : même caméra, même cadre, même enseigne.** Fabriquer l'« avant » en retouchant
+    l'« après » (personnes effacées), jamais à partir de deux images générées séparément. Contrôler en superposant les
+    deux images : les arêtes de façade doivent s'aligner à ±10 px. Un titre « Même… » doit être vrai à l'image.
+    À défaut de retouche, peindre au moins la même enseigne sur les deux plans.
+37. **Le raccord entre motion design et réel passe par un objet commun, à la même taille et à la même place** (téléphone
+    dessiné → vrai téléphone, fiche → enseigne), pas par un effet (éclair blanc, flou radial, aberration chromatique) qui
+    fait « modèle de montage ». Le moment où le récit bascule (« En ligne. ») est un titre de 88 px ou plus.
+38. **Caméra fixe = chaque retouche se voit.** Avant chaque rendu, sortir le plan préparé en pleine résolution, sans
+    habillage, et y chercher tampons, halos et ombres orphelines. Pour effacer un objet : source assez loin pour ne pas
+    reprendre l'objet (décalage > 2 rayons), sous les bordures, à la même profondeur ; puis recaler lumière et contraste
+    local sur le bord du trou (clonage « sans couture », `09-foule-geneve/src/patch_b.py`). Un fondu large entre deux
+    textures de pavés dessine un anneau sombre ; une zone source « voilée » se recopie avec le reste.
+39. **Une transition doit montrer un contenu lisible à chaque image** : jamais de panneau vide, jamais un point seul.
+    La vérifier sur une bande d'images toutes les 0,03–0,1 s autour de chaque coupe. Faire de l'objet qui grandit une
+    fenêtre sur le plan suivant, ou faire voyager un signe (le « ? » devient le point de « Ouvert »).
+40. **Un élément comique bouge encore au moment de la coupe** : pas d'ease-out cubique sur un trajet qui finit sur la
+    coupe (il fige les 0,5 dernières secondes) ; ease-out quadratique jusqu'après la coupe.
+41. **Fondu par profondeur** : choisir les seuils entre les profondeurs des gens (lire la carte de profondeur), bande
+    dure ; la foule proche part d'un bloc, sinon elle reste à demi transparente sur l'autre plan.
+42. **Ce que les notes affirment se vérifie par une commande avant livraison** (grep des espaces insécables, pastille
+    démo présente sur chaque image, une seule différence entre la version principale et la variante d'essai), jamais
+    de mémoire.
+43. **Un signe qui voyage arrive sur une cible vide** : masquer le point déjà dessiné (logo, pastille) jusqu'à
+    l'atterrissage, et garder le signe à sa taille, ou plus gros, pendant le vol. Sinon on voit deux points.
+44. **Un curseur qui clignote ne compte pas comme mouvement.** Juste après la révélation commerciale, un nouvel élément
+    lisible ou un tic toutes les 0,3 à 0,5 s jusqu'à la transition : une fiche complète ne reste jamais figée > 0,5 s.

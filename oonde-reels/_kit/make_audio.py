@@ -14,9 +14,16 @@ cues.json :
     {"t": 3.2, "type": "whoosh"},  {"t": 4.0, "type": "pop"},   {"t": 5.0, "type": "tick"},
     {"t": 6.0, "type": "chime"},   {"t": 8.0, "type": "thump"}, {"t": 2.0, "type": "droplet"},
     {"t": 9.0, "type": "swipe"},   {"t": 15.0, "type": "end"}    # end = accord final + carillon
-  ]
+    # ambiances (ajoutées pour le Reel 09) : span = durée, fade = fondu d'entrée/sortie
+    {"t": 0.0, "type": "crowd", "span": 2.3, "fade": 0.15},  {"t": 3.0, "type": "wind", "span": 2.2},
+    {"t": 2.3, "type": "rewind", "d": 0.6},
+    {"t": 4.0, "type": "scrape", "d": 0.22, "pan": 0.3},     # frottement sec sur les pavés
+    {"t": 17.85, "type": "crowd", "span": 0.15, "fade": 0.12, "fade_out": 0.001}   # fade_out : fondu de sortie séparé
+  ],
+  "music_duck": [[3.0, 5.2, 0.25]],  # facultatif : [début, fin, gain] appliqués à la musique (rampes 0,15 s)
+  "end_fade": 0.6                    # facultatif : fondu de sortie général (court pour une boucle sans trou)
 }
-Mixage : musique discrète (-18 dB environ sous les bruitages), fondu de sortie 0,6 s. Normaliser ensuite au mux :
+Mixage : musique discrète (-18 dB environ sous les bruitages), fondu de sortie 0,6 s par défaut. Normaliser ensuite au mux :
 ffmpeg -i video.mp4 -i audio.wav -c:v copy -af loudnorm=I=-15:TP=-1.5 -c:a aac -b:a 192k -shortest final.mp4
 """
 import json
@@ -135,6 +142,56 @@ def hat():
     return n * env(t, 0.0005, 0.016) * 0.22
 
 
+def band(sig, fc, bw):
+    spec = np.fft.rfft(sig)
+    fr = np.fft.rfftfreq(len(sig), 1 / SR)
+    spec *= np.exp(-0.5 * ((fr - fc) / bw) ** 2)
+    return np.fft.irfft(spec, len(sig))
+
+
+def seg_env(n, fade, fade_out=None):
+    t = np.arange(n) / SR
+    d = n / SR
+    fo = fade if fade_out is None else fade_out
+    return np.clip(t / max(fade, 1e-3), 0, 1) * np.clip((d - t) / max(fo, 1e-3), 0, 1)
+
+
+def crowd_voices(d, voices=16):
+    # rumeur de foule : voix « voyelles » (dents de scie filtrées en formants) + souffle, rythme syllabique
+    n = int(d * SR)
+    t = np.arange(n) / SR
+    out = []
+    for v in range(voices):
+        f0 = rng.uniform(95, 230) * (1 + 0.04 * np.sin(2 * np.pi * rng.uniform(3, 6) * t + rng.uniform(0, 6)))
+        saw = 2 * ((np.cumsum(f0) / SR) % 1.0) - 1
+        voiced = band(saw, rng.uniform(420, 900), 160) + 0.6 * band(saw, rng.uniform(1100, 2300), 260)
+        breath = band(rng.standard_normal(n), rng.uniform(600, 2600), 500) * 0.35
+        rate = rng.uniform(3.5, 6.5)
+        k = int(d * rate) + 3
+        pts = (rng.random(k) > 0.28) * rng.uniform(0.3, 1.0, k)
+        e = np.interp(t * rate, np.arange(k), pts)
+        e = np.convolve(e, np.ones(441) / 441, mode="same")
+        s = (voiced / (np.abs(voiced).max() + 1e-9) + breath / (np.abs(breath).max() + 1e-9) * 0.35) * e
+        out.append((s, rng.uniform(-0.8, 0.8)))
+    rumble = noise(d, 70, 420)
+    return out, rumble
+
+
+def wind_sig(d):
+    t = tt(d)
+    s = noise(d, 110, 950)
+    m = 0.55 + 0.45 * np.sin(2 * np.pi * 0.33 * t + rng.uniform(0, 6)) * np.sin(2 * np.pi * 0.11 * t + 1.0)
+    w = band(rng.standard_normal(len(t)), 700, 60)
+    return s * m + 0.5 * w / (np.abs(w).max() + 1e-9) * m ** 2
+
+
+def rewind_sig(d):
+    t = tt(d)
+    f = (500 + 2600 * (t / d) ** 0.7) * (1 + 0.22 * np.sin(2 * np.pi * 21 * t))
+    s = 0.55 * np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.45 * noise(d, 1500, 7000) * (0.5 + 0.5 * np.sin(2 * np.pi * 21 * t))
+    return s * np.minimum(t / 0.04, 1) * np.clip((d - t) / 0.08, 0, 1)
+
+
 # ---------- musique ----------
 MOODS = {   # 4 accords (pad, arpège, basse), en boucle
     "calm":   [([57, 60, 64], [69, 72, 76, 79], 45), ([53, 57, 60], [65, 69, 72, 77], 41), ([55, 60, 64], [72, 76, 79, 84], 48), ([55, 59, 62], [67, 71, 74, 79], 43)],
@@ -196,6 +253,24 @@ for e in cfg.get("events", []):
         fx(click(), t, 0.5 * g)
     elif ty == "droplet":
         fx(sweep(280, 1500, 0.25, 0.07, 0.06), t, 0.28 * g)
+    elif ty == "crowd":
+        span, fade = float(e.get("span", 2.0)), float(e.get("fade", 0.2))
+        vs, rumble = crowd_voices(span, int(e.get("voices", 16)))
+        ev = seg_env(len(rumble), fade, e.get("fade_out"))
+        for sig, pan in vs:
+            fx(sig * ev, t, 0.035 * g, pan)
+        fx(rumble * ev, t, 0.10 * g)
+    elif ty == "wind":
+        span, fade = float(e.get("span", 2.0)), float(e.get("fade", 0.3))
+        w = wind_sig(span)
+        fx(w * seg_env(len(w), fade), t, 0.14 * g, -0.2)
+    elif ty == "scrape":   # frottement sec (virevoltant qui touche les pavés)
+        d = float(e.get("d", 0.22))
+        tq = tt(d)
+        s = noise(d, 600, 3800) * env(tq, 0.004, d * 0.35) + 0.5 * noise(d, 150, 600) * env(tq, 0.002, 0.04)
+        fx(s, t, 0.20 * g, float(e.get("pan", 0.2)))
+    elif ty == "rewind":
+        fx(rewind_sig(float(e.get("d", 0.6))), t, 0.16 * g)
     elif ty == "end":
         p, arp, bass = prog[0]
         for j, m in enumerate(arp + [arp[0] + 12]):
@@ -204,11 +279,20 @@ for e in cfg.get("events", []):
             fx(bell(m, 2.6, 1.5), t + 0.35, 0.06 * g)
 
 # ---------- mixage ----------
+if cfg.get("music_duck"):
+    tl0 = np.arange(N) / SR
+    gcurve = np.ones(N)
+    for a0, a1, gd in cfg["music_duck"]:
+        r = 0.15
+        w = np.clip((tl0 - (a0 - r)) / r, 0, 1) * np.clip(((a1 + r) - tl0) / r, 0, 1)
+        gcurve = np.minimum(gcurve, 1 - w * (1 - float(gd)))
+    ML *= gcurve
+    MR *= gcurve
 mpk = max(np.abs(ML).max(), np.abs(MR).max(), 1e-9)
 L += ML / mpk * 0.22
 R += MR / mpk * 0.22
 tl = np.arange(N) / SR
-fade = np.clip((DUR - tl) / 0.6, 0, 1) * np.clip(tl / 0.02, 0, 1)
+fade = np.clip((DUR - tl) / float(cfg.get("end_fade", 0.6)), 0, 1) * np.clip(tl / 0.02, 0, 1)
 L *= fade
 R *= fade
 peak = max(np.abs(L).max(), np.abs(R).max(), 1e-9)

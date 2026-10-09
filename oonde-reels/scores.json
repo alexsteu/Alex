@@ -147,5 +147,25 @@
    "L'étiquette du détail 3 est un peu petite.",
    "Un blanc bref entre le bouton WhatsApp et les horaires (0,4 s)."
   ]
+ },
+ "09-foule-geneve": {
+  "title": "La file jusqu’au tram (réel + motion design)",
+  "round": 3,
+  "scores": {
+   "accroche": 8.5,
+   "rythme": 8,
+   "clarte": 8.4,
+   "beaute": 8.1,
+   "partage": 8.2,
+   "conformite": 9.3,
+   "global": 8.4
+  },
+  "verdict": "Une file délirante devant une boulangerie fictive de Genève, un rembobinage vers la rue vide et son virevoltant, le site qui se monte, puis « Bon. On exagère un peu. ». Note des juges sur la v4 (la v1 avait 6,4) ; la version livrée (v5) ajoute leurs quatre dernières retouches.",
+  "remaining": [
+   "À décider par Alexandre avant de publier : l’étiquette IA d’Instagram et TikTok (images générées, certificat « Anthropic Claude » dans chaque fichier) et l’exception à la règle « pas de visages générés ».",
+   "Les plans A et B sont deux photos différentes : une image B′ retouchée depuis A demande de nouvelles images IA.",
+   "Le son de foule est synthétique : 20 s de vraie rue genevoise enregistrées à l’iPhone le régleraient.",
+   "Variante d’essai « Pour du pain. » à publier en Trial Reel Instagram uniquement."
+  ]
  }
 }
