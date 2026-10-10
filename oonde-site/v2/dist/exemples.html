@@ -96,7 +96,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav a{text-decoration:none;color:var(--muted);padding:12px 0;white-space:nowrap}.nav nav a:hover,.nav nav a[aria-current]{color:var(--ink)}
 .nav .btn{flex:none;padding:10px 14px;font-size:14px;min-height:44px;transition:opacity .2s,visibility 0s,background-color .12s}
 .nav .btn .s{display:none}
-body.cta-in .nav .btn{background:transparent;color:var(--ink);border-color:var(--line)}body.cta-in .nav .btn svg{color:var(--wa)}   /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
+   /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
 @media (max-width:860px){.nav nav a.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
@@ -185,7 +185,7 @@ main{padding-top:var(--hh)}
 /* Prix : un chemin dans le temps (0.– aujourd'hui, 490.– si elle vous plaît, 20.– ensuite) */
 .oname{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 16px}
 .oname b{font-size:clamp(21px,2vw,24px);font-weight:600;letter-spacing:-.02em}
-.oname span{color:var(--muted);font-size:16px}
+.oname span{color:var(--muted);font:500 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
 .path li{padding-top:22px}
 .path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -498,7 +498,9 @@ html:not(.js) .e-try{display:none}
 @media (max-width:700px){.w-cap .w-cta{width:100%}.w-cta .btn{flex:1}}
 .e-fold{display:none;align-items:center;gap:8px;width:100%;min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.28);background:rgba(10,12,22,.55);color:#fff;font:500 15px var(--sans);text-align:left;cursor:pointer}
 .e-fold b{font-weight:600}.e-fold i{margin-left:auto;font-style:normal;text-decoration:underline}
-@media (max-width:700px){.e-walk .c1 .w-h{display:none}.e-fold{display:flex}.e-try:not(.open){display:none}}
+.e-fold{display:flex;max-width:480px}.e-try:not(.open){display:none}
+@media (max-width:700px){.e-walk .c1 .w-h{display:none}}
+.e-walk .w-shade{background:linear-gradient(90deg,rgba(8,10,20,.55),rgba(8,10,20,.15) 42%,rgba(8,10,20,0) 62%),linear-gradient(180deg,rgba(10,12,22,.38) 0%,rgba(10,12,22,0) 18%,rgba(10,12,22,0) 55%,rgba(10,12,22,.6) 100%)}
 .close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
 </style>
 
@@ -527,7 +529,7 @@ html:not(.js) .e-try{display:none}
    <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
    <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
    <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
   </div>
   <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
  </div>

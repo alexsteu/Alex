@@ -97,7 +97,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav a{text-decoration:none;color:var(--muted);padding:12px 0;white-space:nowrap}.nav nav a:hover,.nav nav a[aria-current]{color:var(--ink)}
 .nav .btn{flex:none;padding:10px 14px;font-size:14px;min-height:44px;transition:opacity .2s,visibility 0s,background-color .12s}
 .nav .btn .s{display:none}
-body.cta-in .nav .btn{background:transparent;color:var(--ink);border-color:var(--line)}body.cta-in .nav .btn svg{color:var(--wa)}   /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
+   /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
 @media (max-width:860px){.nav nav a.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
@@ -186,7 +186,7 @@ main{padding-top:var(--hh)}
 /* Prix : un chemin dans le temps (0.– aujourd'hui, 490.– si elle vous plaît, 20.– ensuite) */
 .oname{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 16px}
 .oname b{font-size:clamp(21px,2vw,24px);font-weight:600;letter-spacing:-.02em}
-.oname span{color:var(--muted);font-size:16px}
+.oname span{color:var(--muted);font:500 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
 .path li{padding-top:22px}
 .path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -311,10 +311,10 @@ footer .seo{max-width:62em;font-size:13.5px}
 .u-t3 .u-act{display:flex;flex-wrap:wrap;gap:10px}
 .u-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
 .u-chips a:hover{border-color:var(--ink)}
-.u-chips a{min-height:40px;transition:border-color .15s;display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px var(--sans);text-decoration:none}
+.u-chips a{min-height:40px;font-size:13.5px!important;padding:7px 11px!important;transition:border-color .15s;display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px var(--sans);text-decoration:none}
 .u-skip{position:absolute;z-index:4;right:clamp(16px,4cqw,56px);top:18px;font:500 13.5px var(--sans);color:var(--soft);background:rgba(239,237,231,.8);border-radius:99px;padding:8px 12px;text-decoration:none}
 .u-skip:hover{color:var(--ink)}
-.u.end .u-skip{opacity:0;pointer-events:none}
+.u.end .u-skip,.u.mid .u-skip{opacity:0;pointer-events:none}
 .u-note{font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:10px}
 /* téléphone (cadre plus haut que large) : le titre en haut, au-dessus de l'anneau ; la fin, en bas */
 @container (max-aspect-ratio:1/1){
@@ -326,8 +326,8 @@ footer .seo{max-width:62em;font-size:13.5px}
  .u-t15{white-space:normal;left:16px;right:16px;transform:none;text-align:left}
  .u-t2 p{font-size:min(24px,6.4cqw)}
  .u-t3>div{max-width:none}
- .u-t3{top:0;bottom:auto;align-items:flex-start;padding:18px 16px 44px;background:linear-gradient(0deg,rgba(239,237,231,0),rgba(239,237,231,.92) 26%,#EFEDE7 48%)}
- .u-t3 .u-act{display:none}
+ .u-t3{top:0;bottom:0;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:space-between;padding:18px 16px 20px;background:linear-gradient(180deg,#EFEDE7 0,#EFEDE7 30%,rgba(239,237,231,.9) 36%,rgba(239,237,231,0) 44%)}
+ .u-t3 .u-act{justify-content:center}
  .u-t3 h2{font-size:min(28px,7.4cqw)}
  .u-t3 p{font-size:15px}
  .u-skip{top:auto;bottom:14px;right:16px}
@@ -743,7 +743,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
  function ui(){if(!LIVE){u.classList.add('static','end');return}t1.style.opacity=clamp((.1-P)/.07,0,1);t1.style.visibility=P>.1?'hidden':'';
   const sl=(el,a,b,c,d)=>{el.style.opacity=fade(a,b,c,d);el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*12}px`};
-  sl(t15,.12,.15,.31,.34);sl(t2,.35,.4,.58,.63);
+  sl(t15,.12,.15,.31,.34);sl(t2,.5,.54,.64,.68);u.classList.toggle('mid',P>.38);
   const e=clamp((P-.86)/.06,0,1);t3.style.opacity=e;t3.style.transform=`translateY(${(1-e)*16}px)`;t3.inert=e<.5;u.classList.toggle('end',e>.5)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(){raf=0;if(!LIVE){draw(1);return}const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);

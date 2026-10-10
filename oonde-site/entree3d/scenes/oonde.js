@@ -10,7 +10,10 @@ export default async function ({ THREE, kit, scene, portrait }) {
 
   // le papier : un sol qui se soulève (l'onde) et se perd au loin dans la même teinte (fond infini, sans horizon)
   const PAPER = 0xefede7;
-  scene.background = new THREE.Color(PAPER); scene.fog = new THREE.Fog(PAPER, 13, 32);
+  // le ciel : un dégradé chaud, du crème en haut au papier à l'horizon
+  { const c = document.createElement('canvas'); c.width = 4; c.height = 256; const x = c.getContext('2d'); const g = x.createLinearGradient(0, 0, 0, 256);
+    g.addColorStop(0, '#e6dccd'); g.addColorStop(.62, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; scene.background = t; } scene.fog = new THREE.Fog(PAPER, 13, 32);
   const paperM = kit.std(PAPER, { r: .93, env: .45 });
   const N = 300, SZ = 34;
   const fg = new THREE.PlaneGeometry(SZ, SZ, N, N); fg.rotateX(-Math.PI / 2); fg.translate(0, 0, -SZ / 2 + 10);
@@ -112,7 +115,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
       lamp(-.17);
     }
     b.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    const pop = .335 + i * .03;
+    const pop = .29 + i * .03;
     facades.push({ root, hinge, local, world, pop, r: R });
     pins.push({ id: K.id, corners: world });
   });
@@ -125,7 +128,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const soft = new THREE.RectAreaLight(0xfff3e4, 1.2, 8, 6); soft.position.set(0, 7, -2); soft.lookAt(0, 0, -2.6); scene.add(soft);
 
   // l'onde : un front qui part du point d'impact, se soulève en relief et s'amortit ; derrière lui, des sillons fins
-  const P_IMPACT = portrait ? .2 : .2, SPEED = 20;
+  const P_IMPACT = portrait ? .2 : .2, SPEED = 26;
   function wave(r, p) {
     const t = p - P_IMPACT; if (t <= 0) return 0;
     const front = t * SPEED, damp = 1 / (1 + .35 * r);
@@ -150,18 +153,18 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .1, pos: [0, 1.55, 8.4], tgt: [0, 1.55, 0] },
     { p: .22, pos: [0, 1.55, 3.6], tgt: [0, 1.4, -2], fov: 52 },
     { p: .265, pos: [0, 1.53, 1.4], tgt: [0, 1.1, -2.8], fov: 56 },
-    { p: .31, pos: [0, 1.5, -.35], tgt: [0, .5, -3.6], fov: 60 },
-    { p: .44, pos: [.4, 4.2, -.8], tgt: [0, 0, -3.1], fov: 66 },
-    { p: .62, pos: [1.9, 3.7, -.6], tgt: [0, .3, -3.6] },
-    { p: .8, pos: [.6, 3.2, .4], tgt: [0, .2, -5.3], fov: 62 },
-    { p: 1, pos: [0, 3.0, 1.5], tgt: [0, .05, -5.4], fov: 60 },
+    { p: .31, pos: [0, 1.6, -.35], tgt: [0, .6, -4.6], fov: 60 },
+    { p: .44, pos: [.6, 3.0, -.2], tgt: [0, .45, -4.6], fov: 64 },
+    { p: .62, pos: [1.2, 3.3, .3], tgt: [0, .5, -5.0] },
+    { p: .8, pos: [.6, 3.4, 1.6], tgt: [0, .35, -5.3], fov: 62 },
+    { p: 1, pos: [0, 3.5, 2.9], tgt: [0, .45, -5.4], fov: 60 },
   ] : [
     { p: 0, pos: [0, 1.55, 8.6], tgt: [0, 1.55, 0], fov: 30 },
     { p: .1, pos: [0, 1.55, 7.4], tgt: [0, 1.55, 0], fov: 32 },
     { p: .22, pos: [0, 1.55, 2.6], tgt: [0, 1.4, -2], fov: 42 },
     { p: .265, pos: [0, 1.53, .9], tgt: [0, 1.1, -2.8], fov: 45 },
-    { p: .31, pos: [0, 1.5, -.35], tgt: [0, .5, -3.6], fov: 48 },
-    { p: .44, pos: [.4, 3.6, -.7], tgt: [0, 0, -3.0], fov: 50 },
+    { p: .31, pos: [0, 1.6, -.2], tgt: [0, .6, -4.4], fov: 48 },
+    { p: .44, pos: [.6, 2.6, -.1], tgt: [0, .45, -4.4], fov: 50 },
     { p: .62, pos: [2.2, 2.9, -.9], tgt: [0, .4, -3.4] },
     { p: .8, pos: [.7, 2.45, -.4], tgt: [0, .2, -4.6], fov: 52 },
     { p: 1, pos: [0, 2.3, -.25], tgt: [0, .05, -5.0], fov: 54 },
@@ -172,7 +175,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
     path, fov: 40, bloom: [.04, .3, 1.4], exposure: 1.22, vignette: .18, ao: .7,
     pins,
     update(p) {
-      ring.visible = p < .5;   // passé derrière la caméra : il ne doit plus cacher la lumière ni rien d'autre
+      ring.visible = p < .32;   // passé derrière la caméra : il ne doit plus cacher la lumière ni rien d'autre
       // le point : il sort de l'anneau, retombe en arc derrière lui, rebondit, puis s'enfonce à moitié dans le papier
       // le point : un disque debout dans l'anneau ; il bascule en arrière, retombe à plat sur le papier et rebondit à peine
       const a = clamp((p - .12) / (P_IMPACT - .12)), land = new THREE.Vector3(C.x, TD / 2, C.z);
