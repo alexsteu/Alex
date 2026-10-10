@@ -27,7 +27,7 @@ function e3pins(box,s,name){const sg=box.querySelector('.e-sign>span'),wl=box.qu
 function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.find(x=>x.id===el.dataset.id);
  if(!q||q.vis<=0){el.style.opacity=0;continue}e3quad(el,q.c,1000,el.offsetHeight||111,f);el.style.opacity=q.vis}}
 
-(()=>{const walk=$('eWalk'),stg=$('eStage'),view=$('eView'),scene=view.querySelector('.w-scene'),cv=$('eCv'),cx=cv.getContext('2d'),site=$('eSite'),bar=$('eBar'),fill=$('eFill'),toast=$('eToast'),pins=$('ePins');
+(()=>{if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),view=$('eView'),scene=view.querySelector('.w-scene'),cv=$('eCv'),cx=cv.getContext('2d'),site=$('eSite'),bar=$('eBar'),fill=$('eFill'),toast=$('eToast'),pins=$('ePins');
  const chs=[...view.querySelectorAll('.w-ch')],c3=view.querySelector('.c3'),ks=[...view.querySelectorAll('[data-k]')],poster=$('ePoster'),LIVE=!RM;
  const st={sc:'restaurant',name:'',style:0,touched:false,styleSet:false,ex:''};
  let hh=64,D=1,P=0,cur=0,raf=0,last=-1,vis=false,dirty=true,drawn=null,W=0,H=0,armed=false,set='d';
@@ -60,7 +60,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   if(!s.lodge){if(bs.dataset.t!==st.sc){bs.dataset.t=st.sc;bs.innerHTML=T[s.t].styles.map(([c,,n],i)=>`<button type="button" role="radio" aria-label="${esc(n)}" style="--g:${c}" data-i="${i}"></button>`).join('')}
    [...bs.children].forEach((b,i)=>{b.setAttribute('aria-checked',i===st.style);b.tabIndex=i===st.style?0:-1});$('eStyleN').textContent=cn}
   if(st.touched)try{localStorage.setItem('oonde-e3',JSON.stringify({sc:st.sc,name:st.name,style:st.style,s:st.styleSet}))}catch(e){}
-  document.dispatchEvent(new CustomEvent('oonde-e3',{detail:{name:st.name,t:s.t||''}}));
+  document.dispatchEvent(new CustomEvent('oonde-e3',{detail:{name:st.name,t:s.t||'',sc:st.sc}}));
   dirty=true;tick()}
  /* Les choix */
  $('eAct').innerHTML=E3K.map(k=>`<button type="button" role="radio" data-v="${k}" aria-checked="false">${E3[k].lab}</button>`).join('');
@@ -73,7 +73,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  $('eName').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur()});
  /* « Voir cette entrée » sur un exemple : la même entrée, avec le nom de l'exemple tant qu'on n'a pas tapé le sien */
  document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();choose(a.dataset.e3,true);goTo(0)}));
- window.e3go=k=>{choose(k,true);goTo(0)};   /* l'univers OONDE en haut de page : toucher une maquette ouvre son entrée */
+ window.e3go=(k,ex=true)=>{choose(k,ex);goTo(0)};   /* la page des exemples, arrivée avec ?e= : on entre directement */
  /* Un lien préparé (?e=restaurant&n=Chez%20Marco&c=1) remplit l'essai ; sinon, la dernière visite */
  {const q=new URLSearchParams(location.search);let m={};
   if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
@@ -143,13 +143,14 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  ui(0);tick();
 })();
 
-/* Les exemples : la dernière image de chaque entrée, avec le nom de l'exemple posé au mur du fond */
-(()=>{const cache={};
+/* Les exemples : la dernière image de chaque entrée, avec le nom de l'exemple au mur du fond, ou celui que le visiteur a tapé */
+(()=>{const cache={},done=new Map();let nm=($('eName')||{}).value||'';
  const show=(card,k)=>{const s=E3[k],box=card.querySelector('.e-pins'),img=card.querySelector('img');
   const go=()=>{const r=img.getBoundingClientRect();if(!r.width||!cache[k])return;const fr=cache[k][cache[k].length-1];
-   card.style.setProperty('--c',T[s.t].styles[0][0]);card.style.setProperty('--ct',T[s.t].styles[0][1]);e3pins(box,s,s.ex);
+   card.style.setProperty('--c',T[s.t].styles[0][0]);card.style.setProperty('--ct',T[s.t].styles[0][1]);e3pins(box,s,nm||s.ex);
    box.style.transform=`scale(${r.width/1000})`;e3place(box,fr.pins,{ox:0,oy:0,w:1000,h:1000*r.height/r.width})};
-  if(img.complete)go();else img.addEventListener('load',go);new ResizeObserver(go).observe(img)};
+  done.set(card,go);if(img.complete)go();else img.addEventListener('load',go);new ResizeObserver(go).observe(img)};
+ document.addEventListener('oonde-e3',e=>{if(e.detail.name===nm)return;nm=e.detail.name;done.forEach(go=>go())});
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const card=e.target,k=card.dataset.k;
   (cache[k]?Promise.resolve():fetch(e3base(k)+'d/pins.json').then(r=>r.json()).then(j=>{cache[k]=j})).then(()=>show(card,k)).catch(()=>{})}),{rootMargin:'300px'});
  document.querySelectorAll('.ex[data-k]').forEach(c=>{if(c.querySelector('.e-pins'))io.observe(c)})})();
