@@ -1,5 +1,5 @@
 # Construit le site OONDE v2 : dist/ (production, polices locales) et preview/ (aperçu Claude, Google Fonts).
-import pathlib, re, shutil, urllib.parse, hashlib, base64
+import os, pathlib, re, shutil, urllib.parse, hashlib, base64
 D = pathlib.Path(__file__).parent
 FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
@@ -113,11 +113,14 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
     (o / 'img').mkdir()   # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
     html = ''.join(built.values())
     for f in sorted(set(re.findall(r'img/[\w./-]+\.(?:jpe?g|png|webp|avif|mp4)', html))):
+        if os.environ.get('E3TEST') and not (D / f).exists(): print('manque', f); continue   # rendu 3D en cours
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
         big = f.replace('.jpg', '-l.jpg')   # version 1600 px des photos de métier, demandée par l'aperçu en grand
         if f.startswith('img/t-') and (D / big).exists(): shutil.copy2(D / big, o / big)
-    if 'img/greves/${k}/' in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
+    if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
+    if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque métier, ses images et la position des enseignes (pins.json)
+        shutil.copytree(D / 'img' / 'e3d', o / 'img' / 'e3d', dirs_exist_ok=True)
     if wrap:
         (o / 'fonts').mkdir()
         for f, p, ws in FACES:
