@@ -37,7 +37,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
   // les maquettes : carton gris, façade en plâtre blanc, menuiseries en chêne clair, socle blanc
   const plaster = kit.std(0xf3f1eb, { r: .9 }), card = kit.std(0xa7a297, { r: .95 }), board = kit.std(0xfbfaf7, { r: .85 });
   const oak = kit.pbr('wood_floor', { s: .6, color: 0xd9bf98, roughness: .6, env: .5 });
-  const frost = kit.std(0xe8e6df, { r: .5, e: 0xffe2bd, ei: .22, env: .6 });
+  const frost = kit.std(0x23262d, { r: .05, m: .2, e: 0xffa25a, ei: .07, env: 2.2 });   // la vitrine : verre teinté, la salle allumée derrière
+  const glow = kit.std(0xfff1dc, { r: .4, e: 0xffc788, ei: 1.6 });
   const paperSign = kit.std(0xfdfcf8, { r: .88 });
   const kinds = [
     { id: 'restaurant', w: 1.05, h: 1.25, acc: 0xb0664c },
@@ -45,7 +46,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { id: 'coiffure', w: 1.0, h: 1.55, acc: 0x8e9c8a },
     { id: 'institut', w: .95, h: 1.35, acc: 0xd3b2a4 },
     { id: 'onglerie', w: .85, h: 1.7, acc: 0x6e7884 },
-    { id: 'logement', w: 1.05, h: 1.3, acc: 0x9b8d7a },
+    { id: 'logement', w: 1.05, h: 1.08, acc: 0x9b8d7a },
   ];
   const sc = portrait ? .86 : 1, R = portrait ? 3.0 : 3.1, span = portrait ? 40 : 48;
   const facades = []; const pins = [];
@@ -60,13 +61,13 @@ export default async function ({ THREE, kit, scene, portrait }) {
     const hinge = new THREE.Group(); hinge.position.set(0, .035, D / 2 + .02); root.add(hinge);
     const b = new THREE.Group(); b.position.set(0, 0, -(D / 2 + .02)); hinge.add(b);
     kit.box(W - .02, H - .01, D, card, 0, H / 2, 0, { parent: b });                       // le corps en carton
-    const front = kit.std(new THREE.Color(0xf4f2ec).lerp(new THREE.Color(K.acc), .14), { r: .9 });
+    const front = kit.std(new THREE.Color(0xf6f4ee).lerp(new THREE.Color(K.acc), .07), { r: .9 });
     kit.box(W, H, .022, front, 0, H / 2, D / 2 + .011, { parent: b });                  // la façade en plâtre, chants visibles
     kit.box(W + .05, .04, D + .06, plaster, 0, H + .02, 0, { parent: b });              // la corniche
     const f = D / 2 + .024;
     const accM = kit.std(K.acc, { r: .8 });
     // enseigne : un bandeau de papier vierge
-    const sw = W * .78, sh2 = .15, sy = .86;
+    const sw = W * .84, sh2 = .19, sy = .86;
     kit.box(sw, sh2, .012, paperSign, 0, sy, f + .006, { parent: b });
     kit.box(sw + .02, .008, .02, accM, 0, sy - sh2 / 2 - .006, f + .008, { parent: b });
     const sz = f + .016;
@@ -74,34 +75,35 @@ export default async function ({ THREE, kit, scene, portrait }) {
     const world = local.map(v => v.clone());
     // porte en chêne et vitrine dépolie, selon le métier
     const door = (x, w = .2, h = .5) => { kit.box(w + .03, h + .02, .012, plaster, x, h / 2 + .01, f + .002, { parent: b }); kit.box(w, h, .016, oak, x, h / 2, f + .004, { parent: b }); };
-    const win = (x, y, w, h) => { kit.box(w + .03, h + .03, .01, accM, x, y, f + .001, { parent: b }); kit.box(w, h, .014, frost, x, y, f + .004, { parent: b }); };
+    const win = (x, y, w, h) => { kit.box(w + .03, h + .03, .01, accM, x, y, f + .001, { parent: b }); kit.box(w, h, .014, frost, x, y, f + .004, { parent: b });
+      if (w > .3) kit.box(.008, h, .006, accM, x, y, f + .012, { parent: b }); kit.box(w, .008, .006, accM, x, y - h * .18, f + .012, { parent: b }); };
+    const lamp = x => { kit.box(.016, .03, .03, accM, x, .62, f + .012, { parent: b }); kit.box(.034, .05, .034, glow, x, .6, f + .03, { parent: b }); };
     const awning = (x, w) => { const a = kit.box(w, .012, .14, accM, x, sy - .16, f + .07, { parent: b }); a.rotation.x = .38; };
     if (K.id === 'restaurant') {
-      win(-.17, .36, .52, .44); door(.34); awning(-.17, .6);
+      win(-.17, .36, .52, .44); door(.34); awning(-.17, .6); lamp(.34 + .15);
       for (const x of [-.3, -.02]) { const t = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .1, 20), oak); t.position.set(x, .05, f + .17); t.castShadow = true; b.add(t); }
       win(-.27, 1.08, .16, .16); win(.27, 1.08, .16, .16);
     } else if (K.id === 'boulangerie') {
-      win(-.15, .36, .42, .4); door(.3, .18); awning(-.15, .5);
-      const arch = new THREE.Mesh(new THREE.CylinderGeometry(.21, .21, .014, 32, 1, false, 0, Math.PI), frost); arch.rotation.set(Math.PI / 2, 0, Math.PI / 2); arch.position.set(-.15, .56, f + .004); b.add(arch);
+      win(-.15, .36, .42, .4); door(.3, .18); awning(-.15, .5); lamp(.3 + .13);
       win(0, 1.15, .3, .22);
     } else if (K.id === 'coiffure') {
-      win(-.16, .37, .46, .5); door(.32, .18, .52);
+      win(-.16, .37, .46, .5); door(.32, .18, .52); lamp(.32 - .13);
       for (let s = 0; s < 6; s++) kit.box(.018, .38, .02, oak, -.36 + s * .06, 1.2, f + .01, { parent: b });
       win(.22, 1.2, .26, .3);
     } else if (K.id === 'institut') {
       const rw = new THREE.Mesh(new THREE.CylinderGeometry(.19, .19, .014, 48), frost); rw.rotation.x = Math.PI / 2; rw.position.set(-.16, .4, f + .004); b.add(rw);
       const rr = new THREE.Mesh(new THREE.TorusGeometry(.2, .012, 10, 48), accM); rr.position.set(-.16, .4, f + .006); b.add(rr);
-      door(.28, .2); win(0, 1.12, .5, .2);
+      door(.28, .2); win(0, 1.12, .5, .2); lamp(.28 + .15);
     } else if (K.id === 'onglerie') {
-      win(-.12, .36, .36, .46); door(.27, .18); awning(-.12, .44);
+      win(-.12, .36, .36, .46); door(.27, .18); awning(-.12, .44); lamp(.27 + .13);
       win(0, 1.15, .2, .26); win(0, 1.5, .2, .2);
     } else {
       // le logement : une maison à pignon, volets en chêne
-      const roof = new THREE.Shape(); roof.moveTo(-W / 2 - .05, 0); roof.lineTo(0, .42); roof.lineTo(W / 2 + .05, 0); roof.lineTo(-W / 2 - .05, 0);
+      const roof = new THREE.Shape(); roof.moveTo(-W / 2 - .05, 0); roof.lineTo(0, .3); roof.lineTo(W / 2 + .05, 0); roof.lineTo(-W / 2 - .05, 0);
       const rgeo = new THREE.ExtrudeGeometry(roof, { depth: D + .08, bevelEnabled: false }); rgeo.translate(0, 0, -(D + .08) / 2);
       const rm = new THREE.Mesh(rgeo, card); rm.position.y = H + .04; rm.castShadow = rm.receiveShadow = true; b.add(rm);
       door(0, .22, .52); for (const x of [-.32, .32]) { win(x, .4, .2, .26); kit.box(.06, .26, .012, oak, x - .14, .4, f + .006, { parent: b }); kit.box(.06, .26, .012, oak, x + .14, .4, f + .006, { parent: b }); }
-      win(0, 1.1, .24, .2);
+      lamp(-.17);
     }
     b.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     const pop = .41 + i * .034;
@@ -110,10 +112,10 @@ export default async function ({ THREE, kit, scene, portrait }) {
   });
 
   // la lumière d'une table d'architecte : une grande source douce au-dessus, un peu en arrière, et le ciel du studio
-  const sun = new THREE.DirectionalLight(0xfff6ea, 2.4); sun.position.set(-7, 7, 2); sun.target.position.set(0, 0, -2.5);
+  const sun = new THREE.DirectionalLight(0xffe4c4, 3.1); sun.position.set(-8, 5.2, 1); sun.target.position.set(0, 0, -2.5);
   sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096); Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 40 });
   sun.shadow.bias = -.0003; sun.shadow.normalBias = .02; sun.shadow.radius = 6; scene.add(sun, sun.target);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xe6e1d6, .9));
+  scene.add(new THREE.HemisphereLight(0xf4f2ff, 0xe8dccb, .62));
   const soft = new THREE.RectAreaLight(0xfff3e4, 1.2, 8, 6); soft.position.set(0, 7, -2); soft.lookAt(0, 0, -2.6); scene.add(soft);
 
   // l'onde : un front qui part du point d'impact, se soulève en relief et s'amortit ; derrière lui, des sillons fins
@@ -141,6 +143,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: 0, pos: [0, 1.55, 9.6], tgt: [0, 1.55, 0], fov: 42 },
     { p: .1, pos: [0, 1.55, 8.4], tgt: [0, 1.55, 0] },
     { p: .22, pos: [0, 1.55, 3.6], tgt: [0, 1.4, -2], fov: 52 },
+    { p: .265, pos: [0, 1.53, 1.4], tgt: [0, 1.1, -2.8], fov: 56 },
     { p: .31, pos: [0, 1.5, -.35], tgt: [0, .5, -3.6], fov: 60 },
     { p: .44, pos: [.4, 4.2, -.8], tgt: [0, 0, -3.1], fov: 66 },
     { p: .62, pos: [1.9, 3.7, -.6], tgt: [0, .3, -3.6] },
@@ -150,11 +153,12 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: 0, pos: [0, 1.55, 8.6], tgt: [0, 1.55, 0], fov: 30 },
     { p: .1, pos: [0, 1.55, 7.4], tgt: [0, 1.55, 0], fov: 32 },
     { p: .22, pos: [0, 1.55, 2.6], tgt: [0, 1.4, -2], fov: 42 },
+    { p: .265, pos: [0, 1.53, .9], tgt: [0, 1.1, -2.8], fov: 45 },
     { p: .31, pos: [0, 1.5, -.35], tgt: [0, .5, -3.6], fov: 48 },
     { p: .44, pos: [.4, 3.6, -.7], tgt: [0, 0, -3.0], fov: 50 },
     { p: .62, pos: [2.2, 2.9, -.9], tgt: [0, .4, -3.4] },
-    { p: .8, pos: [.7, 2.4, -.45], tgt: [0, .38, -4.6], fov: 52 },
-    { p: 1, pos: [0, 2.25, -.35], tgt: [0, .3, -5.0], fov: 54 },
+    { p: .8, pos: [.7, 2.45, -.4], tgt: [0, .2, -4.6], fov: 52 },
+    { p: 1, pos: [0, 2.3, -.25], tgt: [0, .05, -5.0], fov: 54 },
   ];
 
   const m4 = new THREE.Matrix4();

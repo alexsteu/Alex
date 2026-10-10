@@ -109,14 +109,15 @@ html:not(.js) .nojs{display:block}
 .launch b{color:var(--ink);font-weight:600}
 .p-act{margin-top:32px}
 
-.close.one{grid-template-columns:1fr;max-width:760px}
+.close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
 </style>
 
 <a class="skip" href="#vitrine">Aller au contenu</a>
 <header class="nav">
  <div class="in">
   <a class="logo landed" id="navLogo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
-  <nav aria-label="Pages"><a href="{{EXEMPLES}}">Exemples</a><a class="opt" href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}" aria-current="page">La Vitrine</a><a class="opt2" href="{{HOME}}#questions">Questions</a></nav>
+  <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
+  <nav aria-label="Pages" id="navL"><a href="{{EXEMPLES}}">Exemples</a><a class="opt" href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}" aria-current="page">La Vitrine</a><a class="opt2" href="{{HOME}}#questions">Questions</a></nav>
   <a class="btn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Ma maquette offerte</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
@@ -177,7 +178,7 @@ html:not(.js) .nojs{display:block}
   <div class="p-head"><div><p class="oname"><b>La Vitrine</b><span>votre site, relié à votre fiche Google</span></p><h2 id="hP2">Un prix fixe, écrit d'avance.</h2></div><p>Le même pour tous les commerces. Rien à payer avant d'avoir vu et validé votre site.</p></div>
   <ol class="path">
    <li><span class="when">Aujourd'hui</span><b class="amt">0.–</b><h3>Votre maquette</h3><p>Envoyez le nom de votre commerce sur WhatsApp. La maquette arrive sur votre téléphone en 48 heures.</p></li>
-   <li><span class="when">Si elle vous plaît</span><b class="amt">490.–<small>une fois</small></b><h3>Votre site en ligne</h3><p>On écrit les textes, on relie votre fiche Google et on réserve votre adresse (par exemple salon-mirabelle.ch) à votre nom. Deux séries de corrections. En ligne 5 jours ouvrables après vos photos.</p></li>
+   <li><span class="when">Si elle vous plaît</span><b class="amt">490.–<small>une fois</small></b><h3>Votre site en ligne</h3><p>On écrit les textes, on relie votre fiche Google et on réserve votre adresse (par exemple <span id="vDom">votre-commerce.ch</span>) à votre nom. Deux séries de corrections. En ligne 5 jours ouvrables après vos photos.</p></li>
    <li><span class="when">Ensuite</span><b class="amt">20.–<small>par mois</small></b><h3>On s'en occupe</h3><p>Hébergement, adresse, et vos changements de prix, d'horaires ou de photos, faits sous 3 jours ouvrables. Vous arrêtez à la fin de n'importe quel mois.</p></li>
   </ol>
   <p class="mono guar-t">Nos trois garanties, écrites dans nos conditions</p>
@@ -212,7 +213,7 @@ html:not(.js) .nojs{display:block}
    <h2 id="finalH"><span style="white-space:nowrap">Envoyez-nous</span> le nom de votre commerce.</h2>
    <p>Votre maquette arrive sur votre téléphone en 48 heures, offerte. Elle vous plaît, on la met en ligne. Sinon, vous ne devez rien. On répond le jour même, 7 jours sur 7.</p>
    <a class="btn inv" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a>
-   <p class="alt"><a href="{{HOME}}">Plutôt l’entrée 3D</a><a href="{{WA_PASSE}}" data-wa="passe" target="_blank" rel="noopener">Passez me la montrer</a><a href="mailto:oonde.contact@gmail.com" data-mail="vit">Par e-mail</a></p>
+   <p class="alt"><a href="{{HOME}}">Plutôt l’entrée 3D</a><a href="{{WA_PASSE}}" data-wa="passe" target="_blank" rel="noopener">Venez me la montrer</a><a href="mailto:oonde.contact@gmail.com" data-mail="vit">Par e-mail</a></p>
    <div class="qr" aria-hidden="true">{{QR_WA}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div>
    <dl>
     <div><dt>WhatsApp ou téléphone</dt><dd><a href="tel:+41764882710">+41 76 488 27 10</a></dd></div>
@@ -256,7 +257,7 @@ function render(anim){const t=T[st.act],town=TOWNS.includes(st.town)?st.town:'';
  [...bs.children].forEach((b,i)=>{b.setAttribute('aria-checked',i===st.style);b.tabIndex=i===st.style?0:-1});$('styleName').textContent=t.styles[st.style][2];
  const s={name:st.name,town,style:st.style},look=st.act+st.style;
  if(near){site($('liveDesk'),st.act,s,'d');site($('livePhone'),st.act,s,'m');if(anim&&look!==shown)document.querySelectorAll('#liveDesk>.tpl,#livePhone>.tpl').forEach(n=>n.classList.add('sw'));shown=look}
- $('liveUrl').textContent=slug(st.name)+'.ch';
+ $('liveUrl').textContent=slug(st.name)+'.ch';$('vDom').textContent=st.name?slug(st.name)+'.ch':'votre-commerce.ch';
  const href=wa(msg(town,t)),label=st.name?'Recevoir la maquette de '+short(st.name):'Recevoir ma maquette offerte';
  /* tous les boutons « maquette » de la page suivent l'essai ; sur téléphone, un nom long reste dans le message, pas sur le bouton */
  const lab2=st.name&&narrow.matches&&st.name.length>12?'Recevoir ma maquette offerte':label;

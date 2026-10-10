@@ -29,7 +29,7 @@
 /* OONDE · base commune aux pages (accueil, La Visite, aperçu). Papier, encre, un accent. Grille 1 144 px, filets 1 px, rayons 8/10/14. */
 @font-face{font-family:'Instrument Repli';src:local('Arial'),local('Helvetica Neue'),local('Helvetica');size-adjust:106%;ascent-override:91%;descent-override:23.5%;line-gap-override:0%}
 :root{
- --paper:#F7F7F4;--ink:#111318;--muted:#6B7078;--soft:#3A3F47;--line:#DCDED8;--card:#FFFFFF;--klein:#2038EC;--wa:#14803C;--night:#141826;--cream:#F4EFE7;
+ --paper:#F7F7F4;--ink:#111318;--muted:#5C6169;--soft:#3A3F47;--line:#DCDED8;--card:#FFFFFF;--klein:#2038EC;--wa:#14803C;--night:#141826;--cream:#F4EFE7;
  --pad:clamp(20px,4vw,48px);--hh:64px;
  --sans:'Instrument Sans','Instrument Repli',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
  --ease:cubic-bezier(.22,.61,.2,1);
@@ -259,6 +259,15 @@ footer nav a{padding-block:12px;margin-block:-12px}
 footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:underline}
 footer .seo{max-width:62em;font-size:13.5px}
 .mbar{display:none}
+@media (max-width:700px){body{padding-bottom:78px}}
+/* le menu sur téléphone : un bouton, les quatre liens dessous */
+.nav-m{display:none;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 14.5px var(--sans);cursor:pointer;margin-left:auto}
+.nav-m i{display:block;width:14px;height:1.5px;background:currentColor;box-shadow:0 -4.5px 0 currentColor,0 4.5px 0 currentColor}
+@media (max-width:700px){.nav-m{display:inline-flex}
+ .nav .in>nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 16px 14px;background:rgba(247,247,244,.98);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -24px rgba(17,19,24,.4)}
+ .nav.open .in>nav{display:flex}
+ .nav .in>nav a,.nav .in>nav a.opt,.nav .in>nav a.opt2{display:block;padding:14px 0;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
+ .nav .in>nav a:last-child{border-bottom:0}}
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
 @media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
 *{transition:none!important;animation:none!important}}
@@ -562,6 +571,9 @@ document.querySelectorAll('details').forEach(d=>{const s=d.querySelector('summar
 
 /* Un seul bouton WhatsApp à la fois : celui de la barre du haut s'efface quand un bouton de la page est à l'écran ;
    sur téléphone, la barre du bas arrive une fois l'accueil passé, et se retire tant qu'un autre bouton est visible */
+/* le menu sur téléphone */
+(()=>{const b=document.querySelector('.nav-m'),n=document.querySelector('.nav');if(!b)return;const t=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};
+ b.addEventListener('click',()=>t(!n.classList.contains('open')));n.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>t(false)));addEventListener('keydown',e=>{if(e.key==='Escape')t(false)})})();
 (()=>{const m=$('mbar'),hero=document.querySelector('[data-hero]'),seen=new Set();let past=!hero;
  const set=()=>{const p=past||document.body.classList.contains('named');document.body.classList.toggle('cta-in',seen.size>0);if(m){m.classList.toggle('on',p&&!seen.size);document.body.classList.toggle('mbar-on',p)}};
  document.addEventListener('oonde-cta',()=>set());

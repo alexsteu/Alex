@@ -3,7 +3,7 @@
    une maquette ouvre l'entrée 3D de ce métier, plus bas (data-e3, géré par e3d.js). Mouvement réduit : la dernière image. */
 (()=>{const u=$('univers');if(!u)return;
  const walk=$('uWalk'),stg=$('uStage'),scene=u.querySelector('.u-scene'),cv=$('uCv'),cx=cv.getContext('2d'),poster=$('uPoster'),pins=$('uPins'),hits=$('uHits');
- const t2=u.querySelector('.u-t2'),t3=u.querySelector('.u-t3'),t1=u.querySelector('.u-t1'),LIVE=!RM,SETS={d:96,m:72},store={};
+ const t2=u.querySelector('.u-t2'),t15=u.querySelector('.u-t15'),t3=u.querySelector('.u-t3'),t1=u.querySelector('.u-t1'),LIVE=!RM,SETS={d:96,m:72},store={};
  let set='d',W=0,H=0,P=0,cur=0,last=-1,raf=0,drawn=null,dirty=true,vis=true,D=1,hh=64;
  const base=k=>'img/e3d/oonde/'+k+'/';
  const near=(k,i)=>{const s=store[k];if(!s)return null;const n=SETS[k];for(let d=0;d<n;d++){if(i-d>=0&&s.ok[i-d])return[s.img[i-d],i-d,s];if(i+d<n&&s.ok[i+d])return[s.img[i+d],i+d,s]}return null};
@@ -36,7 +36,8 @@
  const camOf=P=>P<.03?0:P>.86?1:(P-.03)/.83;
  const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
  function ui(){if(!LIVE){u.classList.add('static','end');return}t1.style.opacity=clamp((.1-P)/.07,0,1);t1.style.visibility=P>.1?'hidden':'';
-  t2.style.opacity=fade(.34,.4,.56,.62);
+  const sl=(el,a,b,c,d)=>{el.style.opacity=fade(a,b,c,d);el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*12}px`};
+  sl(t15,.13,.17,.27,.31);sl(t2,.35,.4,.58,.63);
   const e=clamp((P-.86)/.06,0,1);t3.style.opacity=e;t3.style.transform=`translateY(${(1-e)*16}px)`;t3.inert=e<.5;u.classList.toggle('end',e>.5)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(){raf=0;if(!LIVE){draw(1);return}const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
