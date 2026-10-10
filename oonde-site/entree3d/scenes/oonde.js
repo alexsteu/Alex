@@ -12,7 +12,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const PAPER = 0xefede7;
   // le ciel : un dégradé chaud, du crème en haut au papier à l'horizon
   { const c = document.createElement('canvas'); c.width = 4; c.height = 256; const x = c.getContext('2d'); const g = x.createLinearGradient(0, 0, 0, 256);
-    g.addColorStop(0, '#e6dccd'); g.addColorStop(.62, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
+    g.addColorStop(0, '#c4ccd6'); g.addColorStop(.42, '#e2d3c2'); g.addColorStop(.62, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; scene.background = t; } scene.fog = new THREE.Fog(PAPER, 13, 32);
   const paperM = kit.std(PAPER, { r: .93, env: .45 });
   const N = 300, SZ = 34;
@@ -29,7 +29,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const ink = kit.std(0x15171c, { r: .62, env: .6 });
   const ring = new THREE.Mesh(rg, ink); ring.position.set(0, RO + .025, 0); ring.castShadow = ring.receiveShadow = true; scene.add(ring);
   // un petit socle de carton sous l'anneau : il tient debout comme un objet posé
-  kit.box(1.1, .05, .5, kit.std(0xe9e6de, { r: .9 }), 0, .025, 0, { parent: scene });
+  const plinth = kit.box(1.1, .05, .5, kit.std(0xe9e6de, { r: .9 }), 0, .025, 0, { parent: scene });
 
   // le point bleu, seule matière brillante de la scène
   const RD = 10.54 * k, TD = .07;
@@ -41,9 +41,17 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const plaster = kit.std(0xf3f1eb, { r: .9 }), card = kit.std(0xa7a297, { r: .95 }), board = kit.std(0xfbfaf7, { r: .85 });
   const oak = kit.pbr('wood_floor', { s: .6, color: 0xd9bf98, roughness: .6, env: .5 });
   // la vitrine : un verre sombre, et derrière, la salle allumée (une lueur chaude qui monte du bas, 2700 K)
-  const cvs = document.createElement('canvas'); cvs.width = 64; cvs.height = 128; const g2 = cvs.getContext('2d');
-  const gr = g2.createLinearGradient(0, 128, 0, 0); gr.addColorStop(0, '#ffcf8f'); gr.addColorStop(.45, '#e9964f'); gr.addColorStop(1, '#3a2312');
-  g2.fillStyle = gr; g2.fillRect(0, 0, 64, 128);
+  const cvs = document.createElement('canvas'); cvs.width = 128; cvs.height = 160; const g2 = cvs.getContext('2d');
+  const gr = g2.createLinearGradient(0, 160, 0, 0); gr.addColorStop(0, '#ffd59a'); gr.addColorStop(.5, '#eba25c'); gr.addColorStop(1, '#4a2c16');
+  g2.fillStyle = gr; g2.fillRect(0, 0, 128, 160);
+  // une salle floue derrière le verre : un comptoir, des silhouettes, une lampe, et un reflet de ciel en haut
+  g2.filter = 'blur(5px)';
+  g2.fillStyle = 'rgba(60,32,14,.55)'; g2.fillRect(-10, 104, 150, 22);
+  g2.fillStyle = 'rgba(70,40,18,.45)'; g2.fillRect(18, 60, 16, 50); g2.fillRect(84, 52, 22, 58);
+  g2.fillStyle = 'rgba(255,240,205,.9)'; g2.beginPath(); g2.arc(64, 34, 9, 0, Math.PI * 2); g2.fill();
+  g2.filter = 'none';
+  const sky = g2.createLinearGradient(0, 0, 128, 70); sky.addColorStop(0, 'rgba(210,222,240,.16)'); sky.addColorStop(.6, 'rgba(210,222,240,0)');
+  g2.fillStyle = sky; g2.fillRect(0, 0, 128, 160);
   const glowMap = new THREE.CanvasTexture(cvs); glowMap.colorSpace = THREE.SRGBColorSpace;
   const frost = new THREE.MeshStandardMaterial({ color: 0x15161a, roughness: .04, metalness: .1, emissive: 0xffffff, emissiveMap: glowMap, emissiveIntensity: .95, envMapIntensity: 1.8 });
   const glow = kit.std(0xfff1dc, { r: .4, e: 0xffc788, ei: 1.6 });
@@ -115,7 +123,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
       lamp(-.17);
     }
     b.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    const pop = .29 + i * .03;
+    const pop = .25 + i * .012;
     facades.push({ root, hinge, local, world, pop, r: R });
     pins.push({ id: K.id, corners: world });
   });
@@ -128,7 +136,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const soft = new THREE.RectAreaLight(0xfff3e4, 1.2, 8, 6); soft.position.set(0, 7, -2); soft.lookAt(0, 0, -2.6); scene.add(soft);
 
   // l'onde : un front qui part du point d'impact, se soulève en relief et s'amortit ; derrière lui, des sillons fins
-  const P_IMPACT = portrait ? .2 : .2, SPEED = 26;
+  const P_IMPACT = portrait ? .2 : .2, SPEED = 32;
   function wave(r, p) {
     const t = p - P_IMPACT; if (t <= 0) return 0;
     const front = t * SPEED, damp = 1 / (1 + .35 * r);
@@ -157,16 +165,16 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .44, pos: [.6, 3.0, -.2], tgt: [0, .45, -4.6], fov: 64 },
     { p: .62, pos: [1.2, 3.3, .3], tgt: [0, .5, -5.0] },
     { p: .8, pos: [.6, 3.4, 1.6], tgt: [0, .35, -5.3], fov: 62 },
-    { p: 1, pos: [0, 3.5, 2.9], tgt: [0, .45, -5.4], fov: 60 },
+    { p: 1, pos: [0, 3.6, 3.1], tgt: [0, .45, -5.4], fov: 60 },
   ] : [
     { p: 0, pos: [0, 1.55, 8.6], tgt: [0, 1.55, 0], fov: 30 },
     { p: .1, pos: [0, 1.55, 7.4], tgt: [0, 1.55, 0], fov: 32 },
     { p: .22, pos: [0, 1.55, 2.6], tgt: [0, 1.4, -2], fov: 42 },
     { p: .265, pos: [0, 1.53, .9], tgt: [0, 1.1, -2.8], fov: 45 },
-    { p: .31, pos: [0, 1.6, -.2], tgt: [0, .6, -4.4], fov: 48 },
-    { p: .44, pos: [.6, 2.6, -.1], tgt: [0, .45, -4.4], fov: 50 },
-    { p: .62, pos: [2.2, 2.9, -.9], tgt: [0, .4, -3.4] },
-    { p: .8, pos: [.7, 2.45, -.4], tgt: [0, .2, -4.6], fov: 52 },
+    { p: .31, pos: [0, 1.6, -.2], tgt: [0, .6, -4.4], fov: 43 },
+    { p: .44, pos: [.6, 2.6, -.1], tgt: [0, .45, -4.4], fov: 46 },
+    { p: .62, pos: [.95, 2.5, -.2], tgt: [0, .35, -4.7], fov: 49 },
+    { p: .8, pos: [.35, 2.4, -.22], tgt: [0, .18, -4.85], fov: 52 },
     { p: 1, pos: [0, 2.3, -.25], tgt: [0, .05, -5.0], fov: 54 },
   ];
 
@@ -175,13 +183,15 @@ export default async function ({ THREE, kit, scene, portrait }) {
     path, fov: 40, bloom: [.04, .3, 1.4], exposure: 1.22, vignette: .18, ao: .7,
     pins,
     update(p) {
-      ring.visible = p < .32;   // passé derrière la caméra : il ne doit plus cacher la lumière ni rien d'autre
+      ring.visible = plinth.visible = p < .32;   // passé derrière la caméra : il ne doit plus cacher la lumière ni rien d'autre
       // le point : il sort de l'anneau, retombe en arc derrière lui, rebondit, puis s'enfonce à moitié dans le papier
       // le point : un disque debout dans l'anneau ; il bascule en arrière, retombe à plat sur le papier et rebondit à peine
       const a = clamp((p - .12) / (P_IMPACT - .12)), land = new THREE.Vector3(C.x, TD / 2, C.z);
+      dot.scale.setScalar(1);
       if (p < .12) { dot.position.copy(dotStart); dot.rotation.x = Math.PI / 2; }
       else if (p < P_IMPACT) { dot.position.lerpVectors(dotStart, land, a); dot.position.y = dotStart.y + (land.y - dotStart.y) * a * a + .45 * Math.sin(Math.PI * a) * (1 - a); dot.rotation.x = Math.PI / 2 * (1 - ease(a)); }
-      else { const b2 = clamp((p - P_IMPACT) / .05); dot.position.copy(land); dot.position.y = land.y + .05 * Math.sin(Math.PI * b2) * (1 - b2); dot.rotation.x = 0; }
+      else { const b2 = clamp((p - P_IMPACT) / .05); dot.position.copy(land); dot.position.y = land.y + .05 * Math.sin(Math.PI * b2) * (1 - b2); dot.rotation.x = 0;
+        const g3 = ease(clamp((p - .42) / .2)); dot.scale.setScalar(1 - .25 * g3); dot.position.z = land.z - 1.2 * g3; dot.position.y *= 1 - .25 * g3; }   // il glisse, plus petit, jusqu'au pied des maquettes
       shapeFloor(p);
       for (const F of facades) {
         const t = clamp((p - F.pop) / .075);
