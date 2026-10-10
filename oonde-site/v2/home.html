@@ -20,6 +20,7 @@
 {{INC:base.css}}
 {{INC:demo.css}}
 {{INC:e3d.css}}
+{{INC:univers.css}}
 /* La Vitrine : l'essai simple. Le titre et le champ à gauche, l'aperçu à droite (sous le champ, sur téléphone). */
 .hero{position:relative;overflow:hidden}
 .ex-more{margin-top:22px;color:var(--muted);font-size:15.5px}
@@ -115,7 +116,7 @@ html:not(.js) .nojs{display:block}
 .close .ig-l{display:inline-block;margin-top:22px}
 </style>
 
-<a class="skip" href="#entree">Aller au contenu</a>
+<a class="skip" href="#offre">Aller au contenu</a>
 <header class="nav">
  <div class="in">
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a>
@@ -125,7 +126,48 @@ html:not(.js) .nojs{display:block}
 </header>
 
 <main id="top">
-<section id="entree" class="v-demo e-walk" data-hero aria-labelledby="h1">
+<section id="univers" class="u" data-hero aria-labelledby="h1">
+ <div class="u-walk" id="uWalk">
+  <div class="u-stage" id="uStage">
+   <div class="u-scene"><img class="u-poster" id="uPoster" src="img/e3d/oonde/d/f000.webp" width="1280" height="800" alt="Le O du logo OONDE, debout sur une feuille de papier, avec le point bleu au centre" decoding="async" fetchpriority="high"><canvas id="uCv" aria-hidden="true"></canvas>
+    <div class="u-pins" id="uPins" aria-hidden="true"><div data-id="restaurant"><span>RESTAURANT</span></div><div data-id="boulangerie"><span>BOULANGERIE</span></div><div data-id="coiffure"><span>COIFFURE</span></div><div data-id="institut"><span>INSTITUT</span></div><div data-id="onglerie"><span>ONGLERIE</span></div><div data-id="logement"><span>LOGEMENT</span></div></div>
+    <div class="u-hits" id="uHits"><a href="#entree" data-e3="restaurant" aria-label="Restaurant : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="boulangerie" aria-label="Boulangerie : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="coiffure" aria-label="Coiffure : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="institut" aria-label="Institut : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="onglerie" aria-label="Onglerie : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="logement" aria-label="Logement : ouvrir son entrée 3D (démo)"></a></div></div>
+   <div class="u-tx u-t1"><p class="mono">DEUX AMIS · DE GENÈVE À MONTREUX</p><h1 id="h1">Des sites où vos clients entrent avant de venir.</h1><p class="u-hint" aria-hidden="true">Faites défiler ↓</p></div>
+   <div class="u-tx u-t2" aria-hidden="true"><p>Chaque commerce a son entrée.</p></div>
+   <div class="u-tx u-t3"><div><h2>Choisissez le vôtre.</h2><p>Touchez une maquette : son entrée en 3D s’ouvre, et vous y mettez votre nom.</p><div class="u-chips"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div><p class="u-note">SIX COMMERCES IMAGINÉS · DÉMO</p></div>
+    <div class="u-act"><a class="btn light" href="#offre">Ce que nous faisons ↓</a></div></div>
+   <a class="u-skip" href="#offre">Passer l’intro ↓</a>
+  </div>
+ </div>
+</section>
+
+<section class="bg-paper" id="offre" aria-labelledby="hO">
+ <div class="in">
+  <div class="sec-head"><p class="mono">Ce que nous faisons</p><h2 id="hO" style="margin-top:12px">Deux sites, selon votre commerce.</h2></div>
+  <div class="of">
+   <a href="#exemples"><span class="mono">L’ENTRÉE 3D</span><b>Votre site s’ouvre sur votre commerce.</b><p>Nous reconstruisons votre façade et votre salle en 3D. Vos clients entrent en faisant défiler, puis trouvent vos prix, vos horaires et le bouton pour réserver ou écrire.</p><span class="pr"><span>dès 990.– · puis 20.–/mois</span><i>Voir les exemples</i></span></a>
+   <a href="#vitrine"><span class="mono">LA VITRINE</span><b>Un site simple, relié à Google.</b><p>Une page claire avec vos prix, vos horaires et vos photos, reliée à votre fiche Google. Le même prix pour tous les commerces.</p><span class="pr"><span>490.– · puis 20.–/mois</span><i>Voir La Vitrine</i></span></a>
+  </div>
+  <p class="of-n">Rien à payer avant d’avoir vu : une maquette offerte pour La Vitrine, une première image 3D de votre façade pour l’entrée.</p>
+ </div>
+</section>
+
+<section class="bg-white" id="exemples" aria-labelledby="hX">
+ <div class="in">
+  <div class="sec-head"><p class="mono">Six exemples, une même entrée</p><h2 id="hX" style="margin-top:12px">Choisissez un métier, et entrez.</h2><p>Chaque exemple s’ouvre sur la rue, passe la porte et finit sur le site : prix, horaires, bouton pour réserver ou écrire. Mettez votre nom et votre couleur, c’est ce que vos clients verront.</p></div>
+  <div class="exs">
+   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant · Le Petit Port</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure · Atelier Sauge</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté · Maison Calme</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie · Nacre</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie · La Fournée</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes · Les Grèves</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
+  </div>
+  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
+ </div>
+</section>
+
+<section id="entree" class="v-demo e-walk" aria-labelledby="h1e">
  <div class="walk" id="eWalk">
   <div class="w-stage" id="eStage">
    <div class="in">
@@ -143,7 +185,7 @@ html:not(.js) .nojs{display:block}
        <div class="w-prog" aria-hidden="true"><span data-k="1">01 LA RUE</span><span data-k="2">02 L’ENTRÉE</span><span data-k="3" id="eK3">03 LA SALLE</span><span class="w-pb"><i id="eFill"></i></span></div>
       </div>
       <div class="w-ch c1">
-       <h1 class="w-eb" id="h1">Sites avec entrée en 3D · de Genève à Montreux</h1>
+       <p class="w-eb" id="h1e">L’entrée 3D · Démo à essayer</p>
        <p class="w-h">Votre site s’ouvre sur votre commerce.</p>
        <div class="e-try">
         <div><label for="eName">Votre nom, sur l’enseigne</label><input id="eName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
@@ -170,20 +212,6 @@ html:not(.js) .nojs{display:block}
   <div class="w-cal" aria-label="Calendrier de démonstration"><p class="w-k">NOVEMBRE 2026 · DISPONIBILITÉS</p><div class="w-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b>{{CAL}}</div><p class="w-n">Dates barrées : déjà réservées sur Booking ou Airbnb.</p></div></div></template>
 </section>
 
-<section class="bg-white" id="exemples" aria-labelledby="hX">
- <div class="in">
-  <div class="sec-head"><p class="mono">Six exemples, une même entrée</p><h2 id="hX" style="margin-top:12px">Choisissez un métier, et entrez.</h2><p>Chaque exemple s’ouvre sur la rue, passe la porte et finit sur le site : prix, horaires, bouton pour réserver ou écrire. Mettez votre nom et votre couleur, c’est ce que vos clients verront.</p></div>
-  <div class="exs">
-   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant · Le Petit Port</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure · Atelier Sauge</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté · Maison Calme</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie · Nacre</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie · La Fournée</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes · Les Grèves</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
-  </div>
-  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
- </div>
-</section>
 
 <section class="bg-paper" id="prix" aria-labelledby="hP">
  <div class="in">
@@ -325,6 +353,7 @@ html:not(.js) .nojs{display:block}
 {{INC:sites.js}}
 
 {{INC:e3d.js}}
+{{INC:univers.js}}
 
 /* L'essai : un seul état ; le métier, la commune et la couleur n'entrent dans le message que si on les a choisis */
 const ACTS=['coiffure','ongles','barbier','beaute','restaurant'],MORE=[['boulangerie','Boulangerie'],['fleuriste','Fleuriste'],['garage','Garage'],['artisan','Artisan'],['autre','Autre commerce']];

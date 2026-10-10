@@ -73,6 +73,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  $('eName').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur()});
  /* « Voir cette entrée » sur un exemple : la même entrée, avec le nom de l'exemple tant qu'on n'a pas tapé le sien */
  document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();choose(a.dataset.e3,true);goTo(0)}));
+ window.e3go=k=>{choose(k,true);goTo(0)};   /* l'univers OONDE en haut de page : toucher une maquette ouvre son entrée */
  /* Un lien préparé (?e=restaurant&n=Chez%20Marco&c=1) remplit l'essai ; sinon, la dernière visite */
  {const q=new URLSearchParams(location.search);let m={};
   if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}

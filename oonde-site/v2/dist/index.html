@@ -475,6 +475,80 @@ html:not(.js) .e-try{display:none}
 }
 @media (max-height:700px){.e-walk .c1 .w-h{font-size:min(28px,7.6cqw)}.e-walk .c1 .w-eb,.e-try label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 @container (max-width:400px){.e-walk .w-burger{display:none}.e-walk .w-bar .w-logo{font-size:22px}}
+/* L'univers OONDE : la première chose qu'on voit. Le O du logo sur du papier, le point qui tombe, l'onde, et six
+   maquettes de commerces qui se lèvent. Plein cadre, sans fenêtre de navigateur : ce n'est pas un site de client, c'est le nôtre. */
+.u{padding:0}
+.u-walk{position:relative;height:300vh;height:300svh;background:#EFEDE7}
+.u-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size}
+.u-scene{position:absolute;inset:0}
+.u-scene img,.u-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.u-scene canvas{opacity:0}
+.u.live .u-scene canvas{opacity:1}
+.u.live .u-poster{visibility:hidden}
+/* les enseignes des maquettes : le métier, posé en perspective ; à la fin, toute la maquette devient un bouton */
+.u-pins{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.u-pins>div{position:absolute;left:0;top:0;width:400px;height:75px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden}
+.u-pins span{font:600 30px var(--mono);letter-spacing:.08em;color:var(--ink);white-space:nowrap}
+.u-hits{position:absolute;inset:0;z-index:2;pointer-events:none}
+.u-hits a{position:absolute;left:0;top:0;width:400px;height:465px;transform-origin:0 0;pointer-events:none;border-radius:6px;outline-offset:-6px}
+.u.end .u-hits a{pointer-events:auto;cursor:pointer}
+.u-hits a:focus-visible{outline:3px solid var(--klein)}
+/* les textes : le titre dès la première image, une phrase au survol de l'onde, l'invitation à la fin */
+.u-tx{position:absolute;z-index:3;color:var(--ink);pointer-events:none;transition:opacity .2s}
+.u-tx a,.u-tx button{pointer-events:auto}
+.u-t1{left:clamp(16px,4cqw,56px);top:50%;transform:translateY(-50%);max-width:min(25cqw,380px)}
+.u-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.14em;color:var(--soft)}
+.u-t1 h1{font:600 clamp(30px,3.3cqw,48px)/1.04 var(--sans);letter-spacing:-.025em;margin-top:14px}
+.u-t1 h1 em{font-style:normal;color:var(--klein)}
+.u-hint{margin-top:18px;font:500 14px var(--sans);color:var(--soft)}
+.u-t2{right:clamp(16px,4cqw,56px);bottom:clamp(20px,6cqh,64px);max-width:min(34cqw,420px);text-align:right;opacity:0}
+.u-t2 p{font:600 clamp(22px,2.4cqw,34px)/1.12 var(--sans);letter-spacing:-.02em}
+.u-t3{left:0;right:0;bottom:0;padding:clamp(40px,10cqh,96px) clamp(16px,4cqw,56px) clamp(18px,4cqh,36px);opacity:0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;
+ background:linear-gradient(180deg,rgba(239,237,231,0),rgba(239,237,231,.9) 38%,#EFEDE7 62%)}
+.u-t3 h2{font:600 clamp(26px,2.8cqw,40px)/1.05 var(--sans);letter-spacing:-.025em}
+.u-t3 p{margin-top:8px;font:400 16px/1.45 var(--sans);color:var(--soft);max-width:34em}
+.u-t3 .u-act{display:flex;flex-wrap:wrap;gap:10px}
+.u-chips{display:none;flex-wrap:wrap;gap:6px;margin-top:12px}
+.u-chips a{min-height:40px;display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px var(--sans);text-decoration:none}
+.u-skip{position:absolute;z-index:4;right:clamp(16px,4cqw,56px);top:18px;font:500 13.5px var(--sans);color:var(--soft);background:rgba(239,237,231,.8);border-radius:99px;padding:8px 12px;text-decoration:none}
+.u-skip:hover{color:var(--ink)}
+.u.end .u-skip{opacity:0;pointer-events:none}
+.u-note{font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:10px}
+/* téléphone (cadre plus haut que large) : le titre en haut, au-dessus de l'anneau ; la fin, en bas */
+@container (max-aspect-ratio:1/1){
+ .u-t1{left:16px;right:16px;top:clamp(16px,5cqh,40px);transform:none;max-width:none}
+ .u-t1 h1{font-size:min(30px,8cqw);max-width:13em}
+ .u-hint{display:none}
+ .u-t2{left:16px;right:16px;top:20px;bottom:auto;max-width:none;text-align:left}
+ .u-t2 p{font-size:min(24px,6.4cqw)}
+ .u-t3{padding:22px 16px 18px}
+ .u-t3 h2{font-size:min(28px,7.4cqw)}
+ .u-t3 p{font-size:15px}
+ .u-chips{display:flex}
+ .u-skip{top:auto;bottom:14px;right:16px}
+ .u.end .u-skip{display:none}
+}
+/* mouvement réduit, ou sans JavaScript : la dernière image, immobile, avec les métiers ; les textes viennent dessous */
+.u.static .u-walk,html:not(.js) .u-walk{height:auto}
+.u.static .u-stage,html:not(.js) .u-stage{position:relative;top:0;height:auto;overflow:visible;container-type:inline-size}
+.u.static .u-scene,html:not(.js) .u-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
+.u.static .u-tx,html:not(.js) .u-tx{position:relative;inset:auto;transform:none;max-width:none;opacity:1;padding:24px clamp(16px,4vw,56px) 0}
+.u.static .u-t3,html:not(.js) .u-t3{background:none;padding-bottom:40px}
+.u.static .u-t2,.u.static .u-hint,.u.static .u-skip,html:not(.js) .u-t2,html:not(.js) .u-hint,html:not(.js) .u-skip,html:not(.js) .u-hits{display:none}
+.u.static .u-hits a{pointer-events:auto}
+@media (max-width:700px){.u.static .u-scene,html:not(.js) .u-scene{aspect-ratio:9/13}.u.static .u-chips{display:flex}}
+/* Ce que nous faisons : les deux offres, juste sous l'univers */
+.of{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.of{grid-template-columns:1fr}}
+.of a{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
+.of a:hover{border-color:var(--ink);transform:translateY(-2px)}
+.of .mono{font:500 11px var(--mono);letter-spacing:.14em;color:var(--muted)}
+.of b{font:600 24px/1.1 var(--sans);letter-spacing:-.02em}
+.of p{color:var(--soft);font-size:16px;line-height:1.45}
+.of .pr{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line)}
+.of .pr span{font:600 15px var(--mono)}
+.of .pr i{font-style:normal;font-weight:600;font-size:14.5px;border-bottom:1.5px solid currentColor}
+.of-n{margin-top:18px;color:var(--soft);font-size:15px}
 /* La Vitrine : l'essai simple. Le titre et le champ à gauche, l'aperçu à droite (sous le champ, sur téléphone). */
 .hero{position:relative;overflow:hidden}
 .ex-more{margin-top:22px;color:var(--muted);font-size:15.5px}
@@ -572,7 +646,7 @@ html:not(.js) .nojs{display:block}
 
 </head>
 <body>
-<a class="skip" href="#entree">Aller au contenu</a>
+<a class="skip" href="#offre">Aller au contenu</a>
 <header class="nav">
  <div class="in">
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
@@ -582,7 +656,48 @@ html:not(.js) .nojs{display:block}
 </header>
 
 <main id="top">
-<section id="entree" class="v-demo e-walk" data-hero aria-labelledby="h1">
+<section id="univers" class="u" data-hero aria-labelledby="h1">
+ <div class="u-walk" id="uWalk">
+  <div class="u-stage" id="uStage">
+   <div class="u-scene"><img class="u-poster" id="uPoster" src="img/e3d/oonde/d/f000.webp" width="1280" height="800" alt="Le O du logo OONDE, debout sur une feuille de papier, avec le point bleu au centre" decoding="async" fetchpriority="high"><canvas id="uCv" aria-hidden="true"></canvas>
+    <div class="u-pins" id="uPins" aria-hidden="true"><div data-id="restaurant"><span>RESTAURANT</span></div><div data-id="boulangerie"><span>BOULANGERIE</span></div><div data-id="coiffure"><span>COIFFURE</span></div><div data-id="institut"><span>INSTITUT</span></div><div data-id="onglerie"><span>ONGLERIE</span></div><div data-id="logement"><span>LOGEMENT</span></div></div>
+    <div class="u-hits" id="uHits"><a href="#entree" data-e3="restaurant" aria-label="Restaurant : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="boulangerie" aria-label="Boulangerie : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="coiffure" aria-label="Coiffure : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="institut" aria-label="Institut : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="onglerie" aria-label="Onglerie : ouvrir son entrée 3D (démo)"></a><a href="#entree" data-e3="logement" aria-label="Logement : ouvrir son entrée 3D (démo)"></a></div></div>
+   <div class="u-tx u-t1"><p class="mono">DEUX AMIS · DE GENÈVE À MONTREUX</p><h1 id="h1">Des sites où vos clients entrent avant de venir.</h1><p class="u-hint" aria-hidden="true">Faites défiler ↓</p></div>
+   <div class="u-tx u-t2" aria-hidden="true"><p>Chaque commerce a son entrée.</p></div>
+   <div class="u-tx u-t3"><div><h2>Choisissez le vôtre.</h2><p>Touchez une maquette : son entrée en 3D s’ouvre, et vous y mettez votre nom.</p><div class="u-chips"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div><p class="u-note">SIX COMMERCES IMAGINÉS · DÉMO</p></div>
+    <div class="u-act"><a class="btn light" href="#offre">Ce que nous faisons ↓</a></div></div>
+   <a class="u-skip" href="#offre">Passer l’intro ↓</a>
+  </div>
+ </div>
+</section>
+
+<section class="bg-paper" id="offre" aria-labelledby="hO">
+ <div class="in">
+  <div class="sec-head"><p class="mono">Ce que nous faisons</p><h2 id="hO" style="margin-top:12px">Deux sites, selon votre commerce.</h2></div>
+  <div class="of">
+   <a href="#exemples"><span class="mono">L’ENTRÉE 3D</span><b>Votre site s’ouvre sur votre commerce.</b><p>Nous reconstruisons votre façade et votre salle en 3D. Vos clients entrent en faisant défiler, puis trouvent vos prix, vos horaires et le bouton pour réserver ou écrire.</p><span class="pr"><span>dès 990.– · puis 20.–/mois</span><i>Voir les exemples</i></span></a>
+   <a href="#vitrine"><span class="mono">LA VITRINE</span><b>Un site simple, relié à Google.</b><p>Une page claire avec vos prix, vos horaires et vos photos, reliée à votre fiche Google. Le même prix pour tous les commerces.</p><span class="pr"><span>490.– · puis 20.–/mois</span><i>Voir La Vitrine</i></span></a>
+  </div>
+  <p class="of-n">Rien à payer avant d’avoir vu : une maquette offerte pour La Vitrine, une première image 3D de votre façade pour l’entrée.</p>
+ </div>
+</section>
+
+<section class="bg-white" id="exemples" aria-labelledby="hX">
+ <div class="in">
+  <div class="sec-head"><p class="mono">Six exemples, une même entrée</p><h2 id="hX" style="margin-top:12px">Choisissez un métier, et entrez.</h2><p>Chaque exemple s’ouvre sur la rue, passe la porte et finit sur le site : prix, horaires, bouton pour réserver ou écrire. Mettez votre nom et votre couleur, c’est ce que vos clients verront.</p></div>
+  <div class="exs">
+   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant · Le Petit Port</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure · Atelier Sauge</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté · Maison Calme</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie · Nacre</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie · La Fournée</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes · Les Grèves</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
+  </div>
+  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
+ </div>
+</section>
+
+<section id="entree" class="v-demo e-walk" aria-labelledby="h1e">
  <div class="walk" id="eWalk">
   <div class="w-stage" id="eStage">
    <div class="in">
@@ -600,7 +715,7 @@ html:not(.js) .nojs{display:block}
        <div class="w-prog" aria-hidden="true"><span data-k="1">01 LA RUE</span><span data-k="2">02 L’ENTRÉE</span><span data-k="3" id="eK3">03 LA SALLE</span><span class="w-pb"><i id="eFill"></i></span></div>
       </div>
       <div class="w-ch c1">
-       <h1 class="w-eb" id="h1">Sites avec entrée en 3D · de Genève à Montreux</h1>
+       <p class="w-eb" id="h1e">L’entrée 3D · Démo à essayer</p>
        <p class="w-h">Votre site s’ouvre sur votre commerce.</p>
        <div class="e-try">
         <div><label for="eName">Votre nom, sur l’enseigne</label><input id="eName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
@@ -627,20 +742,6 @@ html:not(.js) .nojs{display:block}
   <div class="w-cal" aria-label="Calendrier de démonstration"><p class="w-k">NOVEMBRE 2026 · DISPONIBILITÉS</p><div class="w-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b><i></i><i></i><i></i><i></i><i></i><i></i><span>1</span><span>2</span><span class=x>3</span><span class=x>4</span><span class=x>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class=x>10</span><span class=x>11</span><span class=x>12</span><span class=x>13</span><span>14</span><span>15</span><span>16</span><span class=x>17</span><span class=x>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span class=x>24</span><span class=x>25</span><span class=x>26</span><span>27</span><span>28</span><span>29</span><span>30</span></div><p class="w-n">Dates barrées : déjà réservées sur Booking ou Airbnb.</p></div></div></template>
 </section>
 
-<section class="bg-white" id="exemples" aria-labelledby="hX">
- <div class="in">
-  <div class="sec-head"><p class="mono">Six exemples, une même entrée</p><h2 id="hX" style="margin-top:12px">Choisissez un métier, et entrez.</h2><p>Chaque exemple s’ouvre sur la rue, passe la porte et finit sur le site : prix, horaires, bouton pour réserver ou écrire. Mettez votre nom et votre couleur, c’est ce que vos clients verront.</p></div>
-  <div class="exs">
-   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant · Le Petit Port</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure · Atelier Sauge</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté · Maison Calme</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie · Nacre</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie · La Fournée</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes · Les Grèves</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
-  </div>
-  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
- </div>
-</section>
 
 <section class="bg-paper" id="prix" aria-labelledby="hP">
  <div class="in">
@@ -921,6 +1022,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  $('eName').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur()});
  /* « Voir cette entrée » sur un exemple : la même entrée, avec le nom de l'exemple tant qu'on n'a pas tapé le sien */
  document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();choose(a.dataset.e3,true);goTo(0)}));
+ window.e3go=k=>{choose(k,true);goTo(0)};   /* l'univers OONDE en haut de page : toucher une maquette ouvre son entrée */
  /* Un lien préparé (?e=restaurant&n=Chez%20Marco&c=1) remplit l'essai ; sinon, la dernière visite */
  {const q=new URLSearchParams(location.search);let m={};
   if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
@@ -1000,6 +1102,58 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const card=e.target,k=card.dataset.k;
   (cache[k]?Promise.resolve():fetch(e3base(k)+'d/pins.json').then(r=>r.json()).then(j=>{cache[k]=j})).then(()=>show(card,k)).catch(()=>{})}),{rootMargin:'300px'});
  document.querySelectorAll('.ex[data-k]').forEach(c=>{if(c.querySelector('.e-pins'))io.observe(c)})})();
+/* L'univers OONDE en haut de page : faire défiler fait avancer la caméra image par image (rendu d'avance dans entree3d/,
+   scène « oonde »). Sur chaque enseigne de maquette, le métier est posé en perspective (pins.json) ; à la fin, toucher
+   une maquette ouvre l'entrée 3D de ce métier, plus bas (data-e3, géré par e3d.js). Mouvement réduit : la dernière image. */
+(()=>{const u=$('univers');if(!u)return;
+ const walk=$('uWalk'),stg=$('uStage'),scene=u.querySelector('.u-scene'),cv=$('uCv'),cx=cv.getContext('2d'),poster=$('uPoster'),pins=$('uPins'),hits=$('uHits');
+ const t2=u.querySelector('.u-t2'),t3=u.querySelector('.u-t3'),t1=u.querySelector('.u-t1'),LIVE=!RM,SETS={d:96,m:72},store={};
+ let set='d',W=0,H=0,P=0,cur=0,last=-1,raf=0,drawn=null,dirty=true,vis=true,D=1,hh=64;
+ const base=k=>'img/e3d/oonde/'+k+'/';
+ const near=(k,i)=>{const s=store[k];if(!s)return null;const n=SETS[k];for(let d=0;d<n;d++){if(i-d>=0&&s.ok[i-d])return[s.img[i-d],i-d,s];if(i+d<n&&s.ok[i+d])return[s.img[i+d],i+d,s]}return null};
+ function load(k){if(store[k])return;const n=SETS[k],s=store[k]={img:new Array(n),ok:new Uint8Array(n),pins:null};
+  fetch(base(k)+'pins.json').then(r=>r.json()).then(j=>{s.pins=j;dirty=true;tick()}).catch(()=>{});
+  const want=i=>LIVE||i===n-1;
+  const got=buf=>{const v=new DataView(buf),hl=v.getUint32(0,true),head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
+   return Promise.all(head.filter(([i])=>want(i)).map(([i,o,l])=>{const im=new Image();im.decoding='async';
+    im.src=URL.createObjectURL(new Blob([new Uint8Array(buf,4+hl+o,l)],{type:'image/webp'}));
+    return (im.decode?im.decode():new Promise(r=>im.onload=r)).catch(()=>{}).then(()=>{s.img[i]=im;s.ok[i]=1;if(k===set)dirty=true;tick()})}))};
+  const get=g=>fetch(base(k)+'p'+g+'.txt').then(r=>{if(!r.ok)throw r.status;return r.text()}).then(t=>{const b=atob(t),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer});
+  get(0).then(got).then(()=>LIVE&&Promise.all([get(1).then(got),get(2).then(got)]).then(()=>get(3)).then(got))
+   .catch(()=>{if(k==='m'&&!s.ok[0]&&!s.ok[n-1]){set='d';load('d')}})}   /* jeu absent : l'autre, recadré */
+ const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight)};
+ function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=cv.width=Math.round(r.width*d);H=cv.height=Math.round(r.height*d);
+  const k=r.width<r.height*.95?'m':'d';if(k!==set||!store[k]){set=k;load(k);if(!LIVE||!u.classList.contains('live'))poster.src=base(k)+(LIVE?'f000':last0(k))+'.webp'}geo();dirty=true}
+ const last0=k=>'f'+String(SETS[k]-1).padStart(3,'0');
+ /* les maquettes : le métier sur l'enseigne, et une zone à toucher qui descend de l'enseigne jusqu'au socle (6,2 fois sa hauteur) */
+ const lab=[...pins.children],hit=[...hits.children];
+ function place(pp,f){lab.forEach((el,j)=>{const q=pp&&pp.find(x=>x.id===el.dataset.id),a=hit[j];
+  if(!q||q.vis<=0){el.style.opacity=0;a.style.visibility='hidden';return}
+  e3quad(el,q.c,400,75,f);el.style.opacity=q.vis;
+  const[c0,c1,c2,c3]=q.c,ext=(t,b)=>[t[0]+(b[0]-t[0])*6.2,t[1]+(b[1]-t[1])*6.2];
+  e3quad(a,[c0,c1,ext(c1,c2),ext(c0,c3)],400,465,f);a.style.visibility=q.vis>.5?'visible':'hidden'})}
+ function draw(p){if(!W||!H)return;const r=near(set,Math.round(p*(SETS[set]-1)));if(!r)return;const[im,i,s]=r;if(im===drawn&&!dirty)return;
+  const sc=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc;
+  cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);drawn=im;dirty=false;u.classList.add('live');
+  const d=W/scene.clientWidth;place(s.pins&&s.pins[i]?s.pins[i].pins:null,{ox:(W-w)/2/d,oy:(H-h)/2/d,w:w/d,h:h/d})}
+ /* le rythme : un temps sur le logo, la traversée, l'onde, puis un arrêt sur les maquettes pour lire et choisir */
+ const camOf=P=>P<.03?0:P>.86?1:(P-.03)/.83;
+ const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
+ function ui(){if(!LIVE){u.classList.add('static','end');return}t1.style.opacity=clamp((.1-P)/.07,0,1);t1.style.visibility=P>.1?'hidden':'';
+  t2.style.opacity=fade(.34,.4,.56,.62);
+  const e=clamp((P-.86)/.06,0,1);t3.style.opacity=e;t3.style.transform=`translateY(${(1-e)*16}px)`;t3.inert=e<.5;u.classList.toggle('end',e>.5)}
+ function tick(){if(!raf)raf=requestAnimationFrame(loop)}
+ function loop(){raf=0;if(!LIVE){draw(1);return}const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
+  const t=camOf(P);cur+=(t-cur)*.22;if(Math.abs(t-cur)<.0005)cur=t;
+  if(dirty||cur!==last){draw(cur);last=cur}ui();if(cur!==t)tick()}
+ new IntersectionObserver(es=>{vis=es[0].isIntersecting;tick()}).observe(walk);
+ poster.onerror=()=>{if(poster.src.includes('/m/'))poster.src=poster.src.replace('/m/','/d/').replace(last0('m'),last0('d'))};
+ size();addEventListener('resize',()=>{size();tick()});
+ if(LIVE)addEventListener('scroll',()=>{if(vis)tick()},{passive:true});
+ /* « Passer l'intro » et « Voir les offres » : sans saut brutal */
+ u.querySelectorAll('a[href^="#"]:not([data-e3])').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}));
+ ui();tick();
+})();
 
 /* L'essai : un seul état ; le métier, la commune et la couleur n'entrent dans le message que si on les a choisis */
 const ACTS=['coiffure','ongles','barbier','beaute','restaurant'],MORE=[['boulangerie','Boulangerie'],['fleuriste','Fleuriste'],['garage','Garage'],['artisan','Artisan'],['autre','Autre commerce']];
