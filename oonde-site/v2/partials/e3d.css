@@ -15,7 +15,7 @@
 /* le nom au mur du fond : en néon, ou peint */
 .e-wall span{font-family:var(--serif);font-weight:400}
 [data-wf=neon] .e-wall span{font-style:italic;color:#fff;text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 30px var(--c),0 0 60px var(--c)}
-[data-wf=paint] .e-wall span{color:var(--c);color:color-mix(in srgb,var(--c) 62%,#1a0d06);opacity:.88;text-shadow:0 1px 0 rgba(255,235,210,.14)}
+[data-wf=paint] .e-wall span{color:var(--c);color:color-mix(in srgb,var(--c) 52%,#1a0d06);opacity:.92;text-shadow:0 1px 0 rgba(255,235,210,.14)}
 /* le premier écran : le titre de la page et l'essai, posés sur la rue */
 .e-walk .c1{bottom:64px}
 .e-walk .c1 .w-eb{font-size:11.5px;opacity:.9}
@@ -52,7 +52,8 @@
 .e-ph img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:6px;display:block}
 @container (max-width:640px){
  .e-walk .c1{bottom:52px}
- .e-walk .c1 .w-h{font-size:min(36px,9.6cqw)}
+ .e-walk .c1 .w-h{font-size:min(28px,7.6cqw);max-width:none;margin-top:0}
+ .e-walk .c1 .w-eb{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
  .e-try{margin-top:12px;padding:12px;gap:10px;border-radius:12px}
  .e-try label{font-size:13px;margin-bottom:4px}
  #eName{min-height:46px;font-size:17px}
@@ -100,3 +101,4 @@ html:not(.js) .e-try{display:none}
  #eName{min-height:44px}
 }
 @media (max-height:700px){.e-walk .c1 .w-h{font-size:min(28px,7.6cqw)}.e-walk .c1 .w-eb,.e-try label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@container (max-width:400px){.e-walk .w-burger{display:none}.e-walk .w-bar .w-logo{font-size:22px}}

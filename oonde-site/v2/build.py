@@ -1,5 +1,5 @@
 # Construit le site OONDE v2 : dist/ (production, polices locales) et preview/ (aperçu Claude, Google Fonts).
-import os, pathlib, re, shutil, urllib.parse, hashlib, base64
+import os, json, pathlib, re, shutil, urllib.parse, hashlib, base64
 D = pathlib.Path(__file__).parent
 FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
@@ -86,6 +86,20 @@ def full(s, theme='#F7F7F4', base=''):
             + f'<meta name="theme-color" content="{theme}">\n<link rel="icon" href="favicon.ico" sizes="32x32">\n<link rel="icon" href="favicon.svg" type="image/svg+xml">\n<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
             + s[:i] + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
 
+def pack(src, dst):
+    """Les images d'une entrée en 4 fichiers, dans l'ordre où le lecteur les veut : p0 = la première, la dernière et une sur 8,
+    p1 = les 4 + 8k, p2 = les 2 + 4k, p3 = les impaires. Chaque paquet : 4 octets (longueur de l'en-tête), l'en-tête JSON
+    [[image, début, longueur], …], puis les WebP bout à bout, le tout en base64 dans un .txt (l'aperçu claude.ai ne sert pas
+    les .bin ; compressé à l'envoi, le base64 ne pèse presque rien de plus). Moins de requêtes, et moins de fichiers à héberger."""
+    fr = sorted(src.glob('f*.webp')); n = len(fr); dst.mkdir(parents=True, exist_ok=True)
+    groups = [[i for i in range(n) if i % 8 == 0 or i == n - 1], [i for i in range(n) if i % 8 == 4], [i for i in range(n) if i % 4 == 2], [i for i in range(n) if i % 2 == 1 and i != n - 1]]
+    for g, idx in enumerate(groups):
+        head, body, off = [], b'', 0
+        for i in idx:
+            d = fr[i].read_bytes(); head.append([int(fr[i].stem[1:]), off, len(d)]); body += d; off += len(d)
+        h = json.dumps(head, separators=(',', ':')).encode()
+        (dst / f'p{g}.txt').write_bytes(base64.b64encode(len(h).to_bytes(4, 'little') + h + body))
+
 def csp_hashes(html):
     return {"'sha256-" + base64.b64encode(hashlib.sha256(m.encode()).digest()).decode() + "'"
             for m in re.findall(r'<script(?![^>]*application/ld\+json)[^>]*>(.*?)</script>', html, flags=re.S)}
@@ -119,8 +133,13 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         if f.startswith('img/t-') and (D / big).exists(): shutil.copy2(D / big, o / big)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
-    if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque métier, ses images et la position des enseignes (pins.json)
-        shutil.copytree(D / 'img' / 'e3d', o / 'img' / 'e3d', dirs_exist_ok=True)
+    if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque jeu d'images part en 4 paquets (voir pack()), avec pins.json
+        for sd in [*sorted((D / 'img' / 'e3d').iterdir()), D / 'img' / 'greves']:
+            for k in ('d', 'm'):
+                src, dst = sd / k, o / sd.relative_to(D) / k
+                pack(src, dst)
+                for f in ['f000.webp', 'pins.json'] + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
+                    if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
     if wrap:
         (o / 'fonts').mkdir()
         for f, p, ws in FACES:
@@ -131,7 +150,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         for f in ('favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(D / 'brand' / f, o / f)
         U = ' https://cloud.umami.is' if UMAMI else ''
         csp = ("default-src 'self'; script-src 'self'" + U + ' ' + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))
-               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
+               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self'" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
                "object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'")
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n'
             '  Strict-Transport-Security: max-age=31536000\n  X-Frame-Options: DENY\n  Cross-Origin-Opener-Policy: same-origin\n'

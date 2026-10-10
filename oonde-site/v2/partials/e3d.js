@@ -88,12 +88,16 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  /* 1. Images et enseignes : jeu « ordinateur » (16:10, 96 images) ou « téléphone » (portrait, 72) ; mouvement réduit : la première seule */
  const SETS={d:96,m:72},store={};
  const near=(k,i)=>{const s=store[st.sc+k];if(!s)return null;const n=SETS[k];for(let d=0;d<n;d++){if(i-d>=0&&s.ok[i-d])return[s.img[i-d],i-d,s];if(i+d<n&&s.ok[i+d])return[s.img[i+d],i+d,s]}return null};
- function load(k){const key=st.sc+k;if(store[key]||!armed)return;const sc=st.sc,n=SETS[k],s=store[key]={img:new Array(n),ok:new Uint8Array(n),pins:null},order=[0],seen=new Set(order);
-  if(LIVE){order.push(n-1);seen.add(n-1);for(const sp of[8,4,2,1])for(let i=0;i<n;i+=sp)if(!seen.has(i)){seen.add(i);order.push(i)}}
+ /* les images arrivent en 4 paquets (build.py, pack()) : la première, la dernière et une sur 8 d'abord, puis le reste entre deux */
+ function load(k){const key=st.sc+k;if(store[key]||!armed)return;const sc=st.sc,n=SETS[k],s=store[key]={img:new Array(n),ok:new Uint8Array(n),pins:null};
   if(!E3[sc].lodge)fetch(e3base(sc)+k+'/pins.json').then(r=>r.json()).then(j=>{s.pins=j;if(sc===st.sc)dirty=true;tick()}).catch(()=>{});
-  let q=0;const next=()=>{if(q>=order.length)return;const i=order[q++],im=new Image();im.decoding='async';im.src=e3base(sc)+k+'/f'+String(i).padStart(3,'0')+'.webp';
-   im.onload=()=>{(im.decode?im.decode():Promise.resolve()).catch(()=>{}).then(()=>{s.img[i]=im;s.ok[i]=1;if(sc===st.sc&&k===set)dirty=true;tick();next()})};im.onerror=()=>{if(i===0&&sc===st.sc&&k===set){const o=k==='d'?'m':'d';load(o)}next()}};   /* jeu absent : l'autre jeu, recadré */
-  for(let c=0;c<4;c++)next()}
+  const got=buf=>{const v=new DataView(buf),hl=v.getUint32(0,true),head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
+   return Promise.all(head.filter(([i])=>LIVE||i===0).map(([i,o,l])=>{const im=new Image();im.decoding='async';
+    im.src=URL.createObjectURL(new Blob([new Uint8Array(buf,4+hl+o,l)],{type:'image/webp'}));
+    return (im.decode?im.decode():new Promise(r=>im.onload=r)).catch(()=>{}).then(()=>{s.img[i]=im;s.ok[i]=1;if(sc===st.sc&&k===set)dirty=true;tick()})}))};
+  const get=g=>fetch(e3base(sc)+k+'/p'+g+'.txt').then(r=>{if(!r.ok)throw r.status;return r.text()}).then(t=>{const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u.buffer});
+  get(0).then(got).then(()=>LIVE&&Promise.all([get(1).then(got),get(2).then(got)]).then(()=>get(3)).then(got))
+   .catch(()=>{if(!s.ok[0]&&sc===st.sc&&k===set)load(k==='d'?'m':'d')})}   /* jeu absent : l'autre jeu, recadré */
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=cv.width=Math.round(r.width*d);H=cv.height=Math.round(r.height*d);
   set=r.width<r.height*.95?'m':'d';load(set);geo();dirty=true}
  /* 2. Rythme : la part du défilement figé (P) donne la position de la caméra (p) ; la porte est passée à p = .56 */
