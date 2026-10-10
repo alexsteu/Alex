@@ -102,7 +102,7 @@ html:not(.js) .w-ch.c1{display:block}
  .js body.walking .mbar.on{transform:translateY(110%)}
  .js body.walking .nav .btn{opacity:0;visibility:hidden}   /* pendant la visite, la barre WhatsApp du bas se range : le cadre a sa propre réservation */
  @container (max-width:640px){
-  .js .w-prog{left:16px;right:16px;bottom:18px;gap:10px;font-size:9.5px}.js .w-prog .w-pb{flex:1;width:auto}
+  .js .w-prog{left:16px;right:16px;bottom:18px;gap:14px;font-size:10.5px}.js .w-prog span[data-k]:not(.on){display:none}.js .w-prog .w-pb{flex:1;width:auto}
   .js .w-site{top:clamp(120px,calc(100% - 470px),170px)}
  }
 }

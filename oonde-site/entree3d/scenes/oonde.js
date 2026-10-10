@@ -12,7 +12,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const PAPER = 0xefede7;
   // le ciel : un dégradé chaud, du crème en haut au papier à l'horizon
   { const c = document.createElement('canvas'); c.width = 4; c.height = 256; const x = c.getContext('2d'); const g = x.createLinearGradient(0, 0, 0, 256);
-    g.addColorStop(0, '#c4ccd6'); g.addColorStop(.42, '#e2d3c2'); g.addColorStop(.62, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
+    g.addColorStop(0, '#b9c3cf'); g.addColorStop(.38, '#d9cfc4'); g.addColorStop(.6, '#e9c9a8'); g.addColorStop(.8, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; scene.background = t; } scene.fog = new THREE.Fog(PAPER, 13, 32);
   const paperM = kit.std(PAPER, { r: .93, env: .45 });
   const N = 300, SZ = 34;
@@ -41,19 +41,29 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const plaster = kit.std(0xf3f1eb, { r: .9 }), card = kit.std(0xa7a297, { r: .95 }), board = kit.std(0xfbfaf7, { r: .85 });
   const oak = kit.pbr('wood_floor', { s: .6, color: 0xd9bf98, roughness: .6, env: .5 });
   // la vitrine : un verre sombre, et derrière, la salle allumée (une lueur chaude qui monte du bas, 2700 K)
-  const cvs = document.createElement('canvas'); cvs.width = 128; cvs.height = 160; const g2 = cvs.getContext('2d');
-  const gr = g2.createLinearGradient(0, 160, 0, 0); gr.addColorStop(0, '#ffd59a'); gr.addColorStop(.5, '#eba25c'); gr.addColorStop(1, '#4a2c16');
-  g2.fillStyle = gr; g2.fillRect(0, 0, 128, 160);
-  // une salle floue derrière le verre : un comptoir, des silhouettes, une lampe, et un reflet de ciel en haut
-  g2.filter = 'blur(5px)';
-  g2.fillStyle = 'rgba(60,32,14,.55)'; g2.fillRect(-10, 104, 150, 22);
-  g2.fillStyle = 'rgba(70,40,18,.45)'; g2.fillRect(18, 60, 16, 50); g2.fillRect(84, 52, 22, 58);
-  g2.fillStyle = 'rgba(255,240,205,.9)'; g2.beginPath(); g2.arc(64, 34, 9, 0, Math.PI * 2); g2.fill();
-  g2.filter = 'none';
-  const sky = g2.createLinearGradient(0, 0, 128, 70); sky.addColorStop(0, 'rgba(210,222,240,.16)'); sky.addColorStop(.6, 'rgba(210,222,240,0)');
-  g2.fillStyle = sky; g2.fillRect(0, 0, 128, 160);
-  const glowMap = new THREE.CanvasTexture(cvs); glowMap.colorSpace = THREE.SRGBColorSpace;
-  const frost = new THREE.MeshStandardMaterial({ color: 0x15161a, roughness: .04, metalness: .1, emissive: 0xffffff, emissiveMap: glowMap, emissiveIntensity: .95, envMapIntensity: 1.8 });
+  // chaque métier a sa salle, floue derrière le verre : sa couleur de fond, un objet au milieu, un reflet de ciel en haut
+  const ROOMS = { restaurant: ['#ffd29a', '#d9874a'], boulangerie: ['#ffe0a6', '#e0a256'], coiffure: ['#f6e3c4', '#a7b39c'],
+    institut: ['#fbe4d6', '#d6a891'], onglerie: ['#fbd9e2', '#c98a9d'], logement: ['#ffe2b4', '#c79a6c'], x: ['#ffd59a', '#eba25c'] };
+  function room(kind) {
+    const c = document.createElement('canvas'); c.width = 128; c.height = 160; const g = c.getContext('2d'), [lo, mid] = ROOMS[kind];
+    const gr = g.createLinearGradient(0, 160, 0, 0); gr.addColorStop(0, lo); gr.addColorStop(.55, mid); gr.addColorStop(1, '#3a2414');
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 160); g.filter = 'blur(2.5px)';
+    const ink = a => `rgba(38,22,12,${a})`; g.fillStyle = ink(.8);
+    const disc = (x, y, rx, ry) => { g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); g.fill(); };
+    if (kind === 'restaurant') { for (const x of [34, 94]) { g.fillRect(x - 20, 104, 40, 5); g.fillRect(x - 3, 108, 6, 30); } g.fillStyle = 'rgba(255,236,200,.95)'; disc(34, 52, 6, 6); disc(94, 52, 6, 6); }
+    else if (kind === 'boulangerie') { g.fillRect(10, 112, 108, 30); g.fillStyle = 'rgba(150,84,30,.9)'; for (const y of [62, 82]) for (let x = 20; x < 110; x += 22) disc(x, y, 9, 5); g.fillStyle = ink(.8); g.fillRect(12, 70, 104, 3); g.fillRect(12, 90, 104, 3); }
+    else if (kind === 'coiffure') { g.fillStyle = 'rgba(255,250,235,.9)'; g.fillRect(48, 34, 32, 58); g.fillStyle = ink(.8); disc(64, 112, 16, 12); g.fillRect(60, 118, 8, 24); }
+    else if (kind === 'institut') { g.fillStyle = 'rgba(70,100,58,.85)'; disc(64, 96, 22, 30); g.fillStyle = ink(.8); g.fillRect(52, 120, 24, 22); }
+    else if (kind === 'onglerie') { for (const y of [48, 68, 88]) { g.fillRect(14, y + 8, 100, 2); for (let x = 20; x < 112; x += 10) { g.fillStyle = `hsl(${(x * 7 + y * 3) % 360},55%,45%)`; g.fillRect(x, y, 5, 8); } g.fillStyle = ink(.8); } g.fillRect(28, 112, 72, 8); }
+    else if (kind === 'logement') { g.fillRect(14, 104, 100, 22); g.fillRect(14, 92, 16, 34); g.fillRect(98, 92, 16, 34); g.fillStyle = 'rgba(255,244,214,.95)'; disc(64, 40, 10, 10); }
+    g.fillStyle = 'rgba(255,240,205,.9)'; if (kind === 'x') disc(64, 34, 9, 9);
+    g.filter = 'none';
+    const sky = g.createLinearGradient(0, 0, 0, 56); sky.addColorStop(0, 'rgba(214,226,244,.32)'); sky.addColorStop(1, 'rgba(214,226,244,0)');
+    g.fillStyle = sky; g.fillRect(0, 0, 128, 56);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+    return new THREE.MeshStandardMaterial({ color: 0x15161a, roughness: .04, metalness: .1, emissive: 0xffffff, emissiveMap: t, emissiveIntensity: .95, envMapIntensity: 1.8 });
+  }
+  const frost = room('x');
   const glow = kit.std(0xfff1dc, { r: .4, e: 0xffc788, ei: 1.6 });
   const paperSign = kit.std(0xfdfcf8, { r: .88 });
   const kinds = [
@@ -91,7 +101,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
     const world = local.map(v => v.clone());
     // porte en chêne et vitrine dépolie, selon le métier
     const door = (x, w = .2, h = .5) => { kit.box(w + .03, h + .02, .012, plaster, x, h / 2 + .01, f + .002, { parent: b }); kit.box(w, h, .016, oak, x, h / 2, f + .004, { parent: b }); };
-    const win = (x, y, w, h) => { kit.box(w + .03, h + .03, .01, accM, x, y, f + .001, { parent: b }); kit.box(w, h, .014, frost, x, y, f + .004, { parent: b });
+    const roomM = room(K.id);
+    const win = (x, y, w, h) => { kit.box(w + .03, h + .03, .01, accM, x, y, f + .001, { parent: b }); kit.box(w, h, .014, y < .7 ? roomM : frost, x, y, f + .004, { parent: b });
       if (w > .3) kit.box(.008, h, .006, accM, x, y, f + .012, { parent: b }); kit.box(w, .008, .006, accM, x, y - h * .18, f + .012, { parent: b }); };
     const lamp = x => { kit.box(.016, .03, .03, accM, x, .62, f + .012, { parent: b }); kit.box(.034, .05, .034, glow, x, .6, f + .03, { parent: b });
       const pl = new THREE.PointLight(0xffb36a, .7, .7, 2); pl.position.set(x, .55, f + .08); b.add(pl); };
@@ -108,7 +119,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
       for (let s = 0; s < 6; s++) kit.box(.018, .38, .02, oak, -.36 + s * .06, 1.2, f + .01, { parent: b });
       win(.22, 1.2, .26, .3);
     } else if (K.id === 'institut') {
-      const rw = new THREE.Mesh(new THREE.CylinderGeometry(.19, .19, .014, 48), frost); rw.rotation.x = Math.PI / 2; rw.position.set(-.16, .4, f + .004); b.add(rw);
+      const rw = new THREE.Mesh(new THREE.CylinderGeometry(.19, .19, .014, 48), roomM); rw.rotation.x = Math.PI / 2; rw.position.set(-.16, .4, f + .004); b.add(rw);
       const rr = new THREE.Mesh(new THREE.TorusGeometry(.2, .012, 10, 48), accM); rr.position.set(-.16, .4, f + .006); b.add(rr);
       door(.28, .2); win(0, 1.12, .5, .2); lamp(.28 + .15);
     } else if (K.id === 'onglerie') {
@@ -123,7 +134,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
       lamp(-.17);
     }
     b.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    const pop = .25 + i * .012;
+    const pop = K.id === 'logement' ? .245 : .24 + i * .008;
     facades.push({ root, hinge, local, world, pop, r: R });
     pins.push({ id: K.id, corners: world });
   });
@@ -165,7 +176,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .44, pos: [.6, 3.0, -.2], tgt: [0, .45, -4.6], fov: 64 },
     { p: .62, pos: [1.2, 3.3, .3], tgt: [0, .5, -5.0] },
     { p: .8, pos: [.6, 3.4, 1.6], tgt: [0, .35, -5.3], fov: 62 },
-    { p: 1, pos: [0, 3.6, 3.1], tgt: [0, .45, -5.4], fov: 60 },
+    { p: 1, pos: [0, 3.6, 3.1], tgt: [0, 1.0, -5.4], fov: 60 },
   ] : [
     { p: 0, pos: [0, 1.55, 8.6], tgt: [0, 1.55, 0], fov: 30 },
     { p: .1, pos: [0, 1.55, 7.4], tgt: [0, 1.55, 0], fov: 32 },
@@ -191,7 +202,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
       if (p < .12) { dot.position.copy(dotStart); dot.rotation.x = Math.PI / 2; }
       else if (p < P_IMPACT) { dot.position.lerpVectors(dotStart, land, a); dot.position.y = dotStart.y + (land.y - dotStart.y) * a * a + .45 * Math.sin(Math.PI * a) * (1 - a); dot.rotation.x = Math.PI / 2 * (1 - ease(a)); }
       else { const b2 = clamp((p - P_IMPACT) / .05); dot.position.copy(land); dot.position.y = land.y + .05 * Math.sin(Math.PI * b2) * (1 - b2); dot.rotation.x = 0;
-        const g3 = ease(clamp((p - .42) / .2)); dot.scale.setScalar(1 - .25 * g3); dot.position.z = land.z - 1.2 * g3; dot.position.y *= 1 - .25 * g3; }   // il glisse, plus petit, jusqu'au pied des maquettes
+        const g3 = ease(clamp((p - .22) / .4)); dot.scale.setScalar(1 - .45 * g3); dot.position.z = land.z - 2.15 * g3; dot.position.x = land.x - .35 * g3; dot.position.y *= 1 - .45 * g3; }   // il glisse, plus petit, jusqu'au pied des maquettes
       shapeFloor(p);
       for (const F of facades) {
         const t = clamp((p - F.pop) / .075);
