@@ -13,7 +13,7 @@
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="OONDE">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Sites internet pour les commerces de Genève à Montreux, reliés à la fiche Google. Maquette gratuite avant tout paiement.","url":"https://oonde.ch/","telephone":"+41764882710","email":"oonde.contact@gmail.com","image":"https://oonde.ch/img/og.jpg","logo":"https://oonde.ch/apple-touch-icon.png","priceRange":"CHF 490","currenciesAccepted":"CHF","paymentAccepted":"Virement bancaire, TWINT","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressLocality":"Préverenges","postalCode":"1028","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"founder":[{"@type":"Person","name":"Alexandre Steudler"},{"@type":"Person","name":"Serhat Dogar"}],"sameAs":["https://www.instagram.com/oonde_studio","https://www.tiktok.com/@oonde"],"makesOffer":[{"@type":"Offer","name":"La Vitrine : site relié à la fiche Google","url":"https://oonde.ch/#prix","priceCurrency":"CHF","price":"490","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Création, facturée seulement si le site est validé","price":"490","priceCurrency":"CHF"},{"@type":"UnitPriceSpecification","name":"Hébergement, domaine et petites modifications","price":"20","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1}],"itemOffered":{"@type":"Service","name":"La Vitrine","serviceType":"Création de site internet"}},{"@type":"Offer","name":"La Visite : site avec visite de votre lieu","url":"https://oonde.ch/visite","itemOffered":{"@type":"Service","name":"La Visite","serviceType":"Site internet avec visite filmée ou en 3D"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Sites internet pour les commerces de Genève à Montreux, reliés à la fiche Google. Maquette gratuite avant tout paiement.","url":"https://oonde.ch/","telephone":"+41764882710","email":"oonde.contact@gmail.com","image":"https://oonde.ch/img/og.jpg","logo":"https://oonde.ch/apple-touch-icon.png","priceRange":"CHF 490","currenciesAccepted":"CHF","paymentAccepted":"Virement bancaire, TWINT","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressLocality":"Préverenges","postalCode":"1028","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"sameAs":["https://www.instagram.com/oonde_studio","https://www.tiktok.com/@oonde"],"makesOffer":[{"@type":"Offer","name":"La Vitrine : site relié à la fiche Google","url":"https://oonde.ch/#prix","priceCurrency":"CHF","price":"490","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Création, facturée seulement si le site est validé","price":"490","priceCurrency":"CHF"},{"@type":"UnitPriceSpecification","name":"Hébergement, domaine et petites modifications","price":"20","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1}],"itemOffered":{"@type":"Service","name":"La Vitrine","serviceType":"Création de site internet"}},{"@type":"Offer","name":"La Visite : site avec visite de votre lieu","url":"https://oonde.ch/visite","itemOffered":{"@type":"Service","name":"La Visite","serviceType":"Site internet avec visite filmée ou en 3D"},"priceSpecification":{"@type":"PriceSpecification","priceCurrency":"CHF","minPrice":"1490","description":"Selon le lieu, prix par écrit sous 48 heures"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
 {{FONTS}}
 <script>document.documentElement.classList.add('js')</script>
 <style>
@@ -111,6 +111,8 @@ html:not(.js) .nojs{display:block}
 .p-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
 .p-head p{color:var(--muted);font-size:17px;max-width:30em}
 .guar-t{margin-top:40px}
+.launch{margin-top:28px;padding:16px 20px;border:1px solid var(--line);border-left:3px solid var(--klein);border-radius:10px;background:var(--card);font-size:15.5px;color:var(--soft);max-width:44em}
+.launch b{color:var(--ink);font-weight:600}
 .p-act{margin-top:32px}
 
 /* La bande La Visite */
@@ -148,7 +150,7 @@ html:not(.js) .nojs{display:block}
    <div class="f-act h-fade tool-js"><div class="chips" id="bAct" role="radiogroup" aria-label="Votre métier"></div></div>
    <div class="h-go h-fade">
     <a class="btn" id="wantIt" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span id="wantL">Recevoir ma maquette offerte</span></a>
-    <p class="micro"><b>Rien à préparer :</b> on part de votre fiche Google et de votre Instagram, avec votre accord. Sans engagement. Alexandre ou Serhat vous répond le jour même, 7 jours sur 7. <a href="#prix" style="white-space:nowrap">Voir les prix</a></p>
+    <p class="micro"><b>Rien à préparer :</b> on part de votre fiche Google et de votre Instagram, avec votre accord. Sans engagement. On vous répond le jour même, 7 jours sur 7. <a href="#prix" style="white-space:nowrap">Voir les prix</a></p>
    </div>
   </div>
   <div class="h-prev tool-js">
@@ -202,6 +204,7 @@ html:not(.js) .nojs{display:block}
    <li><b>Sans durée minimale.</b><span>20.– par mois, résiliable à la fin de n'importe quel mois, par un simple message.</span></li>
    <li><b>Le site est à vous.</b><span>L'adresse est à votre nom. Si vous arrêtez, ou si nous arrêtons un jour, on vous remet tout, gratuitement.</span></li>
   </ul>
+  <p class="launch"><b>Offre de lancement, pour nos dix premiers commerces :</b> deux mois de suivi Google offerts (avis, publications, rapport), si vous nous laissez montrer votre site en exemple.</p>
   <div class="act p-act"><a class="btn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a><p class="micro">En option : suivi Google (avis, publications, rapport), 50.– par mois. <a href="{{WA_VID}}" data-wa="vid" target="_blank" rel="noopener">Vidéos pour les réseaux</a> sur devis.</p></div>
   <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
  </div>
@@ -212,10 +215,11 @@ html:not(.js) .nojs{display:block}
   <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:14px">Une autre question ? <a href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp</a>, on répond le jour même.</p></div>
   <div class="faq">
    <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Rien à préparer pour la maquette : on part de votre fiche Google et de votre Instagram. Ensuite, tout se fait depuis votre téléphone : vous nous envoyez sur WhatsApp vos vrais prix et quelques photos. On choisit les meilleures, on écrit les textes et on s'occupe de votre fiche Google.</p></div></div></details>
-   <details><summary>Et si la maquette ne me plaît pas ?</summary><div class="fa"><div><p>Vous ne payez rien et vous ne nous devez rien : un « non merci » sur WhatsApp suffit. Si elle vous plaît presque, dites-nous ce qu'il faut changer : deux séries de corrections sont comprises dans les 490.–.</p></div></div></details>
+   <details><summary>Et si la maquette ne me plaît pas ?</summary><div class="fa"><div><p>Vous ne payez rien et vous ne nous devez rien : un « non merci » sur WhatsApp suffit. Si elle vous plaît presque, dites-nous ce qu'il faut changer : deux séries de corrections sont comprises dans les 490.–. Sans réponse de votre part, la maquette reste à vous 14 jours, puis on l'efface.</p></div></div></details>
    <details><summary>J'ai déjà Instagram, Salonkee ou Planity. Pourquoi un site ?</summary><div class="fa"><div><p>Gardez-les : le bouton « Prendre rendez-vous » de votre site mène à votre agenda Salonkee ou Planity. Votre site et votre fiche Google vous montrent à ceux qui tapent « coiffeur Morges » sans vous connaître. Vous avez déjà un site ? On vous montre la maquette à côté, et si vous changez, vous gardez votre adresse.</p></div></div></details>
    <details><summary>Pourquoi pas Wix, ou le site offert avec mon annuaire ?</summary><div class="fa"><div><p>Avec Wix, c'est vous qui construisez et écrivez le site, souvent le soir. Les forfaits d'annuaire se paient chaque mois, souvent avec un engagement de plusieurs années. Chez nous, on écrit tout, vous voyez le site avant de payer, l'adresse est à votre nom, et vous arrêtez à la fin de n'importe quel mois.</p></div></div></details>
-   <details><summary>Je n'ai pas de belles photos.</summary><div class="fa"><div><p>Celles de votre téléphone suffisent : on choisit les meilleures et on les règle. Vous préférez qu'on les fasse ? Serhat peut passer chez vous ; on vous dit le prix avant.</p></div></div></details>
+   <details><summary>Je n'ai pas de belles photos.</summary><div class="fa"><div><p>Celles de votre téléphone suffisent : on choisit les meilleures et on les règle. Vous préférez qu'on les fasse ? On passe chez vous : dès 90.– la séance, et le prix est écrit avant. Avec La Visite, les photos sont comprises.</p></div></div></details>
+   <details><summary>Je suis un restaurant : et mon menu du jour ?</summary><div class="fa"><div><p>Envoyez-le-nous sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine. C'est compris dans les 20.– par mois.</p></div></div></details>
    <details><summary>Ça coûte combien en tout, et si j'arrête ?</summary><div class="fa"><div><p>La première année, 730.– : 490.– pour le site, plus 12 × 20.–. Ensuite, 240.– par an, que vous pouvez aussi payer en une fois. Vous arrêtez à la fin de n'importe quel mois : l'adresse, vos textes et vos photos restent à vous, et on vous remet tout gratuitement. Pourquoi si peu ? Votre site part de nos modèles, faits pour les commerces, et nous sommes deux, sans bureau à payer. Vos textes, eux, sont écrits pour vous, et votre fiche Google est faite à la main.</p></div></div></details>
    <details><summary>Vous garantissez la première place sur Google ?</summary><div class="fa"><div><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis.</p></div></div></details>
   </div>
@@ -225,9 +229,9 @@ html:not(.js) .nojs{display:block}
 <section class="bg-night vb sec2" aria-labelledby="hV">
  <div class="in vb-in">
   <div class="vb-t">
-   <p class="mono">La Visite · hôtels, chambres d'hôtes, logements de vacances, salles</p>
+   <p class="mono">La Visite · hôtels, logements, salles, restaurants</p>
    <h2 class="h-m" id="hV">Vous avez un lieu à faire visiter ?</h2>
-   <p>Avec La Visite, vos clients entrent chez vous en faisant défiler, avant de réserver. Votre calendrier Booking ou Airbnb s'affiche, en français et en anglais.</p>
+   <p>Avec La Visite, vos clients entrent chez vous en faisant défiler, avant de réserver. Pour un logement, votre calendrier Booking ou Airbnb s'affiche, en français et en anglais. Pour un restaurant ou un commerce, c'est un site qui ne ressemble à aucun autre.</p>
    <a class="lnk" href="{{VISITE}}">Voir la démo Les Grèves →</a>
   </div>
   <a class="vb-img" href="{{VISITE}}" tabindex="-1" aria-hidden="true"><img src="img/greves/d/f000.webp" alt="" width="1280" height="800" loading="lazy" decoding="async"><span>DÉMO</span></a>
@@ -238,12 +242,8 @@ html:not(.js) .nojs{display:block}
  <div class="in close">
   <div>
    <h2 class="h-m" id="hN">Deux amis de la région. C'est nous qui répondons.</h2>
-   <p class="lede" style="margin-top:18px">On s'est connus au gymnase et on a monté OONDE à deux. Alexandre fait les sites et s'occupe de Google ; Serhat fait les photos, les vidéos et le suivi. Quand vous écrivez, c'est l'un de nous deux qui répond. Et si vous préférez, on passe vous montrer votre maquette, entre deux clients, de Genève à Montreux.</p>
+   <p class="lede" style="margin-top:18px">On s'est connus au gymnase et on a monté OONDE à deux. L'un fait les sites et s'occupe de Google, l'autre fait les photos, les vidéos et le suivi. Quand vous écrivez, c'est l'un de nous deux qui répond. On est à Préverenges, entre Morges et Lausanne, et on passe volontiers vous montrer votre maquette, de Genève à Montreux.</p>
    <p class="lede" style="margin-top:14px">On démarre : on n'a pas encore de clients à vous montrer. C'est pour ça qu'on commence par votre maquette, avant que vous payiez quoi que ce soit.</p>
-   <ul class="people">
-    <li><b>Alexandre Steudler</b><span class="role">sites et fiche Google</span></li>
-    <li><b>Serhat Dogar</b><span class="role">photos, vidéos et suivi</span></li>
-   </ul>
    <a class="lnk ig-l" href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Nos conseils pour les commerces, sur Instagram</a>
   </div>
   <div class="final" id="contact">

@@ -20,6 +20,14 @@ def qr(url):
     svg = re.sub(r'<\?xml[^>]*>', '', svg).replace('<svg ', '<svg width="96" height="96" aria-hidden="true" focusable="false" ', 1)
     return svg.replace('fill="#000000"', 'fill="#111318"')
 import datetime
+# Mesure d'audience : Umami Cloud (gratuit, sans cookie). Collez l'identifiant du site (Website ID) dans umami.txt et relancez :
+# sans ce fichier, le site ne charge aucun outil de mesure et la page de confidentialité le dit.
+UMAMI = (D / 'umami.txt').read_text().strip() if (D / 'umami.txt').exists() else ''
+UMAMI_JS = f'<script defer src="https://cloud.umami.is/script.js" data-website-id="{UMAMI}" data-do-not-track="true"></script>' if UMAMI else ''
+MESURE = ({'{{MESURE_LEAD}}': " et ne garde aucune donnée qui vous identifie : on compte seulement les visites, de façon anonyme",
+           '{{MESURE_LI}}': " <li><b>Pas de cookie, pas de publicité.</b></li>\n <li><b>Mesure d'audience anonyme</b> : nous comptons les visites et les clics sur les boutons WhatsApp avec Umami, sans cookie et sans enregistrer votre adresse IP. Ces chiffres nous disent seulement combien de personnes viennent et d'où (Instagram, Google…).</li>",
+           '{{MESURE_WHO}}': " <li><b>Umami</b> (Umami Cloud) compte les visites, de façon anonyme et sans cookie.</li>\n"} if UMAMI else
+          {'{{MESURE_LEAD}}': " et ne mesure pas votre visite", '{{MESURE_LI}}': " <li><b>Pas de cookie, pas d'outil de mesure d'audience, pas de publicité.</b></li>", '{{MESURE_WHO}}': ''})
 _d0 = datetime.date(2026, 11, 1).weekday()   # le calendrier de la démo : novembre 2026, nuits prises en gris
 CAL = '<i></i>' * _d0 + ''.join(f'<span{" class=x" if d in {3,4,5,10,11,12,13,17,18,24,25,26} else ""}>{d}</span>' for d in range(1, 31))
 # Le logo inline vient du fichier de marque : encre → currentColor ; MARK = l'anneau et le point seuls.
@@ -49,6 +57,7 @@ def inc(s):
 
 def fill(s, fonts, links):
     s = inc(s)
+    for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
     for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_VID}}', WA_VID), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
                  ('{{QR_WA}}', QR_WA), ('{{QR_IMM}}', QR_IMM), ('{{CAL}}', CAL)]:
@@ -97,6 +106,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out])
+        if out == 'dist' and k in ('index', 'visite', 'apercu'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         (o / f'{k}.html').write_text(built[k])
@@ -116,8 +126,9 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         for st, f in SERIF: shutil.copy(D / 'fonts' / f, o / 'fonts')
         shutil.copy(D / 'fonts' / 'OFL-Cormorant-Garamond.txt', o / 'fonts')
         for f in ('favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(D / 'brand' / f, o / f)
-        csp = ("default-src 'self'; script-src 'self' " + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))
-               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; "
+        U = ' https://cloud.umami.is' if UMAMI else ''
+        csp = ("default-src 'self'; script-src 'self'" + U + ' ' + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))
+               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
                "object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'")
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n'
             '  Strict-Transport-Security: max-age=31536000\n  X-Frame-Options: DENY\n  Cross-Origin-Opener-Policy: same-origin\n'
@@ -126,6 +137,8 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
             '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
+        # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
+        (o / '_redirects').write_text('/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
         (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '  <url><loc>https://oonde.ch/</loc></url>\n  <url><loc>https://oonde.ch/visite</loc></url>\n' + '</urlset>\n')
 print('ok', sorted(p.name for p in (D / 'dist').iterdir()))
