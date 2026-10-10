@@ -1,0 +1,82 @@
+/* L'univers OONDE : la première chose qu'on voit. Le O du logo sur du papier, le point qui tombe, l'onde, et six
+   maquettes de commerces qui se lèvent. Plein cadre, sans fenêtre de navigateur : ce n'est pas un site de client, c'est le nôtre. */
+.u{padding:0}
+.u-walk{position:relative;height:300vh;height:300svh;background:#EFEDE7}
+.u-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size}
+.u-scene{position:absolute;inset:0}
+.u-scene img,.u-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.u-scene canvas{opacity:0}
+.u.live .u-scene canvas{opacity:1}
+.u.live .u-poster{visibility:hidden}
+/* les enseignes des maquettes : le métier, posé en perspective ; à la fin, toute la maquette devient un bouton */
+.u-pins{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.u-pins>div{position:absolute;left:0;top:0;width:400px;height:75px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden}
+.u-pins span{font:600 30px var(--mono);letter-spacing:.08em;color:var(--ink);white-space:nowrap}
+.u-hits{position:absolute;inset:0;z-index:2;pointer-events:none}
+.u-hits a{position:absolute;left:0;top:0;width:400px;height:465px;transform-origin:0 0;pointer-events:none;border-radius:6px;outline-offset:-6px}
+.u.end .u-hits a{pointer-events:auto;cursor:pointer}
+.u-hits a:focus-visible{outline:3px solid var(--klein)}
+.u.end .u-hits a:hover{background:rgba(32,56,236,.06);box-shadow:inset 0 0 0 2px rgba(32,56,236,.55)}
+/* les textes : le titre dès la première image, une phrase au survol de l'onde, l'invitation à la fin */
+.u-tx{position:absolute;z-index:3;color:var(--ink);pointer-events:none;transition:opacity .2s}
+.u-tx a,.u-tx button{pointer-events:auto}
+.u-t1{left:clamp(16px,4cqw,56px);top:50%;transform:translateY(-50%);max-width:min(25cqw,380px)}
+.u-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.14em;color:var(--soft)}
+.u-t1 h1{font:600 clamp(30px,3.3cqw,48px)/1.04 var(--sans);letter-spacing:-.025em;margin-top:14px}
+.u-t1 h1 em{font-style:normal;color:var(--klein)}
+.u-hint{margin-top:18px;font:500 14px/1.5 var(--sans);color:var(--soft);display:flex;flex-direction:column;gap:6px}
+.u-hint a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;align-self:flex-start;pointer-events:auto}
+.u-t15{left:50%;top:clamp(20px,7cqh,72px);transform:translateX(-50%);text-align:center;opacity:0;white-space:nowrap}
+.u-t15 p,.u-t2 p{font:600 clamp(22px,2.4cqw,34px)/1.12 var(--sans);letter-spacing:-.02em}
+.u-t15 p{background:rgba(239,237,231,.88);padding:6px 14px;border-radius:10px}
+.u-t2{right:clamp(16px,4cqw,56px);bottom:clamp(20px,6cqh,64px);max-width:min(34cqw,420px);text-align:right;opacity:0}
+.u-t3{left:0;right:0;bottom:0;padding:clamp(40px,10cqh,96px) clamp(16px,4cqw,56px) clamp(18px,4cqh,36px);opacity:0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;}
+.u-t3>div{max-width:min(38cqw,560px)}
+.u-t3 h2{font:600 clamp(26px,2.8cqw,40px)/1.05 var(--sans);letter-spacing:-.025em}
+.u-t3 p{margin-top:8px;font:400 16px/1.45 var(--sans);color:var(--soft);max-width:34em}
+.u-t3 .u-act{display:flex;flex-wrap:wrap;gap:10px}
+.u-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.u-chips a:hover{border-color:var(--ink)}
+.u-chips a{min-height:40px;font-size:13.5px!important;padding:7px 11px!important;transition:border-color .15s;display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px var(--sans);text-decoration:none}
+.u-skip{position:absolute;z-index:4;right:clamp(16px,4cqw,56px);top:18px;font:500 13.5px var(--sans);color:var(--soft);background:rgba(239,237,231,.8);border-radius:99px;padding:8px 12px;text-decoration:none}
+.u-skip:hover{color:var(--ink)}
+.u.end .u-skip,.u.mid .u-skip{opacity:0;pointer-events:none}
+.u-note{font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:10px}
+/* téléphone (cadre plus haut que large) : le titre en haut, au-dessus de l'anneau ; la fin, en bas */
+@container (max-aspect-ratio:1/1){
+ .u-t1{left:16px;right:16px;top:clamp(16px,5cqh,40px);transform:none;max-width:none}
+ .u-t1 h1{font-size:min(30px,8cqw);max-width:13em}
+ .u-hint{margin-top:10px;flex-direction:row;flex-wrap:wrap;gap:4px 14px}.u-hint span{font-size:0}.u-hint span::after{content:"Faites défiler ↓";font-size:14px}
+ .u-t2{left:16px;right:16px;top:20px;bottom:auto;max-width:none;text-align:left}
+ .u-t2 p,.u-t15 p{display:inline;background:rgba(239,237,231,.88);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:2px 8px;border-radius:6px}
+ .u-t15{white-space:normal;left:16px;right:16px;transform:none;text-align:left}
+ .u-t2 p{font-size:min(24px,6.4cqw)}
+ .u-t3>div{max-width:none}
+ .u-t3{top:0;bottom:0;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:space-between;padding:18px 16px 20px;background:linear-gradient(180deg,#EFEDE7 0,#EFEDE7 30%,rgba(239,237,231,.9) 36%,rgba(239,237,231,0) 44%)}
+ .u-t3 .u-act{justify-content:center}
+ .u-t3 h2{font-size:min(28px,7.4cqw)}
+ .u-t3 p{font-size:15px}
+ .u-skip{top:auto;bottom:14px;right:16px}
+ .u.end .u-skip{display:none}
+}
+/* mouvement réduit, ou sans JavaScript : la dernière image, immobile, avec les métiers ; les textes viennent dessous */
+.u.static .u-walk,html:not(.js) .u-walk{height:auto}
+.u.static .u-stage,html:not(.js) .u-stage{position:relative;top:0;height:auto;overflow:visible;container-type:inline-size}
+.u.static .u-scene,html:not(.js) .u-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
+.u.static .u-tx,html:not(.js) .u-tx{position:relative;inset:auto;transform:none;max-width:none;opacity:1;padding:24px clamp(16px,4vw,56px) 0}
+.u.static .u-t3,html:not(.js) .u-t3{background:none;padding-bottom:40px}
+.u.static .u-t2,.u.static .u-t15,html:not(.js) .u-t15,.u.static .u-hint span,.u.static .u-skip,html:not(.js) .u-t2,html:not(.js) .u-hint span,html:not(.js) .u-skip,html:not(.js) .u-hits{display:none}
+.u.static .u-hits a{pointer-events:auto}
+@media (max-width:700px){.u.static .u-scene,html:not(.js) .u-scene{aspect-ratio:9/13}.u.static .u-chips{display:flex}}
+/* Ce que nous faisons : les deux offres, juste sous l'univers */
+.of{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.of{grid-template-columns:1fr}}
+.of a{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
+.of a:hover{border-color:var(--ink);transform:translateY(-2px)}
+.of .mono{font:500 11px var(--mono);letter-spacing:.14em;color:var(--muted)}
+.of b{font:600 24px/1.1 var(--sans);letter-spacing:-.02em}
+.of p{color:var(--soft);font-size:16px;line-height:1.45}
+.of .pr{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line)}
+.of .pr span{font:600 15px var(--mono)}
+.of .pr i{font-style:normal;font-weight:600;font-size:14.5px;border-bottom:1.5px solid currentColor}
+.of-n{margin-top:18px;color:var(--soft);font-size:15px}

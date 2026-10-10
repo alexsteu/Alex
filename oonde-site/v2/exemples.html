@@ -1,0 +1,157 @@
+<meta charset="utf-8">
+<title>Exemples d’entrées en 3D pour commerces · OONDE</title>
+<meta name="description" content="Choisissez votre métier, restaurant, coiffure, institut, onglerie, boulangerie ou logement : son entrée en 3D s’ouvre avec votre nom sur l’enseigne. Démos de OONDE, de Genève à Montreux.">
+<link rel="canonical" href="https://oonde.ch/exemples">
+<meta property="og:title" content="OONDE · Votre commerce, en 3D, avec votre nom">
+<meta property="og:description" content="Restaurant, coiffure, institut, boulangerie : choisissez votre métier et entrez dans votre site, en faisant défiler.">
+<meta property="og:url" content="https://oonde.ch/exemples">
+<meta property="og:image" content="https://oonde.ch/img/og-e3d.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Démo OONDE : la façade d’un restaurant le soir, son nom sur l’enseigne.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="OONDE">
+<meta name="twitter:card" content="summary_large_image">
+{{FONTS}}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{INC:base.css}}
+{{INC:demo.css}}
+{{INC:e3d.css}}
+/* Les exemples : d'abord on choisit son métier (et son nom), puis une seule entrée s'ouvre, la sienne */
+.pick{padding-top:clamp(36px,6vw,72px)}
+.pick-h{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px 48px;align-items:end;margin-bottom:clamp(24px,3.4vw,40px)}
+.pick-h h1{font:600 clamp(36px,4.6vw,64px)/1.02 var(--sans);letter-spacing:-.03em;margin-top:12px}
+.pick-h p{color:var(--soft);font-size:17px;line-height:1.5;max-width:32em;margin-top:14px}
+.pick-n label{display:block;font:500 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.pick-n input{width:100%;min-height:52px;font:500 18px var(--sans);padding:12px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+.pick-n input:focus{outline:none;border-color:var(--klein);box-shadow:0 0 0 4px rgba(32,56,236,.14)}
+.pick-n small{display:block;margin-top:8px;color:var(--muted);font-size:14px}
+@media (max-width:820px){.pick-h{grid-template-columns:1fr}}
+@media (max-width:560px){.pick .exs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pick .ex-t{padding:10px 11px 12px}.pick .ex-t b{font-size:15px}.pick .ex-t small,.pick .ex-t i{display:none}.pick .ex-tag{font-size:9.5px;padding:4px 7px}}
+.w-cap{align-items:center}.w-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px}.w-cta .btn{min-height:46px;padding:11px 18px;font-size:15px}
+@media (max-width:700px){.w-cap .w-cta{width:100%}.w-cta .btn{flex:1}}
+.e-fold{display:none;align-items:center;gap:8px;width:100%;min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.28);background:rgba(10,12,22,.55);color:#fff;font:500 15px var(--sans);text-align:left;cursor:pointer}
+.e-fold b{font-weight:600}.e-fold i{margin-left:auto;font-style:normal;text-decoration:underline}
+.e-fold{display:flex;max-width:480px;margin-top:6px}
+.e-walk .c1 .w-h{max-width:21ch}.e-try:not(.open){display:none}
+@media (max-width:700px){.e-walk .c1 .w-h{display:none}}
+.e-walk .w-shade{background:linear-gradient(90deg,rgba(8,10,20,.55),rgba(8,10,20,.15) 42%,rgba(8,10,20,0) 62%),linear-gradient(180deg,rgba(10,12,22,.38) 0%,rgba(10,12,22,0) 18%,rgba(10,12,22,0) 55%,rgba(10,12,22,.6) 100%)}
+.close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
+</style>
+
+<a class="skip" href="#choix">Aller au contenu</a>
+<header class="nav">
+ <div class="in">
+  <a class="logo landed" id="navLogo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
+  <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
+  <nav aria-label="Pages" id="navL"><a href="{{EXEMPLES}}" aria-current="page">Exemples</a><a class="opt" href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><a class="opt2" href="{{HOME}}#questions">Questions</a></nav>
+  <a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Connaître mon prix</span><span class="s">WhatsApp</span></a>
+ </div>
+</header>
+
+<main id="top">
+<section class="bg-paper pick" id="choix" data-hero aria-labelledby="h1">
+ <div class="in">
+  <div class="pick-h">
+   <div><p class="mono">L’entrée 3D · six démos</p><h1 id="h1">Quel est votre commerce ?</h1><p>Choisissez votre métier : son entrée s’ouvre, avec votre nom sur l’enseigne. Vous faites défiler, vous passez la porte, et vous arrivez sur le site.</p></div>
+   <div class="pick-n"><label for="pName">Le nom de votre commerce</label><input id="pName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"><small>Facultatif. Il s’affiche tout de suite sur les six enseignes.</small></div>
+  </div>
+  <div class="exs">
+   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
+  </div>
+  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
+ </div>
+</section>
+
+<section id="entree" class="v-demo e-walk" aria-labelledby="h1e">
+ <div class="walk" id="eWalk">
+  <div class="w-stage" id="eStage">
+   <div class="in">
+    <div class="frame w-frame">
+     <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span id="eUrl">votre-commerce.ch · Démo</span></div>
+     <div class="w-view" id="eView" role="group" aria-label="Démo : votre site avec une entrée en 3D">
+      <div class="w-scene">
+       <div class="w-poster"><img id="ePoster" src="img/e3d/restaurant/d/f000.webp" width="1280" height="800" alt="Démo : la façade d'un restaurant le soir, avec son enseigne et sa terrasse" decoding="async" fetchpriority="high"></div>
+       <canvas class="w-cv" id="eCv" aria-hidden="true"></canvas>
+       <div class="e-pins" id="ePins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div>
+       <div class="w-shade"></div>
+       <div class="w-ch c2"><p class="w-eb">02 · BIENVENUE</p><p class="w-h" id="eC2h">Bienvenue chez vous.</p><p class="w-p" id="eC2p"></p></div>
+       <div class="w-ch c3"><p class="w-eb" id="eC3eb">Démo</p><p class="w-h" id="eC3h"></p>
+        <div class="w-btns"><button type="button" class="w-b1" id="eB1" data-book>Réserver</button><button type="button" class="w-b2" id="eB2" data-go="1">Voir les prix</button></div></div>
+       <div class="w-prog" aria-hidden="true"><span data-k="1">01 LA RUE</span><span data-k="2">02 L’ENTRÉE</span><span data-k="3" id="eK3">03 LA SALLE</span><span class="w-pb"><i id="eFill"></i></span></div>
+      </div>
+      <div class="w-ch c1">
+       <p class="w-eb" id="h1e">L’entrée 3D · Démo à essayer</p>
+       <p class="w-h">Votre site s’ouvre sur votre commerce.</p>
+       <div class="e-try">
+        <div><label for="eName">Votre nom, sur l’enseigne</label><input id="eName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+        <div class="e-chips" id="eAct" role="radiogroup" aria-label="Votre métier"></div>
+        <div class="e-sw"><span id="lE3">Couleur <b id="eStyleN"></b></span><div class="swatches" id="eStyle" role="radiogroup" aria-labelledby="lE3"></div></div>
+       </div>
+       <p class="w-hint" aria-hidden="true">FAITES DÉFILER POUR ENTRER ↓</p>
+      </div>
+      <div class="w-bar" id="eBar"><button type="button" class="w-logo" id="eLogo" data-go="0">Votre commerce <small>DÉMO</small></button>
+       <nav aria-label="Menu du site de démonstration" id="eNav"></nav>
+       <div class="w-r"><button type="button" class="w-book" id="eBook" data-book>Réserver</button><span class="w-burger" aria-hidden="true"></span></div></div>
+      <div class="w-site" id="eSite"></div>
+      <div class="w-toast" id="eToast" role="dialog" aria-label="Démo" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="{{WA_IMM}}" target="_blank" rel="noopener">{{WA_ICON}}Je veux cette entrée</a></div>
+     </div>
+    </div>
+    <p class="w-cap"><span><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</span><span class="w-cta"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Connaître mon prix</span></a><a href="#contact">Sauter la démo ↓</a></span></p>
+   </div>
+  </div>
+ </div>
+ <template id="eLodge"><div class="w-top"><div><p class="w-eb">Le logement · Démo</p><p class="w-t">Plain-pied, posé<br>au bord de l’eau.</p>
+   <p class="w-facts"><span><b>4</b>voyageurs</span><span><b>2</b>chambres</span><span><b>62</b>m²</span><span><b>25</b>m² de terrasse</span></p></div>
+  <div class="w-card"><p class="w-k">TARIF (DÉMO)</p><p class="w-v">dès 180.– <small>la nuit</small></p><button type="button" class="w-go" data-book>Réserver en direct</button><p class="w-n">Sans commission · 2 nuits minimum</p></div></div>
+  <div class="w-ph"><figure><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><figcaption>Le salon et la terrasse, côté lac</figcaption></figure>
+  <div class="w-cal" aria-label="Calendrier de démonstration"><p class="w-k">NOVEMBRE 2026 · DISPONIBILITÉS</p><div class="w-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b>{{CAL}}</div><p class="w-n">Dates barrées : déjà réservées sur Booking ou Airbnb.</p></div></div></template>
+</section>
+
+<section class="bg-white" id="contact" aria-labelledby="finalH">
+ <div class="in close one">
+  <div class="final">
+   <h2 id="finalH">Votre commerce, pour de vrai.</h2>
+   <p>Ces démos sont des commerces imaginés. Votre entrée est reconstruite d’après votre vrai lieu : le prix par écrit sous 48 heures, avec une première image de votre façade, offerte. On répond le jour même, 7 jours sur 7.</p>
+   <a class="btn inv" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Connaître mon prix</span></a>
+   <p class="alt"><a href="{{HOME}}#prix">Voir comment ça marche</a><a href="{{VITRINE}}">Un simple site suffit ? La Vitrine</a><a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p>
+   <div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div>
+   <dl>
+    <div><dt>WhatsApp ou téléphone</dt><dd><a href="tel:+41764882710">+41 76 488 27 10</a></dd></div>
+    <div><dt>E-mail</dt><dd><a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a></dd></div>
+    <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">@oonde_studio</a></dd></div>
+   </dl>
+  </div>
+ </div>
+</section>
+</main>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Connaître mon prix</span></a></nav>
+
+<footer><div class="in">
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{EXEMPLES}}">Exemples</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <p class="seo">Sites internet avec entrée en 3D, et sites simples, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
+</div></footer>
+
+<script>
+{{INC:core.js}}
+{{INC:sites.js}}
+
+{{INC:e3d.js}}
+
+/* Le nom tapé au-dessus des exemples va sur les six enseignes, puis sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
+(()=>{const p=$('pName'),e=$('eName');p.value=e.value;
+ /* sur téléphone, le réglage se replie en une ligne : il ne cache plus la façade */
+ const tr=document.querySelector('.e-try'),fb=document.createElement('button');fb.type='button';fb.className='e-fold';fb.setAttribute('aria-expanded','false');tr.before(fb);
+ const lab=d=>{fb.innerHTML=`<b>${esc(d.name||'Votre nom')}</b> · ${esc(E3[d.sc]?E3[d.sc].lab:'')}<i>Modifier</i>`};lab({name:e.value,sc:new URLSearchParams(location.search).get('e')||(()=>{try{return JSON.parse(localStorage.getItem('oonde-e3')||'{}').sc}catch(x){}})()||'restaurant'});
+ document.addEventListener('oonde-e3',ev=>lab(ev.detail));fb.addEventListener('click',()=>{const o=tr.classList.toggle('open');fb.setAttribute('aria-expanded',o);if(o)e.focus({preventScroll:true})});
+ p.addEventListener('input',()=>{e.value=p.value;e.dispatchEvent(new Event('input'))});p.addEventListener('keydown',ev=>{if(ev.key==='Enter')p.blur()});
+ e.addEventListener('input',()=>{if(p.value!==e.value)p.value=e.value});
+ const k=new URLSearchParams(location.search).get('e');if(k&&E3[k]&&!location.hash)addEventListener('load',()=>setTimeout(()=>window.e3go&&e3go(k,!new URLSearchParams(location.search).get('n')),60))})();
+</script>

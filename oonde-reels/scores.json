@@ -1,0 +1,171 @@
+{
+ "01-horaires-google": {
+  "title": "Vos horaires Google en 30 secondes",
+  "round": 1,
+  "scores": {
+   "accroche": 8,
+   "rythme": 7,
+   "clarte": 8,
+   "beaute": 7.5,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 7.6
+  },
+  "verdict": "Tutoriel exact (intitulés vérifiés dans l'aide Google) qui part d'une contradiction : la porte dit fermé, Google dit ouvert. Publiable après votre regard.",
+  "remaining": [
+   "Le statut « Fermé · Ouvre demain à 07:00 » porte la chute mais reste petit (environ 30 px).",
+   "Pendant 2 images, deux titres se superposent à chaque changement d'étape.",
+   "Écran final un peu court pour 12 mots (1,8 s)."
+  ]
+ },
+ "02-test-5-secondes": {
+  "title": "Le test des 5 secondes",
+  "round": 1,
+  "scores": {
+   "accroche": 8,
+   "rythme": 7.5,
+   "clarte": 8.5,
+   "beaute": 7.5,
+   "partage": 7.5,
+   "conformite": 9.5,
+   "global": 8
+  },
+  "verdict": "Le spectateur fait le test lui-même avec un vrai compte à rebours, puis voit le même commerce refait : les trois réponses apparaissent d'un coup. Publiable après votre regard.",
+  "remaining": [
+   "La boucle finale passe par un fondu où deux textes se superposent (fait un peu « vidéo »).",
+   "Le numéro « caché » du site confus est trop petit pour être remarqué."
+  ]
+ },
+ "03-avant-apres-mirabelle": {
+  "title": "Avant / après : Salon Mirabelle",
+  "round": 1,
+  "scores": {
+   "accroche": 7.5,
+   "rythme": 8,
+   "clarte": 7,
+   "beaute": 8,
+   "partage": 7,
+   "conformite": 9,
+   "global": 7.7
+  },
+  "verdict": "Un curseur de comparaison balaie l'ancien site du Salon Mirabelle (démo) et révèle le nouveau, puis la vue partagée avant / après. Publiable après votre regard ; le bénéfice (réserver d'un geste) mériterait d'être écrit en grand.",
+  "remaining": [
+   "Le bouton « Réserver sur WhatsApp » et la bulle restent sous la taille de lecture confortable.",
+   "Le titre de l'après (« Autre site. ») constate sans nommer le gain.",
+   "Environ 0,6 s d'écran presque vide juste avant l'appel à l'action."
+  ]
+ },
+ "04-essayez-votre-nom": {
+  "title": "Tapez le nom de votre commerce",
+  "round": 1,
+  "scores": {
+   "accroche": 7,
+   "rythme": 7.5,
+   "clarte": 7,
+   "beaute": 7.5,
+   "partage": 6.5,
+   "conformite": 9,
+   "global": 7.3
+  },
+  "verdict": "Vraie démonstration de l'outil « Essayez avec votre nom » du site : le nom s'écrit et l'aperçu du site se construit en direct. À garder pour la semaine de mise en ligne du site, car l'accroche invite à essayer l'outil.",
+  "remaining": [
+   "À publier seulement quand le site sera en ligne (sinon le spectateur ne peut pas essayer).",
+   "Vers 1 s, le logo du site est coupé à mi-hauteur par le bandeau.",
+   "L'étiquette « COIFFURE · MORGES » du site est peu lisible sur la photo : à renforcer sur le site lui-même."
+  ]
+ },
+ "05-trouvez-le-numero": {
+  "title": "Trouvez le numéro en 3 secondes",
+  "round": 2,
+  "scores": {
+   "accroche": 8.5,
+   "rythme": 8,
+   "clarte": 7.5,
+   "beaute": 8,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 8
+  },
+  "verdict": "Un jeu : le spectateur cherche le numéro d'un restaurant fictif pendant que le chrono descend, puis on lui montre où il était et le même site refait avec le bouton WhatsApp sous le pouce. Boucle exacte, à revoir pour trouver le numéro soi-même.",
+  "remaining": [
+   "Le site refait affiche une pastille « Appeler » (contact du restaurant fictif, pas d'OONDE) : à valider, sinon on la remplace par « Terrasse ».",
+   "L'étiquette « Il était à l'écran dès 1,2 s » passe un peu vite."
+  ]
+ },
+ "06-carte-en-pdf": {
+  "title": "Votre carte en PDF ?",
+  "round": 2,
+  "scores": {
+   "accroche": 8,
+   "rythme": 8,
+   "clarte": 8,
+   "beaute": 7.5,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 7.9
+  },
+  "verdict": "Pour les restaurants : la carte en PDF qu'on doit zoomer et chercher, puis la même carte en vraie page lisible, avec trois règles courtes. J'ai remplacé « plat du jour » par « plat de saison » pour rester dans ce que nos conditions garantissent.",
+  "remaining": [
+   "À l'écran final, WhatsApp n'apparaît que par son icône : « Écrivez-nous sur WhatsApp » serait plus net.",
+   "À vérifier : que « Maison Vauclaire » ne correspond à aucun restaurant réel."
+  ]
+ },
+ "07-9-gestes-ou-2": {
+  "title": "Prendre rendez-vous : 9 gestes ou 2 ?",
+  "round": 2,
+  "scores": {
+   "accroche": 8,
+   "rythme": 7.5,
+   "clarte": 8,
+   "beaute": 7.5,
+   "partage": 7.5,
+   "conformite": 8,
+   "global": 7.7
+  },
+  "verdict": "Deux téléphones côte à côte : sur l'ancien site du Salon Mirabelle (démo), on compte 9 gestes pour prendre rendez-vous ; sur le nouveau, 2 avec WhatsApp. À vérifier avant publication : sur un vrai iPhone, le lien WhatsApp doit ouvrir directement la discussion, sinon on passe à « 9 gestes ou 3 ? ».",
+  "remaining": [
+   "Bloquant : tester le lien WhatsApp des sites OONDE sur un iPhone, depuis Safari (2 ou 3 gestes).",
+   "L'accroche reste immobile 1,5 s avant le premier geste.",
+   "Dans le PDF zoomé, un badge recouvre un mot."
+  ]
+ },
+ "08-3-details-qui-datent": {
+  "title": "3 détails qui datent votre site",
+  "round": 2,
+  "scores": {
+   "accroche": 8,
+   "rythme": 7.5,
+   "clarte": 8,
+   "beaute": 8,
+   "partage": 7.5,
+   "conformite": 9,
+   "global": 7.9
+  },
+  "verdict": "Trois mini avant / après liés par le même curseur : « Bienvenue » devient le nom et le métier, le PDF devient une liste, le numéro en image devient un bouton WhatsApp. La question de fin « Et le vôtre : 1, 2 ou 3 ? » invite à commenter.",
+  "remaining": [
+   "La question de fin remplace celle prévue (« Lequel a encore le vôtre ? ») : à valider.",
+   "L'étiquette du détail 3 est un peu petite.",
+   "Un blanc bref entre le bouton WhatsApp et les horaires (0,4 s)."
+  ]
+ },
+ "09-foule-geneve": {
+  "title": "La file jusqu’au tram (réel + motion design)",
+  "round": 3,
+  "scores": {
+   "accroche": 8.5,
+   "rythme": 8,
+   "clarte": 8.4,
+   "beaute": 8.1,
+   "partage": 8.2,
+   "conformite": 9.3,
+   "global": 8.4
+  },
+  "verdict": "Une file délirante devant une boulangerie fictive de Genève, un rembobinage vers la rue vide et son virevoltant, le site qui se monte, puis « Bon. On exagère un peu. ». Note des juges sur la v4 (la v1 avait 6,4) ; la version livrée (v5) ajoute leurs quatre dernières retouches.",
+  "remaining": [
+   "À décider par Alexandre avant de publier : l’étiquette IA d’Instagram et TikTok (images générées, certificat « Anthropic Claude » dans chaque fichier) et l’exception à la règle « pas de visages générés ».",
+   "Les plans A et B sont deux photos différentes : une image B′ retouchée depuis A demande de nouvelles images IA.",
+   "Le son de foule est synthétique : 20 s de vraie rue genevoise enregistrées à l’iPhone le régleraient.",
+   "Variante d’essai « Pour du pain. » à publier en Trial Reel Instagram uniquement."
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+  "duration": 14.6,
+  "bpm": 100,
+  "mood": "bright",
+  "beat_from": 2.95,
+  "beat_until": 11.55,
+  "seed": 4,
+  "events": [
+    {"t": 0.50, "type": "type", "n": 15, "span": 1.80},
+    {"t": 0.55, "type": "pop"},
+    {"t": 2.95, "type": "whoosh"},
+    {"t": 3.85, "type": "tick"},
+    {"t": 3.88, "type": "droplet"},
+    {"t": 4.75, "type": "whoosh", "gain": 0.8},
+    {"t": 5.45, "type": "tick"},
+    {"t": 5.82, "type": "tick"},
+    {"t": 6.50, "type": "droplet"},
+    {"t": 7.05, "type": "whoosh", "gain": 0.8},
+    {"t": 7.85, "type": "tick"},
+    {"t": 8.50, "type": "tick"},
+    {"t": 9.00, "type": "whoosh"},
+    {"t": 9.48, "type": "tick", "gain": 0.55},
+    {"t": 9.70, "type": "tick", "gain": 0.55},
+    {"t": 9.92, "type": "tick", "gain": 0.55},
+    {"t": 10.14, "type": "tick", "gain": 0.55},
+    {"t": 10.36, "type": "chime"},
+    {"t": 11.55, "type": "swipe"},
+    {"t": 11.85, "type": "end"},
+    {"t": 14.40, "type": "pop", "gain": 0.6}
+  ]
+}

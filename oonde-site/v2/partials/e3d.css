@@ -1,0 +1,104 @@
+/* L'entrée 3D en ouverture : reprend le cadre de la démo (demo.css) et y ajoute l'essai, les deux enseignes posées
+   en perspective sur les images, et le site du commerce dans sa couleur. */
+.e-walk{padding:0}
+.e-walk .w-shade{background:linear-gradient(180deg,rgba(10,12,22,.42) 0%,rgba(10,12,22,0) 16%,rgba(10,12,22,0) 42%,rgba(10,12,22,.78) 100%)}
+.e-pins{position:absolute;left:0;top:0;width:1000px;pointer-events:none;z-index:1;transform-origin:0 0}
+.w-scene>.e-pins{width:100%;height:100%}
+.e-pins[hidden]{display:none}
+.e-pins>div{position:absolute;left:0;top:0;width:1000px;transform-origin:0 0;display:flex;align-items:center;justify-content:center;opacity:0;white-space:nowrap;overflow:hidden;backface-visibility:hidden}
+.e-pins span{line-height:1;display:block}
+/* l'enseigne de la façade : un bandeau peint de la couleur choisie, éclairé par-dessus */
+.e-sign{height:111px;background:linear-gradient(180deg,rgba(255,236,210,.14),rgba(0,0,0,.12) 35%,rgba(0,0,0,.5)),var(--c);color:var(--ct);box-shadow:inset 0 0 0 3px rgba(0,0,0,.35),inset 0 -12px 20px rgba(0,0,0,.3)}
+.e-sign span{opacity:.94;text-shadow:0 1px 0 rgba(0,0,0,.35),0 0 18px rgba(255,240,220,.22)}
+[data-sf=serif] .e-sign span{font-family:var(--serif);font-weight:400}
+[data-sf=sans] .e-sign span{font-family:var(--sans);font-weight:600;letter-spacing:.14em}
+/* le nom au mur du fond : en néon, ou peint */
+.e-wall span{font-family:var(--serif);font-weight:400}
+[data-wf=neon] .e-wall span{font-style:italic;color:#fff;text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 30px var(--c),0 0 60px var(--c)}
+[data-wf=paint] .e-wall span{color:var(--c);color:color-mix(in srgb,var(--c) 52%,#1a0d06);opacity:.92;text-shadow:0 1px 0 rgba(255,235,210,.14)}
+/* le premier écran : le titre de la page et l'essai, posés sur la rue */
+.e-walk .c1{bottom:64px}
+.e-walk .c1 .w-eb{font-size:11.5px;opacity:.9}
+.e-walk .c1 .w-h{font-size:clamp(32px,3.9cqw,52px);max-width:15ch;line-height:1.02;margin-top:10px}
+.e-try{margin-top:18px;display:grid;gap:12px;max-width:500px;background:rgba(12,14,24,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px}
+.e-try label,.e-sw>span{font:600 14px var(--sans)}
+.e-try label{display:block;margin-bottom:6px}
+#eName{width:100%;min-height:50px;font:500 18px var(--sans);border-radius:10px;border:1.5px solid rgba(255,255,255,.75);background:rgba(255,255,255,.1);color:#fff;padding:10px 14px}
+#eName::placeholder{color:rgba(255,255,255,.62)}
+#eName:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.e-chips{display:flex;flex-wrap:wrap;gap:6px}
+.e-chips button{min-height:40px;padding:8px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.4);background:none;color:#fff;font:500 14px var(--sans);cursor:pointer;transition:background-color .15s,color .15s}
+.e-chips button:hover{border-color:#fff}
+.e-chips button[aria-checked=true]{background:#fff;color:var(--night);border-color:#fff}
+.e-sw{display:flex;align-items:center;gap:14px}
+.e-sw[hidden]{display:none}
+.e-sw b{font-weight:500;opacity:.8;margin-left:4px}
+.e-sw .swatches{gap:8px}
+.e-sw .swatches button{width:34px;height:34px;border-color:rgba(255,255,255,.9);box-shadow:none}
+.e-sw .swatches button[aria-checked=true]{box-shadow:0 0 0 2px var(--night),0 0 0 4px #fff}
+.e-walk .c1 .w-hint{margin-top:16px}
+/* le site du commerce, dans sa couleur */
+.e-walk .w-bar.solid .w-book,.e-walk .w-go{background:var(--c);color:var(--ct)}
+.e-walk .w-b1{background:var(--c);color:var(--ct)}
+.e-sub{font:400 16px/1.45 var(--sans);color:#4B4F5A;margin-top:10px;max-width:30em}
+.e-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px;font:400 14px/1.45 var(--sans);color:#3A3F47;max-width:560px}
+.e-more .w-k,.e-walk .w-card .w-k{margin-bottom:4px;color:#575B66}
+.e-row{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid #EEE7DC;font:400 14.5px var(--sans)}
+.e-row b{font-weight:600}
+.e-walk .w-card .w-k{margin-bottom:4px}
+.e-walk .w-t{font-size:clamp(34px,4.4cqw,48px)}
+.e-walk .w-ph{margin-top:20px}
+.e-ph{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.e-ph img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:6px;display:block}
+@container (max-width:640px){
+ .e-walk .c1{bottom:52px}
+ .e-walk .c1 .w-h{font-size:min(28px,7.6cqw);max-width:none;margin-top:0}
+ .e-walk .c1 .w-eb{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .e-try{margin-top:12px;padding:12px;gap:10px;border-radius:12px}
+ .e-try label{font-size:13px;margin-bottom:4px}
+ #eName{min-height:46px;font-size:17px}
+ .e-chips{gap:5px}.e-chips button{min-height:36px;padding:6px 10px;font-size:13px}
+ .e-sw .swatches button{width:30px;height:30px}
+ .e-walk .c1 .w-hint{margin-top:10px}
+ .e-more{grid-template-columns:1fr;gap:10px;margin-top:12px}.e-more>div:last-child{display:none}
+ .e-sub{font-size:14.5px}
+ .e-ph{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}.e-ph img:last-child{display:none}
+}
+/* sans JavaScript ou mouvement réduit : l'image, puis l'essai et le site, l'un sous l'autre */
+html:not(.js) .e-try{display:none}
+.e-walk .w-view>.c1{position:relative;left:auto;right:auto;bottom:auto;padding:22px 34px;background:var(--night)}
+@media (prefers-reduced-motion:reduce){
+ .js .e-walk .w-cv{display:block}
+ .js .e-walk .live .w-poster{visibility:hidden}
+ .js .e-walk .w-ch.c3,.js .e-walk .w-prog{display:none}
+ .js .e-walk .w-view>.c1{display:block}
+}
+@media (prefers-reduced-motion:no-preference){
+ .js .e-walk .w-view>.c1{position:absolute;left:34px;right:34px;bottom:64px;padding:0;background:none}
+ @container (max-width:640px){.js .e-walk .w-view>.c1{left:16px;right:16px;bottom:52px}}
+}
+@media (max-width:760px){.e-walk .w-view>.c1{padding:18px 16px}}
+/* Les exemples */
+.exs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.exs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.exs{grid-template-columns:1fr}}
+.ex{position:relative;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--night);color:#fff;text-decoration:none;box-shadow:0 30px 60px -44px rgba(17,19,24,.55);transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.ex:hover{transform:translateY(-3px)}
+.ex-img{position:relative;aspect-ratio:16/10;overflow:hidden}
+.ex-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ex-img .e-pins{height:625px}
+.ex-tag{position:absolute;left:10px;top:10px;font:500 10.5px var(--mono);letter-spacing:.12em;background:rgba(10,12,22,.62);border-radius:99px;padding:5px 9px}
+.ex-t{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px 16px}
+.ex-t b{display:block;font:600 17px var(--sans);letter-spacing:-.01em}
+.ex-t small{display:block;font:400 14px var(--sans);opacity:.72;margin-top:2px}
+.ex-t i{font-style:normal;font:600 14px var(--sans);white-space:nowrap;border-bottom:1.5px solid currentColor}
+/* Écrans bas (portable 13 pouces, petit téléphone) : l'essai garde sa place sous la barre du site */
+.w-bar .w-book{white-space:nowrap}
+@media (max-height:840px){
+ .e-walk .c1 .w-h{font-size:clamp(28px,3.1cqw,40px);max-width:20ch}
+ .e-walk .c1 .w-hint{display:none}
+ .e-try{gap:9px;padding:12px 14px;margin-top:12px}
+ #eName{min-height:44px}
+}
+@media (max-height:700px){.e-walk .c1 .w-h{font-size:min(28px,7.6cqw)}.e-walk .c1 .w-eb,.e-try label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@container (max-width:400px){.e-walk .w-burger{display:none}.e-walk .w-bar .w-logo{font-size:22px}}
