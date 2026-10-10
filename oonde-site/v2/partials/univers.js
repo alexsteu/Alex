@@ -37,7 +37,7 @@
  const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
  function ui(){if(!LIVE){u.classList.add('static','end');return}t1.style.opacity=clamp((.1-P)/.07,0,1);t1.style.visibility=P>.1?'hidden':'';
   const sl=(el,a,b,c,d)=>{el.style.opacity=fade(a,b,c,d);el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*12}px`};
-  sl(t15,.13,.17,.27,.31);sl(t2,.35,.4,.58,.63);
+  sl(t15,.12,.15,.31,.34);sl(t2,.35,.4,.58,.63);
   const e=clamp((P-.86)/.06,0,1);t3.style.opacity=e;t3.style.transform=`translateY(${(1-e)*16}px)`;t3.inert=e<.5;u.classList.toggle('end',e>.5)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(){raf=0;if(!LIVE){draw(1);return}const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);

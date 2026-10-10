@@ -32,7 +32,9 @@
 @media (max-width:560px){.pick .exs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pick .ex-t{padding:10px 11px 12px}.pick .ex-t b{font-size:15px}.pick .ex-t small,.pick .ex-t i{display:none}.pick .ex-tag{font-size:9.5px;padding:4px 7px}}
 .w-cap{align-items:center}.w-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px}.w-cta .btn{min-height:46px;padding:11px 18px;font-size:15px}
 @media (max-width:700px){.w-cap .w-cta{width:100%}.w-cta .btn{flex:1}}
-@media (max-width:700px){.e-walk .c1 .w-h{display:none}}
+.e-fold{display:none;align-items:center;gap:8px;width:100%;min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.28);background:rgba(10,12,22,.55);color:#fff;font:500 15px var(--sans);text-align:left;cursor:pointer}
+.e-fold b{font-weight:600}.e-fold i{margin-left:auto;font-style:normal;text-decoration:underline}
+@media (max-width:700px){.e-walk .c1 .w-h{display:none}.e-fold{display:flex}.e-try:not(.open){display:none}}
 .close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
 </style>
 
@@ -142,6 +144,10 @@
 
 /* Le nom tapé au-dessus des exemples va sur les six enseignes, puis sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
 (()=>{const p=$('pName'),e=$('eName');p.value=e.value;
+ /* sur téléphone, le réglage se replie en une ligne : il ne cache plus la façade */
+ const tr=document.querySelector('.e-try'),fb=document.createElement('button');fb.type='button';fb.className='e-fold';fb.setAttribute('aria-expanded','false');tr.before(fb);
+ const lab=d=>{fb.innerHTML=`<b>${esc(d.name||'Votre nom')}</b> · ${esc(E3[d.sc]?E3[d.sc].lab:'')}<i>Modifier</i>`};lab({name:e.value,sc:new URLSearchParams(location.search).get('e')||(()=>{try{return JSON.parse(localStorage.getItem('oonde-e3')||'{}').sc}catch(x){}})()||'restaurant'});
+ document.addEventListener('oonde-e3',ev=>lab(ev.detail));fb.addEventListener('click',()=>{const o=tr.classList.toggle('open');fb.setAttribute('aria-expanded',o);if(o)e.focus({preventScroll:true})});
  p.addEventListener('input',()=>{e.value=p.value;e.dispatchEvent(new Event('input'))});p.addEventListener('keydown',ev=>{if(ev.key==='Enter')p.blur()});
  e.addEventListener('input',()=>{if(p.value!==e.value)p.value=e.value});
  const k=new URLSearchParams(location.search).get('e');if(k&&E3[k]&&!location.hash)addEventListener('load',()=>setTimeout(()=>window.e3go&&e3go(k,!new URLSearchParams(location.search).get('n')),60))})();

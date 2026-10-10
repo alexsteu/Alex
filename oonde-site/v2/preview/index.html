@@ -292,9 +292,10 @@ footer .seo{max-width:62em;font-size:13.5px}
 .u-hint a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;align-self:flex-start;pointer-events:auto}
 .u-t15{left:50%;top:clamp(20px,7cqh,72px);transform:translateX(-50%);text-align:center;opacity:0;white-space:nowrap}
 .u-t15 p,.u-t2 p{font:600 clamp(22px,2.4cqw,34px)/1.12 var(--sans);letter-spacing:-.02em}
+.u-t15 p{background:rgba(239,237,231,.88);padding:6px 14px;border-radius:10px}
 .u-t2{right:clamp(16px,4cqw,56px);bottom:clamp(20px,6cqh,64px);max-width:min(34cqw,420px);text-align:right;opacity:0}
 .u-t3{left:0;right:0;bottom:0;padding:clamp(40px,10cqh,96px) clamp(16px,4cqw,56px) clamp(18px,4cqh,36px);opacity:0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;}
-.u-t3>div{max-width:min(46cqw,640px)}
+.u-t3>div{max-width:min(38cqw,560px)}
 .u-t3 h2{font:600 clamp(26px,2.8cqw,40px)/1.05 var(--sans);letter-spacing:-.025em}
 .u-t3 p{margin-top:8px;font:400 16px/1.45 var(--sans);color:var(--soft);max-width:34em}
 .u-t3 .u-act{display:flex;flex-wrap:wrap;gap:10px}
@@ -309,8 +310,8 @@ footer .seo{max-width:62em;font-size:13.5px}
 @container (max-aspect-ratio:1/1){
  .u-t1{left:16px;right:16px;top:clamp(16px,5cqh,40px);transform:none;max-width:none}
  .u-t1 h1{font-size:min(30px,8cqw);max-width:13em}
- .u-hint{margin-top:10px}.u-hint span{display:none}
- .u-t2{left:16px;right:16px;top:auto;bottom:22px;max-width:none;text-align:left}
+ .u-hint{margin-top:10px;flex-direction:row;flex-wrap:wrap;gap:4px 14px}.u-hint span{font-size:0}.u-hint span::after{content:"Faites défiler ↓";font-size:14px}
+ .u-t2{left:16px;right:16px;top:20px;bottom:auto;max-width:none;text-align:left}
  .u-t2 p,.u-t15 p{display:inline;background:rgba(239,237,231,.88);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:2px 8px;border-radius:6px}
  .u-t15{white-space:normal;left:16px;right:16px;transform:none;text-align:left}
  .u-t2 p{font-size:min(24px,6.4cqw)}
@@ -728,7 +729,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
  function ui(){if(!LIVE){u.classList.add('static','end');return}t1.style.opacity=clamp((.1-P)/.07,0,1);t1.style.visibility=P>.1?'hidden':'';
   const sl=(el,a,b,c,d)=>{el.style.opacity=fade(a,b,c,d);el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*12}px`};
-  sl(t15,.13,.17,.27,.31);sl(t2,.35,.4,.58,.63);
+  sl(t15,.12,.15,.31,.34);sl(t2,.35,.4,.58,.63);
   const e=clamp((P-.86)/.06,0,1);t3.style.opacity=e;t3.style.transform=`translateY(${(1-e)*16}px)`;t3.inert=e<.5;u.classList.toggle('end',e>.5)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(){raf=0;if(!LIVE){draw(1);return}const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);

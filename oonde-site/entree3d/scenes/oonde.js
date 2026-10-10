@@ -37,7 +37,12 @@ export default async function ({ THREE, kit, scene, portrait }) {
   // les maquettes : carton gris, façade en plâtre blanc, menuiseries en chêne clair, socle blanc
   const plaster = kit.std(0xf3f1eb, { r: .9 }), card = kit.std(0xa7a297, { r: .95 }), board = kit.std(0xfbfaf7, { r: .85 });
   const oak = kit.pbr('wood_floor', { s: .6, color: 0xd9bf98, roughness: .6, env: .5 });
-  const frost = kit.std(0x23262d, { r: .05, m: .2, e: 0xffa25a, ei: .07, env: 2.2 });   // la vitrine : verre teinté, la salle allumée derrière
+  // la vitrine : un verre sombre, et derrière, la salle allumée (une lueur chaude qui monte du bas, 2700 K)
+  const cvs = document.createElement('canvas'); cvs.width = 64; cvs.height = 128; const g2 = cvs.getContext('2d');
+  const gr = g2.createLinearGradient(0, 128, 0, 0); gr.addColorStop(0, '#ffcf8f'); gr.addColorStop(.45, '#e9964f'); gr.addColorStop(1, '#3a2312');
+  g2.fillStyle = gr; g2.fillRect(0, 0, 64, 128);
+  const glowMap = new THREE.CanvasTexture(cvs); glowMap.colorSpace = THREE.SRGBColorSpace;
+  const frost = new THREE.MeshStandardMaterial({ color: 0x15161a, roughness: .04, metalness: .1, emissive: 0xffffff, emissiveMap: glowMap, emissiveIntensity: .95, envMapIntensity: 1.8 });
   const glow = kit.std(0xfff1dc, { r: .4, e: 0xffc788, ei: 1.6 });
   const paperSign = kit.std(0xfdfcf8, { r: .88 });
   const kinds = [
@@ -77,7 +82,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
     const door = (x, w = .2, h = .5) => { kit.box(w + .03, h + .02, .012, plaster, x, h / 2 + .01, f + .002, { parent: b }); kit.box(w, h, .016, oak, x, h / 2, f + .004, { parent: b }); };
     const win = (x, y, w, h) => { kit.box(w + .03, h + .03, .01, accM, x, y, f + .001, { parent: b }); kit.box(w, h, .014, frost, x, y, f + .004, { parent: b });
       if (w > .3) kit.box(.008, h, .006, accM, x, y, f + .012, { parent: b }); kit.box(w, .008, .006, accM, x, y - h * .18, f + .012, { parent: b }); };
-    const lamp = x => { kit.box(.016, .03, .03, accM, x, .62, f + .012, { parent: b }); kit.box(.034, .05, .034, glow, x, .6, f + .03, { parent: b }); };
+    const lamp = x => { kit.box(.016, .03, .03, accM, x, .62, f + .012, { parent: b }); kit.box(.034, .05, .034, glow, x, .6, f + .03, { parent: b });
+      const pl = new THREE.PointLight(0xffb36a, .7, .7, 2); pl.position.set(x, .55, f + .08); b.add(pl); };
     const awning = (x, w) => { const a = kit.box(w, .012, .14, accM, x, sy - .16, f + .07, { parent: b }); a.rotation.x = .38; };
     if (K.id === 'restaurant') {
       win(-.17, .36, .52, .44); door(.34); awning(-.17, .6); lamp(.34 + .15);
@@ -106,20 +112,20 @@ export default async function ({ THREE, kit, scene, portrait }) {
       lamp(-.17);
     }
     b.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    const pop = .41 + i * .034;
+    const pop = .335 + i * .03;
     facades.push({ root, hinge, local, world, pop, r: R });
     pins.push({ id: K.id, corners: world });
   });
 
   // la lumière d'une table d'architecte : une grande source douce au-dessus, un peu en arrière, et le ciel du studio
-  const sun = new THREE.DirectionalLight(0xffe4c4, 3.1); sun.position.set(-8, 5.2, 1); sun.target.position.set(0, 0, -2.5);
+  const sun = new THREE.DirectionalLight(0xffd3a1, 3.4); sun.position.set(-9, 3.6, .5); sun.target.position.set(0, 0, -2.5);
   sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096); Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 40 });
   sun.shadow.bias = -.0003; sun.shadow.normalBias = .02; sun.shadow.radius = 6; scene.add(sun, sun.target);
-  scene.add(new THREE.HemisphereLight(0xf4f2ff, 0xe8dccb, .62));
+  scene.add(new THREE.HemisphereLight(0xdfe7ff, 0xe8dccb, .55));
   const soft = new THREE.RectAreaLight(0xfff3e4, 1.2, 8, 6); soft.position.set(0, 7, -2); soft.lookAt(0, 0, -2.6); scene.add(soft);
 
   // l'onde : un front qui part du point d'impact, se soulève en relief et s'amortit ; derrière lui, des sillons fins
-  const P_IMPACT = portrait ? .2 : .2, SPEED = 14;
+  const P_IMPACT = portrait ? .2 : .2, SPEED = 20;
   function wave(r, p) {
     const t = p - P_IMPACT; if (t <= 0) return 0;
     const front = t * SPEED, damp = 1 / (1 + .35 * r);
@@ -147,8 +153,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .31, pos: [0, 1.5, -.35], tgt: [0, .5, -3.6], fov: 60 },
     { p: .44, pos: [.4, 4.2, -.8], tgt: [0, 0, -3.1], fov: 66 },
     { p: .62, pos: [1.9, 3.7, -.6], tgt: [0, .3, -3.6] },
-    { p: .8, pos: [.5, 2.6, -1.4], tgt: [0, .6, -5.4], fov: 66 },
-    { p: 1, pos: [0, 2.1, -1.55], tgt: [0, .42, -6.0], fov: 66 },
+    { p: .8, pos: [.6, 3.2, .4], tgt: [0, .2, -5.3], fov: 62 },
+    { p: 1, pos: [0, 3.0, 1.5], tgt: [0, .05, -5.4], fov: 60 },
   ] : [
     { p: 0, pos: [0, 1.55, 8.6], tgt: [0, 1.55, 0], fov: 30 },
     { p: .1, pos: [0, 1.55, 7.4], tgt: [0, 1.55, 0], fov: 32 },
