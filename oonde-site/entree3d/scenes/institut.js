@@ -1,7 +1,10 @@
 // Institut de soins : une cabine claire et chaude, enduit à la chaux, deux niches en arc éclairées, lit de soin, fauteuil, bougies.
 import { street, wallPin } from '../kit/common.js';
 export default async function ({ THREE, kit, scene, portrait }) {
-  const shop = street(THREE, kit, scene, { shop: { stone: 'plastered_wall', stoneTint: 0xe9dccd, wall: 0xeedfd2, shutter: 0x8a7a6c, base: 0xe3d6c8, frame: 0x2a2420, seed: 4 }, leftWall: 0xd3c7b8, rightWall: 0xe8d6c4, lampX: 5.4 });
+  // la fin d'après-midi : enduit à la chaux, vitrines et porte en arcades, le soleil bas qui dore la façade
+  const shop = street(THREE, kit, scene, { time: 'golden', lampX: 5.6, road: 'concrete_pavement',
+    shop: { facade: 'arch', signStyle: 'none', signW: 3.6, signH: .42, signY: 3.72, stone: 'plastered_wall', stoneTint: 0xe9dccd, wall: 0xeedfd2, plaster: 'painted_plaster_wall', shutter: 0x9a8a76, base: 0xd9c8b6, frame: 0x3a2e26, lamps: false, mullion: false },
+    leftWall: 0xd3c7b8, rightWall: 0xe8d6c4, neighbours: { left: { shutter: 0x7d6e60 }, right: { shutter: 0x8f9a8a } } });
   const D = 6.2;
   const R = kit.room(scene, { d: D,
     floor: kit.pbr('wood_floor', { s: 2, roughness: .7, color: 0xf3e7d6 }),
@@ -40,16 +43,28 @@ export default async function ({ THREE, kit, scene, portrait }) {
   for (const x of [-1.3, 1.3]) { const L = new THREE.PointLight(0xffc68f, 1.2, 4, 2); L.position.set(x, 2.5, -D + .6); g.add(L); }
   const cl = new THREE.PointLight(0xff9c50, .5, 2, 2); cl.position.set(-.4, .9, -D + .5); g.add(cl);
   const wall = wallPin(THREE, 2.25, 2.9, .5, -D + .01);
-  // dehors : deux pots et une lanterne
-  for (const x of [-1.25, 1.25]) { kit.model('planter_pot_clay', { pos: [x, .14, .55], h: .5, parent: scene }); kit.model('calathea_orbifolia_01', { pos: [x, .57, .55], h: .7, parent: scene }); }
+  // dehors : deux grandes jarres, des plantes, une lanterne posée au sol
+  for (const x of [-1.3, 1.3]) { kit.model('planter_pot_clay', { pos: [x, .14, .55], h: .62, parent: scene }); kit.model('pachira_aquatica_01', { pos: [x, .7, .55], h: 1.15, parent: scene }); }
+  kit.model('Lantern_01', { pos: [-2.4, .14, .5], h: .45, parent: scene });
 
-  const path = kit.entryPath(portrait, portrait ? [
+  // la caméra glisse bas, au ras des jarres, et se relève doucement en arrivant à la porte
+  const path = portrait ? [
+    { p: 0, pos: [.6, .75, 11.5], tgt: [0, 2.6, 0], fov: 58 },
+    { p: .2, pos: [.4, 1.0, 8.0], tgt: [0, 2.4, 0] },
+    { p: .36, pos: [.15, 1.45, 4.6], tgt: [0, 1.9, -1] },
+    { p: .48, pos: [0, 1.58, 2.0], tgt: [0, 1.6, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.2, 1.58, -0.8], tgt: [0, 1.65, -D] },
     { p: 1, pos: [0.4, 1.6, -0.6], tgt: [-0.1, 1.65, -D], fov: 66 },
   ] : [
+    { p: 0, pos: [.8, .8, 11.8], tgt: [0, 2.9, 0], fov: 40 },
+    { p: .2, pos: [.5, 1.05, 7.8], tgt: [0, 2.6, 0] },
+    { p: .36, pos: [.15, 1.45, 4.3], tgt: [0, 2.0, -1] },
+    { p: .48, pos: [0, 1.58, 1.9], tgt: [0, 1.65, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.3, 1.58, -1.0], tgt: [0, 1.65, -D] },
     { p: 1, pos: [0.6, 1.6, -0.8], tgt: [-0.15, 1.62, -D], fov: 54 },
-  ]);
+  ];
   return { path, fov: 46, bloom: [.2, .45, 1.15], exposure: 1.3,
     pins: [{ id: 'sign', corners: shop.sign }, { id: 'wall', corners: wall }],
     after() { kit.dimEnv(g, .25, .3); },

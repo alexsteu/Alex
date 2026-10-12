@@ -1,7 +1,13 @@
 // Boulangerie : carrelage, étagères de pains, vitrine réfrigérée de gâteaux, caisse, paniers, lumière dorée.
 import { street, wallPin } from '../kit/common.js';
 export default async function ({ THREE, kit, scene, portrait }) {
-  const shop = street(THREE, kit, scene, { shop: { stone: 'large_sandstone_blocks', wall: 0xeee2c8, shutter: 0x4d5f6e, base: 0x5a3b2a, frame: 0x2a1d16, seed: 8 }, leftWall: 0xdcd3c3, rightWall: 0xe2cfb4, lampX: 5.4 });
+  // le petit matin : devanture en bois peint bordeaux, filets dorés, petits carreaux ; le soleil se lève au bout de la rue
+  const shop = street(THREE, kit, scene, { time: 'dawn', lampX: -5.6, road: 'cobblestone_floor_08',
+    shop: { facade: 'wood', paint: 0x5a1c22, trim: 0xc9a25e, signStyle: 'fascia', signW: 5.4, signH: .6, grid: [4, 3], wall: 0xf2e6cf, shutter: 0x7a3b33, base: 0x5a1c22, frame: 0x3a1215, lamps: false },
+    leftWall: 0xe6d6bd, rightWall: 0xd9cdb8, neighbours: { left: { shutter: 0x55606a }, right: { shutter: 0x6b7a63 } } });
+  // une cagette et un panier de croissants sur le trottoir
+  kit.model('wooden_crate_01', { pos: [-2.6, .14, .7], ry: .1, h: .42, parent: scene }); kit.model('wicker_basket_02', { pos: [-2.6, .56, .7], h: .3, parent: scene });
+  for (let k = 0; k < 3; k++) kit.model('croissant', { pos: [-2.68 + k * .08, .86, .7], ry: k * 2, h: .06, parent: scene });
   const D = 6.2;
   const R = kit.room(scene, { d: D,
     floor: kit.pbr('interior_tiles', { s: 1.4, roughness: .45, env: .7 }),
@@ -33,17 +39,31 @@ export default async function ({ THREE, kit, scene, portrait }) {
   kit.panel(g, 0, 3.13, -1.8, 1.6, .5, 12, 0xffe6c4);
   kit.panel(g, 0, 3.13, -5.3, 2.4, .4, 9, 0xffe0b8);
   const wall = wallPin(THREE, 2.55, 2.4, .5, -D + .01);
-  // dehors : l'ardoise et des caisses de fleurs
-  kit.model('standing_chalkboard_01', { pos: [1.2, .14, 1.0], ry: -.35, h: 1.0, parent: scene });
-  for (const x of [-4.1, 4.1]) kit.model('planter_box_01', { pos: [x, .14, .55], h: .7, parent: scene });
+  // dehors : l'ardoise et une caisse de fleurs
+  kit.model('standing_chalkboard_01', { pos: [1.3, .14, 1.0], ry: -.35, h: 1.0, parent: scene });
+  kit.model('planter_box_01', { pos: [4.1, .14, .55], h: .7, parent: scene });
+  // le soleil du matin entre par la vitrine et dessine les carreaux sur le sol
+  const morning = new THREE.DirectionalLight(0xffd2a0, 2.2); morning.position.set(6, 4, 6); morning.target.position.set(-1, 0, -3); morning.castShadow = true;
+  morning.shadow.mapSize.set(2048, 2048); Object.assign(morning.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, far: 30 }); morning.shadow.bias = -.0005; scene.add(morning, morning.target);
 
-  const path = kit.entryPath(portrait, portrait ? [
+  // la caméra longe le trottoir depuis la droite, comme un passant, puis tourne vers la porte
+  const path = portrait ? [
+    { p: 0, pos: [6.2, 1.65, 6.4], tgt: [1.5, 2.4, 0], fov: 60 },
+    { p: .2, pos: [3.4, 1.62, 5.6], tgt: [.4, 2.3, 0] },
+    { p: .36, pos: [.9, 1.6, 4.4], tgt: [0, 1.9, -1] },
+    { p: .48, pos: [.15, 1.58, 2.0], tgt: [0, 1.6, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.3, 1.6, -0.9], tgt: [0, 1.55, -D] },
     { p: 1, pos: [0.6, 1.62, -0.8], tgt: [-0.1, 1.55, -D], fov: 66 },
   ] : [
+    { p: 0, pos: [7.4, 1.7, 6.8], tgt: [2.2, 2.4, 0], fov: 44 },
+    { p: .2, pos: [4.2, 1.65, 5.6], tgt: [.6, 2.3, 0] },
+    { p: .36, pos: [1.1, 1.6, 4.0], tgt: [0, 2.0, -1] },
+    { p: .48, pos: [.15, 1.58, 1.9], tgt: [0, 1.65, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.4, 1.6, -1.0], tgt: [0, 1.6, -D] },
     { p: 1, pos: [0.9, 1.64, -0.9], tgt: [-0.2, 1.55, -D], fov: 54 },
-  ]);
+  ];
   return { path, fov: 46, bloom: [.22, .45, 1.1], exposure: 1.25,
     pins: [{ id: 'sign', corners: shop.sign }, { id: 'wall', corners: wall }],
     after() { kit.dimEnv(g, .3, .3); },

@@ -12,9 +12,13 @@
 .e-sign span{opacity:.94;text-shadow:0 1px 0 rgba(0,0,0,.35),0 0 18px rgba(255,240,220,.22)}
 [data-sf=serif] .e-sign span{font-family:var(--serif);font-weight:400}
 [data-sf=sans] .e-sign span{font-family:var(--sans);font-weight:600;letter-spacing:.14em}
-/* le nom au mur du fond : en néon, ou peint */
+/* lettres posées sur la façade (béton, enduit) : pas de bandeau, le nom en relief, de la couleur choisie */
+[data-ss=letters] .e-sign{background:none;box-shadow:none;color:color-mix(in srgb,var(--c) 72%,#111)}
+[data-ss=letters] .e-sign span{opacity:1;text-shadow:1px 2px 0 rgba(0,0,0,.18),0 0 1px rgba(0,0,0,.25)}
+/* le nom au mur du fond : en néon, peint, ou doré sur un panneau */
 .e-wall span{font-family:var(--serif);font-weight:400}
 [data-wf=neon] .e-wall span{font-style:italic;color:#fff;text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 30px var(--c),0 0 60px var(--c)}
+[data-wf=gilt] .e-wall span{color:#ecd39e;text-shadow:0 1px 0 rgba(0,0,0,.45),0 0 14px rgba(255,215,150,.35)}
 [data-wf=paint] .e-wall span{color:var(--c);color:color-mix(in srgb,var(--c) 52%,#1a0d06);opacity:.92;text-shadow:0 1px 0 rgba(255,235,210,.14)}
 /* le premier écran : le titre de la page et l'essai, posés sur la rue */
 .e-walk .c1{bottom:64px}

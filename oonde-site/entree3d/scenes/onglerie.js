@@ -1,7 +1,10 @@
 // Onglerie : claire et rose poudré, deux tables de manucure avec lampes, un mur entier de vernis en couleurs.
 import { street, wallPin } from '../kit/common.js';
 export default async function ({ THREE, kit, scene, portrait }) {
-  const shop = street(THREE, kit, scene, { shop: { stone: 'white_sandstone_blocks_02', wall: 0xf0dfdc, shutter: 0x6f7a80, base: 0xe9dcd8, frame: 0x1b1a1c, seed: 7 }, leftWall: 0xe2d4bf, rightWall: 0xcfc9c0 });
+  // le crépuscule rose : façade en carreaux blancs et rose poudré, store festonné rose, ciel lilas
+  const shop = street(THREE, kit, scene, { time: 'dusk', lampX: -5.6, road: 'concrete_pavement',
+    shop: { facade: 'stone', stone: 'long_white_tiles', stoneTint: 0xf6e1e2, wall: 0xf0d4d6, plaster: 'clay_plaster', shutter: 0xd99aa6, base: 0xe9c3c8, frame: 0xd8b7a0, awning: ['#e7a9b6', '#fbefee'], awningDepth: 1.2, signFrame: 0xd8b07a },
+    leftWall: 0xe2d4bf, rightWall: 0xcfc9c0, neighbours: { left: { shutter: 0x6f7a80 }, right: { shutter: 0x7c6a73 } } });
   const D = 6.2;
   const R = kit.room(scene, { d: D,
     floor: kit.pbr('marble_tiles', { s: 1.6, roughness: .35, env: .8 }),
@@ -40,13 +43,24 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const wall = wallPin(THREE, 2.45, 3.0, .55, -D + .01);
   for (const x of [-1.25, 1.25]) { kit.model('planter_pot_clay', { pos: [x, .14, .55], h: .5, parent: scene, tint: 0xf3e6e2 }); kit.model('potted_plant_04', { pos: [x, .57, .55], h: .8, parent: scene }); }
 
-  const path = kit.entryPath(portrait, portrait ? [
+  // la caméra tourne autour de la vitrine depuis la droite, en arc, avant d'entrer
+  const path = portrait ? [
+    { p: 0, pos: [5.2, 2.6, 10.4], tgt: [0, 2.3, 0], fov: 58 },
+    { p: .2, pos: [3.4, 2.0, 7.4], tgt: [0, 2.2, 0] },
+    { p: .36, pos: [.8, 1.65, 4.6], tgt: [0, 1.9, -1] },
+    { p: .48, pos: [.1, 1.58, 2.0], tgt: [0, 1.6, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.6, 1.58, -0.8], tgt: [-0.4, 1.6, -D] },
     { p: 1, pos: [1.2, 1.6, -0.6], tgt: [-0.5, 1.6, -D], fov: 66 },
   ] : [
+    { p: 0, pos: [6.4, 2.8, 10.6], tgt: [-.4, 2.4, 0], fov: 40 },
+    { p: .2, pos: [4.0, 2.1, 7.2], tgt: [-.1, 2.3, 0] },
+    { p: .36, pos: [.9, 1.65, 4.2], tgt: [0, 2.0, -1] },
+    { p: .48, pos: [.1, 1.58, 1.9], tgt: [0, 1.65, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.8, 1.58, -0.9], tgt: [-0.9, 1.6, -D] },
     { p: 1, pos: [1.8, 1.62, -0.8], tgt: [-1.1, 1.55, -D], fov: 54 },
-  ]);
+  ];
   return { path, fov: 46, bloom: [.18, .4, 1.2], exposure: 1.3,
     pins: [{ id: 'sign', corners: shop.sign }, { id: 'wall', corners: wall }],
     after() { kit.dimEnv(g, .3, .25); mir.envMap = kit.cubeEnv(scene, [0, 1.4, -3.5]); mir.envMapIntensity = .6; },

@@ -82,19 +82,19 @@ export function env(scene, name, intensity = 1, rot = 0, clip = 3) {
 // Le ciel de l'heure bleue : bleu profond en haut, rose orangé à l'horizon, quelques étoiles
 export function sky(scene, o = {}) {
   const top = new THREE.Color(o.top ?? 0x0b1a44), mid = new THREE.Color(o.mid ?? 0x34407a), hor = new THREE.Color(o.hor ?? 0xd99a86);
-  const mat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: false, uniforms: { top: { value: top }, mid: { value: mid }, hor: { value: hor } },
+  const mat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: false, uniforms: { top: { value: top }, mid: { value: mid }, hor: { value: hor }, stars: { value: o.stars ?? .55 } },
     vertexShader: 'varying vec3 vP;void main(){vP=normalize(position);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-    fragmentShader: `uniform vec3 top,mid,hor;varying vec3 vP;
+    fragmentShader: `uniform vec3 top,mid,hor;uniform float stars;varying vec3 vP;
     float h(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
     void main(){float y=clamp(vP.y,0.,1.);vec3 c=mix(hor,mid,smoothstep(0.,.22,y));c=mix(c,top,smoothstep(.2,.75,y));
-    vec3 q=floor(vP*420.);float s=step(.9985,h(q))*smoothstep(.25,.6,y);c+=s*.55;gl_FragColor=vec4(c,1.);}` });
+    vec3 q=floor(vP*420.);float s=step(.9985,h(q))*smoothstep(.25,.6,y);c+=s*stars;gl_FragColor=vec4(c,1.);}` });
   const m = new THREE.Mesh(new THREE.SphereGeometry(300, 48, 24), mat); m.userData.noOcclude = true; scene.add(m);
 }
 
 // La rue : pavés mouillés, trottoir, bordure ; un reflet chaud de la vitrine sur le trottoir
 export function street(scene, o = {}) {
   const g = new THREE.Group(); scene.add(g);
-  const cob = pbr(o.road ?? 'cobblestone_floor_08', { s: 2.2, roughness: .55, ns: 1.2, env: 1.4 });
+  const cob = pbr(o.road ?? 'cobblestone_floor_08', { s: 2.2, roughness: o.wet === false ? .9 : .55, ns: 1.2, env: o.wet === false ? .7 : 1.4 });
   const road = plane(60, 30, cob); road.rotation.x = -Math.PI / 2; road.position.set(0, 0, 3.2 + 15); g.add(road);
   const pav = pbr(o.walk ?? 'concrete_pavement', { s: 1.6, env: .9 });
   const walk = box(60, .14, 3.2, pav, 0, .07, 1.6, { cast: false }); g.add(walk);
@@ -110,11 +110,27 @@ export function building(scene, o = {}) {
   const stone = pbr(o.stone ?? 'white_sandstone_blocks_02', { s: 1.4, color: o.stoneTint ?? 0xffffff });
   // étages
   const up = box(W, H - gf, .5, plaster, 0, gf + (H - gf) / 2, -.25, { parent: g });
-  box(W + .2, .22, .62, stone, 0, gf + .05, -.2, { parent: g });              // corniche du rez
-  box(W + .3, .35, .8, stone, 0, H + .1, -.2, { parent: g });                 // corniche du toit
-  const roofM = std(0x2b2d33, { r: .7 }); const roof = box(W + .3, 2.2, 4, roofM, 0, H + 1.2, -2.6, { parent: g }); roof.rotation.x = -.5;
-  const shutterM = std(o.shutter ?? 0x56685c, { r: .7 }); const frameM = std(0xf4efe6, { r: .5 });
+  box(W + .2, o.modern ? .08 : .22, .62, stone, 0, gf + .05, -.2, { parent: g });              // corniche du rez
+  box(W + .3, o.modern ? .18 : .35, .8, o.modern ? plaster : stone, 0, H + .1, -.2, { parent: g });                 // corniche du toit
+  if (!o.modern) { const roofM = std(o.roof ?? 0x2b2d33, { r: .7 }); const roof = box(W + .3, 2.2, 4, roofM, 0, H + 1.2, -2.6, { parent: g }); roof.rotation.x = -.5; }
+  const shutterM = std(o.shutter ?? 0x56685c, { r: .7 }); const frameM = std(o.winFrame ?? 0xf4efe6, { r: .5 });
   const nwin = o.windows ?? 3;
+  if (o.modern) {
+    // l'immeuble contemporain : grandes baies sans volets, menuiseries fines, garde-corps en verre
+    const fr = std(o.winFrame ?? 0x1c1d20, { r: .4, m: .5 });
+    for (let f = 0; f < floors; f++) for (let i = 0; i < nwin; i++) {
+      const x = (i - (nwin - 1) / 2) * (W / nwin), y = gf + f * fh + 1.45;
+      const lit = o.lit ? o.lit(f, i) : ((f * 5 + i * 3 + (o.seed ?? 0)) % 5 === 0);
+      const gw = W / nwin - .9, gh = 2.1;
+      const gi = new THREE.Mesh(new THREE.PlaneGeometry(gw, gh), lit ? std(0x2a1a0c, { e: 0xffd9a8, ei: 1.1 }) : std(0x10141a, { r: .06, m: .5, env: 1.8 }));
+      gi.position.set(x, y, .06); g.add(gi);
+      box(gw + .08, .06, .1, fr, x, y + gh / 2, .06, { parent: g, cast: false }); box(gw + .08, .06, .1, fr, x, y - gh / 2, .06, { parent: g, cast: false });
+      for (const s of [-1, 1]) box(.06, gh, .1, fr, x + s * gw / 2, y, .06, { parent: g, cast: false });
+      box(.04, gh, .06, fr, x + gw * .18, y, .08, { parent: g, cast: false });
+      box(gw + .3, .05, .5, std(o.slab ?? 0xd9d6cf, { r: .8 }), x, y - gh / 2 - .03, .2, { parent: g });
+    }
+    return { g, W, H, gf, stone, plaster };
+  }
   for (let f = 0; f < floors; f++) for (let i = 0; i < nwin; i++) {
     const x = (i - (nwin - 1) / 2) * (W / nwin), y = gf + f * fh + 1.55;
     const lit = o.lit ? o.lit(f, i) : ((f * 7 + i * 3 + (o.seed ?? 0)) % 4 === 0);
@@ -135,16 +151,38 @@ export function shopfront(scene, o = {}) {
   const b = building(scene, o); const g = b.g; const W = b.W, gf = b.gf;
   const ow = o.openW ?? 7.2, oh = 3.15;                              // ouverture de la vitrine
   const pier = (W - ow) / 2;
-  for (const s of [-1, 1]) box(pier, gf, .6, b.stone, s * (ow / 2 + pier / 2), gf / 2, -.3, { parent: g });
-  box(ow, gf - oh, .6, b.stone, 0, oh + (gf - oh) / 2, -.3, { parent: g });   // linteau
+  // la devanture : pierre (par défaut), boiserie peinte (« wood »), béton lisse (« modern ») ou enduit à arcades (« arch »)
+  const F = o.facade ?? 'stone';
+  const pierM = F === 'wood' ? std(o.paint ?? 0x5e1f24, { r: .45 }) : F === 'modern' ? pbr(o.concrete ?? 'concrete_wall_006', { s: 2.4, color: o.concreteTint ?? 0xf2f0ec, env: .8 }) : F === 'arch' ? b.plaster : b.stone;
+  for (const s of [-1, 1]) box(pier, gf, .6, pierM, s * (ow / 2 + pier / 2), gf / 2, -.3, { parent: g });
+  box(ow, gf - oh, .6, pierM, 0, oh + (gf - oh) / 2, -.3, { parent: g });   // linteau
+  if (F === 'wood') {
+    // la boiserie : pilastres moulurés, corniche, chapiteaux dorés, un vrai coffre de devanture
+    const trim = std(o.trim ?? 0xc9a25e, { m: .9, r: .35 }), pm = std(new THREE.Color(o.paint ?? 0x5e1f24).multiplyScalar(.82), { r: .5 });
+    for (const s of [-1, 1]) {
+      const x = s * (ow / 2 + .28);
+      box(.5, gf - .1, .14, pierM, x, gf / 2, .07, { parent: g });
+      box(.34, gf - 1.3, .06, pm, x, (gf - 1.3) / 2 + .25, .16, { parent: g });
+      box(.58, .1, .2, trim, x, gf - .45, .1, { parent: g });
+    }
+    box(ow + 1.3, .16, .34, pierM, 0, gf - .02, .12, { parent: g });
+    box(ow + 1.36, .04, .36, trim, 0, gf - .11, .13, { parent: g });
+  }
+  if (F === 'modern') box(ow + .3, .04, .5, std(0x1a1b1e, { m: .6, r: .35 }), 0, gf - .02, .1, { parent: g }); // un fin auvent d'acier
   // le bandeau de l'enseigne : un panneau sombre en léger relief ; la page y pose le nom et la couleur
-  const sw = o.signW ?? 5.6, sh = .62, sy = oh + (gf - oh) / 2 + .02;
-  const signM = std(0x15171b, { r: .35, m: .2 });
-  box(sw + .12, sh + .12, .08, std(0x2a2b2e, { r: .4, m: .6 }), 0, sy, .04, { parent: g });
-  box(sw, sh, .06, signM, 0, sy, .07, { parent: g });
-  const sz = .105; const sign = [new THREE.Vector3(-sw / 2, sy + sh / 2, sz), new THREE.Vector3(sw / 2, sy + sh / 2, sz), new THREE.Vector3(sw / 2, sy - sh / 2, sz), new THREE.Vector3(-sw / 2, sy - sh / 2, sz)];
+  const sw = o.signW ?? 5.6, sh = o.signH ?? .62, sy = o.signY ?? (oh + (gf - oh) / 2 + .02);
+  const SS = o.signStyle ?? 'band';
+  if (SS === 'band') {
+    const signM = std(0x15171b, { r: .35, m: .2 });
+    box(sw + .12, sh + .12, .08, std(o.signFrame ?? 0x2a2b2e, { r: .4, m: .6 }), 0, sy, .04, { parent: g });
+    box(sw, sh, .06, signM, 0, sy, .07, { parent: g });
+  } else if (SS === 'fascia') {
+    box(sw + .3, sh + .26, .1, std(o.trim ?? 0xc9a25e, { m: .9, r: .35 }), 0, sy, .1, { parent: g });
+    box(sw + .18, sh + .14, .1, std(o.paint ?? 0x5e1f24, { r: .4 }), 0, sy, .14, { parent: g });
+  }
+  const sz = SS === 'fascia' ? .2 : F === 'arch' ? .235 : SS === 'none' ? .005 : .105; const sign = [new THREE.Vector3(-sw / 2, sy + sh / 2, sz), new THREE.Vector3(sw / 2, sy + sh / 2, sz), new THREE.Vector3(sw / 2, sy - sh / 2, sz), new THREE.Vector3(-sw / 2, sy - sh / 2, sz)];
   // deux appliques au-dessus de l'enseigne
-  if (!o.dark) for (const s of [-1, 1]) {
+  if (!o.dark && o.lamps !== false) for (const s of [-1, 1]) {
     const arm = box(.04, .04, .5, std(0x1b1c1f, { m: .8, r: .35 }), s * sw * .32, sy + .55, .3, { parent: g });
     const shade = new THREE.Mesh(new THREE.ConeGeometry(.11, .14, 20, 1, true), std(0x1b1c1f, { m: .8, r: .35, side: THREE.DoubleSide })); shade.position.set(s * sw * .32, sy + .5, .55); g.add(shade);
     const bulb = new THREE.Mesh(new THREE.SphereGeometry(.035, 12, 8), std(0xffffff, { e: 0xffd7a0, ei: 3 })); bulb.position.set(s * sw * .32, sy + .45, .55); bulb.userData.noOcclude = true; g.add(bulb);
@@ -156,13 +194,43 @@ export function shopfront(scene, o = {}) {
   const dw = o.doorW ?? 1.5, dh = 2.55;
   for (const s of [-1, 1]) {
     const x0 = s * dw / 2, x1 = s * ow / 2, cx = (x0 + x1) / 2, ww = Math.abs(x1 - x0);
-    box(ww, .55, .12, base, cx, .275 + .14, .02, { parent: g });
-    const gl = new THREE.Mesh(new THREE.PlaneGeometry(ww, oh - .55 - .14), glass()); gl.position.set(cx, .69 + (oh - .69) / 2, .02); gl.userData.noOcclude = true; g.add(gl);
-    box(.07, oh, .1, metal, x1 - s * .035, oh / 2, .02, { parent: g }); box(.06, oh, .1, metal, x0 + s * .03, oh / 2, .02, { parent: g });
-    box(ww, .06, .1, metal, cx, .69, .02, { parent: g }); box(ww, .06, .1, metal, cx, oh - .03, .02, { parent: g });
-    if (o.mullion !== false) box(.04, oh - .69, .08, metal, cx, (oh + .69) / 2, .02, { parent: g });
+    if (!o.thin) box(ww, .55, .12, base, cx, .275 + .14, .02, { parent: g });
+    const gy0 = o.thin ? .14 : .69; const gl = new THREE.Mesh(new THREE.PlaneGeometry(ww, oh - gy0), glass()); gl.position.set(cx, gy0 + (oh - gy0) / 2, .02); gl.userData.noOcclude = true; g.add(gl);
+    const fw = o.thin ? .035 : .07; box(fw, oh, .1, metal, x1 - s * fw / 2, oh / 2, .02, { parent: g }); box(fw, oh, .1, metal, x0 + s * fw / 2, oh / 2, .02, { parent: g });
+    box(ww, .06, .1, metal, cx, o.thin ? .16 : .69, .02, { parent: g }); box(ww, .06, .1, metal, cx, oh - .03, .02, { parent: g });
+    if (o.mullion !== false && !o.grid) box(.04, oh - .69, .08, metal, cx, (oh + .69) / 2, .02, { parent: g });
   }
-  if (o.dark) { const bk = new THREE.Mesh(new THREE.PlaneGeometry(ow, oh), std(0x0c0e12, { r: .9, e: 0x1a1410, ei: .6 })); bk.position.set(0, oh / 2, -.9); g.add(bk); }
+  // les petits carreaux de la boiserie
+  if (o.grid) for (const s of [-1, 1]) {
+    const x0 = s * dw / 2, x1 = s * ow / 2, cx = (x0 + x1) / 2, ww = Math.abs(x1 - x0), y0 = .69, y1 = oh - .03;
+    const [nc, nr] = o.grid;
+    for (let c = 1; c < nc; c++) box(.035, y1 - y0, .05, metal, cx - ww / 2 + c * ww / nc, (y0 + y1) / 2, .04, { parent: g, cast: false });
+    for (let r = 1; r < nr; r++) box(ww, .035, .05, metal, cx, y0 + r * (y1 - y0) / nr, .04, { parent: g, cast: false });
+  }
+  // les arcades : un enduit percé d'arcs au-dessus de chaque vitrine et de la porte
+  if (F === 'arch') {
+    const sh2 = new THREE.Shape(); sh2.moveTo(-ow / 2 - .01, 0); sh2.lineTo(ow / 2 + .01, 0); sh2.lineTo(ow / 2 + .01, gf - oh + 1.4); sh2.lineTo(-ow / 2 - .01, gf - oh + 1.4); sh2.lineTo(-ow / 2 - .01, 0);
+    const spans = [[-ow / 2, -dw / 2 - .25], [-dw / 2 - .05, dw / 2 + .05], [dw / 2 + .25, ow / 2]];
+    for (const [a, c] of spans) { const r = (c - a) / 2, m = (a + c) / 2, hole = new THREE.Path(); hole.moveTo(a, 0); hole.lineTo(a, 1.4 - r); hole.absarc(m, 1.4 - r, r, Math.PI, 0, true); hole.lineTo(c, 0); hole.lineTo(a, 0); sh2.holes.push(hole); }
+    const ag = new THREE.ExtrudeGeometry(sh2, { depth: .24, bevelEnabled: false, curveSegments: 40 });
+    const pos = ag.attributes.position, uv = ag.attributes.uv; for (let i = 0; i < pos.count; i++) uv.setXY(i, pos.getX(i) / 3, pos.getY(i) / 3); ag.setAttribute('uv1', uv.clone());
+    const am = new THREE.Mesh(ag, b.plaster); am.position.set(0, oh - 1.4, -.02); am.castShadow = am.receiveShadow = true; g.add(am);
+    for (const s of [-1, 1]) box(pier, gf, .24, b.plaster, s * (ow / 2 + pier / 2), gf / 2, .1, { parent: g });
+    for (const [a, c] of [spans[0], spans[2]]) { const x = a < 0 ? c : a; box(.3, oh - 1.4, .24, b.plaster, x + (a < 0 ? .15 : -.15), (oh - 1.4) / 2, .1, { parent: g }); }
+  }
+  // le store en toile rayée, déroulé au-dessus des vitrines
+  if (o.awning) {
+    const c = document.createElement('canvas'); c.width = 256; c.height = 8; const x = c.getContext('2d');
+    for (let i = 0; i < 16; i++) { x.fillStyle = i % 2 ? o.awning[1] : o.awning[0]; x.fillRect(i * 16, 0, 16, 8); }
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = THREE.RepeatWrapping; t.repeat.set((ow + .4) / 4, 1);
+    const cm = new THREE.MeshStandardMaterial({ map: t, roughness: .85, side: THREE.DoubleSide });
+    const depth = o.awningDepth ?? 1.5, ay = oh + .05;
+    const can = new THREE.Mesh(new THREE.PlaneGeometry(ow + .4, depth), cm); can.rotation.x = -Math.PI / 2 + .42; can.position.set(0, ay - Math.sin(.42) * depth / 2, Math.cos(.42) * depth / 2 + .05);
+    can.castShadow = can.receiveShadow = true; g.add(can);
+    const val = new THREE.Mesh(new THREE.PlaneGeometry(ow + .4, .26), cm); val.position.set(0, ay - Math.sin(.42) * depth - .13, Math.cos(.42) * depth + .05); val.castShadow = true; g.add(val);
+    box(ow + .5, .08, .1, std(0x1b1c1f, { m: .7, r: .4 }), 0, ay, .08, { parent: g });
+  }
+  if (o.dark) { const bk = new THREE.Mesh(new THREE.PlaneGeometry(ow, oh), o.darkOp ? std(0x2a2d31, { r: .9 }) : std(0x0c0e12, { r: .9, e: 0x1a1410, ei: .6 })); bk.position.set(0, oh / 2, -.9); g.add(bk); }
   box(dw, .06, .1, metal, 0, dh, .02, { parent: g });
   const tr = new THREE.Mesh(new THREE.PlaneGeometry(dw, oh - dh), glass()); tr.position.set(0, (oh + dh) / 2, .02); tr.userData.noOcclude = true; g.add(tr);
   // les deux battants, charnières sur les côtés, s'ouvrent vers l'intérieur

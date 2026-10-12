@@ -1,15 +1,10 @@
 // Coiffure : un salon clair, parquet en chevrons, trois postes face aux miroirs, accueil, coin d'attente, mur du fond vert sauge.
+import { street } from '../kit/common.js';
 export default async function ({ THREE, kit, scene, portrait }) {
-  kit.sky(scene); kit.env(scene, 'cobblestone_street_night', .55, 1.2);
-  kit.street(scene);
-  const shop = kit.shopfront(scene, { stone: 'white_sandstone_blocks_02', wall: 0xe4e0d8, shutter: 0x5d6a72, base: 0xd9d3c8, frame: 0x141518, seed: 1 });
-  kit.shopfront(scene, { x: -9.6, wall: 0xd8c3a8, shutter: 0x4e5f53, dark: true, seed: 3, floors: 4 });
-  kit.shopfront(scene, { x: 9.6, wall: 0xcfd3cf, shutter: 0x705a4a, dark: true, seed: 6 });
-  const moon = new THREE.DirectionalLight(0x9fb2ff, .7); moon.position.set(-9, 16, 14); moon.castShadow = true;
-  moon.shadow.mapSize.set(2048, 2048); Object.assign(moon.shadow.camera, { left: -14, right: 14, top: 14, bottom: -6, far: 60 }); moon.shadow.bias = -.0004; scene.add(moon);
-  scene.add(new THREE.HemisphereLight(0x5068c0, 0x2a2018, .7));
-  kit.model('street_lamp_01', { pos: [5.4, .14, 2.85], h: 4.4, parent: scene });
-  const sl = new THREE.PointLight(0xffc38a, 25, 14, 2); sl.position.set(5.4, 4.1, 2.4); scene.add(sl);
+  // le plein jour : un immeuble contemporain, béton lisse, grandes baies sans montants, le nom en lettres posées sur le béton
+  const shop = street(THREE, kit, scene, { time: 'day', lampX: 5.6, road: 'concrete_floor_02',
+    shop: { modern: true, facade: 'modern', concrete: 'plaster_grey_04', concreteTint: 0xf7f6f3, thin: true, mullion: false, signStyle: 'none', signW: 4.6, signH: .5, signY: 3.62, wall: 0xe9e6e0, plaster: 'painted_plaster_wall', frame: 0x141518, lamps: false, floors: 3, windows: 3 },
+    neighbours: { left: { wall: 0xd8c3a8, shutter: 0x4e5f53 }, right: { modern: true, wall: 0xcfd3cf, plaster: 'painted_plaster_wall' } } });
 
   const D = 6.5;
   const R = kit.room(scene, { d: D,
@@ -55,16 +50,27 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const wy = 2.1, ww = 3.4, wh = .58;
   const wall = [new THREE.Vector3(-ww / 2, wy + wh / 2, -D + .01), new THREE.Vector3(ww / 2, wy + wh / 2, -D + .01), new THREE.Vector3(ww / 2, wy - wh / 2, -D + .01), new THREE.Vector3(-ww / 2, wy - wh / 2, -D + .01)];
   // dehors : deux grands pots de part et d'autre de la porte
-  for (const x of [-1.25, 1.25]) { kit.model('planter_pot_clay', { pos: [x, .14, .55], h: .55, parent: scene }); kit.model('potted_plant_04', { pos: [x, .62, .55], h: .9, parent: scene }); }
-  kit.model('planter_box_01', { pos: [-4.1, .14, .55], h: .7, parent: scene });
+  for (const x of [-1.25, 1.25]) { kit.model('planter_pot_clay', { pos: [x, .14, .55], h: .55, parent: scene, tint: 0x8f8d88 }); kit.model('potted_plant_04', { pos: [x, .62, .55], h: .9, parent: scene }); }
+  kit.model('planter_box_01', { pos: [-4.1, .14, .55], h: .7, parent: scene, tint: 0x9a9890 });
 
-  const path = kit.entryPath(portrait, portrait ? [
+  // la caméra arrive en diagonale depuis le coin de la rue, à gauche, et se redresse face à la porte
+  const path = portrait ? [
+    { p: 0, pos: [-6.4, 1.9, 9.6], tgt: [-.6, 2.2, 0], fov: 60 },
+    { p: .2, pos: [-3.6, 1.75, 7.2], tgt: [-.2, 2.1, 0] },
+    { p: .36, pos: [-1.0, 1.62, 4.4], tgt: [0, 1.9, -1] },
+    { p: .48, pos: [-.15, 1.58, 2.0], tgt: [0, 1.6, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.4, 1.58, -0.9], tgt: [-0.6, 1.6, -D] },
     { p: 1, pos: [0.9, 1.6, -0.9], tgt: [-0.6, 1.6, -D], fov: 66 },
   ] : [
+    { p: 0, pos: [-8.2, 2.0, 10.4], tgt: [-.8, 2.3, 0], fov: 42 },
+    { p: .2, pos: [-4.6, 1.8, 7.4], tgt: [-.3, 2.2, 0] },
+    { p: .36, pos: [-1.2, 1.62, 4.2], tgt: [0, 2.0, -1] },
+    { p: .48, pos: [-.15, 1.58, 1.9], tgt: [0, 1.65, -3] },
+    { p: .6, pos: [0, 1.56, -.3], tgt: [0, 1.6, -5] },
     { p: .76, pos: [0.7, 1.58, -1.0], tgt: [-0.9, 1.6, -D] },
     { p: 1, pos: [1.7, 1.62, -1.0], tgt: [-1.1, 1.58, -D], fov: 54 },
-  ]);
+  ];
   return {
     path, fov: 46, bloom: [.18, .4, 1.2], exposure: 1.35,
     pins: [{ id: 'sign', corners: shop.sign }, { id: 'wall', corners: wall }],

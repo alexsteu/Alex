@@ -114,8 +114,8 @@ for k, (title, desc, cur) in PAGES.items():
     docs[k] = s
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': 'exemples', '{{VITRINE}}': 'vitrine'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'exemples.html', '{{VITRINE}}': 'vitrine.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}
     for k, s in docs.items():
@@ -161,7 +161,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
-        (o / '_redirects').write_text('/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n')
+        (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'exemples', 'vitrine', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'visite')) + '</urlset>\n')
 print('ok', sorted(p.name for p in (D / 'dist').iterdir()))

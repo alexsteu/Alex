@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Sites internet avec une entrée en 3D pour les commerces de Genève à Montreux, et sites simples reliés à la fiche Google.","url":"https://oonde.ch/","telephone":"+41764882710","email":"oonde.contact@gmail.com","image":"https://oonde.ch/img/og-e3d.jpg","logo":"https://oonde.ch/apple-touch-icon.png","priceRange":"CHF 490 – 1490","currenciesAccepted":"CHF","paymentAccepted":"Virement bancaire, TWINT","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressLocality":"Préverenges","postalCode":"1028","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"sameAs":["https://www.instagram.com/oonde_studio","https://www.tiktok.com/@oonde"],"makesOffer":[{"@type":"Offer","name":"La Vitrine : site relié à la fiche Google","url":"https://oonde.ch/vitrine#vitrine-prix","priceCurrency":"CHF","price":"490","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Création, facturée seulement si le site est validé","price":"490","priceCurrency":"CHF"},{"@type":"UnitPriceSpecification","name":"Hébergement, domaine et petites modifications","price":"20","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1}],"itemOffered":{"@type":"Service","name":"La Vitrine","serviceType":"Création de site internet"}},{"@type":"Offer","name":"La Visite : site avec une entrée en 3D","url":"https://oonde.ch/#prix","itemOffered":{"@type":"Service","name":"La Visite","serviceType":"Site internet avec entrée en 3D, visite complète du lieu en option"},"priceSpecification":{"@type":"PriceSpecification","priceCurrency":"CHF","minPrice":"990","description":"Selon le lieu, prix par écrit sous 48 heures"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
 <link rel="preload" href="fonts/instrument-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}</style>
-<script>document.documentElement.classList.add('js');{const q=new URLSearchParams(location.search);if(q.get('m'))location.replace('vitrine'+location.search);else if(q.get('e'))location.replace('exemples'+location.search)}</script>
+<script>document.documentElement.classList.add('js');{const q=new URLSearchParams(location.search);if(q.get('m'))location.replace('vitrine'+location.search)}</script>
 <style>
 /* OONDE · base commune aux pages (accueil, La Visite, aperçu). Papier, encre, un accent. Grille 1 144 px, filets 1 px, rayons 8/10/14. */
 @font-face{font-family:'Instrument Repli';src:local('Arial'),local('Helvetica Neue'),local('Helvetica');size-adjust:106%;ascent-override:91%;descent-override:23.5%;line-gap-override:0%}
@@ -272,6 +272,222 @@ footer .seo{max-width:62em;font-size:13.5px}
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
 @media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
 *{transition:none!important;animation:none!important}}
+/* La démo Les Grèves : un vrai site dans le cadre. Le cadre se fige, le défilement fait entrer dans la maison,
+   puis le site du lieu monte (photos, tarif, Réserver). Par défaut la mise en page est posée (sans JavaScript,
+   mouvement réduit) ; l'épinglage n'existe qu'avec JavaScript et le mouvement autorisé. */
+:root{--wd:1300px}
+@media (max-width:760px){:root{--wd:1100px}}
+.walk{position:relative}
+.w-stage{padding:14px 0 10px}
+.w-frame{display:flex;flex-direction:column;box-shadow:0 30px 60px -40px rgba(17,19,24,.45)}
+.w-view{position:relative;overflow:hidden;background:var(--night);container-type:inline-size;color:#fff}
+.w-scene{position:relative;aspect-ratio:16/10}
+.w-poster img,.w-cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.w-cv{display:none}
+.w-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,12,22,.38) 0%,rgba(10,12,22,0) 18%,rgba(10,12,22,0) 55%,rgba(10,12,22,.6) 100%)}
+.w-bar{position:absolute;inset:0 0 auto;z-index:6;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 34px;color:#fff;border-bottom:1px solid transparent;transition:background-color .35s,color .35s,border-color .35s}
+.w-bar button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.w-bar .w-logo{display:flex;align-items:center;gap:10px;font:400 30px/1 var(--serif);white-space:nowrap;min-height:44px}
+.w-logo small{font:500 10px/1 var(--mono);letter-spacing:.14em;border:1px solid currentColor;border-radius:99px;padding:4px 8px 3px;opacity:.75}
+.w-bar nav{display:flex;gap:28px;font:500 14px var(--sans)}
+.w-bar nav button{opacity:.9;padding:12px 0}.w-bar nav button:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.w-r{display:flex;align-items:center;gap:14px}
+.w-bar .w-book{background:#fff;color:var(--night);border-radius:99px;padding:10px 20px;font:600 14px var(--sans);min-height:40px}
+.w-burger{display:none;width:20px;height:12px;border-top:2px solid currentColor;border-bottom:2px solid currentColor}
+.w-bar.solid{background:var(--cream);color:var(--night);border-color:#E4DCCF}
+.w-bar.solid .w-book{background:var(--night);color:#fff}
+.w-ch{position:absolute;left:34px;right:34px;bottom:78px;z-index:5;display:none}
+.w-eb{font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.w-h{font:400 clamp(36px,6.6cqw,76px)/1 var(--serif);margin-top:14px;letter-spacing:-.005em}
+.w-h i{font-style:italic}
+.w-ch.c2 .w-h{font-size:clamp(32px,5.1cqw,58px)}
+.w-p{font:400 17px/1.5 var(--sans);opacity:.92;margin-top:14px;max-width:440px}
+.w-hint{font:500 11px var(--mono);letter-spacing:.14em;margin-top:26px;opacity:.85}
+.w-btns{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:26px}
+.w-b1,.w-b2{border-radius:99px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.w-b1{background:#fff;color:var(--night);border:0;padding:12px 24px}
+.w-b2{background:none;color:#fff;border:1px solid rgba(255,255,255,.6);padding:11px 22px;font-weight:500}
+.w-price{font:400 15px var(--sans);opacity:.9;margin-left:6px}.w-price b{font-weight:600;font-size:17px}
+.w-prog{display:none}
+.w-site{position:relative;z-index:4;background:var(--cream);color:var(--night);padding:40px 34px}
+.w-top{display:flex;justify-content:space-between;align-items:flex-end;gap:30px}
+.w-site .w-eb{color:#575B66}
+.w-t{font:400 44px/1.05 var(--serif);margin-top:8px}
+.w-facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:12px;font:500 13px var(--sans);color:#4B4F5A}.w-facts b{font-size:15px;font-weight:600;color:var(--night);margin-right:5px}
+.w-card{background:#fff;border:1px solid #E4DCCF;border-radius:12px;padding:18px 20px;min-width:300px}
+.w-k{font:500 11px var(--mono);letter-spacing:.12em;color:#6B6F7A}
+.w-v{font:500 30px var(--sans);letter-spacing:-.02em;margin-top:4px}.w-v small{font-size:14px;font-weight:400;color:#4B4F5A;letter-spacing:0}
+.w-go{display:block;width:100%;margin-top:12px;background:var(--night);color:#fff;border:0;border-radius:99px;padding:12px;font:600 14px var(--sans);cursor:pointer;min-height:44px}
+.w-n{font:400 12px var(--sans);color:#6B6F7A;margin-top:8px;text-align:center}
+.w-ph{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px;margin:22px 0 0;align-items:start}
+.w-lang{font:500 11px var(--mono);letter-spacing:.12em;opacity:.8}
+.w-cal{background:#fff;border:1px solid #E4DCCF;border-radius:12px;padding:14px 16px}
+.w-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px;font:500 12px var(--sans);text-align:center}
+.w-days b{font:500 10px var(--mono);color:#6B6F7A;padding-bottom:2px}
+.w-days span{padding:4px 0;border-radius:4px;background:#F4EFE7}
+.w-days span.x{background:none;color:#6F737B;text-decoration:line-through}
+.w-cal .w-n{text-align:left}.w-cal .w-n s{color:#6F737B}
+.w-ph figure{margin:0}
+.w-ph img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:6px}
+.w-ph figcaption{font:500 13px var(--sans);color:#4B4F5A;margin-top:8px}
+.w-toast{position:absolute;left:50%;top:84px;transform:translateX(-50%);z-index:9;width:min(420px,calc(100% - 32px));background:#fff;color:var(--night);border-radius:12px;padding:16px 44px 16px 18px;box-shadow:0 20px 40px -20px rgba(0,0,0,.5);font:400 14px/1.45 var(--sans)}
+.w-toast[hidden]{display:none}
+.w-toast b{display:block;font-size:15px;font-weight:600;margin-bottom:4px}
+.w-toast .btn{margin-top:12px;min-height:44px;padding:10px 14px;font-size:14px}
+.w-x{position:absolute;right:4px;top:4px;width:40px;height:40px;border:0;background:none;font-size:20px;line-height:1;color:#6B6F7A;cursor:pointer}
+.w-cap{display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;padding-top:12px;font-size:14px;color:var(--muted)}
+.w-cap b{color:var(--ink);font-weight:600}
+.w-cap a:not(.btn){color:var(--ink);text-underline-offset:3px;white-space:nowrap;padding-block:10px;margin-block:-10px}
+html:not(.js) .w-ch.c1{display:block}
+@media (prefers-reduced-motion:reduce){.js .w-ch.c3{display:block}}
+/* Cadre étroit (téléphone, petite fenêtre) : la barre du site passe en version mobile */
+@container (max-width:640px){
+ .w-bar{height:58px;padding:0 16px}.w-bar .w-logo{font-size:25px;gap:8px}.w-bar nav{display:none}.w-bar .w-book{padding:8px 14px;font-size:13px;min-height:36px}.w-burger{display:block}
+ .w-ch{left:16px;right:16px;bottom:62px}.w-h{font-size:min(44px,12cqw)}.w-ch.c2 .w-h{font-size:min(40px,11cqw)}.w-p{font-size:15px}.w-eb{font-size:10px}.w-price{display:none}
+ .w-btns{gap:10px}.w-b1{padding:10px 18px;font-size:14px}.w-b2{padding:9px 16px;font-size:14px}
+ .w-site{padding:24px 16px}.w-t{font-size:31px}.w-top{display:block}.w-card{min-width:0;margin-top:14px;padding:14px 16px}.w-v{font-size:26px}
+ .w-facts{gap:4px 12px;font-size:12px}.w-ph{grid-template-columns:1fr;gap:8px;margin-top:14px}.w-ph figure{display:none}.w-lang{display:none}
+ .w-toast{top:70px}
+}
+@media (max-width:760px){
+ .w-stage .in{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+ .w-stage{padding:8px 0 6px}.w-frame{border-radius:22px}.w-frame>.fbar{display:none}
+ .w-scene{aspect-ratio:4/5}.w-cap{font-size:12.5px;padding-top:8px}
+}
+/* La visite pilotée (JavaScript et mouvement autorisé) */
+@media (prefers-reduced-motion:no-preference){
+ .js .walk{height:calc(100vh - var(--hh) + var(--wd));height:calc(100svh - var(--hh) + var(--wd))}
+ .js .w-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));display:flex;flex-direction:column}
+ .js .w-stage>.in{flex:1;min-height:0;width:100%;display:flex;flex-direction:column}
+ .js .w-frame{flex:1;min-height:0}
+ .js .w-view{flex:1;min-height:0}
+ .js .w-scene{position:absolute;inset:0;aspect-ratio:auto}
+ .js .w-cv{display:block;will-change:transform}
+ .js .w-poster img{will-change:transform}
+ .js .live .w-poster{visibility:hidden}
+ .js .w-ch{display:block;opacity:0;pointer-events:none;will-change:opacity,transform}
+ .js .w-ch.c1{opacity:1}
+ .js .w-ch.on{pointer-events:auto}
+ .js .w-prog{position:absolute;left:34px;right:34px;bottom:28px;z-index:5;display:flex;align-items:center;gap:22px;font:500 11px var(--mono);letter-spacing:.12em;color:rgba(255,255,255,.55)}
+ .js .w-prog .on{color:#fff}
+ .js .w-prog .w-pb{width:160px;height:2px;background:rgba(255,255,255,.25);position:relative}
+ .js .w-prog .w-pb i{position:absolute;inset:0 auto 0 0;width:0;background:#fff}
+ .js .w-site{position:absolute;left:0;right:0;bottom:0;top:clamp(150px,calc(100% - 540px),250px);overflow:hidden;transform:translateY(110%);will-change:transform}
+ .js body.walking .mbar.on{transform:translateY(110%)}
+ .js body.walking .nav .btn{opacity:0;visibility:hidden}   /* pendant la visite, la barre WhatsApp du bas se range : le cadre a sa propre réservation */
+ @container (max-width:640px){
+  .js .w-prog{left:16px;right:16px;bottom:18px;gap:14px;font-size:10.5px}.js .w-prog span[data-k]:not(.on){display:none}.js .w-prog .w-pb{flex:1;width:auto}
+  .js .w-site{top:clamp(120px,calc(100% - 470px),170px)}
+ }
+}
+/* L'entrée 3D en ouverture : reprend le cadre de la démo (demo.css) et y ajoute l'essai, les deux enseignes posées
+   en perspective sur les images, et le site du commerce dans sa couleur. */
+.e-walk{padding:0}
+.e-walk .w-shade{background:linear-gradient(180deg,rgba(10,12,22,.42) 0%,rgba(10,12,22,0) 16%,rgba(10,12,22,0) 42%,rgba(10,12,22,.78) 100%)}
+.e-pins{position:absolute;left:0;top:0;width:1000px;pointer-events:none;z-index:1;transform-origin:0 0}
+.w-scene>.e-pins{width:100%;height:100%}
+.e-pins[hidden]{display:none}
+.e-pins>div{position:absolute;left:0;top:0;width:1000px;transform-origin:0 0;display:flex;align-items:center;justify-content:center;opacity:0;white-space:nowrap;overflow:hidden;backface-visibility:hidden}
+.e-pins span{line-height:1;display:block}
+/* l'enseigne de la façade : un bandeau peint de la couleur choisie, éclairé par-dessus */
+.e-sign{height:111px;background:linear-gradient(180deg,rgba(255,236,210,.14),rgba(0,0,0,.12) 35%,rgba(0,0,0,.5)),var(--c);color:var(--ct);box-shadow:inset 0 0 0 3px rgba(0,0,0,.35),inset 0 -12px 20px rgba(0,0,0,.3)}
+.e-sign span{opacity:.94;text-shadow:0 1px 0 rgba(0,0,0,.35),0 0 18px rgba(255,240,220,.22)}
+[data-sf=serif] .e-sign span{font-family:var(--serif);font-weight:400}
+[data-sf=sans] .e-sign span{font-family:var(--sans);font-weight:600;letter-spacing:.14em}
+/* lettres posées sur la façade (béton, enduit) : pas de bandeau, le nom en relief, de la couleur choisie */
+[data-ss=letters] .e-sign{background:none;box-shadow:none;color:color-mix(in srgb,var(--c) 72%,#111)}
+[data-ss=letters] .e-sign span{opacity:1;text-shadow:1px 2px 0 rgba(0,0,0,.18),0 0 1px rgba(0,0,0,.25)}
+/* le nom au mur du fond : en néon, peint, ou doré sur un panneau */
+.e-wall span{font-family:var(--serif);font-weight:400}
+[data-wf=neon] .e-wall span{font-style:italic;color:#fff;text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 30px var(--c),0 0 60px var(--c)}
+[data-wf=gilt] .e-wall span{color:#ecd39e;text-shadow:0 1px 0 rgba(0,0,0,.45),0 0 14px rgba(255,215,150,.35)}
+[data-wf=paint] .e-wall span{color:var(--c);color:color-mix(in srgb,var(--c) 52%,#1a0d06);opacity:.92;text-shadow:0 1px 0 rgba(255,235,210,.14)}
+/* le premier écran : le titre de la page et l'essai, posés sur la rue */
+.e-walk .c1{bottom:64px}
+.e-walk .c1 .w-eb{font-size:11.5px;opacity:.9}
+.e-walk .c1 .w-h{font-size:clamp(32px,3.9cqw,52px);max-width:15ch;line-height:1.02;margin-top:10px}
+.e-try{margin-top:18px;display:grid;gap:12px;max-width:500px;background:rgba(12,14,24,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px}
+.e-try label,.e-sw>span{font:600 14px var(--sans)}
+.e-try label{display:block;margin-bottom:6px}
+#eName{width:100%;min-height:50px;font:500 18px var(--sans);border-radius:10px;border:1.5px solid rgba(255,255,255,.75);background:rgba(255,255,255,.1);color:#fff;padding:10px 14px}
+#eName::placeholder{color:rgba(255,255,255,.62)}
+#eName:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.e-chips{display:flex;flex-wrap:wrap;gap:6px}
+.e-chips button{min-height:40px;padding:8px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.4);background:none;color:#fff;font:500 14px var(--sans);cursor:pointer;transition:background-color .15s,color .15s}
+.e-chips button:hover{border-color:#fff}
+.e-chips button[aria-checked=true]{background:#fff;color:var(--night);border-color:#fff}
+.e-sw{display:flex;align-items:center;gap:14px}
+.e-sw[hidden]{display:none}
+.e-sw b{font-weight:500;opacity:.8;margin-left:4px}
+.e-sw .swatches{gap:8px}
+.e-sw .swatches button{width:34px;height:34px;border-color:rgba(255,255,255,.9);box-shadow:none}
+.e-sw .swatches button[aria-checked=true]{box-shadow:0 0 0 2px var(--night),0 0 0 4px #fff}
+.e-walk .c1 .w-hint{margin-top:16px}
+/* le site du commerce, dans sa couleur */
+.e-walk .w-bar.solid .w-book,.e-walk .w-go{background:var(--c);color:var(--ct)}
+.e-walk .w-b1{background:var(--c);color:var(--ct)}
+.e-sub{font:400 16px/1.45 var(--sans);color:#4B4F5A;margin-top:10px;max-width:30em}
+.e-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px;font:400 14px/1.45 var(--sans);color:#3A3F47;max-width:560px}
+.e-more .w-k,.e-walk .w-card .w-k{margin-bottom:4px;color:#575B66}
+.e-row{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid #EEE7DC;font:400 14.5px var(--sans)}
+.e-row b{font-weight:600}
+.e-walk .w-card .w-k{margin-bottom:4px}
+.e-walk .w-t{font-size:clamp(34px,4.4cqw,48px)}
+.e-walk .w-ph{margin-top:20px}
+.e-ph{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.e-ph img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:6px;display:block}
+@container (max-width:640px){
+ .e-walk .c1{bottom:52px}
+ .e-walk .c1 .w-h{font-size:min(28px,7.6cqw);max-width:none;margin-top:0}
+ .e-walk .c1 .w-eb{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .e-try{margin-top:12px;padding:12px;gap:10px;border-radius:12px}
+ .e-try label{font-size:13px;margin-bottom:4px}
+ #eName{min-height:46px;font-size:17px}
+ .e-chips{gap:5px}.e-chips button{min-height:36px;padding:6px 10px;font-size:13px}
+ .e-sw .swatches button{width:30px;height:30px}
+ .e-walk .c1 .w-hint{margin-top:10px}
+ .e-more{grid-template-columns:1fr;gap:10px;margin-top:12px}.e-more>div:last-child{display:none}
+ .e-sub{font-size:14.5px}
+ .e-ph{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}.e-ph img:last-child{display:none}
+}
+/* sans JavaScript ou mouvement réduit : l'image, puis l'essai et le site, l'un sous l'autre */
+html:not(.js) .e-try{display:none}
+.e-walk .w-view>.c1{position:relative;left:auto;right:auto;bottom:auto;padding:22px 34px;background:var(--night)}
+@media (prefers-reduced-motion:reduce){
+ .js .e-walk .w-cv{display:block}
+ .js .e-walk .live .w-poster{visibility:hidden}
+ .js .e-walk .w-ch.c3,.js .e-walk .w-prog{display:none}
+ .js .e-walk .w-view>.c1{display:block}
+}
+@media (prefers-reduced-motion:no-preference){
+ .js .e-walk .w-view>.c1{position:absolute;left:34px;right:34px;bottom:64px;padding:0;background:none}
+ @container (max-width:640px){.js .e-walk .w-view>.c1{left:16px;right:16px;bottom:52px}}
+}
+@media (max-width:760px){.e-walk .w-view>.c1{padding:18px 16px}}
+/* Les exemples */
+.exs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.exs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.exs{grid-template-columns:1fr}}
+.ex{position:relative;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--night);color:#fff;text-decoration:none;box-shadow:0 30px 60px -44px rgba(17,19,24,.55);transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.ex:hover{transform:translateY(-3px)}
+.ex-img{position:relative;aspect-ratio:16/10;overflow:hidden}
+.ex-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ex-img .e-pins{height:625px}
+.ex-tag{position:absolute;left:10px;top:10px;font:500 10.5px var(--mono);letter-spacing:.12em;background:rgba(10,12,22,.62);border-radius:99px;padding:5px 9px}
+.ex-t{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px 16px}
+.ex-t b{display:block;font:600 17px var(--sans);letter-spacing:-.01em}
+.ex-t small{display:block;font:400 14px var(--sans);opacity:.72;margin-top:2px}
+.ex-t i{font-style:normal;font:600 14px var(--sans);white-space:nowrap;border-bottom:1.5px solid currentColor}
+/* Écrans bas (portable 13 pouces, petit téléphone) : l'essai garde sa place sous la barre du site */
+.w-bar .w-book{white-space:nowrap}
+@media (max-height:840px){
+ .e-walk .c1 .w-h{font-size:clamp(28px,3.1cqw,40px);max-width:20ch}
+ .e-walk .c1 .w-hint{display:none}
+ .e-try{gap:9px;padding:12px 14px;margin-top:12px}
+ #eName{min-height:44px}
+}
+@media (max-height:700px){.e-walk .c1 .w-h{font-size:min(28px,7.6cqw)}.e-walk .c1 .w-eb,.e-try label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@container (max-width:400px){.e-walk .w-burger{display:none}.e-walk .w-bar .w-logo{font-size:22px}}
 /* L'univers OONDE : la première chose qu'on voit. Le O du logo sur du papier, le point qui tombe, l'onde, et six
    maquettes de commerces qui se lèvent. Plein cadre, sans fenêtre de navigateur : ce n'est pas un site de client, c'est le nôtre. */
 .u{padding:0}
@@ -285,7 +501,7 @@ footer .seo{max-width:62em;font-size:13.5px}
 /* les enseignes des maquettes : le métier, posé en perspective ; à la fin, toute la maquette devient un bouton */
 .u-pins{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .u-pins>div{position:absolute;left:0;top:0;width:400px;height:75px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden}
-.u-pins span{font:600 30px var(--mono);letter-spacing:.08em;color:var(--ink);white-space:nowrap}
+.u-pins{visibility:hidden}   /* les métiers sont maintenant peints sur les enseignes, dans l'image */
 .u-hits{position:absolute;inset:0;z-index:2;pointer-events:none}
 .u-hits a{position:absolute;left:0;top:0;width:400px;height:465px;transform-origin:0 0;pointer-events:none;border-radius:6px;outline-offset:-6px}
 .u.end .u-hits a{pointer-events:auto;cursor:pointer}
@@ -354,6 +570,33 @@ footer .seo{max-width:62em;font-size:13.5px}
 .of .pr span{font:600 15px var(--mono)}
 .of .pr i{font-style:normal;font-weight:600;font-size:14.5px;border-bottom:1.5px solid currentColor}
 .of-n{margin-top:18px;color:var(--soft);font-size:15px}
+/* Les exemples : d'abord on choisit son métier (et son nom), puis une seule entrée s'ouvre, la sienne */
+.pick{padding-top:clamp(36px,6vw,72px)}
+.pick-h{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px 48px;align-items:end;margin-bottom:clamp(24px,3.4vw,40px)}
+.pick-h h2{font:600 clamp(36px,4.6vw,64px)/1.02 var(--sans);letter-spacing:-.03em;margin-top:12px}
+.pick-h p{color:var(--soft);font-size:17px;line-height:1.5;max-width:32em;margin-top:14px}
+.pick-n label{display:block;font:500 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.pick-n input{width:100%;min-height:52px;font:500 18px var(--sans);padding:12px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+.pick-n input:focus{outline:none;border-color:var(--klein);box-shadow:0 0 0 4px rgba(32,56,236,.14)}
+.pick-n small{display:block;margin-top:8px;color:var(--muted);font-size:14px}
+@media (max-width:820px){.pick-h{grid-template-columns:1fr}}
+@media (max-width:560px){.pick .exs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pick .ex-t{padding:10px 11px 12px}.pick .ex-t b{font-size:15px}.pick .ex-t small,.pick .ex-t i{display:none}.pick .ex-tag{font-size:9.5px;padding:4px 7px}}
+.w-cap{align-items:center}.w-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px}.w-cta .btn{min-height:46px;padding:11px 18px;font-size:15px}
+@media (max-width:700px){.w-cap .w-cta{width:100%}.w-cta .btn{flex:1}}
+.e-fold{display:none;align-items:center;gap:8px;width:100%;min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.28);background:rgba(10,12,22,.55);color:#fff;font:500 15px var(--sans);text-align:left;cursor:pointer}
+.e-fold b{font-weight:600}.e-fold i{margin-left:auto;font-style:normal;text-decoration:underline}
+.e-fold{display:flex;max-width:480px;margin-top:6px}
+/* les vignettes : le nom bien lisible sur chaque enseigne */
+.pick .ex [data-wf=paint] .e-wall span,.pick .ex[data-k] .e-pins[data-wf=paint] .e-wall span{color:#f7e7c9!important;text-shadow:0 1px 2px rgba(0,0,0,.55),0 0 20px rgba(255,220,170,.5)!important;opacity:1}
+.pick .ex .e-sign span{color:#fbf1de;opacity:1;text-shadow:0 1px 2px rgba(0,0,0,.6),0 0 22px rgba(255,226,180,.55)}
+.e-walk .c1 .w-h{max-width:21ch}.e-try:not(.open){display:none}
+@media (max-width:700px){.e-walk .c1 .w-h{display:none}}
+.e-walk .w-shade{background:linear-gradient(90deg,rgba(8,10,20,.55),rgba(8,10,20,.15) 42%,rgba(8,10,20,0) 62%),linear-gradient(180deg,rgba(10,12,22,.38) 0%,rgba(10,12,22,0) 18%,rgba(10,12,22,0) 40%,rgba(10,12,22,.5) 66%,rgba(10,12,22,.82) 100%)}
+/* les titres posés sur la salle : toujours lisibles, même sur une nappe blanche */
+.e-walk .w-ch .w-h,.e-walk .w-ch .w-p,.e-walk .w-ch .w-eb{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.45)}
+@media (max-width:700px){.e-walk .w-shade{background:linear-gradient(180deg,rgba(10,12,22,.4) 0%,rgba(10,12,22,0) 16%,rgba(10,12,22,0) 34%,rgba(10,12,22,.6) 58%,rgba(10,12,22,.88) 100%)}}
+.close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
+
 /* Prix */
 .p-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
 .p-head p{color:var(--muted);font-size:17px;max-width:30em}
@@ -383,7 +626,7 @@ footer .seo{max-width:62em;font-size:13.5px}
  <div class="in">
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="exemples">Exemples</a><a class="opt" href="#prix">Prix</a><a class="opt" href="vitrine">La Vitrine</a><a class="opt2" href="#questions">Questions</a></nav>
+  <nav aria-label="Pages" id="navL"><a href="#choix">Exemples</a><a class="opt" href="#prix">Prix</a><a class="opt" href="vitrine">La Vitrine</a><a class="opt2" href="#questions">Questions</a></nav>
   <a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l" data-e3l>Connaître mon prix</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
@@ -394,15 +637,78 @@ footer .seo{max-width:62em;font-size:13.5px}
   <div class="u-stage" id="uStage">
    <div class="u-scene"><img class="u-poster" id="uPoster" src="img/e3d/oonde/d/f000.webp" width="1280" height="800" alt="Le O du logo OONDE, debout sur une feuille de papier, avec le point bleu au centre" decoding="async" fetchpriority="high"><canvas id="uCv" aria-hidden="true"></canvas>
     <div class="u-pins" id="uPins" aria-hidden="true"><div data-id="restaurant"><span>RESTAURANT</span></div><div data-id="boulangerie"><span>BOULANGERIE</span></div><div data-id="coiffure"><span>COIFFURE</span></div><div data-id="institut"><span>INSTITUT</span></div><div data-id="onglerie"><span>ONGLERIE</span></div><div data-id="logement"><span>LOGEMENT</span></div></div>
-    <div class="u-hits" id="uHits"><a href="exemples?e=restaurant" aria-label="Restaurant : ouvrir son entrée 3D, démo"></a><a href="exemples?e=boulangerie" aria-label="Boulangerie : ouvrir son entrée 3D, démo"></a><a href="exemples?e=coiffure" aria-label="Coiffure : ouvrir son entrée 3D, démo"></a><a href="exemples?e=institut" aria-label="Institut : ouvrir son entrée 3D, démo"></a><a href="exemples?e=onglerie" aria-label="Onglerie : ouvrir son entrée 3D, démo"></a><a href="exemples?e=logement" aria-label="Logement : ouvrir son entrée 3D, démo"></a></div></div>
-   <div class="u-tx u-t1"><p class="mono">DEUX AMIS · DE GENÈVE À MONTREUX</p><h1 id="h1">Des sites où vos clients entrent avant de venir.</h1><p class="u-hint"><span aria-hidden="true">Faites défiler : vous entrez dans notre univers ↓</span><a href="exemples">ou voir les exemples →</a></p></div>
+    <div class="u-hits" id="uHits"><a href="#entree" data-e3="restaurant" aria-label="Restaurant : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="boulangerie" aria-label="Boulangerie : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="coiffure" aria-label="Coiffure : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="institut" aria-label="Institut : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="onglerie" aria-label="Onglerie : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="logement" aria-label="Logement : ouvrir son entrée 3D, démo"></a></div></div>
+   <div class="u-tx u-t1"><p class="mono">DEUX AMIS · DE GENÈVE À MONTREUX</p><h1 id="h1">Des sites où vos clients entrent avant de venir.</h1><p class="u-hint"><span aria-hidden="true">Faites défiler : vous entrez dans notre univers ↓</span><a href="#choix">ou choisir votre commerce ↓</a></p></div>
    <div class="u-tx u-t15" aria-hidden="true"><p>Votre façade, reconstruite en 3D.</p></div>
    <div class="u-tx u-t2" aria-hidden="true"><p>Chaque commerce a son entrée.</p></div>
-   <div class="u-tx u-t3"><div><h2>Choisissez le vôtre.</h2><p>Touchez une maquette : son entrée en 3D s’ouvre, et vous y mettez votre nom.</p><div class="u-chips" aria-label="Choisir son métier"><a href="exemples?e=restaurant">Restaurant</a><a href="exemples?e=boulangerie">Boulangerie</a><a href="exemples?e=coiffure">Coiffure</a><a href="exemples?e=institut">Institut</a><a href="exemples?e=onglerie">Onglerie</a><a href="exemples?e=logement">Logement</a></div><p class="u-note">SIX COMMERCES IMAGINÉS · DÉMO</p></div>
-    <div class="u-act"><a class="btn light" href="#prix">Comment ça marche ↓</a></div></div>
-   <a class="u-skip" href="#prix">Passer l’intro ↓</a>
+   <div class="u-tx u-t3"><div><h2>Choisissez le vôtre.</h2><p>Touchez une maquette : son entrée en 3D s’ouvre juste en dessous, avec votre nom.</p><div class="u-chips" aria-label="Choisir son métier"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div><p class="u-note">SIX COMMERCES IMAGINÉS · DÉMO</p></div>
+    <div class="u-act"><a class="btn light" href="#choix">Choisir mon commerce ↓</a></div></div>
+   <a class="u-skip" href="#choix">Passer l’intro ↓</a>
   </div>
  </div>
+</section>
+
+<section class="bg-paper pick" id="choix" aria-labelledby="hC">
+ <div class="in">
+  <div class="pick-h">
+   <div><p class="mono">L’entrée 3D · six démos à essayer</p><h2 id="hC">Quel est votre commerce ?</h2><p>Choisissez votre métier : son entrée s’ouvre, avec votre nom sur l’enseigne. Vous faites défiler, vous passez la porte, et vous arrivez sur le site.</p></div>
+   <div class="pick-n"><label for="pName">Le nom de votre commerce</label><input id="pName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"><small>Facultatif. Il s’affiche tout de suite sur les six enseignes.</small></div>
+  </div>
+  <div class="exs">
+   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
+   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
+  </div>
+  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
+ </div>
+</section>
+
+<section id="entree" class="v-demo e-walk" aria-labelledby="h1e">
+ <div class="walk" id="eWalk">
+  <div class="w-stage" id="eStage">
+   <div class="in">
+    <div class="frame w-frame">
+     <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span id="eUrl">votre-commerce.ch · Démo</span></div>
+     <div class="w-view" id="eView" role="group" aria-label="Démo : votre site avec une entrée en 3D">
+      <div class="w-scene">
+       <div class="w-poster"><img id="ePoster" src="img/e3d/restaurant/d/f000.webp" width="1280" height="800" alt="Démo : la façade d’un restaurant le soir, avec son enseigne et sa terrasse" decoding="async" fetchpriority="high"></div>
+       <canvas class="w-cv" id="eCv" aria-hidden="true"></canvas>
+       <div class="e-pins" id="ePins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div>
+       <div class="w-shade"></div>
+       <div class="w-ch c2"><p class="w-eb">02 · BIENVENUE</p><p class="w-h" id="eC2h">Bienvenue chez vous.</p><p class="w-p" id="eC2p"></p></div>
+       <div class="w-ch c3"><p class="w-eb" id="eC3eb">Démo</p><p class="w-h" id="eC3h"></p>
+        <div class="w-btns"><button type="button" class="w-b1" id="eB1" data-book>Réserver</button><button type="button" class="w-b2" id="eB2" data-go="1">Voir les prix</button></div></div>
+       <div class="w-prog" aria-hidden="true"><span data-k="1">01 LA RUE</span><span data-k="2">02 L’ENTRÉE</span><span data-k="3" id="eK3">03 LA SALLE</span><span class="w-pb"><i id="eFill"></i></span></div>
+      </div>
+      <div class="w-ch c1">
+       <p class="w-eb" id="h1e">L’entrée 3D · Démo à essayer</p>
+       <p class="w-h">Votre site s’ouvre sur votre commerce.</p>
+       <div class="e-try">
+        <div><label for="eName">Votre nom, sur l’enseigne</label><input id="eName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+        <div class="e-chips" id="eAct" role="radiogroup" aria-label="Votre métier"></div>
+        <div class="e-sw"><span id="lE3">Couleur <b id="eStyleN"></b></span><div class="swatches" id="eStyle" role="radiogroup" aria-labelledby="lE3"></div></div>
+       </div>
+       <p class="w-hint" aria-hidden="true">FAITES DÉFILER POUR ENTRER ↓</p>
+      </div>
+      <div class="w-bar" id="eBar"><button type="button" class="w-logo" id="eLogo" data-go="0">Votre commerce <small>DÉMO</small></button>
+       <nav aria-label="Menu du site de démonstration" id="eNav"></nav>
+       <div class="w-r"><button type="button" class="w-book" id="eBook" data-book>Réserver</button><span class="w-burger" aria-hidden="true"></span></div></div>
+      <div class="w-site" id="eSite"></div>
+      <div class="w-toast" id="eToast" role="dialog" aria-label="Démo" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Je veux cette entrée</a></div>
+     </div>
+    </div>
+    <p class="w-cap"><span><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</span><span class="w-cta"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Connaître mon prix</span></a><a href="#prix">Sauter la démo ↓</a></span></p>
+   </div>
+  </div>
+ </div>
+ <template id="eLodge"><div class="w-top"><div><p class="w-eb">Le logement · Démo</p><p class="w-t">Plain-pied, posé<br>au bord de l’eau.</p>
+   <p class="w-facts"><span><b>4</b>voyageurs</span><span><b>2</b>chambres</span><span><b>62</b>m²</span><span><b>25</b>m² de terrasse</span></p></div>
+  <div class="w-card"><p class="w-k">TARIF (DÉMO)</p><p class="w-v">dès 180.– <small>la nuit</small></p><button type="button" class="w-go" data-book>Réserver en direct</button><p class="w-n">Sans commission · 2 nuits minimum</p></div></div>
+  <div class="w-ph"><figure><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><figcaption>Le salon et la terrasse, côté lac</figcaption></figure>
+  <div class="w-cal" aria-label="Calendrier de démonstration"><p class="w-k">NOVEMBRE 2026 · DISPONIBILITÉS</p><div class="w-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b><i></i><i></i><i></i><i></i><i></i><i></i><span>1</span><span>2</span><span class=x>3</span><span class=x>4</span><span class=x>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span class=x>10</span><span class=x>11</span><span class=x>12</span><span class=x>13</span><span>14</span><span>15</span><span>16</span><span class=x>17</span><span class=x>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span class=x>24</span><span class=x>25</span><span class=x>26</span><span>27</span><span>28</span><span>29</span><span>30</span></div><p class="w-n">Dates barrées : déjà réservées sur Booking ou Airbnb.</p></div></div></template>
 </section>
 
 <section class="bg-paper" id="prix" aria-labelledby="hP">
@@ -419,7 +725,7 @@ footer .seo{max-width:62em;font-size:13.5px}
    <li><b>Le site est à vous.</b><span>L’adresse est à votre nom. Si vous arrêtez, on vous remet tout, gratuitement.</span></li>
   </ul>
   <p class="launch"><b>En option, la visite complète :</b> tout le lieu, pièce par pièce, dès 1&#8239;490.–. Pour un hôtel, des chambres d’hôtes ou une salle, avec le calendrier Booking ou Airbnb. <a href="visite">Voir la démo Les Grèves</a></p>
-  <div class="act p-act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Connaître mon prix</span></a><a class="lnk" href="exemples">Essayer avec mon métier</a><p class="micro">On répond le jour même, 7 jours sur 7. <a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p></div>
+  <div class="act p-act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Connaître mon prix</span></a><a class="lnk" href="#choix">Essayer avec mon métier</a><p class="micro">On répond le jour même, 7 jours sur 7. <a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p></div>
  </div>
 </section>
 
@@ -472,7 +778,7 @@ footer .seo{max-width:62em;font-size:13.5px}
 <nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Connaître mon prix</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="exemples">Exemples</a><a href="vitrine">La Vitrine</a><a href="visite">La visite complète</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="#choix">Exemples</a><a href="vitrine">La Vitrine</a><a href="visite">La visite complète</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
  <p class="seo">Sites internet avec entrée en 3D, et sites simples, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
 </div></footer>
 
@@ -554,9 +860,9 @@ const apercuUrl=(base,s)=>{const p=new URLSearchParams();if(s.name)p.set('n',s.n
    avec, pour chaque image, la position des deux enseignes à l'écran (pins.json) : le nom y est posé en perspective.
    Mouvement réduit : la façade, immobile, avec le nom sur l'enseigne, et le site posé dessous. */
 const E3={
- restaurant:{t:'restaurant',lab:'Restaurant',ex:'Le Petit Port',wall:5.8,sf:'serif',wf:'paint',k3:'03 LA SALLE',hi:'La table est mise. Entrez.',c3:'Ce soir, une table vous attend.'},
- coiffure:{t:'coiffure',lab:'Coiffure',ex:'Atelier Sauge',wall:5.86,sf:'sans',wf:'neon',k3:'03 LE SALON',hi:'Votre salon, avant même le rendez-vous.',c3:'Un fauteuil vous attend.'},
- institut:{t:'beaute',lab:'Institut',ex:'Maison Calme',wall:5.8,sf:'serif',wf:'neon',k3:'03 LA CABINE',hi:'Le calme commence à la porte.',c3:'Prenez le temps.'},
+ restaurant:{t:'restaurant',lab:'Restaurant',ex:'Le Petit Port',wall:5.8,sf:'serif',wf:'gilt',k3:'03 LA SALLE',hi:'La table est mise. Entrez.',c3:'Ce soir, une table vous attend.'},
+ coiffure:{t:'coiffure',lab:'Coiffure',ex:'Atelier Sauge',wall:5.86,sf:'sans',ss:'letters',wf:'neon',k3:'03 LE SALON',hi:'Votre salon, avant même le rendez-vous.',c3:'Un fauteuil vous attend.'},
+ institut:{t:'beaute',lab:'Institut',ex:'Maison Calme',wall:5.8,sf:'serif',ss:'letters',wf:'neon',k3:'03 LA CABINE',hi:'Le calme commence à la porte.',c3:'Prenez le temps.'},
  onglerie:{t:'ongles',lab:'Onglerie',ex:'Nacre',wall:5.45,sf:'sans',wf:'neon',k3:'03 LES COULEURS',hi:'Toutes les couleurs vous attendent.',c3:'Choisissez votre couleur.'},
  boulangerie:{t:'boulangerie',lab:'Boulangerie',ex:'La Fournée',wall:4.8,sf:'serif',wf:'paint',k3:'03 LE COMPTOIR',hi:'Le pain chaud, dès le trottoir.',c3:'Sorti du four ce matin.'},
  logement:{dir:'greves',lab:'Logement',ex:'Les Grèves',lodge:1,k3:'03 LA VUE',hi:'Un salon face aux Alpes.',c3:'Le lac, depuis le canapé.'}};
@@ -570,7 +876,7 @@ function e3quad(el,c,w,h,f){const X=c.map(q=>f.ox+q[0]*f.w),Y=c.map(q=>f.oy+q[1]
 const e3meas=document.createElement('canvas').getContext('2d');
 function e3fit(el,txt,font,max,w){e3meas.font=font.replace('{s}',max);const tw=e3meas.measureText(txt).width||1;el.style.fontSize=Math.min(max,max*w/tw).toFixed(1)+'px'}
 function e3pins(box,s,name){const sg=box.querySelector('.e-sign>span'),wl=box.querySelector('.e-wall>span'),sans=s.sf==='sans';
- box.dataset.sf=s.sf||'';box.dataset.wf=s.wf||'';
+ box.dataset.sf=s.sf||'';box.dataset.wf=s.wf||'';box.dataset.ss=s.ss||'';
  if(sg){sg.textContent=sans?name.toUpperCase():name;e3fit(sg,sg.textContent,sans?'600 {s}px "Instrument Sans"':'400 {s}px "Cormorant Garamond"',sans?54:80,sans?760:860)}
  const wh=1000/(s.wall||5.8);box.querySelector('.e-wall').style.height=wh.toFixed(1)+'px';
  wl.textContent=name;e3fit(wl,name,s.wf==='neon'?'italic 400 {s}px "Cormorant Garamond"':'400 {s}px "Cormorant Garamond"',Math.round(wh*.66),900)}
@@ -757,6 +1063,17 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  u.querySelectorAll('a[href^="#"]:not([data-e3])').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}));
  ui();tick();
 })();
+
+/* Le nom tapé au-dessus des exemples va sur les six enseignes, puis sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
+(()=>{const p=$('pName'),e=$('eName');p.value=e.value;
+ /* sur téléphone, le réglage se replie en une ligne : il ne cache plus la façade */
+ const tr=document.querySelector('.e-try'),fb=document.createElement('button');fb.type='button';fb.className='e-fold';fb.setAttribute('aria-expanded','false');tr.before(fb);
+ const lab=d=>{fb.innerHTML=`<b>${esc(d.name||'Votre nom')}</b> · ${esc(E3[d.sc]?E3[d.sc].lab:'')}<i>Modifier</i>`};lab({name:e.value,sc:new URLSearchParams(location.search).get('e')||(()=>{try{return JSON.parse(localStorage.getItem('oonde-e3')||'{}').sc}catch(x){}})()||'restaurant'});
+ document.addEventListener('oonde-e3',ev=>lab(ev.detail));fb.addEventListener('click',()=>{const o=tr.classList.toggle('open');fb.setAttribute('aria-expanded',o);if(o)e.focus({preventScroll:true})});
+ p.addEventListener('input',()=>{e.value=p.value;e.dispatchEvent(new Event('input'))});p.addEventListener('keydown',ev=>{if(ev.key==='Enter')p.blur()});
+ e.addEventListener('input',()=>{if(p.value!==e.value)p.value=e.value});
+ const k=new URLSearchParams(location.search).get('e');if(k&&E3[k]&&!location.hash)addEventListener('load',()=>setTimeout(()=>window.e3go&&e3go(k,!new URLSearchParams(location.search).get('n')),60))})();
+
 </script>
 </body>
 </html>

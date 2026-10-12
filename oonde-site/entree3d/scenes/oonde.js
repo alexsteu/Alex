@@ -12,9 +12,14 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const PAPER = 0xefede7;
   // le ciel : un dégradé chaud, du crème en haut au papier à l'horizon
   { const c = document.createElement('canvas'); c.width = 4; c.height = 256; const x = c.getContext('2d'); const g = x.createLinearGradient(0, 0, 0, 256);
-    g.addColorStop(0, '#b9c3cf'); g.addColorStop(.38, '#d9cfc4'); g.addColorStop(.6, '#e9c9a8'); g.addColorStop(.8, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
+    g.addColorStop(0, '#c9ced3'); g.addColorStop(.38, '#ddd6cd'); g.addColorStop(.6, '#ebdcc9'); g.addColorStop(.8, '#efede7'); g.addColorStop(1, '#efede7'); x.fillStyle = g; x.fillRect(0, 0, 4, 256);
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; scene.background = t; } scene.fog = new THREE.Fog(PAPER, 13, 32);
-  const paperM = kit.std(PAPER, { r: .93, env: .45 });
+  // le grain du papier : un bruit fin en relief, à peine visible, qui accroche la lumière rasante
+  const grain = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'), im = x.createImageData(512, 512);
+    let sd = 7; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < 512 * 512; i++) { const v = 118 + r() * 20 + (r() < .015 ? 30 : 0); im.data[i * 4] = im.data[i * 4 + 1] = im.data[i * 4 + 2] = v; im.data[i * 4 + 3] = 255; }
+    x.putImageData(im, 0, 0); x.filter = 'blur(.6px)'; x.drawImage(c, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(44, 44); return t; })();
+  const paperM = new THREE.MeshStandardMaterial({ color: PAPER, roughness: .92, envMapIntensity: .45, bumpMap: grain, bumpScale: .35 });
   const N = 300, SZ = 34;
   const fg = new THREE.PlaneGeometry(SZ, SZ, N, N); fg.rotateX(-Math.PI / 2); fg.translate(0, 0, -SZ / 2 + 10);
   const floor = new THREE.Mesh(fg, paperM); floor.receiveShadow = true; floor.castShadow = true; scene.add(floor);
@@ -26,14 +31,14 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const hole = new THREE.Path(); hole.absarc(0, 0, rIn, 0, Math.PI * 2, true); sh.holes.push(hole);
   const rg = new THREE.ExtrudeGeometry(sh, { depth: dep, bevelEnabled: true, bevelThickness: .025, bevelSize: .025, bevelSegments: 4, curveSegments: 128 });
   rg.translate(0, 0, -dep / 2);
-  const ink = kit.std(0x15171c, { r: .62, env: .6 });
+  const ink = new THREE.MeshPhysicalMaterial({ color: 0x14161b, roughness: .5, metalness: 0, clearcoat: .55, clearcoatRoughness: .32, envMapIntensity: .7 });
   const ring = new THREE.Mesh(rg, ink); ring.position.set(0, RO + .025, 0); ring.castShadow = ring.receiveShadow = true; scene.add(ring);
   // un petit socle de carton sous l'anneau : il tient debout comme un objet posé
-  const plinth = kit.box(1.1, .05, .5, kit.std(0xe9e6de, { r: .9 }), 0, .025, 0, { parent: scene });
+  const plinth = new THREE.Group();   // plus de socle : l'anneau tient seul, comme le logo
 
   // le point bleu, seule matière brillante de la scène
   const RD = 10.54 * k, TD = .07;
-  const dot = new THREE.Mesh(new THREE.CylinderGeometry(RD, RD, TD, 96, 1), kit.std(0x2038ec, { r: .38, env: .7, e: 0x2038ec, ei: .06 }));
+  const dot = new THREE.Mesh(new THREE.CylinderGeometry(RD, RD, TD, 96, 1), new THREE.MeshPhysicalMaterial({ color: 0x2038ec, roughness: .3, clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .8, emissive: 0x2038ec, emissiveIntensity: .05 }));
   dot.castShadow = true; dot.receiveShadow = true; dot.position.copy(ring.position); dot.rotation.x = Math.PI / 2; scene.add(dot);
   const dotStart = ring.position.clone();
 
@@ -52,7 +57,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
     const disc = (x, y, rx, ry) => { g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); g.fill(); };
     if (kind === 'restaurant') { for (const x of [34, 94]) { g.fillRect(x - 20, 104, 40, 5); g.fillRect(x - 3, 108, 6, 30); } g.fillStyle = 'rgba(255,236,200,.95)'; disc(34, 52, 6, 6); disc(94, 52, 6, 6); }
     else if (kind === 'boulangerie') { g.fillRect(10, 112, 108, 30); g.fillStyle = 'rgba(150,84,30,.9)'; for (const y of [62, 82]) for (let x = 20; x < 110; x += 22) disc(x, y, 9, 5); g.fillStyle = ink(.8); g.fillRect(12, 70, 104, 3); g.fillRect(12, 90, 104, 3); }
-    else if (kind === 'coiffure') { g.fillStyle = 'rgba(255,250,235,.9)'; g.fillRect(48, 34, 32, 58); g.fillStyle = ink(.8); disc(64, 112, 16, 12); g.fillRect(60, 118, 8, 24); }
+    else if (kind === 'coiffure') { g.fillStyle = 'rgba(255,250,235,.9)'; for (const x of [22, 58, 94]) g.fillRect(x, 30, 16, 52); g.fillStyle = ink(.4); for (const x of [30, 66, 102]) { g.fillRect(x - 9, 108, 18, 12); g.fillRect(x - 2, 120, 4, 20); } }
     else if (kind === 'institut') { g.fillStyle = 'rgba(70,100,58,.85)'; disc(64, 96, 22, 30); g.fillStyle = ink(.8); g.fillRect(52, 120, 24, 22); }
     else if (kind === 'onglerie') { for (const y of [48, 68, 88]) { g.fillRect(14, y + 8, 100, 2); for (let x = 20; x < 112; x += 10) { g.fillStyle = `hsl(${(x * 7 + y * 3) % 360},55%,45%)`; g.fillRect(x, y, 5, 8); } g.fillStyle = ink(.8); } g.fillRect(28, 112, 72, 8); }
     else if (kind === 'logement') { g.fillRect(14, 104, 100, 22); g.fillRect(14, 92, 16, 34); g.fillRect(98, 92, 16, 34); g.fillStyle = 'rgba(255,244,214,.95)'; disc(64, 40, 10, 10); }
@@ -65,71 +70,103 @@ export default async function ({ THREE, kit, scene, portrait }) {
   }
   const frost = room('x');
   const glow = kit.std(0xfff1dc, { r: .4, e: 0xffc788, ei: 1.6 });
-  const paperSign = kit.std(0xfdfcf8, { r: .88 });
+  // les enseignes sont peintes dans l'image, dans la typo de la marque : nettes, éclairées comme le reste de la maquette
+  const fonts = [['Instrument Sans', 'instrument-600', 600], ['IBM Plex Mono', 'plexmono-600', 600], ['Cormorant Garamond', 'cormorant-garamond-latin-400-normal', 400]];
+  await Promise.all(fonts.map(([f, file, w]) => new FontFace(f, `url(assets/fonts/${file}.woff2)`, { weight: String(w) }).load().then(ff => document.fonts.add(ff)).catch(() => {})));
+  function signTex(text, o) {
+    const c = document.createElement('canvas'); c.width = 1024; c.height = Math.round(1024 * o.ratio); const x = c.getContext('2d');
+    x.fillStyle = o.bg; x.fillRect(0, 0, c.width, c.height);
+    if (o.rule) { x.strokeStyle = o.rule; x.lineWidth = 10; x.strokeRect(14, 14, c.width - 28, c.height - 28); }
+    x.fillStyle = o.fg; x.textAlign = 'center'; x.textBaseline = 'middle';
+    let fs = c.height * (o.size ?? .5); const font = () => `${o.weight ?? 600} ${fs}px "${o.font ?? 'Instrument Sans'}"`;
+    x.font = font(); if ('letterSpacing' in x) x.letterSpacing = (o.ls ?? .16) * fs + 'px';
+    while (x.measureText(text).width > c.width * .84 && fs > 10) { fs *= .95; x.font = font(); if ('letterSpacing' in x) x.letterSpacing = (o.ls ?? .16) * fs + 'px'; }
+    x.fillText(text, c.width / 2 + (o.ls ?? .16) * fs / 2, c.height * .53);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+    return new THREE.MeshStandardMaterial({ map: t, roughness: o.r ?? .7, metalness: 0 });
+  }
+  function stripes(a2, b2) {
+    const c = document.createElement('canvas'); c.width = 128; c.height = 8; const x = c.getContext('2d');
+    for (let i = 0; i < 8; i++) { x.fillStyle = i % 2 ? b2 : a2; x.fillRect(i * 16, 0, 16, 8); }
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return new THREE.MeshStandardMaterial({ map: t, roughness: .85, side: THREE.DoubleSide });
+  }
+  // chaque maquette reprend la façade de sa démo : le bistrot au store vert, la boulangerie en bois bordeaux, le salon
+  // en béton clair, l'institut à arcades, l'onglerie rose, la maison à pignon
   const kinds = [
-    { id: 'restaurant', w: 1.05, h: 1.25, acc: 0xb0664c },
-    { id: 'boulangerie', w: .95, h: 1.4, acc: 0xc79a52 },
-    { id: 'coiffure', w: 1.0, h: 1.55, acc: 0x8e9c8a },
-    { id: 'institut', w: .95, h: 1.35, acc: 0xd3b2a4 },
-    { id: 'onglerie', w: .85, h: 1.7, acc: 0x6e7884 },
-    { id: 'logement', w: 1.05, h: 1.08, acc: 0x9b8d7a },
+    { id: 'restaurant', w: 1.05, h: 1.25, front: 0xe6dac5, acc: 0x1f4a3b, sign: { bg: '#1f4a3b', fg: '#efe3c8', font: 'Cormorant Garamond', weight: 400, ls: .1, size: .62, txt: 'Restaurant' } },
+    { id: 'boulangerie', w: .95, h: 1.4, front: 0xf1e5ce, acc: 0x5a1c22, sign: { bg: '#5a1c22', fg: '#d8b46a', rule: '#c9a25e', font: 'Cormorant Garamond', weight: 400, ls: .12, size: .58, txt: 'Boulangerie' } },
+    { id: 'coiffure', w: 1.0, h: 1.55, front: 0xdedcd7, acc: 0x18191c, sign: { bg: '#dedcd7', fg: '#18191c', ls: .3, size: .42, txt: 'COIFFURE' } },
+    { id: 'institut', w: .95, h: 1.35, front: 0xeed9c4, acc: 0x9c7a5b, sign: { bg: '#eed9c4', fg: '#5e3f2a', font: 'Cormorant Garamond', weight: 400, ls: .16, size: .74, txt: 'Institut' } },
+    { id: 'onglerie', w: .85, h: 1.7, front: 0xf1d2d6, acc: 0xd78b9b, sign: { bg: '#fbf3f2', fg: '#c46f84', ls: .26, size: .42, txt: 'ONGLERIE' } },
+    { id: 'logement', w: 1.05, h: 1.08, front: 0xf4efe6, acc: 0x9b7a58, sign: { bg: '#f4efe6', fg: '#4a3a2c', ls: .3, size: .4, txt: 'LOGEMENT' } },
   ];
   const sc = portrait ? .86 : 1, R = portrait ? 3.0 : 3.1, span = portrait ? 40 : 48;
   const facades = []; const pins = [];
+  const blackM = kit.std(0x18191c, { r: .4, m: .3 }), goldM = kit.std(0xc9a25e, { m: .9, r: .35 });
   kinds.forEach((K, i) => {
     const th = THREE.MathUtils.degToRad(-span + (2 * span) * i / (kinds.length - 1));
     const root = new THREE.Group(); root.position.set(C.x + R * Math.sin(th), 0, C.z - R * Math.cos(th));
     root.lookAt(C.x, 0, C.z); root.scale.setScalar(sc); scene.add(root);
     const D = .5, W = K.w, H = K.h;
-    // socle posé sur le papier
-    kit.box(W + .3, .035, D + .4, board, 0, .0175, -.05, { parent: root });
+    kit.box(W + .3, .035, D + .4, board, 0, .0175, -.05, { parent: root });                      // socle posé sur le papier
     // la charnière : la maquette se déplie depuis le bord avant du socle, comme un livre animé
     const hinge = new THREE.Group(); hinge.position.set(0, .035, D / 2 + .02); root.add(hinge);
     const b = new THREE.Group(); b.position.set(0, 0, -(D / 2 + .02)); hinge.add(b);
-    kit.box(W - .02, H - .01, D, card, 0, H / 2, 0, { parent: b });                       // le corps en carton
-    const front = kit.std(new THREE.Color(0xf6f4ee).lerp(new THREE.Color(K.acc), .07), { r: .9 });
-    kit.box(W, H, .022, front, 0, H / 2, D / 2 + .011, { parent: b });                  // la façade en plâtre, chants visibles
-    kit.box(W + .05, .04, D + .06, plaster, 0, H + .02, 0, { parent: b });              // la corniche
+    const frontM = kit.std(K.front, { r: .88 }), accM = kit.std(K.acc, { r: .6 });
+    kit.box(W - .02, H - .01, D, kit.std(new THREE.Color(K.front).multiplyScalar(.86), { r: .95 }), 0, H / 2, 0, { parent: b });  // le corps
+    kit.box(W, H, .022, frontM, 0, H / 2, D / 2 + .011, { parent: b });                                    // la façade, chants visibles
+    kit.box(W + .05, .04, D + .06, plaster, 0, H + .02, 0, { parent: b });                                 // la corniche
     const f = D / 2 + .024;
-    const accM = kit.std(K.acc, { r: .8 });
-    // enseigne : un bandeau de papier vierge
+    // l'enseigne, peinte
     const sw = W * .84, sh2 = .19, sy = .86;
-    kit.box(sw, sh2, .012, paperSign, 0, sy, f + .006, { parent: b });
-    kit.box(sw + .02, .008, .02, accM, 0, sy - sh2 / 2 - .006, f + .008, { parent: b });
-    const sz = f + .016;
+    kit.box(sw, sh2, .012, kit.std(new THREE.Color(K.sign.bg), { r: .7 }), 0, sy, f + .006, { parent: b });
+    const face = new THREE.Mesh(new THREE.PlaneGeometry(sw, sh2), signTex(K.sign.txt, { ratio: sh2 / sw, ...K.sign })); face.position.set(0, sy, f + .0125); face.receiveShadow = true; b.add(face);
+    if (K.id === 'boulangerie' || K.id === 'restaurant') kit.box(sw + .03, sh2 + .03, .008, K.id === 'boulangerie' ? goldM : accM, 0, sy, f + .001, { parent: b });
+    const sz = f + .013;
     const local = [[-sw / 2, sy + sh2 / 2], [sw / 2, sy + sh2 / 2], [sw / 2, sy - sh2 / 2], [-sw / 2, sy - sh2 / 2]].map(([x, y]) => new THREE.Vector3(x, y, sz));
     const world = local.map(v => v.clone());
-    // porte en chêne et vitrine dépolie, selon le métier
-    const door = (x, w = .2, h = .5) => { kit.box(w + .03, h + .02, .012, plaster, x, h / 2 + .01, f + .002, { parent: b }); kit.box(w, h, .016, oak, x, h / 2, f + .004, { parent: b }); };
     const roomM = room(K.id);
-    const win = (x, y, w, h) => { kit.box(w + .03, h + .03, .01, accM, x, y, f + .001, { parent: b }); kit.box(w, h, .014, y < .7 ? roomM : frost, x, y, f + .004, { parent: b });
-      if (w > .3) kit.box(.008, h, .006, accM, x, y, f + .012, { parent: b }); kit.box(w, .008, .006, accM, x, y - h * .18, f + .012, { parent: b }); };
+    const door = (x, w = .2, h = .5, m = oak) => { kit.box(w + .03, h + .02, .012, accM, x, h / 2 + .01, f + .002, { parent: b }); kit.box(w, h, .016, m, x, h / 2, f + .004, { parent: b }); };
+    // une fenêtre : verre allumé, cadre, petits bois
+    const win = (x, y, w, h, o = {}) => { const fm = o.frame ?? accM;
+      kit.box(w + .025, h + .025, .01, fm, x, y, f + .001, { parent: b }); kit.box(w, h, .014, o.lit === false || y > .7 ? frost : roomM, x, y, f + .004, { parent: b });
+      const [nc, nr] = o.grid ?? [w > .3 ? 2 : 1, 2];
+      for (let c = 1; c < nc; c++) kit.box(.006, h, .006, fm, x - w / 2 + c * w / nc, y, f + .012, { parent: b });
+      for (let r = 1; r < nr; r++) kit.box(w, .006, .006, fm, x, y - h / 2 + r * h / nr, f + .012, { parent: b }); };
+    const archWin = (x, y0, w, h, m) => { const sh = new THREE.Shape(); sh.moveTo(-w / 2, 0); sh.lineTo(-w / 2, h - w / 2); sh.absarc(0, h - w / 2, w / 2, Math.PI, 0, true); sh.lineTo(w / 2, 0); sh.lineTo(-w / 2, 0);
+      const fr = new THREE.Mesh(new THREE.ShapeGeometry(sh, 24), accM); fr.scale.set(1 + .05 / w, 1 + .03 / h, 1); fr.position.set(x, y0 - .015, f + .002); b.add(fr);
+      const gm = new THREE.Mesh(new THREE.ShapeGeometry(sh, 24), m); gm.position.set(x, y0, f + .006); b.add(gm); };
     const lamp = x => { kit.box(.016, .03, .03, accM, x, .62, f + .012, { parent: b }); kit.box(.034, .05, .034, glow, x, .6, f + .03, { parent: b });
       const pl = new THREE.PointLight(0xffb36a, .7, .7, 2); pl.position.set(x, .55, f + .08); b.add(pl); };
-    const awning = (x, w) => { const a = kit.box(w, .012, .14, accM, x, sy - .16, f + .07, { parent: b }); a.rotation.x = .38; };
+    const awning = (x, w, a2, b2) => { const m = stripes(a2, b2); const a = new THREE.Mesh(new THREE.PlaneGeometry(w, .2), m); a.rotation.x = -Math.PI / 2 + .5; a.position.set(x, .68, f + .085); a.castShadow = true; b.add(a);
+      const v = new THREE.Mesh(new THREE.PlaneGeometry(w, .045), m); v.position.set(x, .6, f + .17); b.add(v); };
     if (K.id === 'restaurant') {
-      win(-.17, .36, .52, .44); door(.34); awning(-.17, .6); lamp(.34 + .15);
-      for (const x of [-.3, -.02]) { const t = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .1, 20), oak); t.position.set(x, .05, f + .17); t.castShadow = true; b.add(t); }
+      win(-.17, .36, .52, .44, { grid: [3, 2] }); door(.34); awning(-.04, .86, '#1f4a3b', '#e9dfca'); lamp(.34 + .15);
+      for (const x of [-.32, -.04]) { const t = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .1, 20), oak); t.position.set(x, .05, f + .2); t.castShadow = true; b.add(t); }
       win(-.27, 1.08, .16, .16); win(.27, 1.08, .16, .16);
     } else if (K.id === 'boulangerie') {
-      win(-.15, .36, .42, .4); door(.3, .18); awning(-.15, .5); lamp(.3 + .13);
-      win(0, 1.15, .3, .22);
+      // la devanture en bois peint : un coffre bordeaux sur tout le rez, filet doré, petits carreaux
+      const bord = kit.std(0x5a1c22, { r: .45 });
+      kit.box(W - .04, .74, .003, bord, 0, .37, f + .0005, { parent: b }); kit.box(W - .02, .012, .012, goldM, 0, .742, f + .004, { parent: b });
+      win(-.16, .4, .42, .44, { frame: goldM, grid: [4, 3] }); door(.3, .18, .52, bord); lamp(.3 + .13);
+      win(-.2, 1.15, .2, .22); win(.2, 1.15, .2, .22);
     } else if (K.id === 'coiffure') {
-      win(-.16, .37, .46, .5); door(.32, .18, .52); lamp(.32 - .13);
-      for (let s = 0; s < 6; s++) kit.box(.018, .38, .02, oak, -.36 + s * .06, 1.2, f + .01, { parent: b });
-      win(.22, 1.2, .26, .3);
+      // le béton clair : une grande baie sans montants, des bandeaux vitrés aux étages
+      kit.box(.66, .64, .014, roomM, -.12, .35, f + .004, { parent: b }); kit.box(.68, .66, .008, blackM, -.12, .35, f + .001, { parent: b });
+      door(.35, .16, .56, kit.std(0x23252a, { r: .2, m: .4 }));
+      for (const y of [1.15, 1.4]) { kit.box(W - .14, .16, .012, frost, 0, y, f + .004, { parent: b }); kit.box(W - .12, .006, .016, blackM, 0, y - .083, f + .008, { parent: b }); }
     } else if (K.id === 'institut') {
-      const rw = new THREE.Mesh(new THREE.CylinderGeometry(.19, .19, .014, 48), roomM); rw.rotation.x = Math.PI / 2; rw.position.set(-.16, .4, f + .004); b.add(rw);
-      const rr = new THREE.Mesh(new THREE.TorusGeometry(.2, .012, 10, 48), accM); rr.position.set(-.16, .4, f + .006); b.add(rr);
-      door(.28, .2); win(0, 1.12, .5, .2); lamp(.28 + .15);
+      // l'enduit à la chaux, deux arcades : la vitrine et la porte
+      archWin(-.16, .1, .36, .54, roomM); archWin(.27, .02, .2, .5, oak); lamp(.27 + .16);
+      archWin(0, 1.02, .26, .24, frost);
     } else if (K.id === 'onglerie') {
-      win(-.12, .36, .36, .46); door(.27, .18); awning(-.12, .44); lamp(.27 + .13);
+      win(-.12, .36, .36, .46, { frame: kit.std(0xd8b07a, { m: .8, r: .3 }) }); door(.27, .18); awning(-.03, .7, '#e7a9b6', '#fbefee'); lamp(.27 + .13);
       win(0, 1.15, .2, .26); win(0, 1.5, .2, .2);
     } else {
       // le logement : une maison à pignon, volets en chêne
       const roof = new THREE.Shape(); roof.moveTo(-W / 2 - .05, 0); roof.lineTo(0, .3); roof.lineTo(W / 2 + .05, 0); roof.lineTo(-W / 2 - .05, 0);
       const rgeo = new THREE.ExtrudeGeometry(roof, { depth: D + .08, bevelEnabled: false }); rgeo.translate(0, 0, -(D + .08) / 2);
-      const rm = new THREE.Mesh(rgeo, card); rm.position.y = H + .04; rm.castShadow = rm.receiveShadow = true; b.add(rm);
+      const rm = new THREE.Mesh(rgeo, kit.std(0x8c8378, { r: .85 })); rm.position.y = H + .04; rm.castShadow = rm.receiveShadow = true; b.add(rm);
       door(0, .22, .52); for (const x of [-.32, .32]) { win(x, .4, .2, .26); kit.box(.06, .26, .012, oak, x - .14, .4, f + .006, { parent: b }); kit.box(.06, .26, .012, oak, x + .14, .4, f + .006, { parent: b }); }
       lamp(-.17);
     }
@@ -175,8 +212,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .31, pos: [0, 1.6, -.35], tgt: [0, .6, -4.6], fov: 60 },
     { p: .44, pos: [.6, 3.0, -.2], tgt: [0, .45, -4.6], fov: 64 },
     { p: .62, pos: [1.2, 3.3, .3], tgt: [0, .5, -5.0] },
-    { p: .8, pos: [.6, 3.4, 1.6], tgt: [0, .35, -5.3], fov: 62 },
-    { p: 1, pos: [0, 3.6, 3.1], tgt: [0, 1.0, -5.4], fov: 60 },
+    { p: .8, pos: [.4, 2.3, 1.6], tgt: [0, .6, -5.3], fov: 58 },
+    { p: 1, pos: [0, 1.75, 2.2], tgt: [0, 1.25, -5.4], fov: 56 },
   ] : [
     { p: 0, pos: [0, 1.55, 8.6], tgt: [0, 1.55, 0], fov: 30 },
     { p: .1, pos: [0, 1.55, 7.4], tgt: [0, 1.55, 0], fov: 32 },
@@ -185,8 +222,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .31, pos: [0, 1.6, -.2], tgt: [0, .6, -4.4], fov: 43 },
     { p: .44, pos: [.6, 2.6, -.1], tgt: [0, .45, -4.4], fov: 46 },
     { p: .62, pos: [.95, 2.5, -.2], tgt: [0, .35, -4.7], fov: 49 },
-    { p: .8, pos: [.35, 2.4, -.22], tgt: [0, .18, -4.85], fov: 52 },
-    { p: 1, pos: [0, 2.3, -.25], tgt: [0, .05, -5.0], fov: 54 },
+    { p: .8, pos: [.3, 2.0, -.6], tgt: [0, .4, -5.1], fov: 52 },
+    { p: 1, pos: [0, 1.75, -.85], tgt: [0, .55, -5.3], fov: 52 },
   ];
 
   const m4 = new THREE.Matrix4();

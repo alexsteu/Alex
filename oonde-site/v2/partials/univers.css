@@ -11,7 +11,7 @@
 /* les enseignes des maquettes : le métier, posé en perspective ; à la fin, toute la maquette devient un bouton */
 .u-pins{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .u-pins>div{position:absolute;left:0;top:0;width:400px;height:75px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden}
-.u-pins span{font:600 30px var(--mono);letter-spacing:.08em;color:var(--ink);white-space:nowrap}
+.u-pins{visibility:hidden}   /* les métiers sont maintenant peints sur les enseignes, dans l'image */
 .u-hits{position:absolute;inset:0;z-index:2;pointer-events:none}
 .u-hits a{position:absolute;left:0;top:0;width:400px;height:465px;transform-origin:0 0;pointer-events:none;border-radius:6px;outline-offset:-6px}
 .u.end .u-hits a{pointer-events:auto;cursor:pointer}
