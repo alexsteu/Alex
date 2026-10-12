@@ -3,7 +3,7 @@ import { street } from '../kit/common.js';
 export default async function ({ THREE, kit, scene, portrait }) {
   // le plein jour : un immeuble contemporain, béton lisse, grandes baies sans montants, le nom en lettres posées sur le béton
   const shop = street(THREE, kit, scene, { time: 'day', lampX: 5.6, road: 'concrete_floor_02',
-    shop: { modern: true, facade: 'modern', concrete: 'plaster_grey_04', concreteTint: 0xf7f6f3, thin: true, mullion: false, signStyle: 'none', signW: 4.6, signH: .5, signY: 3.62, wall: 0xe9e6e0, plaster: 'painted_plaster_wall', frame: 0x141518, lamps: false, floors: 3, windows: 3 },
+    shop: { modern: true, facade: 'modern', concrete: false, concreteTint: 0xc9c6bf, thin: true, mullion: false, signStyle: 'none', signW: 4.6, signH: .5, signY: 3.62, wall: 0xe9e6e0, plaster: 'painted_plaster_wall', frame: 0x141518, lamps: false, floors: 3, windows: 3 },
     neighbours: { left: { wall: 0xd8c3a8, shutter: 0x4e5f53 }, right: { modern: true, wall: 0xcfd3cf, plaster: 'painted_plaster_wall' } } });
 
   const D = 6.5;

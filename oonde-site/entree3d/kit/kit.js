@@ -153,7 +153,7 @@ export function shopfront(scene, o = {}) {
   const pier = (W - ow) / 2;
   // la devanture : pierre (par défaut), boiserie peinte (« wood »), béton lisse (« modern ») ou enduit à arcades (« arch »)
   const F = o.facade ?? 'stone';
-  const pierM = F === 'wood' ? std(o.paint ?? 0x5e1f24, { r: .45 }) : F === 'modern' ? pbr(o.concrete ?? 'concrete_wall_006', { s: 2.4, color: o.concreteTint ?? 0xf2f0ec, env: .8 }) : F === 'arch' ? b.plaster : b.stone;
+  const pierM = F === 'wood' ? std(o.paint ?? 0x5e1f24, { r: .45 }) : F === 'modern' ? (o.concrete === false ? std(o.concreteTint ?? 0xe9e7e2, { r: .9, env: .6 }) : pbr(o.concrete ?? 'concrete_wall_006', { s: 2.4, color: o.concreteTint ?? 0xf2f0ec, env: .8 })) : F === 'arch' ? b.plaster : b.stone;
   for (const s of [-1, 1]) box(pier, gf, .6, pierM, s * (ow / 2 + pier / 2), gf / 2, -.3, { parent: g });
   box(ow, gf - oh, .6, pierM, 0, oh + (gf - oh) / 2, -.3, { parent: g });   // linteau
   if (F === 'wood') {
