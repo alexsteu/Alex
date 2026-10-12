@@ -500,9 +500,12 @@ html:not(.js) .e-try{display:none}
 /* les textes : le titre dès la première image, une phrase au survol de l'onde, l'invitation à la fin */
 .u-tx{position:absolute;z-index:3;color:var(--ink);pointer-events:none;transition:opacity .2s}
 .u-tx a,.u-tx button{pointer-events:auto}
-.u-t1{left:clamp(16px,4cqw,56px);top:50%;transform:translateY(-50%);max-width:min(25cqw,380px)}
+.u-t1{left:clamp(16px,4cqw,56px);top:50%;transform:translateY(-50%);max-width:min(32cqw,440px)}
+/* les textes posés sur la scène : une carte de papier, pour qu'aucune forme ne passe derrière les lettres */
+.u-t1,.u-t3>div:first-child{background:rgba(239,237,231,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:22px 24px;border-radius:16px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 10px 30px rgba(30,28,24,.08)}
+.u-t3>div:first-child{pointer-events:auto}
 .u-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.14em;color:var(--soft)}
-.u-t1 h1{font:600 clamp(30px,3.3cqw,48px)/1.04 var(--sans);letter-spacing:-.025em;margin-top:14px}
+.u-t1 h1{font:600 clamp(28px,3cqw,46px)/1.04 var(--sans);letter-spacing:-.025em;margin-top:14px}
 .u-t1 h1 em{font-style:normal;color:var(--klein)}
 .u-hint{margin-top:18px;font:500 14px/1.5 var(--sans);color:var(--soft);display:flex;flex-direction:column;gap:6px}
 .u-hint a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;align-self:flex-start;pointer-events:auto}
@@ -524,7 +527,8 @@ html:not(.js) .e-try{display:none}
 .u-note{font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:10px}
 /* téléphone (cadre plus haut que large) : le titre en haut, au-dessus de l'anneau ; la fin, en bas */
 @container (max-aspect-ratio:1/1){
- .u-t1{left:16px;right:16px;top:clamp(16px,5cqh,40px);transform:none;max-width:none}
+ .u-t1{left:16px;right:16px;top:clamp(16px,5cqh,40px);transform:none;max-width:none;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;box-shadow:none}
+ .u-t3>div:first-child{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;box-shadow:none}
  .u-t1 h1{font-size:min(30px,8cqw);max-width:13em}
  .u-hint{margin-top:10px;flex-direction:row;flex-wrap:wrap;gap:4px 14px}.u-hint span{font-size:0}.u-hint span::after{content:"Faites défiler ↓";font-size:14px}
  .u-t2{left:16px;right:16px;top:20px;bottom:auto;max-width:none;text-align:left}
@@ -545,6 +549,7 @@ html:not(.js) .e-try{display:none}
 .u.static .u-scene,html:not(.js) .u-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
 .u.static .u-tx,html:not(.js) .u-tx{position:relative;inset:auto;transform:none;max-width:none;opacity:1;padding:24px clamp(16px,4vw,56px) 0}
 .u.static .u-t3,html:not(.js) .u-t3{background:none;padding-bottom:40px}
+.u.static .u-t1,.u.static .u-t3>div,html:not(.js) .u-t1,html:not(.js) .u-t3>div{background:none;backdrop-filter:none;padding:0;box-shadow:none}
 .u.static .u-t2,.u.static .u-t15,html:not(.js) .u-t15,.u.static .u-hint span,.u.static .u-skip,html:not(.js) .u-t2,html:not(.js) .u-hint span,html:not(.js) .u-skip,html:not(.js) .u-hits{display:none}
 .u.static .u-hits a{pointer-events:auto}
 @media (max-width:700px){.u.static .u-scene,html:not(.js) .u-scene{aspect-ratio:9/13}.u.static .u-chips{display:flex}}
