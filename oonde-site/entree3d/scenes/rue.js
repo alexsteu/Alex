@@ -72,7 +72,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   pins.push({ id: 'sign', corners: T.sign });
 
   // le réverbère du début : son globe est le point bleu
-  const LX = -5 * S - 5.4;
+  const LX = HEAD[0];
   // un lampadaire à globe : mât fin en fonte, crosse, globe opalin qui brille bleu
   const iron = kit.std(0x15171b, { m: .7, r: .4 });
   const post = new THREE.Mesh(new THREE.CylinderGeometry(.05, .09, 4.1, 20), iron); post.position.set(LX, .14 + 2.05, 2.85); post.castShadow = true; scene.add(post);
@@ -89,36 +89,48 @@ export default async function ({ THREE, kit, scene, portrait }) {
   sun.shadow.mapSize.set(4096, 2048); Object.assign(sun.shadow.camera, { left: -40, right: 40, top: 16, bottom: -8, far: 90 }); sun.shadow.bias = -.0004; sun.shadow.normalBias = .02; scene.add(sun, sun.target);
   scene.add(new THREE.HemisphereLight(0x5a66b8, 0x2a2028, .32));
 
-  const head = [LX, 4.6, 2.85];
+  const head = HEAD;
   glow.position.set(...head); bl.position.set(head[0], head[1] - .1, head[2] + .1);
-  const H = head;
-  const path = portrait ? [
-    { p: 0, pos: [H[0] - .5, H[1] - 1.2, H[2] - 1.9], tgt: [H[0] + .1, H[1] + .25, H[2] + 1], fov: 50 },
-    { p: .03, pos: [H[0] + 1.8, H[1] - 1.7, H[2] - .6], tgt: [H[0] - .2, H[1] + .3, H[2] + .2] },
-    { p: .06, pos: [H[0] + 1.7, H[1] - .9, H[2] + 1.9], tgt: [H[0] + .3, H[1] - .2, H[2]] },
-    { p: .12, pos: [H[0] + 2.2, 3.2, 8.5], tgt: [H[0] + 4, 2.6, 0] },
-    { p: .26, pos: [-43, 2.0, 10.5], tgt: [-38, 2.3, 0], fov: 58 },
-    { p: .44, pos: [-30, 1.8, 10.5], tgt: [-25, 2.2, 0] },
-    { p: .62, pos: [-17, 1.75, 10.5], tgt: [-12, 2.2, 0] },
-    { p: .78, pos: [-5, 1.72, 11.2], tgt: [-1, 2.3, 0] },
-    { p: .88, pos: [0, 1.72, 11.4], tgt: [0, 2.55, 0], fov: 58 },
-    { p: 1, pos: [0, 1.66, 6.4], tgt: [0, 1.9, -2], fov: 56 },
-  ] : [
-    { p: 0, pos: [H[0] - .5, H[1] - 1.1, H[2] - 2.1], tgt: [H[0] + 1.0, H[1] + .05, H[2] + 1], fov: 36 },   // le globe dans le tiers droit : le titre a la gauche
-    { p: .03, pos: [H[0] + 1.8, H[1] - 1.7, H[2] - .6], tgt: [H[0] - .2, H[1] + .3, H[2] + .2] },
-    { p: .06, pos: [H[0] + 1.7, H[1] - .9, H[2] + 1.9], tgt: [H[0] + .3, H[1] - .2, H[2]] },
-    { p: .12, pos: [H[0] + 1.8, 3.3, 8], tgt: [H[0] + 5, 2.6, 0] },
-    { p: .26, pos: [-44, 2.0, 8.6], tgt: [-36, 2.3, 0], fov: 42 },
-    { p: .44, pos: [-31, 1.8, 8.6], tgt: [-23, 2.2, 0] },
-    { p: .62, pos: [-18, 1.75, 8.6], tgt: [-10, 2.2, 0] },
-    { p: .78, pos: [-5.5, 1.72, 8.8], tgt: [-.8, 2.25, 0] },
-    { p: .88, pos: [0, 1.72, 9.4], tgt: [0, 2.3, 0], fov: 42 },
-    { p: 1, pos: [0, 1.66, 5.6], tgt: [0, 1.85, -2], fov: 44 },
-  ];
+  const path = camPath(portrait);
   return {
     path, fov: 42, bloom: [.42, .55, .9], exposure: .9,
     pins,
     after() { kit.dimEnv(g, .3, .45); },
     update(p) { T.openDoor(Math.min(1, Math.max(0, (p - .9) / .1))); },
   };
+}
+
+// La caméra, à part : render.html la suit, et tools/plist.mjs y place les images (autant de changement entre deux images).
+// L'ouverture : un seul tour autour du réverbère, à rayon croissant, le globe au centre ; puis le recul sur la rue.
+// (La v16 faisait ce tour en trois clés : la caméra frôlait le mur et l'image sautait.)
+export const HEAD = [-5 * 9.6 - 5.4, 4.6, 2.85];
+export function camPath(portrait) {
+  const H = HEAD, sm = x => x * x * (3 - 2 * x), mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+  const k0 = portrait ? { pos: [H[0] - .5, H[1] - 1.2, H[2] - 1.9], tgt: [H[0] + .1, H[1] + .25, H[2] + 1], fov: 50 }
+                      : { pos: [H[0] - .5, H[1] - 1.1, H[2] - 2.1], tgt: [H[0] + 1.0, H[1] + .05, H[2] + 1], fov: 36 };   // le globe dans le tiers droit : le titre à gauche
+  const k1 = portrait ? { pos: [H[0] + 2.2, 3.2, 8.5], tgt: [H[0] + 4, 2.6, 0], fov: 54 } : { pos: [H[0] + 1.8, 3.3, 8], tgt: [H[0] + 5, 2.6, 0], fov: 40 };
+  const ang = o => Math.atan2(o[2] - H[2], o[0] - H[0]), rad = o => Math.hypot(o[0] - H[0], o[2] - H[2]);
+  const th0 = ang(k0.pos), th1 = ang(k1.pos) - 2 * Math.PI, r0 = rad(k0.pos), r1 = rad(k1.pos);   // par le côté gauche, loin des stores
+  const globe = [H[0], H[1] - .15, H[2]], K = 10, keys = [{ p: 0, ...k0 }];
+  for (let j = 1; j < K; j++) {
+    const s = j / K, e = sm(s), th = th0 + (th1 - th0) * e, r = r0 + (r1 - r0) * e * e, y = k0.pos[1] + (k1.pos[1] - k0.pos[1]) * e;
+    const tgt = s < .3 ? mix(k0.tgt, globe, sm(s / .3)) : mix(globe, k1.tgt, sm((s - .3) / .7));
+    keys.push({ p: .12 * s, pos: [H[0] + r * Math.cos(th), y, H[2] + r * Math.sin(th)], tgt, fov: k0.fov + (k1.fov - k0.fov) * e });
+  }
+  keys.push({ p: .12, ...k1 });
+  return keys.concat(portrait ? [
+    { p: .26, pos: [-43, 2.0, 10.5], tgt: [-38, 2.3, 0], fov: 58 },
+    { p: .44, pos: [-30, 1.8, 10.5], tgt: [-25, 2.2, 0], fov: 58 },
+    { p: .62, pos: [-17, 1.75, 10.5], tgt: [-12, 2.2, 0], fov: 58 },
+    { p: .78, pos: [-5, 1.72, 11.2], tgt: [-1, 2.3, 0], fov: 58 },
+    { p: .88, pos: [0, 1.72, 11.4], tgt: [0, 2.55, 0], fov: 58 },
+    { p: 1, pos: [0, 1.66, 6.4], tgt: [0, 1.9, -2], fov: 56 },
+  ] : [
+    { p: .26, pos: [-44, 2.0, 8.6], tgt: [-36, 2.3, 0], fov: 42 },
+    { p: .44, pos: [-31, 1.8, 8.6], tgt: [-23, 2.2, 0], fov: 42 },
+    { p: .62, pos: [-18, 1.75, 8.6], tgt: [-10, 2.2, 0], fov: 42 },
+    { p: .78, pos: [-5.5, 1.72, 8.8], tgt: [-.8, 2.25, 0], fov: 42 },
+    { p: .88, pos: [0, 1.72, 9.4], tgt: [0, 2.3, 0], fov: 42 },
+    { p: 1, pos: [0, 1.66, 5.6], tgt: [0, 1.85, -2], fov: 44 },
+  ]);
 }

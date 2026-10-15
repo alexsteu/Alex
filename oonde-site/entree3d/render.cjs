@@ -1,8 +1,9 @@
 // node render.cjs --scene restaurant --w 1280 --h 800 --ss 2 --n 96 --out out/restaurant/d   (ou --p 0,.5,1 pour des images fixes)
+// --plist f.json : les positions des images (tools/plist.mjs), au lieu d'un pas régulier
 const { chromium } = require('playwright'); const sharp = require('sharp'); const fs = require('fs'); const path = require('path');
 const a = Object.fromEntries(process.argv.slice(2).join(' ').split('--').filter(Boolean).map(s => { const [k, ...v] = s.trim().split(' '); return [k, v.join(' ')]; }));
 const W = +a.w || 1280, H = +a.h || 800, SS = +a.ss || 1, out = a.out || 'out/test', fmt = a.fmt || 'webp', port = a.port || 8791;
-const ps = a.p ? a.p.split(',').map(Number) : Array.from({ length: +a.n || 96 }, (_, i) => i / ((+a.n || 96) - 1));
+const ps = a.plist ? JSON.parse(fs.readFileSync(a.plist, 'utf8')) : a.p ? a.p.split(',').map(Number) : Array.from({ length: +a.n || 96 }, (_, i) => i / ((+a.n || 96) - 1));
 const I0 = +a.from || 0, I1 = a.to !== undefined ? +a.to : ps.length;   // --from/--to : une tranche des images (rendus en parallèle)
 fs.mkdirSync(out, { recursive: true });
 (async () => {

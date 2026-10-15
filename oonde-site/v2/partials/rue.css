@@ -3,7 +3,7 @@
 .r{padding:0;background:#0d1024;color:#fff}
 .r-walk{position:relative;height:320vh;height:320svh}
 .r-anchor{position:absolute;left:0;top:60%;width:1px;height:1px;scroll-margin-top:var(--hh)}
-@media (max-aspect-ratio:1/1){.r-walk{height:240vh;height:240svh}}
+@media (max-aspect-ratio:1/1){.r-walk{height:280vh;height:280svh}}
 .r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
 .r-scene{position:absolute;inset:0}
 .r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
