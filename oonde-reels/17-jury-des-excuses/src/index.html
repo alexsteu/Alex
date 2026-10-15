@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel 17 · Le jury des excuses (v1)</title>
+<link rel="icon" href="data:,">
+<style>
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2');font-style:italic}
+:root{--paper:#F7F7F4;--ink:#111318;--ink2:#1A1D23;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+#cam{position:absolute;inset:0}
+.abs{position:absolute}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.t{position:absolute;left:80px;width:860px;font-weight:600;letter-spacing:-.035em;line-height:.98;opacity:0}
+.q{color:#F7F7F4}
+.q i{font-style:normal;color:#6B7078}
+.demo{position:absolute;font:500 26px/1 PM,monospace;letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border-radius:8px;white-space:nowrap;background:#F7F7F4;color:#3A3F47;border:2px solid #DCDED8}
+.bz{position:absolute;top:1318px;width:180px;height:150px}
+.bz .dome{position:absolute;left:22px;top:0;width:136px;height:70px;border-radius:70px 70px 0 0;background:#3A3F47}
+.bz .base{position:absolute;left:0;top:68px;width:180px;height:52px;border-radius:12px;background:#22252C;border:2px solid #3A3F47;box-sizing:border-box}
+.bz .lb{position:absolute;left:0;width:180px;top:132px;text-align:center;font:500 24px/1 PM,monospace;letter-spacing:.14em;color:#6B7078}
+.stamp{position:absolute;left:540px;z-index:6;padding:26px 44px;border-radius:14px;background:var(--klein);color:#fff;font:600 84px/1 PM,monospace;letter-spacing:.06em;white-space:nowrap;opacity:0;box-shadow:0 0 0 6px rgba(247,247,244,.9)}
+.card{position:absolute;background:#fff;border-radius:14px;box-sizing:border-box;overflow:hidden}
+#paper{position:absolute;inset:0;background:var(--paper);z-index:10;clip-path:circle(0px at 540px 600px)}
+.pt{color:var(--ink)}
+#phone{position:absolute;left:290px;top:640px;width:500px;height:860px;border:3px solid #C9CBC5;border-radius:56px;background:#fff;overflow:hidden;box-sizing:border-box;opacity:0}
+.blk{position:absolute;left:28px;right:28px;opacity:0}
+.row{display:flex;justify-content:space-between;font:500 30px/1 IS;color:#3A3F47;padding:14px 0;border-bottom:2px solid #ECEDE8}
+.row b{font-weight:600;color:#111318;font-variant-numeric:tabular-nums}
+.rc{position:absolute;left:80px;width:860px;height:118px;border-radius:14px;background:#fff;border:2px solid #DCDED8;box-sizing:border-box;display:flex;align-items:center;gap:26px;padding:0 30px;opacity:0;white-space:nowrap}
+.rc .n{font:600 64px/1 IS;color:var(--klein);width:40px;text-align:center}
+.rc .x{font:600 42px/1 IS;letter-spacing:-.02em;color:#111318;flex:1;min-width:0;overflow:hidden}
+.rc .m{font:600 44px/1 PM,monospace;color:#6B7078}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;display:none;z-index:99}
+.show-safe #safe{display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="cam">
+  <!-- projecteur + micro -->
+  <div id="spot" class="abs" style="left:190px;top:700px;width:700px;height:620px;border-radius:50%;background:radial-gradient(closest-side,rgba(247,247,244,.13),rgba(247,247,244,.05) 60%,rgba(247,247,244,0));z-index:1"></div>
+  <svg id="mic" class="abs" style="left:390px;top:800px;z-index:2;transform-origin:150px 460px" width="300" height="470" viewBox="0 0 300 470">
+    <rect x="148" y="250" width="5" height="190" fill="#4A4F58"/>
+    <ellipse cx="150" cy="446" rx="92" ry="16" fill="#2A2E36" stroke="#4A4F58" stroke-width="3"/>
+    <path d="M86 150 Q86 236 150 236 Q214 236 214 150" fill="none" stroke="#4A4F58" stroke-width="8" stroke-linecap="round"/>
+    <rect x="100" y="20" width="100" height="190" rx="50" fill="#2A2E36" stroke="#6B7078" stroke-width="4"/>
+    <g stroke="#4A4F58" stroke-width="3">
+      <line x1="112" y1="56" x2="188" y2="56"/><line x1="104" y1="80" x2="196" y2="80"/><line x1="102" y1="104" x2="198" y2="104"/><line x1="102" y1="128" x2="198" y2="128"/>
+      <line x1="150" y1="28" x2="150" y2="140"/><line x1="125" y1="34" x2="125" y2="140"/><line x1="175" y1="34" x2="175" y2="140"/>
+    </g>
+    <rect x="100" y="148" width="100" height="14" fill="#2038EC"/>
+  </svg>
+
+  <!-- en-tête -->
+  <div id="hud" class="abs" style="left:80px;top:258px;width:860px;height:90px;z-index:4">
+    <div class="mono abs" style="left:0;top:34px;font-size:30px;color:#9AA0A8">Le jury des excuses</div>
+    <div class="abs" style="right:0;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
+      <span class="mono" style="font-size:30px;color:#9AA0A8">Excuse</span>
+      <span id="cnt" style="display:inline-block;font:600 92px/1 IS;letter-spacing:-.03em;color:var(--klein);transform-origin:50% 70%">1</span>
+      <span style="font:600 52px/1 IS;color:#6B7078">/4</span>
+    </div>
+  </div>
+
+  <div id="ttl" class="t q" style="top:440px;font-size:138px">Le jury<br>des excuses.</div>
+  <div id="q1" class="t q" style="top:440px;font-size:104px"><i>«&nbsp;</i>Mon neveu va me le faire.<i>&nbsp;»</i></div>
+  <div id="q2" class="t q" style="top:440px;font-size:96px"><i>«&nbsp;</i>J’ai une page Facebook, ça suffit.<i>&nbsp;»</i></div>
+  <div id="q3" class="t q" style="top:440px;font-size:118px"><i>«&nbsp;</i>J’ai pas le temps.<i>&nbsp;»</i></div>
+  <div id="q4" class="t q" style="top:430px;font-size:88px"><i>«&nbsp;</i>Je sais même pas à quoi ça ressemblerait.<i>&nbsp;»</i></div>
+  <div id="stX" class="stamp">✕ REFUSÉE</div>
+  <div id="stV" class="stamp">✓ ACCEPTÉE</div>
+
+  <!-- 1 : calendrier -->
+  <div id="cal" class="card" style="left:250px;top:830px;width:580px;height:400px;opacity:0;z-index:3">
+    <div class="abs" style="left:0;top:0;right:0;height:84px;background:#ECEDE8"></div>
+    <div class="abs" style="left:110px;top:22px;width:22px;height:40px;border-radius:11px;background:#111318"></div>
+    <div class="abs" style="right:110px;top:22px;width:22px;height:40px;border-radius:11px;background:#111318"></div>
+    <div class="mono abs" style="left:0;right:0;top:30px;text-align:center;font-size:28px;color:#3A3F47">2026</div>
+    <div id="mon" class="abs" style="left:0;right:0;top:140px;text-align:center;font:600 110px/1 IS;letter-spacing:-.035em;color:#111318">Janvier</div>
+    <div class="mono abs" style="left:0;right:0;top:300px;text-align:center;font-size:30px;color:#3A3F47">Le site&nbsp;: <span id="calst">en cours…</span></div>
+  </div>
+
+  <!-- 2 : recherche -->
+  <div id="srch" class="card" style="left:120px;top:810px;width:840px;height:440px;opacity:0;z-index:3">
+    <div class="abs" style="left:30px;top:30px;right:30px;height:92px;border-radius:46px;border:3px solid #DCDED8;box-sizing:border-box"></div>
+    <svg class="abs" style="left:60px;top:54px" width="44" height="44" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5" stroke="#3A3F47" stroke-width="2.6" fill="none"/><path d="M15 15l5.5 5.5" stroke="#3A3F47" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div class="abs" style="left:124px;top:56px;font:500 40px/1 IS;color:#111318;white-space:nowrap"><span id="sq"></span><span id="sca" style="display:inline-block;width:3px;height:42px;background:#2038EC;vertical-align:-6px;margin-left:3px"></span></div>
+    <div class="abs" style="left:30px;top:150px;font:600 52px/1 IS;letter-spacing:-.02em;color:#111318">Ton resto</div>
+    <div class="demo" style="right:30px;top:154px">Démo · lieu fictif</div>
+    <div id="sr1" class="abs" style="left:30px;right:30px;top:230px;display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:2px solid #ECEDE8;font:500 44px/1 IS;color:#3A3F47">Horaires<span id="sr1v" style="font:600 64px/1 IS;color:#2038EC">?</span></div>
+    <div id="sr2" class="abs" style="left:30px;right:30px;top:332px;display:flex;justify-content:space-between;align-items:center;padding:22px 0;font:500 44px/1 IS;color:#3A3F47">Site web<span style="font:600 48px/1 IS;color:#9AA0A8">—</span></div>
+  </div>
+
+  <!-- 3 : chrono + message -->
+  <div id="chr" class="abs" style="left:90px;top:840px;width:840px;height:400px;opacity:0;z-index:3">
+    <svg class="abs" style="left:0;top:0" width="400" height="400" viewBox="0 0 400 400">
+      <rect x="180" y="0" width="40" height="30" rx="6" fill="#4A4F58"/>
+      <circle cx="200" cy="215" r="165" fill="#1A1D23" stroke="#3A3F47" stroke-width="18"/>
+      <circle id="arc" cx="200" cy="215" r="165" fill="none" stroke="#2038EC" stroke-width="18" stroke-linecap="round" transform="rotate(-90 200 215)" stroke-dasharray="0 1037"/>
+    </svg>
+    <div id="sec" class="abs" style="left:0;top:150px;width:400px;text-align:center;font:600 120px/1 IS;letter-spacing:-.04em;color:#F7F7F4;font-variant-numeric:tabular-nums">0 s</div>
+    <div id="bub" class="abs" style="left:430px;top:120px;width:400px;opacity:0">
+      <div class="mono" style="font-size:24px;color:#9AA0A8;margin-bottom:14px">Toi · WhatsApp</div>
+      <div style="padding:30px 32px;border-radius:30px 30px 8px 30px;background:#14803C;color:#fff;font:600 56px/1 IS;letter-spacing:-.02em"><span id="bt"></span></div>
+      <div id="bok" class="mono" style="margin-top:16px;text-align:right;font-size:26px;color:#9AA0A8;opacity:0">✓ Envoyé</div>
+    </div>
+  </div>
+
+  <!-- le jury : trois buzzers -->
+  <div id="desk" class="abs" style="left:0;top:0;width:1080px;height:1920px;z-index:4;pointer-events:none">
+    <div class="bz" id="b0" style="left:110px"><div class="dome"></div><div class="base"></div><div class="lb">JURÉ 1</div></div>
+    <div class="bz" id="b1" style="left:450px"><div class="dome"></div><div class="base"></div><div class="lb">JURÉ 2</div></div>
+    <div class="bz" id="b2" style="left:750px"><div class="dome"></div><div class="base"></div><div class="lb">JURÉ 3</div></div>
+  </div>
+  <div id="flash" class="abs" style="inset:0;background:#F7F7F4;opacity:0;z-index:7"></div>
+</div>
+
+<!-- ========== bascule papier ========== -->
+<div id="paper">
+  <div id="p1" class="t pt" style="top:280px;font-size:136px">On te<br>la fait.</div>
+  <div id="p2" class="t pt" style="top:280px;font-size:136px">La maquette&nbsp;?<br><span style="color:var(--klein)">Gratuite.</span></div>
+  <div id="p3" class="t pt" style="top:280px;font-size:118px">Tu la vois<br>avant de payer.</div>
+  <div id="phone">
+    <div class="abs" style="left:40px;top:24px;font:600 28px/1 IS;color:#111318">22:00</div>
+    <div class="demo" style="left:28px;top:76px;font-size:24px">Démo · lieu fictif</div>
+    <div class="blk" id="s0" style="top:140px"><div style="font:italic 400 66px/1 CG;color:#111318">Trattoria</div><div style="font:italic 400 66px/1 CG;color:#111318">Nonna Pia</div><div class="mono" style="margin-top:12px;font-size:24px;color:#6B7078">Morges · cuisine italienne</div></div>
+    <div class="blk" id="s1" style="top:350px;height:170px;border-radius:14px;background:linear-gradient(135deg,#E9E1D2,#D9CBB3);overflow:hidden">
+      <div class="abs" style="left:40px;top:38px;width:94px;height:94px;border-radius:50%;background:#F4EEE3"></div>
+      <div class="abs" style="left:76px;top:70px;width:22px;height:22px;border-radius:50%;background:#C8452E"></div>
+      <div class="abs" style="left:170px;top:52px;width:220px;height:18px;border-radius:6px;background:#F4EEE3"></div>
+      <div class="abs" style="left:170px;top:90px;width:160px;height:18px;border-radius:6px;background:#F4EEE3"></div>
+    </div>
+    <div class="blk" id="s2" style="top:548px"><div class="mono" style="font-size:24px;color:#6B7078;margin-bottom:4px">Horaires</div>
+      <div class="row">Mar – Ven<b>11:30 – 22:00</b></div><div class="row" style="border:0">Sam – Dim<b>18:00 – 23:00</b></div></div>
+    <div class="blk" id="s3" style="top:730px;height:88px;border-radius:16px;background:#111318;color:#fff;font:600 32px/88px IS;text-align:center;white-space:nowrap"><svg width="40" height="40" viewBox="0 0 32 32" style="vertical-align:-10px;margin-right:10px"><circle cx="16" cy="16" r="16" fill="#14803C"/><path d="M9.5 22.5l1-3.6a7.3 7.3 0 1 1 2.7 2.6zm3.3-11.1c-.4 0-.9.2-1.1.7-.5 1-.4 2.3.8 3.9 1.3 1.7 2.8 2.8 4.6 3.4 1.2.4 2 .1 2.5-.6.3-.4.3-.8.2-.9l-1.9-.9c-.2-.1-.4 0-.5.2l-.6.8c-.1.1-.3.2-.5.1a6 6 0 0 1-2.9-2.6c-.1-.2 0-.3.1-.4l.5-.6c.1-.2.1-.4 0-.6l-.8-1.9c-.1-.4-.3-.6-.4-.6z" fill="#fff"/></svg>Écrire sur WhatsApp</div>
+  </div>
+  <div id="toast" class="abs" style="left:60px;width:880px;top:600px;height:190px;border-radius:40px;background:#fff;box-shadow:0 24px 60px rgba(17,19,24,.16);border:2px solid #DCDED8;box-sizing:border-box;opacity:0;z-index:8"><div class="abs" style="left:34px;top:40px;width:110px;height:110px;border-radius:50%;background:#14803C"></div><div class="abs" style="left:174px;top:42px;font:600 44px/1.2 IS;color:#111318">OONDE · WhatsApp</div><div class="abs" style="left:174px;top:104px;font:500 48px/1.2 IS;color:#3A3F47">Ta maquette est prête</div></div>
+
+  <!-- récap -->
+  <div id="rt" class="t pt" style="top:270px;font-size:116px">Laquelle t’as<br>déjà dite&nbsp;?</div>
+  <div class="rc" id="r0" style="top:560px"><span class="n">1</span><span class="x">Mon neveu va me le faire.</span><span class="m">✕</span></div>
+  <div class="rc" id="r1" style="top:694px"><span class="n">2</span><span class="x">J’ai une page Facebook.</span><span class="m">✕</span></div>
+  <div class="rc" id="r2" style="top:828px"><span class="n">3</span><span class="x">J’ai pas le temps.</span><span class="m">✕</span></div>
+  <div class="rc" id="r3" style="top:962px;border-color:#2038EC"><span class="n">4</span><span class="x">Je sais pas à quoi ça ressemble.</span><span class="m" style="color:#2038EC">✓</span></div>
+  <div id="rep" class="abs" style="left:80px;top:1130px;width:860px;opacity:0;font:600 78px/1.05 IS;letter-spacing:-.03em;color:var(--klein)">Réponds avec<br>le numéro <span id="rarr" style="display:inline-block">↓</span></div>
+
+  <!-- final -->
+  <div id="end" class="abs" style="left:100px;top:300px;width:880px;opacity:0">
+    <div id="e2" style="width:880px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:22px;padding:58px 0;border-radius:32px;background:var(--ink);color:#fff;font:600 86px/1 IS;letter-spacing:-.025em;white-space:nowrap;transform-origin:50% 50%">
+      <svg width="96" height="96" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#14803C"/><path d="M9.5 22.5l1-3.6a7.3 7.3 0 1 1 2.7 2.6zm3.3-11.1c-.4 0-.9.2-1.1.7-.5 1-.4 2.3.8 3.9 1.3 1.7 2.8 2.8 4.6 3.4 1.2.4 2 .1 2.5-.6.3-.4.3-.8.2-.9l-1.9-.9c-.2-.1-.4 0-.5.2l-.6.8c-.1.1-.3.2-.5.1a6 6 0 0 1-2.9-2.6c-.1-.2 0-.3.1-.4l.5-.6c.1-.2.1-.4 0-.6l-.8-1.9c-.1-.4-.3-.6-.4-.6z" fill="#fff"/></svg>
+      Écris MAQUETTE</div>
+    <div id="e3" style="margin-top:44px;width:880px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:16px;padding:44px 0;border-radius:70px;border:6px solid var(--ink);background:#fff;font:600 64px/1 IS;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;transform-origin:50% 50%"><span id="e3wa">sur WhatsApp</span> · lien en bio
+      <svg width="56" height="56" viewBox="0 0 24 24"><path d="M6 18L18 6M9 6h9v9" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div id="e5" style="margin-top:44px;text-align:center;font:600 64px/1.1 IS;letter-spacing:-.025em;color:var(--klein)">Plus d’excuse.</div>
+    <div id="e4" style="margin-top:72px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:116px" alt=""><span style="font:600 52px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 44px/1 IS;color:var(--soft)">Studio web · Suisse romande</span></div>
+  </div>
+  <img id="logo1" class="abs" src="/_kit/brand/logo.svg" style="left:340px;top:820px;width:400px;opacity:0" alt="">
+</div>
+<div id="fade" class="abs" style="inset:0;background:var(--ink);opacity:0;z-index:20"></div>
+<div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => b <= a ? (t >= a ? 1 : 0) : clamp((t - a) / (b - a));
+const expo = t => t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+const E_back = x => { const c = 1.70158; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const kick = (t, a, d = .22) => (t < a ? 0 : Math.max(0, 1 - seg(t, a, a + d)));
+
+function title(el, t, a, b, o = {}) {
+  if (!(t >= a && t < b)) { el.style.opacity = 0; return 0; }
+  const p = expo(seg(t, a, a + (o.d || .14))), q = E_back(seg(t, a, a + .22));
+  const sc = lerp(o.s0 ?? .84, 1, q) + (o.punch || 0) * kick(t, a + .1, .3);
+  el.style.opacity = clamp(seg(t, a, a + .034)) * (o.op ?? 1);
+  el.style.transformOrigin = o.origin || '0 50%';
+  el.style.transform = `translate(0px,${(o.dy ?? 30) * (1 - p)}px) scale(${sc})`;
+  return p;
+}
+// objet qui entre (rebond) et sort (glisse vers le bas)
+function obj(el, t, a, b, o = {}) {
+  if (!(t >= a && t < b + .16)) { el.style.opacity = 0; return; }
+  const i = E_back(seg(t, a, a + .26)), u = expo(seg(t, b, b + .16));
+  el.style.opacity = clamp(seg(t, a, a + .05)) * (1 - u);
+  el.style.transform = `translateY(${(1 - i) * 60 + u * 80}px) scale(${lerp(.86, 1, i) - .06 * u}) rotate(${(o.rot || 0) * (1 - u)}deg)`;
+}
+
+// temps calés sur la voix (voix.wav, Whisper small)
+const T = {
+  q1: 1.10, d1: 2.20, jan: 2.68, b1: 3.02,
+  n2: 3.40, q2: 3.96, d2: 5.48, pas2: 7.66, b2: 7.98,
+  n3: 8.28, q3: 8.90, d3: 9.68, sec: 10.74, b3: 11.12,
+  n4: 11.56, q4: 12.22, ah: 13.94, cel: 14.40, onte: 14.86,
+  maq: 15.38, grat: 15.80, avant: 16.34, alors: 17.54, rep: 18.84, ecris: 19.82, wa: 20.74,
+  logo: 22.60, fade: 23.45, end: 23.80
+};
+window.DURATION = T.end;
+const BUZZ = [T.b1, T.b2, T.b3];
+const QS = [[T.q1, T.q2 - .3], [T.q2, T.q3 - .3], [T.q3, T.q4 - .3], [T.q4, T.onte + .1]];
+const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre'];
+
+function render(t) {
+  // ---------- secousse + flash sur chaque buzz ----------
+  let sh = 0, fl = 0;
+  for (const b of BUZZ) { const k = kick(t, b, .32); sh += k; fl += kick(t, b, .1); }
+  const kv = kick(t, T.cel, .3);
+  const sx = 16 * sh * Math.sin(t * 95), sy = 10 * sh * Math.cos(t * 77);
+  $('#cam').style.transform = `translate(${sx}px,${sy}px) scale(${1 + .012 * sh + .02 * kv})`;
+  $('#flash').style.opacity = .16 * fl + .1 * kick(t, T.cel, .12);
+
+  // ---------- compteur ----------
+  const n = t < T.n2 ? 1 : t < T.n3 ? 2 : t < T.n4 ? 3 : 4;
+  $('#cnt').textContent = n;
+  const ck = Math.max(kick(t, T.n2, .35), kick(t, T.n3, .35), kick(t, T.n4, .35));
+  $('#cnt').style.transform = `scale(${1 + .55 * E_back(clamp(ck))})`;
+
+  // ---------- accroche ----------
+  title($('#ttl'), t, -1, T.q1 - .02, { op: 1 });
+  if (t < T.q1) { $('#ttl').style.transform = `scale(${1 + .015 * Math.sin(t * 6)})`; }
+
+  // ---------- citations ----------
+  const qe = ['#q1', '#q2', '#q3', '#q4'];
+  QS.forEach(([a, b], i) => {
+    const bt = i < 3 ? BUZZ[i] : T.cel;
+    const p = title($(qe[i]), t, a, b, { punch: .03 });
+    if (p && t >= bt) $(qe[i]).style.opacity = lerp(1, i < 3 ? .32 : .55, seg(t, bt, bt + .12));
+  });
+
+  // ---------- tampons ----------
+  const st = (el, a, b, top) => {
+    if (!(t >= a && t < b)) { el.style.opacity = 0; return; }
+    const s = E_back(seg(t, a, a + .18)), out = seg(t, b - .1, b);
+    el.style.top = top + 'px';
+    el.style.opacity = clamp(seg(t, a, a + .04)) * (1 - out);
+    el.style.transform = `translate(-50%,-50%) rotate(-7deg) scale(${lerp(1.9, 1, s)})`;
+  };
+  const qmid = i => 440 + $(qe[i]).offsetHeight / 2;
+  let sx0 = null;
+  for (let i = 0; i < 3; i++) if (t >= BUZZ[i] && t < QS[i][1]) { st($('#stX'), BUZZ[i], QS[i][1], qmid(i)); sx0 = 1; }
+  if (!sx0) $('#stX').style.opacity = 0;
+  st($('#stV'), T.cel, T.onte + .4, qmid(3) - 10);
+
+  // ---------- micro : présent pendant chaque citation ----------
+  const micOn = [[-1, T.d1], [T.q2 - .3, T.d2], [T.q3 - .3, T.d3], [T.q4 - .3, T.onte + .2]];
+  let mo = 0, mbump = 0;
+  for (const [a, b] of micOn) if (t >= a && t < b + .16) {
+    const i = a < 0 ? 1 : E_back(seg(t, a, a + .28)), u = expo(seg(t, b, b + .16));
+    mo = (a < 0 ? 1 : clamp(seg(t, a, a + .06))) * (1 - u);
+    mbump = (1 - i) * 80 + u * 60;
+  }
+  const breath = 1 + .012 * Math.sin(t * 5.2);
+  $('#mic').style.opacity = mo;
+  $('#mic').style.transform = `translateY(${mbump}px) scale(${breath})`;
+  $('#spot').style.opacity = .5 + .5 * mo;
+
+  // ---------- 1 : calendrier ----------
+  obj($('#cal'), t, T.d1, T.q2 - .3, { rot: -2 });
+  let mi = 0;
+  if (t >= T.jan + .12) mi = Math.min(9, Math.floor((t - (T.jan + .12)) / .024));
+  $('#mon').textContent = MONTHS[mi];
+  $('#mon').style.color = mi === 9 ? '#2038EC' : '#111318';
+  $('#mon').style.transform = `translateY(${mi > 0 && mi < 9 ? -6 : 0}px)`;
+  $('#calst').textContent = mi === 9 ? 'toujours en cours…' : 'en cours…';
+
+  // ---------- 2 : recherche ----------
+  obj($('#srch'), t, T.d2, T.q3 - .3);
+  const SQ = 'ton resto horaires';
+  const nq = Math.floor(clamp((t - T.d2 - .15) * 22, 0, SQ.length));
+  $('#sq').textContent = SQ.slice(0, nq);
+  $('#sca').style.opacity = nq < SQ.length ? 1 : (Math.floor(t * 4) % 2 ? 0 : 1);
+  const r1 = E_back(seg(t, 6.40, 6.62)), r2 = E_back(seg(t, 6.62, 6.84));
+  $('#sr1').style.opacity = clamp(seg(t, 6.40, 6.46)); $('#sr1').style.transform = `translateY(${(1 - r1) * 30}px)`;
+  $('#sr2').style.opacity = clamp(seg(t, 6.62, 6.68)); $('#sr2').style.transform = `translateY(${(1 - r2) * 30}px)`;
+  $('#sr1v').style.transform = `scale(${1 + .5 * kick(t, T.pas2 - .3, .35) + .35 * kick(t, 7.2, .3)})`;
+  $('#sr1v').style.display = 'inline-block';
+
+  // ---------- 3 : chrono ----------
+  obj($('#chr'), t, T.d3 - .05, T.q4 - .3);
+  const sp = clamp(seg(t, T.d3 + .08, T.sec));
+  $('#arc').setAttribute('stroke-dasharray', `${(sp * 1037).toFixed(1)} 1037`);
+  $('#sec').textContent = Math.round(sp * 10) + ' s';
+  $('#sec').style.color = sp >= 1 ? '#F7F7F4' : '#F7F7F4';
+  $('#sec').style.transform = `scale(${1 + .18 * kick(t, T.sec, .3)})`;
+  const bb = E_back(seg(t, 9.95, 10.2));
+  $('#bub').style.opacity = clamp(seg(t, 9.95, 10.0)); $('#bub').style.transform = `translateY(${(1 - bb) * 40}px) scale(${lerp(.85, 1, bb)})`;
+  const BT = 'MAQUETTE';
+  $('#bt').textContent = BT.slice(0, Math.floor(clamp((t - 10.05) * 20, 0, BT.length))) || ' ';
+  $('#bok').style.opacity = t >= T.sec - .05 ? 1 : 0;
+
+  // ---------- buzzers ----------
+  for (let j = 0; j < 3; j++) {
+    const d = $('#b' + j + ' .dome');
+    let lit = 0, press = 0;
+    // test des lumières dans l'accroche
+    lit = Math.max(lit, kick(t, .30 + j * .16, .2));
+    for (const b of BUZZ) { const bj = b - (j === 1 ? 0 : .03 * j); lit = Math.max(lit, t >= bj && t < bj + .55 ? 1 - .5 * seg(t, bj + .25, bj + .55) : 0); press = Math.max(press, kick(t, bj, .16)); }
+    // excuse 4 : hésitation, puis acceptée
+    if (t >= T.ah - .2 && t < T.cel) lit = Math.max(lit, .25 + .2 * Math.sin((t - T.ah) * 30 + j));
+    if (t >= T.cel - .04 * j && t < T.onte + .4) { lit = 1; press = Math.max(press, kick(t, T.cel - .04 * j, .16)); }
+    d.style.background = lit > .02 ? `rgb(${lerp(58, 32, lit)},${lerp(63, 56, lit)},${lerp(71, 236, lit)})` : '#3A3F47';
+    d.style.boxShadow = lit > .02 ? `0 0 ${50 * lit}px ${10 * lit}px rgba(32,56,236,${.55 * lit})` : 'none';
+    d.style.transform = `translateY(${14 * press}px) scaleY(${1 - .18 * press})`;
+    d.style.transformOrigin = '50% 100%';
+  }
+
+  // ---------- bascule papier depuis le tampon ----------
+  const ir = expo(seg(t, T.onte, T.onte + .38));
+  const cy = qmid(3) - 10;
+  $('#paper').style.clipPath = `circle(${ir * 2300}px at 540px ${cy}px)`;
+
+  // ---------- partie papier ----------
+  title($('#p1'), t, T.onte + .03, T.maq, { punch: .04 });
+  title($('#p2'), t, T.maq, T.avant, { punch: .03 });
+  title($('#p3'), t, T.avant, T.alors);
+  const ph = $('#phone');
+  const pin = E_back(seg(t, T.onte + .06, T.onte + .36)), pout = expo(seg(t, T.alors - .05, T.alors + .15));
+  ph.style.opacity = t >= T.onte + .06 && t < T.alors + .15 ? clamp(seg(t, T.onte + .06, T.onte + .1)) * (1 - pout) : 0;
+  ph.style.transform = `translateY(${(1 - pin) * 300 + pout * 200}px) scale(${lerp(.9, 1, pin)})`;
+  ['#s0', '#s1', '#s2', '#s3'].forEach((s, i) => {
+    const a = T.onte + .3 + i * .16, p = E_back(seg(t, a, a + .25));
+    $(s).style.opacity = clamp(seg(t, a, a + .05));
+    $(s).style.transform = `translateY(${(1 - p) * 40}px)`;
+  });
+  $('#s3').style.transform += ` scale(${1 + .05 * kick(t, T.grat, .3)})`;
+  const tq = E_back(seg(t, T.avant + .2, T.avant + .45));
+  $('#toast').style.opacity = t >= T.avant + .2 && t < T.alors ? clamp(tq * 2) : 0;
+  $('#toast').style.transform = `translateY(${(1 - clamp(tq)) * -280}px) scale(${lerp(.9, 1, tq)})`;
+
+  // ---------- récap ----------
+  title($('#rt'), t, T.alors, T.ecris);
+  for (let i = 0; i < 4; i++) {
+    const a = T.alors + .12 + i * .12, p = E_back(seg(t, a, a + .24)), el = $('#r' + i);
+    el.style.opacity = t >= a && t < T.ecris ? clamp(seg(t, a, a + .05)) : 0;
+    el.style.transform = `translateX(${(1 - p) * 120}px)`;
+  }
+  const rp = E_back(seg(t, T.rep, T.rep + .25));
+  $('#rep').style.opacity = t >= T.rep && t < T.ecris ? clamp(rp * 2) : 0;
+  $('#rep').style.transform = `translateY(${(1 - clamp(rp)) * 30}px)`;
+  $('#rarr').style.transform = `translateY(${12 * Math.abs(Math.sin((t - T.rep) * Math.PI * 2.4))}px)`;
+
+  // ---------- final ----------
+  const EN = $('#end');
+  EN.style.top = (250 + (1250 - EN.offsetHeight) / 2) + 'px';
+  EN.style.left = '60px';
+  const endOn = t >= T.ecris && t < T.logo + .15;
+  EN.style.opacity = endOn ? 1 - expo(seg(t, T.logo, T.logo + .15)) : 0;
+  if (endOn) {
+    const b = E_back(seg(t, T.ecris, T.ecris + .32));
+    $('#e2').style.transform = `translateY(${(1 - b) * -700}px) scale(${1 + .03 * kick(t, T.ecris + .3, .25)})`;
+    const c = E_back(seg(t, T.ecris + .3, T.ecris + .55));
+    $('#e3').style.opacity = t >= T.ecris + .3 ? 1 : 0;
+    const pl = kick(t, T.wa, .35) + .8 * kick(t, T.wa + .6, .35) + .6 * kick(t, T.wa + 1.2, .35);
+    $('#e3').style.transform = `translateY(${(1 - clamp(c)) * 30}px) scale(${lerp(.9, 1, clamp(c)) + .02 * pl})`;
+    $('#e3').style.boxShadow = t >= T.wa ? `0 0 0 ${4 * pl}px rgba(32,56,236,.9), 0 0 ${12 * pl}px rgba(32,56,236,.45)` : 'none';
+    $('#e3').style.borderColor = t >= T.wa ? '#2038EC' : '#111318';
+    $('#e3wa').style.color = t >= T.wa && t < T.wa + .8 ? '#2038EC' : '#111318';
+    const e5 = E_back(seg(t, T.ecris + .5, T.ecris + .75));
+    $('#e5').style.opacity = t >= T.ecris + .5 ? clamp(e5 * 2) : 0; $('#e5').style.transform = `translateY(${(1 - clamp(e5)) * 30}px)`;
+    const lq = expo(seg(t, T.ecris + .15, T.ecris + .4)); $('#e4').style.opacity = lq; $('#e4').style.transform = `translateY(${(1 - lq) * 30}px)`;
+  }
+  const lg = E_back(seg(t, T.logo + .05, T.logo + .35));
+  $('#logo1').style.opacity = t >= T.logo + .05 ? clamp(lg * 2) : 0;
+  $('#logo1').style.transform = `scale(${lerp(.8, 1, lg)})`;
+  $('#fade').style.opacity = seg(t, T.fade, T.end - .03);
+}
+window.render = render;
+
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('600 20px PM'), document.fonts.load('500 40px IS'), document.fonts.load('italic 400 40px CG')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>
