@@ -64,7 +64,7 @@ for j in range(3): add(FX,tick(1800+300*j,.7),.30+j*.16)
 for b in BUZZ:
     add(BZ,buzzer(.5),b,.55); add(BZ,kick(),b,.5)
 for q in (1.10,3.96,8.90,12.22): add(FX,whoosh(.3),q-.15,.3)
-for d in (2.20,5.48,9.63): add(FX,whoosh(.3),d-.15,.35)
+for d in (2.20,5.48,9.63): add(FX,whoosh(.3),d-.15,.2)
 for n in (3.40,8.28,11.56): add(FX,tick(1600,.8),n); add(FX,tick(2400,.6),n+.06)
 for i in range(10): add(FX,flip(),2.80+i*.024)
 for i in range(18): add(FX,tick(3000,.25),5.63+i*.045)          # frappe recherche
@@ -74,14 +74,14 @@ for i in range(8): add(FX,tick(3000,.25),10.05+i*.05)
 add(FX,tick(1500,.8),10.70)
 # excuse 4 : suspense puis acceptée
 for i in range(6): add(FX,tick(700+60*i,.3),13.75+i*.1)
-add(BZ,ding(),CEL,.5); add(BZ,hit(),CEL,.4)
-add(FX,whoosh(.4),ONTE-.1,.45); add(FX,hit(),ONTE+.05,.6)
+add(BZ,ding(),CEL,.35); add(BZ,hit(),CEL,.3)
+add(FX,whoosh(.4),ONTE-.1,.45); add(FX,hit(),ONTE+.05,.35)
 for i in range(4): add(FX,tick(1800,.5),ONTE+.3+i*.16)
 add(FX,hit(),15.80,.5)                                            # « Gratuite. »
 add(FX,whoosh(.3,False),16.54,.35); add(FX,tick(2200,.7),16.70)   # notification
 for i in range(4): add(FX,whoosh(.2),17.66+i*.12,.2)
 add(FX,tick(1500,.8),18.84)
-add(FX,whoosh(.35,False),19.82,.4); add(FX,hit(),20.12,.7)
+add(FX,whoosh(.35,False),19.82,.4); add(FX,hit(),20.12,.4)
 for tt in (20.74,21.34,21.94): add(FX,tick(1800,.6),tt)
 add(FX,ding(),22.65,.35)
 v=np.frombuffer(subprocess.run(['ffmpeg','-v','error','-i',sys.argv[1],'-ac','1','-ar',str(SR),'-f','f32le','-'],capture_output=True).stdout,np.float32)
