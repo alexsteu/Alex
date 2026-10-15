@@ -81,7 +81,7 @@ add(FX,hit(),15.80,.4)
 add(FX,whoosh(.3,False),16.54,.35); add(FX,tick(2200,.7),16.70)   # notification
 for i in range(4): add(FX,whoosh(.2),17.66+i*.12,.2)
 add(FX,tick(1500,.8),18.84)
-add(FX,whoosh(.35,False),19.68,.35); add(FX,hit(),19.90,.4); add(FX,tick(1500,.7),20.02)
+add(FX,whoosh(.35,False),19.88,.35); add(FX,hit(),20.10,.4); add(FX,tick(1500,.7),20.22)
 for tt in (20.84,21.44,22.04): add(FX,tick(1800,.6),tt)
 for i in range(4): add(FX,tick(1300+200*i,.45),18.94+i*.15)
 add(FX,tick(2600,.6),19.45)
