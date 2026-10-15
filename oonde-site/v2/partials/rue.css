@@ -22,7 +22,8 @@
 /* les textes posés sur la scène */
 .r-tx{position:absolute;z-index:3;pointer-events:none;left:clamp(16px,5cqw,72px);right:clamp(16px,5cqw,72px)}
 .r-tx a,.r-tx button,.r-tx input,.r-tx label{pointer-events:auto}
-.r-t1{top:clamp(24px,12cqh,120px);max-width:16em}
+.r-t1{top:auto;bottom:clamp(40px,16cqh,150px)}
+.r-t1 h1{max-width:12.5em}
 .r-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.16em;color:rgba(255,255,255,.72)}
 .r-t1 h1{font:600 clamp(34px,5.6cqw,78px)/1.02 var(--sans);letter-spacing:-.03em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,20,.5)}
 .r-t1 h1 .w{display:inline-block;opacity:0;translate:0 .35em;filter:blur(6px);transition:opacity .7s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1),filter .7s}
@@ -34,7 +35,7 @@
 /* un seul choix du métier : celui de la rue ; l'entrée plus bas garde le nom et la couleur */
 #eAct{display:none}
 /* l'arrêt : l'enseigne est à vous */
-.r-stop{bottom:clamp(16px,5cqh,48px);opacity:0;visibility:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:14px 40px;align-items:end;background:rgba(10,12,32,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px 24px;max-width:1080px;margin:0 auto}
+.r-stop{bottom:clamp(16px,5cqh,48px);opacity:0;visibility:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr);gap:14px 36px;align-items:end;background:rgba(10,12,32,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px 24px;max-width:1080px;margin:0 auto}
 .r-stop.on{visibility:visible}
 .r-stop .mono{font:500 11px var(--mono);letter-spacing:.16em;color:rgba(255,255,255,.66)}
 .r-stop label{display:block;font:600 clamp(20px,2cqw,26px)/1.15 var(--sans);letter-spacing:-.015em;margin:8px 0 12px}
@@ -42,7 +43,7 @@
 .r-stop input::placeholder{color:rgba(255,255,255,.5)}
 .r-stop input:focus{outline:none;border-color:#8f9cff;box-shadow:0 0 0 4px rgba(91,108,255,.3)}
 .r-q{font:600 clamp(20px,2cqw,26px)/1.15 var(--sans);letter-spacing:-.015em}
-.r-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.r-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
 .r-chips a{min-height:44px;display:inline-flex;align-items:center;padding:8px 15px;border-radius:99px;background:#fff;color:var(--ink);font:600 15px var(--sans);text-decoration:none;transition:background .15s,transform .15s}
 .r-chips a:hover{background:#dfe3ff;transform:translateY(-1px)}
 .r-chips a:focus-visible{outline:3px solid #8f9cff;outline-offset:2px}
@@ -56,7 +57,7 @@
 @keyframes r-cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 /* téléphone : le titre en haut, l'arrêt en bas, plein large */
 @container (max-aspect-ratio:1/1){
- .r-t1{top:20px}
+ .r-t1{top:20px;bottom:auto}
  .r-t1 h1{font-size:min(40px,10.4cqw)}
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:22px}
  .r-stop{grid-template-columns:1fr;gap:10px;padding:16px;left:10px;right:10px;bottom:10px;border-radius:16px}

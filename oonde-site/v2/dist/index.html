@@ -488,93 +488,87 @@ html:not(.js) .e-try{display:none}
 }
 @media (max-height:700px){.e-walk .c1 .w-h{font-size:min(28px,7.6cqw)}.e-walk .c1 .w-eb,.e-try label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 @container (max-width:400px){.e-walk .w-burger{display:none}.e-walk .w-bar .w-logo{font-size:22px}}
-/* L'univers OONDE : la première chose qu'on voit. Le O du logo sur du papier, le point qui tombe, l'onde, et six
-   maquettes de commerces qui se lèvent. Plein cadre, sans fenêtre de navigateur : ce n'est pas un site de client, c'est le nôtre. */
-.u{padding:0}
-.u-walk{position:relative;height:300vh;height:300svh;background:#EFEDE7}
-.u-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size}
-.u-scene{position:absolute;inset:0}
-.u-scene img,.u-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.u-scene canvas{opacity:0}
-.u.live .u-scene canvas{opacity:1}
-.u.live .u-poster{visibility:hidden}
-/* les enseignes des maquettes : le métier, posé en perspective ; à la fin, toute la maquette devient un bouton */
-.u-pins{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}
-.u-pins>div{position:absolute;left:0;top:0;width:400px;height:75px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden}
-.u-pins{visibility:hidden}   /* les métiers sont maintenant peints sur les enseignes, dans l'image */
-.u-hits{position:absolute;inset:0;z-index:2;pointer-events:none}
-.u-hits a{position:absolute;left:0;top:0;width:400px;height:465px;transform-origin:0 0;pointer-events:none;border-radius:6px;outline-offset:-6px}
-.u.end .u-hits a{pointer-events:auto;cursor:pointer}
-.u-hits a:focus-visible{outline:3px solid var(--klein)}
-.u.end .u-hits a:hover{background:rgba(32,56,236,.06);box-shadow:inset 0 0 0 2px rgba(32,56,236,.55)}
-/* les textes : le titre dès la première image, une phrase au survol de l'onde, l'invitation à la fin */
-.u-tx{position:absolute;z-index:3;color:var(--ink);pointer-events:none;transition:opacity .2s}
-.u-tx a,.u-tx button{pointer-events:auto}
-.u-t1{left:clamp(16px,4cqw,56px);top:50%;transform:translateY(-50%);max-width:min(32cqw,440px)}
-/* les textes posés sur la scène : une carte de papier, pour qu'aucune forme ne passe derrière les lettres */
-.u-t1,.u-t3>div:first-child{background:rgba(239,237,231,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:22px 24px;border-radius:16px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 10px 30px rgba(30,28,24,.08)}
-.u-t3>div:first-child{pointer-events:auto}
-.u-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.14em;color:var(--soft)}
-.u-t1 h1{font:600 clamp(28px,3cqw,46px)/1.04 var(--sans);letter-spacing:-.025em;margin-top:14px}
-.u-t1 h1 em{font-style:normal;color:var(--klein)}
-.u-hint{margin-top:18px;font:500 14px/1.5 var(--sans);color:var(--soft);display:flex;flex-direction:column;gap:6px}
-.u-hint a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;align-self:flex-start;pointer-events:auto}
-.u-t15{left:50%;top:clamp(20px,7cqh,72px);transform:translateX(-50%);text-align:center;opacity:0;white-space:nowrap}
-.u-t15 p,.u-t2 p{font:600 clamp(22px,2.4cqw,34px)/1.12 var(--sans);letter-spacing:-.02em}
-.u-t15 p{background:rgba(239,237,231,.88);padding:6px 14px;border-radius:10px}
-.u-t2{right:clamp(16px,4cqw,56px);bottom:clamp(20px,6cqh,64px);max-width:min(34cqw,420px);text-align:right;opacity:0}
-.u-t3{left:0;right:0;bottom:0;padding:clamp(40px,10cqh,96px) clamp(16px,4cqw,56px) clamp(18px,4cqh,36px);opacity:0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;}
-.u-t3>div{max-width:min(38cqw,560px)}
-.u-t3 h2{font:600 clamp(26px,2.8cqw,40px)/1.05 var(--sans);letter-spacing:-.025em}
-.u-t3 p{margin-top:8px;font:400 16px/1.45 var(--sans);color:var(--soft);max-width:34em}
-.u-t3 .u-act{display:flex;flex-wrap:wrap;gap:10px}
-.u-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.u-chips a:hover{border-color:var(--ink)}
-.u-chips a{min-height:40px;font-size:13.5px!important;padding:7px 11px!important;transition:border-color .15s;display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px var(--sans);text-decoration:none}
-.u-skip{position:absolute;z-index:4;right:clamp(16px,4cqw,56px);top:18px;font:500 13.5px var(--sans);color:var(--soft);background:rgba(239,237,231,.8);border-radius:99px;padding:8px 12px;text-decoration:none}
-.u-skip:hover{color:var(--ink)}
-.u.end .u-skip,.u.mid .u-skip{opacity:0;pointer-events:none}
-.u-note{font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:10px}
-/* téléphone (cadre plus haut que large) : le titre en haut, au-dessus de l'anneau ; la fin, en bas */
+/* La rue au crépuscule : l'ouverture de la page. Un seul plan-séquence, rendu d'avance (entree3d/scenes/rue.js) :
+   le point bleu est un réverbère, la rue apparaît, on longe les vitrines, on s'arrête devant une enseigne vide. */
+.r{padding:0;background:#0d1024;color:#fff}
+.r-walk{position:relative;height:320vh;height:320svh}
+.r-anchor{position:absolute;left:0;top:60%;width:1px;height:1px;scroll-margin-top:var(--hh)}
+@media (max-aspect-ratio:1/1){.r-walk{height:240vh;height:240svh}}
+.r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
+.r-scene{position:absolute;inset:0}
+.r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.r-scene canvas{opacity:0}
+.r.live .r-scene canvas{opacity:1}
+.r.live .r-poster{visibility:hidden}
+/* un voile en bas et en haut : le texte reste lisible quelle que soit l'image */
+.r-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,10,28,.55) 0,rgba(8,10,28,0) 30%,rgba(8,10,28,0) 52%,rgba(8,10,28,.78) 100%)}
+/* les enseignes : le métier s'inscrit au passage ; l'enseigne vide reçoit le nom tapé, en néon */
+.r-pins{position:absolute;inset:0;pointer-events:none}
+.r-pins>div{position:absolute;left:0;top:0;width:1000px;height:127px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;transition:opacity .35s}
+.r-pins>div>span{font:500 46px var(--mono);letter-spacing:.32em;text-transform:uppercase;color:#f6ead6;text-shadow:0 0 10px rgba(255,214,160,.55),0 2px 2px rgba(0,0,0,.6);white-space:nowrap}
+.r-pins .r-sign>span{font:400 86px/1 var(--serif);letter-spacing:.01em;text-transform:none;color:rgba(255,255,255,.34);text-shadow:none;border:3px dashed rgba(255,255,255,.28);border-radius:10px;padding:6px 34px 12px}
+.r-pins .r-sign.on>span{border-color:transparent;color:#fff;text-shadow:0 0 3px #fff,0 0 10px #c8d0ff,0 0 24px #5b6cff,0 0 48px #2038ec,0 0 90px #2038ec;animation:r-neon 1.1s steps(1,end) 1}
+@keyframes r-neon{0%{opacity:.25}12%{opacity:1}18%{opacity:.35}26%{opacity:1}34%{opacity:.6}40%,100%{opacity:1}}
+/* les textes posés sur la scène */
+.r-tx{position:absolute;z-index:3;pointer-events:none;left:clamp(16px,5cqw,72px);right:clamp(16px,5cqw,72px)}
+.r-tx a,.r-tx button,.r-tx input,.r-tx label{pointer-events:auto}
+.r-t1{top:auto;bottom:clamp(40px,16cqh,150px)}
+.r-t1 h1{max-width:12.5em}
+.r-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.16em;color:rgba(255,255,255,.72)}
+.r-t1 h1{font:600 clamp(34px,5.6cqw,78px)/1.02 var(--sans);letter-spacing:-.03em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,20,.5)}
+.r-t1 h1 .w{display:inline-block;opacity:0;translate:0 .35em;filter:blur(6px);transition:opacity .7s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1),filter .7s}
+.r-t1 h1 .w{transition-delay:calc(var(--i) * 85ms + 150ms)}
+.r.go .r-t1 h1 .w{opacity:1;translate:0 0;filter:none}
+.r-t1 h1 em{font-style:normal;color:#9aa6ff}
+.r-say{bottom:clamp(28px,10cqh,96px);font:600 clamp(26px,3.4cqw,48px)/1.08 var(--sans);letter-spacing:-.025em;opacity:0;max-width:15em;text-shadow:0 2px 20px rgba(5,6,20,.6)}
+.r-say.r-top{bottom:auto;top:clamp(24px,10cqh,100px)}
+/* un seul choix du métier : celui de la rue ; l'entrée plus bas garde le nom et la couleur */
+#eAct{display:none}
+/* l'arrêt : l'enseigne est à vous */
+.r-stop{bottom:clamp(16px,5cqh,48px);opacity:0;visibility:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr);gap:14px 36px;align-items:end;background:rgba(10,12,32,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px 24px;max-width:1080px;margin:0 auto}
+.r-stop.on{visibility:visible}
+.r-stop .mono{font:500 11px var(--mono);letter-spacing:.16em;color:rgba(255,255,255,.66)}
+.r-stop label{display:block;font:600 clamp(20px,2cqw,26px)/1.15 var(--sans);letter-spacing:-.015em;margin:8px 0 12px}
+.r-stop input{width:100%;min-height:52px;font:500 18px var(--sans);padding:12px 16px;border:1.5px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(255,255,255,.08);color:#fff}
+.r-stop input::placeholder{color:rgba(255,255,255,.5)}
+.r-stop input:focus{outline:none;border-color:#8f9cff;box-shadow:0 0 0 4px rgba(91,108,255,.3)}
+.r-q{font:600 clamp(20px,2cqw,26px)/1.15 var(--sans);letter-spacing:-.015em}
+.r-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.r-chips a{min-height:44px;display:inline-flex;align-items:center;padding:8px 15px;border-radius:99px;background:#fff;color:var(--ink);font:600 15px var(--sans);text-decoration:none;transition:background .15s,transform .15s}
+.r-chips a:hover{background:#dfe3ff;transform:translateY(-1px)}
+.r-chips a:focus-visible{outline:3px solid #8f9cff;outline-offset:2px}
+.r-note{grid-column:1/-1;font:400 14px/1.45 var(--sans);color:rgba(255,255,255,.72);border-top:1px solid rgba(255,255,255,.12);padding-top:12px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.r-note b{font:500 11px var(--mono);letter-spacing:.14em;color:#fff;background:rgba(255,255,255,.14);padding:3px 7px;border-radius:5px;align-self:center}
+.r-skip{position:absolute;z-index:4;right:clamp(16px,5cqw,72px);top:18px;font:500 13.5px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 14px;text-decoration:none;transition:opacity .25s}
+.r-skip:hover{background:rgba(255,255,255,.24)}
+.r.stop .r-skip{opacity:0;pointer-events:none}
+.r-cue{position:absolute;z-index:3;left:50%;bottom:22px;translate:-50% 0;font:500 11px var(--mono);letter-spacing:.18em;color:rgba(255,255,255,.7);pointer-events:none;transition:opacity .3s}
+.r-cue i{display:block;width:1px;height:28px;margin:8px auto 0;background:linear-gradient(#fff,rgba(255,255,255,0));animation:r-cue 1.8s ease-in-out infinite}
+@keyframes r-cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* téléphone : le titre en haut, l'arrêt en bas, plein large */
 @container (max-aspect-ratio:1/1){
- .u-t1{left:16px;right:16px;top:clamp(16px,5cqh,40px);transform:none;max-width:none;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;box-shadow:none}
- .u-t3>div:first-child{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0;box-shadow:none}
- .u-t1 h1{font-size:min(30px,8cqw);max-width:13em}
- .u-hint{margin-top:10px;flex-direction:row;flex-wrap:wrap;gap:4px 14px}.u-hint span{font-size:0}.u-hint span::after{content:"Faites défiler ↓";font-size:14px}
- .u-t2{left:16px;right:16px;top:20px;bottom:auto;max-width:none;text-align:left}
- .u-t2 p,.u-t15 p{display:inline;background:rgba(239,237,231,.88);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:2px 8px;border-radius:6px}
- .u-t15{white-space:normal;left:16px;right:16px;transform:none;text-align:left}
- .u-t2 p{font-size:min(24px,6.4cqw)}
- .u-t3>div{max-width:none}
- .u-t3{top:0;bottom:0;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:space-between;padding:18px 16px 20px;background:linear-gradient(180deg,#EFEDE7 0,#EFEDE7 28%,rgba(239,237,231,.85) 36%,rgba(239,237,231,.4) 44%,rgba(239,237,231,0) 54%)}
- .u-t3 .u-act{justify-content:center}
- .u-t3 h2{font-size:min(28px,7.4cqw)}
- .u-t3 p{font-size:15px}
- .u-skip{top:auto;bottom:14px;right:16px}
- .u.end .u-skip{display:none}
+ .r-t1{top:20px;bottom:auto}
+ .r-t1 h1{font-size:min(40px,10.4cqw)}
+ .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:22px}
+ .r-stop{grid-template-columns:1fr;gap:10px;padding:16px;left:10px;right:10px;bottom:10px;border-radius:16px}
+ .r-stop label,.r-q{font-size:19px;margin:4px 0 8px}
+ .r-stop .r-q{margin:2px 0 0}
+ .r-stop input{min-height:48px;font-size:17px}
+ .r-chips{gap:6px;margin-top:8px}.r-chips a{min-height:42px;padding:7px 12px;font-size:14.5px}
+ .r-note{font-size:13px;padding-top:9px}
+ .r-skip{top:auto;bottom:16px;right:16px}
+ .r-cue{left:16px;translate:none;bottom:22px}
 }
-/* mouvement réduit, ou sans JavaScript : la dernière image, immobile, avec les métiers ; les textes viennent dessous */
-.u.static .u-walk,html:not(.js) .u-walk{height:auto}
-.u.static .u-stage,html:not(.js) .u-stage{position:relative;top:0;height:auto;overflow:visible;container-type:inline-size}
-.u.static .u-scene,html:not(.js) .u-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
-.u.static .u-tx,html:not(.js) .u-tx{position:relative;inset:auto;transform:none;max-width:none;opacity:1;padding:24px clamp(16px,4vw,56px) 0}
-.u.static .u-t3,html:not(.js) .u-t3{background:none;padding-bottom:40px}
-.u.static .u-t1,.u.static .u-t3>div,html:not(.js) .u-t1,html:not(.js) .u-t3>div{background:none;backdrop-filter:none;padding:0;box-shadow:none}
-.u.static .u-t2,.u.static .u-t15,html:not(.js) .u-t15,.u.static .u-hint span,.u.static .u-skip,html:not(.js) .u-t2,html:not(.js) .u-hint span,html:not(.js) .u-skip,html:not(.js) .u-hits{display:none}
-.u.static .u-hits a{pointer-events:auto}
-@media (max-width:700px){.u.static .u-scene,html:not(.js) .u-scene{aspect-ratio:9/13}.u.static .u-chips{display:flex}}
-/* Ce que nous faisons : les deux offres, juste sous l'univers */
-.of{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-@media (max-width:760px){.of{grid-template-columns:1fr}}
-.of a{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
-.of a:hover{border-color:var(--ink);transform:translateY(-2px)}
-.of .mono{font:500 11px var(--mono);letter-spacing:.14em;color:var(--muted)}
-.of b{font:600 24px/1.1 var(--sans);letter-spacing:-.02em}
-.of p{color:var(--soft);font-size:16px;line-height:1.45}
-.of .pr{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line)}
-.of .pr span{font:600 15px var(--mono)}
-.of .pr i{font-style:normal;font-weight:600;font-size:14.5px;border-bottom:1.5px solid currentColor}
-.of-n{margin-top:18px;color:var(--soft);font-size:15px}
+/* mouvement réduit, ou sans JavaScript : l'image de l'arrêt, immobile ; les textes et le choix viennent dessous */
+.r.static .r-walk,html:not(.js) .r-walk{height:auto}
+.r.static .r-stage,html:not(.js) .r-stage{position:relative;top:0;height:auto;overflow:visible;container-type:inline-size}
+.r.static .r-scene,html:not(.js) .r-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
+.r.static .r-tx,html:not(.js) .r-tx{position:relative;inset:auto;opacity:1;visibility:visible;max-width:none;margin:0;padding:24px clamp(16px,4vw,56px) 0;background:none;backdrop-filter:none;border:0}
+.r.static .r-stop,html:not(.js) .r-stop{padding-bottom:40px;border-radius:0}
+.r.static .r-t1 h1 .w,html:not(.js) .r-t1 h1 .w{opacity:1;translate:none;filter:none}
+.r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}
+.r.static .r-pins .r-sign{opacity:1}
+@media (max-width:700px){.r.static .r-scene,html:not(.js) .r-scene{aspect-ratio:9/14}}
 /* Les exemples : d'abord on choisit son métier (et son nom), puis une seule entrée s'ouvre, la sienne */
 .pick{padding-top:clamp(36px,6vw,72px)}
 .pick-h{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px 48px;align-items:end;margin-bottom:clamp(24px,3.4vw,40px)}
@@ -637,37 +631,25 @@ html:not(.js) .e-try{display:none}
 </header>
 
 <main id="top">
-<section id="univers" class="u" data-hero aria-labelledby="h1">
- <div class="u-walk" id="uWalk">
-  <div class="u-stage" id="uStage">
-   <div class="u-scene"><img class="u-poster" id="uPoster" src="img/e3d/oonde/d/f000.webp" width="1280" height="800" alt="Le O du logo OONDE, debout sur une feuille de papier, avec le point bleu au centre" decoding="async" fetchpriority="high"><canvas id="uCv" aria-hidden="true"></canvas>
-    <div class="u-pins" id="uPins" aria-hidden="true"><div data-id="restaurant"><span>RESTAURANT</span></div><div data-id="boulangerie"><span>BOULANGERIE</span></div><div data-id="coiffure"><span>COIFFURE</span></div><div data-id="institut"><span>INSTITUT</span></div><div data-id="onglerie"><span>ONGLERIE</span></div><div data-id="logement"><span>LOGEMENT</span></div></div>
-    <div class="u-hits" id="uHits"><a href="#entree" data-e3="restaurant" aria-label="Restaurant : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="boulangerie" aria-label="Boulangerie : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="coiffure" aria-label="Coiffure : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="institut" aria-label="Institut : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="onglerie" aria-label="Onglerie : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="logement" aria-label="Logement : ouvrir son entrée 3D, démo"></a></div></div>
-   <div class="u-tx u-t1"><p class="mono">DEUX AMIS · DE GENÈVE À MONTREUX</p><h1 id="h1">Des sites où vos clients entrent avant de venir.</h1><p class="u-hint"><span aria-hidden="true">Faites défiler : vous entrez dans notre univers ↓</span><a href="#choix">ou choisir votre commerce ↓</a></p></div>
-   <div class="u-tx u-t15" aria-hidden="true"><p>Votre façade, reconstruite en 3D.</p></div>
-   <div class="u-tx u-t2" aria-hidden="true"><p>Chaque commerce a son entrée.</p></div>
-   <div class="u-tx u-t3"><div><h2>Choisissez le vôtre.</h2><p>Touchez une maquette : son entrée en 3D s’ouvre juste en dessous, avec votre nom.</p><div class="u-chips" aria-label="Choisir son métier"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div><p class="u-note">SIX COMMERCES IMAGINÉS · DÉMO</p></div>
-    <div class="u-act"><a class="btn light" href="#choix">Choisir mon commerce ↓</a></div></div>
-   <a class="u-skip" href="#choix">Passer l’intro ↓</a>
+<section id="univers" class="r" data-hero aria-labelledby="h1">
+ <div class="r-walk" id="rWalk">
+  <span class="r-anchor" id="choix" aria-hidden="true"></span>
+  <div class="r-stage" id="rStage">
+   <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/poster.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/poster.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, un réverbère au globe bleu, puis des vitrines allumées" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
+    <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div class="r-sign" data-id="sign"><span>Votre nom ici</span></div></div></div>
+   <div class="r-veil" aria-hidden="true"></div>
+   <div class="r-tx r-t1"><p class="mono">À DEUX · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Des</span> <span class="w" style="--i:1">sites</span> <span class="w" style="--i:2">où</span> <span class="w" style="--i:3">vos</span> <span class="w" style="--i:4">clients</span> <span class="w" style="--i:5"><em>entrent</em></span> <span class="w" style="--i:6">avant</span> <span class="w" style="--i:7">de</span> <span class="w" style="--i:8">venir.</span></h1></div>
+   <p class="r-tx r-say" aria-hidden="true">Dehors, on hésite.</p>
+   <p class="r-tx r-say" aria-hidden="true">Sur votre site, on a déjà vu l’intérieur.</p>
+   <p class="r-tx r-say r-top" aria-hidden="true">Alors on entre.</p>
+   <div class="r-tx r-stop" id="rStop">
+    <div><p class="mono">L’ENSEIGNE EST À VOUS</p><label for="rName">Le nom de votre commerce</label><input id="rName" type="text" maxlength="40" placeholder="Tapez-le, il s’allume" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+    <div><p class="r-q">Votre métier ?</p><div class="r-chips" aria-label="Votre métier : ouvrir sa démo"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div></div>
+    <p class="r-note"><b>DÉMO</b><span>Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit ; vous n’avez rien à préparer. Votre prix par écrit sous 48 heures, sur WhatsApp.</span></p>
+   </div>
+   <p class="r-cue" aria-hidden="true">FAITES DÉFILER<i></i></p>
+   <a class="r-skip" href="#choix">Passer l’intro ↓</a>
   </div>
- </div>
-</section>
-
-<section class="bg-paper pick" id="choix" aria-labelledby="hC">
- <div class="in">
-  <div class="pick-h">
-   <div><p class="mono">L’entrée 3D · six démos à essayer</p><h2 id="hC">Quel est votre commerce ?</h2><p>Choisissez votre métier : son entrée s’ouvre, avec votre nom sur l’enseigne. Vous faites défiler, vous passez la porte, et vous arrivez sur le site.</p></div>
-   <div class="pick-n"><label for="pName">Le nom de votre commerce</label><input id="pName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"><small>Facultatif. Il s’affiche tout de suite sur les six enseignes.</small></div>
-  </div>
-  <div class="exs">
-   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
-  </div>
-  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
  </div>
 </section>
 
@@ -679,7 +661,7 @@ html:not(.js) .e-try{display:none}
      <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span id="eUrl">votre-commerce.ch · Démo</span></div>
      <div class="w-view" id="eView" role="group" aria-label="Démo : votre site avec une entrée en 3D">
       <div class="w-scene">
-       <div class="w-poster"><img id="ePoster" src="img/e3d/restaurant/d/f000.webp" width="1280" height="800" alt="Démo : la façade d’un restaurant le soir, avec son enseigne et sa terrasse" decoding="async" fetchpriority="high"></div>
+       <div class="w-poster"><img id="ePoster" data-src="img/e3d/restaurant/d/f000.webp" width="1280" height="800" alt="Démo : la façade d’un restaurant le soir, avec son enseigne et sa terrasse" decoding="async" loading="lazy"></div>
        <canvas class="w-cv" id="eCv" aria-hidden="true"></canvas>
        <div class="e-pins" id="ePins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div>
        <div class="w-shade"></div>
@@ -705,7 +687,7 @@ html:not(.js) .e-try{display:none}
       <div class="w-toast" id="eToast" role="dialog" aria-label="Démo" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Je veux cette entrée</a></div>
      </div>
     </div>
-    <p class="w-cap"><span><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</span><span class="w-cta"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Connaître mon prix</span></a><a href="#prix">Sauter la démo ↓</a></span></p>
+    <p class="w-cap"><span><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</span><span class="w-cta"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20conna%C3%AEtre%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Connaître mon prix</span></a></span></p>
    </div>
   </div>
  </div>
@@ -911,7 +893,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   else site.innerHTML=`<div class="w-top"><div><p class="w-eb">${esc(t.label)} · Démo</p><p class="w-t">${esc(name)}</p><p class="e-sub">${esc(t.h.replace(/ (à|de) \{t\}/,''))} ${esc(t.sub)}</p>
    <div class="e-more"><div><p class="w-k">HORAIRES</p><p>${t.hours}</p></div><div><p class="w-k">AVIS GOOGLE · ITINÉRAIRE</p><p>${esc(t.about)}</p></div></div></div>
    <div class="w-card"><p class="w-k">${esc(t.sec.toUpperCase())} (DÉMO)</p>${t.rows.slice(0,3).map(([a,b])=>`<p class="e-row"><span>${esc(a)}</span><b>${esc(b)}</b></p>`).join('')}<button type="button" class="w-go" data-book>${esc(cta)}</button><p class="w-n">${esc(t.open)}</p></div></div>
-   <div class="e-ph">${[70,82,95].map(i=>`<img src="${e3base(st.sc)}d/f0${i}.webp" width="1280" height="800" alt="" loading="lazy" decoding="async">`).join('')}</div>`;
+   <div class="e-ph">${(armed?[70,82,95]:[]).map(i=>`<img src="${e3base(st.sc)}d/f0${i}.webp" width="1280" height="800" alt="" loading="lazy" decoding="async">`).join('')}</div>`;
   $('eToastT').textContent=s.lodge?'Ici, vos clients réservent.':t.cta==='Commander'?'Ici, vos clients commandent.':/table/.test(t.cta)?'Ici, vos clients réservent leur table.':'Ici, vos clients prennent rendez-vous.';
   /* les boutons « Connaître mon prix » de la page suivent l'essai */
   const href=wa(msg());$('eWa').href=href;document.querySelectorAll('a[data-wa="e3"]').forEach(a=>a.href=href);
@@ -925,7 +907,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   dirty=true;tick()}
  /* Les choix */
  $('eAct').innerHTML=E3K.map(k=>`<button type="button" role="radio" data-v="${k}" aria-checked="false">${E3[k].lab}</button>`).join('');
- const choose=(k,ex)=>{if(!E3[k])return;st.touched=true;st.ex=ex?E3[k].ex:'';if(st.sc!==k){st.sc=k;st.style=0;st.styleSet=false;drawn=null;load(set);if(!view.classList.contains('live'))poster.src=e3base(k)+set+'/f000.webp'}paint()};
+ const choose=(k,ex)=>{if(!E3[k])return;st.touched=true;armed=true;st.ex=ex?E3[k].ex:'';if(st.sc!==k){st.sc=k;st.style=0;st.styleSet=false;drawn=null;load(set);if(!view.classList.contains('live'))poster.src=e3base(k)+set+'/f000.webp'}paint();load(set)};
  $('eAct').addEventListener('click',e=>{const b=e.target.closest('button');if(b)choose(b.dataset.v)});
  $('eAct').addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft'].includes(e.key))return;e.preventDefault();const i=E3K.indexOf(st.sc),n=E3K[(i+(e.key==='ArrowRight'?1:E3K.length-1))%E3K.length];choose(n);$('eAct').querySelector(`[data-v="${n}"]`).focus()});
  $('eStyle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.touched=st.styleSet=true;st.style=+b.dataset.i;paint()});
@@ -991,9 +973,10 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   const t=camOf(P);cur+=(t-cur)*.22;if(Math.abs(t-cur)<.0005)cur=t;
   if(dirty||cur!==last){draw(cur);last=cur}ui(cur);if(cur!==t)tick()}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);tick()}).observe(walk);
- /* l'entrée est le premier écran : on charge tout de suite le début, puis le reste */
+ /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  poster.onerror=()=>{if(poster.src.includes('/m/'))poster.src=poster.src.replace('/m/','/d/')};
- armed=true;size();poster.src=e3base(st.sc)+set+'/f000.webp';paint();
+ const arm=()=>{if(armed)return;armed=true;poster.src=e3base(st.sc)+set+'/f000.webp';load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
+ size();paint();
  addEventListener('resize',()=>{size();tick()});
  if(document.fonts)document.fonts.ready.then(paint);
  if(!LIVE)return;
@@ -1015,68 +998,87 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const card=e.target,k=card.dataset.k;
   (cache[k]?Promise.resolve():fetch(e3base(k)+'d/pins.json').then(r=>r.json()).then(j=>{cache[k]=j})).then(()=>show(card,k)).catch(()=>{})}),{rootMargin:'300px'});
  document.querySelectorAll('.ex[data-k]').forEach(c=>{if(c.querySelector('.e-pins'))io.observe(c)})})();
-/* L'univers OONDE en haut de page : faire défiler fait avancer la caméra image par image (rendu d'avance dans entree3d/,
-   scène « oonde »). Sur chaque enseigne de maquette, le métier est posé en perspective (pins.json) ; à la fin, toucher
-   une maquette ouvre l'entrée 3D de ce métier, plus bas (data-e3, géré par e3d.js). Mouvement réduit : la dernière image. */
+/* La rue au crépuscule, en haut de page. Faire défiler fait avancer la caméra image par image (rendu d'avance,
+   entree3d/scenes/rue.js) : le réverbère bleu, la rue, les vitrines, puis l'arrêt devant une enseigne vide où le visiteur
+   tape son nom. Les métiers (data-e3) ouvrent l'entrée 3D plus bas (e3d.js). La première image est une affiche légère ;
+   les images du film ne se chargent qu'au premier geste. Mouvement réduit : l'image de l'arrêt, immobile. */
 (()=>{const u=$('univers');if(!u)return;
- const walk=$('uWalk'),stg=$('uStage'),scene=u.querySelector('.u-scene'),cv=$('uCv'),cx=cv.getContext('2d'),poster=$('uPoster'),pins=$('uPins'),hits=$('uHits');
- const t2=u.querySelector('.u-t2'),t15=u.querySelector('.u-t15'),t3=u.querySelector('.u-t3'),t1=u.querySelector('.u-t1'),LIVE=!RM,SETS={d:96,m:72},store={};
- let set='d',W=0,H=0,P=0,cur=0,last=-1,raf=0,drawn=null,dirty=true,vis=true,D=1,hh=64;
- const base=k=>'img/e3d/oonde/'+k+'/';
- const near=(k,i)=>{const s=store[k];if(!s)return null;const n=SETS[k];for(let d=0;d<n;d++){if(i-d>=0&&s.ok[i-d])return[s.img[i-d],i-d,s];if(i+d<n&&s.ok[i+d])return[s.img[i+d],i+d,s]}return null};
+ const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),cv=$('rCv'),cx=cv.getContext('2d'),poster=$('rPoster'),pins=$('rPins'),anchor=$('choix');
+ const t1=u.querySelector('.r-t1'),says=[...u.querySelectorAll('.r-say')],stop=$('rStop'),cue=u.querySelector('.r-cue'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),signT=sign.firstElementChild;
+ const LIVE=!RM,SETS={d:72,m:60},STOP=.79,store={},labs=[...pins.children].filter(x=>x!==sign);
+ let set='d',W=0,H=0,P=0,cur=0,last=-1,raf=0,dirty=true,vis=true,D=1,hh=64,armed=false,t0=0;
+ const base=k=>'img/e3d/rue/'+k+'/';
+ /* les images arrivent en 4 paquets (build.py, pack()) : une sur 8 d'abord, puis le reste entre deux */
  function load(k){if(store[k])return;const n=SETS[k],s=store[k]={img:new Array(n),ok:new Uint8Array(n),pins:null};
   fetch(base(k)+'pins.json').then(r=>r.json()).then(j=>{s.pins=j;dirty=true;tick()}).catch(()=>{});
-  const want=i=>LIVE||i===n-1;
+  if(!LIVE)return;
   const got=buf=>{const v=new DataView(buf),hl=v.getUint32(0,true),head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
-   return Promise.all(head.filter(([i])=>want(i)).map(([i,o,l])=>{const im=new Image();im.decoding='async';
+   return Promise.all(head.map(([i,o,l])=>{const im=new Image();im.decoding='async';
     im.src=URL.createObjectURL(new Blob([new Uint8Array(buf,4+hl+o,l)],{type:'image/webp'}));
     return (im.decode?im.decode():new Promise(r=>im.onload=r)).catch(()=>{}).then(()=>{s.img[i]=im;s.ok[i]=1;if(k===set)dirty=true;tick()})}))};
   const get=g=>fetch(base(k)+'p'+g+'.txt').then(r=>{if(!r.ok)throw r.status;return r.text()}).then(t=>{const b=atob(t),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer});
-  get(0).then(got).then(()=>LIVE&&Promise.all([get(1).then(got),get(2).then(got)]).then(()=>get(3)).then(got))
-   .catch(()=>{if(k==='m'&&!s.ok[0]&&!s.ok[n-1]){set='d';load('d')}})}   /* jeu absent : l'autre, recadré */
- const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight)};
+  get(0).then(got).then(()=>Promise.all([get(1).then(got),get(2).then(got)])).then(()=>get(3)).then(got).catch(()=>{})}
+ const arm=()=>{if(armed)return;armed=true;load(set)};
+ const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight);anchor.style.top=(STOP*D)+'px'};
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=cv.width=Math.round(r.width*d);H=cv.height=Math.round(r.height*d);
-  const k=r.width<r.height*.95?'m':'d';if(k!==set||!store[k]){set=k;load(k);if(!LIVE||!u.classList.contains('live'))poster.src=base(k)+(LIVE?'f000':last0(k))+'.webp'}geo();dirty=true}
- const last0=k=>'f'+String(SETS[k]-1).padStart(3,'0');
- /* les maquettes : le métier sur l'enseigne, et une zone à toucher qui descend de l'enseigne jusqu'au socle (6,2 fois sa hauteur) */
- const lab=[...pins.children],hit=[...hits.children];
- function place(pp,f){lab.forEach((el,j)=>{const q=pp&&pp.find(x=>x.id===el.dataset.id),a=hit[j];
-  if(!q||q.vis<=0){el.style.opacity=0;a.style.visibility='hidden';return}
-  e3quad(el,q.c,400,75,f);el.style.opacity=q.vis;
-  const[c0,c1,c2,c3]=q.c,ext=(t,b)=>[t[0]+(b[0]-t[0])*6.2,t[1]+(b[1]-t[1])*6.2];
-  e3quad(a,[c0,c1,ext(c1,c2),ext(c0,c3)],400,465,f);a.style.visibility=q.vis>.5?'visible':'hidden'})}
- function draw(p){if(!W||!H)return;const r=near(set,Math.round(p*(SETS[set]-1)));if(!r)return;const[im,i,s]=r;if(im===drawn&&!dirty)return;
-  const sc=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc;
-  cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);drawn=im;dirty=false;u.classList.add('live');
-  const d=W/scene.clientWidth;place(s.pins&&s.pins[i]?s.pins[i].pins:null,{ox:(W-w)/2/d,oy:(H-h)/2/d,w:w/d,h:h/d})}
- /* le rythme : un temps sur le logo, la traversée, l'onde, puis un arrêt sur les maquettes pour lire et choisir */
- const camOf=P=>P<.03?0:P>.86?1:(P-.03)/.83;
+  const k=r.width<r.height*.95?'m':'d';if(k!==set){set=k;if(armed)load(k)}if(!LIVE)load(k);geo();dirty=true}
+ /* le nom : sur l'enseigne vide, en néon ; et sur l'entrée plus bas */
+ const fit=()=>e3fit(signT,signT.textContent,'400 {s}px "Cormorant Garamond"',86,860);
+ function named(v,push){const t=v.trim().slice(0,40);signT.textContent=t||'Votre nom ici';sign.classList.toggle('on',!!t);fit();
+  if(push){const e=$('eName');if(e&&e.value!==v){e.value=v;e.dispatchEvent(new Event('input'))}}}
+ nameIn.addEventListener('input',()=>named(nameIn.value,true));nameIn.addEventListener('keydown',e=>{if(e.key==='Enter')nameIn.blur()});
+ {const e=$('eName');if(e&&e.value){nameIn.value=e.value;named(e.value,false)}else named('',false)}
+ if(document.fonts)document.fonts.ready.then(fit);
+ /* une image : les deux voisines fondues l'une dans l'autre ; les enseignes, interpolées de même */
+ const pinAt=(s,i)=>s.pins&&s.pins[i]?s.pins[i].pins:null;
+ function draw(p,still){const s=store[set];if(!W||!H||!s)return;const n=SETS[set],f=p*(n-1);let i0=Math.floor(f),i1=Math.min(n-1,i0+1),a=f-i0;
+  if(still){i0=i1=Math.round(f);a=0}   /* à l'arrêt, une image nette : le fondu ne sert qu'en mouvement */
+  if(!s.ok[i0]||!s.ok[i1]){let j=Math.round(f),b=-1;for(let d=0;d<n&&b<0;d++){if(j-d>=0&&s.ok[j-d])b=j-d;else if(j+d<n&&s.ok[j+d])b=j+d}if(b<0)return;i0=i1=b;a=0}
+  const im=s.img[i0],sc=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc,ox=(W-w)/2,oy=(H-h)/2;
+  cx.globalAlpha=1;cx.drawImage(im,ox,oy,w,h);if(a>.02&&i1!==i0){cx.globalAlpha=a;cx.drawImage(s.img[i1],ox,oy,w,h);cx.globalAlpha=1}
+  u.classList.add('live');dirty=false;
+  const A=pinAt(s,i0),B=pinAt(s,i1)||A,d=W/scene.clientWidth;place(A&&B?A.map((q,j)=>{const r=B[j]||q;return{id:q.id,vis:q.vis+(r.vis-q.vis)*a,c:q.c.map((c,k)=>[c[0]+(r.c[k][0]-c[0])*a,c[1]+(r.c[k][1]-c[1])*a])}}):A,{ox:ox/d,oy:oy/d,w:w/d,h:h/d},p)}
+ function place(pp,f,p){for(const el of pins.children){const q=pp&&pp.find(x=>x.id===el.dataset.id);
+  if(!q||q.vis<=0){el.style.opacity=0;continue}e3quad(el,q.c,1000,127,f);
+  if(el===sign){el.style.opacity=q.vis;continue}
+  const mx=(q.c[0][0]+q.c[1][0])/2,near=clamp(1-Math.abs(mx-.5)/.42,0,1);el.style.opacity=(q.vis*Math.min(1,near*1.8)*(p>.84?0:1)).toFixed(2)}}
+ /* le rythme : un temps sur le point bleu, la rue, un arrêt devant l'enseigne, puis la porte s'ouvre */
+ const camOf=P=>P<.04?0:P<.74?.88*(P-.04)/.7:P<.84?.88:.88+.12*(P-.84)/.16;
  const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
- function ui(){if(!LIVE){u.classList.add('static','end');return}t1.style.opacity=clamp((.1-P)/.07,0,1);t1.style.visibility=P>.1?'hidden':'';
-  const sl=(el,a,b,c,d)=>{el.style.opacity=fade(a,b,c,d);el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*12}px`};
-  sl(t15,.12,.15,.31,.34);sl(t2,.5,.54,.76,.8);u.classList.toggle('mid',P>.38);
-  const e=clamp((P-.86)/.06,0,1);t3.style.opacity=e;t3.style.transform=`translateY(${(1-e)*16}px)`;t3.inert=e<.5;u.classList.toggle('end',e>.5)}
+ function ui(){if(!LIVE)return;
+  t1.style.opacity=clamp((.09-P)/.05,0,1);t1.style.visibility=P>.09?'hidden':'';cue.style.opacity=clamp((.03-P)/.03,0,1);
+  const W3=[[.17,.2,.32,.36],[.42,.46,.6,.64],[.88,.92,1.1,1.2]];
+  says.forEach((el,j)=>{const[a,b,c,d]=W3[j];const o=fade(a,b,c,d);el.style.opacity=o;el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*14}px`});
+  const e=clamp((P-.7)/.05,0,1);stop.style.opacity=e;stop.style.transform=`translateY(${(1-e)*18}px)`;stop.classList.toggle('on',e>.05);stop.inert=e<.5;u.classList.toggle('stop',e>.5)}
+ /* mouvement réduit : l'affiche de l'arrêt, et le nom posé sur son enseigne */
+ function still(){const s=store[set];if(!s||!s.pins||!poster.naturalWidth)return;const i=Math.round(.88*(SETS[set]-1)),rw=scene.clientWidth,rh=scene.clientHeight,sc=Math.max(rw/poster.naturalWidth,rh/poster.naturalHeight),w=poster.naturalWidth*sc,h=poster.naturalHeight*sc;
+  place(pinAt(s,i),{ox:(rw-w)/2,oy:(rh-h)/2,w,h},1)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
- function loop(){raf=0;if(!LIVE){draw(1);return}const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
-  const t=camOf(P);cur+=(t-cur)*.22;if(Math.abs(t-cur)<.0005)cur=t;
-  if(dirty||cur!==last){draw(cur);last=cur}ui();if(cur!==t)tick()}
+ /* l'inertie : la caméra rattrape le défilement avec un temps de ~120 ms, comme une image filmée, pas saccadée */
+ function loop(now){raf=0;const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
+  const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
+  if(!LIVE){still();return}
+  const t=camOf(P);cur+=(t-cur)*(1-Math.exp(-dt/.12));if(Math.abs(t-cur)<.0004)cur=t;
+  if(dirty||cur!==last){draw(cur,cur===t);last=cur}ui();if(cur!==t)tick();else t0=0}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;tick()}).observe(walk);
- poster.onerror=()=>{if(poster.src.includes('/m/'))poster.src=poster.src.replace('/m/','/d/').replace(last0('m'),last0('d'))};
+ if(!LIVE){u.classList.add('static');poster.addEventListener('load',tick);poster.src=base(r0())+'stop.jpg';const ps=poster.parentNode.querySelector('source');if(ps)ps.srcset=base('m')+'stop.jpg'}
+ function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
  size();addEventListener('resize',()=>{size();tick()});
- if(LIVE)addEventListener('scroll',()=>{if(vis)tick()},{passive:true});
- /* « Passer l'intro » et « Voir les offres » : sans saut brutal */
- u.querySelectorAll('a[href^="#"]:not([data-e3])').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}));
+ if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});
+  for(const ev of ['wheel','touchstart','keydown'])addEventListener(ev,arm,{passive:true,once:true});
+  if(scrollY>0)arm();
+  requestAnimationFrame(()=>u.classList.add('go'))}else u.classList.add('go');
+ /* « Passer l'intro » : sans saut brutal, jusqu'à l'arrêt */
+ u.querySelector('.r-skip').addEventListener('click',e=>{e.preventDefault();arm();geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+STOP*D,behavior:RM?'auto':'smooth'})});
  ui();tick();
 })();
 
-/* Le nom tapé au-dessus des exemples va sur les six enseignes, puis sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
-(()=>{const p=$('pName'),e=$('eName');p.value=e.value;
+/* Le nom tapé dans la rue va sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
+(()=>{const e=$('eName');
  /* sur téléphone, le réglage se replie en une ligne : il ne cache plus la façade */
  const tr=document.querySelector('.e-try'),fb=document.createElement('button');fb.type='button';fb.className='e-fold';fb.setAttribute('aria-expanded','false');tr.before(fb);
  const lab=d=>{fb.innerHTML=`<b>${esc(d.name||'Votre nom')}</b> · ${esc(E3[d.sc]?E3[d.sc].lab:'')}<i>Modifier</i>`};lab({name:e.value,sc:new URLSearchParams(location.search).get('e')||(()=>{try{return JSON.parse(localStorage.getItem('oonde-e3')||'{}').sc}catch(x){}})()||'restaurant'});
  document.addEventListener('oonde-e3',ev=>lab(ev.detail));fb.addEventListener('click',()=>{const o=tr.classList.toggle('open');fb.setAttribute('aria-expanded',o);if(o)e.focus({preventScroll:true})});
- p.addEventListener('input',()=>{e.value=p.value;e.dispatchEvent(new Event('input'))});p.addEventListener('keydown',ev=>{if(ev.key==='Enter')p.blur()});
- e.addEventListener('input',()=>{if(p.value!==e.value)p.value=e.value});
  const k=new URLSearchParams(location.search).get('e');if(k&&E3[k]&&!location.hash)addEventListener('load',()=>setTimeout(()=>window.e3go&&e3go(k,!new URLSearchParams(location.search).get('n')),60))})();
 
 </script>

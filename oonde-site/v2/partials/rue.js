@@ -31,7 +31,8 @@
  if(document.fonts)document.fonts.ready.then(fit);
  /* une image : les deux voisines fondues l'une dans l'autre ; les enseignes, interpolées de même */
  const pinAt=(s,i)=>s.pins&&s.pins[i]?s.pins[i].pins:null;
- function draw(p){const s=store[set];if(!W||!H||!s)return;const n=SETS[set],f=p*(n-1);let i0=Math.floor(f),i1=Math.min(n-1,i0+1),a=f-i0;
+ function draw(p,still){const s=store[set];if(!W||!H||!s)return;const n=SETS[set],f=p*(n-1);let i0=Math.floor(f),i1=Math.min(n-1,i0+1),a=f-i0;
+  if(still){i0=i1=Math.round(f);a=0}   /* à l'arrêt, une image nette : le fondu ne sert qu'en mouvement */
   if(!s.ok[i0]||!s.ok[i1]){let j=Math.round(f),b=-1;for(let d=0;d<n&&b<0;d++){if(j-d>=0&&s.ok[j-d])b=j-d;else if(j+d<n&&s.ok[j+d])b=j+d}if(b<0)return;i0=i1=b;a=0}
   const im=s.img[i0],sc=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc,ox=(W-w)/2,oy=(H-h)/2;
   cx.globalAlpha=1;cx.drawImage(im,ox,oy,w,h);if(a>.02&&i1!==i0){cx.globalAlpha=a;cx.drawImage(s.img[i1],ox,oy,w,h);cx.globalAlpha=1}
@@ -45,7 +46,7 @@
  const camOf=P=>P<.04?0:P<.74?.88*(P-.04)/.7:P<.84?.88:.88+.12*(P-.84)/.16;
  const fade=(a,b,c,d)=>Math.min(clamp((P-a)/(b-a||1),0,1),clamp((d-P)/(d-c||1),0,1));
  function ui(){if(!LIVE)return;
-  t1.style.opacity=clamp((.14-P)/.06,0,1);t1.style.visibility=P>.14?'hidden':'';cue.style.opacity=clamp((.03-P)/.03,0,1);
+  t1.style.opacity=clamp((.09-P)/.05,0,1);t1.style.visibility=P>.09?'hidden':'';cue.style.opacity=clamp((.03-P)/.03,0,1);
   const W3=[[.17,.2,.32,.36],[.42,.46,.6,.64],[.88,.92,1.1,1.2]];
   says.forEach((el,j)=>{const[a,b,c,d]=W3[j];const o=fade(a,b,c,d);el.style.opacity=o;el.style.translate=`0 ${(1-clamp((P-a)/(b-a),0,1))*14}px`});
   const e=clamp((P-.7)/.05,0,1);stop.style.opacity=e;stop.style.transform=`translateY(${(1-e)*18}px)`;stop.classList.toggle('on',e>.05);stop.inert=e<.5;u.classList.toggle('stop',e>.5)}
@@ -58,7 +59,7 @@
   const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   if(!LIVE){still();return}
   const t=camOf(P);cur+=(t-cur)*(1-Math.exp(-dt/.12));if(Math.abs(t-cur)<.0004)cur=t;
-  if(dirty||cur!==last){draw(cur);last=cur}ui();if(cur!==t)tick();else t0=0}
+  if(dirty||cur!==last){draw(cur,cur===t);last=cur}ui();if(cur!==t)tick();else t0=0}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;tick()}).observe(walk);
  if(!LIVE){u.classList.add('static');poster.addEventListener('load',tick);poster.src=base(r0())+'stop.jpg';const ps=poster.parentNode.querySelector('source');if(ps)ps.srcset=base('m')+'stop.jpg'}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}

@@ -50,7 +50,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   else site.innerHTML=`<div class="w-top"><div><p class="w-eb">${esc(t.label)} · Démo</p><p class="w-t">${esc(name)}</p><p class="e-sub">${esc(t.h.replace(/ (à|de) \{t\}/,''))} ${esc(t.sub)}</p>
    <div class="e-more"><div><p class="w-k">HORAIRES</p><p>${t.hours}</p></div><div><p class="w-k">AVIS GOOGLE · ITINÉRAIRE</p><p>${esc(t.about)}</p></div></div></div>
    <div class="w-card"><p class="w-k">${esc(t.sec.toUpperCase())} (DÉMO)</p>${t.rows.slice(0,3).map(([a,b])=>`<p class="e-row"><span>${esc(a)}</span><b>${esc(b)}</b></p>`).join('')}<button type="button" class="w-go" data-book>${esc(cta)}</button><p class="w-n">${esc(t.open)}</p></div></div>
-   <div class="e-ph">${[70,82,95].map(i=>`<img src="${e3base(st.sc)}d/f0${i}.webp" width="1280" height="800" alt="" loading="lazy" decoding="async">`).join('')}</div>`;
+   <div class="e-ph">${(armed?[70,82,95]:[]).map(i=>`<img src="${e3base(st.sc)}d/f0${i}.webp" width="1280" height="800" alt="" loading="lazy" decoding="async">`).join('')}</div>`;
   $('eToastT').textContent=s.lodge?'Ici, vos clients réservent.':t.cta==='Commander'?'Ici, vos clients commandent.':/table/.test(t.cta)?'Ici, vos clients réservent leur table.':'Ici, vos clients prennent rendez-vous.';
   /* les boutons « Connaître mon prix » de la page suivent l'essai */
   const href=wa(msg());$('eWa').href=href;document.querySelectorAll('a[data-wa="e3"]').forEach(a=>a.href=href);
@@ -132,8 +132,8 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);tick()}).observe(walk);
  /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  poster.onerror=()=>{if(poster.src.includes('/m/'))poster.src=poster.src.replace('/m/','/d/')};
- const arm=()=>{if(armed)return;armed=true;load(set)};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
- size();poster.src=e3base(st.sc)+set+'/f000.webp';paint();
+ const arm=()=>{if(armed)return;armed=true;poster.src=e3base(st.sc)+set+'/f000.webp';load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
+ size();paint();
  addEventListener('resize',()=>{size();tick()});
  if(document.fonts)document.fonts.ready.then(paint);
  if(!LIVE)return;

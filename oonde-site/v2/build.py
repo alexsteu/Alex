@@ -139,7 +139,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
                 src, dst = sd / k, o / sd.relative_to(D) / k
                 pack(src, dst)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
-                for f in ['f000.webp', 'pins.json'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
+                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
     if wrap:
         (o / 'fonts').mkdir()

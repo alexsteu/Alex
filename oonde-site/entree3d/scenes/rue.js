@@ -9,7 +9,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   kit.env(scene, 'qwantani_dusk_2', .26, 1.0);
   // la rue, longue : pavés à peine mouillés, trottoir, bordure
   const g0 = new THREE.Group(); scene.add(g0);
-  const cob = kit.pbr('cobblestone_floor_08', { s: 2.2, roughness: .5, ns: 1.2, env: 1.5 });
+  const cob = kit.pbr('cobblestone_floor_08', { s: 2.2, roughness: .32, ns: 1.2, env: 2.0 });
   const road = kit.plane(150, 30, cob); road.rotation.x = -Math.PI / 2; road.position.set(-24, 0, 18.2); g0.add(road);
   const pav = kit.pbr('concrete_pavement', { s: 1.6, env: .9 });
   kit.box(150, .14, 3.2, pav, -24, .07, 1.6, { cast: false, parent: g0 });
@@ -32,7 +32,12 @@ export default async function ({ THREE, kit, scene, portrait }) {
     // l'intérieur, vu par la vitrine : sol, mur du fond chaud, une lumière
     const g = new THREE.Group(); g.position.x = s.x; scene.add(g);
     const fl = kit.plane(7.2, 3.5, kit.std(0x6b5444, { r: .6 })); fl.rotation.x = -Math.PI / 2; fl.position.set(0, .15, -1.75); g.add(fl);
-    const bk = kit.plane(7.2, 3.2, kit.std(0x2a1d14, { e: s.warm, ei: .55, r: .9 })); bk.position.set(0, 1.6, -3.4); g.add(bk);
+    const bk = kit.plane(7.2, 3.2, kit.pbr('plastered_wall', { s: 2.4, color: 0xd8c2a8 })); bk.position.set(0, 1.6, -3.4); g.add(bk);
+    // un comptoir et des étagères en silhouette, éclairés par l'arrière : la vitrine a de la profondeur
+    const wd = kit.std(0x3b2a20, { r: .55 });
+    kit.box(2.4, 1.0, .55, wd, 1.6, .64, -2.6, { parent: g }); kit.box(2.5, .04, .62, kit.std(0xc9b49a, { r: .35 }), 1.6, 1.16, -2.6, { parent: g });
+    for (const y of [1.35, 1.85, 2.35]) kit.box(2.6, .04, .3, wd, -1.8, y, -3.25, { parent: g, cast: false });
+    const glowB = new THREE.PointLight(s.warm, 3.6, 5, 2); glowB.position.set(0, 1.6, -2.6); g.add(glowB);
     const ce = kit.plane(7.2, 3.5, kit.std(0xe8ddcf, { r: .9 })); ce.rotation.x = Math.PI / 2; ce.position.set(0, 3.14, -1.75); g.add(ce);
     for (const sx of [-1, 1]) { const w = kit.plane(3.5, 3.2, kit.std(0x8a7360, { r: .9 })); w.rotation.y = -sx * Math.PI / 2; w.position.set(sx * 3.6, 1.6, -1.75); g.add(w); }
     for (const x of [-2, 0, 2]) kit.pendant(g, x, 2.8, -1.4, { i: 2.2, dist: 6, color: s.warm, r: .04 });
@@ -58,6 +63,10 @@ export default async function ({ THREE, kit, scene, portrait }) {
   kit.model('potted_plant_02', { pos: [-2.9, .14, -5.4], h: 1.4, parent: g });
   kit.model('pachira_aquatica_01', { pos: [3.0, .14, -4.8], h: 1.6, parent: g });
   kit.model('wooden_table_02', { pos: [0, .14, -4.4], h: .8, parent: g });
+  kit.model('modern_wooden_cabinet', { pos: [-2.4, .14, -5.9], h: 1.1, parent: g });
+  kit.model('mid_century_lounge_chair', { pos: [2.2, .14, -3.0], ry: -.6, h: .85, parent: g });
+  kit.model('fancy_picture_frame_01', { pos: [0, 1.7, -6.15], h: .9, parent: g, cast: false });
+  const wb = new THREE.PointLight(0xffd2a0, 1.6, 4, 2); wb.position.set(0, 2.6, -5.4); g.add(wb);
   kit.model('ceramic_vase_03', { pos: [.4, .94, -4.4], h: .3, parent: g });
   const fill = new THREE.PointLight(0xffc48a, 3.0, 10, 2); fill.position.set(0, 2.8, -2); g.add(fill);
   pins.push({ id: 'sign', corners: T.sign });
@@ -85,7 +94,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const H = head;
   const path = portrait ? [
     { p: 0, pos: [H[0] - .5, H[1] - 1.2, H[2] - 1.9], tgt: [H[0] + .1, H[1] + .25, H[2] + 1], fov: 50 },
-    { p: .03, pos: [H[0] + 1.9, H[1] - 1.0, H[2] - .5], tgt: [H[0], H[1] + .1, H[2]] },
+    { p: .03, pos: [H[0] + 1.8, H[1] - 1.7, H[2] - .6], tgt: [H[0] - .2, H[1] + .3, H[2] + .2] },
     { p: .06, pos: [H[0] + 1.7, H[1] - .9, H[2] + 1.9], tgt: [H[0] + .3, H[1] - .2, H[2]] },
     { p: .12, pos: [H[0] + 2.2, 3.2, 8.5], tgt: [H[0] + 4, 2.6, 0] },
     { p: .26, pos: [-43, 2.0, 10.5], tgt: [-38, 2.3, 0], fov: 58 },
@@ -95,8 +104,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { p: .88, pos: [0, 1.72, 11.4], tgt: [0, 2.55, 0], fov: 58 },
     { p: 1, pos: [0, 1.66, 6.4], tgt: [0, 1.9, -2], fov: 56 },
   ] : [
-    { p: 0, pos: [H[0] - .5, H[1] - 1.1, H[2] - 2.1], tgt: [H[0] + .1, H[1] + .2, H[2] + 1], fov: 36 },
-    { p: .03, pos: [H[0] + 1.9, H[1] - 1.0, H[2] - .5], tgt: [H[0], H[1] + .1, H[2]] },
+    { p: 0, pos: [H[0] - .5, H[1] - 1.1, H[2] - 2.1], tgt: [H[0] + 1.0, H[1] + .05, H[2] + 1], fov: 36 },   // le globe dans le tiers droit : le titre a la gauche
+    { p: .03, pos: [H[0] + 1.8, H[1] - 1.7, H[2] - .6], tgt: [H[0] - .2, H[1] + .3, H[2] + .2] },
     { p: .06, pos: [H[0] + 1.7, H[1] - .9, H[2] + 1.9], tgt: [H[0] + .3, H[1] - .2, H[2]] },
     { p: .12, pos: [H[0] + 1.8, 3.3, 8], tgt: [H[0] + 5, 2.6, 0] },
     { p: .26, pos: [-44, 2.0, 8.6], tgt: [-36, 2.3, 0], fov: 42 },
