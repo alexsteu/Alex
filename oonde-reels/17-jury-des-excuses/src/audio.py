@@ -2,7 +2,7 @@
 import sys, wave, subprocess, numpy as np
 SR=48000; DUR=23.80; N=int(SR*DUR)
 rng=np.random.default_rng(17)
-M=np.zeros(N); FX=np.zeros(N)
+M=np.zeros(N); FX=np.zeros(N); BZ=np.zeros(N)
 def add(buf,sig,t,g=1.0):
     i=int(t*SR); j=min(N,i+len(sig))
     if j>i and i>=0: buf[i:j]+=g*sig[:j-i]
@@ -62,7 +62,7 @@ while t<23.3:
 # accroche : test des lumières
 for j in range(3): add(FX,tick(1800+300*j,.7),.30+j*.16)
 for b in BUZZ:
-    add(FX,buzzer(.5),b,.55); add(FX,kick(),b,.5)
+    add(BZ,buzzer(.5),b,.55); add(BZ,kick(),b,.5)
 for q in (1.10,3.96,8.90,12.22): add(FX,whoosh(.3),q-.15,.3)
 for d in (2.20,5.48,9.63): add(FX,whoosh(.3),d-.15,.35)
 for n in (3.40,8.28,11.56): add(FX,tick(1600,.8),n); add(FX,tick(2400,.6),n+.06)
@@ -74,7 +74,7 @@ for i in range(8): add(FX,tick(3000,.25),10.05+i*.05)
 add(FX,tick(1500,.8),10.70)
 # excuse 4 : suspense puis acceptée
 for i in range(6): add(FX,tick(700+60*i,.3),13.75+i*.1)
-add(FX,ding(),CEL,.6); add(FX,hit(),CEL,.5)
+add(BZ,ding(),CEL,.5); add(BZ,hit(),CEL,.4)
 add(FX,whoosh(.4),ONTE-.1,.45); add(FX,hit(),ONTE+.05,.6)
 for i in range(4): add(FX,tick(1800,.5),ONTE+.3+i*.16)
 add(FX,hit(),15.80,.5)                                            # « Gratuite. »
@@ -86,10 +86,10 @@ for tt in (20.74,21.34,21.94): add(FX,tick(1800,.6),tt)
 add(FX,ding(),22.65,.35)
 v=np.frombuffer(subprocess.run(['ffmpeg','-v','error','-i',sys.argv[1],'-ac','1','-ar',str(SR),'-f','f32le','-'],capture_output=True).stdout,np.float32)
 V=np.zeros(N); V[:min(N,len(v))]=v[:N]
-ev=np.convolve(np.abs(V),np.ones(2400)/2400,'same'); duck=1-.55*np.clip(ev/(ev.max()*.15),0,1)
+ev=np.convolve(np.abs(V),np.ones(2400)/2400,'same'); duck=1-.75*np.clip(ev/(ev.max()*.15),0,1)
 duck=np.convolve(duck,np.ones(4800)/4800,'same')
-fxd=1-.3*np.clip(ev/(ev.max()*.15),0,1)
-mix=V*1.0+M*duck*.26+FX*fxd*.55
+fxd=1-.7*np.clip(ev/(ev.max()*.15),0,1)
+mix=V*1.0+M*duck*.22+FX*fxd*.4+BZ*(1-.5*np.clip(ev/(ev.max()*.15),0,1))*.5
 fe=int(.3*SR); mix[-fe:]*=np.linspace(1,0,fe)
 st=np.stack([mix,mix],1); st=st/max(1e-9,np.abs(st).max())*.89
 w=wave.open(sys.argv[2],'wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
