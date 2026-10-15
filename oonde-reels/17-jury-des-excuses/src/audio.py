@@ -1,6 +1,6 @@
 """Reel 17 : rythmique 118 bpm + buzzers + bruitages + voix off. python3 audio.py voix.wav mix.wav"""
 import sys, wave, subprocess, numpy as np
-SR=48000; DUR=23.80; N=int(SR*DUR)
+SR=48000; DUR=23.25; N=int(SR*DUR)
 rng=np.random.default_rng(17)
 M=np.zeros(N); FX=np.zeros(N); BZ=np.zeros(N)
 def add(buf,sig,t,g=1.0):
@@ -51,7 +51,7 @@ B=60/118; notes=[55,55,65.4,49]
 BUZZ=[3.02,7.98,11.12]; CEL=14.40; ONTE=14.86
 mute=[(13.70,ONTE)]
 t=0.0; k=0
-while t<23.3:
+while t<22.9:
     if not any(a<=t<b for a,b in mute):
         add(M,kick(),t,.85)
         if k%2==1: add(M,clap(),t,.5)
@@ -77,13 +77,14 @@ for i in range(6): add(FX,tick(700+60*i,.3),13.75+i*.1)
 add(BZ,ding(),CEL,.35); add(BZ,hit(),CEL,.3)
 add(FX,whoosh(.4),ONTE-.1,.45); add(FX,hit(),ONTE+.05,.35)
 for i in range(4): add(FX,tick(1800,.5),ONTE+.3+i*.16)
-add(FX,hit(),15.80,.5)                                            # « Gratuite. »
+add(FX,hit(),15.80,.4)
 add(FX,whoosh(.3,False),16.54,.35); add(FX,tick(2200,.7),16.70)   # notification
 for i in range(4): add(FX,whoosh(.2),17.66+i*.12,.2)
 add(FX,tick(1500,.8),18.84)
-add(FX,whoosh(.35,False),19.82,.4); add(FX,hit(),20.12,.4)
-for tt in (20.74,21.34,21.94): add(FX,tick(1800,.6),tt)
-add(FX,ding(),22.65,.35)
+add(FX,whoosh(.35,False),20.25,.4); add(FX,hit(),20.45,.4); add(FX,tick(1500,.7),20.55)
+for tt in (20.84,21.44,22.04): add(FX,tick(1800,.6),tt)
+for i in range(4): add(FX,tick(1300+200*i,.45),19.09+i*.22)
+add(FX,whoosh(.35),22.88,.4)
 v=np.frombuffer(subprocess.run(['ffmpeg','-v','error','-i',sys.argv[1],'-ac','1','-ar',str(SR),'-f','f32le','-'],capture_output=True).stdout,np.float32)
 V=np.zeros(N); V[:min(N,len(v))]=v[:N]
 ev=np.convolve(np.abs(V),np.ones(2400)/2400,'same'); duck=1-.75*np.clip(ev/(ev.max()*.15),0,1)
