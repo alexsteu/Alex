@@ -1,9 +1,9 @@
 /* La rue au crépuscule : l'ouverture de la page. Un seul plan-séquence, rendu d'avance (entree3d/scenes/rue.js) :
    le point bleu est un réverbère, la rue apparaît, on longe les vitrines, on s'arrête devant une enseigne vide. */
 .r{padding:0;background:#0d1024;color:#fff}
-.r-walk{position:relative;height:320vh;height:320svh}
+.r-walk{position:relative;height:270vh;height:270svh}
 .r-anchor{position:absolute;left:0;top:60%;width:1px;height:1px;scroll-margin-top:var(--hh)}
-@media (max-aspect-ratio:1/1){.r-walk{height:280vh;height:280svh}}
+@media (max-aspect-ratio:1/1){.r-walk{height:235vh;height:235svh}}
 .r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
 .r-scene{position:absolute;inset:0}
 .r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -11,7 +11,8 @@
 .r.live .r-scene canvas{opacity:1}
 .r.live .r-poster{visibility:hidden}
 /* un voile en bas et en haut : le texte reste lisible quelle que soit l'image */
-.r-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,10,28,.55) 0,rgba(8,10,28,0) 30%,rgba(8,10,28,0) 52%,rgba(8,10,28,.78) 100%)}
+.r-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,10,28,.55) 0,rgba(8,10,28,0) 30%,rgba(8,10,28,0) 46%,rgba(8,10,28,.86) 100%)}
+.r-veil::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,10,28,.5),rgba(8,10,28,0) 55%);opacity:var(--hv,1)}
 /* les enseignes : le métier s'inscrit au passage ; l'enseigne vide reçoit le nom tapé, en néon */
 .r-pins{position:absolute;inset:0;pointer-events:none}
 .r-pins>div{position:absolute;left:0;top:0;width:1000px;height:127px;transform-origin:0 0;opacity:0;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;transition:opacity .35s}
@@ -22,7 +23,7 @@
 /* les textes posés sur la scène */
 .r-tx{position:absolute;z-index:3;pointer-events:none;left:clamp(16px,5cqw,72px);right:clamp(16px,5cqw,72px)}
 .r-tx a,.r-tx button,.r-tx input,.r-tx label{pointer-events:auto}
-.r-t1{top:auto;bottom:clamp(40px,16cqh,150px)}
+.r-t1{top:auto;bottom:clamp(40px,12cqh,120px)}
 .r-t1 h1{max-width:12.5em}
 .r-t1 .mono{font:500 11.5px var(--mono);letter-spacing:.16em;color:rgba(255,255,255,.72)}
 .r-t1 h1{font:600 clamp(34px,5.6cqw,78px)/1.02 var(--sans);letter-spacing:-.03em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,20,.5)}
@@ -30,10 +31,21 @@
 .r-t1 h1 .w{transition-delay:calc(var(--i) * 85ms + 150ms)}
 .r.go .r-t1 h1 .w{opacity:1;translate:0 0;filter:none}
 .r-t1 h1 em{font-style:normal;color:#9aa6ff}
+/* sous le titre : ce que nous faisons, en une phrase, puis les deux actions */
+.r-sub{margin-top:14px;font:500 clamp(17px,1.6cqw,21px)/1.4 var(--sans);color:rgba(255,255,255,.92);max-width:40em;text-shadow:0 1px 14px rgba(5,6,20,.6)}
+.r-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:20px}
+.r-act .btn{min-height:50px;padding:12px 20px}
+.r-wa{background:rgba(10,12,32,.5);border-color:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-wa:hover{background:rgba(10,12,32,.75);border-color:#fff}
+.r-off{flex-basis:100%;font:400 14px/1.45 var(--sans);color:rgba(255,255,255,.82);text-shadow:0 1px 10px rgba(5,6,20,.7)}
+.r-off a{color:#fff;white-space:nowrap;text-underline-offset:3px;padding-block:8px;margin-block:-8px;display:inline-block}
+.r-tx :focus-visible,.r-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.r-t1 h1 .w,.r-sub,.r-act{transition-property:opacity,translate,filter}
+.r-sub,.r-act{opacity:0;translate:0 10px;transition:opacity .6s .75s,translate .6s .75s cubic-bezier(.16,1,.3,1)}
+.r.go .r-sub,.r.go .r-act{opacity:1;translate:0 0}
+@media (max-width:700px){body.hero-cta .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
 .r-say{bottom:clamp(28px,10cqh,96px);font:600 clamp(26px,3.4cqw,48px)/1.08 var(--sans);letter-spacing:-.025em;opacity:0;max-width:15em;text-shadow:0 2px 20px rgba(5,6,20,.6)}
 .r-say.r-top{bottom:auto;top:clamp(24px,10cqh,100px)}
-/* un seul choix du métier : celui de la rue ; l'entrée plus bas garde le nom et la couleur */
-#eAct{display:none}
 /* l'arrêt : l'enseigne est à vous */
 .r-stop{bottom:clamp(16px,5cqh,48px);opacity:0;visibility:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr);gap:14px 36px;align-items:end;background:rgba(10,12,32,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:22px 24px;max-width:1080px;margin:0 auto}
 .r-stop.on{visibility:visible}
@@ -48,6 +60,9 @@
 .r-chips a:hover{background:#dfe3ff;transform:translateY(-1px)}
 .r-chips a:focus-visible{outline:3px solid #8f9cff;outline-offset:2px}
 .r-note{grid-column:1/-1;font:400 14px/1.45 var(--sans);color:rgba(255,255,255,.72);border-top:1px solid rgba(255,255,255,.12);padding-top:12px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.r-stop label small,.r-q small{font:400 14px var(--sans);color:rgba(255,255,255,.62);letter-spacing:0;margin-left:6px}
+.r-wa2{margin-left:auto;display:inline-flex;align-items:center;gap:7px;color:#fff;font:600 14px var(--sans);text-decoration:underline;text-underline-offset:3px;min-height:44px;margin-block:-10px}
+.r-wa2 svg{width:17px;height:17px;color:#5ED489}
 .r-note b{font:500 11px var(--mono);letter-spacing:.14em;color:#fff;background:rgba(255,255,255,.14);padding:3px 7px;border-radius:5px;align-self:center}
 .r-skip{position:absolute;z-index:4;right:clamp(16px,5cqw,72px);top:18px;font:500 13.5px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 14px;text-decoration:none;transition:opacity .25s}
 .r-skip:hover{background:rgba(255,255,255,.24)}
@@ -55,10 +70,20 @@
 .r-cue{position:absolute;z-index:3;left:50%;bottom:22px;translate:-50% 0;font:500 11px var(--mono);letter-spacing:.18em;color:rgba(255,255,255,.7);pointer-events:none;transition:opacity .3s}
 .r-cue i{display:block;width:1px;height:28px;margin:8px auto 0;background:linear-gradient(#fff,rgba(255,255,255,0));animation:r-cue 1.8s ease-in-out infinite}
 @keyframes r-cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* le chargement : discret, seulement si le film tarde ; en cas d'échec, l'image fixe reste et la page continue */
+.r-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(10,12,32,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
+.r-load:not(:empty){opacity:1}
 /* téléphone : le titre en haut, l'arrêt en bas, plein large */
 @container (max-aspect-ratio:1/1){
- .r-t1{top:20px;bottom:auto}
- .r-t1 h1{font-size:min(40px,10.4cqw)}
+ .r-t1{top:auto;bottom:18px}
+ .r-t1 .mono{font-size:10.5px}
+ .r-t1 h1{font-size:min(38px,9.8cqw);margin-top:10px}
+ .r-sub{font-size:16.5px;margin-top:10px}
+ .r-act{margin-top:16px;gap:8px}
+ .r-act .btn{flex:1 1 100%;min-height:48px;padding:11px 16px;font-size:15.5px}
+ .r-off{font-size:13.5px}
+ .r-veil{background:linear-gradient(180deg,rgba(8,10,28,.45) 0,rgba(8,10,28,0) 18%,rgba(8,10,28,0) 30%,rgba(8,10,28,.88) 62%,rgba(8,10,28,.95) 100%);opacity:calc(.45 + .55 * var(--hv,1))}
+ .r-veil::before{display:none}
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:22px}
  .r-stop{grid-template-columns:1fr;gap:10px;padding:16px;left:10px;right:10px;bottom:10px;border-radius:16px}
  .r-stop label,.r-q{font-size:19px;margin:4px 0 8px}
@@ -66,8 +91,9 @@
  .r-stop input{min-height:48px;font-size:17px}
  .r-chips{gap:6px;margin-top:8px}.r-chips a{min-height:42px;padding:7px 12px;font-size:14.5px}
  .r-note{font-size:13px;padding-top:9px}
- .r-skip{top:auto;bottom:16px;right:16px}
- .r-cue{left:16px;translate:none;bottom:22px}
+ .r-skip{top:12px;right:12px;padding:8px 12px;font-size:13px}
+ .r-cue{display:none}
+ .r-load{top:14px;left:16px;translate:none}
 }
 /* mouvement réduit, ou sans JavaScript : l'image de l'arrêt, immobile ; les textes et le choix viennent dessous */
 .r.static .r-walk,html:not(.js) .r-walk{height:auto}
@@ -78,4 +104,9 @@
 .r.static .r-t1 h1 .w,html:not(.js) .r-t1 h1 .w{opacity:1;translate:none;filter:none}
 .r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}
 .r.static .r-pins .r-sign{opacity:1}
+html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
+.r.static .r-stage,html:not(.js) .r-stage{display:flex;flex-direction:column}
+.r.static .r-t1,html:not(.js) .r-t1{order:-1;padding-bottom:28px}
+.r.static .r-act .btn,html:not(.js) .r-act .btn{flex:0 1 auto}
 @media (max-width:700px){.r.static .r-scene,html:not(.js) .r-scene{aspect-ratio:9/14}}
+@media (max-width:700px){.r.static .r-stop,html:not(.js) .r-stop{grid-template-columns:minmax(0,1fr);gap:12px}.r.static .r-act .btn,html:not(.js) .r-act .btn{flex:1 1 100%}}

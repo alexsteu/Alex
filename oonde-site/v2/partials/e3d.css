@@ -41,6 +41,13 @@
 .e-sw .swatches button{width:34px;height:34px;border-color:rgba(255,255,255,.9);box-shadow:none}
 .e-sw .swatches button[aria-checked=true]{box-shadow:0 0 0 2px var(--night),0 0 0 4px #fff}
 .e-walk .c1 .w-hint{margin-top:16px}
+/* chargement : un mot discret si le film tarde ; tant qu'il n'est pas là, l'affiche du métier choisi (jamais l'ancienne image) */
+.e-load{position:absolute;z-index:3;left:50%;top:78px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(10,12,22,.66);border-radius:99px;padding:7px 12px;pointer-events:none;white-space:nowrap;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis}
+.e-load:empty{display:none}
+.fallback .e-load{text-transform:none;letter-spacing:0;font:500 13px var(--sans);white-space:normal;text-align:center}
+.js .e-walk .w-view:not(.live) .w-cv,.js .e-walk .w-view:not(.live) .e-pins{visibility:hidden}
+.w-poster{background:#141826}
+.w-poster img:not([src]){visibility:hidden}
 /* le site du commerce, dans sa couleur */
 .e-walk .w-bar.solid .w-book,.e-walk .w-go{background:var(--c);color:var(--ct)}
 .e-walk .w-b1{background:var(--c);color:var(--ct)}

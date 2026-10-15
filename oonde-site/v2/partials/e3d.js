@@ -35,7 +35,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  /* Le message WhatsApp : ce que la personne a tapé et choisi, rien d'autre */
  function msg(){const s=E3[st.sc],t=s.lodge?null:T[s.t];if(!st.touched)return MSG.imm();
   const what=s.lodge?'logement':t.noun,col=st.styleSet&&t?', couleur '+sty()[2]:'';
-  return `${SRC?HELLO+' J’ai':'Bonjour, j’ai'} essayé l’entrée 3D sur votre site. J’aimerais connaître le prix pour ${st.name?'mon commerce':'mon '+what}.\n${st.name?st.name+', '+what+col+'.\n':''}Ma commune : `}
+  return `${SRC?HELLO+' J’ai':'Bonjour, j’ai'} essayé l’entrée 3D sur votre site. J’aimerais recevoir une première image 3D et le prix pour ${st.name?'mon commerce':'mon '+what}.\n${st.name?st.name+', '+what+col+'.\n':''}Ma commune : `}
  function paint(){const s=E3[st.sc],[c,ct,cn]=sty(),name=st.name||st.ex||'Votre commerce',t=s.lodge?null:T[s.t];
   view.style.setProperty('--c',c);view.style.setProperty('--ct',ct);
   pins.hidden=!!s.lodge;if(!s.lodge)e3pins(pins,s,name);
@@ -54,8 +54,8 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   $('eToastT').textContent=s.lodge?'Ici, vos clients réservent.':t.cta==='Commander'?'Ici, vos clients commandent.':/table/.test(t.cta)?'Ici, vos clients réservent leur table.':'Ici, vos clients prennent rendez-vous.';
   /* les boutons « Connaître mon prix » de la page suivent l'essai */
   const href=wa(msg());$('eWa').href=href;document.querySelectorAll('a[data-wa="e3"]').forEach(a=>a.href=href);
-  const lab=st.name?'Mon prix pour '+(st.name.length>18?st.name.slice(0,17)+'…':st.name):'Connaître mon prix';document.querySelectorAll('[data-e3l]').forEach(n=>n.textContent=lab);
-  [...$('eAct').children].forEach(b=>{const on=b.dataset.v===st.sc;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});
+  const lab=st.name?'Aperçu 3D pour '+(st.name.length>18?st.name.slice(0,17)+'…':st.name):'Recevoir mon aperçu 3D';document.querySelectorAll('[data-e3l]').forEach(n=>n.textContent=lab);
+  [...$('eAct').children].forEach(b=>{const on=b.dataset.v===st.sc;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});if($('eSel'))$('eSel').value=st.sc;
   const bs=$('eStyle');bs.parentNode.hidden=!!s.lodge;
   if(!s.lodge){if(bs.dataset.t!==st.sc){bs.dataset.t=st.sc;bs.innerHTML=T[s.t].styles.map(([c,,n],i)=>`<button type="button" role="radio" aria-label="${esc(n)}" style="--g:${c}" data-i="${i}"></button>`).join('')}
    [...bs.children].forEach((b,i)=>{b.setAttribute('aria-checked',i===st.style);b.tabIndex=i===st.style?0:-1});$('eStyleN').textContent=cn}
@@ -64,7 +64,12 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   dirty=true;tick()}
  /* Les choix */
  $('eAct').innerHTML=E3K.map(k=>`<button type="button" role="radio" data-v="${k}" aria-checked="false">${E3[k].lab}</button>`).join('');
- const choose=(k,ex)=>{if(!E3[k])return;st.touched=true;armed=true;st.ex=ex?E3[k].ex:'';if(st.sc!==k){st.sc=k;st.style=0;st.styleSet=false;drawn=null;load(set);if(!view.classList.contains('live'))poster.src=e3base(k)+set+'/f000.webp'}paint();load(set)};
+ if($('eSel')){$('eSel').innerHTML=E3K.map(k=>`<option value="${k}">${E3[k].lab}</option>`).join('');$('eSel').addEventListener('change',e=>choose(e.target.value))}
+ /* Changer de métier : l'affiche du nouveau métier tout de suite (ou sa photo de repli), puis son film.
+    Corrigé (v17) : choisir le métier déjà affiché avant l'approche de l'entrée laissait l'affiche sans image. */
+ const choose=(k,ex)=>{if(!E3[k])return;st.touched=true;st.ex=ex?E3[k].ex:'';const ch=st.sc!==k;
+  if(ch){st.sc=k;st.style=0;st.styleSet=false;drawn=null;view.classList.remove('live')}
+  if(!armed||ch){armed=true;show(k)}paint();load(set)};
  $('eAct').addEventListener('click',e=>{const b=e.target.closest('button');if(b)choose(b.dataset.v)});
  $('eAct').addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft'].includes(e.key))return;e.preventDefault();const i=E3K.indexOf(st.sc),n=E3K[(i+(e.key==='ArrowRight'?1:E3K.length-1))%E3K.length];choose(n);$('eAct').querySelector(`[data-v="${n}"]`).focus()});
  $('eStyle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.touched=st.styleSet=true;st.style=+b.dataset.i;paint()});
@@ -90,6 +95,14 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  const SETS={d:96,m:72},store={};
  const near=(k,i)=>{const s=store[st.sc+k];if(!s)return null;const n=SETS[k];for(let d=0;d<n;d++){if(i-d>=0&&s.ok[i-d])return[s.img[i-d],i-d,s];if(i+d<n&&s.ok[i+d])return[s.img[i+d],i+d,s]}return null};
  /* les images arrivent en 4 paquets (build.py, pack()) : la première, la dernière et une sur 8 d'abord, puis le reste entre deux */
+ /* l'affiche : la première image du film ; si elle manque, l'autre format ; sinon une photo fixe du métier, et la page continue */
+ const FB={restaurant:'img/t-restaurant.jpg',coiffure:'img/t-coiffure.jpg',institut:'img/t-beaute.jpg',onglerie:'img/t-ongles.jpg',boulangerie:'img/t-boulangerie.jpg',logement:'img/greves/salon-l.jpg'};
+ const ld=$('eLoad');let slow=0;
+ function busy(on){clearTimeout(slow);if(on)slow=setTimeout(()=>{if(!view.classList.contains('live'))ld.textContent='Chargement de la démo…'},700);else ld.textContent=''}
+ function show(k){view.classList.remove('fallback');poster.style.visibility='';poster.dataset.k=k;poster.dataset.try='0';poster.src=e3base(k)+set+'/f000.webp';busy(true)}
+ poster.addEventListener('error',()=>{const k=poster.dataset.k||st.sc,t=+poster.dataset.try||0;poster.dataset.try=t+1;
+  if(t===0)poster.src=e3base(k)+(set==='d'?'m':'d')+'/f000.webp';else if(t===1){poster.src=FB[k];view.classList.add('fallback')}else poster.style.visibility='hidden'});
+ poster.addEventListener('load',()=>{if(view.classList.contains('live'))return;busy(false);if(view.classList.contains('fallback'))ld.textContent='Photo d’exemple : la démo animée n’a pas pu se charger.'});
  function load(k){const key=st.sc+k;if(store[key]||!armed)return;const sc=st.sc,n=SETS[k],s=store[key]={img:new Array(n),ok:new Uint8Array(n),pins:null};
   if(!E3[sc].lodge)fetch(e3base(sc)+k+'/pins.json').then(r=>r.json()).then(j=>{s.pins=j;if(sc===st.sc)dirty=true;tick()}).catch(()=>{});
   const got=buf=>{const v=new DataView(buf),hl=v.getUint32(0,true),head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
@@ -98,7 +111,8 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
     return (im.decode?im.decode():new Promise(r=>im.onload=r)).catch(()=>{}).then(()=>{s.img[i]=im;s.ok[i]=1;if(sc===st.sc&&k===set)dirty=true;tick()})}))};
   const get=g=>fetch(e3base(sc)+k+'/p'+g+'.txt').then(r=>{if(!r.ok)throw r.status;return r.text()}).then(t=>{const b=atob(t),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u.buffer});
   get(0).then(got).then(()=>LIVE&&Promise.all([get(1).then(got),get(2).then(got)]).then(()=>get(3)).then(got))
-   .catch(()=>{if(!s.ok[0]&&sc===st.sc&&k===set)load(k==='d'?'m':'d')})}   /* jeu absent : l'autre jeu, recadré */
+   .catch(()=>{if(s.ok.some(x=>x))return;if(sc===st.sc&&k===set&&!store[sc+(k==='d'?'m':'d')])load(k==='d'?'m':'d');   /* jeu absent : l'autre jeu, recadré */
+    else if(sc===st.sc){busy(false);view.classList.add('nofilm')}})}   /* les deux absents : l'affiche (ou la photo de repli) reste, le site de la démo et les boutons aussi */
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=cv.width=Math.round(r.width*d);H=cv.height=Math.round(r.height*d);
   set=r.width<r.height*.95?'m':'d';load(set);geo();dirty=true}
  /* 2. Rythme : la part du défilement figé (P) donne la position de la caméra (p) ; la porte est passée à p = .56 */
@@ -111,7 +125,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   if(!r){const k=set==='d'?'m':'d';r=near(k,Math.round(p*(SETS[k]-1)))}
   if(!r)return;const[im,i,s]=r;if(im===drawn&&!dirty)return;
   const sc=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc;
-  cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);drawn=im;dirty=false;view.classList.add('live');
+  cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);drawn=im;dirty=false;view.classList.add('live');view.classList.remove('nofilm','fallback');busy(false);
   const d=W/scene.clientWidth;if(!E3[st.sc].lodge)e3place(pins,s.pins&&s.pins[i]?s.pins[i].pins:null,{ox:(W-w)/2/d,oy:(H-h)/2/d,w:w/d,h:h/d})}
  /* 4. Textes, barre de progression, et le site qui monte */
  function ui(p){const lodge=E3[st.sc].lodge,c2in=lodge?.3:.12,c2out=lodge?.5:.3,c3in=lodge?.57:.5;
@@ -131,8 +145,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   if(dirty||cur!==last){draw(cur);last=cur}ui(cur);if(cur!==t)tick()}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);tick()}).observe(walk);
  /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
- poster.onerror=()=>{if(poster.src.includes('/m/'))poster.src=poster.src.replace('/m/','/d/')};
- const arm=()=>{if(armed)return;armed=true;poster.src=e3base(st.sc)+set+'/f000.webp';load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
+ const arm=()=>{if(armed)return;armed=true;show(st.sc);load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
  size();paint();
  addEventListener('resize',()=>{size();tick()});
  if(document.fonts)document.fonts.ready.then(paint);

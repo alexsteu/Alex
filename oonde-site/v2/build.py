@@ -7,7 +7,9 @@ def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(m
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 WA = walink(HELLO + " J’aimerais recevoir ma maquette offerte.\nMon commerce et ma commune : ")
 WA_PASSE = walink(HELLO + " J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ")
-WA_IMM = walink(HELLO + " J’aimerais connaître le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ")
+WA_IMM = walink(HELLO + " J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ")
+WA_ASSIST = walink(HELLO + " L’assistant m’intéresse.\nMon commerce et ma commune : ")
+WA_VIDS = walink(HELLO + " Les vidéos m’intéressent.\nMon commerce et ma commune : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
 WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon lieu.\nType de lieu, commune et le meilleur moment : ")
 WA_Q = walink(HELLO + " J’ai une question : ")
@@ -59,7 +61,7 @@ def fill(s, fonts, links):
     s = inc(s)
     for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_VID}}', WA_VID), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_VIDS}}', WA_VIDS), ('{{WA_VID}}', WA_VID), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
                  ('{{QR_WA}}', QR_WA), ('{{QR_IMM}}', QR_IMM), ('{{CAL}}', CAL)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)
@@ -106,7 +108,7 @@ def csp_hashes(html):
 
 layout = (D / 'legal-layout.html').read_text()
 QR_WA, QR_IMM = qr(WA), qr(WA_IMM)
-docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -114,13 +116,13 @@ for k, (title, desc, cur) in PAGES.items():
     docs[k] = s
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out])
-        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'videos'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         (o / f'{k}.html').write_text(built[k])
@@ -131,6 +133,8 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
         big = f.replace('.jpg', '-l.jpg')   # version 1600 px des photos de métier, demandée par l'aperçu en grand
         if f.startswith('img/t-') and (D / big).exists(): shutil.copy2(D / big, o / big)
+    for f in sorted(set(re.findall(r'video/[\w.-]+\.(?:mp4|jpg)', html))):   # les vidéos de la page Vidéos et leurs affiches
+        (o / 'video').mkdir(exist_ok=True); shutil.copy2(D / f, o / f)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
     if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque jeu d'images part en 4 paquets (voir pack()), avec pins.json
@@ -139,7 +143,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
                 src, dst = sd / k, o / sd.relative_to(D) / k
                 pack(src, dst)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
-                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
+                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
     if wrap:
         (o / 'fonts').mkdir()
@@ -163,5 +167,11 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
         (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'visite', 'assistant', 'videos')) + '</urlset>\n')
+    # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
+    for k, h in built.items():
+        for f in set(re.findall(r'(?:src|href|srcset|poster|data-src)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)):
+            if '${' in f or f.startswith(('/', 'mailto', 'tel')) or f in ('./', '') or (out == 'preview' and f in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png')): continue   # l'aperçu se passe des icônes
+            f = f.split(' ')[0]
+            if not ((o / f).exists() or (o / (f + '.html')).exists()): print('MANQUE', out, k, f)
 print('ok', sorted(p.name for p in (D / 'dist').iterdir()))

@@ -402,7 +402,10 @@ const mail=(subject,t)=>'mailto:'+MAIL+'?subject='+encodeURIComponent(subject)+'
 const MSG={
  vit:()=>HELLO+' J’aimerais recevoir ma maquette offerte.\nMon commerce et ma commune : ',
  passe:()=>HELLO+' J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ',
- imm:()=>HELLO+' J’aimerais connaître le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
+ imm:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
+ e3:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
+ assist:()=>HELLO+' L’assistant m’intéresse.\nMon commerce et ma commune : ',
+ vids:()=>HELLO+' Les vidéos m’intéressent.\nMon commerce et ma commune : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
  lieu:()=>HELLO+' J’aimerais que vous veniez voir mon lieu.\nType de lieu, commune et le meilleur moment : ',
@@ -426,7 +429,7 @@ document.querySelectorAll('details').forEach(d=>{const s=d.querySelector('summar
  document.addEventListener('oonde-cta',()=>set());
  if(hero)new IntersectionObserver(es=>{past=!es[0].isIntersecting;set()}).observe(hero);
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));set()},{threshold:.5,rootMargin:'-64px 0px 0px 0px'});
- document.querySelectorAll('main a.btn[href*="wa.me"],main [data-cta]').forEach(a=>io.observe(a));set()})();
+ document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
 /* Les sites types : photo, cadrage, textes, prestations (les 3 premières dans l'aperçu réduit), horaires, trois couleurs nommées.
    Tout est un exemple, marqué comme tel : les vrais textes et prix viennent du commerce. */
 const T={
