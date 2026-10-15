@@ -1,0 +1,115 @@
+// La rue au crépuscule : l'ouverture de oonde.ch. Un seul plan-séquence.
+// On ouvre serré sur un réverbère dont l'ampoule est le point bleu du logo, on recule, la rue apparaît ;
+// la caméra longe six vitrines allumées (restaurant, boulangerie, coiffure, institut, onglerie), puis se pose
+// face à la dernière façade, enseigne vide (pin `sign`) : la page y écrit le nom du visiteur. À la fin, la porte s'ouvre.
+// Pins : `sign` (l'enseigne vide) et une par métier (le nom du métier s'inscrit au passage).
+export default async function ({ THREE, kit, scene, portrait }) {
+  const BLUE = 0x2038ec;
+  kit.sky(scene, { top: 0x1d2156, mid: 0x7d5f98, hor: 0xf0a08e, stars: .35 });
+  kit.env(scene, 'qwantani_dusk_2', .26, 1.0);
+  // la rue, longue : pavés à peine mouillés, trottoir, bordure
+  const g0 = new THREE.Group(); scene.add(g0);
+  const cob = kit.pbr('cobblestone_floor_08', { s: 2.2, roughness: .5, ns: 1.2, env: 1.5 });
+  const road = kit.plane(150, 30, cob); road.rotation.x = -Math.PI / 2; road.position.set(-24, 0, 18.2); g0.add(road);
+  const pav = kit.pbr('concrete_pavement', { s: 1.6, env: .9 });
+  kit.box(150, .14, 3.2, pav, -24, .07, 1.6, { cast: false, parent: g0 });
+  kit.box(150, .16, .22, kit.std(0x8d8a84, { r: .8 }), -24, .08, 3.15, { cast: false, parent: g0 });
+
+  const lit = (f, i) => (f * 5 + i * 3) % 4 === 1;   // quelques fenêtres allumées aux étages
+  const S = 9.6;
+  // les six façades, de gauche à droite : on les longe dans cet ordre
+  const shops = [
+    { id: 'restaurant', x: -5 * S, o: { stone: 'large_sandstone_blocks', wall: 0xefe1cc, shutter: 0x4f6259, base: 0x22352e, frame: 0x17191c, awning: ['#1f4a3b', '#d8cdb6'], awningDepth: 1.5, signY: 3.72, signH: .56 }, warm: 0xffb066 },
+    { id: 'boulangerie', x: -4 * S, o: { facade: 'wood', paint: 0x5a1c22, trim: 0xc9a25e, signStyle: 'fascia', signW: 5.4, signH: .6, grid: [4, 3], wall: 0xf2e6cf, shutter: 0x7a3b33, base: 0x5a1c22, frame: 0x3a1215, lamps: false }, warm: 0xffc27a },
+    { id: 'coiffure', x: -3 * S, o: { modern: true, facade: 'modern', concrete: false, concreteTint: 0xc9c6bf, thin: true, mullion: false, signStyle: 'none', signW: 4.6, signH: .5, signY: 3.62, wall: 0xe9e6e0, plaster: 'painted_plaster_wall', frame: 0x141518, lamps: false, floors: 3, windows: 3 }, warm: 0xffe6c8 },
+    { id: 'institut', x: -2 * S, o: { facade: 'arch', signStyle: 'none', signW: 3.6, signH: .42, signY: 3.72, stone: 'plastered_wall', stoneTint: 0xe9dccd, wall: 0xeedfd2, plaster: 'painted_plaster_wall', shutter: 0x9a8a76, base: 0xd9c8b6, frame: 0x3a2e26, lamps: false, mullion: false }, warm: 0xffcf9a },
+    { id: 'onglerie', x: -1 * S, o: { facade: 'stone', stone: 'long_white_tiles', stoneTint: 0xf6e1e2, wall: 0xf0d4d6, plaster: 'clay_plaster', shutter: 0xd99aa6, base: 0xe9c3c8, frame: 0xd8b7a0, awning: ['#e7a9b6', '#fbefee'], awningDepth: 1.2, signFrame: 0xd8b07a }, warm: 0xffd6d6 },
+  ];
+  const pins = [];
+  for (const s of shops) {
+    const f = kit.shopfront(scene, { x: s.x, seed: s.x, lit, spillOp: .2, spill: s.warm, ...s.o });
+    pins.push({ id: s.id, corners: f.sign.map(v => v.clone().add(new THREE.Vector3(s.x, 0, 0))) });
+    // l'intérieur, vu par la vitrine : sol, mur du fond chaud, une lumière
+    const g = new THREE.Group(); g.position.x = s.x; scene.add(g);
+    const fl = kit.plane(7.2, 3.5, kit.std(0x6b5444, { r: .6 })); fl.rotation.x = -Math.PI / 2; fl.position.set(0, .15, -1.75); g.add(fl);
+    const bk = kit.plane(7.2, 3.2, kit.std(0x2a1d14, { e: s.warm, ei: .55, r: .9 })); bk.position.set(0, 1.6, -3.4); g.add(bk);
+    const ce = kit.plane(7.2, 3.5, kit.std(0xe8ddcf, { r: .9 })); ce.rotation.x = Math.PI / 2; ce.position.set(0, 3.14, -1.75); g.add(ce);
+    for (const sx of [-1, 1]) { const w = kit.plane(3.5, 3.2, kit.std(0x8a7360, { r: .9 })); w.rotation.y = -sx * Math.PI / 2; w.position.set(sx * 3.6, 1.6, -1.75); g.add(w); }
+    for (const x of [-2, 0, 2]) kit.pendant(g, x, 2.8, -1.4, { i: 2.2, dist: 6, color: s.warm, r: .04 });
+    if (s.id === 'restaurant') { for (const x of [-2.4, 2.4]) kit.model('outdoor_table_chair_set_01', { pos: [x, .14, 1.5], ry: x < 0 ? .3 : -.2, h: .95, parent: g }); kit.model('standing_chalkboard_01', { pos: [1.0, .14, 1.0], ry: -.35, h: 1.0, parent: g }); for (const x of [-2, 0, 2]) kit.model('round_wooden_table_01', { pos: [x, .15, -1.6], h: .76, parent: g, tint: 0x8a6a52 }); }
+    if (s.id === 'boulangerie') { kit.model('wooden_display_shelves_01', { pos: [-1.8, .15, -2.6], h: 1.8, parent: g }); kit.model('wooden_display_shelves_01', { pos: [1.8, .15, -2.6], h: 1.8, parent: g }); kit.model('wooden_crate_01', { pos: [-2.5, .14, .7], ry: .1, h: .42, parent: g }); kit.model('wicker_basket_02', { pos: [-2.5, .56, .7], h: .3, parent: g }); }
+    if (s.id === 'coiffure') { for (const x of [-2.2, 0, 2.2]) kit.model('BarberShopChair_01', { pos: [x, .15, -2.2], h: 1.05, parent: g }); kit.model('potted_plant_04', { pos: [3, .15, -.8], h: 1.3, parent: g }); }
+    if (s.id === 'institut') { kit.model('mid_century_lounge_chair', { pos: [-1.8, .15, -2], ry: .4, h: .85, parent: g }); kit.model('ceramic_vase_02', { pos: [1.8, .15, -1.2], h: .6, parent: g }); kit.model('pachira_aquatica_01', { pos: [2.6, .15, -2.4], h: 1.6, parent: g }); }
+    if (s.id === 'onglerie') { const pol = [0xc2182b, 0xe2566f, 0xf2a7b5, 0x8e2440, 0xb38bd0, 0xe8743b, 0x4b6fa8]; for (let r = 0; r < 4; r++) kit.bottles(g, -1.7, 1.0 + r * .32, -3.3, 30, pol.slice(r % 3).concat(pol), { dir: [1, 0, 0], step: .11, h: .1, r: .02 }); kit.model('modern_arm_chair_01', { pos: [1.6, .15, -1.8], h: .82, parent: g, tint: 0xf1d8d3 }); }
+  }
+  // les voisins aux deux bouts, éteints
+  kit.shopfront(scene, { x: -6 * S, wall: 0xd9c9b4, shutter: 0x6a5546, dark: true, seed: 2, floors: 4, lit });
+  kit.shopfront(scene, { x: S, wall: 0xe6d9c3, shutter: 0x5b6670, dark: true, seed: 5, lit });
+
+  // ——— la façade d'arrivée : la vôtre, enseigne vide ———
+  const T = kit.shopfront(scene, { x: 0, stone: 'white_sandstone_blocks_02', wall: 0xeee3d3, shutter: 0x3f4a56, base: 0x23272d, frame: 0x15171a, signW: 5.2, signH: .66, signFrame: 0x3a3c40, spillOp: .24, lit });
+  const R = kit.room(scene, { d: 6.2,
+    floor: kit.pbr('wood_floor', { s: 2, roughness: .7, color: 0xe7d3bb }),
+    wall: kit.pbr('plastered_wall', { s: 2.4, color: 0xf4e8da }),
+    back: kit.std(0xd9c2a6, { r: .85 }),
+    ceiling: kit.std(0xf3ece3, { r: .95 }) });
+  const g = R.g;
+  for (const [x, z] of [[-1.8, -1.8], [1.8, -1.8], [0, -3.8]]) { kit.model('hanging_industrial_lamp', { pos: [x, 2.35, z], h: .7, parent: g, cast: false }); kit.pendant(g, x, 2.4, z, { i: 3.2, dist: 7 }); }
+  kit.model('potted_plant_02', { pos: [-2.9, .14, -5.4], h: 1.4, parent: g });
+  kit.model('pachira_aquatica_01', { pos: [3.0, .14, -4.8], h: 1.6, parent: g });
+  kit.model('wooden_table_02', { pos: [0, .14, -4.4], h: .8, parent: g });
+  kit.model('ceramic_vase_03', { pos: [.4, .94, -4.4], h: .3, parent: g });
+  const fill = new THREE.PointLight(0xffc48a, 3.0, 10, 2); fill.position.set(0, 2.8, -2); g.add(fill);
+  pins.push({ id: 'sign', corners: T.sign });
+
+  // le réverbère du début : son globe est le point bleu
+  const LX = -5 * S - 5.4;
+  // un lampadaire à globe : mât fin en fonte, crosse, globe opalin qui brille bleu
+  const iron = kit.std(0x15171b, { m: .7, r: .4 });
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(.05, .09, 4.1, 20), iron); post.position.set(LX, .14 + 2.05, 2.85); post.castShadow = true; scene.add(post);
+  const foot = new THREE.Mesh(new THREE.CylinderGeometry(.16, .2, .5, 20), iron); foot.position.set(LX, .39, 2.85); scene.add(foot);
+  const cup = new THREE.Mesh(new THREE.CylinderGeometry(.13, .06, .14, 24), iron); cup.position.set(LX, 4.28, 2.85); scene.add(cup);
+  const glow = new THREE.Mesh(new THREE.SphereGeometry(.26, 48, 32), kit.std(0x000000, { e: BLUE, ei: 2.4 })); glow.userData.noOcclude = true; scene.add(glow);
+  const bl = new THREE.PointLight(0x5b6cff, 9, 12, 2); scene.add(bl);
+  // un second réverbère, chaud, au milieu de la rue
+  kit.model('street_lamp_01', { pos: [-2.5 * S, .14, 2.85], h: 4.4, parent: scene });
+  const wl = new THREE.PointLight(0xffc38a, 14, 14, 2); wl.position.set(-2.5 * S, 4.1, 2.4); scene.add(wl);
+
+  // le crépuscule : un soleil rose très bas, le ciel bleu violet
+  const sun = new THREE.DirectionalLight(0xff9fb0, .45); sun.position.set(-30, 6, 14); sun.target.position.set(-20, 0, 0); sun.castShadow = true;
+  sun.shadow.mapSize.set(4096, 2048); Object.assign(sun.shadow.camera, { left: -40, right: 40, top: 16, bottom: -8, far: 90 }); sun.shadow.bias = -.0004; sun.shadow.normalBias = .02; scene.add(sun, sun.target);
+  scene.add(new THREE.HemisphereLight(0x5a66b8, 0x2a2028, .32));
+
+  const head = [LX, 4.6, 2.85];
+  glow.position.set(...head); bl.position.set(head[0], head[1] - .1, head[2] + .1);
+  const H = head;
+  const path = portrait ? [
+    { p: 0, pos: [H[0] - .5, H[1] - 1.2, H[2] - 1.9], tgt: [H[0] + .1, H[1] + .25, H[2] + 1], fov: 50 },
+    { p: .03, pos: [H[0] + 1.9, H[1] - 1.0, H[2] - .5], tgt: [H[0], H[1] + .1, H[2]] },
+    { p: .06, pos: [H[0] + 1.7, H[1] - .9, H[2] + 1.9], tgt: [H[0] + .3, H[1] - .2, H[2]] },
+    { p: .12, pos: [H[0] + 2.2, 3.2, 8.5], tgt: [H[0] + 4, 2.6, 0] },
+    { p: .26, pos: [-43, 2.0, 10.5], tgt: [-38, 2.3, 0], fov: 58 },
+    { p: .44, pos: [-30, 1.8, 10.5], tgt: [-25, 2.2, 0] },
+    { p: .62, pos: [-17, 1.75, 10.5], tgt: [-12, 2.2, 0] },
+    { p: .78, pos: [-5, 1.72, 11.2], tgt: [-1, 2.3, 0] },
+    { p: .88, pos: [0, 1.72, 11.4], tgt: [0, 2.55, 0], fov: 58 },
+    { p: 1, pos: [0, 1.66, 6.4], tgt: [0, 1.9, -2], fov: 56 },
+  ] : [
+    { p: 0, pos: [H[0] - .5, H[1] - 1.1, H[2] - 2.1], tgt: [H[0] + .1, H[1] + .2, H[2] + 1], fov: 36 },
+    { p: .03, pos: [H[0] + 1.9, H[1] - 1.0, H[2] - .5], tgt: [H[0], H[1] + .1, H[2]] },
+    { p: .06, pos: [H[0] + 1.7, H[1] - .9, H[2] + 1.9], tgt: [H[0] + .3, H[1] - .2, H[2]] },
+    { p: .12, pos: [H[0] + 1.8, 3.3, 8], tgt: [H[0] + 5, 2.6, 0] },
+    { p: .26, pos: [-44, 2.0, 8.6], tgt: [-36, 2.3, 0], fov: 42 },
+    { p: .44, pos: [-31, 1.8, 8.6], tgt: [-23, 2.2, 0] },
+    { p: .62, pos: [-18, 1.75, 8.6], tgt: [-10, 2.2, 0] },
+    { p: .78, pos: [-5.5, 1.72, 8.8], tgt: [-.8, 2.25, 0] },
+    { p: .88, pos: [0, 1.72, 9.4], tgt: [0, 2.3, 0], fov: 42 },
+    { p: 1, pos: [0, 1.66, 5.6], tgt: [0, 1.85, -2], fov: 44 },
+  ];
+  return {
+    path, fov: 42, bloom: [.42, .55, .9], exposure: .9,
+    pins,
+    after() { kit.dimEnv(g, .3, .45); },
+    update(p) { T.openDoor(Math.min(1, Math.max(0, (p - .9) / .1))); },
+  };
+}

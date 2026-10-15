@@ -64,7 +64,7 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   dirty=true;tick()}
  /* Les choix */
  $('eAct').innerHTML=E3K.map(k=>`<button type="button" role="radio" data-v="${k}" aria-checked="false">${E3[k].lab}</button>`).join('');
- const choose=(k,ex)=>{if(!E3[k])return;st.touched=true;st.ex=ex?E3[k].ex:'';if(st.sc!==k){st.sc=k;st.style=0;st.styleSet=false;drawn=null;load(set);if(!view.classList.contains('live'))poster.src=e3base(k)+set+'/f000.webp'}paint()};
+ const choose=(k,ex)=>{if(!E3[k])return;st.touched=true;armed=true;st.ex=ex?E3[k].ex:'';if(st.sc!==k){st.sc=k;st.style=0;st.styleSet=false;drawn=null;load(set);if(!view.classList.contains('live'))poster.src=e3base(k)+set+'/f000.webp'}paint();load(set)};
  $('eAct').addEventListener('click',e=>{const b=e.target.closest('button');if(b)choose(b.dataset.v)});
  $('eAct').addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft'].includes(e.key))return;e.preventDefault();const i=E3K.indexOf(st.sc),n=E3K[(i+(e.key==='ArrowRight'?1:E3K.length-1))%E3K.length];choose(n);$('eAct').querySelector(`[data-v="${n}"]`).focus()});
  $('eStyle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;st.touched=st.styleSet=true;st.style=+b.dataset.i;paint()});
@@ -130,9 +130,10 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
   const t=camOf(P);cur+=(t-cur)*.22;if(Math.abs(t-cur)<.0005)cur=t;
   if(dirty||cur!==last){draw(cur);last=cur}ui(cur);if(cur!==t)tick()}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);tick()}).observe(walk);
- /* l'entrée est le premier écran : on charge tout de suite le début, puis le reste */
+ /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  poster.onerror=()=>{if(poster.src.includes('/m/'))poster.src=poster.src.replace('/m/','/d/')};
- armed=true;size();poster.src=e3base(st.sc)+set+'/f000.webp';paint();
+ const arm=()=>{if(armed)return;armed=true;load(set)};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
+ size();poster.src=e3base(st.sc)+set+'/f000.webp';paint();
  addEventListener('resize',()=>{size();tick()});
  if(document.fonts)document.fonts.ready.then(paint);
  if(!LIVE)return;

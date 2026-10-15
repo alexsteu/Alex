@@ -20,7 +20,7 @@
 {{INC:base.css}}
 {{INC:demo.css}}
 {{INC:e3d.css}}
-{{INC:univers.css}}
+{{INC:rue.css}}
 /* Les exemples : d'abord on choisit son métier (et son nom), puis une seule entrée s'ouvre, la sienne */
 .pick{padding-top:clamp(36px,6vw,72px)}
 .pick-h{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px 48px;align-items:end;margin-bottom:clamp(24px,3.4vw,40px)}
@@ -81,37 +81,25 @@
 </header>
 
 <main id="top">
-<section id="univers" class="u" data-hero aria-labelledby="h1">
- <div class="u-walk" id="uWalk">
-  <div class="u-stage" id="uStage">
-   <div class="u-scene"><img class="u-poster" id="uPoster" src="img/e3d/oonde/d/f000.webp" width="1280" height="800" alt="Le O du logo OONDE, debout sur une feuille de papier, avec le point bleu au centre" decoding="async" fetchpriority="high"><canvas id="uCv" aria-hidden="true"></canvas>
-    <div class="u-pins" id="uPins" aria-hidden="true"><div data-id="restaurant"><span>RESTAURANT</span></div><div data-id="boulangerie"><span>BOULANGERIE</span></div><div data-id="coiffure"><span>COIFFURE</span></div><div data-id="institut"><span>INSTITUT</span></div><div data-id="onglerie"><span>ONGLERIE</span></div><div data-id="logement"><span>LOGEMENT</span></div></div>
-    <div class="u-hits" id="uHits"><a href="#entree" data-e3="restaurant" aria-label="Restaurant : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="boulangerie" aria-label="Boulangerie : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="coiffure" aria-label="Coiffure : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="institut" aria-label="Institut : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="onglerie" aria-label="Onglerie : ouvrir son entrée 3D, démo"></a><a href="#entree" data-e3="logement" aria-label="Logement : ouvrir son entrée 3D, démo"></a></div></div>
-   <div class="u-tx u-t1"><p class="mono">DEUX AMIS · DE GENÈVE À MONTREUX</p><h1 id="h1">Des sites où vos clients entrent avant de venir.</h1><p class="u-hint"><span aria-hidden="true">Faites défiler : vous entrez dans notre univers ↓</span><a href="#choix">ou choisir votre commerce ↓</a></p></div>
-   <div class="u-tx u-t15" aria-hidden="true"><p>Votre façade, reconstruite en 3D.</p></div>
-   <div class="u-tx u-t2" aria-hidden="true"><p>Chaque commerce a son entrée.</p></div>
-   <div class="u-tx u-t3"><div><h2>Choisissez le vôtre.</h2><p>Touchez une maquette : son entrée en 3D s’ouvre juste en dessous, avec votre nom.</p><div class="u-chips" aria-label="Choisir son métier"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div><p class="u-note">SIX COMMERCES IMAGINÉS · DÉMO</p></div>
-    <div class="u-act"><a class="btn light" href="#choix">Choisir mon commerce ↓</a></div></div>
-   <a class="u-skip" href="#choix">Passer l’intro ↓</a>
+<section id="univers" class="r" data-hero aria-labelledby="h1">
+ <div class="r-walk" id="rWalk">
+  <span class="r-anchor" id="choix" aria-hidden="true"></span>
+  <div class="r-stage" id="rStage">
+   <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/poster.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/poster.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, un réverbère au globe bleu, puis des vitrines allumées" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
+    <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div class="r-sign" data-id="sign"><span>Votre nom ici</span></div></div></div>
+   <div class="r-veil" aria-hidden="true"></div>
+   <div class="r-tx r-t1"><p class="mono">À DEUX · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Des</span> <span class="w" style="--i:1">sites</span> <span class="w" style="--i:2">où</span> <span class="w" style="--i:3">vos</span> <span class="w" style="--i:4">clients</span> <span class="w" style="--i:5"><em>entrent</em></span> <span class="w" style="--i:6">avant</span> <span class="w" style="--i:7">de</span> <span class="w" style="--i:8">venir.</span></h1></div>
+   <p class="r-tx r-say" aria-hidden="true">Dehors, on hésite.</p>
+   <p class="r-tx r-say" aria-hidden="true">Sur votre site, on a déjà vu l’intérieur.</p>
+   <p class="r-tx r-say r-top" aria-hidden="true">Alors on entre.</p>
+   <div class="r-tx r-stop" id="rStop">
+    <div><p class="mono">L’ENSEIGNE EST À VOUS</p><label for="rName">Le nom de votre commerce</label><input id="rName" type="text" maxlength="40" placeholder="Tapez-le, il s’allume" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+    <div><p class="r-q">Votre métier ?</p><div class="r-chips" aria-label="Votre métier : ouvrir sa démo"><a href="#entree" data-e3="restaurant">Restaurant</a><a href="#entree" data-e3="boulangerie">Boulangerie</a><a href="#entree" data-e3="coiffure">Coiffure</a><a href="#entree" data-e3="institut">Institut</a><a href="#entree" data-e3="onglerie">Onglerie</a><a href="#entree" data-e3="logement">Logement</a></div></div>
+    <p class="r-note"><b>DÉMO</b><span>Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit. Vous n’avez rien à préparer.</span></p>
+   </div>
+   <p class="r-cue" aria-hidden="true">FAITES DÉFILER<i></i></p>
+   <a class="r-skip" href="#choix">Passer l’intro ↓</a>
   </div>
- </div>
-</section>
-
-<section class="bg-paper pick" id="choix" aria-labelledby="hC">
- <div class="in">
-  <div class="pick-h">
-   <div><p class="mono">L’entrée 3D · six démos à essayer</p><h2 id="hC">Quel est votre commerce ?</h2><p>Choisissez votre métier : son entrée s’ouvre, avec votre nom sur l’enseigne. Vous faites défiler, vous passez la porte, et vous arrivez sur le site.</p></div>
-   <div class="pick-n"><label for="pName">Le nom de votre commerce</label><input id="pName" type="text" maxlength="40" placeholder="Ex. Le Petit Port" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"><small>Facultatif. Il s’affiche tout de suite sur les six enseignes.</small></div>
-  </div>
-  <div class="exs">
-   <a class="ex" href="#entree" data-e3="restaurant" data-k="restaurant"><div class="ex-img"><img src="img/e3d/restaurant/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Restaurant</b><small>Terrasse, salle et bar, menu du jour</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="coiffure" data-k="coiffure"><div class="ex-img"><img src="img/e3d/coiffure/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Coiffure</b><small>Trois postes, bouton rendez-vous</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="institut" data-k="institut"><div class="ex-img"><img src="img/e3d/institut/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Institut de beauté</b><small>Cabine, soins et tarifs</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="onglerie" data-k="onglerie"><div class="ex-img"><img src="img/e3d/onglerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Onglerie</b><small>Le mur de couleurs, les prestations</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="boulangerie" data-k="boulangerie"><div class="ex-img"><img src="img/e3d/boulangerie/d/f095.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><div class="e-pins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Boulangerie</b><small>Le comptoir, les commandes</small></span><i>Entrer</i></div></a>
-   <a class="ex" href="#entree" data-e3="logement" data-k="logement"><div class="ex-img"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><span class="ex-tag">DÉMO</span></div><div class="ex-t"><span><b>Logement, chambres d’hôtes</b><small>Avec la visite complète et le calendrier</small></span><i>Entrer</i></div></a>
-  </div>
-  <p class="ex-more">Un autre métier, une boutique, un cabinet, un garage ? On fait l’entrée de n’importe quel commerce, d’après vos photos.</p>
  </div>
 </section>
 
@@ -123,7 +111,7 @@
      <div class="fbar" aria-hidden="true"><i></i><i></i><i></i><span id="eUrl">votre-commerce.ch · Démo</span></div>
      <div class="w-view" id="eView" role="group" aria-label="Démo : votre site avec une entrée en 3D">
       <div class="w-scene">
-       <div class="w-poster"><img id="ePoster" src="img/e3d/restaurant/d/f000.webp" width="1280" height="800" alt="Démo : la façade d'un restaurant le soir, avec son enseigne et sa terrasse" decoding="async" fetchpriority="high"></div>
+       <div class="w-poster"><img id="ePoster" src="img/e3d/restaurant/d/f000.webp" width="1280" height="800" alt="Démo : la façade d'un restaurant le soir, avec son enseigne et sa terrasse" decoding="async" loading="lazy"></div>
        <canvas class="w-cv" id="eCv" aria-hidden="true"></canvas>
        <div class="e-pins" id="ePins" aria-hidden="true"><div class="e-sign" data-id="sign"><span></span></div><div class="e-wall" data-id="wall"><span></span></div></div>
        <div class="w-shade"></div>
@@ -149,7 +137,7 @@
       <div class="w-toast" id="eToast" role="dialog" aria-label="Démo" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="{{WA_IMM}}" target="_blank" rel="noopener">{{WA_ICON}}Je veux cette entrée</a></div>
      </div>
     </div>
-    <p class="w-cap"><span><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</span><span class="w-cta"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Connaître mon prix</span></a><a href="#prix">Sauter la démo ↓</a></span></p>
+    <p class="w-cap"><span><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</span><span class="w-cta"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Connaître mon prix</span></a></span></p>
    </div>
   </div>
  </div>
@@ -236,16 +224,14 @@
 {{INC:sites.js}}
 
 {{INC:e3d.js}}
-{{INC:univers.js}}
+{{INC:rue.js}}
 
-/* Le nom tapé au-dessus des exemples va sur les six enseignes, puis sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
-(()=>{const p=$('pName'),e=$('eName');p.value=e.value;
+/* Le nom tapé dans la rue va sur l'entrée choisie ; arrivé avec ?e=, on entre directement */
+(()=>{const e=$('eName');
  /* sur téléphone, le réglage se replie en une ligne : il ne cache plus la façade */
  const tr=document.querySelector('.e-try'),fb=document.createElement('button');fb.type='button';fb.className='e-fold';fb.setAttribute('aria-expanded','false');tr.before(fb);
  const lab=d=>{fb.innerHTML=`<b>${esc(d.name||'Votre nom')}</b> · ${esc(E3[d.sc]?E3[d.sc].lab:'')}<i>Modifier</i>`};lab({name:e.value,sc:new URLSearchParams(location.search).get('e')||(()=>{try{return JSON.parse(localStorage.getItem('oonde-e3')||'{}').sc}catch(x){}})()||'restaurant'});
  document.addEventListener('oonde-e3',ev=>lab(ev.detail));fb.addEventListener('click',()=>{const o=tr.classList.toggle('open');fb.setAttribute('aria-expanded',o);if(o)e.focus({preventScroll:true})});
- p.addEventListener('input',()=>{e.value=p.value;e.dispatchEvent(new Event('input'))});p.addEventListener('keydown',ev=>{if(ev.key==='Enter')p.blur()});
- e.addEventListener('input',()=>{if(p.value!==e.value)p.value=e.value});
  const k=new URLSearchParams(location.search).get('e');if(k&&E3[k]&&!location.hash)addEventListener('load',()=>setTimeout(()=>window.e3go&&e3go(k,!new URLSearchParams(location.search).get('n')),60))})();
 
 </script>
