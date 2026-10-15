@@ -81,9 +81,10 @@ add(FX,hit(),15.80,.4)
 add(FX,whoosh(.3,False),16.54,.35); add(FX,tick(2200,.7),16.70)   # notification
 for i in range(4): add(FX,whoosh(.2),17.66+i*.12,.2)
 add(FX,tick(1500,.8),18.84)
-add(FX,whoosh(.35,False),20.25,.4); add(FX,hit(),20.45,.4); add(FX,tick(1500,.7),20.55)
+add(FX,whoosh(.35,False),19.68,.35); add(FX,hit(),19.90,.4); add(FX,tick(1500,.7),20.02)
 for tt in (20.84,21.44,22.04): add(FX,tick(1800,.6),tt)
-for i in range(4): add(FX,tick(1300+200*i,.45),19.09+i*.22)
+for i in range(4): add(FX,tick(1300+200*i,.45),18.94+i*.15)
+add(FX,tick(2600,.6),19.45)
 add(FX,whoosh(.35),22.88,.4)
 v=np.frombuffer(subprocess.run(['ffmpeg','-v','error','-i',sys.argv[1],'-ac','1','-ar',str(SR),'-f','f32le','-'],capture_output=True).stdout,np.float32)
 V=np.zeros(N); V[:min(N,len(v))]=v[:N]

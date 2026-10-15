@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Reel 17 · Le jury des excuses (v2)</title>
+<title>Reel 17 · Le jury des excuses (v3)</title>
 <link rel="icon" href="data:,">
 <style>
 @font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
@@ -26,7 +26,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .demo{position:absolute;font:500 26px/1 PM,monospace;letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border-radius:8px;white-space:nowrap;background:#F7F7F4;color:#3A3F47;border:2px solid #DCDED8}
 .bz{position:absolute;top:1338px;width:180px;height:150px}
 .bz .dome{position:absolute;left:22px;top:0;width:136px;height:70px;border-radius:70px 70px 0 0;background:#3A3F47}
-.bz .ok{position:absolute;left:22px;top:6px;width:136px;text-align:center;font:600 52px/1 IS;color:#fff;opacity:0}
+.bz .ok{position:absolute;left:22px;top:8px;width:136px;text-align:center;font:600 54px/1 IS;color:var(--klein);opacity:0}
 .bz .base{position:absolute;left:0;top:68px;width:180px;height:52px;border-radius:12px;background:#22252C;border:2px solid #3A3F47;box-sizing:border-box}
 .bz .lb{position:absolute;left:0;width:180px;top:132px;text-align:center;font:500 24px/1 PM,monospace;letter-spacing:.14em;color:#6B7078}
 .stamp{position:absolute;z-index:6;padding:20px 34px;border-radius:12px;font:600 64px/1 PM,monospace;letter-spacing:.06em;white-space:nowrap;opacity:0}
@@ -36,7 +36,8 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .card{position:absolute;background:#fff;border-radius:14px;box-sizing:border-box;overflow:hidden}
 #paper{position:absolute;inset:0;background:var(--paper);z-index:10;clip-path:circle(0px at 540px 600px)}
 .pt{color:var(--ink)}
-#phone{position:absolute;left:290px;top:640px;width:500px;height:860px;border:3px solid #C9CBC5;border-radius:56px;background:#fff;overflow:hidden;box-sizing:border-box;opacity:0}
+#phone{position:absolute;left:290px;top:600px;width:500px;height:860px;border:3px solid #C9CBC5;border-radius:56px;background:#fff;overflow:hidden;box-sizing:border-box;opacity:0;transform-origin:50% 0}
+#ghost{position:absolute;border:5px dashed #9AA0A8;border-radius:44px;box-sizing:border-box;background:#fff;opacity:0;z-index:2}
 .blk{position:absolute;left:28px;right:28px;opacity:0}
 .row{display:flex;justify-content:space-between;font:500 30px/1 IS;color:#3A3F47;padding:14px 0;border-bottom:2px solid #ECEDE8}
 .row b{font-weight:600;color:#111318;font-variant-numeric:tabular-nums}
@@ -67,16 +68,15 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 
   <!-- en-tête -->
   <div id="hud" class="abs" style="left:80px;top:258px;width:860px;height:90px;z-index:4">
-    <div class="mono abs" style="left:0;top:34px;font-size:30px;color:#9AA0A8">Le jury des excuses</div>
+    <div class="mono abs" style="left:0;top:34px;font-size:28px;color:#9AA0A8">Le jury des excuses · Ép. 1</div>
     <div class="abs" style="right:0;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
-      <span class="mono" style="font-size:30px;color:#9AA0A8">Excuse</span>
-      <span id="cnt" style="display:inline-block;font:600 92px/1 IS;letter-spacing:-.03em;color:var(--klein);transform-origin:50% 70%">1</span>
+            <span id="cnt" style="display:inline-block;font:600 92px/1 IS;letter-spacing:-.03em;color:var(--klein);transform-origin:50% 70%">1</span>
       <span style="font:600 52px/1 IS;color:#6B7078">/4</span>
     </div>
   </div>
 
-  <div id="ttl" class="t q" style="top:440px;font-size:138px">Le jury<br>des <span class="k">excuses</span>.</div>
-  <div id="ttl2" class="abs" style="left:80px;top:740px;width:860px;font:500 54px/1.1 IS;letter-spacing:-.02em;color:#C9CBD2;z-index:3">Ton excuse passe devant le jury.</div>
+  <div id="ttl" class="t q" style="top:410px;font-size:128px">Le jury<br>des excuses.</div>
+  <div id="ttl2" class="abs" style="left:80px;top:676px;width:860px;font:600 50px/1.12 IS;letter-spacing:-.02em;color:#DADCE2;z-index:3">Ton excuse pour pas refaire<br><span class="k" style="color:#6F86FF">ton site</span> passe devant le jury.</div>
   <div id="q1" class="t q" style="top:440px;font-size:104px"><i>«&nbsp;</i>Mon neveu va me le faire.<i>&nbsp;»</i></div>
   <div id="q2" class="t q" style="top:440px;font-size:96px"><i>«&nbsp;</i>J’ai une page Facebook, ça suffit.<i>&nbsp;»</i></div>
   <div id="q3" class="t q" style="top:440px;font-size:118px"><i>«&nbsp;</i>J’ai pas le temps.<i>&nbsp;»</i></div>
@@ -141,18 +141,19 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 
 <!-- ========== bascule papier ========== -->
 <div id="paper">
-  <div id="p1" class="t pt" style="top:300px;font-size:150px">On te<br>la <span class="k">fait</span>.</div>
+  <div id="p1" class="t pt" style="top:290px;font-size:150px">On te<br>la <span class="k">fait</span>.</div>
   <div id="p2" class="t pt" style="top:280px;font-size:104px">La maquette de<br>ton site&nbsp;? <span class="k">Gratuite.</span></div>
   <div id="p3" class="t pt" style="top:280px;font-size:118px">Tu la vois<br>avant de payer.</div>
+  <div id="ghost"><div id="ghq" class="abs" style="left:0;right:0;top:120px;text-align:center;font:600 190px/1 IS;color:var(--klein)">?</div></div>
+  <div id="gpill" class="abs" style="left:660px;top:640px;padding:16px 26px;border-radius:40px;background:var(--klein);color:#fff;font:600 50px/1 IS;letter-spacing:-.02em;opacity:0;z-index:9;transform:rotate(4deg)">Gratuite</div>
   <div id="phone">
     <div class="abs" style="left:40px;top:24px;font:600 28px/1 IS;color:#111318">22:00</div>
     <div class="demo" style="left:28px;top:76px">Démo · lieu fictif</div>
     <div class="blk" id="s0" style="top:140px"><div style="font:italic 400 66px/1 CG;color:#111318">Trattoria</div><div style="font:italic 400 66px/1 CG;color:#111318">Nonna Pia</div><div class="mono" style="margin-top:12px;font-size:24px;color:#6B7078">Morges · cuisine italienne</div></div>
-    <div class="blk" id="s1" style="top:350px;height:170px;border-radius:14px;background:linear-gradient(135deg,#E9E1D2,#D9CBB3);overflow:hidden">
-      <div class="abs" style="left:40px;top:38px;width:94px;height:94px;border-radius:50%;background:#F4EEE3"></div>
-      <div class="abs" style="left:76px;top:70px;width:22px;height:22px;border-radius:50%;background:#C8452E"></div>
-      <div class="abs" style="left:170px;top:52px;width:220px;height:18px;border-radius:6px;background:#F4EEE3"></div>
-      <div class="abs" style="left:170px;top:90px;width:160px;height:18px;border-radius:6px;background:#F4EEE3"></div>
+    <div class="blk" id="s1" style="top:350px;height:170px;border-radius:14px;overflow:hidden;background:repeating-conic-gradient(#C8452E 0 25%,#F4EEE3 0 50%) 0 0/40px 40px">
+      <div class="abs" style="left:140px;top:-25px;width:220px;height:220px;border-radius:50%;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.18)"></div>
+      <div class="abs" style="left:175px;top:10px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#F2D27A,#E2B04A 70%)"></div>
+      <svg class="abs" style="left:175px;top:10px" width="150" height="150" viewBox="0 0 150 150"><g fill="none" stroke="#C99A35" stroke-width="3" stroke-linecap="round"><path d="M40 60q20-25 45-5t30 10"/><path d="M35 85q25 15 50-5t35 5"/><path d="M55 105q20 10 40-8"/><path d="M50 40q25-10 45 10"/></g><circle cx="62" cy="75" r="9" fill="#C8452E"/><circle cx="92" cy="92" r="8" fill="#C8452E"/><ellipse cx="85" cy="58" rx="14" ry="7" fill="#2F7A3A" transform="rotate(-30 85 58)"/><ellipse cx="70" cy="100" rx="12" ry="6" fill="#2F7A3A" transform="rotate(25 70 100)"/></svg>
     </div>
     <div class="blk" id="s2" style="top:548px"><div class="mono" style="font-size:24px;color:#6B7078;margin-bottom:4px">Horaires</div>
       <div class="row">Mar – Ven<b>11:30 – 22:00</b></div><div class="row" style="border:0">Sam – Dim<b>18:00 – 23:00</b></div></div>
@@ -171,9 +172,10 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   <div class="rc" id="r0" style="top:550px"><span class="n">1</span><span class="x">Mon neveu va me le faire.</span><span class="m">✕</span></div>
   <div class="rc" id="r1" style="top:676px"><span class="n">2</span><span class="x">J’ai une page Facebook, ça suffit.</span><span class="m">✕</span></div>
   <div class="rc" id="r2" style="top:802px"><span class="n">3</span><span class="x">J’ai pas le temps.</span><span class="m">✕</span></div>
-  <div class="rc" id="r3" style="top:928px;border-color:#2038EC"><span class="n">4</span><span class="x">Je sais même pas à quoi ça ressemblerait.</span><span class="m" style="color:#2038EC">✓</span></div>
-  <div id="rep" class="abs" style="left:80px;top:1090px;width:860px;opacity:0;font:600 96px/1.02 IS;letter-spacing:-.035em;color:var(--ink)">Réponds avec<br>le <span class="k">numéro</span> <span id="rarr" style="display:inline-block;color:var(--klein)">↓</span></div>
-  <div id="rep2" class="mono abs" style="left:80px;top:1312px;width:860px;opacity:0;font-size:32px;color:#3A3F47">en commentaire · 1, 2, 3 ou 4&nbsp;?</div>
+  <div class="rc" id="r3" style="top:928px;border:3px solid #2038EC;background:#EEF0FD"><span class="n">4</span><span class="x">Je sais même pas à quoi ça ressemblerait.</span><span class="m" style="color:#2038EC">✓</span></div>
+  <div class="rc" id="r4" style="top:1054px;border:3px dashed #BFC1C6;background:transparent"><span class="n" style="color:#9AA0A8">5</span><span class="x" style="color:#6B7078">Une autre&nbsp;? Écris-la.</span><span class="m">…</span></div>
+  <div id="rep" class="abs" style="left:80px;top:1196px;width:860px;opacity:0;font:600 88px/1.02 IS;letter-spacing:-.035em;color:var(--ink)">Réponds avec<br>le <span class="k">numéro</span> <span id="rarr" style="display:inline-block;color:var(--klein)">↓</span></div>
+  <div id="rep2" class="mono abs" style="left:80px;top:1384px;width:860px;opacity:0;font-size:32px;color:#3A3F47">en commentaire · 1, 2, 3, 4 ou 5</div>
 
   <!-- final -->
   <div id="end" class="abs" style="left:140px;top:300px;width:800px;opacity:0">
@@ -183,7 +185,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
       Écris MAQUETTE</div>
     <div id="e3" style="margin-top:36px;width:800px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:14px;padding:40px 0;border-radius:70px;border:6px solid var(--ink);background:#fff;font:600 58px/1 IS;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;transform-origin:50% 50%"><span id="e3wa">sur WhatsApp</span> · lien en bio
       <svg width="52" height="52" viewBox="0 0 24 24"><path d="M6 18L18 6M9 6h9v9" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div id="e4" style="margin-top:64px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:108px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span></div>
+    <div id="e4" style="margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:108px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span class="mono" style="margin-top:22px;font-size:30px;color:#6B7078">Ton excuse en commentaire&nbsp;: <span class="k">1 à 5</span></span></div>
   </div>
 </div>
 <!-- volet de fin : l'encre remonte, liseré Klein -->
@@ -223,14 +225,14 @@ const T = {
   n2: 3.40, q2: 3.96, d2: 5.48, pas2: 7.66, b2: 7.98,
   n3: 8.28, q3: 8.90, d3: 9.68, sec: 10.74, b3: 11.12,
   n4: 11.56, q4: 12.22, ah: 13.94, cel: 14.40, onte: 14.86,
-  maq: 15.75, avant: 16.45, alors: 17.54, rep: 18.84, ecris: 20.30, wa: 20.74,
+  maq: 15.75, avant: 16.45, alors: 17.54, rep: 18.84, ecris: 19.75, wa: 20.74,
   wipe: 22.90, end: 23.25
 };
 window.DURATION = T.end;
 const BUZZ = [T.b1, T.b2, T.b3];
 const NX = [T.n2, T.n3, T.n4];             // « Numéro deux / trois / quatre » : l'excuse jugée sort
 const OUT = NX.map(n => n + .15);
-const QS = [[T.q1, OUT[0]], [T.q2, OUT[1]], [T.q3, OUT[2]], [T.q4, T.onte + .1]];
+const QS = [[T.q1, OUT[0]], [OUT[0] + .06, OUT[1]], [OUT[1] + .06, OUT[2]], [OUT[2] + .06, T.onte + .1]];
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre'];
 
 function render(t) {
@@ -239,7 +241,7 @@ function render(t) {
   for (const b of BUZZ) { sh += kick(t, b, .32); fl += kick(t, b, .1); }
   const sx = 16 * sh * Math.sin(t * 95), sy = 10 * sh * Math.cos(t * 77);
   $('#cam').style.transform = `translate(${sx}px,${sy}px) scale(${1 + .012 * sh})`;
-  $('#flash').style.opacity = .16 * fl;
+  $('#flash').style.opacity = .16 * fl + .08 * kick(t, .12, .1);
 
   // ---------- compteur : change quand l'excuse jugée sort ----------
   const n = t < OUT[0] ? 1 : t < OUT[1] ? 2 : t < OUT[2] ? 3 : 4;
@@ -257,7 +259,7 @@ function render(t) {
   QS.forEach(([a, b], i) => {
     const bt = i < 3 ? BUZZ[i] : T.cel;
     const p = title($(qe[i]), t, a, b, { punch: .03 });
-    if (p && t >= bt) $(qe[i]).style.opacity = lerp(1, i < 3 ? .42 : .7, seg(t, bt, bt + .12)) * (1 - seg(t, b - .1, b));
+    if (p && t >= bt) $(qe[i]).style.opacity = lerp(1, i < 3 ? .42 : 1, seg(t, bt, bt + .12)) * (1 - seg(t, b - .1, b));
   });
 
   // ---------- tampons : plus petits, sur le bas de la citation ----------
@@ -270,9 +272,9 @@ function render(t) {
     el.style.transform = `translate(-50%,-50%) rotate(${rot}deg) scale(${lerp(s0, 1, s)})`;
   };
   let on = false;
-  for (let i = 0; i < 3; i++) if (t >= BUZZ[i] && t < OUT[i]) { st($('#stX'), BUZZ[i], OUT[i], 640, qbot(i) - 10, -6, 1.9); on = true; }
+  for (let i = 0; i < 3; i++) if (t >= BUZZ[i] && t < OUT[i]) { st($('#stX'), BUZZ[i], OUT[i], 680, qbot(i) + 36, -6, 1.9); on = true; }
   if (!on) $('#stX').style.opacity = 0;
-  st($('#stV'), T.cel, T.onte + .4, 600, qbot(3) + 10, 4, .4);
+  st($('#stV'), T.cel, T.onte + .4, 600, qbot(3) + 74, 4, .4);
 
   // ---------- répliques sous les objets ----------
   const pls = [['#pl1', T.d1 + .4, OUT[0]], ['#pl2', T.pas2 - .5, OUT[1]], ['#pl3', T.d3 + .1, OUT[2]]];
@@ -325,68 +327,81 @@ function render(t) {
   $('#bok').style.opacity = t >= T.sec - .05 ? 1 : 0;
 
   // ---------- 4 : un écran vide avec un « ? » ----------
-  obj($('#unk'), t, T.q4 + .5, T.onte);
+  obj($("#unk"), t, T.q4 + .5, T.onte + .5);
   $('#unkq').style.transform = `scale(${1 + .08 * Math.sin((t - T.q4) * 7) + .25 * kick(t, T.ah, .3)})`;
 
   // ---------- buzzers ----------
   for (let j = 0; j < 3; j++) {
     const d = $('#b' + j + ' .dome'), ok = $('#b' + j + ' .ok');
     let lit = 0, press = 0, okv = 0;
-    lit = Math.max(lit, kick(t, .30 + j * .16, .2));                         // test des lumières dans l'accroche
+    lit = Math.max(lit, kick(t, .12 + j * .12, .2));                         // test des lumières dans l'accroche
     for (const b of BUZZ) { const bj = b - .03 * j; lit = Math.max(lit, t >= bj && t < bj + .55 ? 1 - .5 * seg(t, bj + .25, bj + .55) : 0); press = Math.max(press, kick(t, bj, .16)); }
     if (t >= T.ah - .2 && t < T.cel) lit = Math.max(lit, .2 + .15 * Math.sin((t - T.ah) * 30 + j));   // hésitation
-    if (t >= T.cel + .06 * j && t < T.onte + .4) okv = E_back(seg(t, T.cel + .06 * j, T.cel + .06 * j + .2));   // acceptée : ✓ blancs, pas de bleu
-    d.style.background = lit > .02 ? `rgb(${lerp(58, 32, lit)},${lerp(63, 56, lit)},${lerp(71, 236, lit)})` : (okv > 0 ? '#5A5F68' : '#3A3F47');
+    if (t >= T.cel + .08 * j && t < T.onte + .4) okv = clamp(E_back(seg(t, T.cel + .08 * j, T.cel + .08 * j + .2)), 0, 1.15);   // acceptée : ✓ blancs, pas de bleu
+    d.style.background = lit > .02 ? `rgb(${lerp(58, 32, lit)},${lerp(63, 56, lit)},${lerp(71, 236, lit)})` : (okv > 0 ? '#F7F7F4' : '#3A3F47');
+    if (okv > 0 && lit <= .02) d.style.boxShadow = `0 0 ${40 * okv}px ${6 * okv}px rgba(247,247,244,.35)`;
     d.style.boxShadow = lit > .02 ? `0 0 ${50 * lit}px ${10 * lit}px rgba(32,56,236,${.55 * lit})` : 'none';
     d.style.transformOrigin = '50% 100%';
     d.style.transform = `translateY(${14 * press}px) scaleY(${1 - .18 * press})`;
     ok.style.opacity = clamp(okv * 2); ok.style.transform = `scale(${lerp(.3, 1, okv)})`;
+    d.style.transform += ` scale(${1 + .15 * kick(t, T.cel + .08 * j + .1, .2)})`;
   }
 
   // ---------- bascule papier depuis le tampon ACCEPTÉE ----------
   const ir = expo(seg(t, T.onte, T.onte + .38));
-  $('#paper').style.clipPath = `circle(${ir * 2300}px at 600px ${qbot(3) + 10}px)`;
+  $('#paper').style.clipPath = `circle(${ir * 2300}px at 600px ${qbot(3) + 62}px)`;
 
-  // ---------- partie papier ----------
-  const p1 = title($('#p1'), t, T.onte + .03, T.maq, { punch: .05 });
-  if (p1) $('#p1').style.top = '560px';
+  // ---------- partie papier : l'écran vide devient le site ----------
+  title($('#p1'), t, T.onte + .03, T.maq, { punch: .05 });
   title($('#p2'), t, T.maq, T.avant, { punch: .03 });
   title($('#p3'), t, T.avant, T.alors);
+  const G = $('#ghost'), m0 = T.maq - .35, m1 = T.maq - .05;
+  const gm = inOut(seg(t, m0, m1));
+  const gon = t >= T.onte - .05 && t < T.maq + .1;
+  G.style.opacity = gon ? 1 - seg(t, T.maq - .02, T.maq + .1) : 0;
+  G.style.left = lerp(400, 320, gm) + 'px'; G.style.top = lerp(810, 600, gm) + 'px';
+  G.style.width = lerp(280, 440, gm) + 'px'; G.style.height = lerp(440, 757, gm) + 'px';
+  G.style.borderStyle = gm > .5 ? 'solid' : 'dashed'; G.style.borderColor = gm > .5 ? '#C9CBC5' : '#9AA0A8';
+  $('#ghq').style.opacity = 1 - seg(t, m0, m0 + .15);
+  $('#ghq').style.transform = `scale(${1 + .08 * Math.sin((t - T.q4) * 7)})`;
   const ph = $('#phone');
-  const pa = T.maq - .1;
-  const pin = E_back(seg(t, pa, pa + .3)), pout = expo(seg(t, T.alors - .05, T.alors + .15));
+  const pout = expo(seg(t, T.alors - .05, T.alors + .15));
   const tq = E_back(seg(t, T.avant + .25, T.avant + .5));
-  const down = 120 * expo(seg(t, T.avant + .15, T.avant + .4));                // le téléphone descend pour laisser la place à la notification
-  ph.style.opacity = t >= pa && t < T.alors + .15 ? clamp(seg(t, pa, pa + .05)) * (1 - pout) : 0;
-  ph.style.transform = `translateY(${(1 - pin) * 300 + pout * 200 + down}px) scale(${lerp(.9, 1, pin)})`;
+  const down = 100 * expo(seg(t, T.avant + .15, T.avant + .4));
+  ph.style.opacity = t >= m1 - .03 && t < T.alors + .15 ? clamp(seg(t, m1 - .03, m1 + .02)) * (1 - pout) : 0;
+  ph.style.transform = `translateY(${pout * 200 + down}px) scale(.88)`;
   ['#s0', '#s1', '#s2', '#s3'].forEach((s, i) => {
-    const a = pa + .15 + i * .12, p = E_back(seg(t, a, a + .25));
+    const a = m1 + i * .1, p = E_back(seg(t, a, a + .25));
     $(s).style.opacity = clamp(seg(t, a, a + .05));
     $(s).style.transform = `translateY(${(1 - p) * 40}px)`;
   });
   $('#toast').style.opacity = t >= T.avant + .25 && t < T.alors ? clamp(tq * 2) : 0;
   $('#toast').style.transform = `translateY(${(1 - clamp(tq)) * -260}px) scale(${lerp(.9, 1, tq)})`;
+  const gp = E_back(seg(t, T.avant + .1, T.avant + .35));
+  $('#gpill').style.opacity = t >= T.avant + .1 && t < T.alors ? clamp(gp * 2) * (1 - pout) : 0;
+  $('#gpill').style.transform = `translateY(${down}px) rotate(4deg) scale(${lerp(.5, 1, gp)})`;
 
   // ---------- récap + appel au commentaire ----------
   title($('#rt'), t, T.alors, T.ecris);
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     const a = T.alors + .12 + i * .12, p = E_back(seg(t, a, a + .24)), el = $('#r' + i);
     el.style.opacity = t >= a && t < T.ecris ? clamp(seg(t, a, a + .05)) : 0;
-    const hi = kick(t, T.rep + .25 + i * .22, .3);                              // balayage 1 → 4
-    el.style.transform = `translateX(${(1 - p) * 120}px) scale(${1 + .04 * hi})`;
-    el.style.background = hi > .05 ? `rgb(${lerp(255, 230, hi)},${lerp(255, 234, hi)},255)` : '#fff';
+    const hi = i < 4 ? kick(t, T.rep + .1 + i * .15, .28) : 0;
+    const pop = i === 3 ? kick(t, 19.45, .25) : 0;
+    el.style.transform = `translateX(${(1 - p) * 120}px) scale(${1 + .04 * hi + .04 * pop})`;
+    if (i < 3) el.style.background = hi > .05 ? `rgb(${lerp(255, 230, hi)},${lerp(255, 234, hi)},255)` : '#fff';
   }
   const rp = E_back(seg(t, T.rep, T.rep + .25));
   $('#rep').style.opacity = t >= T.rep && t < T.ecris ? clamp(rp * 2) : 0;
   $('#rep').style.transform = `translateY(${(1 - clamp(rp)) * 30}px)`;
   $('#rarr').style.transform = `translateY(${14 * Math.abs(Math.sin((t - T.rep) * Math.PI * 2.4))}px)`;
-  const r2b = E_back(seg(t, T.rep + .3, T.rep + .55));
-  $('#rep2').style.opacity = t >= T.rep + .3 && t < T.ecris ? clamp(r2b * 2) : 0;
+  const r2b = E_back(seg(t, T.rep + .2, T.rep + .45));
+  $('#rep2').style.opacity = t >= T.rep + .2 && t < T.ecris ? clamp(r2b * 2) : 0;
 
   // ---------- final ----------
   const EN = $('#end');
   EN.style.top = (250 + (1250 - EN.offsetHeight) / 2) + 'px';
-  EN.style.left = "140px";
+  EN.style.left = '140px';
   const endOn = t >= T.ecris && t < T.wipe + .4;
   EN.style.opacity = endOn ? 1 : 0;
   if (endOn) {
