@@ -6,9 +6,9 @@
    Mouvement réduit : l'image de l'arrêt, immobile. */
 (()=>{const u=$('univers');if(!u)return;
  const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),cv=$('rCv'),cx=cv.getContext('2d'),poster=$('rPoster'),pins=$('rPins'),anchor=$('choix');
- const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),says=[...u.querySelectorAll('.r-say')],stop=$('rStop'),cue=u.querySelector('.r-cue'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),signT=sign.firstElementChild;
+ const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),says=[...u.querySelectorAll('.r-say')],stop=$('rStop'),cue=u.querySelector('.r-cue'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg'),rsel=$('rSel');
  let LIVE=!RM;const SETS={d:200,m:160},STOP=.79,store={};
- let set='d',W=0,H=0,P=0,cP=-1,cF=0,last=-1,raf=0,dirty=true,vis=true,D=1,hh=64,armed=false,t0=0;
+ let pre=-1,SW=1,set='d',W=0,H=0,P=0,cP=-1,cF=0,last=-1,raf=0,dirty=true,vis=true,D=1,hh=64,armed=false,t0=0;
  const base=k=>'img/e3d/rue/'+k+'/';
  /* les images arrivent en 4 paquets (build.py, pack()) : une sur 8 d'abord, puis le reste entre deux */
  function load(k){if(store[k])return;const n=SETS[k],s=store[k]={img:new Array(n),ok:new Uint8Array(n),pins:null};
@@ -26,12 +26,30 @@
  const arm=()=>{if(armed)return;armed=true;load(set)};
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight);anchor.style.top=(STOP*D)+'px'};
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
-  if(w!==W||h!==H){W=cv.width=w;H=cv.height=h;dirty=true}   /* la barre d'adresse du téléphone bouge : on ne vide le canevas que si sa taille change */
+  SW=r.width||1;if(w!==W||h!==H){W=cv.width=w;H=cv.height=h;dirty=true}   /* la barre d'adresse du téléphone bouge : on ne vide le canevas que si sa taille change */
   const k=r.width<r.height*.95?'m':'d';if(k!==set){set=k;if(armed)load(k)}if(!LIVE)load(k);geo()}
- /* le nom : sur l'enseigne vide, en néon ; et sur l'entrée plus bas */
- const fit=()=>e3fit(signT,signT.textContent,'400 {s}px "Cormorant Garamond"',86,860);
- function named(v,push){const t=v.trim().slice(0,40);signT.textContent=t||'Votre nom ici';sign.classList.toggle('on',!!t);fit();
+ /* le nom : sur l'enseigne vide, en néon. Seules les lettres nouvelles s'allument (les autres ne bougent pas) ;
+    la largeur et la taille suivent en douceur (transition sur width et scale), sans à-coup. Il passe aussi sur l'entrée plus bas. */
+ let shown='';
+ const fit=()=>{e3meas.font='400 86px "Cormorant Garamond"';const w=e3meas.measureText(shown).width;nm.style.setProperty('--w',Math.ceil(w)+'px');nm.style.setProperty('--s',Math.min(1,860/(w||1)).toFixed(3))};
+ function named(v,push){const t=v.trim().slice(0,40);let k=0;while(k<t.length&&k<shown.length&&t[k]===shown[k])k++;
+  const bs=[...nm.children];for(let i=bs.length-1;i>=k;i--)bs[i].remove();
+  for(let i=k;i<t.length;i++){const b=document.createElement('b');b.textContent=t[i];if(push)b.className='in';b.style.animationDelay=Math.min(i-k,6)*35+'ms';nm.appendChild(b)}
+  shown=t;sign.classList.toggle('on',!!t);fit();
   if(push){const e=$('eName');if(e&&e.value!==v){e.value=v;e.dispatchEvent(new Event('input'))}}}
+ /* le métier : choisi sur place, il s'écrit sous l'enseigne (fondu enchaîné) et prépare la démo, sans quitter la rue.
+    « Entrer dans la démo » y va ; le nom et le métier suivent jusque dans le message WhatsApp (e3d.js). */
+ let met='',mi=0;
+ function metier(k,push){if(!E3[k]||k===met)return;met=k;
+  [...seg.children].forEach(b=>{const on=b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});rsel.value=k;
+  const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');b.classList.add('a');
+  if(push&&window.e3pick)e3pick(k)}
+ seg.addEventListener('click',e=>{const b=e.target.closest('button');if(b)metier(b.dataset.m,true)});
+ seg.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key))return;e.preventDefault();const bs=[...seg.children],i=bs.findIndex(b=>b.dataset.m===met),n=bs[(i+(/Right|Down/.test(e.key)?1:bs.length-1))%bs.length];metier(n.dataset.m,true);n.focus()});
+ rsel.addEventListener('change',()=>metier(rsel.value,true));
+ document.addEventListener('oonde-e3',e=>metier(e.detail.sc,false));
+ metier(($('eSel')&&$('eSel').value)||'restaurant',false);
+ u.querySelector('.r-enter').addEventListener('click',e=>{if(!window.e3go)return;e.preventDefault();e3go(met||'restaurant',!nameIn.value.trim())});
  nameIn.addEventListener('input',()=>named(nameIn.value,true));nameIn.addEventListener('keydown',e=>{if(e.key==='Enter')nameIn.blur()});
  {const e=$('eName');if(e&&e.value){nameIn.value=e.value;named(e.value,false)}else named('',false)}
  if(document.fonts)document.fonts.ready.then(fit);
@@ -43,9 +61,10 @@
   if(!s.ok[i0]&&!s.ok[i1])return;if(!s.ok[i0])i0=i1;if(!s.ok[i1])i1=i0;
   const a=i1>i0?clamp((f-i0)/(i1-i0),0,1):0;
   const im=s.img[i0],sc=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*sc,h=im.naturalHeight*sc,ox=(W-w)/2,oy=(H-h)/2;
+  if(i0!==pre){pre=i0;for(const j of [i0+1,i0+2,i0-1])if(s.img[j]&&s.img[j].decode)s.img[j].decode().catch(()=>{})}   /* les voisines prêtes avant d'être dessinées */
   cx.globalAlpha=1;cx.drawImage(im,ox,oy,w,h);if(a>.01){cx.globalAlpha=a;cx.drawImage(s.img[i1],ox,oy,w,h);cx.globalAlpha=1}
   u.classList.add('live');dirty=false;
-  const A=pinAt(s,i0),B=pinAt(s,i1)||A,d=W/scene.clientWidth,p=s.pins&&s.pins[i0]?s.pins[i0].p:0;place(A&&B?A.map((q,j)=>{const r=B[j]||q;return{id:q.id,vis:q.vis+(r.vis-q.vis)*a,c:q.c.map((c,k)=>[c[0]+(r.c[k][0]-c[0])*a,c[1]+(r.c[k][1]-c[1])*a])}}):A,{ox:ox/d,oy:oy/d,w:w/d,h:h/d},p)}
+  const A=pinAt(s,i0),B=pinAt(s,i1)||A,d=W/SW,p=s.pins&&s.pins[i0]?s.pins[i0].p:0;place(A&&B?A.map((q,j)=>{const r=B[j]||q;return{id:q.id,vis:q.vis+(r.vis-q.vis)*a,c:q.c.map((c,k)=>[c[0]+(r.c[k][0]-c[0])*a,c[1]+(r.c[k][1]-c[1])*a])}}):A,{ox:ox/d,oy:oy/d,w:w/d,h:h/d},p)}
  function place(pp,f,p){for(const el of pins.children){const q=pp&&pp.find(x=>x.id===el.dataset.id);
   if(!q||q.vis<=0){el.style.opacity=0;continue}e3quad(el,q.c,1000,127,f);
   if(el===sign){el.style.opacity=q.vis;continue}
@@ -56,14 +75,19 @@
  const S0={d:0,m:52};   /* téléphone : on part de l'image 52 (open.jpg), la rue est déjà là, le réverbère passe sur le côté */
  function frameOf(P){const s=store[set],n=SETS[set],k1=s&&s.k1>0?s.k1:Math.round((n-1)*.935),a=S0[set];
   return P<.74?a+(k1-a)*trap(P,.03,.74,.06,.1):P<.84?k1:k1+(n-1-k1)*trap(P,.84,1,.05,.001)}
- const fade=(a,b,c,d)=>Math.min(clamp((cP-a)/(b-a||1),0,1),clamp((d-cP)/(d-c||1),0,1));
+ const ss=x=>x*x*(3-2*x),fade=(a,b,c,d)=>ss(Math.min(clamp((cP-a)/(b-a||1),0,1),clamp((d-cP)/(d-c||1),0,1)));
+ /* les textes : opacity et transform seulement, et on n'écrit un style que s'il change (pas de recalcul inutile à chaque image) */
+ const memo=new Map(),put=(el,k,v)=>{const m=memo.get(el)||{};if(m[k]!==v){m[k]=v;memo.set(el,m);el.style[k]=v}};
+ const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  function ui(){if(!LIVE)return;
-  const h=clamp((.12-cP)/.07,0,1);t1.style.opacity=h;t1.style.visibility=cP>.12?'hidden':'';u.style.setProperty('--hv',h.toFixed(3));document.body.classList.toggle('hero-cta',h>.5&&vis);cue.style.opacity=clamp((.03-cP)/.03,0,1);
-  const W3=[[.35,.39,.48,.52],[.53,.57,.66,.7],[.88,.92,1.1,1.2]];
-  says.forEach((el,j)=>{const[a,b,c,d]=W3[j];const o=fade(a,b,c,d);el.style.opacity=o;el.style.translate=`0 ${(1-clamp((cP-a)/(b-a),0,1))*14}px`});
-  const e=clamp((cP-.7)/.05,0,1);stop.style.opacity=e;stop.style.transform=`translateY(${(1-e)*18}px)`;stop.classList.toggle('on',e>.05);stop.inert=e<.5;u.classList.toggle('stop',e>.5)}
+  const h=ss(clamp((.12-cP)/.07,0,1));put(t1,'opacity',h.toFixed(3));put(t1,'visibility',cP>.12?'hidden':'');{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
+  const W3=[[.35,.39,.48,.52],[.53,.57,.66,.7],[.89,.93,1.1,1.2]];
+  says.forEach((el,j)=>{const[a,b,c,d]=W3[j];put(el,'opacity',fade(a,b,c,d).toFixed(3));put(el,'transform',`translateY(${((1-ss(clamp((cP-a)/(b-a),0,1)))*14).toFixed(1)}px)`)});
+  /* la barre de l'arrêt : arrive pendant que la caméra se pose, repart en douceur quand on passe la porte */
+  const e=ss(Math.min(clamp((cP-.68)/.08,0,1),clamp((.97-cP)/.06,0,1)));put(stop,'opacity',e.toFixed(3));put(stop,'transform',`translateY(${((1-e)*14).toFixed(1)}px)`);
+  flag(stop,'on',e>.02);if(stop.inert!==(e<.5))stop.inert=e<.5;flag(u,'stop',e>.5)}
  /* mouvement réduit : l'affiche de l'arrêt, et le nom posé sur son enseigne */
- function still(){const s=store[set];if(!s||!s.pins||!poster.naturalWidth)return;const i=s.k1>0?s.k1:0,rw=scene.clientWidth,rh=scene.clientHeight,sc=Math.max(rw/poster.naturalWidth,rh/poster.naturalHeight),w=poster.naturalWidth*sc,h=poster.naturalHeight*sc;
+ function still(){const s=store[set];if(!s||!s.pins||!poster.naturalWidth)return;const i=s.k1>0?s.k1:0,rw=SW,rh=scene.clientHeight,sc=Math.max(rw/poster.naturalWidth,rh/poster.naturalHeight),w=poster.naturalWidth*sc,h=poster.naturalHeight*sc;
   place(pinAt(s,i),{ox:(rw-w)/2,oy:(rh-h)/2,w,h},1)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  /* l'inertie : la page suit le défilement avec ~180 ms de retard, comme une caméra portée, jamais par à-coups ;
@@ -72,7 +96,7 @@
   const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   if(!LIVE){still();return}
   if(cP<0){cP=P;cF=Math.round(frameOf(P))}
-  cP+=(P-cP)*(1-Math.exp(-dt/.18));if(Math.abs(P-cP)<.0003)cP=P;
+  cP+=(P-cP)*(1-Math.exp(-dt/.2));if(Math.abs(P-cP)<.0003)cP=P;
   const F=frameOf(cP),tF=cP===P?Math.round(F):F;cF+=(tF-cF)*(1-Math.exp(-dt/.07));if(Math.abs(tF-cF)<.004)cF=tF;
   if(dirty||cF!==last){draw(cF);last=cF}ui();if(cP!==P||cF!==tF)tick();else t0=0}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;tick()}).observe(walk);
@@ -81,7 +105,7 @@
  if(!LIVE)toStill();
  /* le film ne vient pas (réseau, fichier absent) : la page passe au rendu fixe, comme en mouvement réduit ; rien ne bloque l'offre ni le contact */
  function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;u.classList.add('nofilm');document.body.classList.remove('hero-cta');
-  for(const el of [t1,...says,stop,cue]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}stop.inert=false;toStill();geo();if(deep)stop.scrollIntoView({block:'start'})}
+  for(const el of [t1,...says,stop,cue]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();stop.inert=false;toStill();geo();if(deep)stop.scrollIntoView({block:'start'})}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
  size();addEventListener('resize',()=>{size();tick()});
  if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});

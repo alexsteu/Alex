@@ -78,7 +78,9 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
  $('eName').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur()});
  /* « Voir cette entrée » sur un exemple : la même entrée, avec le nom de l'exemple tant qu'on n'a pas tapé le sien */
  document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();choose(a.dataset.e3,true);goTo(0)}));
- window.e3go=(k,ex=true)=>{choose(k,ex);goTo(0)};   /* la page des exemples, arrivée avec ?e= : on entre directement */
+ window.e3go=(k,ex=true)=>{choose(k,ex);goTo(0)};
+ /* choisi dans la rue : le métier est retenu (et ses images préparées si l'entrée est proche), sans quitter la rue */
+ window.e3pick=k=>{if(!E3[k]||k===st.sc)return;st.touched=true;st.sc=k;st.style=0;st.styleSet=false;drawn=null;view.classList.remove('live');if(armed){show(k);load(set)}paint()};   /* la page des exemples, arrivée avec ?e= : on entre directement */
  /* Un lien préparé (?e=restaurant&n=Chez%20Marco&c=1) remplit l'essai ; sinon, la dernière visite */
  {const q=new URLSearchParams(location.search);let m={};
   if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
