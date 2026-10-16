@@ -32,7 +32,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .stamp{position:absolute;z-index:6;padding:18px 30px;border-radius:12px;font:600 56px/1 PM,monospace;letter-spacing:.06em;white-space:nowrap;opacity:0}
 #stX{background:var(--klein);color:#fff;box-shadow:0 0 0 5px rgba(247,247,244,.9)}
 #stV{background:#F7F7F4;color:var(--klein);border:6px solid var(--klein);box-shadow:0 0 60px 10px rgba(247,247,244,.25)}
-.pl{position:absolute;left:80px;width:860px;top:1252px;text-align:center;font:600 50px/1 IS;letter-spacing:-.02em;color:#C9CBD2;white-space:nowrap;opacity:0;z-index:4}
+.pl{position:absolute;left:80px;width:860px;top:1252px;text-align:center;font:600 50px/1 IS;letter-spacing:-.02em;color:#ECEDF0;white-space:nowrap;opacity:0;z-index:4}
 .card{position:absolute;background:#fff;border-radius:14px;box-sizing:border-box;overflow:hidden}
 #paper{position:absolute;inset:0;background:var(--paper);z-index:10;clip-path:circle(0px at 540px 600px)}
 .pt{color:var(--ink)}
@@ -43,7 +43,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .row b{font-weight:600;color:#111318;font-variant-numeric:tabular-nums}
 .rc{position:absolute;left:90px;width:830px;height:112px;border-radius:14px;background:#fff;border:2px solid #DCDED8;box-sizing:border-box;display:flex;align-items:center;gap:22px;padding:0 26px;opacity:0;white-space:nowrap}
 .rc .n{font:600 64px/1 IS;color:var(--klein);width:40px;text-align:center}
-.rc .x{font:600 35px/1 IS;letter-spacing:-.03em;color:#111318;flex:1;min-width:0;overflow:hidden}
+.rc .x{font:600 36px/1 IS;letter-spacing:-.03em;color:#111318;flex:1;min-width:0;overflow:hidden}
 .rc .m{font:600 44px/1 PM,monospace;color:#6B7078}
 #safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;display:none;z-index:99}
 .show-safe #safe{display:block}
@@ -69,7 +69,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   <!-- en-tête -->
   <div id="hud" class="abs" style="left:80px;top:258px;width:860px;height:90px;z-index:4">
     <div class="mono abs" style="left:0;top:34px;font-size:28px;color:#9AA0A8">Le jury des excuses · Ép. 1</div>
-    <div class="abs" style="right:40px;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
+    <div id="hudc" class="abs" style="right:40px;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
             <span id="cnt" style="display:inline-block;font:600 92px/1 IS;letter-spacing:-.03em;color:var(--klein);transform-origin:50% 70%">1</span>
       <span style="font:600 52px/1 IS;color:#6B7078">/4</span>
     </div>
@@ -174,9 +174,9 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   <div class="rc" id="r1" style="top:676px"><span class="n">2</span><span class="x">J’ai une page Facebook, ça suffit.</span><span class="m">✕</span></div>
   <div class="rc" id="r2" style="top:802px"><span class="n">3</span><span class="x">J’ai pas le temps.</span><span class="m">✕</span></div>
   <div class="rc" id="r3" style="top:928px;border:3px solid #2038EC;background:#EEF0FD"><span class="n">4</span><span class="x">Je sais même pas à quoi ça ressemblerait.</span><span class="m" style="color:#2038EC">✓</span></div>
-  <div class="rc" id="r4" style="top:1054px;border:3px dashed #BFC1C6;background:transparent"><span class="n" style="color:#9AA0A8">5</span><span class="x" style="color:#6B7078">Une autre&nbsp;? Dis-la.</span><span class="m">…</span></div>
+  <div class="rc" id="r4" style="top:1054px;border:3px dashed #2038EC;background:#fff"><span class="n">5</span><span class="x" style="color:#111318">Une autre&nbsp;? Dis-la.</span><span class="m">…</span></div>
   <div id="rep" class="abs" style="left:80px;top:1196px;width:860px;opacity:0;font:600 88px/1.02 IS;letter-spacing:-.035em;color:var(--ink)">Mets le<br><span class="k">numéro</span> <span id="rarr" style="display:inline-block;color:var(--klein)">↘</span></div>
-  <div id="rep2" class="mono abs" style="left:80px;top:1384px;width:860px;opacity:0;font-size:32px;letter-spacing:.08em;color:#111318;white-space:nowrap">en commentaire · de 1 à 4, ou la tienne</div>
+  <div id="rep2" class="mono abs" style="left:80px;top:1384px;width:860px;opacity:0;font-size:33px;font-weight:600;letter-spacing:0;color:#111318;white-space:nowrap">en commentaire · de 1 à 4, ou la tienne</div>
 
   <!-- final -->
   <div id="end" class="abs" style="left:140px;top:300px;width:800px;opacity:0">
@@ -186,8 +186,8 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
       Écris MAQUETTE</div>
     <div id="e3" style="margin-top:36px;width:800px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:14px;padding:40px 0;border-radius:70px;border:6px solid var(--ink);background:#fff;font:600 58px/1 IS;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;transform-origin:50% 50%"><span id="e3wa">sur WhatsApp</span> · lien en bio
       <svg width="52" height="52" viewBox="0 0 24 24"><path d="M6 18L18 6M9 6h9v9" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div id="e6" style="margin-top:30px;text-align:center;font:500 44px/1.2 IS;color:var(--ink);white-space:nowrap">Maquette <span class="k" style="font-weight:600">gratuite</span>, vue avant de payer</div>
-    <div id="e4" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:80px;margin-bottom:16px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span id="e7" class="mono" style="margin-top:30px;font-size:32px;font-weight:600;letter-spacing:.04em;white-space:nowrap;color:#111318">Tague celui qui <span class="k">la sort toujours</span></span></div>
+    <div id="e6" style="display:none">Maquette <span class="k" style="font-weight:600">gratuite</span>, vue avant de payer</div>
+    <div id="e4" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:80px;margin-bottom:16px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span id="e7" class="mono" style="margin-top:30px;font-size:36px;font-weight:600;letter-spacing:.04em;white-space:nowrap;color:#111318">Tague celui qui <span class="k">la sort toujours</span></span></div>
   </div>
 </div>
 <!-- volet de fin : l'encre remonte, liseré Klein -->
@@ -247,7 +247,7 @@ function render(t) {
 
   // ---------- compteur : change quand l'excuse jugée sort ----------
   const n = t < OUT[0] ? 1 : t < OUT[1] ? 2 : t < OUT[2] ? 3 : 4;
-  $('#cnt').textContent = n;
+  $('#cnt').textContent = n; $('#hudc').style.opacity = clamp(seg(t, T.q1 - .05, T.q1 + .1));
   let ck = 0; for (const o of OUT) ck = Math.max(ck, kick(t, o, .3));
   $('#cnt').style.transform = `translateY(${-30 * kick(t, OUT[0], .12) - 30 * kick(t, OUT[1], .12) - 30 * kick(t, OUT[2], .12)}px) scale(${1 + .5 * ck})`;
 
@@ -257,7 +257,7 @@ function render(t) {
   if (t < T.q1) { const s = 1 + .015 * Math.sin(t * 6); $('#ttl').style.transform = `scale(${s})`; $('#ttl2').style.transform = `translateY(${-6 * Math.sin(t * 6)}px)`; }
 
   // ---------- citations ----------
-  const EC = T.wa - .05;
+  const EC = T.ecris - .02;
   const qe = ['#q1', '#q2', '#q3', '#q4'];
   QS.forEach(([a, b], i) => {
     const bt = i < 3 ? BUZZ[i] : T.cel;
@@ -427,10 +427,10 @@ function render(t) {
     $('#e3').style.transform = `translateY(${(1 - clamp(c)) * 30}px) scale(${lerp(.9, 1, clamp(c)) + .02 * pl})`;
     $('#e3').style.boxShadow = t >= T.wa ? `0 0 0 ${4 * pl}px rgba(32,56,236,.9), 0 0 ${12 * pl}px rgba(32,56,236,.45)` : 'none';
     $('#e3').style.borderColor = t >= T.wa + .1 ? '#2038EC' : '#111318';
-    $('#e3wa').style.color = t >= T.wa + .1 && t < T.wa + .9 ? '#2038EC' : '#111318';
+    $('#e3wa').style.color = t >= T.wa + .1 ? '#2038EC' : '#111318';
     const lq = expo(seg(t, EC + .35, EC + .6)); $('#e4').style.opacity = lq; $('#e4').style.transform = `translateY(${(1 - lq) * 30}px)`;
     const l6 = expo(seg(t, EC + .3, EC + .55)); $('#e6').style.opacity = l6; $('#e6').style.transform = `translateY(${(1 - l6) * 20}px)`;
-    const l7 = E_back(seg(t, EC + .9, EC + 1.15)); $('#e7').style.opacity = clamp(seg(t, EC + .9, EC + .95)); $('#e7').style.transform = `translateY(${(1 - l7) * 16}px) scale(${1 + .06 * kick(t, EC + 1.15, .3)})`;
+    const l7 = E_back(seg(t, EC + 1.0, EC + 1.25)); $('#e7').style.opacity = clamp(seg(t, EC + 1.0, EC + 1.05)); $('#e7').style.transform = `translateY(${(1 - l7) * 16}px) scale(${1 + .06 * kick(t, EC + 1.25, .3)})`;
   }
   // volet d'encre qui remonte (la boucle repart sur l'encre de l'image 0)
   const w = inOut(seg(t, T.wipe, T.end - .05));
