@@ -65,6 +65,8 @@ function visible(pt) {
 window.frame = (p) => {
   kit.camAt(camera, S.path, p, S.fov);
   S.update?.(p, camera);
+  if (S.expAt) renderer.toneMappingExposure = S.expAt(p);
+  if (S.bloomAt) bloom.strength = S.bloomAt(p);
   camera.updateMatrixWorld(); fin.uniforms.uT.value = p * 37.1;
   composer.render();
   const pins = (S.pins || []).map(pin => {
@@ -80,5 +82,5 @@ window.frame = (p) => {
   });
   return { pins };
 };
-window.SCENE = scene; window.CAM = camera;
+window.PATH = S.path; window.SCENE = scene; window.CAM = camera;
 window.READY = true;

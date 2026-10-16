@@ -53,12 +53,23 @@ export default async function ({ THREE, kit, scene, portrait }) {
 
   // ——— la façade d'arrivée : la vôtre, enseigne vide ———
   const T = kit.shopfront(scene, { x: 0, stone: 'white_sandstone_blocks_02', wall: 0xeee3d3, shutter: 0x3f4a56, base: 0x23272d, frame: 0x15171a, signW: 5.2, signH: .66, signFrame: 0x3a3c40, spillOp: .24, lit });
-  const R = kit.room(scene, { d: 6.2,
+  // v19 : ?int=restaurant… derrière cette même façade, la salle du métier (celle de sa démo), et la caméra continue
+  // depuis l'arrêt : la porte s'ouvre, on entre, on s'arrête dans la salle. Le dehors du métier (sa rue, sa terrasse) est laissé
+  // de côté : on ne garde que ce que kit.room() construit, posé dans cette scène.
+  const INT = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('int') : null;
+  let M = null;
+  if (INT) {
+    const mod = await import(`./${INT}.js`), dummy = new THREE.Group();
+    const kp = { ...kit, room: (sc, o) => kit.room(scene, o), cubeEnv: (sc, ...r) => kit.cubeEnv(scene, ...r) };
+    M = await mod.default({ THREE, kit: kp, scene: dummy, portrait });
+  }
+  const R = INT ? { g: new THREE.Group() } : kit.room(scene, { d: 6.2,
     floor: kit.pbr('wood_floor', { s: 2, roughness: .7, color: 0xe7d3bb }),
     wall: kit.pbr('plastered_wall', { s: 2.4, color: 0xf4e8da }),
     back: kit.std(0xd9c2a6, { r: .85 }),
     ceiling: kit.std(0xf3ece3, { r: .95 }) });
   const g = R.g;
+  if (!INT) {
   for (const [x, z] of [[-1.8, -1.8], [1.8, -1.8], [0, -3.8]]) { kit.model('hanging_industrial_lamp', { pos: [x, 2.35, z], h: .7, parent: g, cast: false }); kit.pendant(g, x, 2.4, z, { i: 3.2, dist: 7 }); }
   kit.model('potted_plant_02', { pos: [-2.9, .14, -5.4], h: 1.4, parent: g });
   kit.model('pachira_aquatica_01', { pos: [3.0, .14, -4.8], h: 1.6, parent: g });
@@ -69,6 +80,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const wb = new THREE.PointLight(0xffd2a0, 1.6, 4, 2); wb.position.set(0, 2.6, -5.4); g.add(wb);
   kit.model('ceramic_vase_03', { pos: [.4, .94, -4.4], h: .3, parent: g });
   const fill = new THREE.PointLight(0xffc48a, 3.0, 10, 2); fill.position.set(0, 2.8, -2); g.add(fill);
+  }
   pins.push({ id: 'sign', corners: T.sign });
 
   // le réverbère du début : son globe est le point bleu
@@ -91,6 +103,18 @@ export default async function ({ THREE, kit, scene, portrait }) {
 
   const head = HEAD;
   glow.position.set(...head); bl.position.set(head[0], head[1] - .1, head[2] + .1);
+  if (M) {
+    const path = camIn(portrait, M.path, M.fov), e1 = M.exposure ?? 1, sm = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+    return {
+      path, fov: M.fov, bloom: [.42, .55, .9], exposure: .9,
+      pins: [{ id: 'sign', corners: T.sign }, ...M.pins.filter(q => q.id === 'wall')],
+      after() { return M.after?.(); },
+      update(p) { T.openDoor(sm((p - .03) / .3)); },
+      // l'œil s'habitue : de la rue (0,9) à la lumière de la salle, pendant le passage de la porte
+      expAt(p) { return .9 + (e1 - .9) * sm((p - .25) / .35); },
+      bloomAt(p) { return .42 + ((M.bloom?.[0] ?? .3) - .42) * sm((p - .25) / .35); },
+    };
+  }
   const path = camPath(portrait);
   return {
     path, fov: 42, bloom: [.42, .55, .9], exposure: .9,
@@ -98,6 +122,15 @@ export default async function ({ THREE, kit, scene, portrait }) {
     after() { kit.dimEnv(g, .3, .45); },
     update(p) { T.openDoor(Math.min(1, Math.max(0, (p - .9) / .1))); },
   };
+}
+// v19 : la suite, depuis l'arrêt (p .88 de la rue) : la même pose, la porte, puis la fin du parcours du métier (ses clés dès le seuil)
+export function camIn(portrait, mp, mfov) {
+  const st = camPath(portrait).find(k => k.p === .88), f0 = st.fov;
+  const tail = mp.filter(k => k.p >= .48), p0 = tail[0].p;
+  const keys = [{ p: 0, pos: st.pos, tgt: st.tgt, fov: f0 },
+    { p: .22, pos: [0, 1.64, portrait ? 5.6 : 5.2], tgt: [0, 1.8, -2], fov: f0 + (mfov - f0) * .4 }];
+  tail.forEach((k, i) => keys.push({ p: .4 + .6 * (k.p - p0) / (1 - p0), pos: k.pos, tgt: k.tgt, fov: k.fov ?? mfov }));
+  return keys;
 }
 
 // La caméra, à part : render.html la suit, et tools/plist.mjs y place les images (autant de changement entre deux images).
