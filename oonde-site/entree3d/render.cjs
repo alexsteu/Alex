@@ -13,6 +13,7 @@ fs.mkdirSync(out, { recursive: true });
   pg.on('pageerror', e => console.log('[err]', e.message));
   await pg.goto(`http://localhost:${port}/render.html?scene=${a.scene || 'restaurant'}&w=${W}&h=${H}&ss=${SS}${a.q ? '&' + a.q : ''}`);
   await pg.waitForFunction('window.READY === true', null, { timeout: 600000 });
+  if (a.dump) { fs.writeFileSync(a.dump, JSON.stringify(await pg.evaluate(() => window.PATH.map(k => ({ p: k.p, pos: k.pos, tgt: k.tgt, fov: k.fov }))))); await b.close(); return; }
   const pins = []; const t0 = Date.now();
   for (let i = I0; i < Math.min(I1, ps.length); i++) {
     const r = await pg.evaluate(p => { const r = window.frame(p); return { ...r, img: document.querySelector('canvas').toDataURL('image/png') }; }, ps[i]);

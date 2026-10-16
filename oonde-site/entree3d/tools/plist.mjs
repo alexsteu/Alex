@@ -3,8 +3,8 @@
 // Le lecteur (v2/partials/rue.js) lit ces positions dans pins.json : le défilement avance alors d'un pas égal à l'œil.
 import * as THREE from '../node_modules/three/build/three.module.js';
 const [,, name, mode, N, STOP = '.88'] = process.argv;
-const { camPath } = await import(`../scenes/${name}.js`);
-const path = camPath(mode === 'm'), FOV = 42, stop = +STOP;
+// v19 : name = un fichier .json (render.cjs --dump) : le parcours tel que la scène l'a construit
+const path = name.endsWith('.json') ? JSON.parse((await import('fs')).readFileSync(name, 'utf8')) : (await import(`../scenes/${name}.js`)).camPath(mode === 'm'), FOV = +(process.env.FOV || 42), stop = +STOP;
 const C = new THREE.CatmullRomCurve3(path.map(k => new THREE.Vector3(...k.pos)), false, 'centripetal');
 const T = new THREE.CatmullRomCurve3(path.map(k => new THREE.Vector3(...k.tgt)), false, 'centripetal');
 function cam(p) {   // le même calcul que kit.camAt
