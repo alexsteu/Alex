@@ -17,8 +17,9 @@
   const get=g=>e3pack(base(k)+'p'+g+'.txt').then(l=>l.forEach(([i,b])=>s.film.add(i,b)));   /* décodage hors du fil principal (e3d.js) */
   /* tant que le premier paquet n'est pas là, l'affiche reste ; s'il tarde, un mot discret ; s'il échoue, l'affiche (ou le fond) reste et le texte continue */
   const slow=setTimeout(()=>{if(!s.film.any()&&k===set)ld.textContent='Chargement de la rue…'},1200);
-  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return Promise.all([get(1),get(2)])}).then(()=>get(3))
+  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return Promise.all([get(1),get(2)])}).then(()=>{s.p3=()=>{s.p3=null;get(3).catch(()=>{})};more()})   /* p3 (les images impaires, le plus lourd) : seulement si l'on avance vraiment */
    .catch(()=>{clearTimeout(slow);ld.textContent='';if(!s.film.any())flat()})}
+ function more(){const s=store[set];if(s&&s.p3&&P>.4)s.p3()}
  const arm=()=>{if(armed)return;armed=true;load(set)};
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight);anchor.style.top=(STOP*D)+'px'};
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
@@ -64,7 +65,7 @@
  /* le rythme, en images : un temps sur le globe, le tour et la rue d'un seul geste, l'arrêt devant l'enseigne, la porte.
     La vitesse monte et descend en douceur (trapèze) : pas de départ ni d'arrêt sec. */
  const trap=(x,a,b,ra,rb)=>{const L=b-a,t=clamp(x-a,0,L),v=1/(L-ra/2-rb/2);return t<ra?v*t*t/(2*ra):t<=L-rb?v*(ra/2+t-ra):1-v*(L-t)**2/(2*rb)};
- const S0={d:44,m:52};   /* on part dans la rue (open.jpg : image 44 sur ordinateur, 52 sur téléphone), les vitrines déjà là ; le réverbère passe sur le côté */
+ const S0={d:62,m:52};   /* on part dans la rue (open.jpg : image 62 sur ordinateur, les vitrines devant le globe, 52 sur téléphone), les vitrines déjà là ; le réverbère passe sur le côté */
  function frameOf(P){const s=store[set],n=SETS[set],k1=s&&s.k1>0?s.k1:Math.round((n-1)*.935),a=S0[set];
   return P<HOLD[0]?a+(k1-a)*trap(P,.03,HOLD[0],.06,.1):P<HOLD[1]?k1:k1+(n-1-k1)*trap(P,HOLD[1],1,.04,.001)}   /* l'arrêt : un quart du défilement, l'image ne bouge pas */
  const ss=x=>x*x*(3-2*x),fade=(a,b,c,d)=>ss(Math.min(clamp((cP-a)/(b-a||1),0,1),clamp((d-cP)/(d-c||1),0,1)));
@@ -87,6 +88,7 @@
  function loop(now){raf=0;const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
   const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   if(!LIVE){still();return}
+  if(P>.4)more();
   if(cP<0){cP=P;cF=Math.round(frameOf(P))}
   /* le nom a le focus à l'arrêt : tout reste figé, même si le clavier du téléphone fait bouger la page */
   if(COARSE&&document.activeElement===nameIn&&cP>=HOLD[0]-.02&&cP<=HOLD[1]+.02)frz=true;
@@ -124,4 +126,6 @@
   const t=P>=.56&&P<HOLD[0]?HOLD[0]+.04:P>HOLD[1]&&P<=.95?HOLD[1]-.04:-1;if(t>0){geo();e3glide(yAt(t))}},260)},{passive:true})}
  /* la première mesure attend la première image : l'analyse de la page n'est pas allongée d'une mise en page forcée */
  requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick()});
+ /* sans le film (mouvement réduit) : le WhatsApp de l'en-tête se retire tant que celui du titre est à l'écran */
+ {const w=u.querySelector('.r-wa');if(w)new IntersectionObserver(es=>{if(!LIVE)flag(document.body,'hero-cta',es[0].isIntersecting)},{rootMargin:'-64px 0px 0px 0px'}).observe(w)}
 })();

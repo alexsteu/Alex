@@ -88,7 +88,16 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav .btn{flex:none;padding:10px 14px;font-size:14px;min-height:44px;transition:opacity .2s,visibility 0s,background-color .12s}
 .nav .btn .s{display:none}
    /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
-@media (max-width:860px){.nav nav a.opt{display:none}}
+/* « Autres services » : l'assistant et les vidéos, rangés sous un seul bouton (ouvert au clic, Échap le ferme) */
+.nav-sub{position:relative;display:flex}
+.nav-sb{appearance:none;border:0;background:none;font:inherit;color:var(--muted);padding:12px 0;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-sb::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.nav-sb[aria-expanded="true"]::after{transform:translateY(1px) rotate(-135deg)}
+.nav-sb:hover,.nav-sb[data-cur],.nav-sb[aria-expanded="true"]{color:var(--ink)}
+.nav-sl{display:none;position:absolute;top:100%;left:-14px;z-index:40;flex-direction:column;min-width:190px;padding:6px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -22px rgba(17,19,24,.45)}
+.nav-sub.open .nav-sl{display:flex}
+.nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
+@media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
  .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
@@ -260,6 +269,10 @@ footer .seo{max-width:62em;font-size:13.5px}
  .nav.open .in>nav{display:flex}
  .nav .in>nav a,.nav .in>nav a.opt,.nav .in>nav a.opt2{display:block;padding:14px 0;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
  .nav .in>nav a:last-child{border-bottom:0}
+ .nav .in>nav .nav-sub,.nav .in>nav .nav-sub.opt{display:block;border-bottom:1px solid var(--line)}
+ .nav .in>nav .nav-sb{width:100%;justify-content:space-between;padding:14px 0;font-size:17px;color:var(--ink);min-height:48px}
+ .nav .in>nav .nav-sl{position:static;min-width:0;padding:0 0 8px 14px;border:0;border-radius:0;box-shadow:none;background:none}
+ .nav .in>nav .nav-sl a{border-bottom:0;padding:12px 0;font-size:16px}
  .nav.open .in>nav a.nav-wa{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;min-height:48px;padding:12px 16px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:600}.nav-wa svg{width:18px;height:18px;color:#5ED489}}
 .nav nav a.nav-wa{display:none}   /* le WhatsApp du menu : seulement dans le menu du téléphone (le bouton de l'en-tête suffit ailleurs) */
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
@@ -539,11 +552,12 @@ html:not(.js) .e-try{display:none}
 .r-wa{background:rgba(10,12,32,.5);border-color:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .r-wa:hover{background:rgba(10,12,32,.75);border-color:#fff}
 .r-off{flex-basis:100%;font:400 14px/1.45 var(--sans);color:rgba(255,255,255,.82);text-shadow:0 1px 10px rgba(5,6,20,.7)}
-.r-off a{color:#fff;white-space:nowrap;text-underline-offset:3px;padding-block:8px;margin-block:-8px;display:inline-block}
+.r-off a{color:#fff;white-space:nowrap;text-underline-offset:3px;padding-block:13px;margin-block:-13px;display:inline-block}
 .r-tx :focus-visible,.r-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
 .r-t1 h1 .w,.r-sub,.r-act{transition-property:opacity,translate,filter}
 .r-sub,.r-act{opacity:0;translate:0 10px;transition:opacity .6s .75s,translate .6s .75s cubic-bezier(.16,1,.3,1)}
 .r.go .r-sub,.r.go .r-act{opacity:1;translate:0 0}
+@media (min-width:701px){body.hero-cta .nav .btn{opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s}}   /* ordinateur : un seul WhatsApp au premier écran, celui du titre */
 @media (max-width:700px){body.hero-cta .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
 .r-say{bottom:clamp(28px,10cqh,96px);font:600 clamp(26px,3.4cqw,48px)/1.08 var(--sans);letter-spacing:-.025em;opacity:0;max-width:15em;text-shadow:0 2px 20px rgba(5,6,20,.6)}
 .r-say.r-top{bottom:auto;top:clamp(24px,10cqh,100px)}
@@ -726,7 +740,7 @@ html:not(.js) .e-pick{display:none}
  <div class="in">
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="#entree">La démo</a><a href="#prix">Prix</a><a class="opt" href="vitrine.html">La Vitrine</a><a class="opt" href="assistant.html">L’assistant</a><a class="opt" href="videos.html">Vidéos</a><a class="opt2" href="#questions">Questions</a><a class="nav-wa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
+  <nav aria-label="Pages" id="navL"><a href="#entree">La démo</a><a href="#prix">Prix</a><a class="opt" href="vitrine.html">La Vitrine</a><span class="nav-sub opt"><button type="button" class="nav-sb" aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="assistant.html">L’assistant</a><a href="videos.html">Vidéos</a></span></span><a class="opt2" href="#questions">Questions</a><a class="nav-wa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
   <a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l" data-e3l>Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
@@ -739,6 +753,7 @@ html:not(.js) .e-pick{display:none}
    <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/open.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/open.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, des vitrines allumées et un réverbère" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
     <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div class="r-sign" data-id="sign"><span class="r-ph">Votre nom ici</span><span class="r-nm"></span><span class="r-met"><i></i><i></i></span></div></div></div>
    <div class="r-veil" aria-hidden="true"></div>
+   <a class="r-skip" href="#choix">Passer l’intro ↓</a>
    <div class="r-tx r-t1"><p class="mono">SITES INTERNET · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">clients</span> <em><span class="w" style="--i:2">poussent</span> <span class="w" style="--i:3">votre</span> <span class="w" style="--i:4">porte</span></em> <span class="w" style="--i:5">avant</span> <span class="w" style="--i:6">de</span> <span class="w" style="--i:7">venir.</span></h1>
     <p class="r-sub">Nous créons votre site internet, qui s’ouvre sur votre commerce en 3D.</p>
     <div class="r-act"><a class="btn inv r-demo" href="#entree" data-e3="restaurant">Voir une démo</a><a class="btn r-wa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir mon aperçu 3D</span></a>
@@ -754,7 +769,6 @@ html:not(.js) .e-pick{display:none}
     <p class="r-note"><span>Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit.</span><a class="r-wa2" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></p>
    </div>
    <p class="r-cue" aria-hidden="true">FAITES DÉFILER<i></i></p>
-   <a class="r-skip" href="#choix">Passer l’intro ↓</a>
    <p class="r-load" role="status" aria-live="polite"></p>
   </div>
  </div>
@@ -862,14 +876,11 @@ html:not(.js) .e-pick{display:none}
  <div class="in qa">
   <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:14px">Une autre question ? <a href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20une%20question%20%3A%20" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp</a>, on répond le jour même.</p></div>
   <div class="faq">
-   <details><summary>C’est quoi, l’entrée 3D, concrètement ?</summary><div class="fa"><div><p>Quand on ouvre votre site, on est devant chez vous, avec votre nom sur l’enseigne. On fait défiler : on passe la porte, on découvre votre salle, puis le site continue comme un site normal, avec vos prix, vos horaires, vos photos et le bouton pour vous écrire ou réserver.</p></div></div></details>
-   <details><summary>Ce sera mon vrai commerce ?</summary><div class="fa"><div><p>Oui : on vient voir votre lieu, on le photographie, et on reconstruit votre façade, votre porte et votre salle en 3D. Les exemples de cette page, eux, sont des commerces inventés.</p></div></div></details>
-   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>L’entrée 3D avec le site complet, dès 990.–, selon la taille du lieu ; la visite complète, pièce par pièce, dès 1&#8239;490.–. Vous recevez le prix par écrit sous 48 heures, avec une première image offerte. Ensuite, 20.– par mois pour l’hébergement et les petites modifications. La Vitrine, sans 3D, coûte 490.– et 20.– par mois.</p></div></div></details>
-   <details><summary>Et sur téléphone ?</summary><div class="fa"><div><p>L’entrée a sa propre version en hauteur, pour le téléphone, avec des images légères qui arrivent pendant qu’on lit. Si votre client a réglé son téléphone pour réduire les animations, il voit votre façade immobile, puis le site.</p></div></div></details>
-   <details><summary>Qu’est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Nous ouvrir votre porte pour les photos, puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
-   <details><summary>L’entrée 3D ou La Vitrine : laquelle choisir ?</summary><div class="fa"><div><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. L’entrée 3D en fait un site qu’on remarque et qu’on partage. Si vous voulez simplement être bien trouvé, <a href="vitrine.html">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
-   <details><summary>Je suis un restaurant : et mon menu du jour ?</summary><div class="fa"><div><p>Envoyez-le-nous sur WhatsApp, une photo de l’ardoise suffit : on le met à jour sur votre site une fois par semaine. C’est compris dans les 20.– par mois.</p></div></div></details>
-   <details><summary>Vous garantissez la première place sur Google ?</summary><div class="fa"><div><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis.</p></div></div></details>
+   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>L’entrée 3D avec le site complet, dès 990.–, selon la taille du lieu ; la visite complète, pièce par pièce, dès 1&#8239;490.–. Vous recevez le prix par écrit sous 48 heures, avec une première image offerte. Ensuite, 20.– par mois pour l’hébergement et les petites modifications. La Vitrine, sans 3D, coûte 490.– et 20.– par mois.</p><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. L’entrée 3D en fait un site qu’on remarque et qu’on partage. Si vous voulez simplement être bien trouvé, <a href="vitrine.html">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
+   <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
+   <details><summary>Qu’est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Nous ouvrir votre porte : on vient voir votre lieu, on le photographie, et on reconstruit votre vraie façade, votre porte et votre salle en 3D (les exemples de cette page, eux, sont des commerces inventés). Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
+   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>20.– par mois pour l’hébergement et les petites modifications, sans durée minimale. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l’ardoise suffit : on le met à jour sur votre site une fois par semaine, c’est compris.</p><p>Pour Google, on met en place tout ce qu’il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
+   <details><summary>Et sur téléphone ?</summary><div class="fa"><div><p>C’est la même entrée : on est devant chez vous, avec votre nom sur l’enseigne ; on fait défiler, on passe la porte, on découvre votre salle, puis le site continue comme un site normal, avec vos prix, vos horaires, vos photos et le bouton pour vous écrire ou réserver.</p><p>Elle a sa propre version en hauteur, pour le téléphone, avec des images légères qui arrivent pendant qu’on lit. Si votre client a réglé son téléphone pour réduire les animations, il voit votre façade immobile, puis le site.</p></div></div></details>
   </div>
  </div>
 </section>
@@ -938,6 +949,9 @@ document.querySelectorAll('details').forEach(d=>{const s=d.querySelector('summar
 /* Un seul bouton WhatsApp à la fois : celui de la barre du haut s'efface quand un bouton de la page est à l'écran ;
    sur téléphone, la barre du bas arrive une fois l'accueil passé, et se retire tant qu'un autre bouton est visible */
 /* le menu sur téléphone */
+(()=>{const w=document.querySelector('.nav-sub');if(!w)return;const b=w.querySelector('.nav-sb'),t=o=>{w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};   /* « Autres services » */
+ b.addEventListener('click',()=>t(!w.classList.contains('open')));w.addEventListener('focusout',e=>{if(!w.contains(e.relatedTarget)&&!matchMedia('(max-width:700px)').matches)t(false)});
+ document.addEventListener('click',e=>{if(!w.contains(e.target)&&!matchMedia('(max-width:700px)').matches)t(false)});w.addEventListener('keydown',e=>{if(e.key==='Escape'&&w.classList.contains('open')){e.stopPropagation();t(false);b.focus()}})})();
 (()=>{const b=document.querySelector('.nav-m'),n=document.querySelector('.nav');if(!b)return;const t=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};
  b.addEventListener('click',()=>t(!n.classList.contains('open')));n.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>t(false)));addEventListener('keydown',e=>{if(e.key==='Escape')t(false)})})();
 (()=>{const m=$('mbar'),hero=document.querySelector('[data-hero]'),seen=new Set();let past=!hero;
@@ -1019,7 +1033,8 @@ function e3film(n,R,at,onimg){const bl=new Array(n),bm=new Array(n),bz=new Uint8
   if(m){bm[i]=m;if(on&&Math.abs(i-at)<=R+6)onimg(i);else free(i)}pump()})};
  function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&Math.abs(i-at)>R+6)free(i);
   for(let d=0;d<=R&&act<4;d++)for(const i of d?[at+d,at-d]:[at])if(i>=0&&i<n&&bl[i]&&!bm[i]&&!bz[i]&&act<4)dec(i)}
- return{n,get:i=>bm[i],any:()=>bl.some(Boolean),add(i,b){bl[i]=b;pump()},
+ return{n,get:i=>bm[i],any:()=>bl.some(Boolean),
+  near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},
   seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){at=i;pump()}},
   sleep(){on=false;for(let i=0;i<n;i++)free(i)},wake(){if(!on){on=true;pump()}},
   /* ce qu'on dessine pour la position f : les deux voisines fondues si elles sont décodées et à deux images au plus l'une de l'autre ;
@@ -1127,9 +1142,11 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
  function load(k){const key=st.sc+k;if(!armed)return;if(store[key]){store[key].film.wake();return}const sc=st.sc,n=SETS[k],s=store[key]={film:e3film(n,LIVE?24:0,Math.round(cur*(n-1)),()=>{if(sc===st.sc&&k===set){dirty=true;tick()}}),pins:null};
   if(!E3[sc].lodge)fetch(e3base(sc)+k+'/pins.json').then(r=>r.json()).then(j=>{s.pins=j;if(sc===st.sc)dirty=true;tick()}).catch(()=>{});
   const get=g=>e3pack(e3base(sc)+k+'/p'+g+'.txt').then(l=>l.forEach(([i,b])=>{if(LIVE||i===0)s.film.add(i,b)}));
-  get(0).then(()=>LIVE&&Promise.all([get(1),get(2)]).then(()=>get(3)))
+  s.get=get;get(0).then(()=>LIVE&&get(1).then(()=>{s.lv=1;more()}))   /* p2 quand la démo est à l'écran, p3 quand on y avance vraiment */
    .catch(()=>{if(s.film.any())return;if(sc===st.sc&&k===set&&!store[sc+(k==='d'?'m':'d')])load(k==='d'?'m':'d');   /* jeu absent : l'autre jeu, recadré */
     else if(sc===st.sc){busy(false);view.classList.add('nofilm')}})}   /* les deux absents : l'affiche (ou la photo de repli) reste, le site de la démo et les boutons aussi */
+ function more(){const s=store[st.sc+set];if(!s||!vis||!s.lv)return;{const r=walk.getBoundingClientRect();if(r.top>innerHeight||r.bottom<0)return}   /* vraiment à l'écran, pas seulement proche */
+  const g=n=>{s.lv=0;s.get(n).then(()=>{s.lv=n;more()}).catch(()=>{})};if(s.lv===1)g(2);else if(s.lv===2&&P>.12)g(3)}
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);if(w!==W||h!==H){W=cv.width=w;H=cv.height=h}SWd=r.width||1;
   const k=r.width<r.height*.95?'m':'d';if(k!==set){const o=store[st.sc+set];if(o)o.film.sleep();set=k}load(set);geo();BAND=parseFloat(getComputedStyle(site).top)||150;VH=view.clientHeight;dirty=true}
  let SWd=1;
@@ -1163,13 +1180,13 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
  const prog=view.querySelector('.w-prog');
  /* 5. Boucle : la position affichée rattrape la cible en ~80 ms ; rien ne tourne quand l'entrée est loin */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
- function loop(now){raf=0;if(!LIVE){draw(0);return}const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
+ function loop(now){raf=0;if(!LIVE){draw(0);return}const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);more();
   flag(document.body,'walking',r.top<=hh+1&&r.bottom>=innerHeight-1&&P>.02);
   const t=camOf(P);if(jump){cur=t;cq=-1;jump=false}cur+=(t-cur)*(1-Math.exp(-dt/.09));if(Math.abs(t-cur)<.0005)cur=t;
-  const n1=SETS[set]-1,tq=cur===t?Math.round(cur*n1)/n1:cur;if(cq<0)cq=tq;cq+=(tq-cq)*(1-Math.exp(-dt/.07));if(Math.abs(tq-cq)<.002/n1)cq=tq;
+  const n1=SETS[set]-1,fs=store[st.sc+set],tq=cur===t?(fs?fs.film.near(cur*n1):Math.round(cur*n1))/n1:cur;   /* au repos : l'image décodée la plus proche, nette */if(cq<0)cq=tq;cq+=(tq-cq)*(1-Math.exp(-dt/.07));if(Math.abs(tq-cq)<.002/n1)cq=tq;
   if(dirty||cq!==last){draw(cq);last=cq}ui(cur);if(cur!==t||cq!==tq)tick();else t0=0}
  let cq=-1;
- new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);const s=store[st.sc+set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);
+ new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);if(vis)more();const s=store[st.sc+set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);
  /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  const arm=()=>{if(armed)return;armed=true;show(st.sc);load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
  size();paint();
@@ -1227,8 +1244,9 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
   const get=g=>e3pack(base(k)+'p'+g+'.txt').then(l=>l.forEach(([i,b])=>s.film.add(i,b)));   /* décodage hors du fil principal (e3d.js) */
   /* tant que le premier paquet n'est pas là, l'affiche reste ; s'il tarde, un mot discret ; s'il échoue, l'affiche (ou le fond) reste et le texte continue */
   const slow=setTimeout(()=>{if(!s.film.any()&&k===set)ld.textContent='Chargement de la rue…'},1200);
-  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return Promise.all([get(1),get(2)])}).then(()=>get(3))
+  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return Promise.all([get(1),get(2)])}).then(()=>{s.p3=()=>{s.p3=null;get(3).catch(()=>{})};more()})   /* p3 (les images impaires, le plus lourd) : seulement si l'on avance vraiment */
    .catch(()=>{clearTimeout(slow);ld.textContent='';if(!s.film.any())flat()})}
+ function more(){const s=store[set];if(s&&s.p3&&P>.4)s.p3()}
  const arm=()=>{if(armed)return;armed=true;load(set)};
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight);anchor.style.top=(STOP*D)+'px'};
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
@@ -1274,7 +1292,7 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
  /* le rythme, en images : un temps sur le globe, le tour et la rue d'un seul geste, l'arrêt devant l'enseigne, la porte.
     La vitesse monte et descend en douceur (trapèze) : pas de départ ni d'arrêt sec. */
  const trap=(x,a,b,ra,rb)=>{const L=b-a,t=clamp(x-a,0,L),v=1/(L-ra/2-rb/2);return t<ra?v*t*t/(2*ra):t<=L-rb?v*(ra/2+t-ra):1-v*(L-t)**2/(2*rb)};
- const S0={d:44,m:52};   /* on part dans la rue (open.jpg : image 44 sur ordinateur, 52 sur téléphone), les vitrines déjà là ; le réverbère passe sur le côté */
+ const S0={d:62,m:52};   /* on part dans la rue (open.jpg : image 62 sur ordinateur, les vitrines devant le globe, 52 sur téléphone), les vitrines déjà là ; le réverbère passe sur le côté */
  function frameOf(P){const s=store[set],n=SETS[set],k1=s&&s.k1>0?s.k1:Math.round((n-1)*.935),a=S0[set];
   return P<HOLD[0]?a+(k1-a)*trap(P,.03,HOLD[0],.06,.1):P<HOLD[1]?k1:k1+(n-1-k1)*trap(P,HOLD[1],1,.04,.001)}   /* l'arrêt : un quart du défilement, l'image ne bouge pas */
  const ss=x=>x*x*(3-2*x),fade=(a,b,c,d)=>ss(Math.min(clamp((cP-a)/(b-a||1),0,1),clamp((d-cP)/(d-c||1),0,1)));
@@ -1297,6 +1315,7 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
  function loop(now){raf=0;const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
   const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   if(!LIVE){still();return}
+  if(P>.4)more();
   if(cP<0){cP=P;cF=Math.round(frameOf(P))}
   /* le nom a le focus à l'arrêt : tout reste figé, même si le clavier du téléphone fait bouger la page */
   if(COARSE&&document.activeElement===nameIn&&cP>=HOLD[0]-.02&&cP<=HOLD[1]+.02)frz=true;
@@ -1334,6 +1353,8 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
   const t=P>=.56&&P<HOLD[0]?HOLD[0]+.04:P>HOLD[1]&&P<=.95?HOLD[1]-.04:-1;if(t>0){geo();e3glide(yAt(t))}},260)},{passive:true})}
  /* la première mesure attend la première image : l'analyse de la page n'est pas allongée d'une mise en page forcée */
  requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick()});
+ /* sans le film (mouvement réduit) : le WhatsApp de l'en-tête se retire tant que celui du titre est à l'écran */
+ {const w=u.querySelector('.r-wa');if(w)new IntersectionObserver(es=>{if(!LIVE)flag(document.body,'hero-cta',es[0].isIntersecting)},{rootMargin:'-64px 0px 0px 0px'}).observe(w)}
 })();
 
 /* Le nom tapé dans la rue va sur l'entrée choisie ; arrivé avec ?e=, on entre directement */

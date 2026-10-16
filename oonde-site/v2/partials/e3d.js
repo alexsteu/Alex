@@ -41,7 +41,8 @@ function e3film(n,R,at,onimg){const bl=new Array(n),bm=new Array(n),bz=new Uint8
   if(m){bm[i]=m;if(on&&Math.abs(i-at)<=R+6)onimg(i);else free(i)}pump()})};
  function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&Math.abs(i-at)>R+6)free(i);
   for(let d=0;d<=R&&act<4;d++)for(const i of d?[at+d,at-d]:[at])if(i>=0&&i<n&&bl[i]&&!bm[i]&&!bz[i]&&act<4)dec(i)}
- return{n,get:i=>bm[i],any:()=>bl.some(Boolean),add(i,b){bl[i]=b;pump()},
+ return{n,get:i=>bm[i],any:()=>bl.some(Boolean),
+  near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},
   seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){at=i;pump()}},
   sleep(){on=false;for(let i=0;i<n;i++)free(i)},wake(){if(!on){on=true;pump()}},
   /* ce qu'on dessine pour la position f : les deux voisines fondues si elles sont décodées et à deux images au plus l'une de l'autre ;
@@ -149,9 +150,11 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
  function load(k){const key=st.sc+k;if(!armed)return;if(store[key]){store[key].film.wake();return}const sc=st.sc,n=SETS[k],s=store[key]={film:e3film(n,LIVE?24:0,Math.round(cur*(n-1)),()=>{if(sc===st.sc&&k===set){dirty=true;tick()}}),pins:null};
   if(!E3[sc].lodge)fetch(e3base(sc)+k+'/pins.json').then(r=>r.json()).then(j=>{s.pins=j;if(sc===st.sc)dirty=true;tick()}).catch(()=>{});
   const get=g=>e3pack(e3base(sc)+k+'/p'+g+'.txt').then(l=>l.forEach(([i,b])=>{if(LIVE||i===0)s.film.add(i,b)}));
-  get(0).then(()=>LIVE&&Promise.all([get(1),get(2)]).then(()=>get(3)))
+  s.get=get;get(0).then(()=>LIVE&&get(1).then(()=>{s.lv=1;more()}))   /* p2 quand la démo est à l'écran, p3 quand on y avance vraiment */
    .catch(()=>{if(s.film.any())return;if(sc===st.sc&&k===set&&!store[sc+(k==='d'?'m':'d')])load(k==='d'?'m':'d');   /* jeu absent : l'autre jeu, recadré */
     else if(sc===st.sc){busy(false);view.classList.add('nofilm')}})}   /* les deux absents : l'affiche (ou la photo de repli) reste, le site de la démo et les boutons aussi */
+ function more(){const s=store[st.sc+set];if(!s||!vis||!s.lv)return;{const r=walk.getBoundingClientRect();if(r.top>innerHeight||r.bottom<0)return}   /* vraiment à l'écran, pas seulement proche */
+  const g=n=>{s.lv=0;s.get(n).then(()=>{s.lv=n;more()}).catch(()=>{})};if(s.lv===1)g(2);else if(s.lv===2&&P>.12)g(3)}
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);if(w!==W||h!==H){W=cv.width=w;H=cv.height=h}SWd=r.width||1;
   const k=r.width<r.height*.95?'m':'d';if(k!==set){const o=store[st.sc+set];if(o)o.film.sleep();set=k}load(set);geo();BAND=parseFloat(getComputedStyle(site).top)||150;VH=view.clientHeight;dirty=true}
  let SWd=1;
@@ -185,13 +188,13 @@ function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),vi
  const prog=view.querySelector('.w-prog');
  /* 5. Boucle : la position affichée rattrape la cible en ~80 ms ; rien ne tourne quand l'entrée est loin */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
- function loop(now){raf=0;if(!LIVE){draw(0);return}const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
+ function loop(now){raf=0;if(!LIVE){draw(0);return}const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);more();
   flag(document.body,'walking',r.top<=hh+1&&r.bottom>=innerHeight-1&&P>.02);
   const t=camOf(P);if(jump){cur=t;cq=-1;jump=false}cur+=(t-cur)*(1-Math.exp(-dt/.09));if(Math.abs(t-cur)<.0005)cur=t;
-  const n1=SETS[set]-1,tq=cur===t?Math.round(cur*n1)/n1:cur;if(cq<0)cq=tq;cq+=(tq-cq)*(1-Math.exp(-dt/.07));if(Math.abs(tq-cq)<.002/n1)cq=tq;
+  const n1=SETS[set]-1,fs=store[st.sc+set],tq=cur===t?(fs?fs.film.near(cur*n1):Math.round(cur*n1))/n1:cur;   /* au repos : l'image décodée la plus proche, nette */if(cq<0)cq=tq;cq+=(tq-cq)*(1-Math.exp(-dt/.07));if(Math.abs(tq-cq)<.002/n1)cq=tq;
   if(dirty||cq!==last){draw(cq);last=cq}ui(cur);if(cur!==t||cq!==tq)tick();else t0=0}
  let cq=-1;
- new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);const s=store[st.sc+set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);
+ new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);if(vis)more();const s=store[st.sc+set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);
  /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  const arm=()=>{if(armed)return;armed=true;show(st.sc);load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
  size();paint();
