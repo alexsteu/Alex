@@ -23,7 +23,7 @@
 /* le premier écran : le titre de la page et l'essai, posés sur la rue */
 .e-walk .c1{bottom:64px}
 .e-walk .c1 .w-eb{font-size:11.5px;opacity:.9}
-.e-walk .c1 .w-h{font-size:clamp(32px,3.9cqw,52px);max-width:15ch;line-height:1.02;margin-top:10px}
+.e-walk .c1 .w-h{font:600 clamp(30px,3.5cqw,46px)/1.05 var(--sans);letter-spacing:-.025em;max-width:16ch;margin-top:10px}   /* la voix d'OONDE, pas celle du commerce imaginé */
 .e-try{margin-top:18px;display:grid;gap:12px;max-width:500px;background:rgba(12,14,24,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px}
 .e-try label,.e-sw>span{font:600 14px var(--sans)}
 .e-try label{display:block;margin-bottom:6px}
@@ -68,7 +68,7 @@
  .e-try{margin-top:12px;padding:12px;gap:10px;border-radius:12px}
  .e-try label{font-size:13px;margin-bottom:4px}
  #eName{min-height:46px;font-size:17px}
- .e-chips{gap:5px}.e-chips button{min-height:36px;padding:6px 10px;font-size:13px}
+ .e-chips{gap:6px}.e-chips button{min-height:44px;padding:8px 13px;font-size:14px}
  .e-sw .swatches button{width:30px;height:30px}
  .e-walk .c1 .w-hint{margin-top:10px}
  .e-more{grid-template-columns:1fr;gap:10px;margin-top:12px}.e-more>div:last-child{display:none}

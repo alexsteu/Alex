@@ -1,8 +1,8 @@
 <meta charset="utf-8">
 <title>Site avec entrée en 3D pour restaurants, salons, boutiques et hôtels, de Genève à Montreux · OONDE</title>
-<meta name="description" content="La Visite : votre site s'ouvre sur votre lieu en 3D. En faisant défiler, vos clients passent votre porte, puis trouvent vos prix, vos horaires et WhatsApp. Pour tous les commerces, avec la visite complète du lieu en option. Dès 990.–, prix par écrit sous 48 heures.">
+<meta name="description" content="L'entrée 3D : votre site s'ouvre sur votre lieu en 3D. En faisant défiler, vos clients passent votre porte, puis trouvent vos prix, vos horaires et WhatsApp. Pour tous les commerces, avec la visite complète du lieu en option. Dès 990.–, prix par écrit sous 48 heures.">
 <link rel="canonical" href="https://oonde.ch/visite">
-<meta property="og:title" content="La Visite · Un site qui s'ouvre sur votre lieu, en 3D">
+<meta property="og:title" content="L’entrée 3D · Un site qui s'ouvre sur votre lieu, en 3D">
 <meta property="og:description" content="Restaurant, salon, boutique ou hôtel : en faisant défiler, vos clients passent votre porte. Dès 990.–, avec une première image 3D de votre lieu offerte.">
 <meta property="og:url" content="https://oonde.ch/visite">
 <meta property="og:image" content="https://oonde.ch/img/og-visite.jpg">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="OONDE">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"La Visite","serviceType":"Site internet avec visite filmée ou en 3D","url":"https://oonde.ch/visite","provider":{"@id":"https://oonde.ch/#oonde","@type":"ProfessionalService","name":"OONDE","url":"https://oonde.ch/"},"areaServed":{"@type":"AdministrativeArea","name":"De Genève à Montreux"},"audience":{"@type":"BusinessAudience","name":"Hôtels, chambres d'hôtes, logements de vacances, restaurants, salles, caves"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"L’entrée 3D","serviceType":"Site internet avec visite filmée ou en 3D","url":"https://oonde.ch/visite","provider":{"@id":"https://oonde.ch/#oonde","@type":"ProfessionalService","name":"OONDE","url":"https://oonde.ch/"},"areaServed":{"@type":"AdministrativeArea","name":"De Genève à Montreux"},"audience":{"@type":"BusinessAudience","name":"Hôtels, chambres d'hôtes, logements de vacances, restaurants, salles, caves"}}</script>
 {{FONTS}}
 <script>document.documentElement.classList.add('js')</script>
 <style>
@@ -23,6 +23,13 @@
 .v-hero .h-xl{font-size:clamp(40px,4.4vw,64px);max-width:20ch;margin:0}
 @media (max-width:700px){.v-go .btn{width:100%}}
 .v-hero .lede{max-width:34em}
+/* premier écran : le texte à gauche, la démo à droite (sur ordinateur) ; l'e-mail est en bas de page */
+.vx-t{display:flex;flex-direction:column;gap:16px}
+.vx-pic{display:block;text-decoration:none;color:var(--ink)}.vx-pic img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
+.vx-pic span{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px;color:var(--muted);min-height:24px}
+@media (min-width:981px){.v-hero .in.vx{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(32px,4vw,64px);align-items:center}.v-hero{padding-block:clamp(36px,5vh,64px) clamp(28px,4vh,48px)}}
+@media (max-width:980px){.vx-pic{display:none}}
+.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:3px 5px;border-radius:4px;border:1px solid currentColor;color:var(--soft)}
 .v-go{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
 .v-go .lnk{font-size:16px}
 .v-go .micro{flex-basis:100%}
@@ -51,19 +58,22 @@
 <header class="nav">
  <div class="in">
   <a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
-  <nav aria-label="Sections"><a class="opt" href="#demo">La démo</a><a href="#prix">Prix</a><a class="opt" href="#questions">Questions</a><a class="opt2" href="{{EXEMPLES}}">Les exemples</a></nav>
-  <a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Connaître mon prix</span><span class="s">WhatsApp</span></a>
+  <nav aria-label="Pages" id="navL"><a href="{{HOME}}#entree">La démo</a><a href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><span class="nav-sub opt"><button type="button" class="nav-sb" aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a></span></span><a class="opt2" href="{{HOME}}#questions">Questions</a><a class="nav-wa" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a></nav>
+  <a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
 
 <main id="top">
 <section class="v-hero" data-hero aria-labelledby="h1">
- <div class="in">
-  <p class="mono">La Visite · l’entrée 3D et la visite complète</p>
+ <div class="in vx">
+  <div class="vx-t">
+  <p class="mono">L’entrée 3D · et la visite complète</p>
   <h1 class="h-xl" id="h1">Un site qui s'ouvre sur votre lieu, en 3D.</h1>
   <p class="lede">Restaurant, coiffeur, boutique ou hôtel : votre site commence par une entrée en 3D. En faisant défiler, vos clients passent votre porte, puis trouvent vos prix, vos horaires et le bouton WhatsApp. C'est un site qu'on remarque, et qu'on retient.</p>
-  <div class="v-go"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a><a class="lnk" href="#demo">Voir la démo ↓</a><a class="lnk" href="{{EXEMPLES}}">Les exemples par métier</a>
-   <p class="micro">Prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte. Vous préférez l'e-mail ? <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a></p></div>
+  <div class="v-go"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="#demo">Voir la démo ↓</a><a class="lnk" href="{{EXEMPLES}}">Les exemples par métier</a>
+   <p class="micro">Prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte.</p></div>
+  </div>
+  <a class="vx-pic" href="#demo"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="Démo : le salon des Grèves, un logement inventé à Rolle, face au lac" fetchpriority="high"><span><i class="dtag">Démo</i> Les Grèves, Rolle · logement inventé. Entrer ↓</span></a>
  </div>
 </section>
 
@@ -105,7 +115,7 @@
 
 <section class="bg-white" id="pourquoi" aria-labelledby="hW">
  <div class="in">
-  <div class="sec-head"><h2 id="hW">Ce que La Visite fait pour vous.</h2></div>
+  <div class="sec-head"><h2 id="hW">Ce que l’entrée 3D fait pour vous.</h2></div>
   <ul class="why" style="margin-top:36px">
    <li><b>Un site qu'on remarque.</b><span>Les sites classiques se ressemblent tous. Le vôtre s'ouvre sur votre façade, votre porte, votre salle : on sait tout de suite où on va, et on a envie d'y aller. C'est aussi ce qu'on partage sur Instagram.</span></li>
    <li><b>Tout ce qu'un site doit faire, juste après.</b><span>Sous l'entrée, c'est La Vitrine : vos prix, vos horaires, votre carte ou vos prestations, le bouton WhatsApp et votre fiche Google.</span></li>
@@ -117,10 +127,10 @@
 <section class="bg-paper" id="prix" aria-labelledby="hP">
  <div class="in v-price">
   <div class="txt">
-   <p class="oname"><b>La Visite</b><span>une entrée en 3D, avec La Vitrine</span></p>
+   <p class="oname"><b>L’entrée 3D</b><span>tout ce que comprend La Vitrine, plus l’entrée en 3D</span></p>
    <h2 id="hP">Votre prix par écrit, sous 48 heures.</h2>
    <p class="lede">Le prix dépend de votre lieu et de ce que vous voulez montrer : une salle de restaurant ne se reconstruit pas comme un hôtel de vingt chambres. Envoyez-nous votre commerce et votre commune. Vous recevez le prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte.</p>
-   <div class="act"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a><p class="micro">On répond le jour même, 7 jours sur 7. <a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p></div>
+   <div class="act"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a><p class="micro">On répond le jour même, 7 jours sur 7. <a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p></div>
   </div>
   <ol class="steps">
    <li><span class="when">Aujourd'hui</span><h3>Votre prix et une image 3D</h3><b class="amt">0.–</b><p>Par écrit sous 48 heures. Vous décidez ensuite, sans engagement.</p></li>
@@ -142,7 +152,7 @@
    <details><summary>Mes hôtes paient comment ?</summary><div class="fa"><div><p>Comme aujourd'hui : le bouton Réserver vous envoie la demande avec les dates, vous confirmez et demandez l'acompte par virement ou TWINT. Un paiement en ligne est possible, sur devis.</p></div></div></details>
    <details><summary>Et si quelqu'un réserve sur Booking en même temps ?</summary><div class="fa"><div><p>Les dates prises sur Booking ou Airbnb se grisent toutes seules sur votre site, et c'est vous qui confirmez chaque demande directe : pas de double réservation.</p></div></div></details>
    <details><summary>Ça coûte combien, et c'est prêt quand ?</summary><div class="fa"><div><p>Dès 990.– pour l'entrée 3D avec le site, dès 1&#8239;490.– pour la visite complète d'un petit logement, plus pour un hôtel : ça dépend de la taille du lieu. Vous recevez le prix par écrit sous 48 heures, avec une première image offerte, et vous décidez ensuite. Le délai de mise en ligne est écrit dans la même offre, à côté du prix : dites-nous votre date (Pâques, l'été), on vous dit si elle est tenable. L'hébergement et les petites modifications coûtent ensuite 20.– par mois, comme La Vitrine.</p></div></div></details>
-   <details><summary>Je suis un restaurant ou un commerce : La Vitrine ou La Visite ?</summary><div class="fa"><div><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. La Visite y ajoute l'entrée 3D, pour un site qui ne ressemble à aucun autre. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
+   <details><summary>Je suis un restaurant ou un commerce : La Vitrine ou l’entrée 3D ?</summary><div class="fa"><div><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. L'entrée 3D y ajoute votre lieu en 3D, pour un site qui ne ressemble à aucun autre. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
   </div>
  </div>
 </section>
@@ -151,29 +161,25 @@
  <div class="in close">
   <div>
    <h2 class="h-m" id="hC">Deux amis de la région. C'est nous qui répondons.</h2>
-   <p class="lede" style="margin-top:18px">L'un fait les sites et la 3D, l'autre filme et fait le suivi. On est à Préverenges, entre Morges et Lausanne, et on vient voir votre lieu, de Genève à Montreux, avant de le reconstruire.</p>
+   <p class="lede" style="margin-top:18px">L'un fait les sites et la 3D, l'autre filme et fait le suivi. On vient voir votre lieu, de Genève à Montreux, avant de le reconstruire.</p>
    <div class="back"><p><b>Vous voulez un site simple ?</b> C'est La Vitrine : 490.–, et vous voyez votre site avant de payer.</p><a class="lnk" href="{{VITRINE}}">Voir La Vitrine →</a></div>
   </div>
   <div class="final">
    <h2>Parlez-nous de votre lieu.</h2>
    <p>Prix par écrit sous 48 heures. On répond le jour même, 7 jours sur 7.</p>
-   <a class="btn inv" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a>
-   <p class="alt"><a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon lieu</a><a href="mailto:oonde.contact@gmail.com" data-mail="imm">Par e-mail</a></p>
+   <a class="btn inv" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a>
+   <p class="alt"><a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon lieu</a></p>
    <div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div>
-   <dl>
-    <div><dt>WhatsApp ou téléphone</dt><dd><a href="tel:+41764882710">+41 76 488 27 10</a></dd></div>
-    <div><dt>E-mail</dt><dd><a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a></dd></div>
-    <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">@oonde_studio</a></dd></div>
-   </dl>
+   <p class="also">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p>
   </div>
  </div>
 </section>
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Connaître mon prix</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a></nav>
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{HOME}}">L’entrée 3D</a><a href="{{EXEMPLES}}">Exemples</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
- <p class="seo">La Visite : sites avec une entrée en 3D pour les restaurants, salons de coiffure, ongleries, boutiques, cabinets, hôtels, chambres d'hôtes et salles, et visite complète du lieu en option, de Genève à Montreux. © 2026 OONDE.</p>
+ <p class="seo">L’entrée 3D : sites avec une entrée en 3D pour les restaurants, salons de coiffure, ongleries, boutiques, cabinets, hôtels, chambres d'hôtes et salles, et visite complète du lieu en option, de Genève à Montreux. © 2026 OONDE.</p>
 </div></footer>
 
 <script>

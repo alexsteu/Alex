@@ -102,6 +102,26 @@ def pack(src, dst):
         h = json.dumps(head, separators=(',', ':')).encode()
         (dst / f'p{g}.txt').write_bytes(base64.b64encode(len(h).to_bytes(4, 'little') + h + body))
 
+def externalize(html, o, name):
+    """dist : les gros blocs <style> et <script> en ligne partent dans assets/<empreinte>.css|js, en cache long (le HTML,
+    lui, est revalidé à chaque visite). Les petits restent en ligne (le script de tête qui pose .js, les polices, le JSON-LD).
+    Même position, même ordre d'exécution (script classique, sans defer). L'aperçu claude.ai garde tout en ligne."""
+    (o / 'assets').mkdir(exist_ok=True)
+    def out(body, ext):
+        h = hashlib.sha256(body.encode()).hexdigest()[:12]; f = f'assets/{h}.{ext}'   # même contenu, même fichier (les pages légales le partagent)
+        (o / f).write_text(body); return f
+    def css(m):
+        body = m.group(1)
+        if len(body) < 2048: return m.group(0)
+        body = re.sub(r'url\((["\']?)(?!data:|https?:|/|#)', r'url(\1../', body)   # les chemins relatifs partent de assets/
+        return f'<link rel="stylesheet" href="{out(body, "css")}">'
+    def js(m):
+        attrs, body = m.group(1), m.group(2)
+        if attrs.strip() or len(body) < 2048: return m.group(0)
+        return f'<script src="{out(body, "js")}"></script>'
+    html = re.sub(r'<style>(.*?)</style>', css, html, flags=re.S)
+    return re.sub(r'<script((?:\s[^>]*)?)>(.*?)</script>', js, html, flags=re.S)
+
 def csp_hashes(html):
     return {"'sha256-" + base64.b64encode(hashlib.sha256(m.encode()).digest()).decode() + "'"
             for m in re.findall(r'<script(?![^>]*application/ld\+json)[^>]*>(.*?)</script>', html, flags=re.S)}
@@ -119,15 +139,17 @@ for k, (title, desc, cur) in PAGES.items():
 LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos'},
          'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
-    o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}
+    o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out])
         if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'videos'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
+        whole[k] = built[k]   # la page entière (avec ses scripts) : c'est elle qu'on lit pour savoir quels fichiers copier
+        if wrap: built[k] = externalize(built[k], o, k)
         (o / f'{k}.html').write_text(built[k])
     (o / 'img').mkdir()   # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
-    html = ''.join(built.values())
+    html = ''.join(whole.values())
     for f in sorted(set(re.findall(r'img/[\w./-]+\.(?:jpe?g|png|webp|avif|mp4)', html))):
         if os.environ.get('E3TEST') and not (D / f).exists(): print('manque', f); continue   # rendu 3D en cours
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
@@ -143,7 +165,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
                 src, dst = sd / k, o / sd.relative_to(D) / k
                 pack(src, dst)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
-                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
+                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else ['f052.webp', 'f061.webp', 'f071.webp']):   # l'affiche, les enseignes, les photos du site (jeu du téléphone sur téléphone)
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
     if wrap:
         (o / 'fonts').mkdir()
@@ -155,13 +177,14 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         for f in ('favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(D / 'brand' / f, o / f)
         U = ' https://cloud.umami.is' if UMAMI else ''
         csp = ("default-src 'self'; script-src 'self'" + U + ' ' + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))
-               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self'" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
+               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self' data:" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
                "object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'")
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n'
             '  Strict-Transport-Security: max-age=31536000\n  X-Frame-Options: DENY\n  Cross-Origin-Opener-Policy: same-origin\n'
             f'  Content-Security-Policy: {csp}\n'
             '\n/apercu\n  X-Robots-Tag: noindex\n/apercu.html\n  X-Robots-Tag: noindex\n'
             '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n'
+            '\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
@@ -169,7 +192,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
         (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'visite', 'assistant', 'videos')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
-    for k, h in built.items():
+    for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)):
             if '${' in f or f.startswith(('/', 'mailto', 'tel')) or f in ('./', '') or (out == 'preview' and f in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png')): continue   # l'aperçu se passe des icônes
             f = f.split(' ')[0]

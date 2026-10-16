@@ -68,8 +68,8 @@ html:not(.js) .w-ch.c1{display:block}
 @media (prefers-reduced-motion:reduce){.js .w-ch.c3{display:block}}
 /* Cadre étroit (téléphone, petite fenêtre) : la barre du site passe en version mobile */
 @container (max-width:640px){
- .w-bar{height:58px;padding:0 16px}.w-bar .w-logo{font-size:25px;gap:8px}.w-bar nav{display:none}.w-bar .w-book{padding:8px 14px;font-size:13px;min-height:36px}.w-burger{display:block}
- .w-ch{left:16px;right:16px;bottom:62px}.w-h{font-size:min(44px,12cqw)}.w-ch.c2 .w-h{font-size:min(40px,11cqw)}.w-p{font-size:15px}.w-eb{font-size:10px}.w-price{display:none}
+ .w-bar{height:58px;padding:0 16px}.w-bar .w-logo{font-size:25px;gap:8px}.w-bar nav{display:none}.w-bar .w-book{padding:8px 14px;font-size:13px;min-height:44px}.w-burger{display:block}
+ .w-ch{left:16px;right:16px;bottom:62px}.w-h{font-size:min(44px,12cqw)}.w-ch.c2 .w-h{font-size:min(40px,11cqw)}.w-p{font-size:15px}.w-eb{font-size:11px}.w-price{display:none}
  .w-btns{gap:10px}.w-b1{padding:10px 18px;font-size:14px}.w-b2{padding:9px 16px;font-size:14px}
  .w-site{padding:24px 16px}.w-t{font-size:31px}.w-top{display:block}.w-card{min-width:0;margin-top:14px;padding:14px 16px}.w-v{font-size:26px}
  .w-facts{gap:4px 12px;font-size:12px}.w-ph{grid-template-columns:1fr;gap:8px;margin-top:14px}.w-ph figure{display:none}.w-lang{display:none}

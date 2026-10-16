@@ -69,7 +69,16 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav .btn{flex:none;padding:10px 14px;font-size:14px;min-height:44px;transition:opacity .2s,visibility 0s,background-color .12s}
 .nav .btn .s{display:none}
    /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
-@media (max-width:860px){.nav nav a.opt{display:none}}
+/* « Autres services » : l'assistant et les vidéos, rangés sous un seul bouton (ouvert au clic, Échap le ferme) */
+.nav-sub{position:relative;display:flex}
+.nav-sb{appearance:none;border:0;background:none;font:inherit;color:var(--muted);padding:12px 0;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-sb::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.nav-sb[aria-expanded="true"]::after{transform:translateY(1px) rotate(-135deg)}
+.nav-sb:hover,.nav-sb[data-cur],.nav-sb[aria-expanded="true"]{color:var(--ink)}
+.nav-sl{display:none;position:absolute;top:100%;left:-14px;z-index:40;flex-direction:column;min-width:190px;padding:6px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -22px rgba(17,19,24,.45)}
+.nav-sub.open .nav-sl{display:flex}
+.nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
+@media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
  .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
@@ -212,7 +221,8 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 .final>p{margin:14px 0 22px;color:rgba(255,255,255,.75)}
 .final .btn{width:100%}
 .final .alt{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:15px}
-.final .alt a{color:#fff}
+.final .alt a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
+.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff;display:inline-block;padding-block:13px;margin-block:-13px}   /* 44 px au toucher, sans changer la ligne */
 .final dl{margin:26px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
 .final dt{font-size:14px;color:rgba(255,255,255,.6)}
 .final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
@@ -239,7 +249,13 @@ footer .seo{max-width:62em;font-size:13.5px}
  .nav .in>nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 16px 14px;background:rgba(247,247,244,.98);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -24px rgba(17,19,24,.4)}
  .nav.open .in>nav{display:flex}
  .nav .in>nav a,.nav .in>nav a.opt,.nav .in>nav a.opt2{display:block;padding:14px 0;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
- .nav .in>nav a:last-child{border-bottom:0}}
+ .nav .in>nav a:last-child{border-bottom:0}
+ .nav .in>nav .nav-sub,.nav .in>nav .nav-sub.opt{display:block;border-bottom:1px solid var(--line)}
+ .nav .in>nav .nav-sb{width:100%;justify-content:space-between;padding:14px 0;font-size:17px;color:var(--ink);min-height:48px}
+ .nav .in>nav .nav-sl{position:static;min-width:0;padding:0 0 8px 14px;border:0;border-radius:0;box-shadow:none;background:none}
+ .nav .in>nav .nav-sl a{border-bottom:0;padding:12px 0;font-size:16px}
+ .nav.open .in>nav a.nav-wa{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;min-height:48px;padding:12px 16px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:600}.nav-wa svg{width:18px;height:18px;color:#5ED489}}
+.nav nav a.nav-wa{display:none}   /* le WhatsApp du menu : seulement dans le menu du téléphone (le bouton de l'en-tête suffit ailleurs) */
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
 @media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
 *{transition:none!important;animation:none!important}}
