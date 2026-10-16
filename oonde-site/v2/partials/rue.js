@@ -7,8 +7,8 @@
 (()=>{const u=$('univers');if(!u)return;
  const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),cv=$('rCv'),cx=cv.getContext('2d'),poster=$('rPoster'),pins=$('rPins'),anchor=$('choix');
  const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),says=[...u.querySelectorAll('.r-say')],stop=$('rStop'),cue=u.querySelector('.r-cue'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg'),rsel=$('rSel');
- let LIVE=!RM;const SETS={d:200,m:160},STOP=.78,HOLD=[.66,.90],store={};
- const COARSE=matchMedia('(pointer:coarse)').matches;let frz=false,kbY=-1,SW=1,set='d',W=0,H=0,P=0,cP=-1,cF=0,last=-1,raf=0,dirty=true,vis=true,D=1,hh=64,armed=false,t0=0;
+ let LIVE=!RM;const SETS={d:200,m:160},STOP=.78,HOLD=[.66,.90],GATE=[.30,.90],store={};   /* GATE : la zone de capture de l'arrêt, et son mur */
+ const COARSE=matchMedia('(pointer:coarse)').matches;let frz=false,moved=false,kbY=-1,SW=1,set='d',W=0,H=0,P=0,cP=-1,cF=0,last=-1,raf=0,dirty=true,vis=true,D=1,hh=64,armed=false,t0=0;
  const base=k=>'img/e3d/rue/'+k+'/';
  /* les images arrivent en 4 paquets (build.py, pack()) : une sur 8 d'abord, puis le reste entre deux */
  function load(k){if(store[k]){store[k].film.wake();return}const n=SETS[k],s=store[k]={film:e3film(n,24,Math.round(cF)||S0[k],()=>{if(k===set){dirty=true;tick()}}),pins:null};
@@ -17,9 +17,9 @@
   const get=g=>e3pack(base(k)+'p'+g+'.txt').then(l=>l.forEach(([i,b])=>s.film.add(i,b)));   /* décodage hors du fil principal (e3d.js) */
   /* tant que le premier paquet n'est pas là, l'affiche reste ; s'il tarde, un mot discret ; s'il échoue, l'affiche (ou le fond) reste et le texte continue */
   const slow=setTimeout(()=>{if(!s.film.any()&&k===set)ld.textContent='Chargement de la rue…'},1200);
-  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return Promise.all([get(1),get(2)])}).then(()=>{s.p3=()=>{s.p3=null;get(3).catch(()=>{})};more()})   /* p3 (les images impaires, le plus lourd) : seulement si l'on avance vraiment */
+  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return Promise.all([get(1),get(2)])}).then(()=>{s.p3=()=>{s.p3=null;get(3).catch(()=>{})};more()},()=>{s.loose=true;dirty=true;tick()})   /* p1 ou p2 absents : le film joue avec ce qu'il a (images plus espacées) plutôt que de rester figé */   /* p3 (les images impaires, le plus lourd) : seulement si l'on avance vraiment */
    .catch(()=>{clearTimeout(slow);ld.textContent='';if(!s.film.any())flat()})}
- function more(){const s=store[set];if(s&&s.p3&&P>.4)s.p3()}
+ function more(){const s=store[set];if(s&&s.p3&&(P>.4||moved))s.p3()}   /* p3 : dès que la personne bouge (ou si elle arrive plus bas) */
  const arm=()=>{if(armed)return;armed=true;load(set)};
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight);anchor.style.top=(STOP*D)+'px'};
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
@@ -53,7 +53,7 @@
  /* une image : les deux voisines fondues l'une dans l'autre (si elles sont décodées et à deux images au plus) ; les enseignes, interpolées de même.
     Sinon l'image décodée la plus proche, seule : jamais deux images éloignées l'une sur l'autre (pas de « fantôme » pendant le chargement). */
  const pinAt=(s,i)=>s.pins&&s.pins[i]?s.pins[i].pins:null;
- function draw(f){const s=store[set];if(!W||!H||!s)return;const n=SETS[set];f=clamp(f,0,n-1);s.film.seek(f);const r=s.film.pair(f);if(!r)return;const[i0,i1,a]=r;
+ function draw(f){const s=store[set];if(!W||!H||!s)return;const n=SETS[set];f=clamp(f,0,n-1);s.film.seek(f);const r=s.film.pair(f);if(!r)return;const[i0,i1,a]=r;if(!s.loose&&Math.abs(i0-f)>1.01&&Math.abs(i1-f)>1.01)return;   /* jamais une image lointaine à la place de la bonne (l'affiche reste en attendant) */if(window.__rd)__rd.push([i0,i1,+a.toFixed(2)]);
   const im=s.film.get(i0),sc=Math.max(W/im.width,H/im.height),w=im.width*sc,h=im.height*sc,ox=(W-w)/2,oy=(H-h)/2;
   cx.globalAlpha=1;cx.drawImage(im,ox,oy,w,h);if(a>.01&&i1!==i0){cx.globalAlpha=a;cx.drawImage(s.film.get(i1),ox,oy,w,h);cx.globalAlpha=1}
   flag(u,'live',true);dirty=false;
@@ -74,10 +74,10 @@
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  function ui(){if(!LIVE)return;
   const h=ss(clamp((.12-cP)/.07,0,1));put(t1,'opacity',h.toFixed(3));flag(t1,'off',cP>.12);   /* caché à l'œil seulement : le h1 reste dans l'arbre d'accessibilité ; ses boutons ne prennent plus le clic (CSS) */{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
-  const W3=[[.31,.35,.42,.46],[.46,.5,.55,.59],[.93,.96,1.1,1.2]];
+  const W3=[[.12,.145,.175,.2],[.19,.215,.235,.255],[.93,.96,1.1,1.2]];   /* les deux phrases passent avant la zone de l'arrêt */
   says.forEach((el,j)=>{const[a,b,c,d]=W3[j];put(el,'opacity',fade(a,b,c,d).toFixed(3));put(el,'transform',`translateY(${((1-ss(clamp((cP-a)/(b-a),0,1)))*14).toFixed(1)}px)`)});
   /* la barre de l'arrêt : arrive pendant que la caméra se pose, repart en douceur quand on passe la porte */
-  const e=frz?1:ss(Math.min(clamp((cP-.58)/.08,0,1),clamp((.97-cP)/.05,0,1)));put(stop,'opacity',e.toFixed(3));put(stop,'transform',`translateY(${((1-e)*14).toFixed(1)}px)`);
+  const e=frz?1:ss(Math.min(clamp((cP-GATE[0]+.05)/.05,0,1),clamp((.98-cP)/.04,0,1)));   /* la barre : là sur toute la zone de l'arrêt ; elle ne part qu'une fois le portail franchi */put(stop,'opacity',e.toFixed(3));put(stop,'transform',`translateY(${((1-e)*14).toFixed(1)}px)`);
   flag(stop,'on',e>.02);flag(u,'stop',e>.5)}   /* jamais inert : on l'atteint au clavier (voir focusin plus bas) */
  /* mouvement réduit : l'affiche de l'arrêt, et le nom posé sur son enseigne */
  function still(){const s=store[set];if(!s||!s.pins||!poster.naturalWidth)return;const i=s.k1>0?s.k1:0,rw=SW,rh=scene.clientHeight,sc=Math.max(rw/poster.naturalWidth,rh/poster.naturalHeight),w=poster.naturalWidth*sc,h=poster.naturalHeight*sc;
@@ -93,7 +93,10 @@
   /* le nom a le focus à l'arrêt : tout reste figé, même si le clavier du téléphone fait bouger la page */
   if(COARSE&&document.activeElement===nameIn&&cP>=HOLD[0]-.02&&cP<=HOLD[1]+.02)frz=true;
   if(!frz){cP+=(P-cP)*(1-Math.exp(-dt/.2));if(Math.abs(P-cP)<.0003)cP=P}
-  const F=frameOf(cP),tF=cP===P?Math.round(F):F;cF+=(tF-cF)*(1-Math.exp(-dt/.07));if(Math.abs(tF-cF)<.004)cF=tF;
+  const F=frameOf(cP),s0=store[set];let tF=cP===P?Math.round(F):F;
+  if(s0&&s0.loose&&s0.film.get(s0.film.near(cF))){if(!s0.film.get(Math.round(cF)))cF=s0.film.near(cF);if(cP===P)tF=s0.film.near(tF)}
+  else if(s0&&s0.film.get(Math.round(cF))){if(cP===P)tF=s0.film.near(tF);tF=s0.film.reach(cF,tF)}else tF=cF;   /* tant que l'image affichée (l'affiche) n'a pas son double décodé, le film ne part pas */   /* une image pas encore décodée : le film l'attend, il ne la saute pas */
+  {const st=tF-cF,dl=st*(1-Math.exp(-dt/.07));cF+=clamp(dl,-1,1)}if(Math.abs(tF-cF)<.004)cF=tF;   /* une image au plus par image affichée : aucun trou, même lancé fort */
   if(dirty||cF!==last){draw(cF);last=cF}ui();if(!frz&&(cP!==P||cF!==tF))tick();else t0=0}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;const s=store[set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);   /* loin de la rue : ses images décodées sont libérées */
  poster.addEventListener('error',()=>{poster.style.visibility='hidden'});   /* affiche absente : le fond de nuit, les textes restent lisibles */
@@ -106,7 +109,7 @@
  addEventListener('resize',()=>{size();tick()});
  if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});
   /* le film ne se charge qu'au premier geste : qui repart tout de suite ne le télécharge pas (l'affiche est déjà la bonne image) */
-  for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,arm,{passive:true,once:true});
+  for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,()=>{moved=true;arm();more()},{passive:true,once:true});
   requestAnimationFrame(()=>u.classList.add('go'))}else u.classList.add('go');
  /* « Passer l'intro » : sans saut brutal, jusqu'à l'arrêt */
  const yAt=p=>walk.getBoundingClientRect().top+scrollY-hh+p*D;
@@ -120,12 +123,43 @@
  nameIn.addEventListener('focus',()=>{kbY=scrollY});
  nameIn.addEventListener('blur',()=>{const was=frz;frz=false;stop.style.setProperty('--kb','0px');if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
  const vv=window.visualViewport;if(vv){const kb=()=>{const o=document.activeElement===nameIn?Math.max(0,Math.round(innerHeight-vv.height-vv.offsetTop)):0;stop.style.setProperty('--kb',o+'px')};vv.addEventListener('resize',kb);vv.addEventListener('scroll',kb)}
+ /* le portail. Un lancer, même fort, s'arrête à l'arrêt ; pour continuer, il faut un nouveau geste une fois arrivé
+    (doigt reposé, nouvelle molette après une pause, clavier) ou « Entrer dans la démo », un lien, « Passer l'intro ».
+    Remonter n'est jamais bloqué ; arriver d'en dessous (ou par un lien) ouvre le portail. */
+ let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0;const curP=()=>(hh-walk.getBoundingClientRect().top)/D;
+ const rest=()=>{const p=curP();if(gate==='closed'&&p>=HOLD[0]-.03&&p<=GATE[1]+.005&&!e3touch.n&&performance.now()-lastW>350)gate='rested'};
+ const open=(ms=0)=>{gate='open';if(ms)pass=performance.now()+ms};   /* ms : un saut voulu (lien, bouton) passe la rue entière sans être refermé */
+ if(LIVE){
+  addEventListener('scroll',()=>{const p=curP();clearTimeout(rt);rt=setTimeout(rest,320);
+   if(p<GATE[0]-.03){if(performance.now()>pass)gate='closed'}
+   else if(gate!=='open'&&pP<0&&p>GATE[1]+.01)gate='open';   /* arrivé en dessous (lien, rechargement) */
+   else if(gate!=='open'&&pP>=0&&pP>GATE[1]+.01&&p>GATE[1]+.01)gate='open';   /* on remonte depuis la démo */
+   else if(gate!=='open'&&pP>=0&&p>GATE[1]+.002&&!e3gliding()){geo();scrollTo({top:yAt(GATE[1]),behavior:'instant'});pP=GATE[1];
+    if(COARSE){const h=document.documentElement;h.style.overflow='hidden';setTimeout(()=>{h.style.overflow=''},160)}return}   /* le mur ; au doigt, l'élan est coupé */
+   pP=p},{passive:true});
+  addEventListener('wheel',e=>{const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.deltaY<=0)return;
+   if(gate==='rested'&&quiet){open();return}
+   if(gate!=='open'&&curP()>=GATE[1]-.012&&curP()<GATE[1]+.05){e.preventDefault();   /* l'inertie bute sur le mur ; quand elle s'éteint, on se pose à l'arrêt */
+    clearTimeout(wt);wt=setTimeout(()=>{if(gate!=='open'&&Math.abs(curP()-STOP)>.012){geo();e3glide(yAt(STOP))}},300)}},{passive:false});   /* l'inertie du pavé tactile bute sur le mur */
+  addEventListener('touchstart',e=>{tY=e.touches[0]?e.touches[0].clientY:-1;if(gate==='rested')open()},{passive:true,capture:true});
+  addEventListener('touchmove',e=>{const y=e.touches[0]?e.touches[0].clientY:-1;const up=tY>=0&&y<tY;tY=y;if(gate!=='open'&&up&&e.cancelable&&curP()>=GATE[1]-.004&&curP()<GATE[1]+.05)e.preventDefault()},{passive:false});
+  addEventListener('touchend',()=>{clearTimeout(rt);rt=setTimeout(rest,320)},{passive:true});
+  addEventListener('keydown',e=>{if(e.target===nameIn&&e.key!=='Tab')return;if(gate==='rested'||['Tab','End','Home'].includes(e.key))open()},true);
+  document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('a[href*="#"],[data-e3],.r-enter'))open(3000)},true)}
+ /* à l'arrêt, au doigt : un tap qui bouge un peu (jusqu'à 14 px) reste un tap ; le navigateur, lui, l'aurait pris pour un défilement */
+ {let t0=null;stop.addEventListener('touchstart',e=>{const el=e.target.closest('a,button,input');const q=e.touches[0];t0=el&&q&&e.touches.length===1?{el,x:q.clientX,y:q.clientY,t:performance.now(),m:0}:null},{passive:true});
+  stop.addEventListener('touchmove',e=>{const q=e.touches[0];if(t0&&q)t0.m=Math.max(t0.m,Math.hypot(q.clientX-t0.x,q.clientY-t0.y))},{passive:true});
+  stop.addEventListener('touchend',e=>{const k=t0;t0=null;if(!k)return;const q=e.changedTouches[0];if(!q)return;const m=Math.max(k.m,Math.hypot(q.clientX-k.x,q.clientY-k.y));
+   if(m>14||performance.now()-k.t>800)return;const h=document.elementFromPoint(q.clientX,q.clientY);if(!h||!(k.el.contains(h)||h.contains(k.el)))return;
+   if(e.cancelable)e.preventDefault();if(k.el.tagName==='INPUT')k.el.focus();else k.el.click()},{passive:false})}
  /* l'aimantation : si le défilement s'arrête juste avant ou juste après l'arrêt, la caméra s'y pose, en douceur.
     Jamais doigt posé, jamais pendant la frappe ; le moindre geste l'arrête (e3glide). */
  if(LIVE){let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!LIVE||!vis||frz||e3touch.n)return;
-  const t=P>=.56&&P<HOLD[0]?HOLD[0]+.04:P>HOLD[1]&&P<=.95?HOLD[1]-.04:-1;if(t>0){geo();e3glide(yAt(t))}},260)},{passive:true})}
+  const t=gate==='open'&&P>HOLD[1]+.01&&P<.99?1:P>=GATE[0]&&P<=.97&&Math.abs(P-STOP)>.012?STOP:-1;if(t>0){geo();e3glide(yAt(t))}},260)},{passive:true})}
  /* la première mesure attend la première image : l'analyse de la page n'est pas allongée d'une mise en page forcée */
- requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick()});
+ requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick();
+  /* le film se charge dès que la page est posée (sans attendre un geste) : le premier lancer trouve ses images */
+  if(LIVE)(window.requestIdleCallback||setTimeout)(arm,{timeout:1200})});
  /* sans le film (mouvement réduit) : le WhatsApp de l'en-tête se retire tant que celui du titre est à l'écran */
  {const w=u.querySelector('.r-wa');if(w)new IntersectionObserver(es=>{if(!LIVE)flag(document.body,'hero-cta',es[0].isIntersecting)},{rootMargin:'-64px 0px 0px 0px'}).observe(w)}
 })();
