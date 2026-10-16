@@ -23,6 +23,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .q{color:#F7F7F4}
 .q i{font-style:normal;color:#6B7078}
 .k{color:var(--klein)}
+.pl .k{color:#fff;background:var(--klein);padding:0 14px;border-radius:10px}
 .demo{position:absolute;font:500 26px/1 PM,monospace;letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border-radius:8px;white-space:nowrap;background:#F7F7F4;color:#3A3F47;border:2px solid #DCDED8}
 .bz{position:absolute;top:1316px;width:180px;height:150px}
 .bz .dome{position:absolute;left:22px;top:0;width:136px;height:70px;border-radius:70px 70px 0 0;background:#3A3F47}
@@ -174,7 +175,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   <div class="rc" id="r1" style="top:676px"><span class="n">2</span><span class="x">J’ai une page Facebook, ça suffit.</span><span class="m">✕</span></div>
   <div class="rc" id="r2" style="top:802px"><span class="n">3</span><span class="x">J’ai pas le temps.</span><span class="m">✕</span></div>
   <div class="rc" id="r3" style="top:928px;border:3px solid #2038EC;background:#EEF0FD"><span class="n">4</span><span class="x">Je sais même pas à quoi ça ressemblerait.</span><span class="m" style="color:#2038EC">✓</span></div>
-  <div class="rc" id="r4" style="top:1054px;border:3px dashed #2038EC;background:#fff"><span class="n">5</span><span class="x" style="color:#111318">Une autre&nbsp;? Dis-la.</span><span class="m">…</span></div>
+  <div class="rc" id="r4" style="top:1054px;border:3px dashed #2038EC;background:#fff"><span class="n">+</span><span class="x" style="color:#111318">Une autre&nbsp;? Dis-la.</span><span class="m">…</span></div>
   <div id="rep" class="abs" style="left:80px;top:1196px;width:860px;opacity:0;font:600 88px/1.02 IS;letter-spacing:-.035em;color:var(--ink)">Mets le<br><span class="k">numéro</span> <span id="rarr" style="display:inline-block;color:var(--klein)">↘</span></div>
   <div id="rep2" class="mono abs" style="left:80px;top:1384px;width:860px;opacity:0;font-size:33px;font-weight:600;letter-spacing:0;color:#111318;white-space:nowrap">en commentaire · de 1 à 4, ou la tienne</div>
 
@@ -187,7 +188,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
     <div id="e3" style="margin-top:36px;width:800px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:14px;padding:40px 0;border-radius:70px;border:6px solid var(--ink);background:#fff;font:600 58px/1 IS;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;transform-origin:50% 50%"><span id="e3wa">sur WhatsApp</span> · lien en bio
       <svg width="52" height="52" viewBox="0 0 24 24"><path d="M6 18L18 6M9 6h9v9" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div id="e6" style="display:none">Maquette <span class="k" style="font-weight:600">gratuite</span>, vue avant de payer</div>
-    <div id="e4" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:80px;margin-bottom:16px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span id="e7" class="mono" style="margin-top:30px;font-size:36px;font-weight:600;letter-spacing:.04em;white-space:nowrap;color:#111318">Tague celui qui <span class="k">la sort toujours</span></span></div>
+    <div id="e4" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:80px;margin-bottom:16px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span id="e7" class="mono" style="margin-top:30px;font-size:36px;font-weight:600;letter-spacing:.04em;white-space:nowrap;color:#111318">Tague celui qui attend <span class="k">son neveu</span></span></div>
   </div>
 </div>
 <!-- volet de fin : l'encre remonte, liseré Klein -->
@@ -233,7 +234,7 @@ const T = {
 window.DURATION = T.end;
 const BUZZ = [T.b1, T.b2, T.b3];
 const NX = [T.n2, T.n3, T.n4];             // « Numéro deux / trois / quatre » : l'excuse jugée sort
-const OUT = NX.map(n => n + .15);
+const OUT = NX.map(n => n + .45);
 const QS = [[T.q1, OUT[0]], [OUT[0] + .06, OUT[1]], [OUT[1] + .06, OUT[2]], [OUT[2] + .06, T.onte + .1]];
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre'];
 
@@ -376,8 +377,8 @@ function render(t) {
   $('#ghq').style.transform = `scale(${1 + .08 * Math.sin((t - T.q4) * 7)})`;
   const ph = $('#phone');
   const pout = expo(seg(t, T.alors - .05, T.alors + .15));
-  const tq = E_back(seg(t, T.avant + .25, T.avant + .5));
-  const down = 100 * expo(seg(t, T.avant + .15, T.avant + .4));
+  const tq = E_back(seg(t, T.avant + .05, T.avant + .3));
+  const down = 160 * expo(seg(t, T.avant, T.avant + .25));
   ph.style.opacity = t >= m1 - .03 && t < T.alors + .15 ? clamp(seg(t, m1 - .03, m1 + .02)) * (1 - pout) : 0;
   ph.style.transform = `translateY(${pout * 200 + down}px) scale(.88)`;
   ['#s0', '#s1', '#s2', '#s3'].forEach((s, i) => {
@@ -385,7 +386,7 @@ function render(t) {
     $(s).style.opacity = clamp(seg(t, a, a + .05));
     $(s).style.transform = `translateY(${(1 - p) * 40}px)`;
   });
-  $('#toast').style.opacity = t >= T.avant + .25 && t < T.alors ? clamp(tq * 2) : 0;
+  $('#toast').style.opacity = t >= T.avant + .05 && t < T.alors ? clamp(tq * 2) : 0;
   $('#toast').style.transform = `translateY(${(1 - clamp(tq)) * -260}px) scale(${lerp(.9, 1, tq)})`;
   const gp = E_back(seg(t, T.avant + .1, T.avant + .35));
   $('#gpill').style.opacity = t >= T.avant + .1 && t < T.alors ? clamp(gp * 2) * (1 - pout) : 0;
