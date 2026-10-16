@@ -23,6 +23,11 @@
 .hero2 h1{max-width:15ch}
 .hero2 .lede{margin-top:22px}
 .hero2 .act{margin-top:32px}
+/* premier écran : le titre à gauche, la démo à droite (sur ordinateur) */
+.hx{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,420px);gap:clamp(32px,5vw,72px);align-items:center}.hx-cap{margin-top:22px;max-width:34em}
+@media (min-width:901px){.hero2{padding-block:clamp(36px,4vw,56px)}.hx h1{font-size:clamp(44px,4.6vw,68px)}}
+@media (max-width:900px){.hx{grid-template-columns:1fr}}
+.demo.one{display:block}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;list-style:none;margin:0;padding:0}
 .steps li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
 .steps .n{font:500 13px var(--mono);color:var(--klein);letter-spacing:.08em;display:block;margin-bottom:28px}
@@ -72,37 +77,38 @@
  <div class="in">
   <a class="logo landed" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="{{HOME}}#entree">La démo</a><a href="{{HOME}}#prix">Prix</a><a class=opt href="{{VITRINE}}">La Vitrine</a><a class=opt href="{{ASSISTANT}}" aria-current="page">L’assistant</a><a class=opt href="{{VIDEOS}}">Vidéos</a></nav>
-  <a class="btn" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Mon assistant</span><span class="s">WhatsApp</span></a>
+  <nav aria-label="Pages" id="navL"><a href="{{HOME}}#entree">La démo</a><a href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><a class="opt" href="{{ASSISTANT}}" aria-current="page">L’assistant</a><a class="opt" href="{{VIDEOS}}">Vidéos</a><a class="opt2" href="{{HOME}}#questions">Questions</a></nav>
+  <a class="btn" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Parler de mon assistant</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
 
 <main id="top">
 
-<section class="hero2 bg-paper" data-hero><div class="in">
+<section class="hero2 bg-paper" data-hero><div class="in hx">
+ <div>
  <p class="mono"><b>●</b> L’assistant · nouveau</p>
  <h1 class="h-xl">Vos clients ont une réponse, même à 23 h.</h1>
  <p class="lede">Un assistant répond sur votre site aux questions qu’on vous pose tous les jours : horaires, carte, prix, parking, réservation. Quand il ne sait pas, il ne devine pas. Il vous passe la main sur WhatsApp.</p>
- <div class="act"><a class="lnk" href="#essai">L’essayer maintenant</a></div>
-</div></section>
-
-<section class="bg-white" id="essai"><div class="in demo">
- <div>
-  <p class="mono">Démo · restaurant inventé</p>
-  <h2 class="h-l" style="margin-top:14px">Posez-lui une question.</h2>
-  <p class="lede" style="margin-top:16px">Voici l’assistant de la Trattoria Nonna Pia, un restaurant inventé à Morges. Écrivez comme un client, ou touchez une question toute prête.</p>
-  <ul class="pts">
-   <li>Il répond seulement avec les informations que vous lui donnez.</li>
-   <li>Il parle français, et aussi anglais ou allemand si vous le voulez.</li>
-   <li>Pour une réservation ou une question spéciale, il envoie le client vers votre WhatsApp.</li>
-  </ul>
+ <p class="micro hx-cap">Démo à essayer : l’assistant de la Trattoria Nonna Pia, un restaurant inventé à Morges. Écrivez comme un client, ou touchez une question toute prête.</p>
  </div>
- <div class="chat" aria-label="Démo de l’assistant">
+ <div class="chat" id="essai" aria-label="Démo de l’assistant">
   <div class="top"><span class="av" aria-hidden="true">N</span><div class="who"><b>Trattoria Nonna Pia</b><span>Assistant · répond tout de suite</span></div><span class="tag">DÉMO</span></div>
   <div class="log" id="log" aria-live="polite"></div>
   <div class="qchips" id="chips"></div>
   <form id="f" autocomplete="off"><label class="sr" for="q">Votre question</label><input id="q" placeholder="Votre question…" maxlength="160"><button>Envoyer</button></form>
   <p class="foot">Démo : le restaurant et ses informations sont inventés.</p>
+ </div>
+</div></section>
+
+<section class="bg-white"><div class="in demo one">
+ <div>
+  <p class="mono">Démo · restaurant inventé</p>
+  <h2 class="h-l" style="margin-top:14px">Il répond avec vos informations.</h2>
+    <ul class="pts">
+   <li>Il répond seulement avec les informations que vous lui donnez.</li>
+   <li>Il parle français, et aussi anglais ou allemand si vous le voulez.</li>
+   <li>Pour une réservation ou une question spéciale, il envoie le client vers votre WhatsApp.</li>
+  </ul>
  </div>
 </div></section>
 
@@ -138,11 +144,11 @@
 <section class="bg-ink final2"><div class="in">
  <h2>On prépare l’assistant de votre commerce ?</h2>
  <p>Écrivez-nous le nom de votre commerce. Vous l’essayez avant de payer quoi que ce soit.</p>
- <div class="act"><a class="btn inv" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Écrire sur WhatsApp</span></a></div>
+ <div class="act"><a class="btn inv" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></div>
 </div></section>
 
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Écrire sur WhatsApp</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></nav>
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{HOME}}">L’entrée 3D</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>

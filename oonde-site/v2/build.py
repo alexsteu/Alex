@@ -143,7 +143,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
                 src, dst = sd / k, o / sd.relative_to(D) / k
                 pack(src, dst)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
-                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else []):   # l'affiche, les enseignes, les photos du site
+                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else ['f052.webp', 'f061.webp', 'f071.webp']):   # l'affiche, les enseignes, les photos du site (jeu du téléphone sur téléphone)
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
     if wrap:
         (o / 'fonts').mkdir()
@@ -155,7 +155,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
         for f in ('favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(D / 'brand' / f, o / f)
         U = ' https://cloud.umami.is' if UMAMI else ''
         csp = ("default-src 'self'; script-src 'self'" + U + ' ' + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))
-               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self'" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
+               + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self' data:" + (U + ' https://api-gateway.umami.dev' if UMAMI else '') + "; "
                "object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'")
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n'
             '  Strict-Transport-Security: max-age=31536000\n  X-Frame-Options: DENY\n  Cross-Origin-Opener-Policy: same-origin\n'

@@ -3,7 +3,7 @@
 .r{padding:0;background:#0d1024;color:#fff}
 .r-walk{position:relative;height:270vh;height:270svh}
 .r-anchor{position:absolute;left:0;top:60%;width:1px;height:1px;scroll-margin-top:var(--hh)}
-@media (max-aspect-ratio:1/1){.r-walk{height:235vh;height:235svh}}
+@media (max-aspect-ratio:1/1){.r-walk{height:255vh;height:255svh}}
 .r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
 .r-scene{position:absolute;inset:0}
 .r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -41,7 +41,7 @@
 .r-t1 h1 .w{display:inline-block;opacity:0;translate:0 .35em;filter:blur(6px);transition:opacity .7s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1),filter .7s}
 .r-t1 h1 .w{transition-delay:calc(var(--i) * 85ms + 150ms)}
 .r.go .r-t1 h1 .w{opacity:1;translate:0 0;filter:none}
-.r-t1 h1 em{font-style:normal;color:#9aa6ff}
+.r-t1 h1 em{font-style:normal;color:#fff}.r-t1 h1 em .w{text-decoration:underline;text-decoration-color:var(--klein);text-decoration-thickness:.075em;text-underline-offset:.14em;text-decoration-skip-ink:none}   /* l'accent : blanc, souligné de bleu Klein (charte) */
 /* sous le titre : ce que nous faisons, en une phrase, puis les deux actions */
 .r-sub{margin-top:14px;font:500 clamp(17px,1.6cqw,21px)/1.4 var(--sans);color:rgba(255,255,255,.92);max-width:40em;text-shadow:0 1px 14px rgba(5,6,20,.6)}
 .r-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:20px}
@@ -58,18 +58,20 @@
 .r-say{bottom:clamp(28px,10cqh,96px);font:600 clamp(26px,3.4cqw,48px)/1.08 var(--sans);letter-spacing:-.025em;opacity:0;max-width:15em;text-shadow:0 2px 20px rgba(5,6,20,.6)}
 .r-say.r-top{bottom:auto;top:clamp(24px,10cqh,100px)}
 /* l'arrêt : l'enseigne est à vous. Une barre basse et légère, posée sur le trottoir : la façade reste entière. */
-.r-stop{bottom:clamp(12px,2.4cqh,24px);left:50%;right:auto;translate:-50% 0;width:min(1180px,calc(100% - 2 * clamp(16px,4cqw,56px)));opacity:0;visibility:hidden;
+.r-stop{bottom:clamp(12px,2.4cqh,24px);left:50%;right:auto;translate:-50% calc(-1 * var(--kb,0px));width:min(1180px,calc(100% - 2 * clamp(16px,4cqw,56px)));opacity:0;pointer-events:none;
  display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr) auto;grid-template-areas:"h h h" "f m g" "n n n";gap:6px 22px;align-items:end;
  background:rgba(10,12,32,.46);-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:10px 16px 10px;will-change:opacity,transform}
-.r-stop.on{visibility:visible}
-.r-sh{grid-area:h;font:500 10.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62);display:flex;align-items:center;gap:10px}
+.r-stop.on{pointer-events:auto}
+/* cachée, la barre reste atteignable au clavier, mais ne prend aucun toucher ni clic (elle recouvre les boutons du titre sur téléphone) */
+.js .r:not(.static) .r-stop:not(.on),.js .r:not(.static) .r-stop:not(.on) *{pointer-events:none!important}
+.r-sh{grid-area:h;font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);display:flex;align-items:center;gap:10px}
 .r-sh b{font-weight:500;color:#fff;background:rgba(255,255,255,.14);padding:2px 6px;border-radius:4px;letter-spacing:.12em}
 .r-f{grid-area:f}.r-m{grid-area:m;min-width:0}.r-go{grid-area:g}
 .r-stop label,.r-ml{display:block;font:500 12.5px var(--sans);color:rgba(255,255,255,.72);margin:0 0 5px}
 .r-stop label small{font:400 12.5px var(--sans);color:rgba(255,255,255,.5);margin-left:4px}
 .r-stop input{width:100%;min-height:44px;font:500 17px var(--sans);padding:9px 14px;border:1.5px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.08);color:#fff;transition:border-color .2s,box-shadow .2s}
 .r-stop input::placeholder{color:rgba(255,255,255,.5)}
-.r-stop input:focus{outline:none;border-color:#8f9cff;box-shadow:0 0 0 4px rgba(91,108,255,.3)}
+.r-stop input:focus{outline:none;border-color:#8f9cff;box-shadow:0 0 0 4px rgba(91,108,255,.3)}.r-stop input:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .r-seg{display:flex;flex-wrap:nowrap;gap:2px;padding:3px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);width:max-content;max-width:100%}
 .r-seg button{min-height:38px;padding:6px 12px;border:0;border-radius:9px;background:none;color:rgba(255,255,255,.82);font:500 14px var(--sans);cursor:pointer;white-space:nowrap;transition:background-color .25s var(--ease),color .25s var(--ease)}
 .r-seg button:hover{color:#fff;background:rgba(255,255,255,.1)}
@@ -105,15 +107,15 @@
  .r-veil{background:linear-gradient(180deg,rgba(8,10,28,.45) 0,rgba(8,10,28,0) 18%,rgba(8,10,28,0) 30%,rgba(8,10,28,.88) 62%,rgba(8,10,28,.95) 100%);opacity:calc(.45 + .55 * var(--hv,1))}
  .r-veil::before{display:none}
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:22px}
- .r-stop{left:10px;right:10px;width:auto;translate:none;bottom:10px;grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "f" "m" "g" "n";gap:8px;padding:14px;border-radius:16px;background:rgba(10,12,32,.6)}
+ .r-stop{left:10px;right:10px;width:auto;translate:0 calc(-1 * var(--kb,0px));bottom:10px;grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "f" "m" "g" "n";gap:8px;padding:14px;border-radius:16px;background:rgba(10,12,32,.6)}
  .r-stop label,.r-ml{font:600 15.5px var(--sans);color:#fff;margin:0 0 6px}
  .r-stop input{min-height:46px}
  .r-seg,.r-seg button{display:flex}.r-sel{display:none}
  .r-seg{flex-wrap:wrap;gap:6px;padding:0;border:0;background:none;width:auto}
  .r-seg button{min-height:38px;padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.4);font-size:14px;align-items:center}
  .r-go{display:flex}.r-enter{flex:1;justify-content:center;min-height:46px}
- .r-note{font-size:12.5px}.r-wa2{margin-left:0}
- .r-skip{top:12px;right:12px;padding:8px 12px;font-size:13px}
+ .r-note{font-size:12.5px}.r-note>span{display:none}.r-wa2{margin-left:0}   /* téléphone : la mention DÉMO suffit, la vitrine respire */
+ .r-skip{top:12px;right:12px;padding:8px 14px;font-size:13.5px;min-height:44px;display:inline-flex;align-items:center}
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
 }
@@ -122,7 +124,8 @@
 .r.static .r-stage,html:not(.js) .r-stage{position:relative;top:0;height:auto;overflow:visible;container-type:inline-size}
 .r.static .r-scene,html:not(.js) .r-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
 .r.static .r-tx,html:not(.js) .r-tx{position:relative;inset:auto;opacity:1;visibility:visible;max-width:none;margin:0;padding:24px clamp(16px,4vw,56px) 0;background:none;backdrop-filter:none;border:0}
-.r.static .r-stop,html:not(.js) .r-stop{padding-bottom:40px;border-radius:0;translate:none;width:auto;left:auto}
+.r.static .r-stop,html:not(.js) .r-stop{padding-bottom:40px;border-radius:0;translate:none;width:auto;left:auto;pointer-events:auto}
+.r.static .r-note>span,html:not(.js) .r-note>span{display:inline}
 html:not(.js) .r-m{display:none}
 .r.static .r-t1 h1 .w,html:not(.js) .r-t1 h1 .w{opacity:1;translate:none;filter:none}
 .r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}

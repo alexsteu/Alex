@@ -212,7 +212,8 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 .final>p{margin:14px 0 22px;color:rgba(255,255,255,.75)}
 .final .btn{width:100%}
 .final .alt{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:15px}
-.final .alt a{color:#fff}
+.final .alt a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
+.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff}
 .final dl{margin:26px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
 .final dt{font-size:14px;color:rgba(255,255,255,.6)}
 .final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
