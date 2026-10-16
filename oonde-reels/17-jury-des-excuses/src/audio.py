@@ -1,9 +1,13 @@
 """Reel 17 : rythmique 118 bpm + buzzers + bruitages + voix off. python3 audio.py voix.wav mix.wav"""
 import sys, wave, subprocess, numpy as np
-SR=48000; DUR=23.25; N=int(SR*DUR)
+SR=48000; DUR=26.07; N=int(SR*DUR)
 rng=np.random.default_rng(17)
 M=np.zeros(N); FX=np.zeros(N); BZ=np.zeros(N)
+OLD=[0,1.10,2.20,2.68,3.02,3.40,3.96,5.48,7.66,7.98,8.28,8.90,9.68,10.74,11.12,11.56,12.22,13.94,14.40,14.86,15.75,16.45,17.54,18.84,19.75,20.74,22.90,23.25]
+NEW=[0,1.20,2.39,3.29,3.69,4.00,4.84,6.54,8.58,8.90,9.12,9.98,10.80,11.81,12.19,12.47,13.40,15.20,15.70,16.30,17.50,18.22,19.40,21.36,22.57,23.25,25.72,26.07]
+def W(t): return float(np.interp(t,OLD,NEW))
 def add(buf,sig,t,g=1.0):
+    if buf is not M: t=W(t)
     i=int(t*SR); j=min(N,i+len(sig))
     if j>i and i>=0: buf[i:j]+=g*sig[:j-i]
 def env(n,a=.002,tau=.1):
@@ -49,15 +53,15 @@ def flip():
 
 B=60/118; notes=[55,55,65.4,49]
 BUZZ=[3.02,7.98,11.12]; CEL=14.40; ONTE=14.86
-mute=[(13.70,ONTE)]
+mute=[(W(13.70),W(ONTE))]
 t=0.0; k=0
-while t<22.9:
+while t<W(22.9):
     if not any(a<=t<b for a,b in mute):
         add(M,kick(),t,.85)
         if k%2==1: add(M,clap(),t,.5)
         add(M,hat(),t+B/2,.5)
-        if t>=ONTE: add(M,hat(),t+B/4,.25); add(M,hat(),t+3*B/4,.25)
-        add(M,bass(notes[(k//4)%4]*(1.5 if t>=ONTE else 1),.45),t,.55)
+        if t>=W(ONTE): add(M,hat(),t+B/4,.25); add(M,hat(),t+3*B/4,.25)
+        add(M,bass(notes[(k//4)%4]*(1.5 if t>=W(ONTE) else 1),.45),t,.55)
     t+=B; k+=1
 # accroche : test des lumières
 for j in range(3): add(FX,tick(1800+300*j,.7),.30+j*.16)
