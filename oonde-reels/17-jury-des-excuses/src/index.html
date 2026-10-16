@@ -347,11 +347,10 @@ function render(t) {
     const d = $('#b' + j + ' .dome'), ok = $('#b' + j + ' .ok');
     let lit = 0, press = 0, okv = 0;
     // (plus de test lumineux dans l'accroche : bleu = refus)                         // test des lumières dans l'accroche
-    for (const b of BUZZ) { const bj = b - .03 * j; lit = Math.max(lit, t >= bj && t < bj + .55 ? 1 - .5 * seg(t, bj + .25, bj + .55) : 0); press = Math.max(press, kick(t, bj, .16)); }
+    BUZZ.forEach((b, i) => { const bj = b - .03 * j; lit = Math.max(lit, t >= bj && t < OUT[i] ? 1 - .25 * seg(t, bj + .25, bj + .55) - .75 * seg(t, OUT[i] - .15, OUT[i]) : 0); press = Math.max(press, kick(t, bj, .16)); });
     if (t >= T.cel + .08 * j && t < T.onte + .4) okv = clamp(E_back(seg(t, T.cel + .08 * j, T.cel + .08 * j + .2)), 0, 1.15);   // acceptée : ✓ blancs, pas de bleu
     d.style.background = lit > .02 ? `rgb(${lerp(58, 32, lit)},${lerp(63, 56, lit)},${lerp(71, 236, lit)})` : (okv > 0 ? '#F7F7F4' : '#3A3F47');
-    if (okv > 0 && lit <= .02) d.style.boxShadow = `0 0 ${40 * okv}px ${6 * okv}px rgba(247,247,244,.35)`;
-    d.style.boxShadow = lit > .02 ? `0 0 ${50 * lit}px ${10 * lit}px rgba(32,56,236,${.55 * lit})` : 'none';
+    d.style.boxShadow = lit > .02 ? `0 0 ${50 * lit}px ${10 * lit}px rgba(32,56,236,${.55 * lit})` : (okv > 0 ? `0 0 ${40 * okv}px ${6 * okv}px rgba(247,247,244,.35)` : 'none');
     d.style.transformOrigin = '50% 100%';
     d.style.transform = `translateY(${14 * press}px) scaleY(${1 - .18 * press})`;
     ok.style.opacity = clamp(okv * 2); ok.style.transform = `scale(${lerp(.3, 1, okv)})`;
