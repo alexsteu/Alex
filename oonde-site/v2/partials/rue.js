@@ -1,7 +1,7 @@
 /* La rue au crépuscule, en haut de page. Faire défiler fait avancer la caméra image par image (rendu d'avance,
    entree3d/scenes/rue.js) : un tour autour du réverbère bleu, la rue, les vitrines, puis l'arrêt devant une enseigne vide
    où le visiteur tape son nom. Les métiers (data-e3) ouvrent l'entrée 3D plus bas (e3d.js). La première image est une
-   affiche légère ; les images du film se chargent au premier geste (sur ordinateur, un peu après l'affichage).
+   affiche légère ; les images du film se chargent au premier geste (défilement, molette, toucher, clavier).
    Les images sont placées à pas égal pour l'œil (entree3d/tools/plist.mjs) : un pas de défilement = une image, partout.
    Mouvement réduit : l'image de l'arrêt, immobile. */
 (()=>{const u=$('univers');if(!u)return;
@@ -32,18 +32,18 @@
   const bs=[...nm.children];for(let i=bs.length-1;i>=k;i--)bs[i].remove();
   for(let i=k;i<t.length;i++){const b=document.createElement('b');b.textContent=t[i];if(push)b.className='in';b.style.animationDelay=Math.min(i-k,6)*35+'ms';nm.appendChild(b)}
   shown=t;sign.classList.toggle('on',!!t);fit();
-  if(push){const e=$('eName');if(e&&e.value!==v){e.value=v;e.dispatchEvent(new Event('input'))}}}
+  if(push){if(window.e3boot)e3boot();const e=$('eName');if(e&&e.value!==v){e.value=v;e.dispatchEvent(new Event('input'))}}}
  /* le métier : choisi sur place, il s'écrit sous l'enseigne (fondu enchaîné) et prépare la démo, sans quitter la rue.
     « Entrer dans la démo » y va ; le nom et le métier suivent jusque dans le message WhatsApp (e3d.js). */
  let met='',mi=0;
  function metier(k,push){if(!E3[k]||k===met)return;met=k;
   [...seg.children].forEach(b=>{const on=b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});rsel.value=k;
   const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');b.classList.add('a');
-  if(push&&window.e3pick)e3pick(k)}
+  if(push){if(window.e3boot)e3boot();if(window.e3pick)e3pick(k)}}
  seg.addEventListener('click',e=>{const b=e.target.closest('button');if(b)metier(b.dataset.m,true)});
  seg.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key))return;e.preventDefault();const bs=[...seg.children],i=bs.findIndex(b=>b.dataset.m===met),n=bs[(i+(/Right|Down/.test(e.key)?1:bs.length-1))%bs.length];metier(n.dataset.m,true);n.focus()});
  rsel.addEventListener('change',()=>metier(rsel.value,true));
- document.addEventListener('oonde-e3',e=>metier(e.detail.sc,false));
+ document.addEventListener('oonde-e3',e=>{metier(e.detail.sc,false);if(e.detail.name&&!nameIn.value){nameIn.value=e.detail.name;named(e.detail.name,false)}});
  metier(($('eSel')&&$('eSel').value)||'restaurant',false);
  u.querySelector('.r-enter').addEventListener('click',e=>{if(!window.e3go)return;e.preventDefault();e3go(met||'restaurant',!nameIn.value.trim())});
  nameIn.addEventListener('input',()=>named(nameIn.value,true));nameIn.addEventListener('keydown',e=>{if(e.key==='Enter')nameIn.blur()});
@@ -72,7 +72,7 @@
  const memo=new Map(),put=(el,k,v)=>{const m=memo.get(el)||{};if(m[k]!==v){m[k]=v;memo.set(el,m);el.style[k]=v}};
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  function ui(){if(!LIVE)return;
-  const h=ss(clamp((.12-cP)/.07,0,1));put(t1,'opacity',h.toFixed(3));put(t1,'visibility',cP>.12?'hidden':'');{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
+  const h=ss(clamp((.12-cP)/.07,0,1));put(t1,'opacity',h.toFixed(3));flag(t1,'off',cP>.12);   /* caché à l'œil seulement : le h1 reste dans l'arbre d'accessibilité ; ses boutons ne prennent plus le clic (CSS) */{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
   const W3=[[.31,.35,.42,.46],[.46,.5,.55,.59],[.93,.96,1.1,1.2]];
   says.forEach((el,j)=>{const[a,b,c,d]=W3[j];put(el,'opacity',fade(a,b,c,d).toFixed(3));put(el,'transform',`translateY(${((1-ss(clamp((cP-a)/(b-a),0,1)))*14).toFixed(1)}px)`)});
   /* la barre de l'arrêt : arrive pendant que la caméra se pose, repart en douceur quand on passe la porte */
@@ -98,14 +98,13 @@
  function toStill(){u.classList.add('static');poster.addEventListener('load',tick);poster.src=base(r0())+'stop.jpg';const ps=poster.parentNode.querySelector('source');if(ps)ps.srcset=base('m')+'stop.jpg'}
  if(!LIVE)toStill();
  /* le film ne vient pas (réseau, fichier absent) : la page passe au rendu fixe, comme en mouvement réduit ; rien ne bloque l'offre ni le contact */
- function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;u.classList.add('nofilm');document.body.classList.remove('hero-cta');
+ function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');document.body.classList.remove('hero-cta');
   for(const el of [t1,...says,stop,cue]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();if(deep)stop.scrollIntoView({block:'start'})}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
- size();addEventListener('resize',()=>{size();tick()});
+ addEventListener('resize',()=>{size();tick()});
  if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});
   /* le film ne se charge qu'au premier geste : qui repart tout de suite ne le télécharge pas (l'affiche est déjà la bonne image) */
   for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,arm,{passive:true,once:true});
-  if(scrollY>0)arm();
   requestAnimationFrame(()=>u.classList.add('go'))}else u.classList.add('go');
  /* « Passer l'intro » : sans saut brutal, jusqu'à l'arrêt */
  const yAt=p=>walk.getBoundingClientRect().top+scrollY-hh+p*D;
@@ -113,6 +112,8 @@
  u.querySelector('.r-skip').addEventListener('click',e=>{e.preventDefault();toStop()});
  /* au clavier : entrer dans la barre (Tab) amène la caméra à l'arrêt */
  stop.addEventListener('focusin',()=>{if(LIVE&&!u.classList.contains('stop'))toStop()});
+ /* revenir au titre au clavier (Maj+Tab) : la caméra remonte au début */
+ t1.addEventListener('focusin',()=>{if(LIVE&&t1.classList.contains('off'))e3glide(yAt(0))});
  /* le clavier du téléphone : on se souvient d'où l'on était, la barre reste au-dessus du clavier, et on y revient en fermant */
  nameIn.addEventListener('focus',()=>{kbY=scrollY});
  nameIn.addEventListener('blur',()=>{const was=frz;frz=false;stop.style.setProperty('--kb','0px');if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
@@ -121,5 +122,6 @@
     Jamais doigt posé, jamais pendant la frappe ; le moindre geste l'arrête (e3glide). */
  if(LIVE){let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!LIVE||!vis||frz||e3touch.n)return;
   const t=P>=.56&&P<HOLD[0]?HOLD[0]+.04:P>HOLD[1]&&P<=.95?HOLD[1]-.04:-1;if(t>0){geo();e3glide(yAt(t))}},260)},{passive:true})}
- ui();tick();
+ /* la première mesure attend la première image : l'analyse de la page n'est pas allongée d'une mise en page forcée */
+ requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick()});
 })();

@@ -232,7 +232,7 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 .final .btn{width:100%}
 .final .alt{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:15px}
 .final .alt a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
-.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff}
+.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff;display:inline-block;padding-block:13px;margin-block:-13px}   /* 44 px au toucher, sans changer la ligne */
 .final dl{margin:26px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
 .final dt{font-size:14px;color:rgba(255,255,255,.6)}
 .final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
@@ -259,7 +259,9 @@ footer .seo{max-width:62em;font-size:13.5px}
  .nav .in>nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 16px 14px;background:rgba(247,247,244,.98);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -24px rgba(17,19,24,.4)}
  .nav.open .in>nav{display:flex}
  .nav .in>nav a,.nav .in>nav a.opt,.nav .in>nav a.opt2{display:block;padding:14px 0;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
- .nav .in>nav a:last-child{border-bottom:0}}
+ .nav .in>nav a:last-child{border-bottom:0}
+ .nav.open .in>nav a.nav-wa{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;min-height:48px;padding:12px 16px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:600}.nav-wa svg{width:18px;height:18px;color:#5ED489}}
+.nav nav a.nav-wa{display:none}   /* le WhatsApp du menu : seulement dans le menu du téléphone (le bouton de l'en-tête suffit ailleurs) */
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
 @media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
 *{transition:none!important;animation:none!important}}
@@ -529,7 +531,7 @@ html:not(.js) .e-try{display:none}
 .r-t1 h1 .w{display:inline-block;opacity:0;translate:0 .35em;filter:blur(6px);transition:opacity .7s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1),filter .7s}
 .r-t1 h1 .w{transition-delay:calc(var(--i) * 85ms + 150ms)}
 .r.go .r-t1 h1 .w{opacity:1;translate:0 0;filter:none}
-.r-t1 h1 em{font-style:normal;color:#fff}.r-t1 h1 em .w{text-decoration:underline;text-decoration-color:var(--klein);text-decoration-thickness:.075em;text-underline-offset:.14em;text-decoration-skip-ink:none}   /* l'accent : blanc, souligné de bleu Klein (charte) */
+.r-t1 h1 em{font-style:normal;color:#fff}   /* l’accent : blanc, sans trait (un trait bleu sous des mots se lit comme un lien) */
 /* sous le titre : ce que nous faisons, en une phrase, puis les deux actions */
 .r-sub{margin-top:14px;font:500 clamp(17px,1.6cqw,21px)/1.4 var(--sans);color:rgba(255,255,255,.92);max-width:40em;text-shadow:0 1px 14px rgba(5,6,20,.6)}
 .r-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:20px}
@@ -550,6 +552,7 @@ html:not(.js) .e-try{display:none}
  display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr) auto;grid-template-areas:"h h h" "f m g" "n n n";gap:6px 22px;align-items:end;
  background:rgba(10,12,32,.46);-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:10px 16px 10px;will-change:opacity,transform}
 .r-stop.on{pointer-events:auto}
+.js .r:not(.static) .r-t1.off,.js .r:not(.static) .r-t1.off *{pointer-events:none!important}   /* titre passé : lisible par les lecteurs d'écran, mais ne prend plus le clic */
 /* cachée, la barre reste atteignable au clavier, mais ne prend aucun toucher ni clic (elle recouvre les boutons du titre sur téléphone) */
 .js .r:not(.static) .r-stop:not(.on),.js .r:not(.static) .r-stop:not(.on) *{pointer-events:none!important}
 .r-sh{grid-area:h;font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);display:flex;align-items:center;gap:10px}
@@ -604,6 +607,8 @@ html:not(.js) .e-try{display:none}
  .r-go{display:flex}.r-enter{flex:1;justify-content:center;min-height:46px}
  .r-note{font-size:12.5px}.r-note>span{display:none}.r-wa2{margin-left:0}   /* téléphone : la mention DÉMO suffit, la vitrine respire */
  .r-skip{top:12px;right:12px;padding:8px 14px;font-size:13.5px;min-height:44px;display:inline-flex;align-items:center}
+ .r-seg button{min-height:44px}.r-wa2{min-height:44px}
+ .r-sign .r-met{top:auto;bottom:calc(100% + 30px)}   /* téléphone : le métier au-dessus de l'enseigne, jamais sous la barre */
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
 }
@@ -698,7 +703,9 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .e-pick select:hover{border-color:var(--ink)}
 html:not(.js) .e-pick{display:none}
 /* un seul sélecteur de métier à la fois : les puces au début de la démo, cette liste ensuite */
-.e-pick{transition:opacity .3s var(--ease),visibility .3s}.w-cap.chips .e-pick{opacity:0;visibility:hidden}
+.e-pick{transition:opacity .3s var(--ease),visibility .3s}.w-cap.chips .e-pick{display:none}
+/* entre la rue et la démo : une phrase, pour que le changement de lieu soit voulu */
+.e-intro{padding-top:clamp(44px,6vw,80px);padding-bottom:clamp(14px,2vw,22px)}.e-intro h2{font-size:clamp(26px,3vw,40px);letter-spacing:-.025em;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}.e-intro .dtag{font-size:12px;color:var(--soft)}
 @media (max-width:700px){.w-cap .e-pick{flex:1}.w-cap .e-pick select{flex:1}}
 .close .ig-l{display:inline-block;margin-top:22px}
 /* La fin de l'accueil : pour ceux à qui un site simple suffit, La Vitrine, sur sa page */
@@ -719,7 +726,7 @@ html:not(.js) .e-pick{display:none}
  <div class="in">
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="#entree">La démo</a><a href="#prix">Prix</a><a class="opt" href="vitrine.html">La Vitrine</a><a class="opt" href="assistant.html">L’assistant</a><a class="opt" href="videos.html">Vidéos</a><a class="opt2" href="#questions">Questions</a></nav>
+  <nav aria-label="Pages" id="navL"><a href="#entree">La démo</a><a href="#prix">Prix</a><a class="opt" href="vitrine.html">La Vitrine</a><a class="opt" href="assistant.html">L’assistant</a><a class="opt" href="videos.html">Vidéos</a><a class="opt2" href="#questions">Questions</a><a class="nav-wa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
   <a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l" data-e3l>Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
@@ -754,6 +761,7 @@ html:not(.js) .e-pick{display:none}
 </section>
 
 <section id="entree" class="v-demo e-walk" aria-labelledby="h1e">
+ <div class="in e-intro"><h2 id="h1e">Et voici le site de votre commerce <i class="dtag">Démo</i></h2></div>
  <div class="walk" id="eWalk">
   <div class="w-stage" id="eStage">
    <div class="in">
@@ -772,7 +780,7 @@ html:not(.js) .e-pick{display:none}
        <div class="w-prog" aria-hidden="true"><span data-k="1">01 LA RUE</span><span data-k="2">02 L’ENTRÉE</span><span data-k="3" id="eK3">03 LA SALLE</span><span class="w-pb"><i id="eFill"></i></span></div>
       </div>
       <div class="w-ch c1">
-       <p class="w-eb" id="h1e">Le site de votre commerce · Démo</p>
+       <p class="w-eb">Démo à essayer</p>
        <p class="w-h">Votre site s’ouvre sur votre commerce.</p>
        <div class="e-chips" id="eAct" role="radiogroup" aria-label="Métier de la démo"></div>
        <div class="e-try">
@@ -1025,13 +1033,16 @@ const e3touch={n:0};for(const ev of ['touchstart','touchend','touchcancel'])addE
 let e3gl=0,e3own=-1;const e3halt=()=>{if(e3gl){cancelAnimationFrame(e3gl);e3gl=0}};
 for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,e3halt,{passive:true,capture:true});
 function e3glide(y,ms){e3halt();const y0=scrollY,d=y-y0;if(Math.abs(d)<2)return;let t0=0;ms=ms||Math.min(900,380+Math.abs(d)*.6);
- const st=now=>{if(!t0)t0=now;const t=Math.min(1,(now-t0)/ms),e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;e3own=Math.round(y0+d*e);scrollTo({top:e3own,behavior:'instant'});e3gl=t<1?requestAnimationFrame(st):0};e3gl=requestAnimationFrame(st)}
+ const st=now=>{if(t0&&e3own>=0&&Math.abs(scrollY-e3own)>3){e3gl=0;e3own=-1;return}   /* un autre défilement (lien, touche Début, script) a pris la main : on s'efface */
+  if(!t0)t0=now;const t=Math.min(1,(now-t0)/ms),e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;e3own=Math.round(y0+d*e);scrollTo({top:e3own,behavior:'instant'});e3gl=t<1?requestAnimationFrame(st):0};e3gl=requestAnimationFrame(st)}
 /* vrai pendant le glissement, et pour le défilement qu'il a lui-même causé (même arrêté) : l'aimantation ne se relance jamais d'elle-même */
 const e3gliding=()=>{if(e3gl)return true;if(e3own>=0&&Math.abs(scrollY-e3own)<1.5)return true;e3own=-1;return false};
 /* les enseignes entre deux images fondues : leurs coins interpolés de même */
 const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;return{id:q.id,vis:q.vis+(r.vis-q.vis)*a,c:q.c.map((c,k)=>[c[0]+(r.c[k][0]-c[0])*a,c[1]+(r.c[k][1]-c[1])*a])}}):A;
 
-(()=>{if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),view=$('eView'),scene=view.querySelector('.w-scene'),cv=$('eCv'),cx=cv.getContext('2d'),site=$('eSite'),bar=$('eBar'),fill=$('eFill'),toast=$('eToast'),pins=$('ePins');
+/* La démo est sous la rue : elle démarre après l'affichage (temps libre), à son approche, ou dès qu'on la demande (e3boot). */
+let e3booted=false;function e3boot(){if(e3booted)return;e3booted=true;e3main()}
+function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),view=$('eView'),scene=view.querySelector('.w-scene'),cv=$('eCv'),cx=cv.getContext('2d'),site=$('eSite'),bar=$('eBar'),fill=$('eFill'),toast=$('eToast'),pins=$('ePins');
  const chs=[...view.querySelectorAll('.w-ch')],c1=view.querySelector('.c1'),cap=document.querySelector('#entree .w-cap'),c3=view.querySelector('.c3'),ks=[...view.querySelectorAll('[data-k]')],poster=$('ePoster'),LIVE=!RM;
  const st={sc:'restaurant',name:'',style:0,touched:false,styleSet:false,ex:''};
  let hh=64,D=1,P=0,cur=0,raf=0,last=-1,vis=false,dirty=true,drawn='',W=0,H=0,armed=false,set='d',t0=0,jump=false,BAND=150,VH=1,built='';
@@ -1084,7 +1095,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  $('eName').addEventListener('input',e=>{st.touched=true;st.name=e.target.value.trim().slice(0,40);paint()});
  $('eName').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur()});
  /* « Voir cette entrée » sur un exemple : la même entrée, avec le nom de l'exemple tant qu'on n'a pas tapé le sien */
- document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();choose(a.dataset.e3,true);goTo(0)}));
+ document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();fromStreet=false;choose(a.dataset.e3,true);jump=true;goTo(0)}));   /* « Voir une démo » saute la rue : là, on montre la façade */
  window.e3go=(k,ex=true)=>{choose(k,ex);jump=true;goTo(E3[k].lodge?.40:.22)};
  /* choisi dans la rue : le métier est retenu (et ses images préparées si l'entrée est proche), sans quitter la rue */
  window.e3pick=k=>{if(!E3[k]||k===st.sc)return;sleepAll();st.touched=true;st.sc=k;st.style=0;st.styleSet=false;drawn='';view.classList.remove('live');if(armed){show(k);load(set)}paint()};   /* la page des exemples, arrivée avec ?e= : on entre directement */
@@ -1093,6 +1104,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
   if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
   if(E3[m.sc]){st.sc=m.sc;st.touched=true}if(typeof m.name==='string'&&m.name){st.name=m.name.slice(0,40);$('eName').value=st.name;st.touched=true}
   if(Number.isInteger(m.style))st.style=clamp(m.style,0,2),st.styleSet=!!m.s}
+ {const v=$('eName').value.trim();if(!st.name&&v){st.name=v.slice(0,40);st.touched=true}}   /* nom tapé dans la rue avant le démarrage de la démo */
  /* « Réserver », le menu, le logo : le faux site réagit comme un vrai */
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight)};
  const goTo=p=>{if(!LIVE){(p>=.8?site:walk).scrollIntoView({block:'start'});return}geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+p*D})};
@@ -1123,7 +1135,10 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  let SWd=1;
  /* 2. Rythme : la part du défilement figé (P) donne la position de la caméra (p) ; la porte est passée à p = .56 */
  const KS={e:[[0,0],[.03,0],[.3,.56],[.55,.86],[.66,1],[1,1]],g:[[0,0],[.03,0],[.25,.53],[.55,.85],[.66,1],[1,1]]};
- const K=()=>E3[st.sc].lodge?KS.g:KS.e,door=()=>E3[st.sc].lodge?.53:.56;
+ /* arrivé par la rue (on vient de passer sa porte) : la démo commence à sa porte, sans seconde façade vue de dehors */
+ const KD={e:[[0,.41],[.03,.41],[.3,.56],[.55,.86],[.66,1],[1,1]],g:[[0,.47],[.03,.47],[.25,.53],[.55,.85],[.66,1],[1,1]]};
+ let fromStreet=!!$('univers');const u0=$('univers');if(u0)new IntersectionObserver(es=>{if(es[0].isIntersecting)fromStreet=true},{threshold:.05}).observe(u0);
+ const K=()=>(fromStreet?KD:KS)[E3[st.sc].lodge?'g':'e'],door=()=>E3[st.sc].lodge?.47:.38;
  const camOf=P=>{const k=K();for(let j=1;j<k.length;j++)if(P<=k[j][0]){const[a,pa]=k[j-1],[b,pb]=k[j],t=(P-a)/(b-a||1);return pa+(pb-pa)*(j===4?1-(1-t)*(1-t):t)}return 1};
  const ease=t=>1-Math.pow(1-t,3);
  /* 3. Dessin : l'image la plus proche déjà chargée, puis les deux enseignes posées dessus en perspective */
@@ -1144,14 +1159,16 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
   const s=ease(clamp((P-.68)/.27,0,1)),mob=W<H;put(site,'transform',`translateY(${((1-s)*110).toFixed(2)}%)`);{const i=s<.5&&!site.contains(document.activeElement);if(site.inert!==i)site.inert=i}
   const y=`translateY(${(-s*Math.max(0,VH*(mob?.5:.56)-BAND*.6)).toFixed(1)}px)`;put(cv,'transform',y);put(poster,'transform',y);put(pins,'transform',y);
   flag(bar,'solid',s>.82);put(prog,'opacity',(1-Math.min(1,s*2.5)).toFixed(3));
-  put(fill,'width',(p*100).toFixed(2)+'%');const k=p<door()?1:p<.85?2:3;ks.forEach(x=>flag(x,'on',+x.dataset.k===k))}
+  put(fill,'width',(p*100).toFixed(2)+'%');const k=p<door()-.005?1:p<.85?2:3;ks.forEach(x=>flag(x,'on',+x.dataset.k===k))}
  const prog=view.querySelector('.w-prog');
  /* 5. Boucle : la position affichée rattrape la cible en ~80 ms ; rien ne tourne quand l'entrée est loin */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(now){raf=0;if(!LIVE){draw(0);return}const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   flag(document.body,'walking',r.top<=hh+1&&r.bottom>=innerHeight-1&&P>.02);
-  const t=camOf(P);if(jump){cur=t;jump=false}cur+=(t-cur)*(1-Math.exp(-dt/.09));if(Math.abs(t-cur)<.0005)cur=t;
-  if(dirty||cur!==last){draw(cur);last=cur}ui(cur);if(cur!==t)tick();else t0=0}
+  const t=camOf(P);if(jump){cur=t;cq=-1;jump=false}cur+=(t-cur)*(1-Math.exp(-dt/.09));if(Math.abs(t-cur)<.0005)cur=t;
+  const n1=SETS[set]-1,tq=cur===t?Math.round(cur*n1)/n1:cur;if(cq<0)cq=tq;cq+=(tq-cq)*(1-Math.exp(-dt/.07));if(Math.abs(tq-cq)<.002/n1)cq=tq;
+  if(dirty||cq!==last){draw(cq);last=cq}ui(cur);if(cur!==t||cq!==tq)tick();else t0=0}
+ let cq=-1;
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);const s=store[st.sc+set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);
  /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  const arm=()=>{if(armed)return;armed=true;show(st.sc);load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
@@ -1164,10 +1181,21 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!vis||P<=0||P>=1||e3touch.n)return;const ST=E3[st.sc].lodge?[0,.40,.66,1]:[0,.22,.6,1],n=ST.reduce((a,b)=>Math.abs(b-P)<Math.abs(a-P)?b:a);
   if(Math.abs(n-P)>.015&&Math.abs(n-P)<.12)e3glide(walk.getBoundingClientRect().top+scrollY-hh+n*D)},260)},{passive:true});
  /* au clavier : ce qui reçoit le focus dans la démo est montré (on va au moment qui l'affiche), jamais caché sous le focus */
- view.addEventListener('focusin',e=>{const c=e.target.closest('.w-ch,.w-site');if(!c)return;const want=c===site?1:c.classList.contains('c2')?.2:c===c3?.6:0,a=c===site?.75:c.classList.contains('c2')?.12:c===c3?.5:0,b=c===site?1:c.classList.contains('c2')?.3:c===c3?.67:.06;
-  if(P<a||P>b){geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+want*D,behavior:'instant'})}});
+ const seen=el=>{const r=el.getBoundingClientRect();return r.top>=hh-1&&r.bottom<=innerHeight+1&&r.height>0};
+ stg.addEventListener('focusin',e=>{const c=e.target.closest('.w-ch,.w-site');let want,a,b;
+  if(!c){want=clamp(P,0,1);a=0;b=1}   /* la barre du site, la fiche « Réserver » : visibles à tout moment, il suffit que la démo soit à l'écran */
+  else{want=c===site?1:c.classList.contains('c2')?.2:c===c3?.6:0;a=c===site?.75:c.classList.contains('c2')?.12:c===c3?.5:0;b=c===site?1:c.classList.contains('c2')?.3:c===c3?.67:.06}
+  if(P<a||P>b||!seen(e.target)){geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+want*D,behavior:'instant'})}
+  /* le navigateur fait ensuite défiler vers l'élément, mal calculé sous une scène collante : on le retient là où on l'a posé */
+  const y0=scrollY,t=e.target;let k=0;const hold=()=>{if(document.activeElement!==t)return;if(Math.abs(scrollY-y0)>2)scrollTo({top:y0,behavior:'instant'});if(++k<12)requestAnimationFrame(hold)};requestAnimationFrame(hold)});
  ui(0);tick();
-})();
+}
+{const go=()=>e3boot();
+ if(document.readyState==='complete')(window.requestIdleCallback||setTimeout)(go,{timeout:1200});else addEventListener('load',()=>(window.requestIdleCallback||setTimeout)(go,{timeout:1200}),{once:true});
+ const w=$('eWalk');if(w)new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();go()}},{rootMargin:'150% 0px'}).observe(w);
+ /* un bouton qui ouvre la démo avant qu'elle ait démarré : on la démarre d'abord, le clic suit son cours */
+ document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('[data-e3],#entree,.r-enter'))go()},true);
+ document.addEventListener('focusin',e=>{if(e.target.closest&&e.target.closest('#entree'))go()},true)}
 
 /* Les exemples : la dernière image de chaque entrée, avec le nom de l'exemple au mur du fond, ou celui que le visiteur a tapé */
 (()=>{const cache={},done=new Map();let nm=($('eName')||{}).value||'';
@@ -1183,7 +1211,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
 /* La rue au crépuscule, en haut de page. Faire défiler fait avancer la caméra image par image (rendu d'avance,
    entree3d/scenes/rue.js) : un tour autour du réverbère bleu, la rue, les vitrines, puis l'arrêt devant une enseigne vide
    où le visiteur tape son nom. Les métiers (data-e3) ouvrent l'entrée 3D plus bas (e3d.js). La première image est une
-   affiche légère ; les images du film se chargent au premier geste (sur ordinateur, un peu après l'affichage).
+   affiche légère ; les images du film se chargent au premier geste (défilement, molette, toucher, clavier).
    Les images sont placées à pas égal pour l'œil (entree3d/tools/plist.mjs) : un pas de défilement = une image, partout.
    Mouvement réduit : l'image de l'arrêt, immobile. */
 (()=>{const u=$('univers');if(!u)return;
@@ -1214,18 +1242,18 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
   const bs=[...nm.children];for(let i=bs.length-1;i>=k;i--)bs[i].remove();
   for(let i=k;i<t.length;i++){const b=document.createElement('b');b.textContent=t[i];if(push)b.className='in';b.style.animationDelay=Math.min(i-k,6)*35+'ms';nm.appendChild(b)}
   shown=t;sign.classList.toggle('on',!!t);fit();
-  if(push){const e=$('eName');if(e&&e.value!==v){e.value=v;e.dispatchEvent(new Event('input'))}}}
+  if(push){if(window.e3boot)e3boot();const e=$('eName');if(e&&e.value!==v){e.value=v;e.dispatchEvent(new Event('input'))}}}
  /* le métier : choisi sur place, il s'écrit sous l'enseigne (fondu enchaîné) et prépare la démo, sans quitter la rue.
     « Entrer dans la démo » y va ; le nom et le métier suivent jusque dans le message WhatsApp (e3d.js). */
  let met='',mi=0;
  function metier(k,push){if(!E3[k]||k===met)return;met=k;
   [...seg.children].forEach(b=>{const on=b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});rsel.value=k;
   const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');b.classList.add('a');
-  if(push&&window.e3pick)e3pick(k)}
+  if(push){if(window.e3boot)e3boot();if(window.e3pick)e3pick(k)}}
  seg.addEventListener('click',e=>{const b=e.target.closest('button');if(b)metier(b.dataset.m,true)});
  seg.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key))return;e.preventDefault();const bs=[...seg.children],i=bs.findIndex(b=>b.dataset.m===met),n=bs[(i+(/Right|Down/.test(e.key)?1:bs.length-1))%bs.length];metier(n.dataset.m,true);n.focus()});
  rsel.addEventListener('change',()=>metier(rsel.value,true));
- document.addEventListener('oonde-e3',e=>metier(e.detail.sc,false));
+ document.addEventListener('oonde-e3',e=>{metier(e.detail.sc,false);if(e.detail.name&&!nameIn.value){nameIn.value=e.detail.name;named(e.detail.name,false)}});
  metier(($('eSel')&&$('eSel').value)||'restaurant',false);
  u.querySelector('.r-enter').addEventListener('click',e=>{if(!window.e3go)return;e.preventDefault();e3go(met||'restaurant',!nameIn.value.trim())});
  nameIn.addEventListener('input',()=>named(nameIn.value,true));nameIn.addEventListener('keydown',e=>{if(e.key==='Enter')nameIn.blur()});
@@ -1254,7 +1282,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  const memo=new Map(),put=(el,k,v)=>{const m=memo.get(el)||{};if(m[k]!==v){m[k]=v;memo.set(el,m);el.style[k]=v}};
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  function ui(){if(!LIVE)return;
-  const h=ss(clamp((.12-cP)/.07,0,1));put(t1,'opacity',h.toFixed(3));put(t1,'visibility',cP>.12?'hidden':'');{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
+  const h=ss(clamp((.12-cP)/.07,0,1));put(t1,'opacity',h.toFixed(3));flag(t1,'off',cP>.12);   /* caché à l'œil seulement : le h1 reste dans l'arbre d'accessibilité ; ses boutons ne prennent plus le clic (CSS) */{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
   const W3=[[.31,.35,.42,.46],[.46,.5,.55,.59],[.93,.96,1.1,1.2]];
   says.forEach((el,j)=>{const[a,b,c,d]=W3[j];put(el,'opacity',fade(a,b,c,d).toFixed(3));put(el,'transform',`translateY(${((1-ss(clamp((cP-a)/(b-a),0,1)))*14).toFixed(1)}px)`)});
   /* la barre de l'arrêt : arrive pendant que la caméra se pose, repart en douceur quand on passe la porte */
@@ -1280,14 +1308,13 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  function toStill(){u.classList.add('static');poster.addEventListener('load',tick);poster.src=base(r0())+'stop.jpg';const ps=poster.parentNode.querySelector('source');if(ps)ps.srcset=base('m')+'stop.jpg'}
  if(!LIVE)toStill();
  /* le film ne vient pas (réseau, fichier absent) : la page passe au rendu fixe, comme en mouvement réduit ; rien ne bloque l'offre ni le contact */
- function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;u.classList.add('nofilm');document.body.classList.remove('hero-cta');
+ function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');document.body.classList.remove('hero-cta');
   for(const el of [t1,...says,stop,cue]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();if(deep)stop.scrollIntoView({block:'start'})}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
- size();addEventListener('resize',()=>{size();tick()});
+ addEventListener('resize',()=>{size();tick()});
  if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});
   /* le film ne se charge qu'au premier geste : qui repart tout de suite ne le télécharge pas (l'affiche est déjà la bonne image) */
   for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,arm,{passive:true,once:true});
-  if(scrollY>0)arm();
   requestAnimationFrame(()=>u.classList.add('go'))}else u.classList.add('go');
  /* « Passer l'intro » : sans saut brutal, jusqu'à l'arrêt */
  const yAt=p=>walk.getBoundingClientRect().top+scrollY-hh+p*D;
@@ -1295,6 +1322,8 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  u.querySelector('.r-skip').addEventListener('click',e=>{e.preventDefault();toStop()});
  /* au clavier : entrer dans la barre (Tab) amène la caméra à l'arrêt */
  stop.addEventListener('focusin',()=>{if(LIVE&&!u.classList.contains('stop'))toStop()});
+ /* revenir au titre au clavier (Maj+Tab) : la caméra remonte au début */
+ t1.addEventListener('focusin',()=>{if(LIVE&&t1.classList.contains('off'))e3glide(yAt(0))});
  /* le clavier du téléphone : on se souvient d'où l'on était, la barre reste au-dessus du clavier, et on y revient en fermant */
  nameIn.addEventListener('focus',()=>{kbY=scrollY});
  nameIn.addEventListener('blur',()=>{const was=frz;frz=false;stop.style.setProperty('--kb','0px');if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
@@ -1303,7 +1332,8 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
     Jamais doigt posé, jamais pendant la frappe ; le moindre geste l'arrête (e3glide). */
  if(LIVE){let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!LIVE||!vis||frz||e3touch.n)return;
   const t=P>=.56&&P<HOLD[0]?HOLD[0]+.04:P>HOLD[1]&&P<=.95?HOLD[1]-.04:-1;if(t>0){geo();e3glide(yAt(t))}},260)},{passive:true})}
- ui();tick();
+ /* la première mesure attend la première image : l'analyse de la page n'est pas allongée d'une mise en page forcée */
+ requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick()});
 })();
 
 /* Le nom tapé dans la rue va sur l'entrée choisie ; arrivé avec ?e=, on entre directement */

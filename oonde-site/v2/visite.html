@@ -23,6 +23,13 @@
 .v-hero .h-xl{font-size:clamp(40px,4.4vw,64px);max-width:20ch;margin:0}
 @media (max-width:700px){.v-go .btn{width:100%}}
 .v-hero .lede{max-width:34em}
+/* premier écran : le texte à gauche, la démo à droite (sur ordinateur) ; l'e-mail est en bas de page */
+.vx-t{display:flex;flex-direction:column;gap:16px}
+.vx-pic{display:block;text-decoration:none;color:var(--ink)}.vx-pic img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
+.vx-pic span{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px;color:var(--muted);min-height:24px}
+@media (min-width:981px){.v-hero .in.vx{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(32px,4vw,64px);align-items:center}.v-hero{padding-block:clamp(36px,5vh,64px) clamp(28px,4vh,48px)}}
+@media (max-width:980px){.vx-pic{display:none}}
+.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:3px 5px;border-radius:4px;border:1px solid currentColor;color:var(--soft)}
 .v-go{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
 .v-go .lnk{font-size:16px}
 .v-go .micro{flex-basis:100%}
@@ -51,19 +58,22 @@
 <header class="nav">
  <div class="in">
   <a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
-  <nav aria-label="Pages" id="navL"><a href="{{HOME}}#entree">La démo</a><a href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><a class="opt" href="{{ASSISTANT}}">L’assistant</a><a class="opt" href="{{VIDEOS}}">Vidéos</a><a class="opt2" href="{{HOME}}#questions">Questions</a></nav>
+  <nav aria-label="Pages" id="navL"><a href="{{HOME}}#entree">La démo</a><a href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><a class="opt" href="{{ASSISTANT}}">L’assistant</a><a class="opt" href="{{VIDEOS}}">Vidéos</a><a class="opt2" href="{{HOME}}#questions">Questions</a><a class="nav-wa" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a></nav>
   <a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
 
 <main id="top">
 <section class="v-hero" data-hero aria-labelledby="h1">
- <div class="in">
+ <div class="in vx">
+  <div class="vx-t">
   <p class="mono">L’entrée 3D · et la visite complète</p>
   <h1 class="h-xl" id="h1">Un site qui s'ouvre sur votre lieu, en 3D.</h1>
   <p class="lede">Restaurant, coiffeur, boutique ou hôtel : votre site commence par une entrée en 3D. En faisant défiler, vos clients passent votre porte, puis trouvent vos prix, vos horaires et le bouton WhatsApp. C'est un site qu'on remarque, et qu'on retient.</p>
   <div class="v-go"><a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="#demo">Voir la démo ↓</a><a class="lnk" href="{{EXEMPLES}}">Les exemples par métier</a>
-   <p class="micro">Prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte. Vous préférez l'e-mail ? <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a></p></div>
+   <p class="micro">Prix par écrit sous 48 heures, avec une première image de votre lieu en 3D, offerte.</p></div>
+  </div>
+  <a class="vx-pic" href="#demo"><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="Démo : le salon des Grèves, un logement inventé à Rolle, face au lac" fetchpriority="high"><span><i class="dtag">Démo</i> Les Grèves, Rolle · logement inventé. Entrer ↓</span></a>
  </div>
 </section>
 

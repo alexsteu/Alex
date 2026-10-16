@@ -55,13 +55,16 @@ const e3touch={n:0};for(const ev of ['touchstart','touchend','touchcancel'])addE
 let e3gl=0,e3own=-1;const e3halt=()=>{if(e3gl){cancelAnimationFrame(e3gl);e3gl=0}};
 for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,e3halt,{passive:true,capture:true});
 function e3glide(y,ms){e3halt();const y0=scrollY,d=y-y0;if(Math.abs(d)<2)return;let t0=0;ms=ms||Math.min(900,380+Math.abs(d)*.6);
- const st=now=>{if(!t0)t0=now;const t=Math.min(1,(now-t0)/ms),e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;e3own=Math.round(y0+d*e);scrollTo({top:e3own,behavior:'instant'});e3gl=t<1?requestAnimationFrame(st):0};e3gl=requestAnimationFrame(st)}
+ const st=now=>{if(t0&&e3own>=0&&Math.abs(scrollY-e3own)>3){e3gl=0;e3own=-1;return}   /* un autre défilement (lien, touche Début, script) a pris la main : on s'efface */
+  if(!t0)t0=now;const t=Math.min(1,(now-t0)/ms),e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;e3own=Math.round(y0+d*e);scrollTo({top:e3own,behavior:'instant'});e3gl=t<1?requestAnimationFrame(st):0};e3gl=requestAnimationFrame(st)}
 /* vrai pendant le glissement, et pour le défilement qu'il a lui-même causé (même arrêté) : l'aimantation ne se relance jamais d'elle-même */
 const e3gliding=()=>{if(e3gl)return true;if(e3own>=0&&Math.abs(scrollY-e3own)<1.5)return true;e3own=-1;return false};
 /* les enseignes entre deux images fondues : leurs coins interpolés de même */
 const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;return{id:q.id,vis:q.vis+(r.vis-q.vis)*a,c:q.c.map((c,k)=>[c[0]+(r.c[k][0]-c[0])*a,c[1]+(r.c[k][1]-c[1])*a])}}):A;
 
-(()=>{if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),view=$('eView'),scene=view.querySelector('.w-scene'),cv=$('eCv'),cx=cv.getContext('2d'),site=$('eSite'),bar=$('eBar'),fill=$('eFill'),toast=$('eToast'),pins=$('ePins');
+/* La démo est sous la rue : elle démarre après l'affichage (temps libre), à son approche, ou dès qu'on la demande (e3boot). */
+let e3booted=false;function e3boot(){if(e3booted)return;e3booted=true;e3main()}
+function e3main(){if(!$('eWalk'))return;const walk=$('eWalk'),stg=$('eStage'),view=$('eView'),scene=view.querySelector('.w-scene'),cv=$('eCv'),cx=cv.getContext('2d'),site=$('eSite'),bar=$('eBar'),fill=$('eFill'),toast=$('eToast'),pins=$('ePins');
  const chs=[...view.querySelectorAll('.w-ch')],c1=view.querySelector('.c1'),cap=document.querySelector('#entree .w-cap'),c3=view.querySelector('.c3'),ks=[...view.querySelectorAll('[data-k]')],poster=$('ePoster'),LIVE=!RM;
  const st={sc:'restaurant',name:'',style:0,touched:false,styleSet:false,ex:''};
  let hh=64,D=1,P=0,cur=0,raf=0,last=-1,vis=false,dirty=true,drawn='',W=0,H=0,armed=false,set='d',t0=0,jump=false,BAND=150,VH=1,built='';
@@ -114,7 +117,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  $('eName').addEventListener('input',e=>{st.touched=true;st.name=e.target.value.trim().slice(0,40);paint()});
  $('eName').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur()});
  /* « Voir cette entrée » sur un exemple : la même entrée, avec le nom de l'exemple tant qu'on n'a pas tapé le sien */
- document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();choose(a.dataset.e3,true);goTo(0)}));
+ document.querySelectorAll('[data-e3]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();fromStreet=false;choose(a.dataset.e3,true);jump=true;goTo(0)}));   /* « Voir une démo » saute la rue : là, on montre la façade */
  window.e3go=(k,ex=true)=>{choose(k,ex);jump=true;goTo(E3[k].lodge?.40:.22)};
  /* choisi dans la rue : le métier est retenu (et ses images préparées si l'entrée est proche), sans quitter la rue */
  window.e3pick=k=>{if(!E3[k]||k===st.sc)return;sleepAll();st.touched=true;st.sc=k;st.style=0;st.styleSet=false;drawn='';view.classList.remove('live');if(armed){show(k);load(set)}paint()};   /* la page des exemples, arrivée avec ?e= : on entre directement */
@@ -123,6 +126,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
   if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
   if(E3[m.sc]){st.sc=m.sc;st.touched=true}if(typeof m.name==='string'&&m.name){st.name=m.name.slice(0,40);$('eName').value=st.name;st.touched=true}
   if(Number.isInteger(m.style))st.style=clamp(m.style,0,2),st.styleSet=!!m.s}
+ {const v=$('eName').value.trim();if(!st.name&&v){st.name=v.slice(0,40);st.touched=true}}   /* nom tapé dans la rue avant le démarrage de la démo */
  /* « Réserver », le menu, le logo : le faux site réagit comme un vrai */
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight)};
  const goTo=p=>{if(!LIVE){(p>=.8?site:walk).scrollIntoView({block:'start'});return}geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+p*D})};
@@ -153,7 +157,10 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  let SWd=1;
  /* 2. Rythme : la part du défilement figé (P) donne la position de la caméra (p) ; la porte est passée à p = .56 */
  const KS={e:[[0,0],[.03,0],[.3,.56],[.55,.86],[.66,1],[1,1]],g:[[0,0],[.03,0],[.25,.53],[.55,.85],[.66,1],[1,1]]};
- const K=()=>E3[st.sc].lodge?KS.g:KS.e,door=()=>E3[st.sc].lodge?.53:.56;
+ /* arrivé par la rue (on vient de passer sa porte) : la démo commence à sa porte, sans seconde façade vue de dehors */
+ const KD={e:[[0,.41],[.03,.41],[.3,.56],[.55,.86],[.66,1],[1,1]],g:[[0,.47],[.03,.47],[.25,.53],[.55,.85],[.66,1],[1,1]]};
+ let fromStreet=!!$('univers');const u0=$('univers');if(u0)new IntersectionObserver(es=>{if(es[0].isIntersecting)fromStreet=true},{threshold:.05}).observe(u0);
+ const K=()=>(fromStreet?KD:KS)[E3[st.sc].lodge?'g':'e'],door=()=>E3[st.sc].lodge?.47:.38;
  const camOf=P=>{const k=K();for(let j=1;j<k.length;j++)if(P<=k[j][0]){const[a,pa]=k[j-1],[b,pb]=k[j],t=(P-a)/(b-a||1);return pa+(pb-pa)*(j===4?1-(1-t)*(1-t):t)}return 1};
  const ease=t=>1-Math.pow(1-t,3);
  /* 3. Dessin : l'image la plus proche déjà chargée, puis les deux enseignes posées dessus en perspective */
@@ -174,14 +181,16 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
   const s=ease(clamp((P-.68)/.27,0,1)),mob=W<H;put(site,'transform',`translateY(${((1-s)*110).toFixed(2)}%)`);{const i=s<.5&&!site.contains(document.activeElement);if(site.inert!==i)site.inert=i}
   const y=`translateY(${(-s*Math.max(0,VH*(mob?.5:.56)-BAND*.6)).toFixed(1)}px)`;put(cv,'transform',y);put(poster,'transform',y);put(pins,'transform',y);
   flag(bar,'solid',s>.82);put(prog,'opacity',(1-Math.min(1,s*2.5)).toFixed(3));
-  put(fill,'width',(p*100).toFixed(2)+'%');const k=p<door()?1:p<.85?2:3;ks.forEach(x=>flag(x,'on',+x.dataset.k===k))}
+  put(fill,'width',(p*100).toFixed(2)+'%');const k=p<door()-.005?1:p<.85?2:3;ks.forEach(x=>flag(x,'on',+x.dataset.k===k))}
  const prog=view.querySelector('.w-prog');
  /* 5. Boucle : la position affichée rattrape la cible en ~80 ms ; rien ne tourne quand l'entrée est loin */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(now){raf=0;if(!LIVE){draw(0);return}const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   flag(document.body,'walking',r.top<=hh+1&&r.bottom>=innerHeight-1&&P>.02);
-  const t=camOf(P);if(jump){cur=t;jump=false}cur+=(t-cur)*(1-Math.exp(-dt/.09));if(Math.abs(t-cur)<.0005)cur=t;
-  if(dirty||cur!==last){draw(cur);last=cur}ui(cur);if(cur!==t)tick();else t0=0}
+  const t=camOf(P);if(jump){cur=t;cq=-1;jump=false}cur+=(t-cur)*(1-Math.exp(-dt/.09));if(Math.abs(t-cur)<.0005)cur=t;
+  const n1=SETS[set]-1,tq=cur===t?Math.round(cur*n1)/n1:cur;if(cq<0)cq=tq;cq+=(tq-cq)*(1-Math.exp(-dt/.07));if(Math.abs(tq-cq)<.002/n1)cq=tq;
+  if(dirty||cq!==last){draw(cq);last=cq}ui(cur);if(cur!==t||cq!==tq)tick();else t0=0}
+ let cq=-1;
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis)open(false);const s=store[st.sc+set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);
  /* l'entrée est sous la rue : on ne charge ses images qu'à son approche, ou au choix d'un métier */
  const arm=()=>{if(armed)return;armed=true;show(st.sc);load(set);paint()};new IntersectionObserver(es=>{if(es[0].isIntersecting)arm()},{rootMargin:'60% 0px'}).observe(walk);
@@ -194,10 +203,21 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
  let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!vis||P<=0||P>=1||e3touch.n)return;const ST=E3[st.sc].lodge?[0,.40,.66,1]:[0,.22,.6,1],n=ST.reduce((a,b)=>Math.abs(b-P)<Math.abs(a-P)?b:a);
   if(Math.abs(n-P)>.015&&Math.abs(n-P)<.12)e3glide(walk.getBoundingClientRect().top+scrollY-hh+n*D)},260)},{passive:true});
  /* au clavier : ce qui reçoit le focus dans la démo est montré (on va au moment qui l'affiche), jamais caché sous le focus */
- view.addEventListener('focusin',e=>{const c=e.target.closest('.w-ch,.w-site');if(!c)return;const want=c===site?1:c.classList.contains('c2')?.2:c===c3?.6:0,a=c===site?.75:c.classList.contains('c2')?.12:c===c3?.5:0,b=c===site?1:c.classList.contains('c2')?.3:c===c3?.67:.06;
-  if(P<a||P>b){geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+want*D,behavior:'instant'})}});
+ const seen=el=>{const r=el.getBoundingClientRect();return r.top>=hh-1&&r.bottom<=innerHeight+1&&r.height>0};
+ stg.addEventListener('focusin',e=>{const c=e.target.closest('.w-ch,.w-site');let want,a,b;
+  if(!c){want=clamp(P,0,1);a=0;b=1}   /* la barre du site, la fiche « Réserver » : visibles à tout moment, il suffit que la démo soit à l'écran */
+  else{want=c===site?1:c.classList.contains('c2')?.2:c===c3?.6:0;a=c===site?.75:c.classList.contains('c2')?.12:c===c3?.5:0;b=c===site?1:c.classList.contains('c2')?.3:c===c3?.67:.06}
+  if(P<a||P>b||!seen(e.target)){geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+want*D,behavior:'instant'})}
+  /* le navigateur fait ensuite défiler vers l'élément, mal calculé sous une scène collante : on le retient là où on l'a posé */
+  const y0=scrollY,t=e.target;let k=0;const hold=()=>{if(document.activeElement!==t)return;if(Math.abs(scrollY-y0)>2)scrollTo({top:y0,behavior:'instant'});if(++k<12)requestAnimationFrame(hold)};requestAnimationFrame(hold)});
  ui(0);tick();
-})();
+}
+{const go=()=>e3boot();
+ if(document.readyState==='complete')(window.requestIdleCallback||setTimeout)(go,{timeout:1200});else addEventListener('load',()=>(window.requestIdleCallback||setTimeout)(go,{timeout:1200}),{once:true});
+ const w=$('eWalk');if(w)new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();go()}},{rootMargin:'150% 0px'}).observe(w);
+ /* un bouton qui ouvre la démo avant qu'elle ait démarré : on la démarre d'abord, le clic suit son cours */
+ document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('[data-e3],#entree,.r-enter'))go()},true);
+ document.addEventListener('focusin',e=>{if(e.target.closest&&e.target.closest('#entree'))go()},true)}
 
 /* Les exemples : la dernière image de chaque entrée, avec le nom de l'exemple au mur du fond, ou celui que le visiteur a tapé */
 (()=>{const cache={},done=new Map();let nm=($('eName')||{}).value||'';
