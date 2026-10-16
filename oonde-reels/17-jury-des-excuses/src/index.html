@@ -69,14 +69,14 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   <!-- en-tête -->
   <div id="hud" class="abs" style="left:80px;top:258px;width:860px;height:90px;z-index:4">
     <div class="mono abs" style="left:0;top:34px;font-size:28px;color:#9AA0A8">Le jury des excuses · Ép. 1</div>
-    <div class="abs" style="right:0;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
+    <div class="abs" style="right:40px;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
             <span id="cnt" style="display:inline-block;font:600 92px/1 IS;letter-spacing:-.03em;color:var(--klein);transform-origin:50% 70%">1</span>
       <span style="font:600 52px/1 IS;color:#6B7078">/4</span>
     </div>
   </div>
 
   <div id="ttl" class="t q" style="top:410px;font-size:128px">Le jury<br>des excuses.</div>
-  <div id="ttl2" class="abs" style="left:80px;top:676px;width:860px;font:600 58px/1.14 IS;letter-spacing:-.02em;color:#DADCE2;z-index:3">Ton excuse pour pas refaire<br><span style="background:#2038EC;color:#fff;padding:0 14px;border-radius:10px">ton site</span> passe devant le jury.</div>
+  <div id="ttl2" class="abs" style="left:80px;top:676px;width:860px;font:600 58px/1.14 IS;letter-spacing:-.02em;color:#DADCE2;z-index:3">Ton excuse pour<br><span style="background:#2038EC;color:#fff;padding:0 14px;border-radius:10px">ton site</span> passe au jury.</div>
   <div id="q1" class="t q" style="top:440px;font-size:104px"><i>«&nbsp;</i>Mon neveu va me le faire.<i>&nbsp;»</i></div>
   <div id="q2" class="t q" style="top:440px;font-size:96px"><i>«&nbsp;</i>J’ai une page Facebook, ça suffit.<i>&nbsp;»</i></div>
   <div id="q3" class="t q" style="top:440px;font-size:118px"><i>«&nbsp;</i>J’ai pas le temps.<i>&nbsp;»</i></div>
@@ -187,7 +187,7 @@ body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
     <div id="e3" style="margin-top:36px;width:800px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:14px;padding:40px 0;border-radius:70px;border:6px solid var(--ink);background:#fff;font:600 58px/1 IS;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;transform-origin:50% 50%"><span id="e3wa">sur WhatsApp</span> · lien en bio
       <svg width="52" height="52" viewBox="0 0 24 24"><path d="M6 18L18 6M9 6h9v9" stroke="#111318" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div id="e6" style="margin-top:30px;text-align:center;font:500 44px/1.2 IS;color:var(--ink);white-space:nowrap">Maquette <span class="k" style="font-weight:600">gratuite</span>, vue avant de payer</div>
-    <div id="e4" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:108px;margin-bottom:22px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span id="e7" class="mono" style="margin-top:30px;font-size:32px;font-weight:600;letter-spacing:.04em;white-space:nowrap;color:#111318">Envoie-le à celui qui l’a <span class="k">déjà dite</span></span></div>
+    <div id="e4" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:80px;margin-bottom:16px" alt=""><span style="font:600 50px/1 IS;color:var(--soft)">@oonde_studio</span><span style="font:600 42px/1 IS;color:var(--soft)">Studio web · Suisse romande</span><span id="e7" class="mono" style="margin-top:30px;font-size:32px;font-weight:600;letter-spacing:.04em;white-space:nowrap;color:#111318">Tague celui qui <span class="k">la sort toujours</span></span></div>
   </div>
 </div>
 <!-- volet de fin : l'encre remonte, liseré Klein -->
@@ -223,11 +223,11 @@ function obj(el, t, a, b, o = {}) {
 
 // temps calés sur la voix (voix.wav, Whisper small)
 const T = {
-  q1: 1.20, d1: 2.39, jan: 3.29, b1: 3.69,
+  q1: 1.05, d1: 2.39, jan: 3.29, b1: 3.69,
   n2: 4.00, q2: 4.84, d2: 6.54, pas2: 8.58, b2: 8.90,
   n3: 9.12, q3: 9.98, d3: 10.80, sec: 11.81, b3: 12.19,
-  n4: 12.47, q4: 13.40, ah: 15.20, cel: 15.70, onte: 16.30,
-  maq: 17.50, avant: 18.22, alors: 19.40, rep: 21.36, ecris: 22.57, wa: 23.25,
+  n4: 12.47, q4: 13.40, ah: 15.20, cel: 15.35, onte: 16.30,
+  maq: 17.00, avant: 18.10, alors: 19.40, rep: 20.90, ecris: 22.57, wa: 23.25,
   wipe: 25.72, end: 26.07
 };
 window.DURATION = T.end;
@@ -257,7 +257,7 @@ function render(t) {
   if (t < T.q1) { const s = 1 + .015 * Math.sin(t * 6); $('#ttl').style.transform = `scale(${s})`; $('#ttl2').style.transform = `translateY(${-6 * Math.sin(t * 6)}px)`; }
 
   // ---------- citations ----------
-  const EC = T.ecris + .2;
+  const EC = T.wa - .05;
   const qe = ['#q1', '#q2', '#q3', '#q4'];
   QS.forEach(([a, b], i) => {
     const bt = i < 3 ? BUZZ[i] : T.cel;
