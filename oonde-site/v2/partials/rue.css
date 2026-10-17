@@ -1,9 +1,10 @@
 /* La rue au crépuscule : l'ouverture de la page. Un seul plan-séquence, rendu d'avance (entree3d/scenes/rue.js) :
    le point bleu est un réverbère, la rue apparaît, on longe les vitrines, on s'arrête devant une enseigne vide. */
 .r{padding:0;background:#0d1024;color:#fff}
-.r-walk{position:relative;height:270vh;height:270svh}
-.r-anchor{position:absolute;left:0;top:60%;width:1px;height:1px;scroll-margin-top:var(--hh)}
-@media (max-aspect-ratio:1/1){.r-walk{height:255vh;height:255svh}}
+.r-walk{position:relative;--ext:100vh;--ext:100svh;height:calc(270vh + var(--ext));height:calc(270svh + var(--ext))}
+.r-x{position:absolute;left:0;bottom:0;width:1px;height:var(--ext);pointer-events:none;visibility:hidden}   /* v19 : la suite, après l'arrêt (la porte, la salle, la fin du site) */
+.r-anchor{position:absolute;left:0;top:calc(.78 * (170vh + var(--hh)));top:calc(.78 * (170svh + var(--hh)));width:1px;height:1px;scroll-margin-top:var(--hh)}   /* l'arrêt (P .78 de la rue), avant même le script */
+@media (max-aspect-ratio:1/1){.r-walk{--ext:90vh;--ext:90svh;height:calc(255vh + var(--ext));height:calc(255svh + var(--ext))}.r-anchor{top:calc(.78 * (155vh + var(--hh)));top:calc(.78 * (155svh + var(--hh)))}}
 .r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
 .r-scene{position:absolute;inset:0}
 .r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -90,13 +91,29 @@
 @container (max-width:1180px){.r-seg{display:none}.r-sel{display:block}.r-stop{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto}}
 .r-skip{position:absolute;z-index:4;right:clamp(16px,5cqw,72px);top:18px;font:500 13.5px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 14px;text-decoration:none;transition:opacity .25s}
 .r-skip:hover{background:rgba(255,255,255,.24)}
-.r.stop .r-skip{opacity:0;pointer-events:none}
+.r.stop .r-skip,.r.past .r-skip{opacity:0;pointer-events:none}
 .r-cue{position:absolute;z-index:3;left:50%;bottom:22px;translate:-50% 0;font:500 11px var(--mono);letter-spacing:.18em;color:rgba(255,255,255,.7);pointer-events:none;transition:opacity .3s}
 .r-cue i{display:block;width:1px;height:28px;margin:8px auto 0;background:linear-gradient(#fff,rgba(255,255,255,0));animation:r-cue 1.8s ease-in-out infinite}
 @keyframes r-cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 /* le chargement : discret, seulement si le film tarde ; en cas d'échec, l'image fixe reste et la page continue */
 .r-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(10,12,32,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
 .r-load:not(:empty){opacity:1}
+/* v19 : dans la salle, c'est le site du commerce. Sa barre arrive en haut, puis la fin : le métier, son bouton (Démo) */
+.r-sbar{position:absolute;z-index:3;left:0;right:0;top:0;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,5cqw,72px);color:#fff;
+ background:linear-gradient(180deg,rgba(8,10,28,.55),rgba(8,10,28,0));opacity:0;pointer-events:none;will-change:opacity}
+.r-sbn{display:flex;align-items:center;gap:10px;font:400 clamp(22px,2.2cqw,28px)/1 var(--serif);white-space:nowrap;min-width:0;overflow:hidden;text-shadow:0 1px 12px rgba(5,6,20,.6)}
+.r-sbb{flex:none;background:var(--c);color:var(--ct);border-radius:99px;padding:9px 18px;font:600 14px var(--sans)}
+.r-end{bottom:clamp(28px,8cqh,84px);max-width:40em;opacity:0;will-change:opacity,transform}
+.js .r:not(.static) .r-end:not(.on),.js .r:not(.static) .r-end:not(.on) *{pointer-events:none!important}
+.r-eeb{display:flex;align-items:center;gap:10px;font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.88)}
+.r-eeb .dtag{color:#fff}
+.r-eh{font:400 clamp(38px,5.4cqw,72px)/1.02 var(--serif);margin-top:12px;text-wrap:balance}
+.r-end .r-eeb,.r-end .r-eh{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.5)}
+.r-ebt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px}
+.r-book{min-height:50px;padding:12px 24px;font-size:15.5px}
+.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:11px 20px;border:1px solid rgba(255,255,255,.6);border-radius:99px;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-esee:hover{border-color:#fff;background:rgba(10,12,32,.6)}
+.r-end:focus{outline:none}
 /* téléphone : le titre en haut, l'arrêt en bas, plein large */
 @container (max-aspect-ratio:1/1){
  .r-t1{top:auto;bottom:18px}
@@ -122,6 +139,8 @@
  .r-sign .r-met{top:auto;bottom:calc(100% + 30px)}   /* téléphone : le métier au-dessus de l'enseigne, jamais sous la barre */
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
+ .r-sbar{height:54px;padding:0 14px}.r-sbb{padding:8px 14px;font-size:13px}
+ .r-end{bottom:18px}.r-eh{font-size:min(40px,10.4cqw)}.r-ebt{gap:8px}.r-book,.r-esee{flex:1 1 100%;justify-content:center;min-height:48px}
 }
 /* mouvement réduit, ou sans JavaScript : l'image de l'arrêt, immobile ; les textes et le choix viennent dessous */
 .r.static .r-walk,html:not(.js) .r-walk{height:auto}
@@ -132,7 +151,7 @@
 .r.static .r-note>span,html:not(.js) .r-note>span{display:inline}
 html:not(.js) .r-m{display:none}
 .r.static .r-t1 h1 .w,html:not(.js) .r-t1 h1 .w{opacity:1;translate:none;filter:none}
-.r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}
+.r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,.r.static .r-sbar,.r.static .r-wall,html:not(.js) .r-sbar,html:not(.js) .r-wall,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}
 .r.static .r-pins .r-sign{opacity:1}
 html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.static .r-stage,html:not(.js) .r-stage{display:flex;flex-direction:column}
@@ -140,3 +159,7 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.static .r-act .btn,html:not(.js) .r-act .btn{flex:0 1 auto}
 @media (max-width:700px){.r.static .r-scene,html:not(.js) .r-scene{aspect-ratio:9/14}}
 @media (max-width:700px){.r.static .r-stop,html:not(.js) .r-stop{grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "f" "m" "g" "n";gap:12px}.r.static .r-wa2{margin-left:0}.r.static .r-act .btn,html:not(.js) .r-act .btn{flex:1 1 100%}}
+
+.r.static .r-anchor,html:not(.js) .r-anchor{top:min(72vh,62.5vw)}   /* sans film : l’ancre de l’arrêt sous l’image */
+
+.js .r .r-end.kb{opacity:1!important;visibility:visible!important}.js .r .r-end.kb,.js .r .r-end.kb *{pointer-events:auto!important}   /* v19 : le focus clavier dans la fin du site */
