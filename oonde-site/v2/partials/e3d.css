@@ -1,0 +1,80 @@
+/* v19 : la démo est la rue. Le nom posé en perspective au mur du fond de la salle (après la porte), puis les rubriques
+   du site du commerce, sous la rue, dans sa couleur (#entree). */
+.e-pins{position:absolute;left:0;top:0;width:1000px;pointer-events:none;z-index:1;transform-origin:0 0}
+.r-scene>.e-pins{width:100%;height:100%}
+.r-wall{z-index:1}
+.e-pins[hidden]{display:none}
+.e-pins>div{position:absolute;left:0;top:0;width:1000px;transform-origin:0 0;display:flex;align-items:center;justify-content:center;opacity:0;white-space:nowrap;overflow:hidden;backface-visibility:hidden}
+.e-pins span{line-height:1;display:block}
+/* l'enseigne de la façade : un bandeau peint de la couleur choisie, éclairé par-dessus */
+.e-sign{height:111px;background:linear-gradient(180deg,rgba(255,236,210,.14),rgba(0,0,0,.12) 35%,rgba(0,0,0,.5)),var(--c);color:var(--ct);box-shadow:inset 0 0 0 3px rgba(0,0,0,.35),inset 0 -12px 20px rgba(0,0,0,.3)}
+.e-sign span{opacity:.94;text-shadow:0 1px 0 rgba(0,0,0,.35),0 0 18px rgba(255,240,220,.22)}
+[data-sf=serif] .e-sign span{font-family:var(--serif);font-weight:400}
+[data-sf=sans] .e-sign span{font-family:var(--sans);font-weight:600;letter-spacing:.14em}
+/* lettres posées sur la façade (béton, enduit) : pas de bandeau, le nom en relief, de la couleur choisie */
+[data-ss=letters] .e-sign{background:none;box-shadow:none;color:color-mix(in srgb,var(--c) 30%,#141518)}
+[data-ss=letters] .e-sign span{opacity:1;text-shadow:1px 2px 0 rgba(0,0,0,.18),0 0 1px rgba(0,0,0,.25)}
+/* le nom au mur du fond : en néon, peint, ou doré sur un panneau */
+.e-wall span{font-family:var(--serif);font-weight:400}
+[data-wf=neon] .e-wall span{font-style:italic;color:#fff;text-shadow:0 0 4px #fff,0 0 12px var(--c),0 0 30px var(--c),0 0 60px var(--c)}
+[data-wf=gilt] .e-wall span{color:#ecd39e;text-shadow:0 1px 0 rgba(0,0,0,.45),0 0 14px rgba(255,215,150,.35)}
+[data-wf=paint] .e-wall span{color:var(--c);color:color-mix(in srgb,var(--c) 52%,#1a0d06);opacity:.92;text-shadow:0 1px 0 rgba(255,235,210,.14)}
+/* Les exemples */
+.exs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.exs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.exs{grid-template-columns:1fr}}
+.ex{position:relative;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--night);color:#fff;text-decoration:none;box-shadow:0 30px 60px -44px rgba(17,19,24,.55);transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.ex:hover{transform:translateY(-3px)}
+.ex-img{position:relative;aspect-ratio:16/10;overflow:hidden}
+.ex-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ex-img .e-pins{height:625px}
+.ex-tag{position:absolute;left:10px;top:10px;font:500 10.5px var(--mono);letter-spacing:.12em;background:rgba(10,12,22,.62);border-radius:99px;padding:5px 9px}
+.ex-t{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px 16px}
+.ex-t b{display:block;font:600 17px var(--sans);letter-spacing:-.01em}
+.ex-t small{display:block;font:400 14px var(--sans);opacity:.72;margin-top:2px}
+.ex-t i{font-style:normal;font:600 14px var(--sans);white-space:nowrap;border-bottom:1.5px solid currentColor}
+
+/* Les rubriques du site du commerce, sous la rue : la même barre que dans la salle, puis horaires, prix, photos. Tout est Démo. */
+.ds{background:var(--cream,#F6F1E9);color:var(--night,#111318);padding:0 0 clamp(36px,5vw,64px)}
+.ds-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px;padding:0 clamp(16px,4vw,56px);border-bottom:1px solid #E4DCCF;background:var(--cream,#F6F1E9)}
+.ds-logo{display:flex;align-items:center;gap:10px;font:400 clamp(24px,2.4vw,30px)/1 var(--serif);white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.ds-logo small,.r-sbn small{font:500 10px/1 var(--mono);letter-spacing:.14em;border:1px solid currentColor;border-radius:99px;padding:4px 8px 3px;opacity:.75}
+.ds-bar nav{display:flex;gap:28px;font:500 14px var(--sans)}
+.ds-bar nav a{color:inherit;text-decoration:none;padding:12px 0}.ds-bar nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.ds-book,.ds-go,.r-book{background:var(--c);color:var(--ct);border:0;border-radius:99px;font:600 14px var(--sans);cursor:pointer;min-height:44px;padding:10px 20px;white-space:nowrap}
+.ds-book{flex:none}
+[data-book]::after{content:"Démo";display:inline-block;margin-left:7px;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 5px;border-radius:4px;border:1px solid currentColor;vertical-align:.12em}
+.ds-in{padding-top:clamp(28px,4vw,48px)}
+.ds-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:24px clamp(24px,4vw,56px);align-items:start}
+.ds-eb{font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#575B66}
+.ds-t{font:400 clamp(36px,4.6vw,56px)/1.04 var(--serif);letter-spacing:-.005em;margin-top:8px;overflow-wrap:anywhere}
+.ds-sub{font:400 17px/1.45 var(--sans);color:#4B4F5A;margin-top:10px;max-width:32em}
+.ds-more{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 24px;margin-top:26px;font:400 14.5px/1.45 var(--sans);color:#3A3F47}
+.ds-k{font:500 11px var(--mono);letter-spacing:.12em;color:#575B66;margin-bottom:4px}
+.ds-card{background:#fff;border:1px solid #E4DCCF;border-radius:12px;padding:18px 20px}
+.ds-row{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid #EEE7DC;font:400 14.5px var(--sans)}.ds-row b{font-weight:600;font-variant-numeric:tabular-nums}
+.ds-go{display:block;width:100%;margin-top:14px;padding:12px}
+.ds-n{font:400 12.5px var(--sans);color:#5F636D;margin-top:8px;text-align:center}
+.ds-v{font:400 34px/1.1 var(--serif);margin-top:6px}.ds-v small{font:400 14px var(--sans);color:#5F636D}
+.ds-facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:14px;font:500 13.5px var(--sans);color:#4B4F5A}.ds-facts b{font-size:16px;font-weight:600;color:var(--night,#111318);margin-right:5px}
+.ds-cal{background:#fff;border:1px solid #E4DCCF;border-radius:12px;padding:14px 16px;margin-top:20px;max-width:420px}
+.ds-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px;font:500 12px var(--sans);text-align:center}
+.ds-days b{font:500 10px var(--mono);color:#6B6F7A;padding-bottom:2px}.ds-days span{padding:4px 0;border-radius:4px;background:#F4EFE7}.ds-days span.x{background:none;color:#6F737B;text-decoration:line-through}
+.ds-cal .ds-n{text-align:left}
+.ds-ph{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:clamp(24px,3vw,36px)}
+.ds-ph:empty{min-height:1px;margin:0}
+.ds-ph img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:8px;display:block;background:#E9E1D5}
+.ds-cap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 24px;margin-top:22px;padding-top:18px;border-top:1px solid #E4DCCF}
+.ds-cap>p{font-size:14.5px;color:#4B4F5A;max-width:44em}.ds-cap b{color:var(--night,#111318);font-weight:600}
+.ds-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}.ds-cta .btn{min-height:46px;padding:11px 18px;font-size:15px}
+.ds .e-sw{display:flex;align-items:center;gap:12px;font:500 14px var(--sans);color:#4B4F5A}.ds .e-sw[hidden]{display:none}.ds .e-sw b{font-weight:500;margin-left:4px}
+.ds .swatches{gap:8px}.ds .swatches button{width:36px;height:36px}
+.ds-bar :focus-visible,.ds :focus-visible{outline:2px solid var(--night,#111318);outline-offset:3px}
+@media (max-width:860px){.ds-bar nav{display:none}.ds-top{grid-template-columns:minmax(0,1fr)}.ds-more{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.ds-bar{min-height:58px}.ds-ph{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ds-ph img{aspect-ratio:9/14}.ds-ph img:nth-child(n+3){display:none}.ds-cta{width:100%}.ds-cta .btn{flex:1 1 100%}.ds-cta .e-pick{flex:1}.ds-cta .e-pick select{flex:1}}
+/* « C'est une démo » : la fiche qui répond au bouton du métier, posée au-dessus de la page */
+.w-toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:40;width:min(420px,calc(100% - 32px));background:#fff;color:var(--night,#111318);border-radius:12px;padding:16px 44px 16px 18px;box-shadow:0 20px 40px -16px rgba(0,0,0,.55);font:400 14px/1.45 var(--sans)}
+.w-toast[hidden]{display:none}
+.w-toast b{display:block;font-size:15px;font-weight:600;margin-bottom:4px}
+.w-toast .btn{margin-top:12px;min-height:44px;padding:10px 14px;font-size:14px}
+.w-x{position:absolute;right:4px;top:4px;width:44px;height:44px;border:0;background:none;font-size:20px;line-height:1;color:#6B6F7A;cursor:pointer}

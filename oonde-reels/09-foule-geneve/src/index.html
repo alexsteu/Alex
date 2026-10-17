@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · La file jusqu’au tram</title>
+<link rel="icon" href="data:,">
+<style>
+/* Kit Reels OONDE : DA v7. Polices et logos servis par render.cjs sous /_kit/ */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+.abs{position:absolute;left:0;top:0}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+
+/* ---------- plans « réels » ---------- */
+#gl{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:1;transform-origin:0 0}
+#fx{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:2;transform-origin:0 0}
+#trk{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:3;overflow:visible}
+#fly{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:9;overflow:visible;pointer-events:none}
+
+/* cartes de titre posées sur l'image (blanc, encre) */
+.cap{position:absolute;z-index:6;background:#fff;color:var(--ink);border-radius:22px;padding:24px 34px 30px;
+  font:600 88px/1.02 IS;letter-spacing:-.03em;white-space:nowrap;box-shadow:0 20px 60px rgba(8,10,14,.28),0 4px 14px rgba(8,10,14,.12)}
+.chip{position:absolute;z-index:6;height:56px;padding:0 22px;border-radius:12px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;gap:14px;font-size:30px;line-height:1;white-space:nowrap;box-shadow:0 10px 30px rgba(8,10,14,.25)}
+.chip i{display:block;width:14px;height:14px;border-radius:50%;background:var(--klein);box-shadow:0 0 0 5px rgba(32,56,236,.28)}
+.tag{position:absolute;z-index:6;background:#fff;border-radius:16px;padding:16px 24px 18px;white-space:nowrap;
+  font:600 46px/1 IS;letter-spacing:-.02em;color:var(--ink);box-shadow:0 14px 40px rgba(8,10,14,.28);display:flex;align-items:center;gap:16px}
+.tag.col{display:block}
+.tag small{display:block;font:500 30px/1 PM;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+.tag.bub{border-radius:26px 8px 26px 26px;padding:18px 28px 20px 20px}
+#demo{left:auto;right:140px;top:250px;z-index:6}
+#q1{font:600 64px/1 IS;letter-spacing:-.025em;height:auto;padding:18px 30px 22px;border-radius:16px}
+
+/* ---------- scènes papier ---------- */
+.paper{position:absolute;left:0;top:0;width:1080px;height:1920px;background:var(--paper);z-index:4;overflow:hidden}
+.ttl{position:absolute;left:78px;font:600 110px/1.0 IS;letter-spacing:-.035em;white-space:nowrap}
+.sub{position:absolute;left:82px;font:500 54px/1.1 IS;letter-spacing:-.02em;color:var(--soft);white-space:nowrap}
+#srch{position:absolute;left:80px;top:680px;width:860px;height:118px;box-sizing:border-box;border-radius:20px;background:#fff;border:2px solid var(--line);
+  display:flex;align-items:center;gap:22px;padding:0 30px;font:500 48px/1 IS;letter-spacing:-.02em;color:var(--ink);box-shadow:0 18px 40px rgba(17,19,24,.06)}
+#srch .cur{display:inline-block;width:4px;height:56px;background:var(--klein);margin-left:4px;vertical-align:-10px}
+#res{position:absolute;left:80px;top:850px;width:860px;box-sizing:border-box;border-radius:22px;background:#fff;border:2px solid var(--line);padding:30px;
+  box-shadow:0 24px 60px rgba(17,19,24,.08)}
+#res .top{display:flex;gap:28px;align-items:center}
+#res canvas{width:210px;height:210px;border-radius:16px;flex:none}
+#res .nm{font:400 80px/1 CG;letter-spacing:-.005em}
+#res .kd{margin-top:14px;font-size:30px;color:var(--muted)}
+#res .row{display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding-top:30px;border-top:2px solid #ECEDE9;font:500 54px/1 IS;letter-spacing:-.02em}
+#res .row b{font-weight:600}
+#res .row .no{color:var(--muted)}
+#res .row .qq{color:var(--klein);font-weight:600;font-size:64px}
+
+/* téléphone (scène de construction) */
+#win{position:absolute;left:0;top:560px;width:1080px;height:1360px;overflow:hidden}
+#phone{position:absolute;left:190px;top:0;width:700px;height:1515px;border-radius:78px;background:#2A2C30;
+  box-shadow:0 0 0 2px #8A8D92 inset,0 0 0 5px #3A3D42 inset,0 34px 70px rgba(17,19,24,.16),0 10px 24px rgba(17,19,24,.1)}
+#screen{position:absolute;left:14px;top:14px;width:672px;height:1487px;border-radius:64px;overflow:hidden;background:var(--paper)}
+#scrA{position:absolute;left:0;top:0;width:390px;height:863px;transform-origin:0 0;transform:scale(1.723077)}
+
+/* le site Maison Ardelle (390 px de large, réutilisé sur le téléphone réel) */
+.site{position:absolute;left:0;top:0;width:390px;height:863px;background:#F7F7F4;overflow:hidden;font-family:IS;color:#111318}
+.site .sb{position:absolute;left:0;top:0;width:390px;height:48px}
+.site .sb .tm{position:absolute;left:40px;top:16px;font:600 16px/1 IS;letter-spacing:-.01em}
+.site .sb .isl{position:absolute;left:133px;top:11px;width:124px;height:34px;border-radius:17px;background:#000}
+.site .sb .bt{position:absolute;right:30px;top:17px;width:25px;height:12px;border-radius:4px;border:1.5px solid #111318;box-sizing:border-box}
+.site .sb .bt:after{content:"";position:absolute;left:2px;top:2px;width:15px;height:5px;border-radius:1.5px;background:#111318}
+.site .b{position:absolute;left:16px;width:358px}
+.site .hd{top:58px;height:66px}
+.site .nm{font:400 38px/1 CG;letter-spacing:0;white-space:nowrap}
+.site .tg{margin-top:9px;font-size:11px;color:#6B7078;letter-spacing:.14em}
+.site .hero{top:130px;height:128px;border-radius:16px;overflow:hidden;background:#d9cbb7}
+.site .hero canvas{display:block;width:358px;height:128px}
+.site .pill{top:272px;height:52px;border-radius:14px;background:#fff;border:1px solid #DCDED8;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:0 16px;
+  font:600 26px/1 IS;letter-spacing:-.025em;white-space:nowrap}
+.site .pill i{display:block;width:12px;height:12px;border-radius:50%;background:#2038EC;box-shadow:0 0 0 5px rgba(32,56,236,.16);flex:none}
+.site .kk{top:342px;font-size:11px;color:#6B7078;letter-spacing:.14em}
+.site .row{height:48px;border-bottom:1px solid #E6E7E2;display:flex;align-items:center;font:500 26px/1 IS;letter-spacing:-.02em;white-space:nowrap}
+.site .r1{top:358px}.site .r2{top:406px}
+.site .btn{top:470px;height:62px;border-radius:16px;background:#111318;color:#fff;display:flex;align-items:center;gap:12px;padding-left:16px;box-sizing:border-box;
+  font:600 26px/1 IS;letter-spacing:-.025em;white-space:nowrap}
+.site .kk2{top:552px}
+.site .th{top:572px;width:171px;height:150px;border-radius:12px;overflow:hidden;background:#d9cbb7}
+.site .th2{left:203px}
+.site .th canvas{display:block;width:171px;height:150px}
+
+/* site incrusté dans le téléphone réel (plan C) */
+#siteC{position:absolute;left:0;top:0;width:390px;height:863px;transform-origin:0 0;z-index:3;overflow:hidden;border-radius:30px}
+#siteC .isl,#scrA .isl{display:none}
+#scrA .notch{position:absolute;left:106px;top:0;width:180px;height:30px;border-radius:0 0 16px 16px;background:#08090b;z-index:4}
+#siteC .notch{position:absolute;left:106px;top:0;width:180px;height:30px;border-radius:0 0 16px 16px;background:#08090b;z-index:4}
+#glare{position:absolute;left:0;top:0;width:390px;height:863px;z-index:5;background:linear-gradient(115deg,rgba(255,255,255,.10),rgba(255,255,255,0) 38%,rgba(255,255,255,0) 70%,rgba(255,255,255,.05))}
+
+/* fin */
+#end{z-index:7}
+#eTitle{position:absolute;left:78px;top:560px;font:600 132px/.98 IS;letter-spacing:-.04em;white-space:nowrap}
+#ePill{position:absolute;left:80px;top:900px;height:118px;padding:0 44px 0 28px;border-radius:18px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;gap:22px;font:600 48px/1 IS;letter-spacing:-.02em;white-space:nowrap;transform-origin:0 50%}
+#eRule{position:absolute;left:80px;top:1250px;width:860px;height:2px;background:var(--line);transform-origin:0 0}
+#eLogo{position:absolute;left:80px;top:1294px;height:58px}
+#eZone{position:absolute;left:0;top:1306px;width:940px;display:flex;justify-content:flex-end;align-items:center;gap:16px;font-size:36px;line-height:1;color:var(--ink)}
+#s4s{font-size:56px;color:var(--ink)}
+#s4s span{display:inline-block}
+#eSub{position:absolute;left:80px;top:1052px;font:500 40px/1 IS;letter-spacing:-.015em;color:var(--soft);white-space:nowrap}
+#qfly{position:absolute;left:0;top:0;z-index:9;color:var(--klein);font:600 64px/1 IS;letter-spacing:-.02em;will-change:transform}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <path id="waPath" fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/>
+  </defs>
+</svg>
+<div id="stage">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+  <canvas id="fx" width="1080" height="1920"></canvas>
+  <svg id="trk" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+
+  <!-- S1 · la foule ; la puce reste en place et devient « Avant » au rembobinage -->
+  <div id="s1chip" class="chip mono" style="left:80px;top:1060px"><span><span id="flap">Genève</span> · 7 h 42</span></div>
+  <div id="s1cap" class="cap" style="left:80px;top:1140px">Une file<br>jusqu’au tram.</div>
+  <div id="q1" class="chip" style="left:80px;top:1392px">Pourquoi&nbsp;?</div>
+  <div id="s1tag" class="tag col" style="left:400px;top:690px"><span style="font:400 58px/1 CG;letter-spacing:0">Maison Ardelle</span><small>Démo · lieu fictif</small></div>
+
+  <!-- pastille fixe sur tous les plans du commerce -->
+  <div id="demo" class="chip mono">Démo · lieu fictif</div>
+
+  <!-- S3 · la rue vide -->
+  <div id="s3cap" class="cap" style="left:80px;top:1140px">Même boulangerie.</div>
+  <div id="s3b" class="cap" style="left:80px;top:1262px">Personne.</div>
+  <div id="s3tag" class="tag" style="left:420px;top:1420px">seul passant du jour</div>
+
+  <!-- S4 · la recherche -->
+  <div id="s4" class="paper">
+    <div id="s4t" class="ttl" style="top:330px">Aucun site.</div>
+    <div id="s4s" class="sub" style="top:474px"><span>Ouvert&nbsp;?</span> <span>Fermé&nbsp;?</span> <span>Mystère.</span></div>
+    <div id="s4chip" class="chip mono" style="left:80px;top:584px">Un client · 7 h 40</div>
+    <div id="srch"><svg width="44" height="44" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#111318" stroke-width="2.2"/><path d="M15.5 15.5 21 21" stroke="#111318" stroke-width="2.2" stroke-linecap="round"/></svg><span id="srchT"></span><span class="cur" id="cur"></span></div>
+    <div id="res">
+      <div class="top"><canvas id="resImg" width="440" height="440"></canvas>
+        <div><div class="nm">Maison Ardelle</div><div class="kd mono">Boulangerie · démo</div></div></div>
+      <div class="row" id="rw1"><b>Site web</b><span class="no">aucun</span></div>
+      <div class="row" id="rw2"><b>Horaires</b><span class="qq" id="qq">?</span></div>
+    </div>
+  </div>
+
+  <!-- S5 · le site se monte -->
+  <div id="s5" class="paper">
+    <div id="s5t" class="ttl" style="top:330px">Un site clair.</div>
+    <div id="win"><div id="phone"><div id="screen"><div id="scrA"></div></div></div></div>
+  </div>
+
+  <!-- C · le même site dans une vraie main -->
+  <div id="siteC"></div>
+  <div id="ccap" class="cap" style="left:80px;top:330px;font-size:110px;letter-spacing:-.035em">En ligne.</div>
+
+  <!-- S6 · étiquettes dans la foule -->
+  <div id="s6chip" class="chip mono" style="left:80px;top:250px">Aujourd’hui</div>
+  <div id="t1" class="tag" style="left:400px;top:600px">a vu que c’était ouvert</div>
+  <div id="t2" class="tag" style="left:80px;top:1180px">a trouvé la carte</div>
+  <div id="t3" class="tag bub" style="left:300px;top:1000px"><svg width="46" height="46" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#14803C"/><g transform="translate(6.2 6.2) scale(.9)"><use href="#waPath"/></g></svg>Il vous reste des tresses&nbsp;?</div>
+
+  <!-- S8 · la boulangère -->
+  <div id="s8cap" class="cap" style="left:80px;top:330px">Bon.</div>
+  <div id="s8b" class="cap" style="left:80px;top:452px"><span id="s8bt">On exagère un peu.</span></div>
+  <div id="s8tag" class="tag" style="left:420px;top:900px">débordée</div>
+
+  <!-- fin -->
+  <div id="end" class="paper">
+    <div id="eTitle">On vous<br>trouve&nbsp;?</div>
+    <div id="ePill"><svg width="64" height="64" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#14803C"/><g transform="translate(6.2 6.2) scale(.9)"><use href="#waPath"/></g></svg>Maquette offerte sur WhatsApp</div>
+    <div id="eSub">Sans engagement · lien en bio</div>
+    <div id="eRule"></div>
+    <img id="eLogo" src="/_kit/brand/logo.svg" alt="">
+    <div id="eZone" class="mono"><span>Genève</span><svg width="40" height="20" viewBox="0 0 40 20"><path d="M2 10H36M28 3l8 7-8 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg><span>Montreux</span></div>
+  </div>
+
+  <svg id="fly" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div id="qfly">?</div>
+  <div id="safe"></div>
+</div>
+
+<template id="siteTpl">
+  <div class="site">
+    <div class="sb"><span class="tm">7:42</span><span class="isl"></span><span class="bt"></span></div>
+    <div class="b hd" data-k="-1"><div class="nm">Maison Ardelle</div><div class="tg mono">Boulangerie · démo</div></div>
+    <div class="b hero" data-k="0"><canvas width="716" height="256"></canvas></div>
+    <div class="b pill" data-k="1"><i></i>Ouvert de 7 h à 19 h</div>
+    <div class="b kk mono" data-k="2">La carte</div>
+    <div class="b row r1" data-k="2"><span>Croissant au beurre</span></div>
+    <div class="b row r2" data-k="2"><span>Pain au levain</span></div>
+    <div class="b btn" data-k="3"><svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="17" fill="#14803C"/><g transform="translate(6.2 6.2) scale(.9)"><use href="#waPath"/></g></svg>Écrire sur WhatsApp</div>
+    <div class="b kk kk2 mono" data-k="0">Nos pains</div>
+    <div class="b th th1" data-k="0"><canvas width="342" height="300"></canvas></div>
+    <div class="b th th2" data-k="0"><canvas width="342" height="300"></canvas></div>
+  </div>
+</template>
+
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  in: t => t * t * t,
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  back: t => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
+};
+function rise(el, t, a, d = .4, dy = 36) { const p = E.out(seg(t, a, a + d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; return p; }
+function pop(el, t, a, d = .32) { const p = seg(t, a, a + d); const s = p <= 0 ? .9 : E.back(p) * .1 + .9; el.style.opacity = E.out(clamp(p * 1.6)); el.style.transform = `scale(${s})`; return p; }
+function vis(el, on) { el.style.display = on ? '' : 'none'; }
+// sortie nette : opacité à 0 en 0,12 s (courbe out), jamais d'image hybride
+function out(el, t, a, d = .12) { const p = E.out(seg(t, a, a + d)); if (p > 0) el.style.opacity = String((+el.style.opacity || 1) * (1 - p)); return p; }
+
+// ---------- minutage (s) ----------
+// v3 : recherche et site plus courts, plan final tenu 2 s ; coupes sur les temps (100 bpm, 0,6 s)
+const T = {
+  s1: 0, rw: 2.20, s3: 2.80, s4: 5.00, s5: 6.90, c: 9.00, s6: 10.20, s8: 12.60, end: 15.30, loop: 17.85, dur: 18.00,
+};
+const Q = new URLSearchParams(location.search);
+const FROM = +(Q.get('from') || 0), UPTO = Q.has('upto') ? +Q.get('upto') : T.dur;   // rendu par morceaux
+const HOOK = Q.get('hook');                                                           // 'pain' : variante d'accroche (essai)
+window.DURATION = UPTO - FROM;
+
+// ---------- coordonnées des plans (normalisées, image 864 × 1536) ----------
+const N = (x, y) => [x / 864, y / 1536];
+const SIGN_A = [N(56, 268), N(382, 392), N(382, 473), N(57, 380)];            // panneau crème (HG, HD, BD, BG)
+const TW = { c: N(697, 1187), r: 97 / 864 };                                    // virevoltant (plan B)
+const SIGN_B = [N(58, 262), N(402, 403), N(402, 485), N(58, 368)];            // panneau du plan B
+const PHONE_C = [[.2483, .4113], [.5262, .4131], [.5333, .7657], [.2296, .7653]];  // écran blanc (plan C, suivi)
+const PEOPLE = { mamie: N(418, 875), femme: N(215, 1000), homme: N(505, 868) };   // plan A : écharpe, manteau, téléphone (pas les visages)
+const QUEUE = [[282, 800, .62], [420, 712, .5], [560, 686, .4], [680, 632, .09]]; // la file, de la vitrine jusqu'au tram (x, y, profondeur)
+const SHR = { x: 10, y: 700, s: 620 };                                           // zone du plan B qui devient la vignette du résultat
+const THUMB = { x: 112, y: 882, s: 210 };                                        // vignette (#resImg) à l'écran
+const LOGO_DOT = [109, 1323];                                                    // point Klein du logo (fin)
+
+// ---------- WebGL : plan + profondeur (effet 2.5D), flou de profondeur, fondu par profondeur ----------
+const VS = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
+const FS = `precision highp float;
+uniform sampler2D img, dep; uniform vec2 cp, off, tex; uniform float Z, dz, f, blur, seed, grain, vig, sharp, gain, dofA, sweep, band;
+vec2 src(vec2 s){
+  vec2 p = cp + (s - .5) / Z;
+  for (int i = 0; i < 4; i++) { float k = texture2D(dep, p).r - f; p = cp - off * k + (s - .5) / (Z * (1. + dz * k)); }
+  return p;
+}
+float h(vec2 q){ return fract(sin(dot(q, vec2(12.9898, 78.233)) + seed) * 43758.5453); }
+void main(){
+  vec2 s = vec2(gl_FragCoord.x / 1080., 1. - gl_FragCoord.y / 1920.);
+  vec3 c; float a = 1.;
+  vec2 p = src(s);
+  if (blur > 0.001) {
+    c = vec3(0.);
+    for (int i = 0; i < 12; i++) { float u = float(i) / 11.; vec2 q = .5 + (s - .5) * (1. - blur * u); c += texture2D(img, src(q)).rgb; }
+    c /= 12.;
+  } else {
+    c = texture2D(img, p).rgb;
+    float coc = dofA * (1. - smoothstep(.18, .36, texture2D(dep, p).r));   // arrière-plan lointain : flou d'objectif
+    if (coc > .25) {
+      vec3 acc = c;
+      for (int i = 0; i < 8; i++) { float an = float(i) * .7854 + .39; acc += texture2D(img, p + vec2(cos(an), sin(an)) * coc * tex).rgb; }
+      for (int i = 0; i < 6; i++) { float an = float(i) * 1.0472; acc += texture2D(img, p + vec2(cos(an), sin(an)) * coc * .5 * tex).rgb; }
+      c = acc / 15.;
+    } else {
+      vec3 b = (texture2D(img, p + vec2(tex.x, 0.)).rgb + texture2D(img, p - vec2(tex.x, 0.)).rgb + texture2D(img, p + vec2(0., tex.y)).rgb + texture2D(img, p - vec2(0., tex.y)).rgb) * .25;
+      c += (c - b) * sharp;
+    }
+  }
+  if (sweep > -.5) a = smoothstep(sweep - band, sweep + band, texture2D(dep, p).r);   // le loin passe d'abord
+  c = mix(c, c * c * (3. - 2. * c), .12) * gain;
+  vec2 v = s - .5; c *= 1. - dot(v, v) * vig;
+  c += (h(gl_FragCoord.xy * .5) - .5) * grain;
+  gl_FragColor = vec4(clamp(c, 0., 1.), a);
+}`;
+let gl, prog, U = {};
+const PL = {};   // plans : { tex, dtex, depth (Uint8 432×768), w, h }
+
+// plans vidéo (si vids.json les décrit) : images JPEG vid/<plan>/0001.jpg…, caméra fixe, pas de parallaxe
+let VID = {};
+async function videoFrame(name, vt) {
+  const V = VID[name], P = PL[name], i = clamp(Math.round(vt * V.fps), 0, V.n - 1);
+  if (P.fi !== i) {
+    const img = await loadImg(`vid/${name}/${String(i + 1).padStart(4, '0')}.jpg`);
+    let src = img;
+    if (name === 'A') { src = canvasOf(img); paintSign(src, SIGN_A); }
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, P.tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, src);
+    P.fi = i; P.w = img.naturalWidth; P.h = img.naturalHeight;
+  }
+  return i;
+}
+async function plate(name, cam, t, vt, extra) {
+  if (VID[name]) { await videoFrame(name, vt); cam = { ...cam, off: [0, 0], dz: 0 }; }
+  drawPlate(name, cam, t, extra);
+  return cam;
+}
+
+function mkTex(srcCanvas) {
+  const t = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, t);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, srcCanvas);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  return t;
+}
+function initGL() {
+  gl = $('#gl').getContext('webgl', { preserveDrawingBuffer: true, antialias: false });
+  const sh = (ty, s) => { const o = gl.createShader(ty); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+  prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog); gl.useProgram(prog);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  for (const n of ['img', 'dep', 'cp', 'off', 'tex', 'Z', 'dz', 'f', 'blur', 'seed', 'grain', 'vig', 'sharp', 'gain', 'dofA', 'sweep', 'band']) U[n] = gl.getUniformLocation(prog, n);
+  gl.uniform1i(U.img, 0); gl.uniform1i(U.dep, 1);
+  gl.viewport(0, 0, 1080, 1920);
+  // fondu par profondeur : le 2e plan se pose sur le 1er ; l'alpha final reste à 1
+  gl.enable(gl.BLEND); gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+}
+function drawPlate(name, cam, t, extra = {}) {
+  const P = PL[name];
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, P.tex);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, P.dtex);
+  gl.uniform2f(U.cp, cam.cp[0], cam.cp[1]); gl.uniform2f(U.off, cam.off[0], cam.off[1]);
+  gl.uniform2f(U.tex, 1 / P.w, 1 / P.h);
+  gl.uniform1f(U.Z, cam.Z); gl.uniform1f(U.dz, cam.dz); gl.uniform1f(U.f, cam.f);
+  gl.uniform1f(U.blur, extra.blur || 0); gl.uniform1f(U.seed, Math.floor(t * 30) * 1.618 % 97);
+  gl.uniform1f(U.grain, .045); gl.uniform1f(U.vig, .55); gl.uniform1f(U.sharp, .35); gl.uniform1f(U.gain, extra.gain || 1);
+  gl.uniform1f(U.dofA, extra.dof || 0); gl.uniform1f(U.sweep, extra.sweep === undefined ? -1 : extra.sweep); gl.uniform1f(U.band, extra.band ?? .08);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+}
+function depthAt(name, u, v) {
+  const P = PL[name], x = clamp(Math.round(u * 431), 0, 431), y = clamp(Math.round(v * 767), 0, 767);
+  return P.depth[(y * 432 + x) * 4] / 255;
+}
+// plan (u, v) → écran (px), même formule que le shader
+function project(name, cam, uv, d) {
+  const k = (d === undefined ? depthAt(name, uv[0], uv[1]) : d) - cam.f, z = cam.Z * (1 + cam.dz * k);
+  return [(.5 + (uv[0] - cam.cp[0] + cam.off[0] * k) * z) * 1080, (.5 + (uv[1] - cam.cp[1] + cam.off[1] * k) * z) * 1920];
+}
+
+// ---------- préparation des plans (panneau, virevoltant effacé, retouches) ----------
+const loadImg = src => new Promise((r, j) => { const i = new Image(); i.onload = () => r(i); i.onerror = j; i.src = src; });
+function canvasOf(img) { const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight; c.getContext('2d').drawImage(img, 0, 0); return c; }
+
+function paintSign(c, quad) {
+  // texte peint sur le panneau, déformé colonne par colonne pour suivre la perspective
+  const W = 1400, H = 300, tc = document.createElement('canvas'); tc.width = W; tc.height = H;
+  const x = tc.getContext('2d');
+  x.fillStyle = '#21382E'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+  let fs = 196; x.letterSpacing = '22px';
+  do { x.font = `400 ${fs}px CG`; fs -= 4; } while (x.measureText('MAISON ARDELLE').width > W * .94);
+  x.fillText('MAISON ARDELLE', W / 2, 212);
+  x.fillRect(W / 2 - 260, 250, 520, 5);
+  const g = c.getContext('2d'), cw = c.width, ch = c.height;
+  const P = quad.map(([u, v]) => [u * cw, v * ch]);
+  const m = .12, n = 220;   // marge horizontale relative
+  g.save(); g.globalCompositeOperation = 'multiply'; g.globalAlpha = .92; g.filter = 'blur(.6px)';
+  for (let i = 0; i < n; i++) {
+    const a = i / n, b = (i + 1) / n, ua = lerp(m, 1 - m, a), ub = lerp(m, 1 - m, b);
+    const xa = lerp(P[0][0], P[1][0], ua), xb = lerp(P[0][0], P[1][0], ub);
+    const ta = lerp(P[0][1], P[1][1], ua), ba = lerp(P[3][1], P[2][1], ua);
+    const hh = ba - ta, top = ta + hh * .2, hgt = hh * .6;
+    g.drawImage(tc, a * W, 0, W / n + .5, H, xa, top, xb - xa + .6, hgt);
+  }
+  g.restore();
+}
+function shadeGhost(c) {
+  // plan A : un visage pâle et cireux dans la foule du fond devient une tête dans l'ombre (texture gardée)
+  const g = c.getContext('2d'), w = c.width, [u, v] = N(660, 765), rx = 21 / 864 * w, ry = 31 / 864 * w;
+  g.save(); g.translate(u * w, v * c.height); g.scale(1, ry / rx);
+  const gr = g.createRadialGradient(0, 0, 0, 0, 0, rx);
+  gr.addColorStop(0, 'rgba(40,36,34,.66)'); gr.addColorStop(.62, 'rgba(40,36,34,.55)'); gr.addColorStop(1, 'rgba(40,36,34,0)');
+  g.globalCompositeOperation = 'multiply'; g.fillStyle = gr; g.beginPath(); g.arc(0, 0, rx, 0, Math.PI * 2); g.fill();
+  g.restore();
+}
+function creamApron(c) {
+  // plan B : le tablier lilas devient crème, comme sur le plan D (même boulangère)
+  const g = c.getContext('2d'), w = c.width, h = c.height;
+  const x0 = Math.round(40 / 864 * w), y0 = Math.round(800 / 1536 * h), x1 = Math.round(178 / 864 * w), y1 = Math.round(1000 / 1536 * h);
+  const im = g.getImageData(x0, y0, x1 - x0, y1 - y0), d = im.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], gg = d[i + 1], b = d[i + 2];
+    const m = clamp((b - gg - 2) / 10) * clamp((r - gg + 6) / 10) * clamp(((r + gg + b) / 3 - 85) / 30);
+    if (m <= 0) continue;
+    const L = (.299 * r + .587 * gg + .114 * b) * 1.2;
+    d[i] = lerp(r, Math.min(255, L * 1.027), m); d[i + 1] = lerp(gg, Math.min(255, L * .997), m); d[i + 2] = lerp(b, Math.min(255, L * .945), m);
+  }
+  g.putImageData(im, x0, y0);
+}
+// le virevoltant d'origine est effacé hors ligne (patch_b.py) : pavés pris à gauche, contraste local et lumière
+// recalés sur le bord du trou (clonage « sans couture ») ; il n'y a ni anneau, ni zone voilée
+const BPATCH = { x: 820, y: 1560 };   // position du patch dans le plan B (1296 × 2304)
+function cleanTumbleweed(c, patch) { const k = c.width / 1296; c.getContext('2d').drawImage(patch, BPATCH.x * k, BPATCH.y * k, patch.naturalWidth * k, patch.naturalHeight * k); }
+let TWS;   // sprite du virevoltant (détouré)
+function cutTumbleweed(img, clean) {
+  // détourage par la teinte (brindilles chaudes, pavés gris) et par différence avec le plan nettoyé, bord resserré
+  const w = img.naturalWidth, r = TW.r * w, S = Math.ceil(r * 2 + 8);
+  const x0 = Math.round(TW.c[0] * w - S / 2), y0 = Math.round(TW.c[1] * img.naturalHeight - S / 2);
+  const c = document.createElement('canvas'); c.width = S; c.height = S;
+  const g = c.getContext('2d');
+  g.drawImage(img, -x0, -y0);
+  const o = g.getImageData(0, 0, S, S), k = clean.getContext('2d').getImageData(x0, y0, S, S).data, d = o.data;
+  const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const al = new Float32Array(S * S);
+  for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+    const i = (y * S + x) * 4, warm = d[i] - d[i + 2], df = Math.max(Math.abs(d[i] - k[i]), Math.abs(d[i + 2] - k[i + 2]));
+    const rr = Math.hypot(x - S / 2, y - S / 2) / r;
+    al[y * S + x] = ss(12, 34, warm) * ss(6, 22, df) * (1 - ss(.82, .96, rr));
+  }
+  for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {   // érosion 1 px : plus de halo gris de pavés
+    let m = al[y * S + x];
+    for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) { const xx = x + i, yy = y + j; m = Math.min(m, xx < 0 || yy < 0 || xx >= S || yy >= S ? 0 : al[yy * S + xx]); }
+    d[(y * S + x) * 4 + 3] = 255 * m;
+  }
+  g.putImageData(o, 0, 0);
+  return { c, r, S, w };
+}
+
+async function loadPlate(name, prep) {
+  const [img, dimg] = await Promise.all([loadImg(`img/${name}.jpg`), loadImg(`img/${name}-d.png`)]);
+  const c = canvasOf(img);
+  const dc = document.createElement('canvas'); dc.width = 432; dc.height = 768; dc.getContext('2d').drawImage(dimg, 0, 0, 432, 768);
+  if (prep) prep(c, dc, img);
+  PL[name] = { tex: mkTex(c), dtex: mkTex(dc), depth: dc.getContext('2d').getImageData(0, 0, 432, 768).data, w: c.width, h: c.height, canvas: c };
+}
+
+// ---------- caméras (par plan, en fonction du temps) ----------
+// A1 : bouge dès 0,2 s (courbe out), glisse le long de la file vers le tram ; l'image 0 ne change pas
+function camA1(t) { const p = E.out(seg(t, T.s1, T.rw)); return { cp: [.48, .5], Z: lerp(1.06, 1.13, p), dz: lerp(0, .07, p), f: .55, off: [lerp(.018, -.025, p), 0] }; }
+// B : caméra fixe (seul le virevoltant bouge) ; cadrée pour que l'enseigne B tombe sur l'enseigne A
+let CAMB;
+function lockCamB() {
+  const a = camA1(T.rw), ctr = q => [q.reduce((s, p) => s + p[0], 0) / 4, q.reduce((s, p) => s + p[1], 0) / 4];
+  const ca = ctr(SIGN_A), cb = ctr(SIGN_B), d = depthAt('A', ca[0], ca[1]);
+  const [xa, ya] = project('A', a, ca, d);
+  const wa = project('A', a, [SIGN_A[1][0], ca[1]], d)[0] - project('A', a, [SIGN_A[0][0], ca[1]], d)[0];
+  const Z = Math.max(1.02, wa / ((SIGN_B[1][0] - SIGN_B[0][0]) * 1080)), m = .5 - .5 / Z - .004;
+  CAMB = { cp: [clamp(cb[0] - (xa / 1080 - .5) / Z, .5 - m, .5 + m), clamp(cb[1] - (ya / 1920 - .5) / Z, .5 - m, .5 + m)], Z, dz: 0, f: .5, off: [0, 0] };
+}
+// C : on part du cadre où l'écran réel a la taille et la place du téléphone dessiné, on recule, puis caméra à la main
+function camC(t) {
+  const p = E.out(seg(t, T.c, T.c + .6)), q = seg(t, T.c + .6, T.s6), w = seg(t, T.c + .6, T.c + .9), u = t - T.c;
+  const hx = w * (.0025 * Math.sin(2 * Math.PI * 1.3 * u) + .0015 * Math.sin(2 * Math.PI * 3.1 * u + 1.1));
+  const hy = w * (.0025 * Math.sin(2 * Math.PI * 1.1 * u + 2.0) + .0015 * Math.sin(2 * Math.PI * 2.7 * u + .4));
+  return { cp: [lerp(.3873, .43, p) + hx, lerp(.5011, .55, p) + hy], Z: lerp(2.239, 1.25, p) * (1 + .03 * q), dz: lerp(0, .04, p), f: .8, off: [lerp(0, .014, p), 0] };
+}
+// A2 : travelling latéral (pas de poussée)
+function camA2(t) { const p = E.inOut(seg(t, T.s6, T.s8)); return { cp: [lerp(.47, .42, p), .595], Z: 1.32, dz: lerp(0, .04, p), f: .7, off: [lerp(.02, -.015, p), 0] }; }
+// D : petit zoom sec sur « Bon. », puis dérive lente
+function camD(t) {
+  const p = E.out(seg(t, T.s8, T.end)), sn = E.out(seg(t, T.s8, T.s8 + .12)), dr = seg(t, T.s8 + .12, T.end);
+  return { cp: [lerp(.5, .46, p), lerp(.5, .48, p)], Z: lerp(1.04, 1.09, sn) + .03 * dr, dz: lerp(0, .09, p), f: .45, off: [lerp(.02, -.012, p), 0] };
+}
+
+// ---------- dessin des calques « suivis » ----------
+const fx = () => $('#fx').getContext('2d');
+const svgNS = 'http://www.w3.org/2000/svg';
+function trkClear() { $('#trk').innerHTML = ''; $('#fly').innerHTML = ''; }
+function dotSVG(x, y, a = 1, s = 1, host = '#trk') {
+  const g = document.createElementNS(svgNS, 'g'); g.setAttribute('opacity', a);
+  g.setAttribute('transform', `translate(${x} ${y}) scale(${s})`);
+  g.innerHTML = `<circle r="26" fill="none" stroke="#fff" stroke-width="3" opacity=".75"/><circle r="11" fill="#2038EC" stroke="#fff" stroke-width="4"/>`;
+  $(host).appendChild(g);
+}
+function trkDot(x, y, a = 1, s = 1) { dotSVG(x, y, a, s); }
+function trkLine(x1, y1, x2, y2, a = 1, prog = 1) {
+  const l = document.createElementNS(svgNS, 'line');
+  l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', lerp(x1, x2, prog)); l.setAttribute('y2', lerp(y1, y2, prog));
+  l.setAttribute('stroke', '#fff'); l.setAttribute('stroke-width', 3); l.setAttribute('opacity', a); $('#trk').appendChild(l);
+}
+function trkPath(P, prog, a = 1) {
+  // pointillé blanc tracé progressivement le long des points P (écran)
+  const L = []; let tot = 0;
+  for (let i = 1; i < P.length; i++) { const l = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); L.push(l); tot += l; }
+  let rest = tot * prog, d = `M${P[0][0]} ${P[0][1]}`;
+  for (let i = 1; i < P.length && rest > 0; i++) {
+    const k = Math.min(1, rest / L[i - 1]); rest -= L[i - 1];
+    d += ` L${lerp(P[i - 1][0], P[i][0], k)} ${lerp(P[i - 1][1], P[i][1], k)}`;
+  }
+  const p = document.createElementNS(svgNS, 'path');
+  p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', '#fff'); p.setAttribute('stroke-width', 3);
+  p.setAttribute('stroke-dasharray', '8 8'); p.setAttribute('stroke-linecap', 'butt'); p.setAttribute('opacity', a);
+  $('#trk').appendChild(p);
+}
+function trkPoly(P, prog, a = 1) {
+  // trait plein le long des points P (écran), tracé progressivement
+  const L = []; let tot = 0;
+  for (let i = 1; i < P.length; i++) { const l = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); L.push(l); tot += l; }
+  let rest = tot * prog, d = `M${P[0][0]} ${P[0][1]}`;
+  for (let i = 1; i < P.length && rest > 0; i++) {
+    const k = Math.min(1, rest / L[i - 1]); rest -= L[i - 1];
+    d += ` L${lerp(P[i - 1][0], P[i][0], k)} ${lerp(P[i - 1][1], P[i][1], k)}`;
+  }
+  const p = document.createElementNS(svgNS, 'path');
+  p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', '#fff'); p.setAttribute('stroke-width', 3);
+  p.setAttribute('stroke-linejoin', 'round'); p.setAttribute('opacity', a);
+  $('#trk').appendChild(p);
+}
+function trkBracket(x1, y1, x2, y2, a, L = 46) {
+  const p = document.createElementNS(svgNS, 'path');
+  p.setAttribute('d', `M${x1} ${y1 + L}V${y1}H${x1 + L} M${x2 - L} ${y1}H${x2}V${y1 + L} M${x2} ${y2 - L}V${y2}H${x2 - L} M${x1 + L} ${y2}H${x1}V${y2 - L}`);
+  p.setAttribute('fill', 'none'); p.setAttribute('stroke', '#fff'); p.setAttribute('stroke-width', 5); p.setAttribute('stroke-linecap', 'square'); p.setAttribute('opacity', a);
+  $('#trk').appendChild(p);
+}
+
+// homographie : rectangle (w × h) → quadrilatère (écran) en matrix3d
+function quadMatrix(w, h, q) {
+  const [x0, y0] = q[0], [x1, y1] = q[1], [x2, y2] = q[2], [x3, y3] = q[3];
+  const dx1 = x1 - x2, dx2 = x3 - x2, dy1 = y1 - y2, dy2 = y3 - y2, sx = x0 - x1 + x2 - x3, sy = y0 - y1 + y2 - y3;
+  const den = dx1 * dy2 - dx2 * dy1, g = (sx * dy2 - dx2 * sy) / den, hh = (dx1 * sy - sx * dy1) / den;
+  const a = x1 - x0 + g * x1, b = x3 - x0 + hh * x3, d = y1 - y0 + g * y1, e = y3 - y0 + hh * y3;
+  const m = [a / w, d / w, 0, g / w, b / h, e / h, 0, hh / h, 0, 0, 1, 0, x0, y0, 0, 1];
+  return `matrix3d(${m.join(',')})`;
+}
+
+// ---------- le virevoltant (plan B, caméra fixe : coordonnées écran) ----------
+// à sa profondeur d'origine (avant-plan) : entre par la droite, roule en ralentissant (encore ≈ 130 px/s à la coupe), deux rebonds
+const WEED = { x0: 1180, x1: 660, t0: 3.40, t1: 5.30, gy: 1560, R: 109, hops: [[3.75, .30, 25], [4.30, .30, 17]] };
+function weedState(t) {
+  const W = WEED, s = seg(t, W.t0, W.t1), x = lerp(W.x0, W.x1, 1 - (1 - s) * (1 - s));
+  const v = t > W.t0 && t < W.t1 ? 2 * (W.x0 - W.x1) / (W.t1 - W.t0) * (1 - s) : 0;   // px/s
+  let h = 0, sq = 1;
+  for (const [a, d, amp] of W.hops) {
+    const k = (t - a) / d;
+    if (k > 0 && k < 1) h += amp * Math.sin(Math.PI * k);
+    const l = (t - a - d) / .1;                     // atterrissage : écrasement bref
+    if (l >= 0 && l < 1) sq = Math.min(sq, 1 - .08 * Math.sin(Math.PI * l));
+  }
+  return { x, cy: W.gy - W.R * sq - h, r: W.R, h, sq, v, ang: -(W.x0 - x) / W.R };
+}
+function drawSprite(g, x, y, S, al) {
+  const k = S.r / TWS.r;
+  g.save(); g.globalAlpha = al; g.filter = 'brightness(.85) contrast(1.25) sepia(.15) blur(.6px)';
+  g.translate(x, y); g.scale(1, S.sq); g.rotate(S.ang);
+  g.drawImage(TWS.c, -TWS.S / 2 * k, -TWS.S / 2 * k, TWS.S * k, TWS.S * k);
+  g.restore();
+}
+function dust(g, dt, x, gy, r) {
+  if (dt < 0 || dt > .45) return;
+  const p = dt / .45, e = E.out(p);
+  g.save(); g.filter = 'blur(5px)';
+  for (let i = 0; i < 8; i++) {
+    const f = i / 7 - .5, rad = (10 + 14 * e) * (.8 + .4 * ((i * 37) % 10) / 10);
+    g.globalAlpha = .3 * (1 - p); g.fillStyle = 'rgb(162,148,128)';
+    g.beginPath(); g.arc(x + f * r * 1.8 * (.6 + .6 * e), gy - (6 + 26 * e) * (1 - Math.abs(f)), rad, 0, Math.PI * 2); g.fill();
+  }
+  g.restore();
+}
+function drawWeed(g, t) {
+  const S = weedState(t);
+  if (S.x - S.r > 1100) return S;
+  g.save(); g.globalAlpha = .55 * clamp(1 - S.h / 60); g.fillStyle = '#000'; g.filter = 'blur(8px)';
+  g.beginPath(); g.ellipse(S.x, WEED.gy, S.r * .85 * (1 - S.h / 120), S.r * .12, 0, 0, Math.PI * 2); g.fill(); g.restore();
+  for (const [a, d] of WEED.hops) dust(g, t - (a + d), weedState(a + d).x, WEED.gy, S.r);
+  for (const [o, al] of [[.012, .15], [.006, .3]]) if (S.v > 60) drawSprite(g, S.x + S.v * o, S.cy, S, al);   // traînée
+  g.save(); g.globalAlpha = .35; g.fillStyle = '#7A6446'; g.filter = 'blur(6px)';
+  g.beginPath(); g.ellipse(S.x, S.cy, S.r * .55, S.r * .55 * S.sq, 0, 0, Math.PI * 2); g.fill(); g.restore();
+  drawSprite(g, S.x, S.cy, S, 1);
+  return S;
+}
+
+// ---------- la devanture qui se réduit dans la vignette du résultat (S4) ----------
+function shrinkInto(t) {
+  const p = E.inOut(seg(t, T.s4, T.s4 + .30));
+  const L = lerp(0, SHR.x, p), Tp = lerp(0, SHR.y, p), R = lerp(1080, SHR.x + SHR.s, p), B = lerp(1920, SHR.y + SHR.s, p);
+  const k = lerp(1, THUMB.s / SHR.s, p);
+  const cs = [(L + R) / 2, (Tp + B) / 2], cd = [lerp(540, THUMB.x + THUMB.s / 2, p), lerp(960, THUMB.y + THUMB.s / 2, p)];
+  const tr = `translate(${cd[0] - cs[0] * k}px,${cd[1] - cs[1] * k}px) scale(${k})`;
+  const clip = `inset(${Tp}px ${1080 - R}px ${1920 - B}px ${L}px round ${lerp(0, 16 * SHR.s / THUMB.s, p)}px)`;
+  for (const id of ['#gl', '#fx']) { const el = $(id); el.style.transform = tr; el.style.clipPath = clip; el.style.zIndex = id === '#gl' ? 5 : 6; }
+}
+
+// ---------- le site (deux copies : téléphone dessiné, téléphone réel) ----------
+function buildSite(host) {
+  host.appendChild($('#siteTpl').content.cloneNode(true));
+  const cv = host.querySelector('.hero canvas'), g = cv.getContext('2d');
+  const D = PL.D.canvas;   // étagères de pains (plan D)
+  g.drawImage(D, .0 * D.width, .135 * D.height, .36 * D.width, .36 * D.width * 256 / 716, 0, 0, 716, 256);
+  const th = host.querySelectorAll('.th canvas');   // deux recadrages des pains du plan D
+  th[0].getContext('2d').drawImage(D, 0, .262 * D.height, .22 * D.width, .22 * D.width * 300 / 342, 0, 0, 342, 300);
+  th[1].getContext('2d').drawImage(D, .25 * D.width, .655 * D.height, .2 * D.width, .2 * D.width * 300 / 342, 0, 0, 342, 300);
+  return host.querySelector('.site');
+}
+function siteState(site, t, a, step = .28) {   // blocs qui arrivent l'un après l'autre à partir de a (s) ; k < 0 : déjà là
+  site.querySelectorAll('[data-k]').forEach(el => {
+    const k = +el.dataset.k, p = k < 0 ? 1 : E.out(seg(t, a + k * step, a + k * step + .3));
+    el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 26}px)`;
+  });
+}
+
+// ---------- rendu ----------
+const ALL = ['#s1chip', '#s1cap', '#q1', '#s1tag', '#demo', '#s3cap', '#s3b', '#s3tag', '#s4', '#s5', '#siteC', '#ccap', '#s6chip', '#t1', '#t2', '#t3', '#s8cap', '#s8b', '#s8tag', '#end'];
+// « Démo · lieu fictif » : une seule pastille, de la fin de l'accroche jusqu'au plan final
+function demo(t) { const el = $('#demo'); vis(el, true); el.style.transform = ''; el.style.opacity = E.out(seg(t, T.rw - .14, T.rw - .02)) * (1 - E.out(seg(t, T.end + .14, T.end + .22))); }
+// puce « GENÈVE » → « AVANT » : lettres qui défilent comme un tableau des départs, une marche toutes les 2 images
+function setFlap(t) {
+  const A = 'Genève', B = 'AVANT', Lt = 'BCDEFGHIJKLMNOPRSTUVZ', a = T.rw + .05, n = Math.floor((t - a) * 15);
+  let s;
+  if (t < a) s = A;
+  else if (n >= 7) s = 'Avant';
+  else { s = ''; for (let i = 0; i < 6; i++) s += n >= 2 + i ? (B[i] || '') : Lt[(n * 7 + i * 13 + 3) % Lt.length]; }
+  $('#flap').textContent = s;
+}
+
+async function sceneS1(t) {                         /* la foule (aussi l'image de bouclage) */
+  const cam = await plate('A', camA1(t), t, t + .2, { dof: 4 });
+  ['#s1chip', '#s1cap', '#q1', '#s1tag'].forEach(s => vis($(s), true));
+  setFlap(t);
+  // t = 0 : accroche, commerce et mention démo déjà lisibles (vignette du fil)
+  $('#s1cap').style.opacity = 1; $('#s1cap').style.transform = `translateY(${-6 * E.out(seg(t, 0, 2))}px)`;
+  $('#s1chip').style.opacity = 1; $('#s1chip').style.transform = '';
+  pop($('#q1'), t, .8, .3);                       // même minutage pour la variante d'essai
+  const a = project('A', cam, N(26, 436), .62), b = project('A', cam, N(282, 800), .62);
+  const pb = E.out(seg(t, .3, .7));
+  if (pb > 0) { const cx = (a[0] + b[0]) / 2, cy = (a[1] + b[1]) / 2, s = lerp(1.25, 1, pb);
+    trkBracket(Math.max(20, cx + (a[0] - cx) * s), cy + (a[1] - cy) * s, cx + (b[0] - cx) * s, cy + (b[1] - cy) * s, pb); }
+  // la file : pointillé de la vitrine jusqu'au tram, puis un point sur le tram (une ligne, pas un compteur)
+  const pl = E.inOut(seg(t, .30, .75));
+  if (pl > 0) trkPath(QUEUE.map(([x, y, d]) => project('A', cam, N(x, y), d)), pl);
+  const pd = seg(t, .75, .97);
+  if (pd > 0) { const [x, y] = project('A', cam, N(680, 632), .09); trkDot(x, y, E.out(clamp(pd * 1.6)), E.back(pd) * .2 + .8); }
+  const tg = $('#s1tag'), ty = lerp(a[1], b[1], .38);
+  tg.style.opacity = 1; tg.style.left = (b[0] + 40) + 'px'; tg.style.top = ty + 'px'; tg.style.transform = '';
+  trkLine(b[0], ty + 52, b[0] + 40, ty + 52, 1);
+  ['#s1cap', '#q1', '#s1tag'].forEach(s => out($(s), t, T.rw - .14, .12));
+  if (t > T.rw - .14) { $('#trk').innerHTML = ''; demo(t); }   // la mention démo ne quitte jamais l'écran
+}
+
+function sceneD(t, cam) {                           /* la boulangère : titres et étiquette */
+  vis($('#s8cap'), true); rise($('#s8cap'), t, T.s8, .25, 26);
+  vis($('#s8b'), true); rise($('#s8b'), t, T.s8 + .6, .28, 18);
+  const el = $('#s8tag'); vis(el, true);
+  const p = E.out(seg(t, T.s8 + 1.2, T.s8 + 1.5)); el.style.opacity = p; el.style.transform = `translateX(${(1 - p) * -18}px)`;
+  const [x, y] = project('D', cam, [.215, .47]);
+  el.style.left = (x + 150) + 'px'; el.style.top = (y - 40) + 'px';
+  if (p > 0 && t < T.end) { trkLine(x + 18, y, x + 150, y, p, p); trkDot(x, y, p); }
+  return [x, y];
+}
+
+// « Aucun site. » devient « Un site clair. » au même endroit ; le téléphone monte pendant que la fiche s'efface
+function sceneS5(t) {
+  const el = $('#s5'); vis(el, true); el.style.transform = '';
+  el.style.background = t < T.s5 ? 'transparent' : '';
+  const pt = E.out(seg(t, T.s5 - .20, T.s5 + .04)); $('#s5t').style.opacity = pt; $('#s5t').style.transform = '';
+  out($('#s5t'), t, T.c - .14, .12);
+  $('#phone').style.transform = `translateY(${(1 - E.out(seg(t, T.s5 - .16, T.s5 + .14))) * 1400}px)`;   // part de sous l'image : ne couvre jamais la fiche
+  siteState(SITE_A, t, T.s5 + .3, .30);             // photo et « Nos pains », horaires, carte, puis WhatsApp en dernier
+  const pr = seg(t, T.s5 + 1.52, T.s5 + 1.68);      // le bouton WhatsApp est « touché »
+  if (pr > 0 && pr < 1) { const b = SITE_A.querySelector('.btn'); b.style.transform += ` scale(${1 - .03 * Math.sin(Math.PI * pr)})`; }
+  flyQ(t);
+}
+// le « ? » des horaires quitte la fiche, vole dans le téléphone et devient le point de « Ouvert de 7 h à 19 h »
+let Q0;
+function flyQ(t) {
+  const el = $('#qfly'), a = T.s5 - .24, b = a + .40, op = T.s5 + .6;   // op : la pastille horaires s'ouvre
+  if (t < a || t >= op + .12) return;
+  vis(el, true);
+  const pill = SITE_A.querySelector('.pill'), sv = pill.style.transform; pill.style.transform = '';
+  const r = pill.querySelector('i').getBoundingClientRect(); pill.style.transform = sv;
+  const p = E.inOut(seg(t, a, b)), x = lerp(Q0[0], r.left + r.width / 2, p), y = lerp(Q0[1], r.top + r.height / 2, p) - 110 * Math.sin(Math.PI * p);
+  const pulse = t > b ? 1 + .1 * Math.sin(2 * Math.PI * 2.5 * (t - b)) : 1, e = E.in(seg(t, op, op + .12));
+  el.style.opacity = 1 - e;
+  el.style.transform = `translate(${x}px,${y}px) translate(-50%,-52%) scale(${lerp(1, .8, p) * (1 + .45 * Math.sin(Math.PI * p)) * pulse * lerp(1, .25, e)})`;   // grossit en vol
+}
+
+function resetFrame() {
+  for (const id of ['#gl', '#fx']) { const el = $(id); el.style.transform = ''; el.style.clipPath = ''; el.style.zIndex = ''; }
+  const g = $('#s8b'); Object.assign(g.style, { left: '80px', top: '452px', width: '', height: '', boxSizing: '', borderRadius: '', background: '', boxShadow: '', display: '', alignItems: '' });
+  $('#s8bt').style.opacity = ''; $('#demo').style.zIndex = ''; $('#s1chip').style.transformOrigin = ''; $('#end').style.transform = ''; $('#end').style.clipPath = ''; $('#end').style.opacity = ''; $('#eLogo').style.opacity = '';
+  vis($('#qfly'), false); $('#qq').style.visibility = ''; $('#ePill').style.transform = '';
+}
+
+async function renderAt(t) {
+  const fxc = fx(); fxc.clearRect(0, 0, 1080, 1920); trkClear(); resetFrame();
+  ALL.forEach(s => vis($(s), false));
+
+  if (t < T.rw) {                                   /* ---- S1 : la foule ---- */
+    await sceneS1(t);
+  } else if (t < T.s3) {                            /* ---- S2 : rembobinage (fondu par profondeur, le loin d'abord) ---- */
+    const p = seg(t, T.rw + .05, T.s3 - .15), k = Math.floor(p * 6), bl = .03 * Math.sin(Math.PI * p);
+    await plate('B', CAMB, t, 0, { blur: bl });
+    // le ciel et le fond lointain passent d'abord (profondeur < 0,1 puis < 0,2), puis toute la foule part d'un bloc à 2,58 s
+    if (k < 5) await plate('A', camA1(T.rw), t, lerp(T.rw + .2, .2, E.in(p)), { blur: bl, dof: 4, sweep: [-.1, .1, .2, .2, .2][k], band: .03 });
+    vis($('#s1chip'), true); $('#s1chip').style.opacity = 1; setFlap(t);
+    $('#s1chip').style.transformOrigin = '0 50%'; $('#s1chip').style.transform = `scale(${1 + .6 * E.out(seg(t, T.rw + .05, T.rw + .25))})`;
+    demo(t);
+  } else if (t < T.s4) {                            /* ---- S3 : la rue vide ---- */
+    const cam = await plate('B', CAMB, t, t - T.s3);
+    let S;
+    if (VID.B) {   // virevoltant filmé : position suivie image par image (track.json)
+      const k = VID.B.track && VID.B.track[PL.B.fi];
+      if (k) { const [x, y] = project('B', cam, [k[0], k[1]]); S = { x, cy: y, r: k[2] * 1080 * cam.Z }; } else S = { x: -999, cy: 0, r: 0 };
+    } else S = drawWeed(fxc, t);
+    ['#s1chip', '#s3cap', '#s3b', '#s3tag'].forEach(s => vis($(s), true));
+    demo(t);
+    $('#s1chip').style.opacity = 1; setFlap(t);
+    $('#s1chip').style.transformOrigin = '0 50%'; $('#s1chip').style.transform = `scale(${1 + .6 * (1 - E.inOut(seg(t, T.s3, T.s3 + .15)))})`;
+    rise($('#s3cap'), t, T.s3 + .15, .3, 24);
+    rise($('#s3b'), t, T.s3 + .55, .28, 18);
+    // étiquette à gauche du virevoltant, qui le suit
+    const tg = $('#s3tag'), tw = tg.offsetWidth, pt = E.out(seg(t, T.s3 + .85, T.s3 + 1.15)) * (S.x > -900 ? 1 : 0);
+    const tx = clamp(S.x - S.r - 50 - tw, 80, 940 - tw), ty = 1420;
+    tg.style.opacity = pt; tg.style.left = tx + 'px'; tg.style.top = ty + 'px'; tg.style.transform = `translateX(${(1 - pt) * 18}px)`;
+    if (pt > 0) { trkLine(tx + tw, ty + 40, S.x, S.cy, pt, pt); trkDot(S.x, S.cy, pt); }
+    ['#s1chip', '#s3cap', '#s3b', '#s3tag'].forEach(s => out($(s), t, T.s4 - .14, .12));
+    if (t > T.s4 - .14) $('#trk').innerHTML = '';
+  } else if (t < T.s5) {                            /* ---- S4 : la recherche ---- */
+    vis($('#s4'), true); $('#s4').style.transform = '';
+    await plate('B', CAMB, T.s4, 0);                // même image figée, même grain
+    if (!VID.B) drawWeed(fxc, Math.min(t, T.s4 + .30));
+    if (t < T.s4 + .5) shrinkInto(t);               // la devanture devient la vignette (GL au-dessus du papier)
+    $('#resImg').getContext('2d').drawImage($('#gl'), SHR.x, SHR.y, SHR.s, SHR.s, 0, 0, 440, 440);
+    demo(t);
+    rise($('#s4chip'), t, T.s4 + .05, .3, 20);
+    rise($('#srch'), t, T.s4 + .02, .25, 24);
+    rise($('#s4t'), t, T.s4 + .10, .3, 28);
+    $('#s4s').style.opacity = 1; $('#s4s').style.transform = '';   // trois temps sur la fiche complète : jamais figée plus de 0,5 s
+    $('#s4s').querySelectorAll('span').forEach((el, i) => pop(el, t, 5.90 + .25 * i, .22));
+    const qy = 'maison ardelle horaires', n = Math.floor(clamp((t - (T.s4 + .05)) / .30, 0, 1) * qy.length);
+    $('#srchT').textContent = qy.slice(0, n);
+    $('#cur').style.opacity = (n < qy.length || Math.floor(t * 3) % 2 === 0) ? 1 : 0;
+    $('#res').style.opacity = E.out(seg(t, T.s4 + .30, T.s4 + .50)); $('#res').style.transform = '';
+    rise($('#rw1'), t, T.s4 + .45, .28, 16);
+    rise($('#rw2'), t, T.s4 + .65, .28, 16);
+    const pq = seg(t, T.s4 + .70, T.s4 + .95), pm = seg(t, 6.40, 6.60); $('#qq').style.display = 'inline-block';   // 2e pulsation sur « Mystère. »
+    $('#qq').style.transform = `scale(${1 + .25 * Math.sin(E.out(pq) * Math.PI) + .2 * Math.sin(E.out(pm) * Math.PI)})`;
+    ['#s4t', '#s4s', '#s4chip', '#srch', '#res'].forEach(s => out($(s), t, T.s5 - .24, .10));   // la fiche part avant que le téléphone monte
+    if (t >= T.s5 - .24) { $('#qq').style.visibility = 'hidden'; sceneS5(t); }
+  } else if (t < T.c) {                             /* ---- S5 : le site se monte ---- */
+    sceneS5(t);
+    demo(t);
+  } else if (t < T.s6) {                            /* ---- C : le même site, dans une vraie main ---- */
+    const cam = await plate('C', camC(t), t, t - T.c);
+    const quad = VID.C && VID.C.quads ? VID.C.quads[PL.C.fi] : PHONE_C;
+    const q = quad.map(uv => project('C', cam, uv, .8));
+    const sc = $('#siteC'); vis(sc, true);
+    sc.style.transform = quadMatrix(390, 863, q);
+    siteState(SITE_C, t, -10);
+    demo(t);
+    vis($('#ccap'), true); rise($('#ccap'), t, T.c + .1, .3, 26);
+    out($('#ccap'), t, T.s6 - .14, .12);
+  } else if (t < T.s8) {                            /* ---- S6 : étiquettes dans la foule ---- */
+    const cam = await plate('A', camA2(t), t, 2.5 + (t - T.s6), { dof: 4 });
+    demo(t);
+    vis($('#s6chip'), true); rise($('#s6chip'), t, T.s6 + .05, .3, 20);
+    const L = [['#t1', PEOPLE.mamie, T.s6 + .30], ['#t2', PEOPLE.femme, T.s6 + .60], ['#t3', PEOPLE.homme, T.s6 + .90]];
+    for (const [id, uv, a] of L) {
+      const el = $(id); vis(el, true);
+      const [x, y] = project('A', cam, uv), w = el.offsetWidth;
+      const xe = id === '#t1' ? x + 80 : x;          // #t1 : coude à droite du point, puis droit vers le haut
+      if (id !== '#t2') el.style.left = clamp(xe - w * (id === '#t1' ? .5 : .62), 80, 940 - w) + 'px';
+      const p = id === '#t3' ? pop(el, t, a, .32) : E.out(seg(t, a, a + .3));
+      if (id !== '#t3') { el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 18}px)`; }
+      if (p > 0) {
+        const r = el.getBoundingClientRect(), ty = r.top > y ? r.top + 2 : r.bottom - 2, q = clamp(p * 1.5);
+        if (xe !== x) { trkPoly([[x + 14, y], [xe, y], [xe, ty]], q, q); } else trkLine(x, y, x, ty, q, q);
+        trkDot(x, y, q);
+      }
+    }
+    ['#s6chip', '#t1', '#t2', '#t3'].forEach(s => out($(s), t, T.s8 - .14, .12));
+    if (t > T.s8 - .14) $('#trk').innerHTML = '';
+  } else if (t < T.end) {                           /* ---- S8 : la boulangère ---- */
+    const cam = await plate('D', camD(t), t, .3 + t - T.s8);
+    demo(t);
+    sceneD(t, cam);
+  } else {                                          /* ---- fin : la carte devient l'écran final, le point devient le logo ---- */
+    const g = T.end + .25, ws = T.end + .04;        // ws : l'écran final commence à monter dans la carte
+    if (t < g) {
+      const cam = await plate('D', camD(T.end), T.end, .3 + T.end - T.s8);
+      demo(t);
+      sceneD(t, cam);
+      out($('#s8cap'), t, T.end, .12); out($('#s8tag'), t, T.end, .12);
+      const p = E.inOut(seg(t, T.end, g)), el = $('#s8b');
+      const w0 = el.offsetWidth, h0 = el.offsetHeight;
+      const L = lerp(80, 0, p), Tp = lerp(452, 0, p), W = lerp(w0, 1080, p), H = lerp(h0, 1920, p), R = lerp(22, 0, p);
+      el.style.opacity = 1; el.style.transform = ''; el.style.boxSizing = 'border-box';
+      el.style.left = L + 'px'; el.style.top = Tp + 'px'; el.style.width = W + 'px'; el.style.height = H + 'px';
+      el.style.borderRadius = R + 'px'; el.style.display = 'flex'; el.style.alignItems = 'center';   // le texte reste centré : pas de carte vide
+      el.style.background = `rgb(${lerp(255, 247, p)},${lerp(255, 247, p)},${lerp(255, 244, p)})`;
+      $('#s8bt').style.opacity = p < .18 ? 1 : 0;   // bascule quand le titre final tient entier dans la carte      // « On exagère un peu. » cède la place à « On vous trouve ? » (un seul texte à la fois)
+      // la carte est une fenêtre sur l'écran final : à chaque image, du texte lisible, jamais un panneau vide
+      const ee = $('#end'); ee.style.opacity = p < .18 ? 0 : 1;
+      $('#demo').style.zIndex = 8;                   // la mention démo reste sur la photo du commerce
+      ee.style.clipPath = `inset(${Tp}px ${Math.max(0, 1080 - L - W)}px ${Math.max(0, 1920 - Tp - H)}px ${L}px round ${R}px)`;
+    } else if (t >= T.loop) await sceneS1(0);
+    // le point « débordée » vole jusqu'au point du logo
+    if (t >= T.end + .15 && t < T.end + .30) {        // le O du logo reste vide jusqu'à l'arrivée du point
+      const c = document.createElementNS(svgNS, 'circle'); c.setAttribute('cx', LOGO_DOT[0]); c.setAttribute('cy', LOGO_DOT[1]); c.setAttribute('r', 12); c.setAttribute('fill', '#F7F7F4');
+      $('#fly').appendChild(c);
+    }
+    if (t < T.end + .38) {
+      const [sx, sy] = project('D', camD(T.end), [.215, .47]), p = E.inOut(seg(t, T.end, T.end + .30));
+      const x = lerp(sx, LOGO_DOT[0], p), y = lerp(sy, LOGO_DOT[1], p), a = 1 - seg(t, T.end + .32, T.end + .38);
+      const gg = document.createElementNS(svgNS, 'g'); gg.setAttribute('opacity', a);
+      gg.innerHTML = `<circle cx="${x}" cy="${y}" r="26" fill="none" stroke="#fff" stroke-width="3" opacity="${.75 * (1 - p)}"/><circle cx="${x}" cy="${y}" r="${lerp(11, 9.9, p)}" fill="#2038EC" stroke="#fff" stroke-width="${lerp(4, 0, p)}"/>`;
+      $('#fly').appendChild(gg);
+    }
+    vis($('#end'), true);
+    $('#end').style.transform = t < T.loop ? '' : `translateY(${E.out(seg(t, T.loop, T.dur - 1 / 30)) * 1920}px)`;
+    rise($('#eTitle'), t, ws, .22, 34);
+    rise($('#ePill'), t, ws + .07, .3, 30);
+    $('#eRule').style.transform = `scaleX(${E.out(seg(t, ws + .11, ws + .41))})`;
+    $('#eLogo').style.opacity = E.out(seg(t, T.end + .15, T.end + .27)); $('#eLogo').style.transform = '';
+    rise($('#eZone'), t, ws + .13, .3, 20);
+    rise($('#eSub'), t, ws + .64, .3, 24);         // 2e temps : où toucher, et sans risque
+    const pp = seg(t, 16.80, 16.96);                 // un temps mort de 2 s : le bouton est « touché », rappel de 8,45 s
+    if (pp > 0 && pp < 1) $('#ePill').style.transform += ` scale(${1 - .03 * Math.sin(Math.PI * pp)})`;
+    if (t >= T.loop) {                               // retour à t = 0 : la mention démo est là avant l'enseigne, puis rejoint l'image 0
+      const d = $('#demo'); vis(d, true); d.style.transform = ''; d.style.opacity = 1 - seg(t, T.dur - 3 / 30, T.dur - 1 / 30);
+    }
+  }
+}
+window.render = t => renderAt(t + FROM);   // (une fonction globale « render » serait écrasée ici)
+
+let SITE_A, SITE_C;
+async function init() {
+  initGL();
+  try { const r = await fetch('vids.json'); if (r.ok) VID = await r.json(); } catch (e) {}
+  const BP = await loadImg('img/B-patch.png');
+  await Promise.all([
+    loadPlate('A', c => { shadeGhost(c); paintSign(c, SIGN_A); }),
+    loadPlate('B', (c, dc, img) => { cleanTumbleweed(c, BP); TWS = cutTumbleweed(img, c); creamApron(c); paintSign(c, SIGN_B); }),
+    loadPlate('C'), loadPlate('D'),
+  ]);
+  lockCamB();
+  SITE_A = buildSite($('#scrA'));
+  { const nn = document.createElement('div'); nn.className = 'notch'; $('#scrA').appendChild(nn); }
+  vis($('#s4'), true); { const r = $('#qq').getBoundingClientRect(); Q0 = [r.left + r.width / 2, r.top + r.height / 2]; } vis($('#s4'), false);
+  SITE_C = buildSite($('#siteC'));
+  const n = document.createElement('div'); n.className = 'notch'; $('#siteC').appendChild(n);
+  const gl2 = document.createElement('div'); gl2.id = 'glare'; $('#siteC').appendChild(gl2);
+  if (HOOK === 'pain') $('#q1').textContent = 'Pour du pain.';
+}
+
+if (Q.has('safe')) document.body.classList.add('show-safe');
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('400 40px IS'), document.fonts.load('500 40px IS'), document.fonts.load('400 40px CG')])
+  .then(init)
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => renderAt(Q.has('t') ? +Q.get('t') : 0)).then(() => { window.READY = true; });
+</script>
+</body>
+</html>
