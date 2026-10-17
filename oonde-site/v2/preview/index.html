@@ -1094,13 +1094,13 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   {const st=tF-cF,dl=st*(1-Math.exp(-dt/.07));cF+=clamp(dl,-1,1)}if(Math.abs(tF-cF)<.004)cF=tF;   /* une image au plus par image affichée : aucun trou, même lancé fort */
   /* passé le mur alors que la rue n'est pas encore à l'arrêt (réseau lent, l'arrêt atteint par « Voir une démo ») : la rue se pose
      sur l'arrêt par un fondu, et la salle prend la suite ; sinon la rue endormie attendrait des images qui ne viendraient plus */
-  const k1=k1Of();if(cQ>.02&&cF<k1-.5&&inCur()&&inCur().film.get(0)){snap();cF=tF=k1;dirty=true}
+  const k1=k1Of();if(cQ>.12&&cF<k1-.5&&inCur()&&inCur().film.get(0)){snap();cF=tF=k1;dirty=true}
   /* la salle s'allume à l'arrêt (la caméra posée, sa première image prête) ; s'éteint si l'on repart vers la rue */
   const z=inCur(),atStop=Math.abs(cF-k1)<.5&&cP>=HOLD[0]-.01,ia=atStop&&z&&z.film.get(0)?1:0;
   if(inA!==ia){inA+=(ia-inA)*(1-Math.exp(-dt/.16));if(Math.abs(ia-inA)<.004)inA=ia;dirty=true}
   /* la suite : son image suit la position, sans trou, comme la rue */
-  let tI=inOf(cQ);if(z&&cF>=k1-.5)cI=follow(z.film,cI,rest?Math.round(tI):tI,dt,rest);else cI=0;
-  const want=cQ>.0005||cI>.02?1:0;
+  let tI=inOf(cQ);if(z&&cF>=k1-.5&&mode===1)cI=follow(z.film,cI,rest?Math.round(tI):tI,dt,rest);else cI=0;   /* la salle part de sa première image (celle de l'arrêt), une fois qu'elle a la main */
+  const want=(cQ>.0005||cI>.02)&&cF>=k1-.5?1:0;   /* la salle ne prend la main qu'une fois la rue à l'arrêt (un lancer qui bute sur le mur ne montre pas la salle au milieu de la rue) */
   if(want&&z&&z.film.get(Math.round(cI))){if(!mode&&inA<.95)snap();mode=1}else if(!want&&mode){mode=0;if(inA<.95)snap()}else if(want&&!z&&ins[inKey()]&&ins[inKey()].bad)mode=2;else if(!want)mode=0;
   if(xa>0){xa=Math.max(0,xa-dt/.35);dirty=true}
   if(mode===1){if(dirty||cI!==lastI){if(!drawIn(cI))draw(cF);lastI=cI;last=-1}}
