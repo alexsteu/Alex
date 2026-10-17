@@ -160,12 +160,14 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
     if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque jeu d'images part en 4 paquets (voir pack()), avec pins.json
-        for sd in [*sorted((D / 'img' / 'e3d').iterdir()), D / 'img' / 'greves']:
+        for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name == 'rue' or d.name.startswith('in-')]:   # v19 : la rue et sa suite par métier (les anciens films de la démo ne partent plus)
             for k in ('d', 'm'):
                 src, dst = sd / k, o / sd.relative_to(D) / k
                 pack(src, dst)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
-                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + (['f070.webp', 'f082.webp', 'f095.webp'] if k == 'd' else ['f052.webp', 'f061.webp', 'f071.webp']):   # l'affiche, les enseignes, les photos du site (jeu du téléphone sur téléphone)
+                ph = re.search(r"E3IN=\{d:\[([\d,]+)\],m:\[([\d,]+)\]\}", html)   # les photos du site (e3d.js, E3IN) : trois images de la salle
+                phs = [f'f{int(i):03d}.webp' for i in ph.group(1 if k == 'd' else 2).split(',')] if ph and sd.name.startswith('in-') else []
+                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + phs:   # l'affiche, les enseignes, les photos du site (jeu du téléphone sur téléphone)
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
     if wrap:
         (o / 'fonts').mkdir()
