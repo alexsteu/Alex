@@ -31,8 +31,8 @@
   s.more=lv=>{for(let g=0;g<Math.min(lv,PK.length);g++)s.ask(PK[g])};
   s.more(AUTO);more();return s}
  function more(){const s=store[set];if(!s||!s.ask)return;const a=A[set],f=Math.max(cF,jmp?HOMEi():0);
-  if(moved||P>.05||jmp)s.ask('L3');if(jmp||f>a+20){s.ask('H3');s.ask('H2')}   /* arrivé par un lien : l'arrêt et les façades d'abord */
-  if((moved||P>.05)&&!jmp&&cF<a+5)s.ask('H1');if(f>a-15||went||P>PA[set]-.08)s.ask('H2');if(f>a+20||went||P>.5)s.ask('H3')}
+  if(moved||P>.05||jmp)s.ask('L3');if(jmp||f>a+20)s.ask('H3');   /* arrivé par un lien : la seconde moitié (l'arrêt, ses voisines) d'abord ; H2 seulement si l'on y va (glissement, marche) */
+  if((moved||P>.05)&&!jmp&&cF<a+5)s.ask('H1');if(f>a-15&&f<a+45&&!jmp||vg&&Math.min(vg.b,vx)<a+40)s.ask('H2');if(f>a+20||vg)s.ask('H3')}
  let armT=0,inOk=false;const arm=()=>{if(armed)return;armed=true;armT=performance.now();load(set)};
  /* la rue a ses premières images (ou n'en aura pas) : avant, le mur de l'arrêt reste fermé, même pour un nouveau geste */
  const rdy=()=>{const s=store[set];return !LIVE||!!(s&&(s.ok.L1||s.loose))||armed&&performance.now()-armT>12000};
@@ -71,7 +71,7 @@
   recall();if(k===was&&!push)return;
   if(push)E3S.set({sc:k});if(cv.width&&(mode||inA>.02&&!push))snap();wall();if(push)goMet(k);dirty=true;tick()}
  function goMet(k){rel();if(!LIVE||!(k in FAC)||!W)return;const p=curP();if(p<HOLD[0]-.02||p>GATE[1]+.01)return;
-  went=true;const s=store[set];if(s&&s.ask){s.ask('H2');s.ask('H3')}glideTo(FACi(k));if(s&&!s.film.get(Math.round(FACi(k))))ld.textContent='Vers la façade : '+E3[k].lab+'…'}
+  went=true;const s=store[set];if(s&&s.ask){const t=FACi(k);s.ask(t<A[set]+40?'H2':'H3')}glideTo(FACi(k));if(s&&!s.film.get(Math.round(FACi(k))))ld.textContent='Vers la façade : '+E3[k].lab+'…'}
  const rwall=$('rWall');function wall(){if(rwall&&E3[met])e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici')}
  /* le rappel, aux étapes 2 et 3 : « Coiffure · changer », « Café du Lac · Coiffure · modifier » */
  function recall(){const m=E3[met]?E3[met].lab:'';const nx=stop.querySelector('.r-next');if(nx)nx.setAttribute('aria-label','Suivant : '+m);u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
