@@ -593,9 +593,10 @@ footer{border-top:0}
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:76px}   /* sous « Passer l’intro » */
  /* v22 : la carte reste sous l'enseigne : bas de l'écran, 12 px des bords, ≤ 30 % de la hauteur (≤ 200 px) */
  .r-stop{left:12px;right:12px;width:auto;bottom:12px;padding:12px}
- .r-s1{margin:0 -12px}.r-s1{position:relative}.r-s1 .r-next{position:absolute;top:-42px;right:8px;min-height:40px;padding:0 14px;font-size:14.5px}   /* « Suivant → » dans l'en-tête : la carte tient en ≤ 200 px */
+ .r-s1{margin:0 -12px}.r-s1{position:relative}.r-s1 .r-next{position:absolute;top:-42px;right:8px;min-height:40px;padding:0 11px;font-size:14px;gap:4px}
+ .r-stop[data-step="1"] .r-sh{font-size:15px;gap:2px 8px;flex-wrap:wrap}.r-stop[data-step="1"] .r-hd{padding-right:var(--nx,130px)}   /* v22.2 : « Boulangerie → » ne recouvre plus « Démo » (petit écran : « Démo » passe à la ligne) */   /* « Suivant → » dans l'en-tête : la carte tient en ≤ 200 px */
  .r-stop[data-step="1"] .r-dots{display:none}
- .r-seg{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px calc(100% - 128px) 4px 12px;scroll-padding-inline:12px}   /* v22.1 : la tuile choisie à gauche, 3 tuiles et demie visibles */
+ .r-seg{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 12px 4px;scroll-padding-inline:12px}   /* v22.1 : la tuile choisie à gauche, 3 tuiles et demie visibles ; v22.2 : les dernières, calées à droite (plus de moitié vide) */
  .r-seg::-webkit-scrollbar{display:none}
  .r-seg button{flex-direction:column;justify-content:flex-start;gap:6px;width:104px;height:120px;padding:4px 4px 8px;text-align:center;font-size:15px;scroll-snap-align:start}
  .r-seg img{width:96px;height:72px}
@@ -664,6 +665,9 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
  .r-stop[data-step="1"] .r-s1{display:flex;gap:10px;align-items:center}.r-stop[data-step="1"] .r-seg{flex:1;gap:4px}   /* v22.1 : les six tuiles en 3 × 2, « Suivant » à côté : aucune rognée */
  .r-seg button{width:auto;height:34px;padding:0 10px;font-size:13.5px;justify-content:center}.r-seg img{display:none}.r-s1 .r-next{margin:0;flex:none}
  .r-go{flex-direction:row}.r-enter,.r-stop input{min-height:40px}.r-rc,.r-note{display:none}
+ /* v22.2 : moins haute (3 × 2 tuiles, ≈ un tiers de l'écran) ; le nom du mur du fond ne transparaît plus sous la carte */
+ .r-hd{margin-bottom:4px}.r-stop[data-step="1"] .r-seg{grid-template-columns:repeat(3,minmax(0,1fr))}.r-seg button{height:30px;font-size:13px}.r-s1 .r-next{min-height:36px}
+ .r.stop .r-wall{visibility:hidden}
 }
 /* v20 · l'accueil « Apple minimal » : une idée par écran */
 /* les deux offres : deux colonnes sans bordure, le prix en grand */
@@ -1085,7 +1089,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),says=[...u.querySelectorAll('.r-say')],stop=$('rStop'),cue=u.querySelector('.r-cue'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg');
  /* la rue (D) : l'approche jusqu'à PA, la marche jusqu'à HOLD[0] (la caméra posée devant la vôtre), l'arrêt jusqu'au mur (GATE[1]), puis la porte et la salle (L) */
  const A={d:45,m:55},VAN=73,FAC={restaurant:0,boulangerie:12,coiffure:24,institut:36,onglerie:48,logement:72},HV=60,INS={d:56,m:64},STOP=.82,HOLD=[.75,.92],GATE=[.5,.92],END=.8,PA={d:.3,m:.25},store={},ins={};
- const COARSE=matchMedia('(pointer:coarse)').matches;let wT=0,wOn=false,pV=0,jmp=null,held=null,xd=.35,LIVE=!RM,frz=false,moved=false,kbY=-1,SW=1,set='d',want='',W=0,H=0,P=0,Q=0,cP=-1,cQ=0,cF=0,cI=0,last=-1,lastI=-1,raf=0,dirty=true,vis=true,D=1,L=1,hh=64,armed=false,t0=0,inA=0,mode=0,xa=0,dn=1;
+ const COARSE=matchMedia('(pointer:coarse)').matches;let wT=0,wOn=false,pV=0,wH=0,sH=0,Pk=-1,jmp=null,held=null,xd=.35,LIVE=!RM,frz=false,moved=false,kbY=-1,SW=1,set='d',want='',W=0,H=0,P=0,Q=0,cP=-1,cQ=0,cF=0,cI=0,last=-1,lastI=-1,raf=0,dirty=true,vis=true,D=1,L=1,hh=64,armed=false,t0=0,inA=0,mode=0,xa=0,dn=1;
  const NF=k=>A[k]+VAN,HOMEi=()=>A[set]+HV,FACi=k=>A[set]+FAC[k];
  const base=k=>'img/e3d/w/'+k+'/';
  /* le film : les paquets dans l'ordre où on les veut (build.py) : L0 (les 6 premières images, basse définition) d'abord, demandé dès le HTML (preload) ;
@@ -1112,7 +1116,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  let armT=0,inOk=false;const arm=()=>{if(armed)return;armed=true;armT=performance.now();if(!W)size();load(set)};   /* v22.2 : le jeu de l'écran d'abord (un glissé avant le script ne charge plus l'autre) */
  /* la rue a ses premières images (ou n'en aura pas) : avant, le mur de l'arrêt reste fermé, même pour un nouveau geste */
  const rdy=()=>{const s=store[set];return !LIVE||!!(s&&(s.ok.Kb||s.ok.L1b||s.loose))||armed&&performance.now()-armT>12000};
- const xh=u.querySelector('.r-x'),geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;const x=xh?xh.offsetHeight:0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight-x);L=Math.max(1,x+D*(1-GATE[1]));anchor.style.top=LIVE?(STOP*D)+'px':''};
+ const xh=u.querySelector('.r-x'),geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;wH=walk.offsetHeight;sH=stg.offsetHeight;const x=xh?xh.offsetHeight:0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight-x);L=Math.max(1,x+D*(1-GATE[1]));anchor.style.top=LIVE?(STOP*D)+'px':''};
  const curP=()=>(hh-walk.getBoundingClientRect().top)/D,yAt=p=>walk.getBoundingClientRect().top+scrollY-hh+p*D;
  /* redimensionner vide le canevas (rotation, barre d'adresse) : on y remet la dernière bonne image, étirée en « cover », jusqu'à la prochaine */
  const kc=document.createElement('canvas'),kx=kc.getContext('2d');let painted=false,shF=-1,lastS=0;
@@ -1122,7 +1126,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   SW=r.width||1;if(w!==W||h!==H){keep();W=cv.width=w;H=cv.height=h;back();dirty=true}
   /* v22 : en tournant le téléphone, la rue change de longueur : on reste au même endroit (à l'arrêt, la carte reste là) ; l'autre jeu d'images
      ne remplace l'ancien qu'une fois son image prête (plus d'image étirée en double exposition) */
-  const k=r.width<r.height*.95?'m':'d',p0=D>1&&cP>=0?curP():-1;if(k!==set&&k!==want){if(!painted&&!store[set]){if(vx>=0)vx=vx-A[set]+A[k];set=k;want=''}else{want=k;if(armed||!LIVE)load(k)}}else if(k===set){if(want&&store[want]&&store[want].halt)store[want].halt();want=''}
+  const k=r.width<r.height*.95?'m':'d',p0=D>1&&cP>=0&&Pk>=0?Pk:-1;   /* v22.2 : la dernière position mesurée avec la géométrie d'avant (barre d'adresse, rotation : plus de page décalée de 107 px) */if(k!==set&&k!==want){if(!painted&&!store[set]){if(vx>=0)vx=vx-A[set]+A[k];set=k;want=''}else{want=k;if(armed||!LIVE)load(k)}}else if(k===set){if(want&&store[want]&&store[want].halt)store[want].halt();want=''}
   if(!LIVE)load(set);geo();if(p0>=0&&LIVE&&Math.abs(curP()-p0)>.002){e3halt();scrollTo({top:yAt(p0),behavior:'instant'})}}
  const mapF=(f,a,b)=>f<a?f:f-a+b;   /* le même endroit dans l'autre jeu (l'approche n'a pas le même nombre d'images) */
  function swap(){if(!want||want===set)return;const s=store[want];if(!painted||!store[set]){if(vx>=0)vx=vx-A[set]+A[want];set=want;want='';return}if(!s)return;
@@ -1150,7 +1154,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   went=true;const s=store[set];if(s&&s.ask){const t=FACi(k);s.ask(t<A[set]+40?'H2':'H3')}glideTo(FACi(k));if(s&&!s.film.get(Math.round(FACi(k))))ld.textContent='Vers la façade : '+E3[k].lab+'…'}
  const rwall=$('rWall');function wall(){if(rwall&&E3[met])e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici')}
  /* le rappel, aux étapes 2 et 3 : « Coiffure · changer », « Café du Lac · Coiffure · modifier » */
- function recall(){const m=E3[met]?E3[met].lab:'';const nx=stop.querySelector('.r-next');if(nx)nx.setAttribute('aria-label','Suivant : '+m);u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
+ function recall(){const m=E3[met]?E3[met].lab:'';const nx=stop.querySelector('.r-next');if(nx){nx.setAttribute('aria-label','Suivant : '+m);requestAnimationFrame(()=>{const w=nx.offsetWidth;if(w)stop.style.setProperty('--nx',(w+2)+'px')})}u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
  metier(E3S.st.sc,false);
  /* ——— la carte, une étape à la fois : 1 le métier, 2 le nom, 3 « Entrer » ——— */
  let step=chosen?3:1,segT=0,segMe=0,segU=false;
@@ -1165,8 +1169,10 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
     choisit la tuile qui s'arrête au centre (le glissement la suit). Au clavier : ← → (role=radiogroup). */
  seg.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;if(chosen&&b.dataset.m===met){if(went||!LIVE)go(2,true);else goMet(met);return}metier(b.dataset.m,true);centre(true)});
  seg.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(e.key))return;e.preventDefault();const bs=tiles(),i=Math.max(0,bs.findIndex(b=>b.dataset.m===met)),n=e.key==='Home'?bs[0]:e.key==='End'?bs[bs.length-1]:bs[(i+(/Right|Down/.test(e.key)?1:bs.length-1))%bs.length];metier(n.dataset.m,true);n.focus();centre(true)});
- function centre(sm){const b=seg.querySelector(`[data-m="${met}"]`);if(!b||seg.scrollWidth<=seg.clientWidth+2)return;const x=b.offsetLeft-padL();   /* v22.1 : la tuile choisie à gauche du carrousel (pas de vide au départ) */segMe=performance.now();seg.scrollTo({left:x,behavior:sm&&!RM?'smooth':'instant'})}
- seg.addEventListener('scroll',()=>{if(!segU||performance.now()-segMe<700)return;clearTimeout(segT);segT=setTimeout(()=>{const c=seg.scrollLeft+padL();let best=null,bd=1e9;for(const b of tiles()){const d=Math.abs(b.offsetLeft-c);if(d<bd){bd=d;best=b}}
+ function centre(sm){const b=seg.querySelector(`[data-m="${met}"]`);if(!b||seg.scrollWidth<=seg.clientWidth+2)return;const x=Math.min(b.offsetLeft-padL(),seg.scrollWidth-seg.clientWidth);   /* v22.1 : la tuile choisie à gauche du carrousel (pas de vide au départ) */segMe=performance.now();seg.scrollTo({left:x,behavior:sm&&!RM?'smooth':'instant'})}
+ seg.addEventListener('scroll',()=>{if(!segU||performance.now()-segMe<700)return;clearTimeout(segT);segT=setTimeout(()=>{const c=seg.scrollLeft+padL(),mx=seg.scrollWidth-seg.clientWidth,cur=seg.querySelector(`[data-m="${met}"]`);
+   if(chosen&&cur&&seg.scrollLeft>=mx-2&&cur.offsetLeft-padL()>=mx-2)return;   /* au bout : les dernières tuiles s'y calent toutes ; la choisie reste */
+   let best=null,bd=1e9;for(const b of tiles()){const d=Math.abs(b.offsetLeft-c);if(d<bd){bd=d;best=b}}
   if(best&&(!chosen||best.dataset.m!==met))metier(best.dataset.m,true)},140)},{passive:true});
  for(const ev of ['pointerdown','touchstart','wheel','focusin'])seg.addEventListener(ev,()=>{if(ev!=='focusin')segU=true;more()},{passive:true});   /* le carrousel ne choisit qu'après un geste sur lui (pas l'aimantation du navigateur au chargement) */
  document.addEventListener('oonde-e3',e=>{if(e.detail.sc!==met)metier(e.detail.sc,false);if(e.detail.name&&!nameIn.value){nameIn.value=e.detail.name;named(e.detail.name,false)}wall()});
@@ -1212,7 +1218,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  let signQ=null;
  function place(pp,fb,f){const walkOn=f>=0&&f>A[set]-3&&!atStop0();for(const el of pins.children){const q=pp&&pp.find(x=>x.id===el.dataset.id);
   if(!q||q.vis<=0){el.style.opacity=0;continue}e3quad(el,q.c,1000,127,fb);
-  if(el===sign){el.style.opacity=q.vis;signQ={c:q.c,f:fb};continue}
+  if(el===sign){el.style.opacity=vg?(q.vis*clamp((.56-Math.abs(mxOf(q)-.5))/.14,0,1)).toFixed(2):q.vis;signQ={c:q.c,f:fb};continue}   /* en glissant : elle s'efface au bord de l'image */
   const mx=(q.c[0][0]+q.c[1][0])/2,near=clamp(1-Math.abs(mx-.5)/.42,0,1);el.style.opacity=walkOn?(q.vis*Math.min(1,near*1.8)).toFixed(2):0}}
  const atStop0=()=>cP>=HOLD[0]-.012&&cQ<.06;
  /* la suite, par métier (img/e3d/in-<métier>/<jeu>/) : p0 en approchant de l'arrêt, p1 et p2 à l'arrêt, p3 dès qu'on passe la porte.
@@ -1241,7 +1247,11 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  function glideTo(x){if(vx<0)vx=HOMEi();if(Math.abs(x-vx)<.01&&!vg)return;const s=store[set];vg={a:vx,b:x,t0:s&&s.film.dl(vx,x)?performance.now():0,q:performance.now(),dur:vdur(vx,x)};if(s){s.film.seek(vx+Math.sign(x-vx));s.film.boost(8)}dirty=true;tick()}
  function home(){went=false;glideTo(HOMEi())}
  /* le nom va sur l'enseigne de la façade choisie ; celle de l'arrêt (la vôtre) reste vide */
- const remap=pp=>pp&&went?pp.map(q=>q.id==='sign'?{...q,id:'_t'}:q.id===met?{...q,id:'sign'}:q):pp;
+ const mxOf=q=>(q.c[0][0]+q.c[1][0])/2;
+ const remap=pp=>{if(!pp||!went)return pp;
+  /* v22.2 : pendant le glissement, l'enseigne reste sur la façade la plus au centre (la vôtre, puis celle du métier) : elle ne disparaît plus au départ */
+  if(vg){const h=pp.find(q=>q.id==='sign'),m=pp.find(q=>q.id===met);if(h&&h.vis>0&&(!m||m.vis<=0||Math.abs(mxOf(h)-.5)<Math.abs(mxOf(m)-.5)))return pp}
+  return pp.map(q=>q.id==='sign'?{...q,id:'_t'}:q.id===met?{...q,id:'sign'}:q)};
  const ss=x=>x*x*(3-2*x),fade=(a,b,c,d,x=cP)=>ss(Math.min(clamp((x-a)/(b-a||1),0,1),clamp((d-x)/(d-c||1),0,1))),fq=(a,b,c,d)=>ss(Math.min(clamp((cQ-a)/(b-a||1),0,1),clamp((d-cQ)/(d-c||1),0,1)));
  /* les textes : opacity et transform seulement, et on n'écrit un style que s'il change */
  const memo=new Map(),put=(el,k,v)=>{const m=memo.get(el)||{};if(m[k]!==v){m[k]=v;memo.set(el,m);el.style[k]=v}};
@@ -1274,8 +1284,8 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   if(film.get(Math.round(c))){if(rest)t=film.near(t);t=film.reach(c,t)}else t=c;const st=t-c;c+=clamp(st*(1-Math.exp(-dt/.07)),-1,1);return Math.abs(t-c)<.004?t:c}
  /* l'inertie : la page suit le défilement avec ~180 ms de retard, comme une caméra portée ; une fois arrêtée, elle se pose sur l'image nette la plus proche */
  function loop(now){raf=0;swap();const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
-  if(cP<0)geo();
-  const r=walk.getBoundingClientRect(),y=hh-r.top;P=Math.max(0,y/D);Q=clamp((y-GATE[1]*D)/L,0,1);
+  if(cP<0)geo();else if(walk.offsetHeight!==wH||stg.offsetHeight!==sH)size();
+  const r=walk.getBoundingClientRect(),y=hh-r.top;P=Math.max(0,y/D);Pk=P;Q=clamp((y-GATE[1]*D)/L,0,1);
   if(!LIVE){still();return}
   more();if(P>.3&&store[set]&&(store[set].ok.L1b||store[set].loose))thumb()   /* v22.2 : les vignettes après l'approche (elles ne prennent pas la bande passante des clés) */
   /* v22.2 : réseau lent, le visiteur a déjà glissé avant que le script ne tourne : on part de l'affiche (l'image 0, celle qu'il voit), le film la suit */
@@ -1372,7 +1382,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* ——— le portail. Un lancer, même fort, s'arrête à l'arrêt ; pour continuer, il faut un nouveau geste une fois arrivé.
     v22 : aux étapes 1 et 2, le premier glissé neuf ne passe pas (« Continuer sans choisir ↓ », 2 s), le second passe ; à l'étape 3, le premier passe.
     « Entrer », un lien, « Passer l'intro » passent toujours. Remonter n'est jamais bloqué ; arriver d'en dessous (ou par un lien) ouvre le portail. ——— */
- let nudged=false,nt=0,tY0=-1,tX0=0,swp=false;const nudge=()=>{nudged=true;u.classList.add('push');clearTimeout(nt);nt=setTimeout(()=>u.classList.remove('push'),2000)};
+ let nudged=false,nt=0,nt0=0,tY0=-1,tX0=0,swp=false;const nudge=()=>{nudged=true;u.classList.add('push');clearTimeout(nt);nt=setTimeout(()=>u.classList.remove('push'),2000)};
  const pass1=()=>{if(step===3||nudged)open();else nudge()};
  let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0,w0=0,wMax=0,pt=0;
  const rest=()=>{const p=curP();if(gate==='closed'&&p>=HOLD[0]-.03&&p<=GATE[1]+.005&&!e3touch.n&&performance.now()-lastW>350)gate='rested'};
@@ -1382,7 +1392,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
    if(p<GATE[0]-.03){if(performance.now()>pass)gate='closed'}if(p<HOLD[0]-.06)nudged=false;
    if(gate!=='open'&&pP<0&&p>GATE[1]+.01)gate='open';
    else if(gate!=='open'&&pP>=0&&pP>GATE[1]+.01&&p>GATE[1]+.01)gate='open';
-   else if((gate!=='open'||!rdy()&&performance.now()>pass&&pP<=GATE[1]+.01)&&pP>=0&&p>GATE[1]+.002&&!e3gliding()){geo();scrollTo({top:yAt(GATE[1]),behavior:'instant'});pP=GATE[1];
+   else if((gate!=='open'||!rdy()&&performance.now()>pass&&pP<=GATE[1]+.01)&&pP>=0&&p>GATE[1]+.002&&!e3gliding()){geo();scrollTo({top:yAt(GATE[1]),behavior:'instant'});pP=GATE[1];if(gate!=='open'&&rdy()&&performance.now()-nt0>600){nt0=performance.now();nudge()}   /* v22.2 : chaque rebond contre le mur le dit (« Continuer sans choisir ↓ ») ; le geste suivant passe */
     if(COARSE){const h=document.documentElement;h.style.overflow='hidden';setTimeout(()=>{h.style.overflow=''},160)}return}   /* le mur ; au doigt, l'élan est coupé */
    pP=p},{passive:true});
   addEventListener('wheel',e=>{const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.deltaY<=0)return;
@@ -1394,7 +1404,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   {const mb=u.querySelector('.r-more');if(mb)mb.addEventListener('click',()=>{open(1500);e3glide(scrollY+innerHeight*.7)})}
   addEventListener('touchstart',e=>{tY=e.touches[0]?e.touches[0].clientY:-1;tY0=tY;tX0=e.touches[0]?e.touches[0].clientX:0;swp=false},{passive:true,capture:true});
   addEventListener('touchmove',e=>{const y=e.touches[0]?e.touches[0].clientY:-1;const up=tY>=0&&y<tY;tY=y;
-   const x=e.touches[0]?e.touches[0].clientX:0;if(!swp&&tY0>=0&&tY0-y>10&&tY0-y>1.5*Math.abs(x-tX0)){swp=true;if(gate==='rested')pass1()}   /* un glissé vers le bas de la page (pas un tap ; sur le carrousel aussi, s'il est surtout vertical) */
+   const x=e.touches[0]?e.touches[0].clientX:0;if(!swp&&tY0>=0&&tY0-y>10&&tY0-y>1.5*Math.abs(x-tX0)){swp=true;if(gate==='rested'||nudged&&gate==='closed'&&rdy()&&curP()>=HOLD[0]-.03)pass1()}   /* v22.2 : après un rebond annoncé, le glissé suivant passe (même sans s'être posé) */   /* un glissé vers le bas de la page (pas un tap ; sur le carrousel aussi, s'il est surtout vertical) */
    if((gate!=='open'||!rdy()&&performance.now()>pass)&&up&&e.cancelable&&curP()>=GATE[1]-.004&&curP()<GATE[1]+.05)e.preventDefault()},{passive:false});
   addEventListener('touchend',()=>{clearTimeout(rt);rt=setTimeout(rest,320)},{passive:true});
   addEventListener('keydown',e=>{if(e.target===nameIn&&e.key!=='Tab')return;if(e.target.closest&&e.target.closest('.r-seg')&&/Arrow|Home|End/.test(e.key))return;if(gate==='rested'||['Tab','End','Home'].includes(e.key))open()},true);

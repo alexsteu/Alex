@@ -180,9 +180,10 @@
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:76px}   /* sous « Passer l’intro » */
  /* v22 : la carte reste sous l'enseigne : bas de l'écran, 12 px des bords, ≤ 30 % de la hauteur (≤ 200 px) */
  .r-stop{left:12px;right:12px;width:auto;bottom:12px;padding:12px}
- .r-s1{margin:0 -12px}.r-s1{position:relative}.r-s1 .r-next{position:absolute;top:-42px;right:8px;min-height:40px;padding:0 14px;font-size:14.5px}   /* « Suivant → » dans l'en-tête : la carte tient en ≤ 200 px */
+ .r-s1{margin:0 -12px}.r-s1{position:relative}.r-s1 .r-next{position:absolute;top:-42px;right:8px;min-height:40px;padding:0 11px;font-size:14px;gap:4px}
+ .r-stop[data-step="1"] .r-sh{font-size:15px;gap:2px 8px;flex-wrap:wrap}.r-stop[data-step="1"] .r-hd{padding-right:var(--nx,130px)}   /* v22.2 : « Boulangerie → » ne recouvre plus « Démo » (petit écran : « Démo » passe à la ligne) */   /* « Suivant → » dans l'en-tête : la carte tient en ≤ 200 px */
  .r-stop[data-step="1"] .r-dots{display:none}
- .r-seg{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px calc(100% - 128px) 4px 12px;scroll-padding-inline:12px}   /* v22.1 : la tuile choisie à gauche, 3 tuiles et demie visibles */
+ .r-seg{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 12px 4px;scroll-padding-inline:12px}   /* v22.1 : la tuile choisie à gauche, 3 tuiles et demie visibles ; v22.2 : les dernières, calées à droite (plus de moitié vide) */
  .r-seg::-webkit-scrollbar{display:none}
  .r-seg button{flex-direction:column;justify-content:flex-start;gap:6px;width:104px;height:120px;padding:4px 4px 8px;text-align:center;font-size:15px;scroll-snap-align:start}
  .r-seg img{width:96px;height:72px}
@@ -251,4 +252,7 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
  .r-stop[data-step="1"] .r-s1{display:flex;gap:10px;align-items:center}.r-stop[data-step="1"] .r-seg{flex:1;gap:4px}   /* v22.1 : les six tuiles en 3 × 2, « Suivant » à côté : aucune rognée */
  .r-seg button{width:auto;height:34px;padding:0 10px;font-size:13.5px;justify-content:center}.r-seg img{display:none}.r-s1 .r-next{margin:0;flex:none}
  .r-go{flex-direction:row}.r-enter,.r-stop input{min-height:40px}.r-rc,.r-note{display:none}
+ /* v22.2 : moins haute (3 × 2 tuiles, ≈ un tiers de l'écran) ; le nom du mur du fond ne transparaît plus sous la carte */
+ .r-hd{margin-bottom:4px}.r-stop[data-step="1"] .r-seg{grid-template-columns:repeat(3,minmax(0,1fr))}.r-seg button{height:30px;font-size:13px}.r-s1 .r-next{min-height:36px}
+ .r.stop .r-wall{visibility:hidden}
 }
