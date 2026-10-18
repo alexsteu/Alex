@@ -145,6 +145,11 @@
 /* le chargement : discret, seulement si le film tarde ; en cas d'échec, l'image fixe reste et la page continue */
 .r-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(10,12,32,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
 .r-load:not(:empty){opacity:1}
+/* v22.2 : le film attend ses images : le repère, une fine ligne de progression dessous, et l'image tenue qui pousse doucement (1 %) */
+.r-load::after{content:"";position:absolute;left:12px;right:12px;bottom:3px;height:1px;background:rgba(255,255,255,.7);transform-origin:0 50%;transform:scaleX(var(--pg,0));opacity:0;transition:transform .25s linear,opacity .3s}
+.r.wait .r-load::after{opacity:1}
+#rCv,.r-pins{transition:scale .6s ease-out}
+.r.wait #rCv,.r.wait .r-pins{scale:1.01;transition:scale 2.4s cubic-bezier(.3,0,.3,1)}
 /* v19 : dans la salle, c'est le site du commerce. Sa barre arrive en haut, puis la fin : le métier, son bouton (Démo) */
 .r-sbar{position:absolute;z-index:3;left:0;right:0;top:0;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,5cqw,72px);color:#fff;
  background:linear-gradient(180deg,rgba(8,10,28,.55),rgba(8,10,28,0));opacity:0;pointer-events:none;will-change:opacity}
