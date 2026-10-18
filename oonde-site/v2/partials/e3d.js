@@ -58,13 +58,13 @@ function e3film(n,R,at,onimg){const bl=new Array(n),ll=new Array(n),bm=new Array
  const out=i=>{const a=dir>0?i-at:at-i;return a>Math.round(R*1.5)+6||a<-Math.round(R*.5)-6};
  const near=d=>{const Bk=Math.round(R*.5);return d?(d<=Bk?[at+d*dir,at-d*dir]:[at+d*dir]):[at]};
  function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&out(i))free(i);const A=Math.round(R*1.5);
-  /* d'abord une image partout (en mouvement, la basse : quatre fois moins de pixels à décoder, le film suit ; au repos, la nette si elle est là),
-     puis, une fois le film posé (250 ms sans changer d'image), les basses remplacées par les nettes, au plus près d'abord */
+  /* d'abord une image partout (la nette dès qu'elle est là, même en mouvement ; sinon la basse), puis, une fois le film posé
+     (250 ms sans changer d'image), les basses déjà décodées remplacées par les nettes, au plus près d'abord */
   const still=performance.now()-mv>250;
-  for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&!bm[i]&&!bz[i]&&(bl[i]||ll[i])&&act<par)dec(i,!!bl[i]&&(still||!ll[i]));
+  for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&!bm[i]&&!bz[i]&&(bl[i]||ll[i])&&act<par)dec(i,!!bl[i]);
   if(!still){clearTimeout(mt);mt=setTimeout(pump,260);return}
   for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&bm[i]&&!bq[i]&&bl[i]&&!bz[i]&&act<par)dec(i,1)}
- return{n,get:i=>bm[i],hi:i=>!!bm[i]&&bq[i]===1,any:()=>bl.some(Boolean)||ll.some(Boolean),has:i=>!!(bl[i]||ll[i]),boost(k){par=k;pump()},
+ return{n,get:i=>bm[i],hi:i=>!!bm[i]&&bq[i]===1,any:()=>bl.some(Boolean)||ll.some(Boolean),has:i=>!!(bl[i]||ll[i]),blob:i=>bl[i]||ll[i],boost(k){par=k;pump()},
   /* v20.1 : de a à b, les fichiers sont-ils là (jamais deux images manquantes de suite) ? sinon le film attendrait un paquet encore en route */
   dl(a,b){a=clamp(Math.round(a),0,n-1);b=clamp(Math.round(b),0,n-1);const s=b>a?1:-1,h=j=>bl[j]||ll[j];for(let k=a;k!==b;k+=s){const j=k+s;if(!h(j)&&(j===b||!h(j+s)))return false}return true},
   near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},addLo(i,b){if(!ll[i]){ll[i]=b;pump()}},

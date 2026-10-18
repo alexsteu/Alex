@@ -144,9 +144,9 @@ def blob(fr):
 
 WA_N = {'d': 45, 'm': 55}   # v22 : le film de l'intro (img/e3d/w/<jeu>) : A images d'approche, puis les 73 du glissement (va)
 def wpacks(k):
-    """v22 : les 8 paquets du film, dans l'ordre de rue.js (PK) : L* en basse définition (demi-taille), H* nets.
+    """v22 : les 8 paquets du film, dans l'ordre de rue.js (PK) : L* en basse définition (360×640 au téléphone, 640×400 à l'ordinateur), H* nets.
     L0 = les 6 premières images de l'approche (demandé dès la tête du HTML : le premier mouvement) ; L1 = le reste de l'approche ; L2/L3 = la marche, paires/impaires ;
-    H0 = l'affiche et l'arrêt nets ; H1 (les six façades, et une sur 4)/H2/H3 = le reste net (j % 4 == 0, j % 4 == 2, impaires ; j compté dans sa partie)."""
+    H0 = l'affiche et l'arrêt nets ; H1 l'approche, H2 et H3 les deux moitiés de la marche, nettes."""
     src = D / 'img' / 'e3d' / 'w' / k; A = WA_N[k]; n = len(list(src.glob('h*.webp')))
     if os.environ.get('E3TEST') and n != A + 73: print('incomplet', k, n); return
     assert n == A + 73, (k, n)
@@ -154,12 +154,13 @@ def wpacks(k):
     h0 = [0, A + 60]   # l'affiche et l'arrêt, nets, tout de suite après L0 : à l'arrivée, l'arrêt est net même en réseau lent
     G = {'L0': ('l', list(range(6))), 'L1': ('l', list(range(6, A))),
          'L2': ('l', [i for i in range(A, n) if j(i) % 2 == 0]), 'L3': ('l', [i for i in range(A, n) if j(i) % 2 == 1]),
-         'H0': ('h', h0), 'H1': ('h', [i for i in range(n) if (j(i) % 4 == 0 or i >= A and j(i) % 12 == 0) and i not in h0]),
-         'H2': ('h', [i for i in range(n) if j(i) % 4 == 2]), 'H3': ('h', [i for i in range(n) if j(i) % 2 == 1])}
+         'H0': ('h', h0), 'H1': ('h', [i for i in range(1, A)]),   # v22.1 : les nettes par tronçon : H1 l'approche, H2 la première moitié de la marche, H3 la seconde (rue.js les demande en chemin)
+         'H2': ('h', [i for i in range(A, A + 37) if i not in h0]), 'H3': ('h', [i for i in range(A + 37, n) if i not in h0])}
     for nm, (t, idx) in G.items():
         yield nm, {x: blob([(i, src / f'{t}{i:03d}.{e}') for i in idx]) for x, e in (('a', 'avif'), ('w', 'webp'))}
 
 def externalize(html, o, name):
+    crit = name == 'index'   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé
     """dist : les gros blocs <style> et <script> en ligne partent dans assets/<empreinte>.css|js, en cache long (le HTML,
     lui, est revalidé à chaque visite). Les petits restent en ligne (le script de tête qui pose .js, les polices, le JSON-LD).
     Même position, même ordre d'exécution (script classique, sans defer). L'aperçu claude.ai garde tout en ligne."""
@@ -169,15 +170,19 @@ def externalize(html, o, name):
         (o / f).write_text(body); return f
     def css(m):
         body = m.group(1)
-        if len(body) < 2048: return m.group(0)
+        if len(body) < 2048 or crit: return m.group(0)
         body = re.sub(r'url\((["\']?)(?!data:|https?:|/|#)', r'url(\1../', body)   # les chemins relatifs partent de assets/
         return f'<link rel="stylesheet" href="{out(body, "css")}">'
     def js(m):
         attrs, body = m.group(1), m.group(2)
         if attrs.strip() or len(body) < 2048: return m.group(0)
-        return f'<script src="{out(body, "js")}"></script>'
+        f = out(body, "js")
+        if crit: pre.append(f'<link rel="preload" href="{f}" as="script">'); return f'<script src="{f}" defer></script>'
+        return f'<script src="{f}"></script>'
+    pre = []
     html = re.sub(r'<style>(.*?)</style>', css, html, flags=re.S)
-    return re.sub(r'<script((?:\s[^>]*)?)>(.*?)</script>', js, html, flags=re.S)
+    html = re.sub(r'<script((?:\s[^>]*)?)>(.*?)</script>', js, html, flags=re.S)
+    return html.replace('</head>', ''.join(pre) + '\n</head>', 1) if pre else html
 
 def csp_hashes(html):
     return {"'sha256-" + base64.b64encode(hashlib.sha256(m.encode()).digest()).decode() + "'"
@@ -221,13 +226,15 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
     # le premier paquet du film (L0, AVIF) part dès la tête de la page, avant le reste du HTML ; e3get le reprend (window.E3P).
     # (un <link rel=preload as=fetch> n'est pas repris par WebKit : le paquet partait deux fois)
     E3PRE = ''
-    if 'w/m/L0' in E3M and 'w/d/L0' in E3M:   # v22 : dès la tête : L0 et H0 (AVIF) et les enseignes du jeu de l'écran ; e3get et rue.js les reprennent (window.E3P)
-        U = {k: [E3M[f'w/{k}/L0']['a'], E3M[f'w/{k}/H0']['a'], f'img/e3d/w/{k}/pins.json'] for k in ('m', 'd')}
+    if 'w/m/L0' in E3M and 'w/d/L0' in E3M:   # v22 : dès la tête : L0 (AVIF) et les enseignes (v22.1 : H0 après le script, pour ne pas le retarder) du jeu de l'écran ; e3get et rue.js les reprennent (window.E3P)
+        U = {k: [E3M[f'w/{k}/L0']['a'], f'img/e3d/w/{k}/pins.json'] for k in ('m', 'd')}
         E3PRE = ("<script>window.E3P={};(function(){var L=innerWidth<innerHeight*.95?%s:%s;"
                  "try{L.forEach(function(u,i){var p=fetch(u,{priority:i?'low':'high'}).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p})}catch(e){}})()</script>"
                  % (json.dumps(U['m']), json.dumps(U['d'])))
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out]).replace('{{E3M}}', E3MJ).replace('{{E3PRE}}', E3PRE)
+        for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
+            s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'w' / k2 / 'blur.webp').read_bytes()).decode())
         if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'pub'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
