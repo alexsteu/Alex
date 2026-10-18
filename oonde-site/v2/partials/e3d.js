@@ -43,6 +43,8 @@ function e3film(n,R,at,onimg){const bl=new Array(n),bm=new Array(n),bz=new Uint8
  function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&out(i))free(i);const A=Math.round(R*1.5),Bk=Math.round(R*.5);
   for(let d=0;d<=A&&act<4;d++)for(const i of d?(d<=Bk?[at+d*dir,at-d*dir]:[at+d*dir]):[at])if(i>=0&&i<n&&bl[i]&&!bm[i]&&!bz[i]&&act<4)dec(i)}
  return{n,get:i=>bm[i],any:()=>bl.some(Boolean),
+  /* v20.1 : de a à b, les fichiers sont-ils là (jamais deux images manquantes de suite) ? sinon le film attendrait un paquet encore en route */
+  dl(a,b){a=clamp(Math.round(a),0,n-1);b=clamp(Math.round(b),0,n-1);const s=b>a?1:-1;for(let k=a;k!==b;k+=s){const j=k+s;if(!bl[j]&&(j===b||!bl[j+s]))return false}return true},
   near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},
   seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){dir=i>at?1:-1;at=i;pump()}},
   /* jusqu'où l'on peut aller de f vers t sans trou de plus d'une image (deux images décodées au plus l'une de l'autre) */

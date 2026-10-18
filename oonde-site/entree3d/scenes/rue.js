@@ -16,7 +16,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   kit.box(150, .16, .22, kit.std(0x8d8a84, { r: .8 }), -24, .08, 3.15, { cast: false, parent: g0 });
 
   const lit = (f, i) => (f * 5 + i * 3) % 4 === 1;   // quelques fenêtres allumées aux étages
-  const S = 9.6;
+  const S = 9.6;   // v20.1 : les façades font exactement S de large (9,4 laissait une fente de 20 cm où le ciel passait)
   // les six façades, de gauche à droite : on les longe dans cet ordre
   const shops = [
     { id: 'restaurant', x: -5 * S, o: { stone: 'large_sandstone_blocks', wall: 0xefe1cc, shutter: 0x4f6259, base: 0x22352e, frame: 0x17191c, awning: ['#1f4a3b', '#d8cdb6'], awningDepth: 1.5, signY: 3.72, signH: .56 }, warm: 0xffb066 },
@@ -27,7 +27,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
   ];
   const pins = [];
   for (const s of shops) {
-    const f = kit.shopfront(scene, { x: s.x, seed: s.x, lit, spillOp: .2, spill: s.warm, ...s.o });
+    const f = kit.shopfront(scene, { w: S,  x: s.x, seed: s.x, lit, spillOp: .2, spill: s.warm, ...s.o });
     pins.push({ id: s.id, corners: f.sign.map(v => v.clone().add(new THREE.Vector3(s.x, 0, 0))) });
     // l'intérieur, vu par la vitrine : sol, mur du fond chaud, une lumière
     const g = new THREE.Group(); g.position.x = s.x; scene.add(g);
@@ -48,11 +48,11 @@ export default async function ({ THREE, kit, scene, portrait }) {
     if (s.id === 'onglerie') { const pol = [0xc2182b, 0xe2566f, 0xf2a7b5, 0x8e2440, 0xb38bd0, 0xe8743b, 0x4b6fa8]; for (let r = 0; r < 4; r++) kit.bottles(g, -1.7, 1.0 + r * .32, -3.3, 30, pol.slice(r % 3).concat(pol), { dir: [1, 0, 0], step: .11, h: .1, r: .02 }); kit.model('modern_arm_chair_01', { pos: [1.6, .15, -1.8], h: .82, parent: g, tint: 0xf1d8d3 }); }
   }
   // les voisins aux deux bouts, éteints
-  kit.shopfront(scene, { x: -6 * S, wall: 0xd9c9b4, shutter: 0x6a5546, dark: true, seed: 2, floors: 4, lit });
-  kit.shopfront(scene, { x: S, wall: 0xe6d9c3, shutter: 0x5b6670, dark: true, seed: 5, lit });
+  kit.shopfront(scene, { w: S,  x: -6 * S, wall: 0xd9c9b4, shutter: 0x6a5546, dark: true, seed: 2, floors: 4, lit });
+  kit.shopfront(scene, { w: S,  x: S, wall: 0xe6d9c3, shutter: 0x5b6670, dark: true, seed: 5, lit });
 
   // ——— la façade d'arrivée : la vôtre, enseigne vide ———
-  const T = kit.shopfront(scene, { x: 0, stone: 'white_sandstone_blocks_02', wall: 0xeee3d3, shutter: 0x3f4a56, base: 0x23272d, frame: 0x15171a, signW: 5.2, signH: .66, signFrame: 0x3a3c40, spillOp: .24, lit });
+  const T = kit.shopfront(scene, { w: S,  x: 0, stone: 'white_sandstone_blocks_02', wall: 0xeee3d3, shutter: 0x3f4a56, base: 0x23272d, frame: 0x15171a, signW: 5.2, signH: .66, signFrame: 0x3a3c40, spillOp: .24, lit });
   // v19 : ?int=restaurant… derrière cette même façade, la salle du métier (celle de sa démo), et la caméra continue
   // depuis l'arrêt : la porte s'ouvre, on entre, on s'arrête dans la salle. Le dehors du métier (sa rue, sa terrasse) est laissé
   // de côté : on ne garde que ce que kit.room() construit, posé dans cette scène.

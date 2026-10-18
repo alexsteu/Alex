@@ -126,6 +126,8 @@ function e3film(n,R,at,onimg){const bl=new Array(n),bm=new Array(n),bz=new Uint8
  function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&out(i))free(i);const A=Math.round(R*1.5),Bk=Math.round(R*.5);
   for(let d=0;d<=A&&act<4;d++)for(const i of d?(d<=Bk?[at+d*dir,at-d*dir]:[at+d*dir]):[at])if(i>=0&&i<n&&bl[i]&&!bm[i]&&!bz[i]&&act<4)dec(i)}
  return{n,get:i=>bm[i],any:()=>bl.some(Boolean),
+  /* v20.1 : de a à b, les fichiers sont-ils là (jamais deux images manquantes de suite) ? sinon le film attendrait un paquet encore en route */
+  dl(a,b){a=clamp(Math.round(a),0,n-1);b=clamp(Math.round(b),0,n-1);const s=b>a?1:-1;for(let k=a;k!==b;k+=s){const j=k+s;if(!bl[j]&&(j===b||!bl[j+s]))return false}return true},
   near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},
   seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){dir=i>at?1:-1;at=i;pump()}},
   /* jusqu'où l'on peut aller de f vers t sans trou de plus d'une image (deux images décodées au plus l'une de l'autre) */
@@ -251,12 +253,12 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  const xh=u.querySelector('.r-x'),geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;const x=xh?xh.offsetHeight:0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight-x);L=Math.max(1,x+D*(1-GATE[1]));anchor.style.top=LIVE?(STOP*D)+'px':''};   /* D : la rue ; L : la suite (de son mur à la fin de la marche) */
  /* v20.1 : redimensionner vide le canevas (rotation, barre d'adresse, autre jeu d'images) : on y remet la dernière bonne image,
     étirée en « cover », jusqu'à la prochaine ; jamais un canevas noir */
- const kc=document.createElement('canvas'),kx=kc.getContext('2d');let painted=false;
+ const kc=document.createElement('canvas'),kx=kc.getContext('2d');let painted=false,shF=-1,lastS=0;
  function keep(){if(!painted||!W||!H)return;kc.width=W;kc.height=H;kx.drawImage(cv,0,0)}
  function back(){if(!painted||!kc.width)return;const sc=Math.max(W/kc.width,H/kc.height),w=kc.width*sc,h=kc.height*sc;cx.drawImage(kc,(W-w)/2,(H-h)/2,w,h)}
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
   SW=r.width||1;if(w!==W||h!==H){keep();W=cv.width=w;H=cv.height=h;back();dirty=true}   /* la barre d'adresse du téléphone bouge : on ne vide le canevas que si sa taille change */
-  const k=r.width<r.height*.95?'m':'d';if(k!==set){if(store[set])store[set].film.sleep();set=k;if(armed)load(k)}if(!LIVE)load(k);geo()}
+  const k=r.width<r.height*.95?'m':'d';if(k!==set){if(store[set])store[set].film.sleep();set=k;shF=-1;if(armed)load(k)}if(!LIVE)load(k);geo()}
  /* le nom : sur l'enseigne vide, en néon. Seules les lettres nouvelles s'allument (les autres ne bougent pas) ;
     la largeur et la taille suivent en douceur (transition sur width et scale), sans à-coup. Il passe aussi sur l'entrée plus bas. */
  let shown='';
@@ -292,7 +294,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  const xc=document.createElement('canvas'),xx=xc.getContext('2d');
  function snap(){if(!W||!H)return;xc.width=W;xc.height=H;xx.drawImage(cv,0,0);xa=1}
  const fit2=(b,d)=>({ox:b.ox/d,oy:b.oy/d,w:b.w/d,h:b.h/d});
- function draw(f){const s=store[set];if(!W||!H||!s)return;const n=SETS[set];f=clamp(f,0,n-1);s.film.seek(f);const r=s.film.pair(f);if(!r)return;const[i0,i1,a]=r;if(!s.loose&&Math.abs(i0-f)>1.01&&Math.abs(i1-f)>1.01)return;   /* jamais une image lointaine à la place de la bonne (l'affiche reste en attendant) */if(window.__rd)__rd.push([i0,i1,+a.toFixed(2)]);
+ function draw(f){const s=store[set];if(!W||!H||!s)return;const n=SETS[set];f=clamp(f,0,n-1);s.film.seek(f);const r=s.film.pair(f);if(!r)return;const[i0,i1,a]=r;const far=Math.min(Math.abs(i0-f),Math.abs(i1-f));if(!s.loose&&far>1.01&&(far>=Math.abs((shF<0?S0[set]:shF)-f)-1||performance.now()-lastS<1500))return;   /* jamais une image plus lointaine que celle qu'on voit déjà (l'affiche = S0) ; v20.1 : réseau lent, on se rapproche par étapes au lieu de rester sur l'affiche */shF=far>1.01?(Math.abs(i0-f)<Math.abs(i1-f)?i0:i1):f;if(window.__rd)__rd.push([i0,i1,+a.toFixed(2)]);
   const b=paintPair(s.film,r,1);
   /* à l'arrêt : la salle du métier choisi s'allume derrière la vitrine (la première image de la suite, même cadrage) */
   const z=inCur(),z0=z&&z.film.get(0);if(z0&&inA>.003){const c=cover(z0);cx.globalAlpha=inA;cx.drawImage(z0,c.ox,c.oy,c.w,c.h);cx.globalAlpha=1}
@@ -349,7 +351,11 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   place(pinAt(s,i),{ox:(rw-w)/2,oy:(rh-h)/2,w,h},1)}
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  /* le film suit sa cible sans jamais sauter une image : une image décodée à la fois, au plus une par image affichée */
- function follow(film,c,t,dt,rest){if(film.get(Math.round(c))){if(rest)t=film.near(t);t=film.reach(c,t)}else t=c;const st=t-c;c+=clamp(st*(1-Math.exp(-dt/.07)),-1,1);return Math.abs(t-c)<.004?t:c}
+ function follow(film,c,t,dt,rest){
+  /* v20.1 : au repos, si les images manquent entre ici et la cible (réseau lent : une image sur huit), on ne reste pas figé loin d'elle :
+     on se pose sur l'image prête la plus proche de la cible, par un fondu (snap) */
+  if(rest&&performance.now()-lastS>1500){const nt=film.near(t);if(film.get(nt)&&Math.abs(nt-t)<Math.abs(c-t)-1&&(!film.get(Math.round(c))||!film.dl(c,nt))){if(painted)snap();return nt}}
+  if(film.get(Math.round(c))){if(rest)t=film.near(t);t=film.reach(c,t)}else t=c;const st=t-c;c+=clamp(st*(1-Math.exp(-dt/.07)),-1,1);return Math.abs(t-c)<.004?t:c}
  /* l'inertie : la page suit le défilement avec ~180 ms de retard, comme une caméra portée, jamais par à-coups ;
     une fois arrêtée, elle se pose en douceur sur l'image nette la plus proche (le fondu ne sert qu'en mouvement). */
  function loop(now){raf=0;const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
@@ -364,6 +370,8 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   cQ=clamp((cP*D-GATE[1]*D)/L,0,1);const rest=cP===P;need();
   /* la rue */
   const F=frameOf(Math.min(cP,HOLD[1])),s0=store[set];let tF=rest?Math.round(F):F;
+  /* v20.1 : au repos, loin de la cible et sans images entre deux (réseau lent) : on se pose sur l'image prête la plus proche, par un fondu */
+  if(rest&&s0&&!s0.loose&&performance.now()-lastS>1500){const nt=s0.film.near(Math.round(F));if(s0.film.get(nt)&&Math.abs(nt-F)<Math.abs(cF-F)-1&&(!s0.film.get(Math.round(cF))||!s0.film.dl(cF,nt))){if(painted)snap();cF=tF=nt;dirty=true}}
   if(s0&&s0.loose&&s0.film.get(s0.film.near(cF))){if(!s0.film.get(Math.round(cF)))cF=s0.film.near(cF);if(rest)tF=s0.film.near(tF)}
   else if(s0&&s0.film.get(Math.round(cF))){if(rest)tF=s0.film.near(tF);tF=s0.film.reach(cF,tF)}else tF=cF;   /* tant que l'image affichée (l'affiche) n'a pas son double décodé, le film ne part pas */   /* une image pas encore décodée : le film l'attend, il ne la saute pas */
   {const st=tF-cF,dl=st*(1-Math.exp(-dt/.07));cF+=clamp(dl,-1,1)}if(Math.abs(tF-cF)<.004)cF=tF;   /* une image au plus par image affichée : aucun trou, même lancé fort */
@@ -396,7 +404,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* v20.1 : retour d'un autre onglet, de l'arrière-plan ou du cache (bouton Retour) : on redessine (iOS peut avoir vidé le canevas) */
  const redo=()=>{const s=store[set];if(s&&vis)s.film.wake();size();dirty=true;last=-1;lastI=-1;tick()};
  addEventListener('pageshow',e=>{if(e.persisted)redo()});document.addEventListener('visibilitychange',()=>{if(!document.hidden)redo()});
- if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});
+ if(LIVE){addEventListener('scroll',()=>{lastS=performance.now();arm();if(vis)tick()},{passive:true});
   /* le film ne se charge qu'au premier geste : qui repart tout de suite ne le télécharge pas (l'affiche est déjà la bonne image) */
   for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,()=>{moved=true;arm();more()},{passive:true,once:true});
   requestAnimationFrame(()=>u.classList.add('go'))}else u.classList.add('go');

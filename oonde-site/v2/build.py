@@ -121,7 +121,10 @@ def pack(src, dst, start=0):
     fr = sorted(src.glob('f*.webp')); n = len(fr); dst.mkdir(parents=True, exist_ok=True)
     # v20.1 : start = la première image que le lecteur montre (S0 dans rue.js) ; celles d'avant ne partent plus (un tiers du poids en moins)
     J = lambda i: i - start
-    groups = [[i for i in range(start, n) if J(i) % 8 == 0 or i == n - 1], [i for i in range(start, n) if J(i) % 8 == 4], [i for i in range(start, n) if J(i) % 4 == 2], [i for i in range(start, n) if J(i) % 2 == 1 and i != n - 1]]
+    k1 = -1
+    if start and (src / 'pins.json').exists():   # v20.1 : l'image de l'arrêt part dans le premier paquet (réseau lent : on ne reste pas sur l'affiche du début à l'arrêt)
+        k1 = next((i for i, x in enumerate(json.loads((src / 'pins.json').read_text())) if x['p'] >= .88), -1)
+    groups = [[i for i in range(start, n) if J(i) % 8 == 0 or i == n - 1 or i == k1], [i for i in range(start, n) if J(i) % 8 == 4 and i != k1], [i for i in range(start, n) if J(i) % 4 == 2 and i != k1], [i for i in range(start, n) if J(i) % 2 == 1 and i != n - 1 and i != k1]]
     for g, idx in enumerate(groups):
         head, body, off = [], b'', 0
         for i in idx:
