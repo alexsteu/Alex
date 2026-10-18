@@ -21,8 +21,6 @@
 {{INC:e3d.css}}
 {{INC:rue.css}}
 /* v20 · l'accueil « Apple minimal » : une idée par écran */
-.idea{padding-block:clamp(120px,14vw,200px)}
-.idea h2{max-width:14ch}
 /* les deux offres : deux colonnes sans bordure, le prix en grand */
 #prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
 .offers2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,6vw,96px)}
@@ -58,7 +56,7 @@ html:not(.js) .e-pick{display:none}
  <div class="r-walk" id="rWalk">
   <span class="r-anchor" id="choix" aria-hidden="true"></span><span class="r-x" aria-hidden="true"></span>
   <div class="r-stage" id="rStage">
-   <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/open.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/open.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, des vitrines allumées et un réverbère" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
+   <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/open.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/open.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, des vitrines allumées" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
     <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div class="r-sign" data-id="sign"><span class="r-ph">Votre nom ici</span><span class="r-nm"></span><span class="r-met"><i></i><i></i></span></div></div>
     <div class="e-pins r-wall" id="rWall" aria-hidden="true"><div class="e-wall" data-id="wall"><span></span></div></div></div>
    <div class="r-sbar" id="rSbar" aria-hidden="true"><span class="r-sbn"><span id="rSbN">Votre commerce</span> <small>DÉMO</small></span><span class="r-sbb" id="rSbB">Réserver</span></div>
@@ -77,11 +75,12 @@ html:not(.js) .e-pick{display:none}
     <div class="r-m"><span class="r-ml" id="rMl">Votre métier</span><div class="r-seg" role="radiogroup" aria-labelledby="rMl"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1">Restaurant</button><button type="button" role="radio" data-m="boulangerie" aria-checked="false" tabindex="-1">Boulangerie</button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1">Coiffure</button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1">Institut</button><button type="button" role="radio" data-m="onglerie" aria-checked="false" tabindex="-1">Onglerie</button><button type="button" role="radio" data-m="logement" aria-checked="false" tabindex="-1">Logement</button></div><select class="r-sel" id="rSel" aria-labelledby="rMl"><option value="restaurant">Restaurant</option><option value="boulangerie">Boulangerie</option><option value="coiffure">Coiffure</option><option value="institut">Institut</option><option value="onglerie">Onglerie</option><option value="logement">Logement</option></select></div>
     <div class="r-go"><a class="r-enter" href="#rEnd">Entrer <span aria-hidden="true">→</span></a></div>
     <p class="r-note"><span>Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit.</span><a class="r-wa2" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></p>
+    <button type="button" class="r-more" tabindex="-1" aria-hidden="true">Continuer <span>↓</span></button>
    </div>
    <div class="r-tx r-end" id="rEnd" role="group" aria-labelledby="rEndH" tabindex="-1">
     <p class="r-eeb"><span id="rEndEb">Restaurant</span> <i class="dtag">Démo</i></p>
     <p class="r-eh" id="rEndH">Ce soir, une table vous attend.</p>
-    <div class="r-ebt"><button type="button" class="r-book" id="rEndBtn" data-book><span id="rEndB">Réserver une table</span></button><a class="r-esee" href="#entree"><span id="rEndM">Voir le menu du jour</span> <span aria-hidden="true">↓</span></a></div>
+    <div class="r-ebt"><a class="r-esee" href="#entree">Voir le site <span aria-hidden="true">↓</span></a></div>
    </div>
    <p class="r-cue" aria-hidden="true">FAITES DÉFILER<i></i></p>
    <p class="r-load" role="status" aria-live="polite"></p>
@@ -104,11 +103,6 @@ html:not(.js) .e-pick{display:none}
   <div class="ds-card"><p class="ds-k">TARIF</p><p class="ds-v">dès 180.– <small>la nuit</small></p><button type="button" class="ds-go" data-book>Réserver en direct</button><p class="ds-n">Sans commission · 2 nuits minimum</p></div></div></template>
 </section>
 <div class="w-toast" id="eToast" role="dialog" aria-labelledby="eToastT" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></div>
-
-<section class="bg-white idea" aria-labelledby="hI"><div class="in txt c">
- <h2 id="hI" class="rv">Un site qu’on visite avant de venir.</h2>
- <p class="lede rv" style="margin-top:24px">Votre façade, votre porte, votre salle. Puis vos prix, vos horaires et le bouton pour vous écrire.</p>
-</div></section>
 
 <section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
  <h2 id="hP" class="rv">Deux sites, selon ce qu’il vous faut.</h2>
@@ -152,6 +146,7 @@ html:not(.js) .e-pick{display:none}
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
    <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Nous ouvrir votre porte : on vient voir votre lieu, on le photographie, et on reconstruit votre vraie façade, votre porte et votre salle en 3D (les exemples de cette page, eux, sont des commerces inventés). Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l'entrée et on s'occupe de votre fiche Google.</p></div></div></details>
    <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>20.– par mois pour l'hébergement et les petites modifications, sans durée minimale. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine, c'est compris.</p><p>Pour Google, on met en place tout ce qu'il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
+   <details><summary>Et sur téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
    <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux. On démarre : on n'a pas encore de clients à vous montrer. C'est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit. Quand vous écrivez, c'est nous qui répondons.</p></div></div></details>
   </div>
  </div>

@@ -299,7 +299,7 @@ h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;m
 .btn{border-radius:999px;padding:15px 26px}
 .nav .btn{border-radius:999px;padding:10px 16px}
 .nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
-.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none}
+.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
 .bg-ink .lnk,.bg-night .lnk{color:#fff}
 footer{border-top:0}
@@ -523,8 +523,8 @@ footer{border-top:0}
 .r-end .r-eeb,.r-end .r-eh{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.5)}
 .r-ebt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px}
 .r-book{min-height:50px;padding:12px 24px;font-size:15.5px}
-.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:11px 20px;border:1px solid rgba(255,255,255,.6);border-radius:99px;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.r-esee:hover{border-color:#fff;background:rgba(10,12,32,.6)}
+.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-esee:hover{text-decoration:underline;text-underline-offset:4px}
 .r-end:focus{outline:none}
 /* téléphone : le titre en haut, l'arrêt en bas, plein large */
 @container (max-aspect-ratio:1/1){
@@ -552,7 +552,7 @@ footer{border-top:0}
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
  .r-sbar{height:54px;padding:0 14px}.r-sbb{padding:8px 14px;font-size:13px}
- .r-end{bottom:18px}.r-eh{font-size:min(40px,10.4cqw)}.r-ebt{gap:8px}.r-book,.r-esee{flex:1 1 100%;justify-content:center;min-height:48px}
+ .r-end{bottom:18px}.r-eh{font-size:min(40px,10.4cqw)}.r-ebt{gap:8px}.r-esee{min-height:44px}
 }
 /* mouvement réduit, ou sans JavaScript : l'image de l'arrêt, immobile ; les textes et le choix viennent dessous */
 .r.static .r-walk,html:not(.js) .r-walk{height:auto}
@@ -580,9 +580,15 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r-act .r-wa{display:inline-flex;align-items:center;gap:6px;min-height:50px;padding:0 4px;background:none;border:0;color:#fff;font:600 16px var(--sans);text-decoration:none;text-shadow:0 1px 14px rgba(5,6,20,.7);-webkit-backdrop-filter:none;backdrop-filter:none}
 .r-act .r-wa:hover{background:none;text-decoration:underline;text-underline-offset:4px}
 @media (max-width:700px){.r-act .r-wa{flex:1 1 100%;justify-content:center;min-height:44px;font-size:15.5px}}
+/* v20.1 : à l'arrêt, sur ordinateur, la roulette bute ; un indice discret dit qu'on peut continuer (et la roulette tenue ~1,2 s passe) */
+.r-more{position:absolute;left:50%;bottom:calc(100% + 14px);translate:-50% 6px;opacity:0;pointer-events:none;border:0;background:rgba(10,12,32,.55);color:#fff;font:500 14px var(--sans);letter-spacing:.01em;padding:10px 18px;border-radius:999px;cursor:pointer;transition:opacity .3s var(--ez,ease),translate .3s var(--ez,ease);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-more span{display:inline-block;margin-left:4px}
+.r.push .r-more{opacity:1;translate:-50% 0;pointer-events:auto}
+@media (prefers-reduced-motion:no-preference){.r.push .r-more span{animation:rMore 1.4s ease-in-out 2}}
+@keyframes rMore{50%{transform:translateY(3px)}}
+@media (hover:none),(pointer:coarse){.r-more{display:none}}
+.r.static .r-more,html:not(.js) .r-more{display:none}
 /* v20 · l'accueil « Apple minimal » : une idée par écran */
-.idea{padding-block:clamp(120px,14vw,200px)}
-.idea h2{max-width:14ch}
 /* les deux offres : deux colonnes sans bordure, le prix en grand */
 #prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
 .offers2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,6vw,96px)}
@@ -618,7 +624,7 @@ html:not(.js) .e-pick{display:none}
  <div class="r-walk" id="rWalk">
   <span class="r-anchor" id="choix" aria-hidden="true"></span><span class="r-x" aria-hidden="true"></span>
   <div class="r-stage" id="rStage">
-   <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/open.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/open.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, des vitrines allumées et un réverbère" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
+   <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/open.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/open.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, des vitrines allumées" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
     <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div class="r-sign" data-id="sign"><span class="r-ph">Votre nom ici</span><span class="r-nm"></span><span class="r-met"><i></i><i></i></span></div></div>
     <div class="e-pins r-wall" id="rWall" aria-hidden="true"><div class="e-wall" data-id="wall"><span></span></div></div></div>
    <div class="r-sbar" id="rSbar" aria-hidden="true"><span class="r-sbn"><span id="rSbN">Votre commerce</span> <small>DÉMO</small></span><span class="r-sbb" id="rSbB">Réserver</span></div>
@@ -637,11 +643,12 @@ html:not(.js) .e-pick{display:none}
     <div class="r-m"><span class="r-ml" id="rMl">Votre métier</span><div class="r-seg" role="radiogroup" aria-labelledby="rMl"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1">Restaurant</button><button type="button" role="radio" data-m="boulangerie" aria-checked="false" tabindex="-1">Boulangerie</button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1">Coiffure</button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1">Institut</button><button type="button" role="radio" data-m="onglerie" aria-checked="false" tabindex="-1">Onglerie</button><button type="button" role="radio" data-m="logement" aria-checked="false" tabindex="-1">Logement</button></div><select class="r-sel" id="rSel" aria-labelledby="rMl"><option value="restaurant">Restaurant</option><option value="boulangerie">Boulangerie</option><option value="coiffure">Coiffure</option><option value="institut">Institut</option><option value="onglerie">Onglerie</option><option value="logement">Logement</option></select></div>
     <div class="r-go"><a class="r-enter" href="#rEnd">Entrer <span aria-hidden="true">→</span></a></div>
     <p class="r-note"><span>Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit.</span><a class="r-wa2" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></p>
+    <button type="button" class="r-more" tabindex="-1" aria-hidden="true">Continuer <span>↓</span></button>
    </div>
    <div class="r-tx r-end" id="rEnd" role="group" aria-labelledby="rEndH" tabindex="-1">
     <p class="r-eeb"><span id="rEndEb">Restaurant</span> <i class="dtag">Démo</i></p>
     <p class="r-eh" id="rEndH">Ce soir, une table vous attend.</p>
-    <div class="r-ebt"><button type="button" class="r-book" id="rEndBtn" data-book><span id="rEndB">Réserver une table</span></button><a class="r-esee" href="#entree"><span id="rEndM">Voir le menu du jour</span> <span aria-hidden="true">↓</span></a></div>
+    <div class="r-ebt"><a class="r-esee" href="#entree">Voir le site <span aria-hidden="true">↓</span></a></div>
    </div>
    <p class="r-cue" aria-hidden="true">FAITES DÉFILER<i></i></p>
    <p class="r-load" role="status" aria-live="polite"></p>
@@ -664,11 +671,6 @@ html:not(.js) .e-pick{display:none}
   <div class="ds-card"><p class="ds-k">TARIF</p><p class="ds-v">dès 180.– <small>la nuit</small></p><button type="button" class="ds-go" data-book>Réserver en direct</button><p class="ds-n">Sans commission · 2 nuits minimum</p></div></div></template>
 </section>
 <div class="w-toast" id="eToast" role="dialog" aria-labelledby="eToastT" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></div>
-
-<section class="bg-white idea" aria-labelledby="hI"><div class="in txt c">
- <h2 id="hI" class="rv">Un site qu’on visite avant de venir.</h2>
- <p class="lede rv" style="margin-top:24px">Votre façade, votre porte, votre salle. Puis vos prix, vos horaires et le bouton pour vous écrire.</p>
-</div></section>
 
 <section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
  <h2 id="hP" class="rv">Deux sites, selon ce qu’il vous faut.</h2>
@@ -712,6 +714,7 @@ html:not(.js) .e-pick{display:none}
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
    <details><summary>Qu’est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Nous ouvrir votre porte : on vient voir votre lieu, on le photographie, et on reconstruit votre vraie façade, votre porte et votre salle en 3D (les exemples de cette page, eux, sont des commerces inventés). Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
    <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>20.– par mois pour l’hébergement et les petites modifications, sans durée minimale. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l’ardoise suffit : on le met à jour sur votre site une fois par semaine, c’est compris.</p><p>Pour Google, on met en place tout ce qu’il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
+   <details><summary>Et sur téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
    <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux. On démarre : on n’a pas encore de clients à vous montrer. C’est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit. Quand vous écrivez, c’est nous qui répondons.</p></div></div></details>
   </div>
  </div>
@@ -900,7 +903,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   const cta=s.lodge?'Réserver un séjour':t.cta,see=s.lodge?'Voir les dates':'Voir '+({'Menu du jour':'le menu du jour','Nos produits':'nos produits'}[t.sec]||'les '+t.sec.toLowerCase());
   /* la fin de la rue : la barre du site, le titre et le bouton du métier */
   txt('rSbN',name);txt('rSbB',/rendez-vous/.test(cta)?'Rendez-vous':cta.split(' ')[0]);
-  txt('rEndEb',lab);txt('rEndH',s.c3);txt('rEndB',cta);txt('rEndM',see);
+  txt('rEndEb',lab);txt('rEndH',s.c3);
   /* les rubriques du site */
   if(sec){txt('eLogoN',name);txt('eBookB',/rendez-vous/.test(cta)?'Rendez-vous':cta.split(' ')[0]);
    const nav=$('eNav');if(nav&&nav.dataset.k!==st.sc){nav.dataset.k=st.sc;nav.innerHTML=s.lodge?'<a href="#eInfo">Le logement</a><a href="#eInfo">Dates</a>':`<a href="#eInfo">${esc(t.sec)}</a><a href="#eInfo">Horaires</a><a href="#eInfo">Contact</a>`}
@@ -977,13 +980,18 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   const get=g=>e3pack(base(k)+'p'+g+'.txt').then(l=>l.forEach(([i,b])=>s.film.add(i,b)));   /* décodage hors du fil principal (e3d.js) */
   /* tant que le premier paquet n'est pas là, l'affiche reste ; s'il tarde, un mot discret ; s'il échoue, l'affiche (ou le fond) reste et le texte continue */
   const slow=setTimeout(()=>{if(!s.film.any()&&k===set)ld.textContent='Chargement de la rue…'},1200);
-  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return get(1)}).then(()=>{s.p2=()=>{s.p2=null;get(2).then(()=>{s.p3=()=>{s.p3=null;get(3).catch(()=>{})};more()},()=>{s.loose=true;dirty=true;tick()})};more()},   /* v20 : p0 et p1 dès que la page est posée (le premier lancer a déjà une image sur quatre) ; p2 puis p3 au premier geste */()=>{clearTimeout(slow);ld.textContent='';if(!s.film.any()){flat();return}s.loose=true;dirty=true;tick()})   /* p1 ou p2 absents : le film joue avec ce qu'il a (images plus espacées) plutôt que de rester figé */   /* p3 (les images impaires, le plus lourd) : seulement si l'on avance vraiment */
+  get(0).then(()=>{clearTimeout(slow);ld.textContent='';return get(1)}).then(()=>get(2)).then(()=>{s.p3=()=>{s.p3=null;get(3).catch(()=>{})};more()},   /* v20.1 : p0, p1 et p2 dès que la page est posée (une image sur deux : le premier lancer n'a plus de trou) ; p3 au premier geste */()=>{clearTimeout(slow);ld.textContent='';if(!s.film.any()){flat();return}s.loose=true;dirty=true;tick()})   /* p1 ou p2 absents : le film joue avec ce qu'il a (images plus espacées) plutôt que de rester figé */   /* p3 (les images impaires, le plus lourd) : seulement si l'on avance vraiment */
    .catch(()=>{clearTimeout(slow);ld.textContent='';if(!s.film.any())flat()})}
- function more(){const s=store[set];if(!s||!(P>.4||moved))return;if(s.p2)s.p2();else if(s.p3)s.p3()}   /* p3 : dès que la personne bouge (ou si elle arrive plus bas) */
+ function more(){const s=store[set];if(!s||!(P>.4||moved))return;if(s.p3)s.p3()}   /* p3 : dès que la personne bouge (ou si elle arrive plus bas) */
  const arm=()=>{if(armed)return;armed=true;load(set)};
  const xh=u.querySelector('.r-x'),geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;const x=xh?xh.offsetHeight:0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight-x);L=Math.max(1,x+D*(1-GATE[1]));anchor.style.top=LIVE?(STOP*D)+'px':''};   /* D : la rue ; L : la suite (de son mur à la fin de la marche) */
+ /* v20.1 : redimensionner vide le canevas (rotation, barre d'adresse, autre jeu d'images) : on y remet la dernière bonne image,
+    étirée en « cover », jusqu'à la prochaine ; jamais un canevas noir */
+ const kc=document.createElement('canvas'),kx=kc.getContext('2d');let painted=false;
+ function keep(){if(!painted||!W||!H)return;kc.width=W;kc.height=H;kx.drawImage(cv,0,0)}
+ function back(){if(!painted||!kc.width)return;const sc=Math.max(W/kc.width,H/kc.height),w=kc.width*sc,h=kc.height*sc;cx.drawImage(kc,(W-w)/2,(H-h)/2,w,h)}
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
-  SW=r.width||1;if(w!==W||h!==H){W=cv.width=w;H=cv.height=h;dirty=true}   /* la barre d'adresse du téléphone bouge : on ne vide le canevas que si sa taille change */
+  SW=r.width||1;if(w!==W||h!==H){keep();W=cv.width=w;H=cv.height=h;back();dirty=true}   /* la barre d'adresse du téléphone bouge : on ne vide le canevas que si sa taille change */
   const k=r.width<r.height*.95?'m':'d';if(k!==set){if(store[set])store[set].film.sleep();set=k;if(armed)load(k)}if(!LIVE)load(k);geo()}
  /* le nom : sur l'enseigne vide, en néon. Seules les lettres nouvelles s'allument (les autres ne bougent pas) ;
     la largeur et la taille suivent en douceur (transition sur width et scale), sans à-coup. Il passe aussi sur l'entrée plus bas. */
@@ -1025,14 +1033,14 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   /* à l'arrêt : la salle du métier choisi s'allume derrière la vitrine (la première image de la suite, même cadrage) */
   const z=inCur(),z0=z&&z.film.get(0);if(z0&&inA>.003){const c=cover(z0);cx.globalAlpha=inA;cx.drawImage(z0,c.ox,c.oy,c.w,c.h);cx.globalAlpha=1}
   if(xa>.003){cx.globalAlpha=xa;cx.drawImage(xc,0,0);cx.globalAlpha=1}
-  flag(u,'live',true);dirty=false;
+  flag(u,'live',true);painted=true;dirty=false;
   const d=W/SW,p=s.pins&&s.pins[i0]?s.pins[i0].p:0;place(e3mix(pinAt(s,i0),pinAt(s,i1),a),fit2(b,d),p);
   if(z0&&inA>.5&&z.pins)e3place(rwall,z.pins[0].pins,fit2(b,d));else e3place(rwall,null,null)}
  /* dans la salle : la suite du métier choisi ; le nom sur l'enseigne (dehors) puis au mur du fond */
  function drawIn(f){const z=inCur();if(!W||!H||!z)return false;f=clamp(f,0,z.n-1);z.film.seek(f);const r=z.film.pair(f);if(!r)return false;const[i0,i1,a]=r;if(Math.abs(i0-f)>1.01&&Math.abs(i1-f)>1.01)return false;
   if(window.__ri)__ri.push([i0,i1,+a.toFixed(2)]);
   const b=paintPair(z.film,r,1);if(xa>.003){cx.globalAlpha=xa;cx.drawImage(xc,0,0);cx.globalAlpha=1}
-  flag(u,'live',true);dirty=false;const d=W/SW,pp=z.pins?e3mix(pinAt(z,i0),pinAt(z,i1),a):null;
+  flag(u,'live',true);painted=true;dirty=false;const d=W/SW,pp=z.pins?e3mix(pinAt(z,i0),pinAt(z,i1),a):null;
   place(pp,fit2(b,d),1);e3place(rwall,pp,fit2(b,d));return true}
  function place(pp,f,p){for(const el of pins.children){const q=pp&&pp.find(x=>x.id===el.dataset.id);
   if(!q||q.vis<=0){el.style.opacity=0;continue}e3quad(el,q.c,1000,127,f);
@@ -1052,7 +1060,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* le rythme, en images : un temps sur le globe, le tour et la rue d'un seul geste, l'arrêt devant l'enseigne, puis la suite.
     La vitesse monte et descend en douceur (trapèze) : pas de départ ni d'arrêt sec. */
  const trap=(x,a,b,ra,rb)=>{const L=b-a,t=clamp(x-a,0,L),v=1/(L-ra/2-rb/2);return t<ra?v*t*t/(2*ra):t<=L-rb?v*(ra/2+t-ra):1-v*(L-t)**2/(2*rb)};
- const S0={d:62,m:52};   /* on part dans la rue (open.jpg : image 62 sur ordinateur, les vitrines devant le globe, 52 sur téléphone), les vitrines déjà là ; le réverbère passe sur le côté */
+ const S0={d:74,m:60};   /* v20.1 : on part dans la rue, le réverbère du logo déjà sorti du cadre (de 62 à 73, son globe coupé filait au bord en quelques images : « les lampadaires au début ») ; build.py ne livre que les images à partir d'ici */
  const k1Of=()=>{const s=store[set],n=SETS[set];return s&&s.k1>0?s.k1:Math.round((n-1)*.935)};
  function frameOf(P){const k1=k1Of(),a=S0[set];return P<HOLD[0]?a+(k1-a)*trap(P,.03,HOLD[0],.06,.1):k1}   /* l'arrêt : l'image ne bouge plus jusqu'au mur ; après, c'est la suite */
  const inOf=q=>(INS[set]-1)*trap(q,0,END,.08,.14);   /* la suite : la porte, la salle, et un temps sur la fin du site */
@@ -1121,6 +1129,9 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   for(const el of [t1,...says,stop,cue,sbar,end]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();if(deep)stop.scrollIntoView({block:'start'})}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
  addEventListener('resize',()=>{size();tick()});
+ /* v20.1 : retour d'un autre onglet, de l'arrière-plan ou du cache (bouton Retour) : on redessine (iOS peut avoir vidé le canevas) */
+ const redo=()=>{const s=store[set];if(s&&vis)s.film.wake();size();dirty=true;last=-1;lastI=-1;tick()};
+ addEventListener('pageshow',e=>{if(e.persisted)redo()});document.addEventListener('visibilitychange',()=>{if(!document.hidden)redo()});
  if(LIVE){addEventListener('scroll',()=>{arm();if(vis)tick()},{passive:true});
   /* le film ne se charge qu'au premier geste : qui repart tout de suite ne le télécharge pas (l'affiche est déjà la bonne image) */
   for(const ev of ['wheel','touchstart','keydown','pointerdown'])addEventListener(ev,()=>{moved=true;arm();more()},{passive:true,once:true});
@@ -1134,13 +1145,14 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  const yQ=q=>walk.getBoundingClientRect().top+scrollY-hh+GATE[1]*D+q*L;
  function enter(){arm();geo();open(3000);need(4);if(LIVE)e3glide(yQ(END),1900);else end.scrollIntoView({block:'nearest'})}
  end.addEventListener('focusout',e=>{if(!end.contains(e.relatedTarget))end.classList.remove('kb')});   /* au clavier : la fin du site se montre tout de suite, sans attendre le fondu */
- end.addEventListener('focusin',()=>{end.classList.add('kb');if(LIVE&&!end.classList.contains('on')){open(3000);need(4);geo();e3glide(yQ(END),600)}});
+ const kb=e=>{try{return e.target.matches(':focus-visible')}catch(_){return false}},jump=(y,ms,e)=>{if(kb(e)){e3halt();scrollTo({top:y,behavior:'instant'})}else e3glide(y,ms)};   /* au clavier : l'élément est à l'écran tout de suite */
+ end.addEventListener('focusin',e=>{end.classList.add('kb');if(LIVE&&!end.classList.contains('on')){open(3000);need(4);geo();jump(yQ(END),600,e)}});
  /* arrivé avec ?e= (un lien préparé) : droit à l'arrêt, le métier et le nom déjà posés */
  if(new URLSearchParams(location.search).get('e')&&!location.hash)addEventListener('load',()=>setTimeout(toStop,80),{once:true});
  /* au clavier : entrer dans la barre (Tab) amène la caméra à l'arrêt */
- stop.addEventListener('focusin',()=>{if(LIVE&&!u.classList.contains('stop'))toStop()});
+ stop.addEventListener('focusin',e=>{if(LIVE&&!u.classList.contains('stop')){if(kb(e)){arm();geo();jump(yAt(STOP),0,e)}else toStop()}});
  /* revenir au titre au clavier (Maj+Tab) : la caméra remonte au début */
- t1.addEventListener('focusin',()=>{if(LIVE&&t1.classList.contains('off'))e3glide(yAt(0))});
+ t1.addEventListener('focusin',e=>{if(LIVE&&t1.classList.contains('off'))jump(yAt(0),undefined,e)});
  /* le clavier du téléphone : on se souvient d'où l'on était, la barre reste au-dessus du clavier, et on y revient en fermant */
  nameIn.addEventListener('focus',()=>{kbY=scrollY});
  nameIn.addEventListener('blur',()=>{const was=frz;frz=false;stop.style.setProperty('--kb','0px');if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
@@ -1148,7 +1160,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* le portail. Un lancer, même fort, s'arrête à l'arrêt ; pour continuer, il faut un nouveau geste une fois arrivé
     (doigt reposé, nouvelle molette après une pause, clavier) ou « Entrer dans la démo », un lien, « Passer l'intro ».
     Remonter n'est jamais bloqué ; arriver d'en dessous (ou par un lien) ouvre le portail. */
- let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0;const curP=()=>(hh-walk.getBoundingClientRect().top)/D;
+ let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0,w0=0,wMax=0,pt=0;const curP=()=>(hh-walk.getBoundingClientRect().top)/D;
  const rest=()=>{const p=curP();if(gate==='closed'&&p>=HOLD[0]-.03&&p<=GATE[1]+.005&&!e3touch.n&&performance.now()-lastW>350)gate='rested'};
  const open=(ms=0)=>{gate='open';if(ms)pass=performance.now()+ms};   /* ms : un saut voulu (lien, bouton) passe la rue entière sans être refermé */
  if(LIVE){
@@ -1162,7 +1174,10 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   addEventListener('wheel',e=>{const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.deltaY<=0)return;
    if(gate==='rested'&&quiet){open();return}
    if(gate!=='open'&&curP()>=GATE[1]-.012&&curP()<GATE[1]+.05){e.preventDefault();   /* l'inertie bute sur le mur ; quand elle s'éteint, on se pose à l'arrêt */
+    if(quiet||!w0){w0=t;wMax=0}wMax=Math.max(wMax,e.deltaY);u.classList.add('push');clearTimeout(pt);pt=setTimeout(()=>u.classList.remove('push'),2600);
+    if(t-w0>1200&&e.deltaY>=Math.max(4,wMax*.6)){w0=0;u.classList.remove('push');open();return}   /* roulette tenue ~1,2 s (pas l'élan qui s'éteint) : on continue */
     clearTimeout(wt);wt=setTimeout(()=>{if(gate!=='open'&&Math.abs(curP()-STOP)>.012){geo();e3glide(yAt(STOP))}},300)}},{passive:false});   /* l'inertie du pavé tactile bute sur le mur */
+  {const mb=u.querySelector('.r-more');if(mb)mb.addEventListener('click',()=>{u.classList.remove('push');open(1500);e3glide(scrollY+innerHeight*.7)})}
   addEventListener('touchstart',e=>{tY=e.touches[0]?e.touches[0].clientY:-1;if(gate==='rested')open()},{passive:true,capture:true});
   addEventListener('touchmove',e=>{const y=e.touches[0]?e.touches[0].clientY:-1;const up=tY>=0&&y<tY;tY=y;if(gate!=='open'&&up&&e.cancelable&&curP()>=GATE[1]-.004&&curP()<GATE[1]+.05)e.preventDefault()},{passive:false});
   addEventListener('touchend',()=>{clearTimeout(rt);rt=setTimeout(rest,320)},{passive:true});

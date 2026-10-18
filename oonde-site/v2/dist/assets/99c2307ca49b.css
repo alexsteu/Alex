@@ -281,7 +281,7 @@ h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;m
 .btn{border-radius:999px;padding:15px 26px}
 .nav .btn{border-radius:999px;padding:10px 16px}
 .nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
-.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none}
+.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
 .bg-ink .lnk,.bg-night .lnk{color:#fff}
 footer{border-top:0}
@@ -505,8 +505,8 @@ footer{border-top:0}
 .r-end .r-eeb,.r-end .r-eh{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.5)}
 .r-ebt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px}
 .r-book{min-height:50px;padding:12px 24px;font-size:15.5px}
-.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:11px 20px;border:1px solid rgba(255,255,255,.6);border-radius:99px;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.r-esee:hover{border-color:#fff;background:rgba(10,12,32,.6)}
+.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-esee:hover{text-decoration:underline;text-underline-offset:4px}
 .r-end:focus{outline:none}
 /* téléphone : le titre en haut, l'arrêt en bas, plein large */
 @container (max-aspect-ratio:1/1){
@@ -534,7 +534,7 @@ footer{border-top:0}
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
  .r-sbar{height:54px;padding:0 14px}.r-sbb{padding:8px 14px;font-size:13px}
- .r-end{bottom:18px}.r-eh{font-size:min(40px,10.4cqw)}.r-ebt{gap:8px}.r-book,.r-esee{flex:1 1 100%;justify-content:center;min-height:48px}
+ .r-end{bottom:18px}.r-eh{font-size:min(40px,10.4cqw)}.r-ebt{gap:8px}.r-esee{min-height:44px}
 }
 /* mouvement réduit, ou sans JavaScript : l'image de l'arrêt, immobile ; les textes et le choix viennent dessous */
 .r.static .r-walk,html:not(.js) .r-walk{height:auto}
@@ -562,9 +562,15 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r-act .r-wa{display:inline-flex;align-items:center;gap:6px;min-height:50px;padding:0 4px;background:none;border:0;color:#fff;font:600 16px var(--sans);text-decoration:none;text-shadow:0 1px 14px rgba(5,6,20,.7);-webkit-backdrop-filter:none;backdrop-filter:none}
 .r-act .r-wa:hover{background:none;text-decoration:underline;text-underline-offset:4px}
 @media (max-width:700px){.r-act .r-wa{flex:1 1 100%;justify-content:center;min-height:44px;font-size:15.5px}}
+/* v20.1 : à l'arrêt, sur ordinateur, la roulette bute ; un indice discret dit qu'on peut continuer (et la roulette tenue ~1,2 s passe) */
+.r-more{position:absolute;left:50%;bottom:calc(100% + 14px);translate:-50% 6px;opacity:0;pointer-events:none;border:0;background:rgba(10,12,32,.55);color:#fff;font:500 14px var(--sans);letter-spacing:.01em;padding:10px 18px;border-radius:999px;cursor:pointer;transition:opacity .3s var(--ez,ease),translate .3s var(--ez,ease);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-more span{display:inline-block;margin-left:4px}
+.r.push .r-more{opacity:1;translate:-50% 0;pointer-events:auto}
+@media (prefers-reduced-motion:no-preference){.r.push .r-more span{animation:rMore 1.4s ease-in-out 2}}
+@keyframes rMore{50%{transform:translateY(3px)}}
+@media (hover:none),(pointer:coarse){.r-more{display:none}}
+.r.static .r-more,html:not(.js) .r-more{display:none}
 /* v20 · l'accueil « Apple minimal » : une idée par écran */
-.idea{padding-block:clamp(120px,14vw,200px)}
-.idea h2{max-width:14ch}
 /* les deux offres : deux colonnes sans bordure, le prix en grand */
 #prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
 .offers2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,6vw,96px)}

@@ -84,7 +84,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   const cta=s.lodge?'Réserver un séjour':t.cta,see=s.lodge?'Voir les dates':'Voir '+({'Menu du jour':'le menu du jour','Nos produits':'nos produits'}[t.sec]||'les '+t.sec.toLowerCase());
   /* la fin de la rue : la barre du site, le titre et le bouton du métier */
   txt('rSbN',name);txt('rSbB',/rendez-vous/.test(cta)?'Rendez-vous':cta.split(' ')[0]);
-  txt('rEndEb',lab);txt('rEndH',s.c3);txt('rEndB',cta);txt('rEndM',see);
+  txt('rEndEb',lab);txt('rEndH',s.c3);
   /* les rubriques du site */
   if(sec){txt('eLogoN',name);txt('eBookB',/rendez-vous/.test(cta)?'Rendez-vous':cta.split(' ')[0]);
    const nav=$('eNav');if(nav&&nav.dataset.k!==st.sc){nav.dataset.k=st.sc;nav.innerHTML=s.lodge?'<a href="#eInfo">Le logement</a><a href="#eInfo">Dates</a>':`<a href="#eInfo">${esc(t.sec)}</a><a href="#eInfo">Horaires</a><a href="#eInfo">Contact</a>`}
