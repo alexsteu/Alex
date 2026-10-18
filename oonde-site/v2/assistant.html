@@ -17,36 +17,28 @@
 <style>
 {{INC:base.css}}
 {{INC:pub.css}}
-.ia{display:grid;grid-template-columns:minmax(0,1fr) min(320px,70vw);gap:clamp(40px,6vw,96px);align-items:center}.ia h2{font-size:clamp(34px,4.6vw,64px);letter-spacing:-.035em;line-height:1.04}.ia .lede{color:rgba(255,255,255,.72);margin-top:20px;font-size:clamp(18px,1.7vw,22px)}
-.ia .v{border-radius:24px;box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}@media (max-width:860px){.ia{grid-template-columns:1fr}.ia-v{justify-self:center;width:min(280px,72vw)}}
-/* Page reprise du fil « nouvelles pages » (générateur nouvelles-pages/build.py), intégrée au gabarit du site : en-tête, pied, polices, CSP. */
-.hero2{padding-block:clamp(56px,8vw,112px) clamp(48px,6vw,80px)}
-.hero2 .mono{display:inline-flex;gap:10px;align-items:center;margin-bottom:20px}
-.hero2 .mono b{color:var(--klein);font-weight:500}
-.hero2 h1{max-width:15ch}
-.hero2 .lede{margin-top:22px}
-.hero2 .act{margin-top:32px}
-/* premier écran : le titre à gauche, la démo à droite (sur ordinateur) */
-.hx{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,420px);gap:clamp(32px,5vw,72px);align-items:center}.hx-cap{margin-top:22px;max-width:34em}
-@media (min-width:901px){.hero2{padding-block:clamp(36px,4vw,56px)}.hx h1{font-size:clamp(44px,4.6vw,68px)}}
-@media (max-width:900px){.hx{grid-template-columns:1fr}}
-.demo.one{display:block}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;list-style:none;margin:0;padding:0}
-.steps li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
-.steps .n{font:500 13px var(--mono);color:var(--klein);letter-spacing:.08em;display:block;margin-bottom:28px}
-.steps p{margin-top:10px;color:var(--soft);font-size:16px}
-@media (max-width:860px){.steps{grid-template-columns:1fr}}
-.final2{text-align:left}
-.final2 h2{max-width:20ch}
-.final2 p{margin-top:16px;color:rgba(255,255,255,.72);max-width:34em}
-.final2 .act{margin-top:28px}
-.prix2{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline;margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
-.prix2 .mono{color:var(--ink)}
-.demo{display:grid;grid-template-columns:1fr minmax(320px,420px);gap:clamp(32px,5vw,72px);align-items:start}
-@media (max-width:900px){.demo{grid-template-columns:1fr}}
-.demo .pts{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
-.demo .pts li{padding-left:22px;position:relative;color:var(--soft)}
-.demo .pts li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink)}
+/* v20 : un héros centré, la conversation en grand ; trois écrans d'une phrase ; une liste ; la vidéo ; le dernier écran */
+.ia{display:grid;grid-template-columns:minmax(0,1fr) min(320px,70vw);gap:clamp(40px,6vw,96px);align-items:center}.ia .lede{margin-top:24px}
+.ia .v{border-radius:24px;box-shadow:0 40px 80px -40px rgba(17,19,24,.5)}@media (max-width:860px){.ia{grid-template-columns:1fr}.ia-v{justify-self:center;width:min(280px,72vw)}}
+.ah{padding-block:clamp(56px,7vw,112px) clamp(96px,11vw,160px)}
+.ah h1{max-width:13ch;margin:16px auto 0}
+.ah .lede{margin:24px auto 0;max-width:30em}
+.ah .chat{margin:clamp(40px,5vw,64px) auto 0;max-width:440px;text-align:left}
+.ah .cap{margin:16px auto 0;max-width:34em;color:var(--muted)}
+.say{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,96px);align-items:center}
+.say+.say{margin-top:clamp(96px,11vw,160px)}
+.say h2{max-width:13ch}
+.say>div>p{margin-top:20px;color:var(--soft);font-size:clamp(19px,1.7vw,24px);line-height:1.4;max-width:22em}
+.bub{display:flex;flex-direction:column;gap:14px}
+.bub .m{font-size:clamp(17px,1.5vw,21px);max-width:88%;padding:16px 20px;border-radius:22px;white-space:normal;margin:0}
+.bub .m.b{border-bottom-left-radius:6px;box-shadow:0 30px 60px -40px rgba(17,19,24,.35)}
+.bub .m.u{border-bottom-right-radius:6px}
+.bub .who{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase;align-self:flex-end}
+@media (max-width:860px){.say{grid-template-columns:minmax(0,1fr)}}
+.non3{list-style:none;margin:clamp(40px,5vw,64px) 0 0;padding:0;display:grid;gap:clamp(20px,2.4vw,32px)}
+.non3 li{font-size:clamp(22px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:600;max-width:30ch}
+.non3 li span{display:block;font-weight:400;font-size:clamp(17px,1.5vw,20px);letter-spacing:0;color:var(--soft);margin-top:6px}
+.pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}
 .chat{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:560px;max-height:78vh;box-shadow:0 1px 0 rgba(17,19,24,.03),0 18px 40px -24px rgba(17,19,24,.25)}
 .chat .top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .chat .av{width:36px;height:36px;border-radius:50%;background:#2B2420;color:#F4EFE7;display:grid;place-items:center;font:400 italic 19px var(--serif);flex:none}
@@ -72,7 +64,6 @@
 .non div{border-top:1px solid var(--ink);padding-top:16px}
 .non p{color:var(--soft);margin-top:8px;font-size:16px}
 @media (max-width:860px){.non{grid-template-columns:1fr}}
-.final2 :focus-visible{outline-color:#fff}
 </style>
 
 <a class="skip" href="#top">Aller au contenu</a>
@@ -87,72 +78,64 @@
 
 <main id="top">
 
-<section class="hero2 bg-paper" data-hero><div class="in hx">
- <div>
- <p class="mono"><b>●</b> L’assistant · nouveau</p>
- <h1 class="h-xl">Vos clients ont une réponse, même à 23 h.</h1>
- <p class="lede">Un assistant répond sur votre site aux questions qu’on vous pose tous les jours : horaires, carte, prix, parking, réservation. Quand il ne sait pas, il ne devine pas. Il vous passe la main sur WhatsApp.</p>
- <p class="micro hx-cap">Démo à essayer : l’assistant de la Trattoria Nonna Pia, un restaurant inventé à Morges. Écrivez comme un client, ou touchez une question toute prête.</p>
- </div>
+<section class="ah bg-paper c" data-hero aria-labelledby="h1"><div class="in">
+ <p class="mono">L’assistant</p>
+ <h1 class="h-xl" id="h1">Vos clients ont une réponse, même à 23 h.</h1>
+ <p class="lede">Sur votre site, il répond à ce qu’on vous demande tous les jours. Quand il ne sait pas, il vous passe la main sur WhatsApp.</p>
  <div class="chat" id="essai" aria-label="Démo de l’assistant">
-  <div class="top"><span class="av" aria-hidden="true">N</span><div class="who"><b>Trattoria Nonna Pia</b><span>Assistant · répond tout de suite</span></div><span class="tag">DÉMO</span></div>
+  <div class="top"><span class="av" aria-hidden="true">N</span><div class="who"><b>Trattoria Nonna Pia</b><span>Assistant · répond tout de suite</span></div><span class="dtag" style="margin-left:auto">Démo</span></div>
   <div class="log" id="log" aria-live="polite"></div>
   <div class="qchips" id="chips"></div>
   <form id="f" autocomplete="off"><label class="sr" for="q">Votre question</label><input id="q" placeholder="Votre question…" maxlength="160"><button>Envoyer</button></form>
-  <p class="foot">Démo : le restaurant et ses informations sont inventés.</p>
  </div>
+ <p class="micro cap">Démo à essayer : la Trattoria Nonna Pia est un restaurant inventé, à Morges. Écrivez comme un client, ou touchez une question.</p>
 </div></section>
 
-<section class="bg-white"><div class="in demo one">
- <div>
-  <p class="mono">Démo · restaurant inventé</p>
-  <h2 class="h-l" style="margin-top:14px">Il répond avec vos informations.</h2>
-    <ul class="pts">
-   <li>Il répond seulement avec les informations que vous lui donnez.</li>
-   <li>Il parle français, et aussi anglais ou allemand si vous le voulez.</li>
-   <li>Pour une réservation ou une question spéciale, il envoie le client vers votre WhatsApp.</li>
-  </ul>
+<section class="bg-white" aria-label="Ce que fait l’assistant"><div class="in">
+ <div class="say">
+  <div><h2 class="rv">Il répond.</h2><p class="rv">Avec vos horaires, votre carte et vos prix. En français, et en anglais ou en allemand si vous le voulez.</p></div>
+  <div class="bub rv"><span class="who">Un client · 22 h 47</span><p class="m u">Vous êtes ouverts ce soir ?</p><p class="m b">Oui, jusqu’à 22 h 30. Ce soir, la cuisine prend les commandes jusqu’à 21 h 45.</p></div>
  </div>
-</div></section>
-
-<section class="bg-paper"><div class="in">
- <div class="sec-head"><p class="mono">Comment ça marche</p><h2 style="margin-top:14px">Prêt en quelques jours, avec vos mots.</h2></div>
- <ol class="steps">
-  <li><span class="n">01</span><h3>On liste vos questions</h3><p>En 20 minutes, vous nous dites ce que vos clients demandent tout le temps, et ce que vous répondez.</p></li>
-  <li><span class="n">02</span><h3>Vous l’essayez avant de payer</h3><p>On vous envoie un lien pour discuter avec votre assistant. S’il ne vous plaît pas, vous vous arrêtez là.</p></li>
-  <li><span class="n">03</span><h3>Il travaille, vous gardez la main</h3><p>Il est en ligne sur votre site. Un horaire change ? Un message WhatsApp et on le met à jour.</p></li>
- </ol>
-</div></section>
-
-<section class="bg-white sec2"><div class="in">
- <div class="sec-head"><p class="mono">Ce qu’il ne fait pas</p><h2 class="h-m" style="margin-top:14px">Un assistant honnête, pas un robot qui invente.</h2></div>
- <div class="non">
-  <div><h3>Il n’invente rien</h3><p>S’il n’a pas la réponse, il le dit et propose de vous écrire.</p></div>
-  <div><h3>Il ne promet rien à votre place</h3><p>Pas de prix spécial, pas de table garantie sans votre accord.</p></div>
-  <div><h3>Il ne remplace pas votre accueil</h3><p>Il répond quand vous n’êtes pas là. Le reste, c’est vous.</p></div>
+ <div class="say">
+  <div><h2 class="rv">Il ne sait pas ? Il vous passe la main.</h2><p class="rv">Il ne devine jamais. Une réservation, une allergie, une demande spéciale : le client arrive sur votre WhatsApp.</p></div>
+  <div class="bub rv"><span class="who">Un client</span><p class="m u">Vous faites des pâtes sans gluten ?</p><p class="m b">Pour une allergie, je préfère que l’équipe vous réponde elle-même. Écrivez-lui sur WhatsApp.</p></div>
  </div>
- <div class="prix2"><span class="mono">En option de votre site</span><span class="micro">Prix sur devis, par écrit sous 48 h. Sans engagement, résiliable chaque mois.</span></div>
+ <div class="say">
+  <div><h2 class="rv">Vous gardez la main.</h2><p class="rv">Vous l’essayez avant de payer. Un horaire change ? Un message WhatsApp, et on le met à jour.</p></div>
+  <div class="bub rv"><span class="who">Vous, à OONDE</span><p class="m u">On ferme le 24 décembre.</p><p class="m b">C’est noté, on met l’assistant à jour.</p></div>
+ </div>
+ <p class="micro" style="margin-top:clamp(64px,7vw,96px);color:var(--muted)"><span class="dtag">Démo</span>&nbsp; Conversations tirées de la démo Trattoria Nonna Pia, un restaurant inventé.</p>
 </div></section>
 
-<section class="bg-ink" aria-labelledby="ia-t"><div class="in ia">
- <div><span class="dtag">Démo</span><h2 id="ia-t" style="margin-top:18px">On a essayé de le faire mentir.</h2><p class="lede">L’assistant d’un restaurant de démo, interrogé sur ce qu’il ne sait pas. Il répond avec vos informations, et sinon il vous passe la main.</p><p class="micro" style="margin-top:18px;color:rgba(255,255,255,.6)">Restaurant de démo, inventé. Voix générées par IA.</p></div>
+<section class="bg-paper" aria-labelledby="hN"><div class="in">
+ <h2 id="hN" class="rv">Ce qu’il ne fait pas.</h2>
+ <ul class="non3">
+  <li class="rv">Il n’invente rien.<span>S’il n’a pas la réponse, il le dit et propose de vous écrire.</span></li>
+  <li class="rv">Il ne promet rien à votre place.<span>Pas de prix spécial, pas de table garantie sans votre accord.</span></li>
+  <li class="rv">Il ne remplace pas votre accueil.<span>Il répond quand vous n’êtes pas là. Le reste, c’est vous.</span></li>
+ </ul>
+ <p class="pz2 rv">En option de votre site. Prix sur devis, par écrit sous 48 h. Sans engagement, résiliable chaque mois.</p>
+</div></section>
+
+<section class="bg-white" aria-labelledby="ia-t"><div class="in ia">
+ <div><span class="dtag">Démo</span><h2 id="ia-t" style="margin-top:18px">On a essayé de le faire mentir.</h2><p class="lede">L’assistant d’un restaurant de démo, interrogé sur ce qu’il ne sait pas. Il répond avec vos informations, et sinon il vous passe la main.</p><p class="micro" style="margin-top:18px;color:var(--muted)">Restaurant de démo, inventé. Voix générées par IA.</p></div>
  <div class="ia-v"><div class="v" data-v="video/pub/assistant.mp4"><img src="video/pub/assistant.jpg" width="720" height="1280" alt="Démo : l’assistant de la Trattoria Nonna Pia face à des questions pièges ; il n’invente rien." loading="lazy" decoding="async"><button type="button" class="vp" aria-label="Lire la vidéo : l’interrogatoire" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></button><button type="button" class="snd" aria-label="Son de la vidéo" aria-pressed="false"><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div></div>
 </div></section>
 
-<section class="bg-paper sec2"><div class="in">
- <div class="sec-head"><p class="mono">Questions</p><h2 class="h-m" style="margin-top:14px">Ce qu’on nous demande.</h2></div>
+<section class="bg-paper" aria-labelledby="hQ"><div class="in qa">
+ <h2 class="h-m" id="hQ">Vos questions.</h2>
  <div class="faq">
   <details><summary>Est-ce que c’est une IA ?</summary><div class="fa"><div><p>Oui. Mais elle répond seulement avec vos informations, et vos clients savent qu’ils parlent à un assistant.</p></div></div></details>
   <details><summary>Je n’ai pas de site OONDE. Ça marche quand même ?</summary><div class="fa"><div><p>Souvent, oui. Envoyez-nous le lien de votre site, on vous dit si on peut l’ajouter.</p></div></div></details>
   <details><summary>Et si un client pose une question bizarre ?</summary><div class="fa"><div><p>L’assistant dit qu’il ne sait pas et lui propose de vous écrire sur WhatsApp. Il ne sort pas de son sujet.</p></div></div></details>
+  <details><summary>Comment ça se prépare ?</summary><div class="fa"><div><p>En 20 minutes, vous nous dites ce que vos clients demandent tout le temps, et ce que vous répondez. On vous envoie un lien pour discuter avec votre assistant : s’il ne vous plaît pas, vous vous arrêtez là.</p></div></div></details>
   <details><summary>Où vont les messages de mes clients ?</summary><div class="fa"><div><p>Ils servent seulement à répondre. On ne les vend pas et on ne s’en sert pas pour de la publicité.</p></div></div></details>
  </div>
 </div></section>
 
-<section class="bg-ink final2"><div class="in">
- <h2>On prépare l’assistant de votre commerce ?</h2>
- <p>Écrivez-nous le nom de votre commerce. Vous l’essayez avant de payer quoi que ce soit.</p>
- <div class="act"><a class="btn inv" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></div>
+<section class="bg-ink end" id="contact" aria-labelledby="finalH"><div class="in">
+ <h2 id="finalH" class="rv">On prépare l’assistant de votre commerce ?</h2>
+ <div class="act rv"><a class="btn inv" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></div>
 </div></section>
 
 </main>
@@ -160,6 +143,7 @@
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{HOME}}">L’entrée 3D</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p></div>
  <p class="seo">Sites internet avec entrée en 3D, sites simples, assistant et vidéos courtes pour les commerces de Genève à Montreux. © 2026 OONDE.</p>
 </div></footer>
 

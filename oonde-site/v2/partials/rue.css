@@ -163,3 +163,8 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.static .r-anchor,html:not(.js) .r-anchor{top:min(72vh,62.5vw)}   /* sans film : l’ancre de l’arrêt sous l’image */
 
 .js .r .r-end.kb{opacity:1!important;visibility:visible!important}.js .r .r-end.kb,.js .r .r-end.kb *{pointer-events:auto!important}   /* v19 : le focus clavier dans la fin du site */
+
+/* v20 : le héros n'a qu'un bouton plein ; WhatsApp devient un lien « → » */
+.r-act .r-wa{display:inline-flex;align-items:center;gap:6px;min-height:50px;padding:0 4px;background:none;border:0;color:#fff;font:600 16px var(--sans);text-decoration:none;text-shadow:0 1px 14px rgba(5,6,20,.7);-webkit-backdrop-filter:none;backdrop-filter:none}
+.r-act .r-wa:hover{background:none;text-decoration:underline;text-underline-offset:4px}
+@media (max-width:700px){.r-act .r-wa{flex:1 1 100%;justify-content:center;min-height:44px;font-size:15.5px}}

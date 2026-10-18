@@ -110,6 +110,17 @@ html:not(.js) .nojs{display:block}
 .p-act{margin-top:32px}
 
 .close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
+/* v20 · « Apple minimal » : le téléphone seul et grand ; Google en un écran ; le prix centré */
+.pv .frame{display:none}
+@media (min-width:861px){.h-prev{padding:0}.pv{display:flex;justify-content:center}.pv .phone{position:relative;right:auto;bottom:auto;width:min(340px,80%);border-radius:44px;padding:9px;box-shadow:0 50px 100px -40px rgba(17,19,24,.55)}.pv .phone .screen{border-radius:36px}.pv-opts{padding-right:0;justify-content:center}.pv-note{justify-content:center}}
+.f-act .chips button{border-color:transparent;background:rgba(17,19,24,.06);border-radius:999px}
+.f-act .chips button[aria-checked="true"]{background:var(--ink);color:#fff}
+.gg .q{border:0;background:rgba(17,19,24,.06)}
+.pz{display:block;font-size:clamp(72px,10vw,144px);letter-spacing:-.05em;line-height:.95;margin-bottom:12px}
+#vitrine-prix h2{max-width:18ch}
+.l4c{display:inline-grid;text-align:left;margin-top:36px}
+.g3c{justify-content:center}
+#vitrine-prix .act{justify-content:center;margin-top:40px}
 </style>
 
 <a class="skip" href="#vitrine">Aller au contenu</a>
@@ -126,7 +137,7 @@ html:not(.js) .nojs{display:block}
 <section class="hero on end bg-white" id="vitrine" data-hero aria-labelledby="h1">
  <div class="in hero-in">
   <div class="h-txt">
-   <p class="mono kick"><span>La Vitrine · le site simple</span> <span><span class="dot">· </span>sans 3D</span></p>
+   <p class="mono kick"><span>La Vitrine</span></p>
    <h1 class="h-xl h-title" id="h1"><span class="w">Plus simple,</span> <span class="w">vu avant</span> <span class="w">de payer.</span></h1>
    <p class="h-sub h-fade">La Vitrine est un site clair, relié à votre fiche Google. On vous envoie la maquette en 48 heures, offerte. Elle vous plaît, on la met en ligne. Sinon, vous ne devez rien.</p>
    <div class="f-name h-fade tool-js"><p class="micro prep" id="prep" hidden></p><label class="lab" for="bName">Tapez le nom de votre commerce</label><input class="field" id="bName" type="text" maxlength="40" placeholder="Ex. Salon Mirabelle" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
@@ -151,14 +162,11 @@ html:not(.js) .nojs{display:block}
  </div>
 </section>
 
-<section class="bg-paper" id="google" aria-labelledby="hG">
+<section class="bg-white" id="google" aria-labelledby="hG">
  <div class="in gg">
   <div class="txt">
-   <p class="mono">Relié à votre fiche Google</p>
-   <h2 id="hG">Ce que vos clients voient quand ils vous cherchent.</h2>
-   <p class="lede">Ceux qui ne vous connaissent pas encore tapent <span class="q" id="gQ">coiffeur Morges</span> sur leur téléphone. Google leur montre quelques adresses sur la carte, et ils choisissent celle qui montre ses prix, ses photos et un bouton pour écrire.</p>
-   <p class="lede">On complète votre fiche (catégorie, horaires, photos) et on la relie à votre site. Vos clients trouvent vos prix et vous écrivent en un geste.</p>
-   <p class="ig">Instagram parle à ceux qui vous suivent déjà. Google, à ceux qui vous cherchent sans vous connaître.</p>
+   <h2 id="hG" class="rv">Ce que vos clients voient quand ils vous cherchent.</h2>
+   <p class="lede rv">Ils tapent <span class="q" id="gQ">coiffeur Morges</span>. On complète votre fiche Google et on la relie à votre site : vos prix, vos photos, et un bouton pour vous écrire.</p>
   </div>
   <div class="maps" aria-hidden="true">
    <span class="m-tag">EXEMPLE</span>
@@ -173,62 +181,41 @@ html:not(.js) .nojs{display:block}
  </div>
 </section>
 
-<section class="bg-white" id="vitrine-prix" aria-labelledby="hP2">
- <div class="in">
-  <div class="p-head"><div><p class="oname"><b>La Vitrine</b><span>votre site, relié à votre fiche Google</span></p><h2 id="hP2">Un prix fixe, écrit d'avance.</h2></div><p>Le même pour tous les commerces. Rien à payer avant d'avoir vu et validé votre site.</p></div>
-  <ol class="path">
-   <li><span class="when">Aujourd'hui</span><b class="amt">0.–</b><h3>Votre maquette</h3><p>Envoyez le nom de votre commerce sur WhatsApp. La maquette arrive sur votre téléphone en 48 heures.</p></li>
-   <li><span class="when">Si elle vous plaît</span><b class="amt">490.–<small>une fois</small></b><h3>Votre site en ligne</h3><p>On écrit les textes, on relie votre fiche Google et on réserve votre adresse (par exemple <span id="vDom">votre-commerce.ch</span>) à votre nom. Deux séries de corrections. En ligne 5 jours ouvrables après vos photos.</p></li>
-   <li><span class="when">Ensuite</span><b class="amt">20.–<small>par mois</small></b><h3>On s'en occupe</h3><p>Hébergement, adresse, et vos changements de prix, d'horaires ou de photos, faits sous 3 jours ouvrables. Vous arrêtez à la fin de n'importe quel mois.</p></li>
-  </ol>
-  <p class="mono guar-t">Nos trois garanties, écrites dans nos conditions</p>
-  <ul class="guar">
-   <li><b>Payé seulement s'il vous plaît.</b><span>Le site terminé ne vous plaît pas ? Vous ne payez rien, et on le retire.</span></li>
-   <li><b>Sans durée minimale.</b><span>20.– par mois, résiliable à la fin de n'importe quel mois, par un simple message.</span></li>
-   <li><b>Le site est à vous.</b><span>L'adresse est à votre nom. Si vous arrêtez, ou si nous arrêtons un jour, on vous remet tout, gratuitement.</span></li>
-  </ul>
-  <p class="launch"><b>Offre de lancement, pour nos dix premiers commerces :</b> deux mois de suivi Google offerts (avis, publications, rapport), si vous nous laissez montrer votre site en exemple.</p>
-  <div class="act p-act"><a class="btn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a><p class="micro">En option : suivi Google (avis, publications, rapport), 50.– par mois. <a href="{{WA_VID}}" data-wa="vid" target="_blank" rel="noopener">Vidéos pour les réseaux</a> sur devis.</p></div>
-  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
+<section class="bg-paper" id="vitrine-prix" aria-labelledby="hP2">
+ <div class="in txt c">
+  <h2 id="hP2" class="rv"><span class="pz">490.–</span> une fois, seulement si le site vous plaît.</h2>
+  <p class="lede rv" style="margin-top:24px">Puis 20.– par mois : hébergement, adresse <span id="vDom">votre-commerce.ch</span> à votre nom, et vos changements de prix, d'horaires ou de photos.</p>
+  <ul class="l4 l4c rv"><li>Maquette offerte en 48 heures</li><li>Deux séries de corrections</li><li>En ligne 5 jours ouvrables après vos photos</li><li>Vos changements faits sous 3 jours ouvrables</li></ul>
+  <p class="g3 g3c rv"><span>Payé seulement s'il vous plaît.</span><span>Résiliable chaque mois.</span><span>Le site et l'adresse sont à vous.</span></p>
+  <div class="act p-act rv"><a class="btn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a></div>
+  <p class="micro" style="margin-top:20px">Offre de lancement, pour nos dix premiers commerces : deux mois de suivi Google offerts, si vous nous laissez montrer votre site en exemple. En option : suivi Google (avis, publications, rapport), 50.– par mois. <a class="lnk" href="{{PUB}}">La Pub</a>, sur devis.</p>
+  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Le site terminé ne vous plaît pas ? Vous ne payez rien, et on le retire. Si vous arrêtez, ou si nous arrêtons un jour, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
  </div>
 </section>
 
 <section class="bg-paper sec2" id="questions" aria-labelledby="hQ">
  <div class="in qa">
-  <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:14px">Une autre question ? <a href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp</a>, on répond le jour même.</p></div>
+  <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
   <div class="faq">
    <details><summary>L'entrée 3D ou La Vitrine : laquelle choisir ?</summary><div class="fa"><div><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. <a href="{{HOME}}">L'entrée 3D</a> en fait un site qu'on remarque et qu'on partage. Si vous voulez simplement être bien trouvé, La Vitrine suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
    <details><summary>Et si la maquette ne me plaît pas ?</summary><div class="fa"><div><p>Vous ne payez rien et vous ne nous devez rien : un « non merci » sur WhatsApp suffit. Si elle vous plaît presque, deux séries de corrections sont comprises dans les 490.–. Sans réponse de votre part, la maquette reste à vous 14 jours, puis on l'efface.</p></div></div></details>
    <details><summary>Qu'est-ce que je dois préparer ?</summary><div class="fa"><div><p>Rien pour la maquette : on part de votre fiche Google et de votre Instagram, avec votre accord. Si elle vous plaît, vous nous envoyez sur WhatsApp vos vrais prix, vos horaires et quelques photos, et on écrit les textes.</p></div></div></details>
    <details><summary>Je suis un restaurant : et mon menu du jour ?</summary><div class="fa"><div><p>Envoyez-le-nous sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine. C'est compris dans les 20.– par mois.</p></div></div></details>
    <details><summary>Vous garantissez la première place sur Google ?</summary><div class="fa"><div><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis.</p></div></div></details>
-   <details><summary>Et si je veux l’entrée 3D plus tard ?</summary><div class="fa"><div><p>Écrivez-nous : on vient voir votre commerce et on vous donne le prix de l’entrée 3D par écrit. Votre adresse, vos textes et votre fiche Google restent les mêmes.</p></div></div></details>
   </div>
  </div>
 </section>
 
-<section class="bg-white" id="contact" aria-labelledby="finalH">
- <div class="in close">
-  <div>
-   <h2 class="h-m">On vous montre avant de vous demander quoi que ce soit.</h2>
-   <p class="lede" style="margin-top:18px">Nous sommes deux amis de la région, de Genève à Montreux. On prépare votre maquette à partir de ce que Google et Instagram montrent déjà de votre commerce. Vous la regardez sur votre téléphone, tranquillement, et vous décidez.</p>
-   <p class="lede" style="margin-top:14px">Quand vous écrivez, c’est l’un de nous deux qui répond.</p>
-  </div>
-  <div class="final">
-   <h2 id="finalH"><span style="white-space:nowrap">Envoyez-nous</span> le nom de votre commerce.</h2>
-   <p>Votre maquette arrive sur votre téléphone en 48 heures, offerte. Elle vous plaît, on la met en ligne. Sinon, vous ne devez rien. On répond le jour même, 7 jours sur 7.</p>
-   <a class="btn inv" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a>
-   <p class="alt"><a href="{{HOME}}">Plutôt l’entrée 3D</a><a href="{{WA_PASSE}}" data-wa="passe" target="_blank" rel="noopener">Venez me la montrer</a><a href="mailto:oonde.contact@gmail.com" data-mail="vit">Par e-mail</a></p>
-   <div class="qr" aria-hidden="true">{{QR_WA}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div>
-   <p class="also">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p>
-  </div>
- </div>
-</section>
+<section class="bg-ink end" id="contact" aria-labelledby="finalH"><div class="in">
+ <h2 id="finalH" class="rv">Envoyez-nous le nom de votre commerce.</h2>
+ <div class="act rv"><a class="btn inv" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a><a class="lnk" href="{{HOME}}">Plutôt l’entrée 3D →</a></div>
+</div></section>
 </main>
 <nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a></nav>
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{EXEMPLES}}">Exemples</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="vit">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="{{WA_PASSE}}" data-wa="passe" target="_blank" rel="noopener">Venez me la montrer</a></p><div class="qr" aria-hidden="true">{{QR_WA}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
  <p class="seo">Sites internet avec entrée en 3D, et sites simples, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
 </div></footer>
 

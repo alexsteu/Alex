@@ -48,6 +48,9 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  if(hero)new IntersectionObserver(es=>{past=!es[0].isIntersecting;set()}).observe(hero);
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));set()},{threshold:.5,rootMargin:'-64px 0px 0px 0px'});
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
+
+/* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
+(()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
 /* La démo : la visite Les Grèves. Le cadre se fige ; faire défiler fait avancer la caméra, image par image,
    puis le site du lieu monte dans le cadre. Les images (une sur huit, puis une sur quatre, deux, toutes) ne se
    chargent qu'à l'approche, après la page. Mouvement réduit ou sans JavaScript : l'image et le site posés. */
@@ -110,3 +113,6 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
   if(Math.abs(n-P)>.015&&Math.abs(n-P)<.12)scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+n*D,behavior:'smooth'})},220)},{passive:true});
  addEventListener('resize',()=>{size();tick()});size();ui(0);tick();
 })();
+/* l'écran collant : l'image suit la phrase lue */
+(()=>{const im=document.querySelectorAll('.sk-v img'),st=document.querySelectorAll('.sk-s');if(!im.length||!('IntersectionObserver' in window))return;
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const i=[...st].indexOf(e.target);im.forEach((x,j)=>x.classList.toggle('on',j===i))}}),{rootMargin:'-45% 0px -45% 0px'});st.forEach(x=>io.observe(x))})();

@@ -260,6 +260,58 @@ footer .seo{max-width:62em;font-size:13.5px}
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
 @media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
 *{transition:none!important;animation:none!important}}
+
+/* ── v20 · « Apple minimal » (jury v20 § 2) : une idée par écran, typographie grande, palette calme, ni filet ni carte décoratifs ── */
+:root{--muted:#6B7078;--ez:cubic-bezier(.16,1,.3,1)}
+body{font-size:19px;line-height:1.5}
+@media (max-width:760px){body{font-size:17px}}
+.in{max-width:1280px}
+.txt{max-width:980px}.c{text-align:center}.c h2,.c .lede{margin-inline:auto}
+section{padding-block:clamp(96px,11vw,160px)}
+section.sec2{padding-block:clamp(88px,9vw,128px)}
+.bg-paper+.bg-paper{border-top:0}
+.h-xl{font-size:clamp(48px,7.2vw,112px);line-height:1;letter-spacing:-.04em}
+h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
+.h-m{font-size:clamp(30px,3.4vw,48px);line-height:1.06;letter-spacing:-.03em;max-width:18ch}
+@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2,.h-l{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
+.lede{font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:34em;color:var(--soft)}
+.mono{font-size:12px;letter-spacing:.14em}
+@media (max-width:760px){.mono{font-size:11px}}
+.micro{font-size:14px}
+.btn{border-radius:999px;padding:15px 26px}
+.nav .btn{border-radius:999px;padding:10px 16px}
+.nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
+.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none}
+.lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
+.bg-ink .lnk,.bg-night .lnk{color:#fff}
+footer{border-top:0}
+/* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
+.js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
+.js .rv.on{opacity:1;translate:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;translate:none;transition:none}}
+@media print{.js .rv{opacity:1;translate:none}}
+/* trois temps, en très grand */
+.t3{list-style:none;margin:clamp(48px,6vw,80px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,64px)}
+.t3 i{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);font-style:normal;display:block;margin-bottom:16px}
+.t3 b{display:block;font:600 clamp(28px,3vw,44px)/1.06 var(--sans);letter-spacing:-.03em}
+.t3 span{display:block;margin-top:14px;color:var(--soft);font-size:18px;line-height:1.45;max-width:22em}
+@media (max-width:760px){.t3{grid-template-columns:minmax(0,1fr)}.t3 span{font-size:17px}}
+/* quatre puces, sans filet */
+.l4{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+.l4 li{padding-left:28px;position:relative;line-height:1.4}
+.l4 li::before{content:"";position:absolute;left:2px;top:.42em;width:11px;height:6px;border:solid var(--klein);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+/* une ligne de garanties */
+.g3{display:flex;flex-wrap:wrap;gap:8px 32px;margin-top:clamp(40px,5vw,64px);font-size:clamp(17px,1.5vw,20px);font-weight:500;letter-spacing:-.01em}
+.g3 span{display:inline-flex;gap:10px;align-items:baseline}.g3 span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--klein);flex:none;transform:translateY(-2px)}
+/* le dernier écran : encre, un titre, un bouton blanc */
+.end h2{font-size:clamp(36px,5vw,72px);max-width:15ch}
+.end .act{margin-top:clamp(32px,3.6vw,48px)}
+.end :focus-visible{outline-color:#fff}
+.also2{font-size:14px;color:var(--muted)}.also2 a{display:inline-block;padding-block:12px;margin-block:-12px}
+/* pied de page : « Aussi » et le QR (ordinateur seulement) */
+.fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
+.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr svg{width:84px;height:84px;flex:none}
+@media (max-width:900px){.fq .qr{display:none}}
 /* v19 : la démo est la rue. Le nom posé en perspective au mur du fond de la salle (après la porte), puis les rubriques
    du site du commerce, sous la rue, dans sa couleur (#entree). */
 .e-pins{position:absolute;left:0;top:0;width:1000px;pointer-events:none;z-index:1;transform-origin:0 0}
@@ -305,7 +357,7 @@ footer .seo{max-width:62em;font-size:13.5px}
 .ds-bar nav a{color:inherit;text-decoration:none;padding:12px 0}.ds-bar nav a:hover{text-decoration:underline;text-underline-offset:4px}
 .ds-book,.ds-go,.r-book{background:var(--c);color:var(--ct);border:0;border-radius:99px;font:600 14px var(--sans);cursor:pointer;min-height:44px;padding:10px 20px;white-space:nowrap}
 .ds-book{flex:none}
-[data-book]::after{content:"Démo";display:inline-block;margin-left:7px;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 5px;border-radius:4px;border:1px solid currentColor;vertical-align:.12em}
+.ds [data-book]::after{content:none;display:inline-block;margin-left:7px;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 5px;border-radius:4px;border:1px solid currentColor;vertical-align:.12em}
 .ds-in{padding-top:clamp(28px,4vw,48px)}
 .ds-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:24px clamp(24px,4vw,56px);align-items:start}
 .ds-eb{font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#575B66}
@@ -505,58 +557,29 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.static .r-anchor,html:not(.js) .r-anchor{top:min(72vh,62.5vw)}   /* sans film : l’ancre de l’arrêt sous l’image */
 
 .js .r .r-end.kb{opacity:1!important;visibility:visible!important}.js .r .r-end.kb,.js .r .r-end.kb *{pointer-events:auto!important}   /* v19 : le focus clavier dans la fin du site */
-.close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
 
-/* Prix */
-.p-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
-.p-head p{color:var(--muted);font-size:17px;max-width:30em}
-@media (min-width:861px){.p-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,30em);align-items:end}}
-.launch{margin-top:28px;padding:16px 20px;border:1px solid var(--line);border-left:3px solid var(--klein);border-radius:10px;background:var(--card);font-size:15.5px;color:var(--soft);max-width:44em}
-.launch b{color:var(--ink);font-weight:600}
-
-
-/* Les offres côte à côte : l'entrée 3D mise en avant, La Vitrine pour un besoin plus simple */
-.offers{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:stretch}
-.offer{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(22px,2.6vw,32px)}
-.offer.feat{border:1.5px solid var(--ink);box-shadow:0 30px 60px -44px rgba(17,19,24,.45)}
-.o-tag{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.feat .o-tag{color:var(--klein)}
-.offer h3{font-size:clamp(26px,2.4vw,32px);margin-top:8px}
-.o-for{margin-top:10px;color:var(--soft);font-size:16.5px;max-width:32em}
-.o-dl{margin:20px 0 0;border-top:1px solid var(--line)}
-.o-dl>div{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:4px 16px;padding:13px 0;border-bottom:1px solid var(--line)}
-.o-dl dt{font:500 12px/1.9 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.o-dl dd{margin:0;font-size:15.5px;color:var(--soft)}
-.o-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:10px}.o-price b{font-size:clamp(30px,2.8vw,38px);font-weight:600;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}.o-price span{font-size:15px;color:var(--muted)}
-.o-amt{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1.15;font-variant-numeric:tabular-nums}
-.o-amt small{font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0}
-.o-next{margin-top:auto;padding-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
-.o-next .micro{flex:1 1 14em}
-@media (max-width:860px){.offers{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:480px){.o-dl>div{grid-template-columns:minmax(0,1fr)}.o-next .btn{width:100%}}
-/* La chronologie : de la demande à la mise en ligne */
-.steps-h{margin-top:clamp(44px,5vw,64px);font-size:clamp(21px,2vw,26px)}
-.chrono{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:c}
-.chrono li{counter-increment:c;border-top:2px solid var(--ink);padding-top:14px}
-.chrono li::before{content:counter(c,decimal-leading-zero);display:block;font:500 12.5px var(--mono);color:var(--klein);margin-bottom:8px}
-.chrono b{display:block;font-size:17px;letter-spacing:-.01em;line-height:1.25}
-.chrono span{display:block;margin-top:6px;font-size:14.5px;color:var(--muted);line-height:1.45}
-@media (max-width:980px){.chrono{grid-template-columns:minmax(0,1fr);gap:0}.chrono li{display:grid;grid-template-columns:2.4em minmax(0,1fr);border-top:1px solid var(--line);padding:12px 0}.chrono li::before{grid-row:1/3;margin:2px 0 0}.chrono span{grid-column:2}}
-/* les faux boutons du commerce imaginé portent « Démo » ; le choix du métier reste sous la main */
-.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:3px 5px;border-radius:4px;border:1px solid currentColor;vertical-align:.12em}
+/* v20 : le héros n'a qu'un bouton plein ; WhatsApp devient un lien « → » */
+.r-act .r-wa{display:inline-flex;align-items:center;gap:6px;min-height:50px;padding:0 4px;background:none;border:0;color:#fff;font:600 16px var(--sans);text-decoration:none;text-shadow:0 1px 14px rgba(5,6,20,.7);-webkit-backdrop-filter:none;backdrop-filter:none}
+.r-act .r-wa:hover{background:none;text-decoration:underline;text-underline-offset:4px}
+@media (max-width:700px){.r-act .r-wa{flex:1 1 100%;justify-content:center;min-height:44px;font-size:15.5px}}
+/* v20 · l'accueil « Apple minimal » : une idée par écran */
+.idea{padding-block:clamp(120px,14vw,200px)}
+.idea h2{max-width:14ch}
+/* les deux offres : deux colonnes sans bordure, le prix en grand */
+#prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
+.offers2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,6vw,96px)}
+.offers2 h3{font-size:clamp(24px,2.2vw,30px);letter-spacing:-.02em}
+.o-p{font:600 clamp(56px,6vw,80px)/1 var(--sans);letter-spacing:-.04em;margin-top:14px;font-variant-numeric:tabular-nums}
+.o-p small{font-size:.36em;font-weight:500;letter-spacing:-.01em;color:var(--muted);vertical-align:.9em;margin-right:.2em}
+.o-m{margin-top:10px;font-size:16px;color:var(--muted)}
+.o-s{margin-top:24px;color:var(--soft);max-width:30em}
+.o-go{margin-top:32px;display:grid;gap:14px;justify-items:start}
+.o-opt{margin-top:clamp(56px,7vw,96px);color:var(--soft);max-width:44em}
+@media (max-width:860px){.offers2{grid-template-columns:minmax(0,1fr)}.o-p{font-size:48px}}
+@media (max-width:480px){.o-go .btn{width:100%}}
+/* le pied de page de l'accueil : les autres moyens de nous joindre et le code QR */
 .e-pick{display:inline-flex;align-items:center;gap:8px;font:500 14px var(--sans);color:var(--soft)}
-.e-pick select{min-height:46px;padding:8px 36px 8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card) url(../"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111318' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;font:500 15px var(--sans);color:var(--ink);cursor:pointer}
+.e-pick select{min-height:46px;padding:8px 36px 8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card) url(../"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111318' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;appearance:none;-webkit-appearance:none;font:500 15px var(--sans);color:var(--ink);cursor:pointer}
 .e-pick select:hover{border-color:var(--ink)}
 html:not(.js) .e-pick{display:none}
-.close .ig-l{display:inline-block;margin-top:22px}
-/* La fin de l'accueil : pour ceux à qui un site simple suffit, La Vitrine, sur sa page */
-.simple{padding-top:clamp(44px,6vw,72px);padding-bottom:clamp(44px,6vw,72px)}
-.sim{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px 48px;align-items:center}
-.sim h2{font:600 clamp(26px,2.8vw,38px)/1.08 var(--sans);letter-spacing:-.025em;margin-top:10px}
-.sim p{margin-top:12px;color:var(--soft);font-size:16.5px;line-height:1.5;max-width:34em}
-.sim-go{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 16px;padding:22px 24px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
-.sim-go:hover{border-color:var(--ink);transform:translateY(-2px)}
-.sim-go b{font:600 30px var(--sans);letter-spacing:-.02em}
-.sim-go span{grid-column:1;color:var(--soft);font-size:15px}
-.sim-go i{grid-column:2;grid-row:1/3;align-self:center;font-style:normal;font-weight:600;font-size:15px;border-bottom:1.5px solid currentColor;white-space:nowrap}
-@media (max-width:760px){.sim{grid-template-columns:1fr}}
+.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft);vertical-align:.12em}
