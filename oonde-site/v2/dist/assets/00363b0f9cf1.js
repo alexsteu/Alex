@@ -260,7 +260,8 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  function back(){if(!painted||!kc.width)return;const sc=Math.max(W/kc.width,H/kc.height),w=kc.width*sc,h=kc.height*sc;cx.drawImage(kc,(W-w)/2,(H-h)/2,w,h)}
  function size(){const r=scene.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*d),h=Math.round(r.height*d);
   SW=r.width||1;if(w!==W||h!==H){keep();W=cv.width=w;H=cv.height=h;back();dirty=true}   /* la barre d'adresse du téléphone bouge : on ne vide le canevas que si sa taille change */
-  const k=r.width<r.height*.95?'m':'d';if(k!==set){if(store[set])store[set].film.sleep();set=k;shF=-1;if(armed)load(k)}if(!LIVE)load(k);geo()}
+  const k=r.width<r.height*.95?'m':'d',p0=D>1&&cP>=0?curP():-1;if(k!==set){if(!painted&&!store[set]){set=k;want=''}else{want=k;if(armed||!LIVE)load(k)}}if(!LIVE)load(k);geo();if(p0>=0&&Math.abs(curP()-p0)>.002&&LIVE){const y=yAt(p0);e3halt();scrollTo({top:y,behavior:'instant'})}}   /* v22 : en tournant le téléphone, la rue change de longueur : on reste au même endroit (à l'arrêt, la carte reste là) */
+ let want='';function swap(){if(!want||want===set)return;const s=store[want];if(!painted||!store[set]){set=want;want='';return}if(!s||!s.film.get(Math.round(cF))&&!s.film.get(s.film.near(cF)))return;if(store[set])store[set].film.sleep();if(painted)snap();set=want;want='';shF=-1;dirty=true}   /* v22 : l'autre jeu d'images ne remplace l'ancien qu'une fois sa première image prête (plus d'image étirée en double exposition) */
  /* le nom : sur l'enseigne vide, en néon. Seules les lettres nouvelles s'allument (les autres ne bougent pas) ;
     la largeur et la taille suivent en douceur (transition sur width et scale), sans à-coup. Il passe aussi sur l'entrée plus bas. */
  let shown='';
@@ -319,7 +320,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   if(window.__ri)__ri.push([i0,i1,+a.toFixed(2)]);
   const b=paintPair(z.film,r,1);if(xa>.003){cx.globalAlpha=xa;cx.drawImage(xc,0,0);cx.globalAlpha=1}
   flag(u,'live',true);painted=true;dirty=false;const d=W/SW,pp=z.pins?e3mix(pinAt(z,i0),pinAt(z,i1),a):null;
-  place(pp,fit2(b,d),1);e3place(rwall,pp,fit2(b,d));return true}
+  place(pp&&cQ>.22?pp.filter(q=>q.id!=='sign'):pp,fit2(b,d),1);e3place(rwall,pp,fit2(b,d));return true}   /* v22 : passé la porte, l'enseigne du dehors s'efface (plus de nom fantôme sous la barre) */
  function place(pp,f,p){for(const el of pins.children){const q=pp&&pp.find(x=>x.id===el.dataset.id);
   if(!q||q.vis<=0){el.style.opacity=0;continue}e3quad(el,q.c,1000,127,f);
   if(el===sign){el.style.opacity=q.vis;continue}
@@ -366,7 +367,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   const W3=[[.12,.145,.175,.2],[.19,.215,.235,.255]];   /* les deux phrases passent avant la zone de l'arrêt ; la troisième, une fois la porte passée */
   says.forEach((el,j)=>{const w=W3[j],o=w?fade(...w):mode===2||mode===1&&inOk?fq(.03,.07,.15,.21):0,a0=w?w[0]:.03,b0=w?w[1]:.07,x=w?cP:cQ;put(el,'opacity',o.toFixed(3));put(el,'transform',`translateY(${((1-ss(clamp((x-a0)/(b0-a0),0,1)))*14).toFixed(1)}px)`)});
   /* la barre de l'arrêt : là sur toute la zone de l'arrêt ; elle ne part qu'une fois le portail franchi, dès les premiers pas vers la porte */
-  const e=frz?1:ss(Math.min(clamp((cP-GATE[0]+.05)/.05,0,1),clamp((.06-cQ)/.045,0,1)));put(stop,'opacity',e.toFixed(3));put(stop,'transform',`translateY(${((1-e)*14).toFixed(1)}px)`);
+  const e=frz?1:ss(Math.min(clamp((cP-HOLD[0]+.03)/.03,0,1),clamp((.06-cQ)/.045,0,1),cF>=k1Of()-1.5||vg||went?1:0));   /* v22 : la carte attend l'arrêt (plus à 30 % de la marche) */put(stop,'opacity',e.toFixed(3));put(stop,'transform',`translateY(${((1-e)*14).toFixed(1)}px)`);
   flag(stop,'on',e>.02);flag(u,'stop',e>.5);flag(u,'past',cQ>.005);   /* jamais inert : on l'atteint au clavier (voir focusin plus bas) */
   /* dans la salle : la barre du site du commerce, puis sa fin (le bouton du métier) */
   put(sbar,'opacity',(mode===2||mode===1&&inOk?ss(clamp((cQ-.3)/.1,0,1)):0).toFixed(3));   /* v21.1 : le titre de la salle et sa barre attendent ses images (réseau lent : pas de « Un fauteuil vous attend » sur la façade) */
@@ -375,7 +376,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* mouvement réduit : l'affiche de l'arrêt, et le nom posé sur son enseigne */
  function still(){const s=store[set];if(!s||!s.pins||!poster.naturalWidth)return;const i=s.k1>0?s.k1:0,rw=SW,rh=scene.clientHeight,sc=Math.max(rw/poster.naturalWidth,rh/poster.naturalHeight),w=poster.naturalWidth*sc,h=poster.naturalHeight*sc;
   place(pinAt(s,i),{ox:(rw-w)/2,oy:(rh-h)/2,w,h},1)}
- window.__e3=()=>{const z=ins[inKey()],v=va[set];return{mode,cF:+cF.toFixed(2),cI:+cI.toFixed(2),cP:+cP.toFixed(3),cQ:+cQ.toFixed(3),gate,key:inKey(),z:z&&{req:z.req,got:z.got,bad:!!z.bad,f0:!!z.film.get(0)},va:v&&{req:v.req,got:v.got},vx,went,vg:!!vg,k1:k1Of()}};   /* état, pour les tests */
+ window.__e3=()=>{const z=ins[inKey()],v=va[set];return{mode,cF:+cF.toFixed(2),cI:+cI.toFixed(2),cP:+cP.toFixed(3),cQ:+cQ.toFixed(3),gate,key:inKey(),z:z&&{req:z.req,got:z.got,bad:!!z.bad,f0:!!z.film.get(0)},va:v&&{req:v.req,got:v.got},vx,went,vg:!!vg,k1:k1Of(),set,nudged}};   /* état, pour les tests */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  /* le film suit sa cible sans jamais sauter une image : une image décodée à la fois, au plus une par image affichée */
  function follow(film,c,t,dt,rest){
@@ -385,7 +386,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   if(film.get(Math.round(c))){if(rest)t=film.near(t);t=film.reach(c,t)}else t=c;const st=t-c;c+=clamp(st*(1-Math.exp(-dt/.07)),-1,1);return Math.abs(t-c)<.004?t:c}
  /* l'inertie : la page suit le défilement avec ~180 ms de retard, comme une caméra portée, jamais par à-coups ;
     une fois arrêtée, elle se pose en douceur sur l'image nette la plus proche (le fondu ne sert qu'en mouvement). */
- function loop(now){raf=0;const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
+ function loop(now){raf=0;swap();const dt=Math.min(.1,t0?(now-t0)/1000:.016);t0=now;
   if(cP<0)geo();   /* la première image : mesurer la rue d'abord (sinon D=1 et P vaut des dizaines : le titre resterait caché le temps de « redescendre ») */
   const r=walk.getBoundingClientRect(),y=hh-r.top;P=Math.max(0,y/D);Q=clamp((y-GATE[1]*D)/L,0,1);
   if(!LIVE){still();return}
@@ -464,31 +465,31 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* le clavier du téléphone : on se souvient d'où l'on était, la barre reste au-dessus du clavier, et on y revient en fermant */
  nameIn.addEventListener('focus',()=>{kbY=scrollY});
  function rel(){if(document.activeElement===nameIn){kbY=-1;nameIn.blur()}}   /* v21.1 : une action (Entrer, un métier) rend le focus du champ, sans revenir là où l'on était avant la frappe */
- nameIn.addEventListener('blur',()=>{const was=frz;frz=false;stop.style.setProperty('--kb','0px');if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
- const vv=window.visualViewport;if(vv){const kb=()=>{const o=document.activeElement===nameIn?Math.max(0,Math.round(innerHeight-vv.height-vv.offsetTop)):0;stop.style.setProperty('--kb',o+'px')};vv.addEventListener('resize',kb);vv.addEventListener('scroll',kb)}
+ nameIn.addEventListener('blur',()=>{const was=frz;frz=false;stop.style.setProperty('--kb','0px');flag(stop,'kbo',false);if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
+ const vv=window.visualViewport;if(vv){const kb=()=>{const o=document.activeElement===nameIn?Math.max(0,Math.round(innerHeight-vv.height-vv.offsetTop)):0;stop.style.setProperty('--kb',o+'px');flag(stop,'kbo',o>40)};vv.addEventListener('resize',kb);vv.addEventListener('scroll',kb)}
  /* le portail. Un lancer, même fort, s'arrête à l'arrêt ; pour continuer, il faut un nouveau geste une fois arrivé
     (doigt reposé, nouvelle molette après une pause, clavier) ou « Entrer dans la démo », un lien, « Passer l'intro ».
     Remonter n'est jamais bloqué ; arriver d'en dessous (ou par un lien) ouvre le portail. */
- let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0,w0=0,wMax=0,pt=0;const curP=()=>(hh-walk.getBoundingClientRect().top)/D;
+ let nudged=false,nt=0,tY0=-1,swp=false;const nudge=()=>{nudged=true;u.classList.add('push');clearTimeout(nt);nt=setTimeout(()=>u.classList.remove('push'),2000)};let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0,w0=0,wMax=0,pt=0;const curP=()=>(hh-walk.getBoundingClientRect().top)/D;
  const rest=()=>{const p=curP();if(gate==='closed'&&p>=HOLD[0]-.03&&p<=GATE[1]+.005&&!e3touch.n&&performance.now()-lastW>350)gate='rested'};
  const open=(ms=0)=>{gate='open';if(ms)pass=performance.now()+ms};   /* ms : un saut voulu (lien, bouton) passe la rue entière sans être refermé */
  if(LIVE){
   addEventListener('scroll',()=>{const p=curP();clearTimeout(rt);rt=setTimeout(rest,320);
-   if(p<GATE[0]-.03){if(performance.now()>pass)gate='closed'}
+   if(p<GATE[0]-.03){if(performance.now()>pass)gate='closed'}if(p<HOLD[0]-.06)nudged=false;
    else if(gate!=='open'&&pP<0&&p>GATE[1]+.01)gate='open';   /* arrivé en dessous (lien, rechargement) */
    else if(gate!=='open'&&pP>=0&&pP>GATE[1]+.01&&p>GATE[1]+.01)gate='open';   /* on remonte depuis la démo */
    else if((gate!=='open'||!rdy()&&performance.now()>pass&&pP<=GATE[1]+.01)&&pP>=0&&p>GATE[1]+.002&&!e3gliding()){geo();scrollTo({top:yAt(GATE[1]),behavior:'instant'});pP=GATE[1];
     if(COARSE){const h=document.documentElement;h.style.overflow='hidden';setTimeout(()=>{h.style.overflow=''},160)}return}   /* le mur ; au doigt, l'élan est coupé */
    pP=p},{passive:true});
   addEventListener('wheel',e=>{const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.deltaY<=0)return;
-   if(gate==='rested'&&quiet){open();return}
+   if(gate==='rested'&&quiet){if(nudged)open();else nudge();if(gate==='open')return}
    if((gate!=='open'||!rdy()&&performance.now()>pass)&&curP()>=GATE[1]-.012&&curP()<GATE[1]+.05){e.preventDefault();   /* l'inertie bute sur le mur ; quand elle s'éteint, on se pose à l'arrêt */
     if(quiet||!w0||!rdy()){w0=t;wMax=0}wMax=Math.max(wMax,e.deltaY);u.classList.add('push');clearTimeout(pt);pt=setTimeout(()=>u.classList.remove('push'),2600);
     if(t-w0>1200&&e.deltaY>=Math.max(4,wMax*.6)){w0=0;u.classList.remove('push');open();return}   /* roulette tenue ~1,2 s (pas l'élan qui s'éteint) : on continue */
     clearTimeout(wt);wt=setTimeout(()=>{if(gate!=='open'&&Math.abs(curP()-STOP)>.012){geo();e3glide(yAt(STOP))}},300)}},{passive:false});   /* l'inertie du pavé tactile bute sur le mur */
   {const mb=u.querySelector('.r-more');if(mb)mb.addEventListener('click',()=>{u.classList.remove('push');open(1500);e3glide(scrollY+innerHeight*.7)})}
-  addEventListener('touchstart',e=>{tY=e.touches[0]?e.touches[0].clientY:-1;if(gate==='rested')open()},{passive:true,capture:true});
-  addEventListener('touchmove',e=>{const y=e.touches[0]?e.touches[0].clientY:-1;const up=tY>=0&&y<tY;tY=y;if((gate!=='open'||!rdy()&&performance.now()>pass)&&up&&e.cancelable&&curP()>=GATE[1]-.004&&curP()<GATE[1]+.05)e.preventDefault()},{passive:false});
+  addEventListener('touchstart',e=>{tY=e.touches[0]?e.touches[0].clientY:-1;tY0=tY;swp=false},{passive:true,capture:true});
+  addEventListener('touchmove',e=>{const y=e.touches[0]?e.touches[0].clientY:-1;const up=tY>=0&&y<tY;tY=y;if(!swp&&tY0>=0&&tY0-y>10){swp=true;if(gate==='rested'){if(nudged)open();else nudge()}}   /* v22 : au doigt, le premier glissé neuf à l'arrêt ne passe pas (il montre l'indice), le second passe ; un tap ne compte pas ; « Entrer » passe toujours */if((gate!=='open'||!rdy()&&performance.now()>pass)&&up&&e.cancelable&&curP()>=GATE[1]-.004&&curP()<GATE[1]+.05)e.preventDefault()},{passive:false});
   addEventListener('touchend',()=>{clearTimeout(rt);rt=setTimeout(rest,320)},{passive:true});
   addEventListener('keydown',e=>{if(e.target===nameIn&&e.key!=='Tab')return;if(gate==='rested'||['Tab','End','Home'].includes(e.key))open()},true);
   document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('a[href*="#"]:not([href="#choix"]),.r-enter'))open(3000)},true)}
@@ -501,7 +502,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* l'aimantation : si le défilement s'arrête juste avant ou juste après l'arrêt, la caméra s'y pose, en douceur.
     Jamais doigt posé, jamais pendant la frappe ; le moindre geste l'arrête (e3glide). */
  if(LIVE){let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!LIVE||!vis||frz||e3touch.n)return;
-  geo();const t=gate==='open'&&Q>.012&&Q<END-.01?(dn>0?yQ(END):yAt(STOP)):P>=GATE[0]&&Q<=.012&&Math.abs(P-STOP)>.012?yAt(STOP):-1;if(t>=0)e3glide(t)},260)},{passive:true})}   /* dans la salle : en avant, la fin du site ; en arrière, l'arrêt */
+  geo();const t=gate==='open'&&Q>.012&&Q<END-.01?(dn>0?yQ(END):yAt(STOP)):P>=HOLD[0]-.06&&P<HOLD[0]&&Q<=.012?yAt(HOLD[0]+.01):-1;if(t>=0)e3glide(t)},260)},{passive:true})}   /* dans la salle : en avant, la fin du site ; en arrière, l'arrêt */
  {let y0=scrollY;addEventListener('scroll',()=>{const d=scrollY-y0;if(Math.abs(d)>2)dn=d>0?1:-1;y0=scrollY},{passive:true})}
  /* la première mesure attend la première image : l'analyse de la page n'est pas allongée d'une mise en page forcée */
  requestAnimationFrame(()=>{size();if(LIVE&&scrollY>0)arm();ui();tick();

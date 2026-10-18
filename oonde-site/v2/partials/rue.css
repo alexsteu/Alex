@@ -62,7 +62,7 @@
 /* l'arrêt : l'enseigne est à vous. Une barre basse et légère, posée sur le trottoir : la façade reste entière. */
 .r-stop{bottom:clamp(12px,2.4cqh,24px);left:50%;right:auto;translate:-50% calc(-1 * var(--kb,0px));width:min(1180px,calc(100% - 2 * clamp(16px,4cqw,56px)));opacity:0;pointer-events:none;
  display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr) auto;grid-template-areas:"h h h" "f m g" "n n n";gap:6px 22px;align-items:end;
- background:rgba(10,12,32,.46);-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:10px 16px 10px;will-change:opacity,transform}
+ background:rgba(10,12,32,.82);-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:10px 16px 10px;will-change:opacity,transform}
 .r-stop.on{pointer-events:auto}
 .js .r:not(.static) .r-t1.off,.js .r:not(.static) .r-t1.off *{pointer-events:none!important}   /* titre passé : lisible par les lecteurs d'écran, mais ne prend plus le clic */
 /* cachée, la barre reste atteignable au clavier, mais ne prend aucun toucher ni clic (elle recouvre les boutons du titre sur téléphone) */
@@ -126,16 +126,18 @@
  .r-veil{background:linear-gradient(180deg,rgba(8,10,28,.45) 0,rgba(8,10,28,0) 18%,rgba(8,10,28,0) 30%,rgba(8,10,28,.88) 62%,rgba(8,10,28,.95) 100%);opacity:calc(.45 + .55 * var(--hv,1))}
  .r-veil::before{display:none}
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:76px}   /* sous « Passer l’intro » */
- .r-stop{left:10px;right:10px;width:auto;translate:0 calc(-1 * var(--kb,0px));bottom:10px;grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "f" "m" "g" "n";gap:8px;padding:14px;border-radius:16px;background:rgba(10,12,32,.6)}
- .r-stop label,.r-ml{font:600 15.5px var(--sans);color:#fff;margin:0 0 6px}
- .r-stop input{min-height:46px}
+ .r-stop{left:12px;right:12px;width:auto;translate:0 calc(-1 * var(--kb,0px));bottom:12px;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"h h" "f f" "m m" "g n";gap:8px 12px;padding:10px 12px;border-radius:16px;background:rgba(10,12,32,.82)}   /* v22 : la carte reste sous l'enseigne (≤ 200 px, 30 % de l'écran), opaque : rien ne transparaît */
+ .r-stop label,.r-ml{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* le titre de la carte suffit à l'œil ; les libellés restent pour les lecteurs d'écran */
+ .r-stop input{min-height:44px}
  .r-seg,.r-seg button{display:flex}.r-sel{display:none}
- .r-seg{flex-wrap:wrap;gap:6px;padding:0;border:0;background:none;width:auto}
- .r-seg button{min-height:38px;padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.4);font-size:14px;align-items:center}
- .r-go{display:flex}.r-enter{flex:1;justify-content:center;min-height:46px}
- .r-note{font-size:12.5px}.r-note>span{display:none}.r-wa2{margin-left:0}   /* téléphone : la mention DÉMO suffit, la vitrine respire */
+ .r-seg{flex-wrap:nowrap;gap:6px;padding:0 0 2px;border:0;background:none;width:auto;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -12px;padding-inline:12px;scroll-padding-inline:12px}
+ .r-seg::-webkit-scrollbar{display:none}
+ .r-seg button{flex:none;min-height:38px;padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.4);font-size:14px;align-items:center}
+ .r-go{display:flex}.r-enter{flex:1;justify-content:center;min-height:44px}
+ .r-note{font-size:12.5px;margin:0}.r-note>span{display:none}.r-wa2{margin-left:0}   /* téléphone : la mention DÉMO suffit, la vitrine respire */
+ .r-stop.kbo .r-sh,.r-stop.kbo .r-m,.r-stop.kbo .r-go,.r-stop.kbo .r-note{display:none}   /* v22 : clavier ouvert, une seule ligne (le champ) au-dessus du clavier : la façade reste visible */
  .r-skip{top:12px;right:12px;padding:8px 14px;font-size:13.5px;min-height:44px;display:inline-flex;align-items:center}
- .r-seg button{min-height:44px}.r-wa2{min-height:44px}
+ .r-seg button{min-height:44px}.r-wa2{min-height:44px}.r-note{grid-area:n;align-self:center}
  .r-sign .r-met{top:auto;bottom:calc(100% + 30px)}   /* téléphone : le métier au-dessus de l'enseigne, jamais sous la barre */
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
@@ -174,5 +176,12 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.push .r-more{opacity:1;translate:-50% 0;pointer-events:auto}
 @media (prefers-reduced-motion:no-preference){.r.push .r-more span{animation:rMore 1.4s ease-in-out 2}}
 @keyframes rMore{50%{transform:translateY(3px)}}
-@media (hover:none),(pointer:coarse){.r-more{display:none}}
+@media (hover:none),(pointer:coarse){.r-more{bottom:auto;top:calc(100% + 8px);translate:-50% -6px}}   /* v22 : au doigt aussi : « Continuer sans choisir ↓ » sous la carte, 2 s */
 .r.static .r-more,html:not(.js) .r-more{display:none}
+
+/* v22 : paysage du téléphone (hauteur ≤ 480) : la carte compacte, en bas, une ligne par rubrique ; la façade au-dessus */
+@media (orientation:landscape) and (max-height:480px){
+ .r-stop{left:12px;right:auto;width:min(560px,calc(100% - 24px));translate:0 calc(-1 * var(--kb,0px));bottom:8px;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"f g" "m m";gap:6px 10px;padding:8px 10px}
+ .r-sh,.r-note,.r-stop label,.r-ml{display:none}
+ .r-seg{display:flex;overflow-x:auto;scrollbar-width:none}.r-sel{display:none}.r-seg button{flex:none;min-height:36px}
+}

@@ -171,7 +171,7 @@ for k, (title, desc, cur) in PAGES.items():
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
 LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{PUB}}': 'pub'},
          'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{PUB}}': 'pub.html'}}
-for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
+for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out])
@@ -207,13 +207,13 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
                 phs = [f'f{int(i):03d}.webp' for i in ph.group(1 if k == 'd' else 2).split(',')] if ph and sd.name.startswith('in-') else []
                 for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + phs:   # l'affiche, les enseignes, les photos du site (jeu du téléphone sur téléphone)
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
+    (o / 'fonts').mkdir()
+    for f, p, ws in FACES:
+        for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
+    for n in ('Instrument-Sans', 'IBM-Plex-Mono'): shutil.copy(FONTDIR / f'OFL-{n}.txt', o / 'fonts')
+    for st, f in SERIF: shutil.copy(D / 'fonts' / f, o / 'fonts')
+    shutil.copy(D / 'fonts' / 'OFL-Cormorant-Garamond.txt', o / 'fonts')
     if wrap:
-        (o / 'fonts').mkdir()
-        for f, p, ws in FACES:
-            for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
-        for n in ('Instrument-Sans', 'IBM-Plex-Mono'): shutil.copy(FONTDIR / f'OFL-{n}.txt', o / 'fonts')
-        for st, f in SERIF: shutil.copy(D / 'fonts' / f, o / 'fonts')
-        shutil.copy(D / 'fonts' / 'OFL-Cormorant-Garamond.txt', o / 'fonts')
         for f in ('favicon.svg', 'favicon.ico', 'apple-touch-icon.png'): shutil.copy(D / 'brand' / f, o / f)
         U = ' https://cloud.umami.is' if UMAMI else ''
         csp = ("default-src 'self'; script-src 'self'" + U + ' ' + ' '.join(sorted(set().union(*(csp_hashes(h) for h in built.values()))))

@@ -126,7 +126,7 @@ export default async function ({ THREE, kit, scene, portrait }) {
       bloomAt(p) { return .42 + ((M.bloom?.[0] ?? .3) - .42) * sm((p - .25) / .35); },
     };
   }
-  if (VA) return { path: camVa(portrait), fov: 42, bloom: [.42, .55, .9], exposure: .9, pins, after() { kit.dimEnv(g, .3, .45); } };
+  if (VA) return { path: Q.get('ap') === '1' ? camAp(portrait) : camVa(portrait), fov: 42, bloom: [.42, .55, .9], exposure: .9, pins, after() { kit.dimEnv(g, .3, .45); } };
   const path = camPath(portrait);
   return {
     path, fov: 42, bloom: [.42, .55, .9], exposure: .9,
@@ -149,6 +149,23 @@ export function camIn(portrait, mp, mfov) {
 export function camVa(portrait) {
   const st = camPath(portrait).find(k => k.p === .88), S = 9.6;
   return Array.from({ length: 7 }, (_, k) => { const x = (k - 5) * S; return { p: k / 6, pos: [st.pos[0] + x, st.pos[1], st.pos[2]], tgt: [st.tgt[0] + x, st.tgt[1], st.tgt[2]], fov: st.fov }; });
+}
+// v22 : l'approche (?va=1&ap=1) : l'affiche est votre façade, de face, depuis le trottoir d'en face (l'enseigne vide au tiers haut ;
+// sur ordinateur, dans le tiers droit, la caméra décalée sans tourner : l'enseigne reste un rectangle). La caméra traverse la rue
+// en filant vers la gauche jusqu'à la pose de l'image 0 du glissement (le restaurant) : la marche le rejoue ensuite jusqu'à la vôtre.
+export function camAp(portrait) {
+  const v0 = camVa(portrait)[0];
+  return portrait ? [
+    { p: 0, pos: [0, 2.15, 20.5], tgt: [0, .05, 0], fov: 58 },
+    { p: .45, pos: [-20, 1.95, 16.5], tgt: [-27, 1.4, 0], fov: 58 },
+    { p: .8, pos: [-40, 1.78, 12.5], tgt: [-45, 2.3, 0], fov: 58 },
+    { p: 1, pos: v0.pos, tgt: v0.tgt, fov: v0.fov },
+  ] : [
+    { p: 0, pos: [-4.2, 2.3, 19], tgt: [-4.2, 1.19, 0], fov: 42 },
+    { p: .45, pos: [-22, 2.0, 14.5], tgt: [-30, 1.6, 0], fov: 42 },
+    { p: .8, pos: [-41, 1.78, 10.4], tgt: [-46, 2.15, 0], fov: 42 },
+    { p: 1, pos: v0.pos, tgt: v0.tgt, fov: v0.fov },
+  ];
 }
 // La caméra, à part : render.html la suit, et tools/plist.mjs y place les images (autant de changement entre deux images).
 // L'ouverture : un seul tour autour du réverbère, à rayon croissant, le globe au centre ; puis le recul sur la rue.
