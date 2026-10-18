@@ -16,6 +16,9 @@
 <script>document.documentElement.classList.add('js')</script>
 <style>
 {{INC:base.css}}
+{{INC:pub.css}}
+.ia{display:grid;grid-template-columns:minmax(0,1fr) min(320px,70vw);gap:clamp(40px,6vw,96px);align-items:center}.ia h2{font-size:clamp(34px,4.6vw,64px);letter-spacing:-.035em;line-height:1.04}.ia .lede{color:rgba(255,255,255,.72);margin-top:20px;font-size:clamp(18px,1.7vw,22px)}
+.ia .v{border-radius:24px;box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}@media (max-width:860px){.ia{grid-template-columns:1fr}.ia-v{justify-self:center;width:min(280px,72vw)}}
 /* Page reprise du fil « nouvelles pages » (générateur nouvelles-pages/build.py), intégrée au gabarit du site : en-tête, pied, polices, CSP. */
 .hero2{padding-block:clamp(56px,8vw,112px) clamp(48px,6vw,80px)}
 .hero2 .mono{display:inline-flex;gap:10px;align-items:center;margin-bottom:20px}
@@ -77,7 +80,7 @@
  <div class="in">
   <a class="logo landed" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="{{HOME}}#choix">La démo</a><a href="{{HOME}}#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><span class="nav-sub opt"><button type="button" class="nav-sb" data-cur aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="{{ASSISTANT}}" aria-current="page">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a></span></span><a class="opt2" href="{{HOME}}#questions">Questions</a><a class="nav-wa" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></nav>
+  <nav aria-label="Pages" id="navL">{{NAV:assistant}}<a class="nav-wa" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></nav>
   <a class="btn" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Parler de mon assistant</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
@@ -131,6 +134,11 @@
  <div class="prix2"><span class="mono">En option de votre site</span><span class="micro">Prix sur devis, par écrit sous 48 h. Sans engagement, résiliable chaque mois.</span></div>
 </div></section>
 
+<section class="bg-ink" aria-labelledby="ia-t"><div class="in ia">
+ <div><span class="dtag">Démo</span><h2 id="ia-t" style="margin-top:18px">On a essayé de le faire mentir.</h2><p class="lede">L’assistant d’un restaurant de démo, interrogé sur ce qu’il ne sait pas. Il répond avec vos informations, et sinon il vous passe la main.</p><p class="micro" style="margin-top:18px;color:rgba(255,255,255,.6)">Restaurant de démo, inventé. Voix générées par IA.</p></div>
+ <div class="ia-v"><div class="v" data-v="video/pub/assistant.mp4"><img src="video/pub/assistant.jpg" width="720" height="1280" alt="Démo : l’assistant de la Trattoria Nonna Pia face à des questions pièges ; il n’invente rien." loading="lazy" decoding="async"><button type="button" class="vp" aria-label="Lire la vidéo : l’interrogatoire" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></button><button type="button" class="snd" aria-label="Son de la vidéo" aria-pressed="false"><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div></div>
+</div></section>
+
 <section class="bg-paper sec2"><div class="in">
  <div class="sec-head"><p class="mono">Questions</p><h2 class="h-m" style="margin-top:14px">Ce qu’on nous demande.</h2></div>
  <div class="faq">
@@ -151,12 +159,13 @@
 <nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler de mon assistant</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{HOME}}">L’entrée 3D</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{HOME}}">L’entrée 3D</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
  <p class="seo">Sites internet avec entrée en 3D, sites simples, assistant et vidéos courtes pour les commerces de Genève à Montreux. © 2026 OONDE.</p>
 </div></footer>
 
 <script>
 {{INC:core.js}}
+{{INC:pub.js}}
 (()=>{const log=document.getElementById('log'),chips=document.getElementById('chips'),f=document.getElementById('f'),q=document.getElementById('q');
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const WAL='<a href="https://wa.me/41764882710" target="_blank" rel="noopener">WhatsApp</a>';
