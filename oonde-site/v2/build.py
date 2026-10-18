@@ -145,16 +145,16 @@ def blob(fr):
 WA_N = {'d': 45, 'm': 55}   # v22 : le film de l'intro (img/e3d/w/<jeu>) : A images d'approche, puis les 73 du glissement (va)
 def wpacks(k):
     """v22 : les 8 paquets du film, dans l'ordre de rue.js (PK) : L* en basse définition (demi-taille), H* nets.
-    L0 = les 12 premières images de l'approche (demandé dès le HTML) ; L1 = le reste de l'approche ; L2/L3 = la marche, paires/impaires ;
-    H0 = l'affiche et les six façades nettes ; H1/H2/H3 = le reste net (j % 4 == 0, j % 4 == 2, impaires ; j compté dans sa partie)."""
+    L0 = les 6 premières images de l'approche (demandé dès la tête du HTML : le premier mouvement) ; L1 = le reste de l'approche ; L2/L3 = la marche, paires/impaires ;
+    H0 = l'affiche et l'arrêt nets ; H1 (les six façades, et une sur 4)/H2/H3 = le reste net (j % 4 == 0, j % 4 == 2, impaires ; j compté dans sa partie)."""
     src = D / 'img' / 'e3d' / 'w' / k; A = WA_N[k]; n = len(list(src.glob('h*.webp')))
     if os.environ.get('E3TEST') and n != A + 73: print('incomplet', k, n); return
     assert n == A + 73, (k, n)
     j = lambda i: i if i < A else i - A
-    h0 = [0] + [A + f for f in range(0, 73, 12)]
-    G = {'L0': ('l', [i for i in range(min(12, A))]), 'L1': ('l', list(range(12, A))),
+    h0 = [0, A + 60]   # l'affiche et l'arrêt, nets, tout de suite après L0 : à l'arrivée, l'arrêt est net même en réseau lent
+    G = {'L0': ('l', list(range(6))), 'L1': ('l', list(range(6, A))),
          'L2': ('l', [i for i in range(A, n) if j(i) % 2 == 0]), 'L3': ('l', [i for i in range(A, n) if j(i) % 2 == 1]),
-         'H0': ('h', h0), 'H1': ('h', [i for i in range(n) if j(i) % 4 == 0 and i not in h0]),
+         'H0': ('h', h0), 'H1': ('h', [i for i in range(n) if (j(i) % 4 == 0 or i >= A and j(i) % 12 == 0) and i not in h0]),
          'H2': ('h', [i for i in range(n) if j(i) % 4 == 2]), 'H3': ('h', [i for i in range(n) if j(i) % 2 == 1])}
     for nm, (t, idx) in G.items():
         yield nm, {x: blob([(i, src / f'{t}{i:03d}.{e}') for i in idx]) for x, e in (('a', 'avif'), ('w', 'webp'))}
@@ -221,10 +221,11 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
     # le premier paquet du film (L0, AVIF) part dès la tête de la page, avant le reste du HTML ; e3get le reprend (window.E3P).
     # (un <link rel=preload as=fetch> n'est pas repris par WebKit : le paquet partait deux fois)
     E3PRE = ''
-    if 'w/m/L0' in E3M and 'w/d/L0' in E3M:
-        um, ud = E3M['w/m/L0']['a'], E3M['w/d/L0']['a']
-        E3PRE = ("<script>window.E3P={};(function(){var u=innerWidth<innerHeight*.95?'%s':'%s';"
-                 "try{var p=fetch(u).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p}catch(e){}})()</script>" % (um, ud))
+    if 'w/m/L0' in E3M and 'w/d/L0' in E3M:   # v22 : dès la tête : L0 et H0 (AVIF) et les enseignes du jeu de l'écran ; e3get et rue.js les reprennent (window.E3P)
+        U = {k: [E3M[f'w/{k}/L0']['a'], E3M[f'w/{k}/H0']['a'], f'img/e3d/w/{k}/pins.json'] for k in ('m', 'd')}
+        E3PRE = ("<script>window.E3P={};(function(){var L=innerWidth<innerHeight*.95?%s:%s;"
+                 "try{L.forEach(function(u,i){var p=fetch(u,{priority:i?'low':'high'}).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p})}catch(e){}})()</script>"
+                 % (json.dumps(U['m']), json.dumps(U['d'])))
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out]).replace('{{E3M}}', E3MJ).replace('{{E3PRE}}', E3PRE)
         if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'pub'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)

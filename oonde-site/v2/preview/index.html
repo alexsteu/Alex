@@ -16,7 +16,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Sites internet avec une entrée en 3D pour les commerces de Genève à Montreux, et sites simples reliés à la fiche Google.","url":"https://oonde.ch/","telephone":"+41764882710","email":"oonde.contact@gmail.com","image":"https://oonde.ch/img/og-e3d.jpg","logo":"https://oonde.ch/apple-touch-icon.png","priceRange":"CHF 490 – 1490","currenciesAccepted":"CHF","paymentAccepted":"Virement bancaire, TWINT","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressLocality":"Préverenges","postalCode":"1028","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"sameAs":["https://www.instagram.com/oonde_studio","https://www.tiktok.com/@oonde"],"makesOffer":[{"@type":"Offer","name":"La Vitrine : site relié à la fiche Google","url":"https://oonde.ch/vitrine#vitrine-prix","priceCurrency":"CHF","price":"490","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Création, facturée seulement si le site est validé","price":"490","priceCurrency":"CHF"},{"@type":"UnitPriceSpecification","name":"Hébergement, domaine et petites modifications","price":"20","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1}],"itemOffered":{"@type":"Service","name":"La Vitrine","serviceType":"Création de site internet"}},{"@type":"Offer","name":"L’entrée 3D : site avec une entrée en 3D","url":"https://oonde.ch/#prix","itemOffered":{"@type":"Service","name":"L’entrée 3D","serviceType":"Site internet avec entrée en 3D, visite complète du lieu en option"},"priceSpecification":{"@type":"PriceSpecification","priceCurrency":"CHF","minPrice":"990","description":"Selon le lieu, prix par écrit sous 48 heures"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
 <link rel="preload" href="fonts/instrument-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}</style>
 <script>document.documentElement.classList.add('js');{const q=new URLSearchParams(location.search);if(q.get('m'))location.replace('vitrine.html'+location.search)}</script>
-<script>window.E3P={};(function(){var u=innerWidth<innerHeight*.95?'img/e3d/w/m/L0.a.txt':'img/e3d/w/d/L0.a.txt';try{var p=fetch(u).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p}catch(e){}})()</script>
+<script>window.E3P={};(function(){var L=innerWidth<innerHeight*.95?["img/e3d/w/m/L0.a.txt", "img/e3d/w/m/H0.a.txt", "img/e3d/w/m/pins.json"]:["img/e3d/w/d/L0.a.txt", "img/e3d/w/d/H0.a.txt", "img/e3d/w/d/pins.json"];try{L.forEach(function(u,i){var p=fetch(u,{priority:i?'low':'high'}).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p})}catch(e){}})()</script>
 <style>
 /* OONDE · base commune aux pages (accueil, La Visite, aperçu). Papier, encre, un accent. Grille 1 144 px, filets 1 px, rayons 8/10/14. */
 @font-face{font-family:'Instrument Repli';src:local('Arial'),local('Helvetica Neue'),local('Helvetica');size-adjust:106%;ascent-override:91%;descent-override:23.5%;line-gap-override:0%}
@@ -712,7 +712,7 @@ html:not(.js) .e-pick{display:none}
    <p class="r-tx r-say r-top" aria-hidden="true">Alors on entre.</p>
    <div class="r-tx r-stop" id="rStop" role="group" aria-labelledby="rStopH" data-step="1" tabindex="-1">
     <div class="r-hd"><p class="r-sh" id="rStopH"><span class="r-st r-st1">Votre commerce, c’est…</span><span class="r-st r-st2">Et son nom ?</span><span class="r-st r-st3">Votre démo est prête</span> <b>Démo</b></p><span class="r-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
-    <div class="r-s r-s1"><div class="r-seg" role="radiogroup" aria-label="Votre métier"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1"><img src="img/e3d/w/t-restaurant.jpg" width="96" height="72" alt="" decoding="async"><span>Restaurant</span></button><button type="button" role="radio" data-m="boulangerie" aria-checked="false" tabindex="-1"><img src="img/e3d/w/t-boulangerie.jpg" width="96" height="72" alt="" decoding="async"><span>Boulangerie</span></button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1"><img src="img/e3d/w/t-coiffure.jpg" width="96" height="72" alt="" decoding="async"><span>Coiffure</span></button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1"><img src="img/e3d/w/t-institut.jpg" width="96" height="72" alt="" decoding="async"><span>Institut</span></button><button type="button" role="radio" data-m="onglerie" aria-checked="false" tabindex="-1"><img src="img/e3d/w/t-onglerie.jpg" width="96" height="72" alt="" decoding="async"><span>Onglerie</span></button><button type="button" role="radio" data-m="logement" aria-checked="false" tabindex="-1"><img src="img/e3d/w/t-logement.jpg" width="96" height="72" alt="" decoding="async"><span>Logement</span></button></div><button type="button" class="r-next">Suivant <span aria-hidden="true">→</span></button></div>
+    <div class="r-s r-s1"><div class="r-seg" role="radiogroup" aria-label="Votre métier"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-restaurant.jpg" width="96" height="72" alt="" decoding="async"><span>Restaurant</span></button><button type="button" role="radio" data-m="boulangerie" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-boulangerie.jpg" width="96" height="72" alt="" decoding="async"><span>Boulangerie</span></button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-coiffure.jpg" width="96" height="72" alt="" decoding="async"><span>Coiffure</span></button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-institut.jpg" width="96" height="72" alt="" decoding="async"><span>Institut</span></button><button type="button" role="radio" data-m="onglerie" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-onglerie.jpg" width="96" height="72" alt="" decoding="async"><span>Onglerie</span></button><button type="button" role="radio" data-m="logement" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-logement.jpg" width="96" height="72" alt="" decoding="async"><span>Logement</span></button></div><button type="button" class="r-next">Suivant <span aria-hidden="true">→</span></button></div>
     <div class="r-s r-s2" hidden><div class="r-f"><label for="rName">Le nom de votre commerce <small>facultatif</small></label><input id="rName" type="text" maxlength="40" placeholder="Tapez-le, il s’allume" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div><button type="button" class="r-pass">Passer</button><p class="r-rc"><span data-rc-m>Restaurant</span> · <button type="button" class="r-chg" data-to="1">changer</button></p></div>
     <div class="r-s r-s3" hidden><div class="r-go"><a class="r-enter" href="#rEnd">Entrer <span aria-hidden="true">→</span></a><a class="r-wa2" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20une%20premi%C3%A8re%20image%203D%20de%20ma%20fa%C3%A7ade%20et%20le%20prix%20d%E2%80%99un%20site%20avec%20une%20entr%C3%A9e%20en%203D.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></div><p class="r-rc"><span data-rc-n>Restaurant</span> · <button type="button" class="r-chg" data-to="2">modifier</button></p><p class="r-note">Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit.</p></div>
     <button type="button" class="r-more" tabindex="-1" aria-hidden="true">Continuer sans choisir <span>↓</span></button>
@@ -925,17 +925,22 @@ function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.fi
    (createImageBitmap, lui aussi hors du fil principal), les autres sont libérées (close) : la mémoire reste petite. */
 const E3F=(()=>{try{const b=Uint8Array.from(atob('AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAANZtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAACJpbG9jAAAAAERAAAEAAQAAAAAA+gABAAAAAAAAACIAAAAjaWluZgAAAAAAAQAAABVpbmZlAgAAAAABAABhdjAxAAAAAA5waXRtAAAAAAABAAAAVmlwcnAAAAA4aXBjbwAAAAxhdjFDgQAMAAAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAABZpcG1hAAAAAAAAAAEAAQOBAgMAAAAqbWRhdBIACggYADbICGg0IDIUHEeHhd3AACwAACDsJLhGXp8ww9A='),c=>c.charCodeAt(0));
  return window.createImageBitmap?createImageBitmap(new Blob([b],{type:'image/avif'})).then(m=>{if(m.close)m.close();return 'a'},()=>'w'):Promise.resolve('w')}catch(e){return Promise.resolve('w')}})();
-function e3pack(url,signal,type,pre){return (pre||fetch(url,signal?{signal}:undefined)).then(r=>{if(!r.ok)throw r.status;return /\.bin$/.test(url)?r.arrayBuffer():r.text()
-  .then(t=>fetch('data:application/octet-stream;base64,'+t).then(r=>r.arrayBuffer()).catch(()=>{const b=atob(t),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer}))})
+/* le corps d'une réponse, lu au fil de l'eau : hd() quand il en reste peu (≈ un aller-retour en 4G lente), pour que le paquet suivant parte
+   à temps sans partager la bande passante avec celui-ci ; sans longueur connue, hd() à la fin */
+function e3body(r,hd){const n=+r.headers.get('content-length')||0;if(!hd||!n||!r.body||!r.body.getReader)return r.arrayBuffer().then(b=>{if(hd)hd();return b});
+ const rd=r.body.getReader(),cs=[];let got=0,fired=false;const step=()=>rd.read().then(({done,value})=>{if(done){if(!fired)hd();const a=new Uint8Array(got);let o=0;for(const c of cs){a.set(c,o);o+=c.length}return a.buffer}
+  cs.push(value);got+=value.length;if(!fired&&n-got<48e3){fired=true;hd()}return step()});return step()}
+function e3pack(url,signal,type,pre,hd){return (pre||fetch(url,signal?{signal}:undefined)).then(r=>{if(!r.ok){if(hd)hd();throw r.status}return e3body(r,hd)})
+ .then(b=>/\.bin$/.test(url)?b:(t=>fetch('data:application/octet-stream;base64,'+t).then(r=>r.arrayBuffer()).catch(()=>{const s=atob(t),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a.buffer}))(new TextDecoder().decode(b)))
  .then(buf=>{const v=new DataView(buf),hl=v.getUint32(0,true),head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
   return head.map(([i,o,l])=>[i,new Blob([new Uint8Array(buf,4+hl+o,l)],{type:type||'image/webp'})])})}
 /* v22 : un paquet par son nom logique (« w/m/L0 », « in-coiffure/ma/p1 ») : AVIF d'abord si possible, WebP en secours */
-function e3get(k,signal){const f=(window.E3M||{})[k];if(!f)return Promise.reject('?'+k);
+function e3get(k,signal,hd){const f=(window.E3M||{})[k];if(!f)return Promise.reject('?'+k);
  const E=window.E3P||{},pre=f.a&&E[f.a];if(pre)delete E[f.a];   /* le premier paquet, demandé dès la tête de la page (build.py, E3PRE) */
- return E3F.then(x=>x==='a'&&f.a?e3pack(f.a,signal,'image/avif',pre).catch(e=>{if(signal&&signal.aborted)throw e;return e3pack(f.w,signal,'image/webp')}):e3pack(f.w,signal,'image/webp'))}
+ return E3F.then(x=>x==='a'&&f.a?e3pack(f.a,signal,'image/avif',pre,hd).catch(e=>{if(signal&&signal.aborted)throw e;return e3pack(f.w,signal,'image/webp',null,hd)}):e3pack(f.w,signal,'image/webp',null,hd))}   /* hd : la réponse commence (le paquet suivant peut partir) */
 const e3url=k=>{const f=(window.E3M||{})[k];return f&&(f.u||f.w)};
 /* v22 : deux définitions par image : l (basse, demi-taille, pour bouger tout de suite) et h (nette). La nette remplace la basse dès qu'elle est décodée. */
-function e3film(n,R,at,onimg){const bl=new Array(n),ll=new Array(n),bm=new Array(n),bq=new Uint8Array(n),bz=new Uint8Array(n);let act=0,on=true,dir=1,par=4;   /* par : décodages en parallèle (8 pendant un glissement) */
+function e3film(n,R,at,onimg){const bl=new Array(n),ll=new Array(n),bm=new Array(n),bq=new Uint8Array(n),bz=new Uint8Array(n);let act=0,on=true,dir=1,par=4,mv=0,mt=0;   /* par : décodages en parallèle (8 pendant un glissement) */
  const cl=m=>{if(!m)return;if(m.close)m.close();else URL.revokeObjectURL(m.src)};
  const free=i=>{const m=bm[i];bm[i]=null;bq[i]=0;cl(m)};
  const asImg=b=>{const m=new Image();m.src=URL.createObjectURL(b);return m.decode().then(()=>m,()=>{URL.revokeObjectURL(m.src);return null})};
@@ -945,14 +950,17 @@ function e3film(n,R,at,onimg){const bl=new Array(n),ll=new Array(n),bm=new Array
  const out=i=>{const a=dir>0?i-at:at-i;return a>Math.round(R*1.5)+6||a<-Math.round(R*.5)-6};
  const near=d=>{const Bk=Math.round(R*.5);return d?(d<=Bk?[at+d*dir,at-d*dir]:[at+d*dir]):[at]};
  function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&out(i))free(i);const A=Math.round(R*1.5);
-  /* d'abord une image partout (la nette si elle est là, sinon la basse), puis les basses remplacées par les nettes, au plus près d'abord */
-  for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&!bm[i]&&!bz[i]&&(bl[i]||ll[i])&&act<par)dec(i,!!bl[i]);
+  /* d'abord une image partout (en mouvement, la basse : quatre fois moins de pixels à décoder, le film suit ; au repos, la nette si elle est là),
+     puis, une fois le film posé (250 ms sans changer d'image), les basses remplacées par les nettes, au plus près d'abord */
+  const still=performance.now()-mv>250;
+  for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&!bm[i]&&!bz[i]&&(bl[i]||ll[i])&&act<par)dec(i,!!bl[i]&&(still||!ll[i]));
+  if(!still){clearTimeout(mt);mt=setTimeout(pump,260);return}
   for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&bm[i]&&!bq[i]&&bl[i]&&!bz[i]&&act<par)dec(i,1)}
  return{n,get:i=>bm[i],hi:i=>!!bm[i]&&bq[i]===1,any:()=>bl.some(Boolean)||ll.some(Boolean),has:i=>!!(bl[i]||ll[i]),boost(k){par=k;pump()},
   /* v20.1 : de a à b, les fichiers sont-ils là (jamais deux images manquantes de suite) ? sinon le film attendrait un paquet encore en route */
   dl(a,b){a=clamp(Math.round(a),0,n-1);b=clamp(Math.round(b),0,n-1);const s=b>a?1:-1,h=j=>bl[j]||ll[j];for(let k=a;k!==b;k+=s){const j=k+s;if(!h(j)&&(j===b||!h(j+s)))return false}return true},
   near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},addLo(i,b){if(!ll[i]){ll[i]=b;pump()}},
-  seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){dir=i>at?1:-1;at=i;pump()}},
+  seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){dir=i>at?1:-1;at=i;mv=performance.now();pump()}},
   /* jusqu'où l'on peut aller de f vers t sans trou de plus d'une image (deux images décodées au plus l'une de l'autre) */
   reach(f,t){let k=clamp(Math.round(f),0,n-1);const s=t>f?1:-1,e=clamp(t,0,n-1);if(!bm[k])return f;while(s>0?k<e:k>e){const a=k+s,b=k+2*s;if(a>=0&&a<n&&bm[a])k=a;else if(b>=0&&b<n&&bm[b]&&(s>0?b<=Math.ceil(e)+1:b>=Math.floor(e)-1))k=b;else break}return s>0?Math.min(t,k):Math.max(t,k)},
   sleep(){on=false;for(let i=0;i<n;i++)free(i)},wake(){if(!on){on=true;pump()}},
@@ -1065,14 +1073,15 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  const COARSE=matchMedia('(pointer:coarse)').matches;let LIVE=!RM,frz=false,moved=false,kbY=-1,SW=1,set='d',want='',W=0,H=0,P=0,Q=0,cP=-1,cQ=0,cF=0,cI=0,last=-1,lastI=-1,raf=0,dirty=true,vis=true,D=1,L=1,hh=64,armed=false,t0=0,inA=0,mode=0,xa=0,dn=1;
  const NF=k=>A[k]+VAN,HOMEi=()=>A[set]+HV,FACi=k=>A[set]+FAC[k];
  const base=k=>'img/e3d/w/'+k+'/';
- /* le film : les paquets dans l'ordre où on les veut (build.py) : L0 (les 12 premières images, basse définition) d'abord, demandé dès le HTML (preload) ;
-    L1 (le reste de l'approche), L2 (une image sur deux de la marche), H0 (l'arrêt et les six façades, nettes), puis le reste. Avant tout geste : jusqu'à H0. */
- const PK=['L0','L1','L2','H0','L3','H1','H2','H3'],AUTO=5;
+ /* le film : les paquets dans l'ordre où on les veut (build.py) : L0 (les 6 premières images, basse définition) d'abord, demandé dès le HTML (preload) ;
+    H0 (l'affiche et l'arrêt, nets : deux images), L1 (le reste de l'approche), L2 et L3 (la marche), puis H1 (les façades nettes) et le reste. Avant tout geste : jusqu'à H1. */
+ const PK=['L0','H0','L1','L2','L3','H1','H2','H3'],AUTO=6;
  function load(k){let s=store[k];if(s){s.film.wake();return s}const n=NF(k);s=store[k]={n,got:0,req:0,pins:null,chain:Promise.resolve(),film:e3film(n,32,Math.round(cF),()=>{if(k===(want||set)){dirty=true;tick()}})};
-  fetch(base(k)+'pins.json').then(r=>r.json()).then(j=>{s.pins=j;dirty=true;tick()}).catch(()=>{});
+  const pu=base(k)+'pins.json',pp=window.E3P&&E3P[pu];if(pp)delete E3P[pu];(pp||fetch(pu)).then(r=>r.json()).then(j=>{s.pins=j;dirty=true;tick()}).catch(()=>{});
   if(!LIVE)return s;
   const slow=setTimeout(()=>{if(!s.film.any()&&k===set)ld.textContent='Chargement de la rue…'},1500);
-  s.more=lv=>{while(s.req<Math.min(lv,PK.length)){const g=s.req++,nm=PK[g];s.chain=s.chain.then(()=>e3get('w/'+k+'/'+nm).then(l=>{const lo=nm[0]==='L';l.forEach(([i,b])=>lo?s.film.addLo(i,b):s.film.add(i,b));s.got=g+1;if(!g){clearTimeout(slow);if(ld.textContent==='Chargement de la rue…')ld.textContent=''}dirty=true;tick()}))
+  /* v22 : le paquet suivant part dès que le précédent commence d'arriver (l'aller-retour se recouvre, la bande passante reste à un seul paquet à la fois) ; ajoutés dans l'ordre */
+  s.fp=[];s.hd=[];s.more=lv=>{while(s.req<Math.min(lv,PK.length)){const g=s.req++,nm=PK[g];let h;s.hd[g]=new Promise(r=>h=r);const go=()=>{const q=e3get('w/'+k+'/'+nm,null,h);q.catch(h);return q};s.fp[g]=g<1?go():s.hd[g-1].then(go);s.chain=s.chain.then(()=>s.fp[g].then(l=>{const lo=nm[0]==='L';l.forEach(([i,b])=>lo?s.film.addLo(i,b):s.film.add(i,b));s.got=g+1;if(!g){clearTimeout(slow);if(ld.textContent==='Chargement de la rue…')ld.textContent=''}dirty=true;tick()}))
    .catch(()=>{if(!g){clearTimeout(slow);ld.textContent='';if(!s.film.any())flat();return}s.loose=true;s.got=Math.max(s.got,g+1);dirty=true;tick()})}};   /* un paquet absent : le film joue avec ce qu'il a (images plus espacées) plutôt que de rester figé */
   s.more(AUTO);if(moved)s.more(PK.length);return s}
  function more(){const s=store[set];if(s&&s.more&&(moved||P>.3))s.more(PK.length)}   /* les images nettes du reste : dès que la personne bouge (ou si elle arrive plus bas) */
@@ -1107,6 +1116,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
     Avant tout choix (première visite), la caméra reste devant la vôtre et aucune tuile n'est cochée. */
  let met='',mi=0,chosen=!!E3S.st.touched;
  const tiles=()=>[...seg.querySelectorAll('[data-m]')];
+ let thumbs=false;const thumb=()=>{if(thumbs)return;thumbs=true;seg.querySelectorAll('img[data-src]').forEach(i=>{i.src=i.dataset.src})};   /* les vignettes des tuiles : après le film (P > .3, l'arrêt, ou sans film) */
  function metier(k,push){if(!E3[k])return;const was=met;if(push)chosen=true;met=k;
   tiles().forEach(b=>{const on=chosen&&b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on||!chosen&&b===seg.firstElementChild?0:-1});
   if(k!==was){const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');if(chosen)b.classList.add('a')}else if(chosen)mets[mi].classList.add('a');
@@ -1120,8 +1130,8 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  metier(E3S.st.sc,false);
  /* ——— la carte, une étape à la fois : 1 le métier, 2 le nom, 3 « Entrer » ——— */
  let step=chosen?3:1,segT=0,segMe=0,segU=false;
- function go(n,focus){if(n!==2&&document.activeElement===nameIn){kbY=-1;nameIn.blur()}step=n;stop.dataset.step=n;const dots=stop.querySelectorAll('.r-dots i');dots.forEach((d,i)=>d.classList.toggle('on',i<n));
-  stop.querySelectorAll('.r-s').forEach(el=>{const on=el.classList.contains('r-s'+n);el.hidden=!on;if(on){el.classList.remove('in');void el.offsetWidth;el.classList.add('in')}});
+ function go(n,focus){if(n!==1||LIVE&&armed)thumb();if(n!==2&&document.activeElement===nameIn){kbY=-1;nameIn.blur()}step=n;stop.dataset.step=n;const dots=stop.querySelectorAll('.r-dots i');dots.forEach((d,i)=>d.classList.toggle('on',i<n));
+  stop.querySelectorAll('.r-s').forEach(el=>{const on=el.classList.contains('r-s'+n);el.hidden=LIVE&&!on;   /* sans film (mouvement réduit) : les trois étapes à la suite */if(on){el.classList.remove('in');void el.offsetWidth;el.classList.add('in')}});
   if(n===1)centre(false);
   if(focus){const f=n===1?seg.querySelector('[tabindex="0"]'):n===2?nameIn:stop.querySelector('.r-enter');if(f&&(n!==2||!COARSE))f.focus({preventScroll:true});else stop.focus({preventScroll:true})}}
  go(step,false);
@@ -1232,7 +1242,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   if(cP<0)geo();
   const r=walk.getBoundingClientRect(),y=hh-r.top;P=Math.max(0,y/D);Q=clamp((y-GATE[1]*D)/L,0,1);
   if(!LIVE){still();return}
-  if(P>.3)more();
+  if(P>.3){more();thumb()}
   if(cP<0){cP=P;cF=Math.round(frameOf(P));cQ=Q;cI=Math.round(inOf(Q));if(vx<0)vx=HOMEi()}
   /* le nom a le focus à l'arrêt : tout reste figé, même si le clavier du téléphone fait bouger la page */
   if(COARSE&&document.activeElement===nameIn&&cP>=HOLD[0]-.02&&cP<=HOLD[1]+.02)frz=true;
@@ -1268,11 +1278,11 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   ui(now);zoom();if(!frz&&(cP!==P||cF!==tF||Math.abs(cI-tI)>.004&&z||inA!==ia||xa>0||vg||now-arrT<1000))tick();else t0=0}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;const s=store[set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);   /* loin de la rue : ses images décodées sont libérées */
  poster.addEventListener('error',()=>{poster.style.visibility='hidden'});
- function toStill(){u.classList.add('static');poster.addEventListener('load',tick);const k=r0();poster.src=base(k)+'stop.jpg';poster.parentNode.querySelectorAll('source').forEach(s=>s.remove())}
+ function toStill(){thumb();u.classList.add('static');poster.addEventListener('load',tick);const k=r0();poster.src=base(k)+'stop.jpg';poster.parentNode.querySelectorAll('source').forEach(s=>s.remove())}
  if(!LIVE)toStill();
  /* le film ne vient pas (réseau, fichier absent) : la page passe au rendu fixe, comme en mouvement réduit ; rien ne bloque l'offre ni le contact */
  function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');document.body.classList.remove('hero-cta');
-  for(const el of [t1,...says,stop,cue,sbar,end]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();if(deep)stop.scrollIntoView({block:'start'})}
+  for(const el of [t1,...says,stop,cue,sbar,end]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();go(step,false);if(deep)stop.scrollIntoView({block:'start'})}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
  addEventListener('resize',()=>{size();tick()});
  /* retour d'un autre onglet, de l'arrière-plan ou du cache (bouton Retour) : on redessine (iOS peut avoir vidé le canevas) */
