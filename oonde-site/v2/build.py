@@ -115,10 +115,9 @@ def full(s, theme='#F7F7F4', base=''):
 
 def pack(src, dst, start=0, fr=None, p0x=()):
     """Les images d'une entrée en 4 fichiers, dans l'ordre où le lecteur les veut : p0 = la première, la dernière et une sur 8,
-    p1 = les 4 + 8k, p2 = les 2 + 4k, p3 = les impaires. Chaque paquet : 4 octets (longueur de l'en-tête), l'en-tête JSON
-    [[image, début, longueur], …], puis les WebP bout à bout, le tout en base64 dans un .txt (l'aperçu claude.ai ne sert pas
-    les .bin ; compressé à l'envoi, le base64 ne pèse presque rien de plus). Moins de requêtes, et moins de fichiers à héberger."""
-    fr = fr or sorted(src.glob('f*.webp')); n = len(fr); dst.mkdir(parents=True, exist_ok=True)
+    p1 = les 4 + 8k, p2 = les 2 + 4k, p3 = les impaires. Rend (numéro, octets) : voir blob() pour le format ; v22 : écrits par put()
+    (dist : .bin à empreinte ; preview : base64 dans un .txt, l'aperçu claude.ai ne servant pas les .bin)."""
+    fr = fr or sorted(src.glob('f*.webp')); n = len(fr)
     # v20.1 : start = la première image que le lecteur montre (S0 dans rue.js) ; celles d'avant ne partent plus (un tiers du poids en moins)
     J = lambda i: i - start
     k1 = -1
@@ -133,7 +132,32 @@ def pack(src, dst, start=0, fr=None, p0x=()):
         for i in idx:
             d = fr[i].read_bytes(); head.append([int(fr[i].stem[1:]), off, len(d)]); body += d; off += len(d)
         h = json.dumps(head, separators=(',', ':')).encode()
-        (dst / f'p{g}.txt').write_bytes(base64.b64encode(len(h).to_bytes(4, 'little') + h + body))
+        yield g, len(h).to_bytes(4, 'little') + h + body
+
+def blob(fr):
+    """Un paquet : 4 octets (longueur de l'en-tête), l'en-tête JSON [[image, début, longueur], …], puis les images bout à bout."""
+    head, body, off = [], b'', 0
+    for i, f in fr:
+        d = f.read_bytes(); head.append([i, off, len(d)]); body += d; off += len(d)
+    h = json.dumps(head, separators=(',', ':')).encode()
+    return len(h).to_bytes(4, 'little') + h + body
+
+WA_N = {'d': 45, 'm': 55}   # v22 : le film de l'intro (img/e3d/w/<jeu>) : A images d'approche, puis les 73 du glissement (va)
+def wpacks(k):
+    """v22 : les 8 paquets du film, dans l'ordre de rue.js (PK) : L* en basse définition (demi-taille), H* nets.
+    L0 = les 12 premières images de l'approche (demandé dès le HTML) ; L1 = le reste de l'approche ; L2/L3 = la marche, paires/impaires ;
+    H0 = l'affiche et les six façades nettes ; H1/H2/H3 = le reste net (j % 4 == 0, j % 4 == 2, impaires ; j compté dans sa partie)."""
+    src = D / 'img' / 'e3d' / 'w' / k; A = WA_N[k]; n = len(list(src.glob('h*.webp')))
+    if os.environ.get('E3TEST') and n != A + 73: print('incomplet', k, n); return
+    assert n == A + 73, (k, n)
+    j = lambda i: i if i < A else i - A
+    h0 = [0] + [A + f for f in range(0, 73, 12)]
+    G = {'L0': ('l', [i for i in range(min(12, A))]), 'L1': ('l', list(range(12, A))),
+         'L2': ('l', [i for i in range(A, n) if j(i) % 2 == 0]), 'L3': ('l', [i for i in range(A, n) if j(i) % 2 == 1]),
+         'H0': ('h', h0), 'H1': ('h', [i for i in range(n) if j(i) % 4 == 0 and i not in h0]),
+         'H2': ('h', [i for i in range(n) if j(i) % 4 == 2]), 'H3': ('h', [i for i in range(n) if j(i) % 2 == 1])}
+    for nm, (t, idx) in G.items():
+        yield nm, {x: blob([(i, src / f'{t}{i:03d}.{e}') for i in idx]) for x, e in (('a', 'avif'), ('w', 'webp'))}
 
 def externalize(html, o, name):
     """dist : les gros blocs <style> et <script> en ligne partent dans assets/<empreinte>.css|js, en cache long (le HTML,
@@ -173,15 +197,43 @@ LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': '.
          'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{PUB}}': 'pub.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
+    # v22 : les paquets d'images de l'accueil, avant les pages : E3M (nom logique → fichiers) est écrit dans la page.
+    # dist : des .bin binaires, nommés par empreinte (img/e3d/h/), en cache immuable ; AVIF + WebP en secours pour le film de l'intro.
+    # preview : des .txt en base64 (l'aperçu claude.ai refuse les .bin), au chemin lisible.
+    E3M = {}
+    def put(key, x, data, path):
+        if out == 'dist':
+            f = f'img/e3d/h/{hashlib.sha256(data).hexdigest()[:12]}.bin'; (o / f).parent.mkdir(parents=True, exist_ok=True); (o / f).write_bytes(data)
+        else:
+            f = path; (o / f).parent.mkdir(parents=True, exist_ok=True); (o / f).write_bytes(base64.b64encode(data))
+        E3M.setdefault(key, {})[x] = f
+    for k in ('d', 'm'):
+        for nm, by in wpacks(k):
+            for x, data in by.items(): put(f'w/{k}/{nm}', x, data, f'img/e3d/w/{k}/{nm}.{x}.txt')
+    for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name.startswith('in-')]:
+        for k in ('da', 'ma', 'd', 'm'):
+            if not (sd / k).is_dir(): continue
+            if k in ('da', 'ma'):   # v21 : la suite derrière la façade du métier : ses images de la porte (da/, ma/), puis celles de la salle, communes (d/, m/)
+                own = sorted((sd / k).glob('f*.webp')); fr = own + sorted((sd / k[0]).glob('f*.webp'))[len(own):]
+            else: fr = None
+            for g, data in pack(sd / k, None, 0, fr): put(f'{sd.name}/{k}/p{g}', 'w', data, f'img/e3d/{sd.name}/{k}/p{g}.txt')
+    E3MJ = json.dumps(E3M, separators=(',', ':'))
+    # le premier paquet du film (L0, AVIF) part dès la tête de la page, avant le reste du HTML ; e3get le reprend (window.E3P).
+    # (un <link rel=preload as=fetch> n'est pas repris par WebKit : le paquet partait deux fois)
+    E3PRE = ''
+    if 'w/m/L0' in E3M and 'w/d/L0' in E3M:
+        um, ud = E3M['w/m/L0']['a'], E3M['w/d/L0']['a']
+        E3PRE = ("<script>window.E3P={};(function(){var u=innerWidth<innerHeight*.95?'%s':'%s';"
+                 "try{var p=fetch(u).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p}catch(e){}})()</script>" % (um, ud))
     for k, s in docs.items():
-        s = fill(s, fonts, LINKS[out])
+        s = fill(s, fonts, LINKS[out]).replace('{{E3M}}', E3MJ).replace('{{E3PRE}}', E3PRE)
         if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'pub'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         whole[k] = built[k]   # la page entière (avec ses scripts) : c'est elle qu'on lit pour savoir quels fichiers copier
         if wrap: built[k] = externalize(built[k], o, k)
         (o / f'{k}.html').write_text(built[k])
-    (o / 'img').mkdir()   # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
+    (o / 'img').mkdir(exist_ok=True)   # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
     html = ''.join(whole.values())
     for f in sorted(set(re.findall(r'img/[\w./-]+\.(?:jpe?g|png|webp|avif|mp4)', html))):
         if os.environ.get('E3TEST') and not (D / f).exists(): print('manque', f); continue   # rendu 3D en cours
@@ -192,21 +244,22 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
-    if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque jeu d'images part en 4 paquets (voir pack()), avec pins.json
-        for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name in ('rue', 'va') or d.name.startswith('in-')]:   # v19 : la rue et sa suite par métier (les anciens films de la démo ne partent plus) ; v21 : va, le glissement d'une façade à l'autre
-            for k in ('da', 'ma'):   # v21 : la suite derrière la façade du métier : ses images de la porte (da/, ma/), puis celles de la salle, communes (d/, m/)
-                if (sd / k).is_dir():
-                    own = sorted((sd / k).glob('f*.webp')); rest = sorted((sd / k[0]).glob('f*.webp'))[len(own):]
-                    pack(None, o / sd.relative_to(D) / k, 0, own + rest); shutil.copy2(sd / k / 'pins.json', o / sd.relative_to(D) / k / 'pins.json')
+    if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : le film de l'intro (w) et, par métier, la porte et la salle (in-*), en paquets (E3M)
+        for k in ('d', 'm'):
+            src, dst = D / 'img' / 'e3d' / 'w' / k, o / 'img' / 'e3d' / 'w' / k; dst.mkdir(parents=True, exist_ok=True)
+            for f in ('pins.json', 'stop.jpg', 'poster.jpg', 'poster.avif'):
+                if (src / f).exists(): shutil.copy2(src / f, dst / f)
+        for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name.startswith('in-')]:
             for k in ('d', 'm'):
-                src, dst = sd / k, o / sd.relative_to(D) / k
-                S0 = re.search(r'const S0=\{d:(\d+),m:(\d+)\}', (D / 'partials' / 'rue.js').read_text())
-                pack(src, dst, int(S0.group(1 if k == 'd' else 2)) if sd.name == 'rue' and S0 else 0, None, set(range(0, 73, 12)) if sd.name == 'va' else ())
+                src, dst = sd / k, o / sd.relative_to(D) / k; dst.mkdir(parents=True, exist_ok=True)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
                 ph = re.search(r"E3IN=\{d:\[([\d,]+)\],m:\[([\d,]+)\]\}", html)   # les photos du site (e3d.js, E3IN) : trois images de la salle
-                phs = [f'f{int(i):03d}.webp' for i in ph.group(1 if k == 'd' else 2).split(',')] if ph and sd.name.startswith('in-') else []
-                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + phs:   # l'affiche, les enseignes, les photos du site (jeu du téléphone sur téléphone)
+                phs = [f'f{int(i):03d}.webp' for i in ph.group(1 if k == 'd' else 2).split(',')] if ph else []
+                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + phs:
                     if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
+            for k in ('da', 'ma'):
+                if (sd / k).is_dir():
+                    (o / sd.relative_to(D) / k).mkdir(parents=True, exist_ok=True); shutil.copy2(sd / k / 'pins.json', o / sd.relative_to(D) / k / 'pins.json')
     (o / 'fonts').mkdir()
     for f, p, ws in FACES:
         for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
@@ -226,6 +279,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
+            '\n/img/e3d/h/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
         (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/videos /pub 301\n/videos.html /pub 301\n')
