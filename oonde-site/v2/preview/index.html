@@ -625,7 +625,7 @@ html:not(.js) .e-pick{display:none}
   <span class="r-anchor" id="choix" aria-hidden="true"></span><span class="r-x" aria-hidden="true"></span>
   <div class="r-stage" id="rStage">
    <div class="r-scene"><picture><source media="(max-aspect-ratio: 1/1)" srcset="img/e3d/rue/m/open.jpg" width="540" height="960"><img class="r-poster" id="rPoster" src="img/e3d/rue/d/open.jpg" width="1280" height="800" alt="Démo : une rue au crépuscule, des vitrines allumées" decoding="async" fetchpriority="high"></picture><canvas id="rCv" aria-hidden="true"></canvas>
-    <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div class="r-sign" data-id="sign"><span class="r-ph">Votre nom ici</span><span class="r-nm"></span><span class="r-met"><i></i><i></i></span></div></div>
+    <div class="r-pins" id="rPins" aria-hidden="true"><div data-id="restaurant"><span>Restaurant</span></div><div data-id="boulangerie"><span>Boulangerie</span></div><div data-id="coiffure"><span>Coiffure</span></div><div data-id="institut"><span>Institut</span></div><div data-id="onglerie"><span>Onglerie</span></div><div data-id="logement"><span>Logement</span></div><div class="r-sign" data-id="sign"><span class="r-ph">Votre nom ici</span><span class="r-nm"></span><span class="r-met"><i></i><i></i></span></div></div>
     <div class="e-pins r-wall" id="rWall" aria-hidden="true"><div class="e-wall" data-id="wall"><span></span></div></div></div>
    <div class="r-sbar" id="rSbar" aria-hidden="true"><span class="r-sbn"><span id="rSbN">Votre commerce</span> <small>DÉMO</small></span><span class="r-sbb" id="rSbB">Réserver</span></div>
    <div class="r-veil" aria-hidden="true"></div>
@@ -1010,11 +1010,14 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  function metier(k,push){if(!E3[k]||k===met)return;met=k;
   [...seg.children].forEach(b=>{const on=b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});rsel.value=k;
   const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');b.classList.add('a');
-  if(push)E3S.set({sc:k});if(cv.width&&(mode||inA>.02))snap();wall();dirty=true;tick()}   /* need() suit, dans la boucle */
- seg.addEventListener('click',e=>{const b=e.target.closest('button');if(b)metier(b.dataset.m,true)});
+  if(push)E3S.set({sc:k});if(cv.width&&(mode||inA>.02))snap();wall();if(push)goMet(k);dirty=true;tick()}   /* need() suit, dans la boucle */
+ seg.addEventListener('click',e=>{const b=e.target.closest('button');if(b){if(b.dataset.m===met)goMet(met);else metier(b.dataset.m,true)}});   /* v21 : le métier déjà choisi : on va devant sa façade */
  seg.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp'].includes(e.key))return;e.preventDefault();const bs=[...seg.children],i=bs.findIndex(b=>b.dataset.m===met),n=bs[(i+(/Right|Down/.test(e.key)?1:bs.length-1))%bs.length];metier(n.dataset.m,true);n.focus()});
  rsel.addEventListener('change',()=>metier(rsel.value,true));
  document.addEventListener('oonde-e3',e=>{metier(e.detail.sc,false);if(e.detail.name&&!nameIn.value){nameIn.value=e.detail.name;named(e.detail.name,false)}wall()});
+ /* v21 : choisir un métier à l'arrêt : la caméra glisse jusqu'à sa façade */
+ function goMet(k){if(!LIVE||!(k in FAC)||!W)return;const p=(hh-walk.getBoundingClientRect().top)/D;if(p<HOLD[0]-.02||p>GATE[1]+.01)return;
+  went=true;loadVa(set,4);glideTo(FAC[k])}
  const rwall=$('rWall');function wall(){if(rwall&&E3[met])e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici')}
  metier(E3S.st.sc,false);
  u.querySelector('.r-enter').addEventListener('click',e=>{e.preventDefault();enter()});
@@ -1030,7 +1033,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  const xc=document.createElement('canvas'),xx=xc.getContext('2d');
  function snap(){if(!W||!H)return;xc.width=W;xc.height=H;xx.drawImage(cv,0,0);xa=1}
  const fit2=(b,d)=>({ox:b.ox/d,oy:b.oy/d,w:b.w/d,h:b.h/d});
- function draw(f){const s=store[set];if(!W||!H||!s)return;const n=SETS[set];f=clamp(f,0,n-1);s.film.seek(f);const r=s.film.pair(f);if(!r)return;const[i0,i1,a]=r;const far=Math.min(Math.abs(i0-f),Math.abs(i1-f));if(!s.loose&&far>1.01&&(far>=Math.abs((shF<0?S0[set]:shF)-f)-1||performance.now()-lastS<1500))return;   /* jamais une image plus lointaine que celle qu'on voit déjà (l'affiche = S0) ; v20.1 : réseau lent, on se rapproche par étapes au lieu de rester sur l'affiche */shF=far>1.01?(Math.abs(i0-f)<Math.abs(i1-f)?i0:i1):f;if(window.__rd)__rd.push([i0,i1,+a.toFixed(2)]);
+ function draw(f){const v=vaS();if(v&&Math.abs(vx-HOME)>.01&&drawVa(v))return;const s=store[set];if(!W||!H||!s)return;const n=SETS[set];f=clamp(f,0,n-1);s.film.seek(f);const r=s.film.pair(f);if(!r)return;const[i0,i1,a]=r;const far=Math.min(Math.abs(i0-f),Math.abs(i1-f));if(!s.loose&&far>1.01&&(far>=Math.abs((shF<0?S0[set]:shF)-f)-1||performance.now()-lastS<1500))return;   /* jamais une image plus lointaine que celle qu'on voit déjà (l'affiche = S0) ; v20.1 : réseau lent, on se rapproche par étapes au lieu de rester sur l'affiche */shF=far>1.01?(Math.abs(i0-f)<Math.abs(i1-f)?i0:i1):f;if(window.__rd)__rd.push([i0,i1,+a.toFixed(2)]);
   const b=paintPair(s.film,r,1);
   /* à l'arrêt : la salle du métier choisi s'allume derrière la vitrine (la première image de la suite, même cadrage) */
   const z=inCur(),z0=z&&z.film.get(0);if(z0&&inA>.003){const c=cover(z0);cx.globalAlpha=inA;cx.drawImage(z0,c.ox,c.oy,c.w,c.h);cx.globalAlpha=1}
@@ -1038,6 +1041,12 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   flag(u,'live',true);painted=true;dirty=false;
   const d=W/SW,p=s.pins&&s.pins[i0]?s.pins[i0].p:0;place(e3mix(pinAt(s,i0),pinAt(s,i1),a),fit2(b,d),p);
   if(z0&&inA>.5&&z.pins)e3place(rwall,z.pins[0].pins,fit2(b,d));else e3place(rwall,null,null)}
+ /* v21 : à l'arrêt, ailleurs que devant la vôtre : le glissement ; la salle s'allume de même derrière la vitrine de la façade choisie */
+ function drawVa(v){if(!W||!H)return false;v.film.seek(vx);const r=v.film.pair(vx);if(!r)return false;const[i0,i1,a]=r;const b=paintPair(v.film,r,1);
+  const z=inCur(),z0=z&&z.film.get(0);if(z0&&inA>.003){const c=cover(z0);cx.globalAlpha=inA;cx.drawImage(z0,c.ox,c.oy,c.w,c.h);cx.globalAlpha=1}
+  if(xa>.003){cx.globalAlpha=xa;cx.drawImage(xc,0,0);cx.globalAlpha=1}
+  flag(u,'live',true);painted=true;dirty=false;const d=W/SW;place(remap(e3mix(pinAt(v,i0),pinAt(v,i1),a)),fit2(b,d),0);
+  if(z0&&inA>.5&&z.pins)e3place(rwall,z.pins[0].pins,fit2(b,d));else e3place(rwall,null,null);return true}
  /* dans la salle : la suite du métier choisi ; le nom sur l'enseigne (dehors) puis au mur du fond */
  function drawIn(f){const z=inCur();if(!W||!H||!z)return false;f=clamp(f,0,z.n-1);z.film.seek(f);const r=z.film.pair(f);if(!r)return false;const[i0,i1,a]=r;if(Math.abs(i0-f)>1.01&&Math.abs(i1-f)>1.01)return false;
   if(window.__ri)__ri.push([i0,i1,+a.toFixed(2)]);
@@ -1050,19 +1059,32 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   const mx=(q.c[0][0]+q.c[1][0])/2,near=clamp(1-Math.abs(mx-.5)/.42,0,1);el.style.opacity=(q.vis*Math.min(1,near*1.8)*(p>.84?0:1)).toFixed(2)}}
  /* la suite, par métier (img/e3d/in-<métier>/<jeu>/) : p0 (la première, la dernière et une sur 8) en approchant de l'arrêt,
     p1 et p2 à l'arrêt, p3 dès qu'on passe la porte. Les autres métiers dorment ; un jeu absent : la porte de la rue, en secours. */
- const inKey=()=>met+set,inCur=()=>{const z=ins[inKey()];return z&&!z.bad?z:null};
+ const inKey=()=>met+set+(went?'a':''),inCur=()=>{const z=ins[inKey()];return z&&!z.bad?z:null};
  function inGet(k,g){const z=ins[k];return e3pack(e3in(z.m)+z.k+'/p'+g+'.txt').then(l=>l.forEach(([i,b])=>z.film.add(i,b)))}
  function need(lv){if(!LIVE||!met||!W)return;if(lv===undefined)lv=cQ>0||gate==='open'&&cP>HOLD[0]?4:gate==='rested'||cP>=HOLD[0]-.02?3:cP>.45?1:0;if(!lv)return;
   const k=inKey();let z=ins[k];
   for(const j in ins)if(j!==k&&ins[j].film)ins[j].film.sleep();
-  if(!z){z=ins[k]={m:met,k:set,n:INS[set],req:0,pins:null,chain:Promise.resolve(),film:e3film(INS[set],24,0,()=>{if(k===inKey()){dirty=true;tick()}})};
-   fetch(e3in(met)+set+'/pins.json').then(r=>r.json()).then(j=>{z.pins=j;dirty=true;tick()}).catch(()=>{})}
+  if(!z){z=ins[k]={m:met,k:set+(went?'a':''),n:INS[set],req:0,pins:null,chain:Promise.resolve(),film:e3film(INS[set],24,0,()=>{if(k===inKey()){dirty=true;tick()}})};
+   fetch(e3in(met)+z.k+'/pins.json').then(r=>r.json()).then(j=>{z.pins=j;dirty=true;tick()}).catch(()=>{})}
   else z.film.wake();
-  while(z.req<lv){const g=z.req++;z.chain=z.chain.then(()=>inGet(k,g)).catch(()=>{if(g===0){z.bad=true;dirty=true;tick()}})}}
+  while(z.req<lv){const g=z.req++;z.chain=z.chain.then(()=>inGet(k,g)).catch(()=>{if(g===0){z.bad=true;if(went&&k===inKey())home();dirty=true;tick()}})}   /* la porte de la façade absente : retour devant la vôtre, sa porte à elle */
+  if(lv>=3&&met&&cQ<.1&&cP>.4)loadVa(set,2)}   /* v21 : à l'arrêt, le glissement se prépare (une image sur quatre : toutes les façades) */
  /* le rythme, en images : un temps sur le globe, le tour et la rue d'un seul geste, l'arrêt devant l'enseigne, puis la suite.
     La vitesse monte et descend en douceur (trapèze) : pas de départ ni d'arrêt sec. */
  const trap=(x,a,b,ra,rb)=>{const L=b-a,t=clamp(x-a,0,L),v=1/(L-ra/2-rb/2);return t<ra?v*t*t/(2*ra):t<=L-rb?v*(ra/2+t-ra):1-v*(L-t)**2/(2*rb)};
- const S0={d:74,m:60};   /* v20.1 : on part dans la rue, le réverbère du logo déjà sorti du cadre (de 62 à 73, son globe coupé filait au bord en quelques images : « les lampadaires au début ») ; build.py ne livre que les images à partir d'ici */
+ const S0={d:74,m:60};
+ /* v21 : le glissement d'une façade à l'autre (img/e3d/va/<jeu>/, entree3d ?va=1) : 73 images à la pose de l'arrêt, une façade toutes les 12.
+    Choisir un métier à l'arrêt y conduit la caméra (0,8 à 1,2 s), le nom passe sur son enseigne, et la porte est la sienne (in-<métier>/<jeu>a/). */
+ const FAC={restaurant:0,boulangerie:12,coiffure:24,institut:36,onglerie:48,logement:72},HOME=60,VAN=73,va={};let vx=HOME,went=false,vg=null,vaWas=false;
+ const vaS=()=>{const v=va[set];return v&&!v.bad&&v.film.any()?v:null};
+ function loadVa(k,lv){if(!LIVE)return;let v=va[k];if(!v){v=va[k]={req:0,pins:null,chain:Promise.resolve(),film:e3film(VAN,24,Math.round(vx),()=>{if(k===set){dirty=true;tick()}})};
+   fetch('img/e3d/va/'+k+'/pins.json').then(r=>r.json()).then(j=>{v.pins=j;dirty=true;tick()}).catch(()=>{})}else v.film.wake();
+  while(v.req<lv){const g=v.req++;v.chain=v.chain.then(()=>e3pack('img/e3d/va/'+k+'/p'+g+'.txt').then(l=>l.forEach(([i,b])=>v.film.add(i,b)))).catch(()=>{if(g===0){v.bad=true;if(k===set&&went)home();dirty=true;tick()}})}}
+ const vdur=(a,b)=>Math.min(1200,800+Math.abs(b-a)/12*90);
+ function glideTo(x){if(Math.abs(x-vx)<.01&&!vg)return;vg={a:vx,b:x,t0:0,dur:vdur(vx,x)};dirty=true;tick()}
+ function home(){went=false;glideTo(HOME)}
+ /* le nom va sur l'enseigne de la façade choisie ; celle de l'arrêt (la vôtre) reste vide */
+ const remap=pp=>pp&&went?pp.map(q=>q.id==='sign'?{...q,id:'_t'}:q.id===met?{...q,id:'sign'}:q):pp;   /* v20.1 : on part dans la rue, le réverbère du logo déjà sorti du cadre (de 62 à 73, son globe coupé filait au bord en quelques images : « les lampadaires au début ») ; build.py ne livre que les images à partir d'ici */
  const k1Of=()=>{const s=store[set],n=SETS[set];return s&&s.k1>0?s.k1:Math.round((n-1)*.935)};
  function frameOf(P){const k1=k1Of(),a=S0[set];return P<HOLD[0]?a+(k1-a)*trap(P,.03,HOLD[0],.06,.1):k1}   /* l'arrêt : l'image ne bouge plus jusqu'au mur ; après, c'est la suite */
  const inOf=q=>(INS[set]-1)*trap(q,0,END,.08,.14);   /* la suite : la porte, la salle, et un temps sur la fin du site */
@@ -1113,21 +1135,26 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   {const st=tF-cF,dl=st*(1-Math.exp(-dt/.07));cF+=clamp(dl,-1,1)}if(Math.abs(tF-cF)<.004)cF=tF;   /* une image au plus par image affichée : aucun trou, même lancé fort */
   /* passé le mur alors que la rue n'est pas encore à l'arrêt (réseau lent, l'arrêt atteint par « Voir une démo ») : la rue se pose
      sur l'arrêt par un fondu, et la salle prend la suite ; sinon la rue endormie attendrait des images qui ne viendraient plus */
+  /* v21 : le glissement avance avec le temps (une vraie caméra qui longe la rue) ; on repart vers la rue : retour devant la vôtre d'abord */
+  if(went&&cP<HOLD[0]-.01)home();
+  {const v=vaS();if(vg&&v){if(!vg.t0){vg.t0=now;if(painted&&Math.abs(vg.a-HOME)<.01)snap()}const t=clamp((now-vg.t0)/vg.dur,0,1),e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;vx=vg.a+(vg.b-vg.a)*e;if(t>=1){vx=vg.b;vg=null}dirty=true}
+   else if(vg&&!went&&(!va[set]||va[set].bad)){vx=HOME;vg=null}
+   const on=!!v&&Math.abs(vx-HOME)>.01;if(vaWas&&!on&&painted)snap();vaWas=on}
   const k1=k1Of();if(cQ>.12&&cF<k1-.5&&inCur()&&inCur().film.get(0)){snap();cF=tF=k1;dirty=true}
   /* la salle s'allume à l'arrêt (la caméra posée, sa première image prête) ; s'éteint si l'on repart vers la rue */
-  const z=inCur(),atStop=Math.abs(cF-k1)<.5&&cP>=HOLD[0]-.01,ia=atStop&&z&&z.film.get(0)?1:0;
+  const z=inCur(),atStop=Math.abs(cF-k1)<.5&&cP>=HOLD[0]-.01&&!vg&&Math.abs(vx-(went?FAC[met]:HOME))<.05,ia=atStop&&z&&z.film.get(0)?1:0;
   if(inA!==ia){inA+=(ia-inA)*(1-Math.exp(-dt/.16));if(Math.abs(ia-inA)<.004)inA=ia;dirty=true}
   /* la suite : son image suit la position, sans trou, comme la rue */
   let tI=inOf(cQ);if(z&&cF>=k1-.5&&mode===1)cI=follow(z.film,cI,rest?Math.round(tI):tI,dt,rest);else cI=0;   /* la salle part de sa première image (celle de l'arrêt), une fois qu'elle a la main */
-  const want=(cQ>.0005||cI>.02)&&cF>=k1-.5?1:0;   /* la salle ne prend la main qu'une fois la rue à l'arrêt (un lancer qui bute sur le mur ne montre pas la salle au milieu de la rue) */
+  const want=(cQ>.0005||cI>.02)&&cF>=k1-.5&&!vg?1:0;   /* la salle ne prend la main qu'une fois la rue à l'arrêt (un lancer qui bute sur le mur ne montre pas la salle au milieu de la rue) */
   if(want&&z&&z.film.get(Math.round(cI))){if(!mode&&inA<.95)snap();mode=1}else if(!want&&mode){mode=0;if(inA<.95)snap()}else if(want&&!z&&ins[inKey()]&&ins[inKey()].bad)mode=2;else if(!want)mode=0;
   if(xa>0){xa=Math.max(0,xa-dt/.35);dirty=true}
   if(mode===1){if(dirty||cI!==lastI){if(!drawIn(cI))draw(cF);lastI=cI;last=-1}}
   else if(mode===2){const n=SETS[set],f=k1+(n-1-k1)*clamp(cQ/END,0,1);if(dirty||f!==last){draw(f);last=f}}   /* secours : la porte de la rue */
   else if(dirty||cF!==last){draw(cF);last=cF;lastI=-1}
   /* une seule grande série d'images décodées à la fois : la rue dort dans la salle, la salle dort loin de l'arrêt */
-  if(s0){if(cQ>.12)s0.film.sleep();else if(vis)s0.film.wake()}if(z&&cP<.4)z.film.sleep();
-  ui();if(!frz&&(cP!==P||cF!==tF||Math.abs(cI-tI)>.004&&z||inA!==ia||xa>0))tick();else t0=0}
+  if(s0){if(cQ>.12)s0.film.sleep();else if(vis)s0.film.wake()}if(z&&cP<.4)z.film.sleep();{const v=va[set];if(v&&(cP<.4||cQ>.12))v.film.sleep()}
+  ui();if(!frz&&(cP!==P||cF!==tF||Math.abs(cI-tI)>.004&&z||inA!==ia||xa>0||vg))tick();else t0=0}
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;const s=store[set];if(s){if(vis)s.film.wake();else s.film.sleep()}tick()},{rootMargin:'50% 0px'}).observe(walk);   /* loin de la rue : ses images décodées sont libérées */
  poster.addEventListener('error',()=>{poster.style.visibility='hidden'});   /* affiche absente : le fond de nuit, les textes restent lisibles */
  function toStill(){u.classList.add('static');poster.addEventListener('load',tick);poster.src=base(r0())+'stop.jpg';const ps=poster.parentNode.querySelector('source');if(ps)ps.srcset=base('m')+'stop.jpg'}
