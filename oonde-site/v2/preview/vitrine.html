@@ -307,7 +307,7 @@ h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;m
 .btn{border-radius:999px;padding:15px 26px}
 .nav .btn{border-radius:999px;padding:10px 16px}
 .nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
-.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none}
+.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
 .bg-ink .lnk,.bg-night .lnk{color:#fff}
 footer{border-top:0}
@@ -374,6 +374,7 @@ footer{border-top:0}
 .pv-opts{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 24px;margin-top:22px;padding-right:clamp(150px,30%,210px)}
 .pv-opts .lab{margin-bottom:8px}
 #sTown{min-height:44px;border-radius:8px;border:1px solid var(--line);background-color:var(--card);font-weight:500;font-size:15px;padding:9px 14px;cursor:pointer}
+.pv{position:relative}.pv-tag{position:absolute;z-index:3;top:-14px;left:50%;translate:-50% 0;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:#E9E9E6;color:var(--soft)}
 .pv-note{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px;font-size:14px;color:var(--muted)}
 .pv-note a{color:var(--ink);font-weight:600;text-underline-offset:3px}
 .nojs{display:none}
@@ -472,7 +473,7 @@ html:not(.js) .nojs{display:block}
   </div>
   <div class="h-prev tool-js">
    <p class="sr" id="prevDesc" aria-live="polite"></p>
-   <div class="pv" aria-hidden="true">
+   <div class="pv" aria-hidden="true"><span class="pv-tag">Démo</span>
     <div class="frame"><div class="fbar"><i></i><i></i><i></i><span id="liveUrl">votre-commerce.ch</span></div><div class="fview" id="liveDesk"></div></div>
     <div class="phone"><div class="screen" id="livePhone"></div></div>
    </div>

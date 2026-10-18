@@ -113,13 +113,18 @@ def full(s, theme='#F7F7F4', base=''):
             + f'<meta name="theme-color" content="{theme}">\n<link rel="icon" href="favicon.ico" sizes="32x32">\n<link rel="icon" href="favicon.svg" type="image/svg+xml">\n<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
             + s[:i] + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
 
-def pack(src, dst):
+def pack(src, dst, start=0, fr=None):
     """Les images d'une entrée en 4 fichiers, dans l'ordre où le lecteur les veut : p0 = la première, la dernière et une sur 8,
     p1 = les 4 + 8k, p2 = les 2 + 4k, p3 = les impaires. Chaque paquet : 4 octets (longueur de l'en-tête), l'en-tête JSON
     [[image, début, longueur], …], puis les WebP bout à bout, le tout en base64 dans un .txt (l'aperçu claude.ai ne sert pas
     les .bin ; compressé à l'envoi, le base64 ne pèse presque rien de plus). Moins de requêtes, et moins de fichiers à héberger."""
-    fr = sorted(src.glob('f*.webp')); n = len(fr); dst.mkdir(parents=True, exist_ok=True)
-    groups = [[i for i in range(n) if i % 8 == 0 or i == n - 1], [i for i in range(n) if i % 8 == 4], [i for i in range(n) if i % 4 == 2], [i for i in range(n) if i % 2 == 1 and i != n - 1]]
+    fr = fr or sorted(src.glob('f*.webp')); n = len(fr); dst.mkdir(parents=True, exist_ok=True)
+    # v20.1 : start = la première image que le lecteur montre (S0 dans rue.js) ; celles d'avant ne partent plus (un tiers du poids en moins)
+    J = lambda i: i - start
+    k1 = -1
+    if start and (src / 'pins.json').exists():   # v20.1 : l'image de l'arrêt part dans le premier paquet (réseau lent : on ne reste pas sur l'affiche du début à l'arrêt)
+        k1 = next((i for i, x in enumerate(json.loads((src / 'pins.json').read_text())) if x['p'] >= .88), -1)
+    groups = [[i for i in range(start, n) if J(i) % 8 == 0 or i == n - 1 or i == k1], [i for i in range(start, n) if J(i) % 8 == 4 and i != k1], [i for i in range(start, n) if J(i) % 4 == 2 and i != k1], [i for i in range(start, n) if J(i) % 2 == 1 and i != n - 1 and i != k1]]
     for g, idx in enumerate(groups):
         head, body, off = [], b'', 0
         for i in idx:
@@ -185,10 +190,15 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', GOOGLE, False)]:
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
     if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : chaque jeu d'images part en 4 paquets (voir pack()), avec pins.json
-        for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name == 'rue' or d.name.startswith('in-')]:   # v19 : la rue et sa suite par métier (les anciens films de la démo ne partent plus)
+        for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name in ('rue', 'va') or d.name.startswith('in-')]:   # v19 : la rue et sa suite par métier (les anciens films de la démo ne partent plus) ; v21 : va, le glissement d'une façade à l'autre
+            for k in ('da', 'ma'):   # v21 : la suite derrière la façade du métier : ses images de la porte (da/, ma/), puis celles de la salle, communes (d/, m/)
+                if (sd / k).is_dir():
+                    own = sorted((sd / k).glob('f*.webp')); rest = sorted((sd / k[0]).glob('f*.webp'))[len(own):]
+                    pack(None, o / sd.relative_to(D) / k, 0, own + rest); shutil.copy2(sd / k / 'pins.json', o / sd.relative_to(D) / k / 'pins.json')
             for k in ('d', 'm'):
                 src, dst = sd / k, o / sd.relative_to(D) / k
-                pack(src, dst)
+                S0 = re.search(r'const S0=\{d:(\d+),m:(\d+)\}', (D / 'partials' / 'rue.js').read_text())
+                pack(src, dst, int(S0.group(1 if k == 'd' else 2)) if sd.name == 'rue' and S0 else 0)
                 lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
                 ph = re.search(r"E3IN=\{d:\[([\d,]+)\],m:\[([\d,]+)\]\}", html)   # les photos du site (e3d.js, E3IN) : trois images de la salle
                 phs = [f'f{int(i):03d}.webp' for i in ph.group(1 if k == 'd' else 2).split(',')] if ph and sd.name.startswith('in-') else []
