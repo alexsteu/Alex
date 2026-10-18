@@ -20,61 +20,27 @@
 {{INC:base.css}}
 {{INC:e3d.css}}
 {{INC:rue.css}}
-.close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
-
-/* Prix */
-.p-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
-.p-head p{color:var(--muted);font-size:17px;max-width:30em}
-@media (min-width:861px){.p-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,30em);align-items:end}}
-.launch{margin-top:28px;padding:16px 20px;border:1px solid var(--line);border-left:3px solid var(--klein);border-radius:10px;background:var(--card);font-size:15.5px;color:var(--soft);max-width:44em}
-.launch b{color:var(--ink);font-weight:600}
-
-
-/* Les offres côte à côte : l'entrée 3D mise en avant, La Vitrine pour un besoin plus simple */
-.offers{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:stretch}
-.offer{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(22px,2.6vw,32px)}
-.offer.feat{border:1.5px solid var(--ink);box-shadow:0 30px 60px -44px rgba(17,19,24,.45)}
-.o-tag{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.feat .o-tag{color:var(--klein)}
-.offer h3{font-size:clamp(26px,2.4vw,32px);margin-top:8px}
-.o-for{margin-top:10px;color:var(--soft);font-size:16.5px;max-width:32em}
-.o-dl{margin:20px 0 0;border-top:1px solid var(--line)}
-.o-dl>div{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:4px 16px;padding:13px 0;border-bottom:1px solid var(--line)}
-.o-dl dt{font:500 12px/1.9 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.o-dl dd{margin:0;font-size:15.5px;color:var(--soft)}
-.o-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:10px}.o-price b{font-size:clamp(30px,2.8vw,38px);font-weight:600;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}.o-price span{font-size:15px;color:var(--muted)}
-.o-amt{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1.15;font-variant-numeric:tabular-nums}
-.o-amt small{font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0}
-.o-next{margin-top:auto;padding-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
-.o-next .micro{flex:1 1 14em}
-@media (max-width:860px){.offers{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:480px){.o-dl>div{grid-template-columns:minmax(0,1fr)}.o-next .btn{width:100%}}
-/* La chronologie : de la demande à la mise en ligne */
-.steps-h{margin-top:clamp(44px,5vw,64px);font-size:clamp(21px,2vw,26px)}
-.chrono{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:c}
-.chrono li{counter-increment:c;border-top:2px solid var(--ink);padding-top:14px}
-.chrono li::before{content:counter(c,decimal-leading-zero);display:block;font:500 12.5px var(--mono);color:var(--klein);margin-bottom:8px}
-.chrono b{display:block;font-size:17px;letter-spacing:-.01em;line-height:1.25}
-.chrono span{display:block;margin-top:6px;font-size:14.5px;color:var(--muted);line-height:1.45}
-@media (max-width:980px){.chrono{grid-template-columns:minmax(0,1fr);gap:0}.chrono li{display:grid;grid-template-columns:2.4em minmax(0,1fr);border-top:1px solid var(--line);padding:12px 0}.chrono li::before{grid-row:1/3;margin:2px 0 0}.chrono span{grid-column:2}}
-/* les faux boutons du commerce imaginé portent « Démo » ; le choix du métier reste sous la main */
-.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;font-style:normal;padding:3px 5px;border-radius:4px;border:1px solid currentColor;vertical-align:.12em}
+/* v20 · l'accueil « Apple minimal » : une idée par écran */
+.idea{padding-block:clamp(120px,14vw,200px)}
+.idea h2{max-width:14ch}
+/* les deux offres : deux colonnes sans bordure, le prix en grand */
+#prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
+.offers2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,6vw,96px)}
+.offers2 h3{font-size:clamp(24px,2.2vw,30px);letter-spacing:-.02em}
+.o-p{font:600 clamp(56px,6vw,80px)/1 var(--sans);letter-spacing:-.04em;margin-top:14px;font-variant-numeric:tabular-nums}
+.o-p small{font-size:.36em;font-weight:500;letter-spacing:-.01em;color:var(--muted);vertical-align:.9em;margin-right:.2em}
+.o-m{margin-top:10px;font-size:16px;color:var(--muted)}
+.o-s{margin-top:24px;color:var(--soft);max-width:30em}
+.o-go{margin-top:32px;display:grid;gap:14px;justify-items:start}
+.o-opt{margin-top:clamp(56px,7vw,96px);color:var(--soft);max-width:44em}
+@media (max-width:860px){.offers2{grid-template-columns:minmax(0,1fr)}.o-p{font-size:48px}}
+@media (max-width:480px){.o-go .btn{width:100%}}
+/* le pied de page de l'accueil : les autres moyens de nous joindre et le code QR */
 .e-pick{display:inline-flex;align-items:center;gap:8px;font:500 14px var(--sans);color:var(--soft)}
-.e-pick select{min-height:46px;padding:8px 36px 8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111318' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;font:500 15px var(--sans);color:var(--ink);cursor:pointer}
+.e-pick select{min-height:46px;padding:8px 36px 8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111318' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;appearance:none;-webkit-appearance:none;font:500 15px var(--sans);color:var(--ink);cursor:pointer}
 .e-pick select:hover{border-color:var(--ink)}
 html:not(.js) .e-pick{display:none}
-.close .ig-l{display:inline-block;margin-top:22px}
-/* La fin de l'accueil : pour ceux à qui un site simple suffit, La Vitrine, sur sa page */
-.simple{padding-top:clamp(44px,6vw,72px);padding-bottom:clamp(44px,6vw,72px)}
-.sim{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px 48px;align-items:center}
-.sim h2{font:600 clamp(26px,2.8vw,38px)/1.08 var(--sans);letter-spacing:-.025em;margin-top:10px}
-.sim p{margin-top:12px;color:var(--soft);font-size:16.5px;line-height:1.5;max-width:34em}
-.sim-go{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 16px;padding:22px 24px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
-.sim-go:hover{border-color:var(--ink);transform:translateY(-2px)}
-.sim-go b{font:600 30px var(--sans);letter-spacing:-.02em}
-.sim-go span{grid-column:1;color:var(--soft);font-size:15px}
-.sim-go i{grid-column:2;grid-row:1/3;align-self:center;font-style:normal;font-weight:600;font-size:15px;border-bottom:1.5px solid currentColor;white-space:nowrap}
-@media (max-width:760px){.sim{grid-template-columns:1fr}}
+.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft);vertical-align:.12em}
 </style>
 
 <a class="skip" href="#prix">Aller aux offres</a>
@@ -82,7 +48,7 @@ html:not(.js) .e-pick{display:none}
  <div class="in">
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="#choix">La démo</a><a href="#prix">Prix</a><a class="opt" href="{{VITRINE}}">La Vitrine</a><span class="nav-sub opt"><button type="button" class="nav-sb" aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a></span></span><a class="opt2" href="#questions">Questions</a><a class="nav-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
+  <nav aria-label="Pages" id="navL">{{NAV:index}}<a class="nav-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
   <a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span class="l" data-e3l>Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
@@ -100,7 +66,7 @@ html:not(.js) .e-pick{display:none}
    <a class="r-skip" href="#choix">Passer l’intro ↓</a>
    <div class="r-tx r-t1"><p class="mono">SITES INTERNET · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">clients</span> <em><span class="w" style="--i:2">poussent</span> <span class="w" style="--i:3">votre</span> <span class="w" style="--i:4">porte</span></em> <span class="w" style="--i:5">avant</span> <span class="w" style="--i:6">de</span> <span class="w" style="--i:7">venir.</span></h1>
     <p class="r-sub">Nous créons votre site internet, qui s’ouvre sur votre commerce en 3D.</p>
-    <div class="r-act"><a class="btn inv r-demo" href="#choix">Voir une démo</a><a class="btn r-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a>
+    <div class="r-act"><a class="btn inv r-demo" href="#choix">Voir la démo</a><a class="r-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener"><span>Recevoir mon aperçu 3D</span> <span aria-hidden="true">→</span></a>
      <p class="r-off">Votre aperçu 3D : une première image de votre façade, offerte, avec le devis. Sans engagement. <a href="#prix">Voir les offres</a></p></div></div>
    <p class="r-tx r-say" aria-hidden="true">Dehors, on hésite.</p>
    <p class="r-tx r-say" aria-hidden="true">Sur votre site, on a déjà vu l’intérieur.</p>
@@ -124,109 +90,84 @@ html:not(.js) .e-pick{display:none}
 </section>
 
 <section id="entree" class="ds" aria-labelledby="hS">
- <div class="ds-bar"><span class="ds-logo"><span id="eLogoN">Votre commerce</span> <small>DÉMO</small></span><nav aria-label="Menu du site de démonstration" id="eNav"><a href="#eInfo">Menu du jour</a><a href="#eInfo">Horaires</a><a href="#eInfo">Contact</a></nav><button type="button" class="ds-book" data-book><span id="eBookB">Réserver</span></button></div>
  <div class="in ds-in" id="eInfo">
   <div class="ds-body" id="eSite" data-k="restaurant"><div class="ds-top"><div><p class="ds-eb">Restaurant · <i class="dtag">Démo</i></p><h2 class="ds-t" id="hS"><span class="sr">Démo, la suite du site : </span><span id="eSiteT">Votre commerce</span></h2><p class="ds-sub">Une bonne table. Midi et soir, une cuisine de saison.</p>
    <div class="ds-more"><div><p class="ds-k">HORAIRES</p><p>Ma–Di 11:30–14:00<br>18:00–23:00</p></div><div><p class="ds-k">LA MAISON</p><p>Des produits de la région, une carte courte qui change avec les saisons, et une terrasse aux beaux jours.</p></div><div><p class="ds-k">SUR GOOGLE</p><p>Votre fiche, vos avis et l’itinéraire, à un clic.</p></div></div></div>
-   <div class="ds-card"><p class="ds-k">MENU DU JOUR (DÉMO)</p><p class="ds-row"><span>Menu du jour</span><b>21.50</b></p><p class="ds-row"><span>Filets de perche</span><b>34.–</b></p><p class="ds-row"><span>Dessert maison</span><b>9.–</b></p><p class="ds-row"><span>Plat végétarien</span><b>24.–</b></p><button type="button" class="ds-go" data-book>Réserver une table</button><p class="ds-n">Ouvert · jusqu’à 23:00</p></div></div></div>
+   <div class="ds-card"><p class="ds-k">MENU DU JOUR</p><p class="ds-row"><span>Menu du jour</span><b>21.50</b></p><p class="ds-row"><span>Filets de perche</span><b>34.–</b></p><p class="ds-row"><span>Dessert maison</span><b>9.–</b></p><p class="ds-row"><span>Plat végétarien</span><b>24.–</b></p><button type="button" class="ds-go" data-book>Réserver une table</button><p class="ds-n">Ouvert · jusqu’à 23:00</p></div></div></div>
   <div class="ds-ph" id="ePh"><img src="img/e3d/in-restaurant/d/f022.webp" width="1280" height="800" alt="Démo : la salle, vue depuis l’entrée" loading="lazy" decoding="async"><img src="img/e3d/in-restaurant/d/f038.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><img src="img/e3d/in-restaurant/d/f055.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"></div>
-  <div class="ds-cap"><p><b>Démo :</b> commerce, textes et prix inventés. Les boutons marqués <i class="dtag">Démo</i> font partie du site imaginé. Votre entrée est faite d’après votre vrai lieu.</p>
+  <div class="ds-cap"><p><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</p>
    <div class="ds-cta"><label class="e-pick"><span>Métier</span><select id="eSel" aria-label="Changer le métier de la démo"></select></label><div class="e-sw"><span id="lE3">Couleur <b id="eStyleN"></b></span><div class="swatches" id="eStyle" role="radiogroup" aria-labelledby="lE3"></div></div><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></div></div>
  </div>
  <template id="eLodge"><div class="ds-top"><div><p class="ds-eb">Le logement · <i class="dtag">Démo</i></p><h2 class="ds-t" id="hS"><span class="sr">Démo, la suite du site : </span><span id="eSiteT"></span></h2><p class="ds-sub">Un appartement d’hôtes au cœur de la ville, à deux pas du lac.</p>
    <p class="ds-facts"><span><b>4</b>voyageurs</span><span><b>2</b>chambres</span><span><b>62</b>m²</span></p>
    <div class="ds-cal" aria-label="Calendrier de démonstration"><p class="ds-k">NOVEMBRE 2026 · DISPONIBILITÉS</p><div class="ds-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b>{{CAL}}</div><p class="ds-n">Dates barrées : déjà réservées sur Booking ou Airbnb.</p></div></div>
-  <div class="ds-card"><p class="ds-k">TARIF (DÉMO)</p><p class="ds-v">dès 180.– <small>la nuit</small></p><button type="button" class="ds-go" data-book>Réserver en direct</button><p class="ds-n">Sans commission · 2 nuits minimum</p></div></div></template>
+  <div class="ds-card"><p class="ds-k">TARIF</p><p class="ds-v">dès 180.– <small>la nuit</small></p><button type="button" class="ds-go" data-book>Réserver en direct</button><p class="ds-n">Sans commission · 2 nuits minimum</p></div></div></template>
 </section>
 <div class="w-toast" id="eToast" role="dialog" aria-labelledby="eToastT" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></div>
 
-<section class="bg-paper" id="prix" aria-labelledby="hP">
- <div class="in">
-  <div class="p-head"><div><p class="mono">Nos offres</p><h2 id="hP">Deux sites, selon ce qu’il vous faut.</h2></div><p>Les deux mettent en ligne vos prix, vos horaires, WhatsApp et votre fiche Google. L’entrée 3D y ajoute votre commerce, qu’on visite avant de venir.</p></div>
-  <div class="offers">
-   <article class="offer feat" aria-labelledby="oE">
-    <p class="o-tag">Notre spécialité</p>
-    <h3 id="oE">L’entrée 3D</h3>
-    <p class="o-price"><b>dès 990.–</b><span>puis 20.– par mois</span></p>
-    <p class="o-for">Pour un commerce qu’on a envie de découvrir : restaurant, salon, institut, boulangerie, onglerie.</p>
-    <dl class="o-dl">
-     <div><dt>La différence</dt><dd>Votre site s’ouvre sur votre façade, votre porte et votre salle, reconstruites en 3D d’après nos photos. Puis le site continue, comme un site normal.</dd></div>
-     <div><dt>Compris</dt><dd>Tout ce que comprend La Vitrine (site adapté au téléphone, textes, fiche Google, adresse .ch et hébergement), les photos de votre lieu et l’entrée 3D.</dd></div>
-     <div><dt>Prix de départ</dt><dd><b class="o-amt"><small>dès</small> 990.–</b> selon la taille du lieu, écrit dans le devis. 30 % à la commande, le solde à la mise en ligne.</dd></div>
-     <div><dt>Ensuite</dt><dd><b class="o-amt">20.–<small> par mois</small></b> hébergement, adresse et petites modifications. Résiliable chaque mois.</dd></div>
-    </dl>
-    <div class="o-next"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a><p class="micro">Première image de votre façade et devis offerts, sous 48 heures, sans engagement.</p></div>
-   </article>
-   <article class="offer" aria-labelledby="oV">
-    <p class="o-tag">Sans 3D</p>
-    <h3 id="oV">La Vitrine</h3>
-    <p class="o-price"><b>490.–</b><span>puis 20.– par mois</span></p>
-    <p class="o-for">Pour un commerce qui veut simplement être bien trouvé sur Google, avec un site clair.</p>
-    <dl class="o-dl">
-     <div><dt>La différence</dt><dd>Un site d’une page, sans 3D. Vous voyez la maquette avant de payer quoi que ce soit.</dd></div>
-     <div><dt>Compris</dt><dd>Vos prestations, prix, horaires, plan, boutons d’appel et WhatsApp ; les textes ; votre fiche Google ; l’adresse .ch et l’hébergement ; deux séries de corrections.</dd></div>
-     <div><dt>Prix</dt><dd><b class="o-amt">490.–</b> une fois, seulement si vous validez le site terminé.</dd></div>
-     <div><dt>Ensuite</dt><dd><b class="o-amt">20.–<small> par mois</small></b> hébergement, adresse et petites modifications. Résiliable chaque mois.</dd></div>
-    </dl>
-    <div class="o-next"><a class="btn light" href="{{VITRINE}}">Voir La Vitrine</a><p class="micro">Maquette offerte en 48 heures.</p></div>
-   </article>
-  </div>
-  <p class="launch"><b>La visite complète, en option de l’entrée 3D :</b> tout le lieu, pièce par pièce, dès 1&#8239;490.–. Pour un hôtel, des chambres d’hôtes ou une salle, avec votre calendrier Booking ou Airbnb affiché sur le site, en français et en anglais. <a href="{{VISITE}}">Voir la démo Les Grèves</a></p>
+<section class="bg-white idea" aria-labelledby="hI"><div class="in txt c">
+ <h2 id="hI" class="rv">Un site qu’on visite avant de venir.</h2>
+ <p class="lede rv" style="margin-top:24px">Votre façade, votre porte, votre salle. Puis vos prix, vos horaires et le bouton pour vous écrire.</p>
+</div></section>
 
-  <h3 class="steps-h" id="hC">Comment ça se passe, pour l’entrée 3D</h3>
-  <ol class="chrono" aria-labelledby="hC">
-   <li><b>Votre demande</b><span>Le nom et la commune de votre commerce, sur WhatsApp.</span></li>
-   <li><b>Première image et devis</b><span>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. Vous décidez ensuite, sans engagement.</span></li>
-   <li><b>Validation et commande</b><span>Vous acceptez l’offre par écrit. 30 % à la commande.</span></li>
-   <li><b>Réalisation</b><span>On vient photographier votre lieu, on construit l’entrée et le site. Vous recevez le site terminé et on corrige ce qui ne vous convient pas.</span></li>
-   <li><b>Mise en ligne</b><span>Le solde à la mise en ligne. Ensuite 20.– par mois, sans durée minimale.</span></li>
-  </ol>
-  <ul class="guar">
-   <li><b>Le prix du devis, ni plus ni moins.</b><span>Écrit avant de commencer, avec ce qui est compris.</span></li>
-   <li><b>Sans durée minimale.</b><span>20.– par mois, résiliable à la fin de n'importe quel mois, par un simple message.</span></li>
-   <li><b>Le site est à vous.</b><span>L'adresse est à votre nom. Si vous arrêtez, on vous remet tout, gratuitement.</span></li>
-  </ul>
-  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>. On répond le jour même, 7 jours sur 7.</p>
+<section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
+ <h2 id="hP" class="rv">Deux sites, selon ce qu’il vous faut.</h2>
+ <div class="offers2">
+  <article class="rv" aria-labelledby="oE">
+   <h3 id="oE">L’entrée 3D</h3>
+   <p class="o-p"><small>dès </small>990.–</p>
+   <p class="o-m">puis 20.– par mois, résiliable chaque mois</p>
+   <p class="o-s">Votre site s’ouvre sur votre façade, votre porte et votre salle, reconstruites en 3D d’après nos photos. Puis il continue, comme un site normal.</p>
+   <ul class="l4"><li>Tout ce que comprend La Vitrine</li><li>Les photos de votre lieu</li><li>L’entrée 3D, sur ordinateur et téléphone</li><li>30 % à la commande, le solde à la mise en ligne</li></ul>
+   <div class="o-go"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a><p class="micro">Première image de votre façade et devis offerts, sous 48 heures, sans engagement.</p></div>
+  </article>
+  <article class="rv" aria-labelledby="oV">
+   <h3 id="oV">La Vitrine</h3>
+   <p class="o-p">490.–</p>
+   <p class="o-m">puis 20.– par mois, résiliable chaque mois</p>
+   <p class="o-s">Un site d’une page, sans 3D, pour être bien trouvé sur Google. Vous voyez la maquette avant de payer : 490.– une fois, seulement si vous validez le site terminé.</p>
+   <ul class="l4"><li>Prestations, prix, horaires, plan et WhatsApp</li><li>Les textes et votre fiche Google</li><li>L’adresse .ch et l’hébergement</li><li>Deux séries de corrections</li></ul>
+   <div class="o-go"><a class="lnk" href="{{VITRINE}}">Voir La Vitrine →</a><p class="micro">Maquette offerte en 48 heures.</p></div>
+  </article>
  </div>
-</section>
+ <p class="o-opt rv">La visite complète, pièce par pièce, en option de l’entrée 3D : dès 1&#8239;490.–. <a class="lnk" href="{{VISITE}}">Voir la démo Les Grèves →</a></p>
+</div></section>
+
+<section class="bg-white" aria-labelledby="hC"><div class="in">
+ <h2 id="hC" class="rv">Comment ça se passe.</h2>
+ <ol class="t3">
+  <li class="rv"><i>01</i><b>Vous écrivez.</b><span>Le nom et la commune de votre commerce, sur WhatsApp.</span></li>
+  <li class="rv"><i>02</i><b>Vous voyez.</b><span>Sous 48 heures, une première image de votre façade en 3D et le prix par écrit, offerts.</span></li>
+  <li class="rv"><i>03</i><b>Vous décidez.</b><span>Sans engagement. Si vous dites oui : 30 % à la commande, on vient photographier, et vous corrigez avant la mise en ligne.</span></li>
+ </ol>
+ <p class="g3 rv"><span>Le prix du devis, ni plus ni moins.</span><span>Résiliable chaque mois, par un message.</span><span>Le site et l’adresse sont à vous.</span></p>
+ <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Si vous arrêtez, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
+</div></section>
 
 <section class="bg-paper sec2" id="questions" aria-labelledby="hQ">
  <div class="in qa">
-  <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:14px">Une autre question ? <a href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp</a>, on répond le jour même.</p></div>
+  <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
   <div class="faq">
    <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>L'entrée 3D avec le site complet, dès 990.–, selon la taille du lieu ; la visite complète, pièce par pièce, dès 1&#8239;490.–. Vous recevez le prix par écrit sous 48 heures, avec une première image offerte. Ensuite, 20.– par mois pour l'hébergement et les petites modifications. La Vitrine, sans 3D, coûte 490.– et 20.– par mois.</p><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. L'entrée 3D en fait un site qu'on remarque et qu'on partage. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
    <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Nous ouvrir votre porte : on vient voir votre lieu, on le photographie, et on reconstruit votre vraie façade, votre porte et votre salle en 3D (les exemples de cette page, eux, sont des commerces inventés). Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l'entrée et on s'occupe de votre fiche Google.</p></div></div></details>
    <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>20.– par mois pour l'hébergement et les petites modifications, sans durée minimale. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine, c'est compris.</p><p>Pour Google, on met en place tout ce qu'il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
-   <details><summary>Et sur téléphone ?</summary><div class="fa"><div><p>C'est la même entrée : on est devant chez vous, avec votre nom sur l'enseigne ; on fait défiler, on passe la porte, on découvre votre salle, puis le site continue comme un site normal, avec vos prix, vos horaires, vos photos et le bouton pour vous écrire ou réserver.</p><p>Elle a sa propre version en hauteur, pour le téléphone, avec des images légères qui arrivent pendant qu'on lit. Si votre client a réglé son téléphone pour réduire les animations, il voit votre façade immobile, puis le site.</p></div></div></details>
+   <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux. On démarre : on n'a pas encore de clients à vous montrer. C'est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit. Quand vous écrivez, c'est nous qui répondons.</p></div></div></details>
   </div>
  </div>
 </section>
 
-<section class="bg-white" id="nous" aria-labelledby="hN">
- <div class="in close">
-  <div>
-   <h2 class="h-m" id="hN">Deux amis de la région. C'est nous qui répondons.</h2>
-   <p class="lede" style="margin-top:18px">On s'est connus au gymnase et on a monté OONDE à deux. L'un fait les sites, la 3D et Google, l'autre fait les photos, les vidéos et le suivi. Quand vous écrivez, c'est l'un de nous deux qui répond. On vient voir votre commerce, de Genève à Montreux, avant de le reconstruire.</p>
-   <p class="lede" style="margin-top:14px">On démarre : on n'a pas encore de clients à vous montrer. C'est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit.</p>
-   <a class="lnk ig-l" href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Nos conseils pour les commerces, sur Instagram</a>
-  </div>
-  <div class="final" id="contact">
-   <h2 id="finalH"><span style="white-space:nowrap">Envoyez-nous</span> le nom de votre commerce.</h2>
-   <p>Le prix de votre entrée 3D par écrit sous 48 heures, avec une première image de votre façade, offerte. On répond le jour même, 7 jours sur 7.</p>
-   <a class="btn inv" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a>
-   <p class="alt"><a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon commerce</a></p>
-   <div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div>
-   <p class="also">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p>
-  </div>
- </div>
-</section>
+<section class="bg-ink end" id="contact" aria-labelledby="finalH"><div class="in">
+ <h2 id="finalH" class="rv">Envoyez-nous le nom de votre commerce.</h2>
+ <div class="act rv"><a class="btn inv" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></div>
+</div></section>
 
 </main>
 <nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VIDEOS}}">Vidéos</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon commerce</a></p><div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
  <p class="seo">Sites internet avec entrée en 3D, et sites simples, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
 </div></footer>
 
