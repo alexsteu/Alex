@@ -5,7 +5,7 @@
   Strict-Transport-Security: max-age=31536000
   X-Frame-Options: DENY
   Cross-Origin-Opener-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' 'sha256-S2rJr2hj88BHMnku95eblGtIV1GeUHjL867bKxUmvAQ=' 'sha256-UeOQfdCb0A/7wyVIhGMIww6agLiRKdBfOYAndQOn+ME=' 'sha256-gvurmLv4FeqCxciZmSUXfOwwtx4yzbADOwppKf47hBI='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-3s+fdWdAbLOa1cZTDKwk8am2aoF8UcKFHO2r6M8X6m4=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' 'sha256-S2rJr2hj88BHMnku95eblGtIV1GeUHjL867bKxUmvAQ=' 'sha256-UeOQfdCb0A/7wyVIhGMIww6agLiRKdBfOYAndQOn+ME=' 'sha256-gvurmLv4FeqCxciZmSUXfOwwtx4yzbADOwppKf47hBI='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
 
 /apercu
   X-Robots-Tag: noindex
@@ -20,6 +20,9 @@
 
 /img/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/img/e3d/h/*
+  Cache-Control: public, max-age=31536000, immutable
 
 /apple-touch-icon.png
   Cache-Control: public, max-age=604800

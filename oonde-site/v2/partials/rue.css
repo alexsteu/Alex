@@ -1,16 +1,50 @@
 /* La rue au crépuscule : l'ouverture de la page. Un seul plan-séquence, rendu d'avance (entree3d/scenes/rue.js) :
    le point bleu est un réverbère, la rue apparaît, on longe les vitrines, on s'arrête devant une enseigne vide. */
 .r{padding:0;background:#0d1024;color:#fff}
-.r-walk{position:relative;--ext:100vh;--ext:100svh;height:calc(270vh + var(--ext));height:calc(270svh + var(--ext))}
+.r-walk{position:relative;--ext:100vh;--ext:100svh;height:calc(367vh + var(--ext));height:calc(367svh + var(--ext))}   /* v22 : l'approche (P 0 → .3), la marche le long des six façades (→ .75), l'arrêt */
 .r-x{position:absolute;left:0;bottom:0;width:1px;height:var(--ext);pointer-events:none;visibility:hidden}   /* v19 : la suite, après l'arrêt (la porte, la salle, la fin du site) */
-.r-anchor{position:absolute;left:0;top:calc(.78 * (170vh + var(--hh)));top:calc(.78 * (170svh + var(--hh)));width:1px;height:1px;scroll-margin-top:var(--hh)}   /* l'arrêt (P .78 de la rue), avant même le script */
-@media (max-aspect-ratio:1/1){.r-walk{--ext:90vh;--ext:90svh;height:calc(255vh + var(--ext));height:calc(255svh + var(--ext))}.r-anchor{top:calc(.78 * (155vh + var(--hh)));top:calc(.78 * (155svh + var(--hh)))}}
+.r-anchor{position:absolute;left:0;top:calc(.82 * (267vh + var(--hh)));top:calc(.82 * (267svh + var(--hh)));width:1px;height:1px;scroll-margin-top:var(--hh)}   /* l'arrêt (P .82 de la rue), avant même le script */
+@media (max-aspect-ratio:1/1){.r-walk{--ext:90vh;--ext:90svh;height:calc(420vh + var(--ext));height:calc(420svh + var(--ext))}.r-anchor{top:calc(.82 * (320vh + var(--hh)));top:calc(.82 * (320svh + var(--hh)))}}
 .r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
-.r-scene{position:absolute;inset:0}
+.r-scene{position:absolute;inset:0;background:#0d1024 url("{{PVB_D}}") 50% 50%/cover no-repeat}   /* v22.1 : l'affiche floue, avant l'image */
+@media (max-aspect-ratio:1/1){.r-scene{background-image:url("{{PVB_M}}")}}
 .r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .r-scene canvas{opacity:0}
 .r.live .r-scene canvas{opacity:1}
 .r.live .r-poster{visibility:hidden}
+/* v22 · l'affiche vivante, avant la première image du film : la vitrine respire, trois fenêtres s'allument, l'enseigne attend un nom.
+   Le calque suit l'image en object-fit:cover (même rapport, même centre) ; les positions sont celles de l'image 0 (pins.json). */
+.r-pv{position:absolute;left:50%;top:50%;--ar:1.6;width:max(100cqw,calc(100cqh * var(--ar)));aspect-ratio:var(--ar);translate:-50% -50%;pointer-events:none;
+ --sx:.5694;--sy:.3074;--sw:.2256;--sh:.0461;--wx:.50;--wy:.32;--ww:.36;--wh:.30}
+@media (max-aspect-ratio:1/1){.r-pv{--ar:.5625;--sx:.2926;--sy:.3253;--sw:.4148;--sh:.0299;--wx:.22;--wy:.36;--ww:.56;--wh:.13}}
+.r.live .r-pvs{visibility:hidden}   /* l'enseigne du film prend le relais, au même endroit */
+.r-pv{transition:opacity .3s ease-out}.r.moving .r-pv,.r.static .r-pv,.r.nofilm .r-pv{opacity:0}   /* v22.1 : la vitrine et les lampes vivent jusqu'au premier geste, puis s'effacent en 300 ms */
+.r-pv i{position:absolute;display:block;border-radius:3px}
+.r-pvw{left:calc(var(--wx) * 100%);top:calc(var(--wy) * 100%);width:calc(var(--ww) * 100%);height:calc(var(--wh) * 100%);background:radial-gradient(closest-side,rgba(255,196,120,.42),rgba(255,196,120,0));mix-blend-mode:screen;opacity:.0;border-radius:50%}
+.r-pvl{background:rgba(255,206,140,.55);mix-blend-mode:screen;opacity:0;box-shadow:0 0 14px rgba(255,190,110,.5)}
+.r-pvl:nth-of-type(2){left:45.5%;top:6.8%;width:8.5%;height:7.2%}
+.r-pvl:nth-of-type(3){left:71.5%;top:21%;width:8.5%;height:7.5%}
+.r-pvl:nth-of-type(4){left:19%;top:21%;width:9%;height:7.5%}
+@media (min-aspect-ratio:1/1){.r-pvl:nth-of-type(2){left:52.2%;top:13.5%;width:4.4%;height:10.5%}.r-pvl:nth-of-type(3){left:66%;top:13.5%;width:4.5%;height:10.5%}.r-pvl:nth-of-type(4){left:79.8%;top:13.5%;width:4.7%;height:10.5%}}
+.r-pvs{position:absolute;left:calc(var(--sx) * 100%);top:calc(var(--sy) * 100%);width:calc(var(--sw) * 100%);height:calc(var(--sh) * 100%);display:flex;align-items:center;justify-content:center;gap:.08em;
+ border:1.5px dashed rgba(255,255,255,.34);border-radius:6px;font:400 clamp(11px,2.4cqh,22px)/1 var(--serif);color:rgba(255,255,255,.4);white-space:nowrap;overflow:hidden}
+.r-pvs b,.r-sign .r-ph::after{display:inline-block;width:2px;height:1em;background:#2038ec;box-shadow:0 0 6px #5b6cff;vertical-align:-.12em}
+.r-sign .r-ph::after{content:"";margin-left:.06em;height:.9em}
+.r-sign.on .r-ph::after{display:none}
+@media (prefers-reduced-motion:no-preference){
+ .r-pvw{animation:rBreath 4s ease-in-out infinite;opacity:.8}
+ .r-pvl{animation:rLamp .7s ease-out forwards}
+ .r-pvl:nth-of-type(2){animation-delay:1.2s}.r-pvl:nth-of-type(3){animation-delay:2s}.r-pvl:nth-of-type(4){animation-delay:2.9s}
+ .r-pvs b,.r-sign .r-ph::after{animation:rCaret 1.1s steps(1) infinite}
+ .js .r:not(.static) .r-scene{animation:rPush 6s cubic-bezier(.3,0,.3,1) forwards}
+ .r-sign.pulse .r-ph,.r-sign.pulse .r-nm{animation:rPulse 1.3s ease-in-out}
+}
+@media (prefers-reduced-motion:reduce){.r-pvw{opacity:.8}.r-pvl{opacity:.9}}
+@keyframes rBreath{0%,100%{opacity:.74;scale:.97}50%{opacity:.86;scale:1.03}}
+@keyframes rLamp{0%{opacity:0}30%{opacity:.5}45%{opacity:.25}100%{opacity:.9}}
+@keyframes rCaret{50%{opacity:0}}
+@keyframes rPush{to{scale:1.015}}
+@keyframes rPulse{0%,100%{filter:none}40%{filter:drop-shadow(0 0 12px rgba(91,108,255,.95)) brightness(1.25)}}
 /* un voile en bas et en haut : le texte reste lisible quelle que soit l'image */
 .r-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,10,28,.55) 0,rgba(8,10,28,0) 30%,rgba(8,10,28,0) 46%,rgba(8,10,28,.86) 100%)}
 .r-veil::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,10,28,.5),rgba(8,10,28,0) 55%);opacity:var(--hv,1)}
@@ -26,7 +60,7 @@
 .r-sign .r-nm{display:block;font:400 86px/1 var(--serif);color:#fff;white-space:nowrap;text-align:left;width:var(--w,0px);transform:scale(var(--s,1));transform-origin:50% 55%;
  text-shadow:0 0 3px #fff,0 0 10px #c8d0ff,0 0 24px #5b6cff,0 0 48px #2038ec,0 0 90px #2038ec;transition:width .42s var(--ease),transform .42s var(--ease)}
 .r-nm b{font-weight:400;display:inline-block;white-space:pre;padding:0;margin:0;border:0;background:none;color:inherit;letter-spacing:0}
-.r-nm b.in{animation:r-lit .7s cubic-bezier(.3,.7,.2,1) both}
+.r-nm b.r-lit{animation:r-lit .7s cubic-bezier(.3,.7,.2,1) both}
 @keyframes r-lit{0%{opacity:0}22%{opacity:.95}34%{opacity:.3}52%{opacity:1}64%{opacity:.7}100%{opacity:1}}
 .r-sign .r-met{position:absolute;left:0;right:0;top:calc(100% + 26px);height:40px}
 .r-met i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 30px/1 var(--mono);font-style:normal;letter-spacing:.44em;text-transform:uppercase;color:#ffeccf;
@@ -59,36 +93,49 @@
 @media (max-width:700px){body.hero-cta .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
 .r-say{bottom:clamp(28px,10cqh,96px);font:600 clamp(26px,3.4cqw,48px)/1.08 var(--sans);letter-spacing:-.025em;opacity:0;max-width:15em;text-shadow:0 2px 20px rgba(5,6,20,.6)}
 .r-say.r-top{bottom:auto;top:clamp(24px,10cqh,100px)}
-/* l'arrêt : l'enseigne est à vous. Une barre basse et légère, posée sur le trottoir : la façade reste entière. */
-.r-stop{bottom:clamp(12px,2.4cqh,24px);left:50%;right:auto;translate:-50% calc(-1 * var(--kb,0px));width:min(1180px,calc(100% - 2 * clamp(16px,4cqw,56px)));opacity:0;pointer-events:none;
- display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr) auto;grid-template-areas:"h h h" "f m g" "n n n";gap:6px 22px;align-items:end;
- background:rgba(10,12,32,.46);-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:10px 16px 10px;will-change:opacity,transform}
-.r-stop.on{pointer-events:auto}
+/* v22 · l'arrêt : une carte, une étape à la fois (1 le métier, 2 le nom, 3 « Entrer ») ; la scène reste visible au-dessus.
+   Ordinateur : en bas à gauche, 420 px, ≤ 22 % de la hauteur ; à l'étape 1, la rangée de tuiles, centrée sous la façade. */
+.r-stop{bottom:clamp(14px,3cqh,28px);left:clamp(16px,3cqw,40px);right:auto;width:min(420px,calc(100% - 32px));translate:0 calc(-1 * var(--kb,0px));opacity:0;transform:translateY(12px);pointer-events:none;
+ background:rgba(10,12,32,.82);-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:12px 14px 14px;
+ transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
+.r-stop.on{opacity:1;transform:none;pointer-events:auto}
+.r-stop:focus{outline:none}
 .js .r:not(.static) .r-t1.off,.js .r:not(.static) .r-t1.off *{pointer-events:none!important}   /* titre passé : lisible par les lecteurs d'écran, mais ne prend plus le clic */
-/* cachée, la barre reste atteignable au clavier, mais ne prend aucun toucher ni clic (elle recouvre les boutons du titre sur téléphone) */
 .js .r:not(.static) .r-stop:not(.on),.js .r:not(.static) .r-stop:not(.on) *{pointer-events:none!important}
-.r-sh{grid-area:h;font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);display:flex;align-items:center;gap:10px}
-.r-sh b{font-weight:500;color:#fff;background:rgba(255,255,255,.14);padding:2px 6px;border-radius:4px;letter-spacing:.12em}
-.r-f{grid-area:f}.r-m{grid-area:m;min-width:0}.r-go{grid-area:g}
-.r-stop label,.r-ml{display:block;font:500 12.5px var(--sans);color:rgba(255,255,255,.72);margin:0 0 5px}
-.r-stop label small{font:400 12.5px var(--sans);color:rgba(255,255,255,.5);margin-left:4px}
-.r-stop input{width:100%;min-height:44px;font:500 17px var(--sans);padding:9px 14px;border:1.5px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.08);color:#fff;transition:border-color .2s,box-shadow .2s}
+.r-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.r-sh{font:600 17px/1.2 var(--sans);letter-spacing:-.01em;color:#fff;display:flex;align-items:center;gap:10px;margin:0}
+.r-sh b{font:500 10.5px var(--mono);color:#fff;background:rgba(255,255,255,.14);padding:3px 6px;border-radius:4px;letter-spacing:.12em;text-transform:uppercase}
+.r-st{display:none}.r-stop[data-step="1"] .r-st1,.r-stop[data-step="2"] .r-st2,.r-stop[data-step="3"] .r-st3{display:inline}
+.r-dots{display:flex;gap:6px}.r-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.28);transition:background-color .28s}.r-dots i.on{background:#fff}
+.r-s.r-in{animation:r-step .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes r-step{from{opacity:0;transform:translateY(12px)}}
+/* étape 1 : les tuiles (une vignette de la façade, tirée du film, et le métier) */
+.r-seg{display:flex;gap:8px;margin:0;position:relative}
+.r-seg button{flex:none;display:flex;align-items:center;gap:10px;width:150px;height:64px;padding:6px 10px 6px 6px;border:1.5px solid rgba(255,255,255,.22);border-radius:12px;background:rgba(255,255,255,.06);color:#fff;font:500 15px var(--sans);text-align:left;cursor:pointer;transition:border-color .16s,background-color .16s}
+.r-seg img{width:64px;height:48px;object-fit:cover;border-radius:7px;flex:none;background:#2a2b44}
+.r-seg button:hover{border-color:rgba(255,255,255,.6)}
+.r-seg button[aria-checked=true]{border-color:#fff;background:rgba(255,255,255,.16);box-shadow:0 0 0 3px rgba(91,108,255,.45)}
+.r-seg button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.r-next,.r-pass{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 16px;border-radius:10px;border:0;background:#fff;color:var(--ink);font:600 15px var(--sans);cursor:pointer;white-space:nowrap}
+.r-pass{background:none;color:#fff;text-decoration:underline;text-underline-offset:3px;padding:0 8px}
+.r-next:focus-visible,.r-pass:focus-visible,.r-chg:focus-visible,.r-enter:focus-visible,.r-wa2:focus-visible{outline:2px solid #fff;outline-offset:2px}
+/* étape 2 : un seul champ */
+.r-s2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+.r-s2 .r-rc{grid-column:1/-1}
+.r-stop label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* le titre de la carte (« Et son nom ? ») suffit à l'œil ; le libellé reste pour les lecteurs d'écran */
+.r-stop input{width:100%;min-height:48px;font:500 17px var(--sans);padding:10px 14px;border:1.5px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.08);color:#fff;transition:border-color .2s,box-shadow .2s}
 .r-stop input::placeholder{color:rgba(255,255,255,.5)}
 .r-stop input:focus{outline:none;border-color:#8f9cff;box-shadow:0 0 0 4px rgba(91,108,255,.3)}.r-stop input:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.r-seg{display:flex;flex-wrap:nowrap;gap:2px;padding:3px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);width:max-content;max-width:100%}
-.r-seg button{min-height:38px;padding:6px 12px;border:0;border-radius:9px;background:none;color:rgba(255,255,255,.82);font:500 14px var(--sans);cursor:pointer;white-space:nowrap;transition:background-color .25s var(--ease),color .25s var(--ease)}
-.r-seg button:hover{color:#fff;background:rgba(255,255,255,.1)}
-.r-seg button[aria-checked=true]{background:#fff;color:var(--ink)}
-.r-seg button:focus-visible{outline:2px solid #fff;outline-offset:1px}
-.r-sel{display:none;width:100%;min-height:44px;padding:8px 36px 8px 12px;border:1.5px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;color:#fff;font:500 16px var(--sans);pointer-events:auto}
-.r-sel option{color:var(--ink)}
-.r-enter{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:10px;background:#fff;color:var(--ink);font:600 15px var(--sans);text-decoration:none;white-space:nowrap;transition:background-color .2s}
+.r-rc{margin:6px 0 0;font:400 13.5px/1.3 var(--sans);color:rgba(255,255,255,.72)}
+.r-chg{border:0;background:none;color:#fff;font:600 13.5px var(--sans);text-decoration:underline;text-underline-offset:3px;padding:12px 4px;margin:-12px -4px;cursor:pointer}
+/* étape 3 : Entrer */
+.r-go{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px}
+.r-enter{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:10px;background:#fff;color:var(--ink);font:600 15.5px var(--sans);text-decoration:none;white-space:nowrap;transition:background-color .2s}
 .r-enter:hover{background:#dfe3ff}
 .r-enter span{transition:transform .25s var(--ease)}.r-enter:hover span{transform:translateX(3px)}
-.r-note{grid-area:n;font:400 12.5px/1.4 var(--sans);color:rgba(255,255,255,.62);display:flex;flex-wrap:wrap;align-items:center;gap:2px 18px;margin-top:2px}
-.r-wa2{margin-left:auto;display:inline-flex;align-items:center;gap:7px;color:#fff;font:600 13.5px var(--sans);text-decoration:underline;text-underline-offset:3px;min-height:36px}
+.r-note{font:400 12.5px/1.4 var(--sans);color:rgba(255,255,255,.62);margin:6px 0 0}
+.r-wa2{display:inline-flex;align-items:center;gap:7px;color:#fff;font:600 13.5px var(--sans);text-decoration:underline;text-underline-offset:3px;min-height:44px}
 .r-wa2 svg{width:16px;height:16px;color:#5ED489}
-@container (max-width:1180px){.r-seg{display:none}.r-sel{display:block}.r-stop{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto}}
 .r-skip{position:absolute;z-index:4;right:clamp(16px,5cqw,72px);top:18px;font:500 13.5px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 14px;text-decoration:none;transition:opacity .25s}
 .r-skip:hover{background:rgba(255,255,255,.24)}
 .r.stop .r-skip,.r.past .r-skip{opacity:0;pointer-events:none}
@@ -98,6 +145,11 @@
 /* le chargement : discret, seulement si le film tarde ; en cas d'échec, l'image fixe reste et la page continue */
 .r-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(10,12,32,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
 .r-load:not(:empty){opacity:1}
+/* v22.2 : le film attend ses images : le repère, une fine ligne de progression dessous, et l'image tenue qui pousse doucement (1 %) */
+.r-load::after{content:"";position:absolute;left:12px;right:12px;bottom:3px;height:1px;background:rgba(255,255,255,.7);transform-origin:0 50%;transform:scaleX(var(--pg,0));opacity:0;transition:transform .25s linear,opacity .3s}
+.r.wait .r-load::after{opacity:1}
+#rCv,.r-pins{transition:scale .6s ease-out}
+.r.wait #rCv,.r.wait .r-pins{scale:1.01;transition:scale 2.4s cubic-bezier(.3,0,.3,1)}
 /* v19 : dans la salle, c'est le site du commerce. Sa barre arrive en haut, puis la fin : le métier, son bouton (Démo) */
 .r-sbar{position:absolute;z-index:3;left:0;right:0;top:0;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,5cqw,72px);color:#fff;
  background:linear-gradient(180deg,rgba(8,10,28,.55),rgba(8,10,28,0));opacity:0;pointer-events:none;will-change:opacity}
@@ -126,16 +178,23 @@
  .r-veil{background:linear-gradient(180deg,rgba(8,10,28,.45) 0,rgba(8,10,28,0) 18%,rgba(8,10,28,0) 30%,rgba(8,10,28,.88) 62%,rgba(8,10,28,.95) 100%);opacity:calc(.45 + .55 * var(--hv,1))}
  .r-veil::before{display:none}
  .r-say{font-size:min(30px,7.6cqw);bottom:auto;top:76px}   /* sous « Passer l’intro » */
- .r-stop{left:10px;right:10px;width:auto;translate:0 calc(-1 * var(--kb,0px));bottom:10px;grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "f" "m" "g" "n";gap:8px;padding:14px;border-radius:16px;background:rgba(10,12,32,.6)}
- .r-stop label,.r-ml{font:600 15.5px var(--sans);color:#fff;margin:0 0 6px}
- .r-stop input{min-height:46px}
- .r-seg,.r-seg button{display:flex}.r-sel{display:none}
- .r-seg{flex-wrap:wrap;gap:6px;padding:0;border:0;background:none;width:auto}
- .r-seg button{min-height:38px;padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.4);font-size:14px;align-items:center}
- .r-go{display:flex}.r-enter{flex:1;justify-content:center;min-height:46px}
- .r-note{font-size:12.5px}.r-note>span{display:none}.r-wa2{margin-left:0}   /* téléphone : la mention DÉMO suffit, la vitrine respire */
+ /* v22 : la carte reste sous l'enseigne : bas de l'écran, 12 px des bords, ≤ 30 % de la hauteur (≤ 200 px) */
+ .r-stop{left:12px;right:12px;width:auto;bottom:12px;padding:12px}
+ .r-s1{margin:0 -12px}.r-s1{position:relative}.r-s1 .r-next{position:absolute;top:-42px;right:8px;min-height:40px;padding:0 11px;font-size:14px;gap:4px}
+ .r-stop[data-step="1"] .r-sh{font-size:15px;gap:2px 8px;flex-wrap:wrap}.r-stop[data-step="1"] .r-hd{padding-right:var(--nx,130px)}   /* v22.2 : « Boulangerie → » ne recouvre plus « Démo » (petit écran : « Démo » passe à la ligne) */   /* « Suivant → » dans l'en-tête : la carte tient en ≤ 200 px */
+ .r-stop[data-step="1"] .r-dots{display:none}
+ .r-seg{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 12px 4px;scroll-padding-inline:12px}   /* v22.1 : la tuile choisie à gauche, 3 tuiles et demie visibles ; v22.2 : les dernières, calées à droite (plus de moitié vide) */
+ .r-seg::-webkit-scrollbar{display:none}
+ .r-seg button{flex-direction:column;justify-content:flex-start;gap:6px;width:104px;height:120px;padding:4px 4px 8px;text-align:center;font-size:15px;scroll-snap-align:start}
+ .r-seg img{width:96px;height:72px}
+ .r-go{flex-direction:column;align-items:stretch;gap:4px}.r-wa2{justify-content:center}
+ .r-note{display:none}
+ /* clavier ouvert : la carte de l'étape 2 se colle au-dessus du clavier, sur une ligne de 64 px ; la scène se recadre sur l'enseigne (rue.js, zoom) */
+ .r-stop.kbo{left:0;right:0;bottom:0;border-radius:14px 14px 0 0;padding:8px 10px}
+ .r-stop.kbo .r-hd,.r-stop.kbo .r-rc{display:none}
+ .r.zoom .r-scene{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+ .r.zoom .r-wall{visibility:hidden}   /* clavier ouvert : seul le nom de l'enseigne, pas celui du mur du fond (il dépassait au-dessus de la carte) */
  .r-skip{top:12px;right:12px;padding:8px 14px;font-size:13.5px;min-height:44px;display:inline-flex;align-items:center}
- .r-seg button{min-height:44px}.r-wa2{min-height:44px}
  .r-sign .r-met{top:auto;bottom:calc(100% + 30px)}   /* téléphone : le métier au-dessus de l'enseigne, jamais sous la barre */
  .r-cue{display:none}
  .r-load{top:14px;left:16px;translate:none}
@@ -147,9 +206,11 @@
 .r.static .r-stage,html:not(.js) .r-stage{position:relative;top:0;height:auto;overflow:visible;container-type:inline-size}
 .r.static .r-scene,html:not(.js) .r-scene{position:relative;aspect-ratio:16/10;max-height:72vh;width:100%;overflow:hidden}
 .r.static .r-tx,html:not(.js) .r-tx{position:relative;inset:auto;opacity:1;visibility:visible;max-width:none;margin:0;padding:24px clamp(16px,4vw,56px) 0;background:none;backdrop-filter:none;border:0}
-.r.static .r-stop,html:not(.js) .r-stop{padding-bottom:40px;border-radius:0;translate:none;width:auto;left:auto;pointer-events:auto}
-.r.static .r-note>span,html:not(.js) .r-note>span{display:inline}
-html:not(.js) .r-m{display:none}
+.r.static .r-stop,html:not(.js) .r-stop{padding-bottom:40px;border-radius:0;translate:none;transform:none;opacity:1;width:auto;left:auto;pointer-events:auto;background:none;border:0}
+.r.static .r-s[hidden],html:not(.js) .r-s[hidden]{display:block}.r.static .r-s,html:not(.js) .r-s{margin:0 0 14px}.r.static .r-st,html:not(.js) .r-st{display:none}.r.static .r-st1,html:not(.js) .r-st1{display:inline}.r.static .r-dots,html:not(.js) .r-dots,.r.static .r-next,html:not(.js) .r-next,.r.static .r-pass,html:not(.js) .r-pass,.r.static .r-rc,html:not(.js) .r-rc{display:none}
+.r.static .r-seg,html:not(.js) .r-seg{flex-wrap:wrap;overflow:visible;padding:0;margin:0}
+.r.static .r-note,html:not(.js) .r-note{display:block}
+html:not(.js) .r-s1{display:none}
 .r.static .r-t1 h1 .w,html:not(.js) .r-t1 h1 .w{opacity:1;translate:none;filter:none}
 .r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,.r.static .r-sbar,.r.static .r-wall,html:not(.js) .r-sbar,html:not(.js) .r-wall,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}
 .r.static .r-pins .r-sign{opacity:1}
@@ -158,7 +219,7 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.static .r-t1,html:not(.js) .r-t1{order:-1;padding-bottom:28px}
 .r.static .r-act .btn,html:not(.js) .r-act .btn{flex:0 1 auto}
 @media (max-width:700px){.r.static .r-scene,html:not(.js) .r-scene{aspect-ratio:9/14}}
-@media (max-width:700px){.r.static .r-stop,html:not(.js) .r-stop{grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "f" "m" "g" "n";gap:12px}.r.static .r-wa2{margin-left:0}.r.static .r-act .btn,html:not(.js) .r-act .btn{flex:1 1 100%}}
+@media (max-width:700px){.r.static .r-act .btn,html:not(.js) .r-act .btn{flex:1 1 100%}}
 
 .r.static .r-anchor,html:not(.js) .r-anchor{top:min(72vh,62.5vw)}   /* sans film : l’ancre de l’arrêt sous l’image */
 
@@ -174,5 +235,24 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.push .r-more{opacity:1;translate:-50% 0;pointer-events:auto}
 @media (prefers-reduced-motion:no-preference){.r.push .r-more span{animation:rMore 1.4s ease-in-out 2}}
 @keyframes rMore{50%{transform:translateY(3px)}}
-@media (hover:none),(pointer:coarse){.r-more{display:none}}
+/* v22 : au doigt aussi : « Continuer sans choisir ↓ », 2 s, juste au-dessus de la carte */
 .r.static .r-more,html:not(.js) .r-more{display:none}
+
+/* v22.1 : ordinateur : une seule place pour la carte, en bas à gauche, 420 px, aux trois étapes ; les six tuiles en 2 × 3 */
+@container (min-aspect-ratio:1/1){
+ .r-seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .r-seg button{width:auto;height:46px;gap:10px;padding:3px 10px 3px 3px;font-size:14.5px}
+ .r-seg img{width:52px;height:39px}
+ .r-s1 .r-next{margin-top:10px}
+}
+/* v22 : paysage du téléphone (hauteur ≤ 480) : la carte compacte en bas à gauche, tuiles sans vignette ; la façade au-dessus */
+@media (orientation:landscape) and (max-height:480px){
+ .r-stop,.r-stop[data-step="1"]{left:12px;bottom:8px;width:min(600px,calc(100% - 24px));padding:8px 10px;translate:0 calc(-1 * var(--kb,0px))}
+ .r-hd{margin-bottom:6px}.r-sh{font-size:15px}.r-dots{display:none}
+ .r-stop[data-step="1"] .r-s1{display:flex;gap:10px;align-items:center}.r-stop[data-step="1"] .r-seg{flex:1;gap:4px}   /* v22.1 : les six tuiles en 3 × 2, « Suivant » à côté : aucune rognée */
+ .r-seg button{width:auto;height:34px;padding:0 10px;font-size:13.5px;justify-content:center}.r-seg img{display:none}.r-s1 .r-next{margin:0;flex:none}
+ .r-go{flex-direction:row}.r-enter,.r-stop input{min-height:40px}.r-rc,.r-note{display:none}
+ /* v22.2 : moins haute (3 × 2 tuiles, ≈ un tiers de l'écran) ; le nom du mur du fond ne transparaît plus sous la carte */
+ .r-hd{margin-bottom:4px}.r-stop[data-step="1"] .r-seg{grid-template-columns:repeat(3,minmax(0,1fr))}.r-seg button{height:30px;font-size:13px}.r-s1 .r-next{min-height:36px}
+ .r.stop .r-wall{visibility:hidden}
+}
