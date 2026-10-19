@@ -3,13 +3,12 @@ import os, json, pathlib, re, shutil, urllib.parse, hashlib, base64
 D = pathlib.Path(__file__).parent
 FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
-# v23 · LES PRIX, tous ici (rien d'autre à changer) : les trois paliers par mois, la mise en ligne, l'engagement. Recommandation du 19 oct. 2026,
-# pas encore confirmée par Alexandre : pour l'Entrée 3D à 39.–, changer seulement 'e3' (la page, la FAQ, les conditions et le JSON-LD suivent).
-OFFRES = {'vit': 29, 'e3': 49, 'reel': 149, 'setup': 190, 'reel_setup': 690, 'mois': 12}
+# v23.2 · LES PRIX, tous ici (rien d'autre à changer) : les trois paliers par mois, sans engagement, et leurs mises en ligne
+# (payées seulement si le site terminé plaît). Option recommandée du 19 oct. 2026 (« sans engagement », Entrée réelle moins chère).
+OFFRES = {'vit': 29, 'e3': 49, 'reel': 99, 'setup': 190, 'e3_setup': 290, 'reel_setup': 490}
 def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
-PX = {'vit_m': chf(OFFRES['vit']), 'e3_m': chf(OFFRES['e3']), 'reel_m': chf(OFFRES['reel']), 'setup': chf(OFFRES['setup']), 'reel_setup': chf(OFFRES['reel_setup']),
-      'engage': f"{OFFRES['mois']} mois", 'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}",
-      'vit_n': str(OFFRES['vit']), 'e3_n': str(OFFRES['e3']), 'reel_n': str(OFFRES['reel']), 'setup_n': str(OFFRES['setup']), 'reel_setup_n': str(OFFRES['reel_setup']), 'mois_n': str(OFFRES['mois'])}
+PX = {k + '_m': chf(OFFRES[k]) for k in ('vit', 'e3', 'reel')} | {k: chf(OFFRES[k]) for k in ('setup', 'e3_setup', 'reel_setup')} \
+   | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}"}
 def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 WA = walink(HELLO + " J’aimerais recevoir ma maquette offerte.\nMon commerce et ma commune : ")
