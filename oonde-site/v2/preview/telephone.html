@@ -341,8 +341,28 @@ footer{border-top:0}
 .fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
 .fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr svg{width:84px;height:84px;flex:none}
 @media (max-width:900px){.fq .qr{display:none}}
+/* v24.1 · les cartes à trois paliers, communes aux offres du site (accueil) et au téléphone (/telephone) */
+/* v23 · trois paliers, celui du milieu mis en avant (plus haut, bordure Klein, « Notre conseil ») ; au téléphone, il passe en premier */
+.o-lede{margin-top:20px;max-width:34em}
+.offers3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);align-items:stretch;margin-top:clamp(40px,5vw,64px)}
+.o3{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,2.4vw,36px)}
+.o3 h3{font-size:clamp(22px,1.9vw,27px);letter-spacing:-.02em}
+.o3-k{border:2px solid var(--klein);box-shadow:0 30px 60px -40px rgba(43,63,255,.45);margin-block:-16px;padding-block:calc(clamp(24px,2.4vw,36px) + 16px)}
+.o-badge{position:absolute;top:-14px;left:clamp(24px,2.4vw,36px);background:var(--klein);color:#fff;font:600 13px var(--sans);padding:6px 12px;border-radius:999px;margin:0}
+.o-p{font:600 clamp(44px,4.4vw,60px)/1 var(--sans);letter-spacing:-.04em;margin-top:14px;font-variant-numeric:tabular-nums}
+.o-p small{font-size:.32em;font-weight:500;letter-spacing:-.01em;color:var(--muted);margin-left:.2em}
+.o-d{margin-top:8px;font-size:14px;color:var(--muted)}
+.o-s{margin-top:18px;color:var(--soft)}
+.o3 .l4{margin-top:22px;gap:10px;font-size:15.5px}
+.o3 .l4 li.no{color:var(--muted)}.o3 .l4 li.no::before{border:0;height:2px;width:11px;top:.62em;background:var(--muted);transform:none}
+.o-f{margin-top:auto;padding-top:22px;font-size:14px;color:var(--muted)}
+.o-go{margin-top:18px;display:grid;gap:12px;justify-items:start}
+.o-all{margin-top:clamp(40px,5vw,56px);color:var(--soft);max-width:44em}
+@media (max-width:960px){.offers3{grid-template-columns:minmax(0,1fr);gap:28px}.o3-k{order:-1;margin-block:0;padding-block:clamp(28px,3vw,40px)}}
+@media (max-width:480px){.o-go .btn{width:100%}}
+.o-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}
 /* v23 · Le téléphone : la page du service principal en plus du site. Même écriture que L’assistant : un héros centré, un appel de démo,
-   quatre écrans d’une phrase, ce qu’elle ne fait pas, les questions, le dernier écran. Aucun chiffre, aucun client, aucun prix (« Sur devis »). */
+   quatre écrans d’une phrase, ce qu’elle ne fait pas, les questions, le dernier écran. Aucun chiffre ni client inventé ; v24.1 : les trois forfaits (TEL_OFFRES dans build.py). */
 .tl{padding-block:clamp(56px,7vw,112px) clamp(96px,11vw,160px)}
 .tl h1{max-width:14ch;margin:16px auto 0}
 .tl .lede{margin:24px auto 0;max-width:30em}
@@ -382,6 +402,10 @@ footer{border-top:0}
 .non3 li span{display:block;font-weight:400;font-size:clamp(17px,1.5vw,20px);letter-spacing:0;color:var(--soft);margin-top:6px}
 .pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}
 .dnum{margin:20px auto 0;font-size:15px;color:var(--muted)}
+.cmd{margin:0;justify-self:center;width:min(540px,100%)}.cmd img{display:block;width:100%;height:auto;border-radius:24px;border:1px solid var(--line);box-shadow:0 40px 80px -48px rgba(17,19,24,.45)}.cmd figcaption{margin-top:14px;font-size:14px;color:var(--muted)}
+/* v24.1 · les trois forfaits : les cartes des offres du site (offres.css). Pro surélevée, filet Klein, « Notre conseil », seule au bouton encre ; au téléphone, en premier. */
+#prix h2{max-width:18ch}.tp-n{margin-top:clamp(40px,5vw,56px);display:grid;gap:10px;color:var(--soft);max-width:46em}.tp-n p{margin:0}
+.o3 .l4 b{font-weight:600}
 </style>
 
 </head>
@@ -401,7 +425,7 @@ footer{border-top:0}
 <section class="tl bg-paper c" data-hero aria-labelledby="h1"><div class="in">
  <p class="mono">Le téléphone</p>
  <h1 class="h-xl" id="h1">Quand vous ne pouvez pas décrocher, une voix répond.</h1>
- <p class="lede">Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas. Elle donne vos horaires, répond aux questions de tous les jours, prend un rendez-vous ou un message, et vous envoie un résumé sur WhatsApp.</p>
+ <p class="lede">Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas. Elle donne vos horaires, répond aux questions de tous les jours, prend un rendez-vous ou un message, et vous envoie un résumé par message.</p>
  <div class="act"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>En parler sur WhatsApp</span></a></div>
  <!-- v23 : le numéro de démo à appeler viendra plus tard (accord d’Alexandre). Pour l’afficher : remplir le lien et retirer « hidden ». -->
  <p class="dnum" id="demoTel" hidden>Essayez-la : appelez le <a href="tel:">numéro de démo</a>. <span class="dtag">Démo</span></p>
@@ -433,8 +457,8 @@ footer{border-top:0}
   <div class="bub rv"><span class="who">Un client</span><p class="m u">C’est pour une demande un peu spéciale.</p><p class="m b">Je transmets votre message à l’équipe : on vous rappelle.</p></div>
  </div>
  <div class="say">
-  <div><h2 class="rv">Vous recevez le résumé sur WhatsApp.</h2><p class="rv">Qui a appelé, pourquoi, ce qui est à faire. Vous rappelez quand vous avez le temps.</p></div>
-  <div class="bub rv"><span class="who">Sur votre téléphone</span><p class="sum"><b><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Résumé d’appel</b>Demande de rendez-vous pour samedi matin. À confirmer.</p></div>
+  <div><h2 class="rv">Vous recevez le résumé, ou la commande.</h2><p class="rv">Qui a appelé, pourquoi, ce qui est à faire. Avec Pro, la commande arrive prête à préparer : les articles, l’heure, les allergies signalées.</p></div>
+  <figure class="cmd rv"><picture><source type="image/avif" srcset="img/tel/commande-demo.avif"><source type="image/webp" srcset="img/tel/commande-demo.webp"><img src="img/tel/commande-demo.jpg" width="1080" height="1920" alt="Démo : l’écran des commandes de la Trattoria Nonna Pia, un restaurant inventé. Trois commandes prises au téléphone par l’assistant ; en haut, Mme Keller, à l’emporter pour 19 h 30, une Margherita sans gluten, une burrata sans pignons pour une allergie et deux tiramisus, 56 francs, SMS de confirmation envoyé." loading="lazy" decoding="async"></picture><figcaption><span class="dtag">Démo</span> Restaurant, clients et commandes inventés.</figcaption></figure>
  </div>
  <p class="micro" style="margin-top:clamp(64px,7vw,96px);color:var(--muted)"><span class="dtag">Démo</span>&nbsp; Exemples d’appels inventés.</p>
 </div></section>
@@ -446,7 +470,78 @@ footer{border-top:0}
   <li class="rv">Elle n’invente rien.<span>Si elle n’a pas la réponse, elle prend un message pour l’équipe.</span></li>
   <li class="rv">Elle ne promet rien à votre place.<span>Pas de prix spécial, pas de rendez-vous confirmé sans votre accord.</span></li>
  </ul>
- <p class="pz2 rv">On met tout en place et on s’en occupe : la voix, ce qu’elle sait de votre commerce, les essais avec vous. Prix : sur devis.</p>
+ <p class="pz2 rv">On met tout en place et on s’en occupe : la voix, ce qu’elle sait de votre commerce, les essais avec vous.</p>
+</div></section>
+
+<section class="bg-white" id="prix" aria-labelledby="hP"><div class="in">
+ <h2 id="hP" class="rv">Trois forfaits, au mois. Sans engagement.</h2>
+ <p class="lede rv o-lede">Vous essayez d’abord une démo avec vos vraies informations. Vous payez seulement quand l’assistant est en service.</p>
+ <!-- v24.1 · les montants viennent de TEL_OFFRES dans build.py -->
+ <div class="offers3">
+  <article class="o3 rv" aria-labelledby="tE">
+   <h3 id="tE">Essentiel</h3>
+   <p class="o-p">149.–<small>/mois</small></p>
+   <p class="o-s">Pour ne plus rater d’appel.</p>
+   <ul class="l4">
+    <li>100 minutes comprises, environ 70 appels</li>
+    <li>Répond aux questions : horaires, prix, accès</li>
+    <li>Prend un message et vous l’envoie</li>
+    <li>Résumé par SMS</li>
+    <li>Un changement de carte ou d’horaires par mois</li>
+    <li>En français</li>
+    <li class="no"><s>Prend les commandes, rendez-vous et réservations</s></li>
+    <li class="no"><s>Bilan mensuel des appels</s></li>
+   </ul>
+   <p class="o-f">Mise en place 290.–, payée seulement quand l’assistant est en service.</p>
+   <div class="o-go"><a class="btn light" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo gratuite</span></a></div>
+  </article>
+  <article class="o3 o3-k rv" aria-labelledby="tR">
+   <p class="o-badge">Notre conseil</p>
+   <h3 id="tR">Pro</h3>
+   <p class="o-p">249.–<small>/mois</small></p>
+   <p class="o-d">moins de 9.– par jour</p>
+   <p class="o-s">Les commandes et les rendez-vous, pris à votre place.</p>
+   <ul class="l4">
+    <li>350 minutes comprises, environ 230 appels</li>
+    <li>Tout ce que fait Essentiel</li>
+    <li><b>Prend les commandes, rendez-vous et réservations jusqu’au bout</b></li>
+    <li>Résumé par SMS, WhatsApp ou e-mail</li>
+    <li>Changements de carte et d’horaires illimités</li>
+    <li>Bilan mensuel des appels</li>
+    <li>En français</li>
+   </ul>
+   <p class="o-f">Mise en place 390.–, payée seulement quand l’assistant est en service.</p>
+   <div class="o-go"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo gratuite</span></a></div>
+  </article>
+  <article class="o3 rv" aria-labelledby="tX">
+   <h3 id="tX">Premium</h3>
+   <p class="o-p">449.–<small>/mois</small></p>
+   <p class="o-s">Pour un commerce très appelé, et une clientèle de passage.</p>
+   <ul class="l4">
+    <li>900 minutes comprises, environ 600 appels</li>
+    <li>Tout ce que fait Pro</li>
+    <li><b>En français, allemand, anglais et italien</b></li>
+    <li>SMS de confirmation envoyé au client</li>
+    <li>Changements illimités, faits le jour même</li>
+   </ul>
+   <p class="o-f">Mise en place 490.–, payée seulement quand l’assistant est en service.</p>
+   <div class="o-go"><a class="btn light" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo gratuite</span></a></div>
+  </article>
+ </div>
+ <div class="tp-n rv">
+  <p>Minute au-delà du forfait : 0.40. Prix en francs suisses, sans TVA. <b>Sans engagement</b>, résiliable à la fin de chaque mois.</p>
+  <p>Vous gardez votre numéro : vos appels sont renvoyés vers l’assistant quand vous ne décrochez pas.</p>
+  <p>L’assistant dit qu’il est un assistant vocal et prévient que l’appel est enregistré.</p>
+ </div>
+</div></section>
+
+<section class="bg-paper" aria-labelledby="hC"><div class="in">
+ <h2 id="hC" class="rv">Comment ça se passe.</h2>
+ <ol class="t3">
+  <li class="rv"><i>01</i><b>Vous écrivez.</b><span>Le nom de votre commerce, sur WhatsApp.</span></li>
+  <li class="rv"><i>02</i><b>Vous l’appelez.</b><span>Sous 48 h, vous recevez une démo gratuite avec vos vraies informations. Vous l’appelez comme un client.</span></li>
+  <li class="rv"><i>03</i><b>Elle répond pour vous.</b><span>Si elle vous plaît, l’assistant est en service en 5 jours. Vous payez seulement à ce moment-là.</span></li>
+ </ol>
 </div></section>
 
 <section class="bg-white" aria-labelledby="hQ"><div class="in qa">
@@ -456,8 +551,8 @@ footer{border-top:0}
   <details><summary>Je dois changer de numéro ?</summary><div class="fa"><div><p>Non. Vous gardez votre numéro et vous activez un renvoi d’appel : si c’est occupé, s’il n’y a pas de réponse, ou en dehors de vos horaires.</p></div></div></details>
   <details><summary>Et si le client veut parler à quelqu’un ?</summary><div class="fa"><div><p>Elle transfère l’appel à l’équipe si vous le voulez, ou prend un message pour qu’on le rappelle.</p></div></div></details>
   <details><summary>Qui la prépare ?</summary><div class="fa"><div><p>Nous. Vous nous dites ce que vos clients demandent et ce que vous répondez ; on prépare la voix, on l’essaie avec vous, et on la met à jour quand quelque chose change.</p></div></div></details>
-  <details><summary>Les appels sont-ils enregistrés ?</summary><div class="fa"><div><p>Seulement si vous le décidez, et l’appelant en est alors informé au début de l’appel. Les informations servent à vous faire le résumé, rien d’autre.</p></div></div></details>
-  <details><summary>Combien ça coûte ?</summary><div class="fa"><div><p>Sur devis : écrivez-nous sur WhatsApp, on vous répond par écrit.</p></div></div></details>
+  <details><summary>Les appels sont-ils enregistrés ?</summary><div class="fa"><div><p>Oui, et l’assistant le dit au début de l’appel. Les informations servent à vous faire le résumé, rien d’autre.</p></div></div></details>
+  <details><summary>Combien ça coûte ?</summary><div class="fa"><div><p>Essentiel 149.– par mois, Pro 249.–, Premium 449.–, sans engagement. Mise en place 290.–, 390.– ou 490.–, payée seulement quand l’assistant est en service, après une démo gratuite. <a href="#prix">Voir les forfaits</a></p></div></div></details>
  </div>
 </div></section>
 

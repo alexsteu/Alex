@@ -7,8 +7,14 @@ WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fi
 # (payées seulement si le site terminé plaît). Option recommandée du 19 oct. 2026 (« sans engagement », Entrée réelle moins chère).
 OFFRES = {'vit': 29, 'e3': 49, 'reel': 99, 'setup': 190, 'e3_setup': 290, 'reel_setup': 490}
 def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
+# v24.1 · LE TÉLÉPHONE (assistant vocal), tout ici : trois forfaits par mois, leur mise en place, la minute au-delà du forfait.
+# Source : telephone-ia/offre.md, « Texte pour le site » (proposition v2, à valider par Alexandre).
+TEL_OFFRES = {'tel_ess': 149, 'tel_pro': 249, 'tel_pre': 449, 'tel_ess_setup': 290, 'tel_pro_setup': 390, 'tel_pre_setup': 490}
+TEL_MIN = '0.40'   # la minute au-delà du forfait, en francs
 PX = {k + '_m': chf(OFFRES[k]) for k in ('vit', 'e3', 'reel')} | {k: chf(OFFRES[k]) for k in ('setup', 'e3_setup', 'reel_setup')} \
-   | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}"}
+   | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}"} \
+   | {k: chf(v) for k, v in TEL_OFFRES.items()} | {k + '_n': str(v) for k, v in TEL_OFFRES.items()} | {'tel_min': TEL_MIN} \
+   | {'tel_pro_jour': f"moins de {-(-TEL_OFFRES['tel_pro'] * 12 // 365)}.–"}
 def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 # v24 · les messages pré-remplis (brief page-vente § 3.8) ; les mêmes textes que MSG dans partials/core.js
@@ -106,7 +112,7 @@ def ftile(k, line=True):
     src, t, d, tags, alt = FV[k]
     return (f'<li>{vbox(src, alt, t.rstrip("."))}<div class="cap"><p class="ft">{t}</p>' + (f'<p>{d}</p>' if line else '')
             + '<p class="vt">' + ' '.join(f'<span class="dtag{" ia" if i else ""}">{x}</span>' for i, x in enumerate(tags)) + '</p></div></li>')
-FIL_HOME = '<ul class="vrail v3">' + ''.join(ftile(k, False) for k in ('plat', 'produit', 'saison') if k in FV) + '</ul>'   # l'accueil : trois au plus, même taille
+FIL_HOME = '<ul class="vrail v3">' + ''.join(ftile(k, False) for k in ('plat', 'produit', 'angles') if k in FV) + '</ul>'   # l'accueil : trois au plus, même taille (v24.1 : les angles remplacent le vélo)
 FIL_FORMATS = '<ul class="vrail v6">' + ''.join(ftile(k) for k in FV) + '</ul>'
 
 def fill(s, fonts, links):

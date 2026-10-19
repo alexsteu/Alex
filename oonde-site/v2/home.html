@@ -27,25 +27,7 @@
 /* v20 · l'accueil « Apple minimal » : une idée par écran */
 /* les deux offres : deux colonnes sans bordure, le prix en grand */
 #prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
-/* v23 · trois paliers, celui du milieu mis en avant (plus haut, bordure Klein, « Notre conseil ») ; au téléphone, il passe en premier */
-.o-lede{margin-top:20px;max-width:34em}
-.offers3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);align-items:stretch;margin-top:clamp(40px,5vw,64px)}
-.o3{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(24px,2.4vw,36px)}
-.o3 h3{font-size:clamp(22px,1.9vw,27px);letter-spacing:-.02em}
-.o3-k{border:2px solid var(--klein);box-shadow:0 30px 60px -40px rgba(43,63,255,.45);margin-block:-16px;padding-block:calc(clamp(24px,2.4vw,36px) + 16px)}
-.o-badge{position:absolute;top:-14px;left:clamp(24px,2.4vw,36px);background:var(--klein);color:#fff;font:600 13px var(--sans);padding:6px 12px;border-radius:999px;margin:0}
-.o-p{font:600 clamp(44px,4.4vw,60px)/1 var(--sans);letter-spacing:-.04em;margin-top:14px;font-variant-numeric:tabular-nums}
-.o-p small{font-size:.32em;font-weight:500;letter-spacing:-.01em;color:var(--muted);margin-left:.2em}
-.o-d{margin-top:8px;font-size:14px;color:var(--muted)}
-.o-s{margin-top:18px;color:var(--soft)}
-.o3 .l4{margin-top:22px;gap:10px;font-size:15.5px}
-.o3 .l4 li.no{color:var(--muted)}.o3 .l4 li.no::before{border:0;height:2px;width:11px;top:.62em;background:var(--muted);transform:none}
-.o-f{margin-top:auto;padding-top:22px;font-size:14px;color:var(--muted)}
-.o-go{margin-top:18px;display:grid;gap:12px;justify-items:start}
-.o-all{margin-top:clamp(40px,5vw,56px);color:var(--soft);max-width:44em}
-@media (max-width:960px){.offers3{grid-template-columns:minmax(0,1fr);gap:28px}.o3-k{order:-1;margin-block:0;padding-block:clamp(28px,3vw,40px)}}
-@media (max-width:480px){.o-go .btn{width:100%}}
-.o-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}
+{{INC:offres.css}}
 /* v24 · « Ce qu'on fait pour vous » : trois lignes, des ancres (pas des cartes), dans l'ordre d'Alexandre */
 .sv h2{margin-top:14px;max-width:16ch}
 .sv3{list-style:none;margin:clamp(36px,5vw,64px) 0 0;padding:0;border-top:1px solid var(--ink)}
@@ -62,10 +44,9 @@
 .f-lede{margin-top:20px;max-width:34em}
 .f-h3{margin-top:clamp(64px,8vw,112px);font-size:clamp(24px,2.4vw,32px);letter-spacing:-.02em}
 .fil .vrail{margin-top:clamp(24px,3vw,36px)}
-.f-do{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,64px);margin-top:clamp(48px,6vw,80px);border-top:1px solid rgba(17,19,24,.16);padding-top:clamp(24px,3vw,36px)}
+.f-do{margin-top:clamp(48px,6vw,80px);border-top:1px solid rgba(17,19,24,.16);padding-top:clamp(24px,3vw,36px);max-width:44em}   /* v24.1 : une seule colonne, pleine largeur de lecture */
 .f-do h3{font-size:clamp(20px,1.8vw,24px);letter-spacing:-.015em}
 .f-do ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;color:var(--soft)}.f-do p{margin-top:14px;color:var(--soft)}
-@media (max-width:760px){.f-do{grid-template-columns:1fr}}
 .f-px{margin-top:clamp(36px,4vw,52px);font:600 clamp(19px,1.7vw,23px) var(--sans);letter-spacing:-.01em}
 .f-act{margin-top:18px;align-items:center;gap:22px}
 /* v24 · Le téléphone (l'encre) : le résultat, pas la technologie */
@@ -256,7 +237,6 @@ html:not(.js) .e-pick{display:none}
  <h3 class="f-h3 rv">Ce qui sort sur votre fil.</h3>
  {{FIL_HOME}}
  <div class="f-do">
-  <div class="rv"><h3>Ce que vous faites, honnêtement.</h3><ul><li><b>Une fois, au début :</b> nous donner l’accès à votre compte Instagram professionnel, et quelques photos de votre commerce.</li><li><b>Ensuite, si vous voulez :</b> nous envoyer une photo, l’ardoise ou une nouveauté.</li><li><b>Sinon, rien.</b></li></ul></div>
   <div class="rv"><h3>Ce qu’on ne promet pas.</h3><p>Des abonnés, des likes ou des ventes. On promet la régularité : votre commerce visible {{FIL:cadence}}, dans un style soigné.</p></div>
  </div>
  <p class="f-px rv">{{FIL:prix}}</p>
@@ -267,9 +247,9 @@ html:not(.js) .e-pick{display:none}
  <div>
   <p class="mono rv">Le téléphone</p>
   <h2 id="hT" class="rv">Quand vous ne pouvez pas décrocher, une voix répond.</h2>
-  <p class="lede rv">Les mains dans une couleur, une table à servir, un client devant vous. La voix prend l’appel, note le rendez-vous ou le message, et vous envoie le résumé sur WhatsApp.</p>
+  <p class="lede rv">Les mains dans une couleur, une table à servir, un client devant vous. La voix prend l’appel, note le rendez-vous ou le message, et vous envoie le résumé par message.</p>
   <ul class="tel-l rv"><li>Vous gardez votre numéro.</li><li>Elle dit qu’elle est une voix d’IA.</li><li>Ce qu’elle ne sait pas, elle vous le passe.</li></ul>
-  <p class="tel-px rv">Sur devis, par écrit sous 48 h. Sans engagement.</p>
+  <p class="tel-px rv">Dès {{PX:tel_ess}} par mois, sans engagement. Une démo gratuite d’abord.</p>
   <div class="act rv"><a class="btn inv" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span>Une voix pour mes appels manqués</span></a><a class="lnk" href="{{TELEPHONE}}">Comment ça marche →</a></div>
  </div>
  <figure class="tel-d" data-teld>
@@ -298,13 +278,13 @@ html:not(.js) .e-pick{display:none}
  <div class="in qa">
   <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
   <div class="faq">
-   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine {{PX:vit_m}} par mois, l’Entrée 3D {{PX:e3_m}} par mois, l’Entrée réelle {{PX:reel_m}} par mois. Sans engagement : résiliable chaque mois. La mise en ligne coûte {{PX:setup}} pour La Vitrine, {{PX:e3_setup}} pour l’Entrée 3D et {{PX:reel_setup}} pour l’Entrée réelle, tournage compris ; elle se paie seulement si le site terminé vous plaît.</p><p>Avant tout paiement, vous recevez votre maquette, ou une première image de votre façade en 3D, offerte. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit.</p><p>Le Fil : {{FIL:prix}} Le téléphone : sur devis, par écrit sous 48 h, sans engagement.</p></div></div></details>
+   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine {{PX:vit_m}} par mois, l’Entrée 3D {{PX:e3_m}} par mois, l’Entrée réelle {{PX:reel_m}} par mois. Sans engagement : résiliable chaque mois. La mise en ligne coûte {{PX:setup}} pour La Vitrine, {{PX:e3_setup}} pour l’Entrée 3D et {{PX:reel_setup}} pour l’Entrée réelle, tournage compris ; elle se paie seulement si le site terminé vous plaît.</p><p>Avant tout paiement, vous recevez votre maquette, ou une première image de votre façade en 3D, offerte. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit.</p><p>Le Fil : {{FIL:prix}} Le téléphone : dès {{PX:tel_ess}} par mois, sans engagement, <a href="{{TELEPHONE}}#prix">voir les forfaits</a>.</p></div></div></details>
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
    <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour l’Entrée 3D : nous envoyer quelques photos de votre façade et de votre salle. On en fait votre entrée en 3D, en motion design (les exemples de cette page, eux, sont des commerces inventés). Pour l’Entrée réelle, on vient tourner chez vous. Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l'entrée et on s'occupe de votre fiche Google.</p></div></div></details>
    <details><summary>Le Fil, c’est vraiment automatique ?</summary><div class="fa"><div><p>Oui. On prépare chaque publication, vous recevez l’aperçu la veille, et elle se publie seule le matin. Vous pouvez dire « Stop », jamais être obligé de dire « Oui ».</p></div></div></details>
    <details><summary>Il me faut un compte particulier ?</summary><div class="fa"><div><p>Un compte Instagram professionnel (gratuit). On vous aide à le passer en professionnel si besoin. Instagram se publie automatiquement ; pour TikTok et votre fiche Google, on vous dit ce qui est possible pour votre compte.</p></div></div></details>
    <details><summary>Le Fil sans site OONDE ?</summary><div class="fa"><div><p>Oui, il se prend seul.</p></div></div></details>
-   <details><summary>Le téléphone : mes clients savent que c’est une IA ?</summary><div class="fa"><div><p>Oui, la voix se présente. Ce qu’elle ne sait pas, elle vous le passe, avec le résumé de l’appel sur WhatsApp. <a href="{{TELEPHONE}}">Comment ça marche</a></p></div></div></details>
+   <details><summary>Le téléphone : mes clients savent que c’est une IA ?</summary><div class="fa"><div><p>Oui, la voix se présente. Ce qu’elle ne sait pas, elle vous le passe, avec le résumé de l’appel par message. <a href="{{TELEPHONE}}">Comment ça marche</a></p></div></div></details>
    <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements envoyés par message. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine, c'est compris.</p><p>Pour Google, on met en place tout ce qu'il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
    <details><summary>Et le site, sur un téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
    <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux. On démarre : on n'a pas encore de clients à vous montrer. C'est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit. Quand vous écrivez, c'est nous qui répondons.</p></div></div></details>
