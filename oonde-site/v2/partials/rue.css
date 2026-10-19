@@ -1,23 +1,22 @@
-/* La rue au crépuscule : l'ouverture de la page. Un seul plan-séquence, rendu d'avance (entree3d/scenes/rue.js) :
-   le point bleu est un réverbère, la rue apparaît, on longe les vitrines, on s'arrête devant une enseigne vide. */
+/* La rue au crépuscule : l'ouverture de la page, en deux temps (v26) : la carte-titre sur l'affiche, puis, en un geste (ou de lui-même),
+   le fondu vers l'arrivée devant une enseigne vide (les dernières images du plan-séquence rendu d'avance, entree3d/scenes/rue.js). */
 .r{padding:0;background:#0d1024;color:#fff}
-.r-walk{position:relative;--ext:100vh;--ext:100svh;height:calc(270vh + var(--ext));height:calc(270svh + var(--ext))}   /* v23 : plus courte (367 → 270) ; v22 : l'approche (P 0 → .3), la marche le long des six façades (→ .75), l'arrêt */
+.r-walk{position:relative;--ext:100vh;--ext:100svh;height:calc(170vh + var(--ext));height:calc(170svh + var(--ext))}   /* v26 : courte (270 → 170 : un seul geste mène à l'arrêt) : l'affiche (P 0 → .05), le fondu et l'arrivée (→ .75), l'arrêt (→ .92) */
 .r-x{position:absolute;left:0;bottom:0;width:1px;height:var(--ext);pointer-events:none;visibility:hidden}   /* v19 : la suite, après l'arrêt (la porte, la salle, la fin du site) */
-.r-anchor{position:absolute;left:0;top:calc(.82 * (170vh + var(--hh)));top:calc(.82 * (170svh + var(--hh)));width:1px;height:1px;scroll-margin-top:var(--hh)}   /* l'arrêt (P .82 de la rue), avant même le script */
-@media (max-aspect-ratio:1/1){.r-walk{--ext:90vh;--ext:90svh;height:calc(300vh + var(--ext));height:calc(300svh + var(--ext))}.r-anchor{top:calc(.82 * (200vh + var(--hh)));top:calc(.82 * (200svh + var(--hh)))}}
+.r-anchor{position:absolute;left:0;top:calc(.82 * (70vh + var(--hh)));top:calc(.82 * (70svh + var(--hh)));width:1px;height:1px;scroll-margin-top:var(--hh)}   /* l'arrêt (P .82 de la rue), avant même le script */
+@media (max-aspect-ratio:1/1){.r-walk{--ext:90vh;--ext:90svh;height:calc(200vh + var(--ext));height:calc(200svh + var(--ext))}.r-anchor{top:calc(.82 * (100vh + var(--hh)));top:calc(.82 * (100svh + var(--hh)))}}
 .r-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));overflow:hidden;container-type:size;background:#0d1024}
 .r-scene{position:absolute;inset:0;background:#0d1024 url("{{PVB_D}}") 50% 50%/cover no-repeat}   /* v22.1 : l'affiche floue, avant l'image */
 @media (max-aspect-ratio:1/1){.r-scene{background-image:url("{{PVB_M}}")}}
 .r-scene img,.r-scene canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.r-scene canvas{opacity:0}
-.r.live .r-scene canvas{opacity:1}
-.r.live .r-poster{visibility:hidden}
+.r-scene canvas,.r-pins{opacity:0}   /* v26 : le script monte l'opacité du canevas (et des enseignes) pendant le fondu depuis l'affiche ; mixd : fondu fini */
+.r.mixd .r-poster{visibility:hidden}
 /* v22 · l'affiche vivante, avant la première image du film : la vitrine respire, trois fenêtres s'allument, l'enseigne attend un nom.
    Le calque suit l'image en object-fit:cover (même rapport, même centre) ; les positions sont celles de l'image 0 (pins.json). */
 .r-pv{position:absolute;left:50%;top:50%;--ar:1.6;width:max(100cqw,calc(100cqh * var(--ar)));aspect-ratio:var(--ar);translate:-50% -50%;pointer-events:none;
  --sx:.5694;--sy:.3074;--sw:.2256;--sh:.0461;--wx:.50;--wy:.32;--ww:.36;--wh:.30}
 @media (max-aspect-ratio:1/1){.r-pv{--ar:.5625;--sx:.2926;--sy:.3253;--sw:.4148;--sh:.0299;--wx:.22;--wy:.36;--ww:.56;--wh:.13}}
-.r.live .r-pvs{visibility:hidden}   /* l'enseigne du film prend le relais, au même endroit */
+.r.mixd .r-pvs{visibility:hidden}   /* l'enseigne du film prend le relais, au même endroit */
 .r-pv{transition:opacity .3s ease-out}.r.moving .r-pv,.r.static .r-pv,.r.nofilm .r-pv{opacity:0}   /* v22.1 : la vitrine et les lampes vivent jusqu'au premier geste, puis s'effacent en 300 ms */
 .r-pv i{position:absolute;display:block;border-radius:3px}
 .r-pvw{left:calc(var(--wx) * 100%);top:calc(var(--wy) * 100%);width:calc(var(--ww) * 100%);height:calc(var(--wh) * 100%);background:radial-gradient(closest-side,rgba(255,196,120,.42),rgba(255,196,120,0));mix-blend-mode:screen;opacity:.0;border-radius:50%}
@@ -191,7 +190,7 @@
 .r.static .r-note,html:not(.js) .r-note{display:block}
 .r.static .r-t1 h1 .w,html:not(.js) .r-t1 h1 .w{opacity:1;translate:none;filter:none}
 .r.static .r-say,.r.static .r-cue,.r.static .r-skip,.r.static .r-veil,.r.static .r-sbar,.r.static .r-wall,html:not(.js) .r-sbar,html:not(.js) .r-wall,html:not(.js) .r-say,html:not(.js) .r-cue,html:not(.js) .r-skip,html:not(.js) .r-veil{display:none}
-.r.static .r-pins .r-sign{opacity:1}
+.r.static .r-pins,.r.static .r-pins .r-sign{opacity:1}
 html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .r.static .r-stage,html:not(.js) .r-stage{display:flex;flex-direction:column}
 .r.static .r-t1,html:not(.js) .r-t1{order:-1;padding-bottom:28px}
@@ -239,18 +238,18 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 .js .r:not(.static) .r-mk{display:block;width:clamp(40px,4.4cqw,56px);height:clamp(40px,4.4cqw,56px);color:#fff}
 .js .r:not(.static) .r-mk svg{width:100%;height:100%;display:block;overflow:visible}
 .js .r:not(.static) .r-k,.js .r:not(.static) .r-t1 .r-sub,.js .r:not(.static) .r-t1 .r-act{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;opacity:1;translate:none}
-.js .r:not(.static) .r-t1 h1 .w{transition-delay:calc(var(--i) * 85ms + 700ms)}
+.js .r:not(.static) .r-t1 h1 .w{transition-delay:calc(var(--i) * 60ms + 420ms)}   /* v26 : en place à 1,5 s (la rue part d'elle-même à 1,8 s) */
 @media (prefers-reduced-motion:no-preference){
  .js .r:not(.static) .r-mk svg>*{transform-box:fill-box;transform-origin:center}
- .js .r:not(.static) .r-mk svg>:first-child{animation:rMkRing .9s cubic-bezier(.16,1,.3,1) .1s both}
- .js .r:not(.static) .r-mk svg>:last-child{animation:rMkDot .6s cubic-bezier(.34,1.56,.64,1) .45s both}
+ .js .r:not(.static) .r-mk svg>:first-child{animation:rMkRing .7s cubic-bezier(.16,1,.3,1) both}
+ .js .r:not(.static) .r-mk svg>:last-child{animation:rMkDot .5s cubic-bezier(.34,1.56,.64,1) .3s both}
 }
 @keyframes rMkRing{from{opacity:0;transform:scale(.6)}}
 @keyframes rMkDot{from{opacity:0;transform:scale(0)}}
 .js .r:not(.static) .r-veil::before{display:block;background:radial-gradient(ellipse at 50% 46%,rgba(8,10,28,.62),rgba(8,10,28,.82));opacity:var(--hv,1)}
-.js .r:not(.static) .r-cue{display:block;bottom:62px;font:500 14px var(--sans);letter-spacing:0;color:#fff;animation:rIn .6s ease-out 1.5s both}
+.js .r:not(.static) .r-cue{display:block;bottom:62px;font:500 14px var(--sans);letter-spacing:0;color:#fff;animation:rIn .6s ease-out 2.6s both}   /* v26 : seulement si la rue n'est pas partie d'elle-même (réseau lent) */
 .js .r:not(.static) .r-cue span{display:inline-block;margin-left:2px}
-@media (prefers-reduced-motion:no-preference){.js .r:not(.static) .r-cue span{animation:rMore 1.6s ease-in-out 2.1s infinite}}
+@media (prefers-reduced-motion:no-preference){.js .r:not(.static) .r-cue span{animation:rMore 1.6s ease-in-out 3.2s infinite}}
 @keyframes rIn{from{filter:opacity(0)}}
 .js .r:not(.static).intro .r-skip{top:auto;right:auto;left:50%;bottom:14px;translate:-50% 0;background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:13.5px;color:rgba(255,255,255,.78);text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center;padding:0 12px;animation:rIn .6s ease-out 1.6s both}
 .js .r:not(.static).intro .r-skip:hover{color:#fff}
