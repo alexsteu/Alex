@@ -284,18 +284,31 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   const pu=base(k)+'pins.json',pp=window.E3P&&E3P[pu];if(pp)delete E3P[pu];(pp||fetch(pu)).then(r=>r.json()).then(j=>{s.pins=j;dirty=true;tick()}).catch(()=>{});
   if(!LIVE)return s;
   const slow=setTimeout(()=>{if(!s.film.any()&&k===set)ld.textContent='Chargement de la rue…'},1500);
-  /* le paquet suivant part dès que le précédent finit d'arriver (l'aller-retour se recouvre, la bande passante reste à un seul paquet à la fois) ; ajoutés dans l'ordre */
-  s.ask=nm=>{if(s.has[nm])return;s.has[nm]=1;s.req++;const gen=s.gen,sig=s.ac.signal,prev=s.prev;let h;s.prev=new Promise(r=>h=r);
-   const go=()=>{if(gen!==s.gen)return Promise.reject('x');if(window.__pk)__pk.push([nm,'go',Math.round(performance.now())]);const q=e3get('w/'+k+'/'+nm,sig,h,(a,b)=>{s.pg[nm]=a/b;if(wT)tick()});q.catch(h);return q},fp=prev?prev.then(go):go();
-   if(window.__pk)fp.then(()=>__pk.push([nm,'in',Math.round(performance.now())]),()=>{});s.chain=s.chain.then(()=>fp.then(l=>{if(gen!==s.gen)return;if(window.__pk)__pk.push([nm,'add',Math.round(performance.now())]);const lo=nm[0]==='L';l.forEach(([i,b])=>nm[0]==='K'?s.film.addKey(i,b):lo?s.film.addLo(i,b):s.film.add(i,b));s.pg[nm]=1;s.got++;s.ok[nm]=1;if(nm==='L0'){clearTimeout(slow);if(ld.textContent==='Chargement de la rue…')ld.textContent=''}dirty=true;tick()}))
-   .catch(()=>{if(gen!==s.gen)return;if(nm==='L0'){clearTimeout(slow);ld.textContent='';if(!s.film.any())flat();return}s.loose=true;s.got++;s.ok[nm]=1;dirty=true;tick()})};   /* un paquet absent : le film joue avec ce qu'il a (images plus espacées) plutôt que de rester figé */
+  /* le paquet suivant part dès que le précédent finit d'arriver (l'aller-retour se recouvre, la bande passante reste à un seul paquet à la fois).
+     v23.1 : une file à priorité, plus un ordre fixe : L0, les clés (Ka, Kb) et H0 d'abord ; puis, parmi les paquets demandés, celui dont les images
+     sont les plus proches de la cible (là où le doigt a envoyé le film) ; un glissé profond fait passer la marche (L2, L3) avant la fin de l'approche (L1b) */
+  const Ak=A[k],mid=(6+Ak)>>1,RG={L0:[0,5],L1a:[6,mid-1],L1b:[mid,Ak-1],L2:[Ak,n-1],L3:[Ak,n-1],H1:[1,Ak-1],H2:[Ak,Ak+36],H3:[Ak+37,n-1]};
+  const tgt=()=>{if(k!==set)return HOMEi();if(jmp)return HOMEi();if(vg)return Math.max(vg.a,vg.b);return Math.max(cF,frameOf(clamp(P,0,HOLD[1])))};
+  const prio=nm=>{const i=PK.indexOf(nm);if(i<4)return i-100;const r=RG[nm],t=tgt(),d=r?(t<r[0]?r[0]-t:t>r[1]?t-r[1]:0):0;return (nm[0]==='H'?1e3:0)+d+i*.01};
+  s.q=[];s.busy=false;
+  const next=()=>{if(s.busy||s.picking)return;s.picking=true;if(k===set&&armed)more();s.picking=false;if(!s.q.length)return;s.q.sort((x,y)=>prio(x)-prio(y));if(window.__pk)__pk.push(['pick',+P.toFixed(3),moved,Math.round(tgt()),s.q.join()]);
+   const nm=s.q.shift(),gen=s.gen,rc=new AbortController(),sig=rc.signal;s.ac.signal.addEventListener('abort',()=>rc.abort(),{once:true});s.busy=true;let fired=false;const me=s.cur={nm,rc,pre:false};
+   const h=()=>{if(fired)return;fired=true;if(s.cur===me)s.cur=null;if(gen!==s.gen)return;s.busy=false;next()};
+   if(window.__pk)__pk.push([nm,'go',Math.round(performance.now())]);
+   const q=e3get('w/'+k+'/'+nm,sig,h,(a,b)=>{s.pg[nm]=a/b;if(wT)tick()});
+   q.then(l=>{h();if(gen!==s.gen)return;if(window.__pk)__pk.push([nm,'add',Math.round(performance.now())]);const lo=nm[0]==='L';l.forEach(([i,b])=>nm[0]==='K'?s.film.addKey(i,b):lo?s.film.addLo(i,b):s.film.add(i,b));s.pg[nm]=1;s.got++;s.ok[nm]=1;if(nm==='L0'){clearTimeout(slow);if(ld.textContent==='Chargement de la rue…')ld.textContent=''}dirty=true;tick()})
+   .catch(()=>{if(me.pre){s.pg[nm]=0;s.q.push(nm);fired=true;if(s.cur===me)s.cur=null;if(gen===s.gen){s.busy=false;next()}return}   /* cédé à un paquet plus proche de la cible : il revient dans la file */
+    h();if(gen!==s.gen)return;if(nm==='L0'){clearTimeout(slow);ld.textContent='';if(!s.film.any())flat();return}s.loose=true;s.got++;s.ok[nm]=1;dirty=true;tick()})};   /* un paquet absent : le film joue avec ce qu'il a (images plus espacées) plutôt que de rester figé */
+  /* v23.1 : un glissé profond pendant qu'une basse loin de la cible arrive (moins de la moitié reçue) : on la coupe, celle de la cible passe devant */
+  s.pre=()=>{const c=s.cur;if(!c||c.pre||c.nm[0]!=='L'||PK.indexOf(c.nm)<4||(s.pg[c.nm]||0)>.5)return;const d=prio(c.nm);if(d<12)return;if(s.q.some(m=>m[0]==='L'&&prio(m)<1)){c.pre=true;if(window.__pk)__pk.push([c.nm,'cut',Math.round(performance.now())]);c.rc.abort()}};
+  s.ask=nm=>{if(s.has[nm])return;s.has[nm]=1;s.req++;s.q.push(nm);if(!s.picking){next();s.pre()}};   /* au moment de choisir, more() remet d'abord dans la file ce que la position du moment demande (un glissé fait avant le script compris) */
   /* v22.2 : l'autre jeu (rotation aller-retour, capture d'écran) : ses paquets en route sont annulés ; ceux reçus restent */
-  s.halt=()=>{if(Object.keys(s.has).every(m=>s.ok[m]))return;s.gen++;s.ac.abort();s.ac=new AbortController();s.prev=null;s.chain=Promise.resolve();for(const m in s.has)if(!s.ok[m]){delete s.has[m];s.req--}};
+  s.halt=()=>{if(Object.keys(s.has).every(m=>s.ok[m]))return;s.gen++;s.ac.abort();s.ac=new AbortController();s.q=[];s.busy=false;s.cur=null;for(const m in s.has)if(!s.ok[m]){delete s.has[m];s.req--}};
   s.more=lv=>{for(let g=0;g<Math.min(lv,PK.length);g++)s.ask(PK[g])};
   s.more(AUTO);more();return s}
  function more(){const s=store[set];if(!s||!s.ask)return;const a=A[set],f=Math.max(cF,jmp?HOMEi():0);
   if(moved||P>.05||jmp){s.ask('L2');s.ask('L3')}if(jmp||f>a+20)s.ask('H3');   /* arrivé par un lien : la seconde moitié (l'arrêt, ses voisines) d'abord ; H2 seulement si l'on y va (glissement, marche) */
-  if(cP>.01&&!jmp&&cF<a+5)s.ask('H1');   /* v22.2 : H1 (l'approche nette) seulement en marchant : arrivé par un lien, le fondu la saute */if(f>a-15&&f<a+45&&!jmp||vg&&Math.min(vg.b,vx)<a+40)s.ask('H2');if(f>a+20||vg)s.ask('H3')}
+  if(cP>.01&&!jmp&&cF<a+5)s.ask('H1');   /* v22.2 : H1 (l'approche nette) seulement en marchant : arrivé par un lien, le fondu la saute */if(f>a-15&&f<a+45&&!jmp||vg&&Math.min(vg.b,vx)<a+40)s.ask('H2');if(f>a+20||vg)s.ask('H3');if(s.pre)s.pre()}
  let armT=0,inOk=false;const arm=()=>{if(armed)return;armed=true;armT=performance.now();if(!W)size();load(set)};   /* v22.2 : le jeu de l'écran d'abord (un glissé avant le script ne charge plus l'autre) */
  /* la rue a ses premières images (ou n'en aura pas) : avant, le mur de l'arrêt reste fermé, même pour un nouveau geste */
  const rdy=()=>{const s=store[set];return !LIVE||!!(s&&(s.ok.Kb||s.ok.L1b||s.loose))||armed&&performance.now()-armT>12000};
@@ -489,7 +502,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   {const st=tF-cF,dl=st*(1-Math.exp(-dt/.07));cF+=clamp(dl,-1,1)}if(Math.abs(tF-cF)<.004)cF=tF;
   /* v22.2 : le film attend des images (la cible a plus de 1,5 image d'avance et il ne peut plus avancer) : après 400 ms, « Chargement de la rue… »
      et une fine ligne de progression, l'image tenue pousse doucement (1 %) ; les textes suivent l'image à l'écran, pas le doigt */
-  {const blk=s0&&!jmp&&!vg&&cQ<.005&&Math.abs(F-cF)>1.5&&Math.abs(tF-cF)<.05;if(blk&&!wT){wT=now;setTimeout(tick,420)}else if(!blk)wT=0;
+  {const blk=s0&&!jmp&&!vg&&cQ<.005&&Math.abs(F-cF)>1.5&&Math.abs(tF-cF)<.05&&!(rest&&Math.abs(F-cF)<=2.6&&s0.film.get(Math.round(cF)));   /* v23.1 : au repos, posé sur l'image la plus proche (≤ 2,5 images, l'écart de deux clés) : c'est arrivé, pas d'attente affichée ; l'image exacte suit en fondu quand elle arrive */if(blk&&!wT){wT=now;setTimeout(tick,420)}else if(!blk)wT=0;
    const on=!!wT&&now-wT>=400;if(on!==wOn){wOn=on;flag(u,'wait',on);if(on)ld.textContent='Chargement de la rue…';else if(ld.textContent==='Chargement de la rue…')ld.textContent=''}
    if(on)ld.style.setProperty('--pg',wPg(s0,F>cF?1:-1).toFixed(3));
    const pT=wT?Math.min(cP,invF(cF)):cP;pV+=(pT-pV)*(1-Math.exp(-dt/.12));if(Math.abs(pT-pV)<.0005)pV=pT;else if(!wT)tick()}   /* une image au plus par image affichée : aucun trou, même lancé fort */
