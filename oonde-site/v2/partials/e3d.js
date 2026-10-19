@@ -111,7 +111,8 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* le message WhatsApp : ce que la personne a tapé et choisi, rien d'autre */
  function msg(){const s=E3[st.sc],t=s.lodge?null:T[s.t];if(!st.touched)return MSG.imm();
   const what=s.lodge?'logement':t.noun,col=st.styleSet&&t?', couleur '+sty()[2]:'';
-  return `${SRC?HELLO+' J’ai':'Bonjour, j’ai'} essayé l’entrée 3D sur votre site. J’aimerais recevoir une première image 3D et le prix pour ${st.name?'mon commerce':'mon '+what}.\n${st.name?st.name+', '+what+col+'.\n':''}Ma commune : `}
+  /* v24 (brief § 3.8) : avec le nom tapé à l'arrêt, « l'aperçu 3D de [Nom] ([métier]) » */
+  return st.name?`${HELLO} J’aimerais l’aperçu 3D de ${st.name} (${what}${col}) et le prix de son site.\nMa commune : `:`${HELLO} J’aimerais voir ma façade en 3D (${what}${col}) et recevoir le prix de mon site.\nMon commerce et ma commune : `}
  const txt=(id,v)=>{const e=$(id);if(e&&e.textContent!==v)e.textContent=v};
  function paint(){const s=E3[st.sc],t=s.lodge?null:T[s.t],[c,ct,cn]=sty(),name=st.name||'Votre commerce',lab=s.lodge?'Logement':t.label;
   for(const el of [u,sec])if(el){el.style.setProperty('--c',c);el.style.setProperty('--ct',ct)}

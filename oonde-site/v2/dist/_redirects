@@ -3,5 +3,7 @@
 /tt     /?s=tt     302
 /carte  /?s=carte  302
 /g      /?s=gbp    302
-/videos /pub 301
-/videos.html /pub 301
+/pub    /fil  301
+/pub.html /fil 301
+/videos /fil  301
+/videos.html /fil 301

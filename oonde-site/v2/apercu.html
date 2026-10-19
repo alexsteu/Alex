@@ -120,7 +120,7 @@ main{padding-top:0}
    <li><b>Sans engagement.</b><span>Résiliable à la fin de n'importe quel mois.</span></li>
    <li><b>Le site est à vous.</b><span>L'adresse est à votre nom. Si vous arrêtez, on vous remet tout, gratuitement.</span></li>
   </ul>
-  <div class="act go"><a class="btn" id="goLive" href="{{WA}}" target="_blank" rel="noopener">{{WA_ICON}}<span>Je le veux en ligne</span></a><a class="btn light" id="change" href="{{WA}}" target="_blank" rel="noopener">Changer quelque chose</a></div>
+  <div class="act go"><a class="btn" id="goLive" href="{{WA_APL}}" target="_blank" rel="noopener">{{WA_ICON}}<span>Je le veux en ligne</span></a><a class="btn light" id="change" href="{{WA_APC}}" target="_blank" rel="noopener">Changer quelque chose</a></div>
   <p class="sig">OONDE. On répond le jour même, 7 jours sur 7, au +41 76 488 27 10.</p>
   <p class="note"><span>Cette page n'est publiée nulle part : seuls ceux qui ont le lien la voient.</span><a id="edit" href="{{VITRINE}}#vitrine">Modifier le nom, le métier ou la couleur</a><a href="{{HOME}}">Découvrir OONDE</a></p>
  </div>
@@ -150,8 +150,8 @@ main{padding-top:0}
  /* la vraie maquette : le message reprend le lien de cette page, pour qu'on sache ce que la personne a vu */
  const hi=SRC?HELLO+' J’ai':'Bonjour, j’ai',what=name?' préparé pour '+name:'';
  $('real').href=wa(`${hi} vu l’exemple de site${what}. J’aimerais recevoir ma vraie maquette, offerte.\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
- $('goLive').href=wa(`${hi} vu l’exemple de site${what}, et je le veux en ligne. On peut commencer ?\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
- $('change').href=wa(`${hi} vu l’exemple de site${what}.\n${location.href}\nCe que j’aimerais changer : `);
+ $('goLive').href=wa(`${hi} vu ma maquette${name?' pour '+name:''}, je la veux en ligne.\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
+ $('change').href=wa(`${hi} vu ma maquette${name?' pour '+name:''}.\n${location.href}\nJ’aimerais changer : `);
  $('why').textContent=`Quand on cherche « ${Q[key]}${town?' '+town:''} » sur Google, votre fiche mène à ce site, à votre nom, avec vos prix et un bouton pour vous écrire. Rien à préparer : on part de votre fiche Google et de votre Instagram.`;
  if(name)$('exT').textContent='Exemple préparé pour '+name+' par OONDE. Textes, prix et photos à remplacer par les vôtres.';
  const p=new URLSearchParams();if(name)p.set('n',name);p.set('m',key);if(town)p.set('v',town);if(sv)p.set('c',sv);$('edit').href='{{VITRINE}}?'+p+'#vitrine';

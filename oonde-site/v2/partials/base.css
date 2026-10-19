@@ -80,6 +80,10 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
 @media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
+/* v24 : le bouton de l'en-tête suit l'étage (« Un exemple pour mon commerce ») : entre 701 et 1180 px, « Et aussi » puis « Questions » cèdent la place (ils restent dans le pied de page et sur l'accueil) */
+@media (min-width:701px) and (max-width:1180px){.nav nav .nav-sub.opt3{display:none}}
+@media (min-width:701px) and (max-width:1000px){.nav nav a.opt2{display:none}}
+@media (min-width:701px) and (max-width:860px){.nav nav{gap:20px}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
  .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
  body.cta-in .nav .btn,body.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
