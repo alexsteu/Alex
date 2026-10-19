@@ -147,7 +147,6 @@
 .r-eh{font:400 clamp(38px,5.4cqw,72px)/1.02 var(--serif);margin-top:12px;text-wrap:balance}
 .r-end .r-eeb,.r-end .r-eh{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.5)}
 .r-ebt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px}
-.r-book{min-height:50px;padding:12px 24px;font-size:15.5px}
 .r-esee{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .r-esee:hover{text-decoration:underline;text-underline-offset:4px}
 .r-end:focus{outline:none}

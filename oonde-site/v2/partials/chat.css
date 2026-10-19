@@ -4,7 +4,6 @@
 .chat .av{width:36px;height:36px;border-radius:50%;background:#2B2420;color:#F4EFE7;display:grid;place-items:center;font:400 italic 19px var(--serif);flex:none}
 .chat .who b{display:block;font-size:15px}
 .chat .who span{font-size:13px;color:var(--muted)}
-.chat .tag{margin-left:auto;font:500 11px var(--mono);letter-spacing:.08em;border:1px solid var(--line);border-radius:6px;padding:4px 7px;color:var(--muted)}
 .chat .log{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
 .m{max-width:85%;padding:10px 13px;border-radius:14px;font-size:15px;line-height:1.45;white-space:pre-line}
 .m.b{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}

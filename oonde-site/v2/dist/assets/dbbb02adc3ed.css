@@ -24,24 +24,21 @@ p{margin:0;text-wrap:pretty}
 h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
 /* trois niveaux de titre : l'accueil, les sections clés, les sections secondaires */
 .h-xl{font-size:clamp(40px,5.6vw,78px);line-height:.98;letter-spacing:-.035em}
-h2,.h-l{font-size:clamp(32px,4vw,54px);max-width:18ch}
+h2{font-size:clamp(32px,4vw,54px);max-width:18ch}
 .h-m{font-size:clamp(26px,2.6vw,36px);max-width:22ch}
 h3{font-size:clamp(19px,1.8vw,22px);letter-spacing:-.02em;line-height:1.15}
 .mono{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 section{padding-block:clamp(64px,9vw,128px)}
 section.sec2{padding-block:clamp(56px,6.5vw,88px)}
-.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}
-.bg-night{background:var(--night);color:#fff}.bg-ink{background:var(--ink);color:#fff}
+.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}.bg-ink{background:var(--ink);color:#fff}
 .bg-paper+.bg-paper{border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid var(--klein);outline-offset:3px}
-.bg-night :focus-visible,.bg-ink :focus-visible,.final :focus-visible{outline-color:#fff}
+.bg-ink :focus-visible{outline-color:#fff}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:fixed;left:12px;top:12px;z-index:40;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;text-decoration:none;transform:translateY(-200%)}
 .skip:focus-visible{transform:none}
-.sec-head{margin-bottom:clamp(32px,4.5vw,56px)}
-.sec-head p{margin-top:16px;max-width:38em;color:var(--muted);font-size:18px}
 .lede{color:var(--soft);font-size:18px;max-width:36em}
-@media (max-width:760px){.lede,.sec-head p{font-size:16.5px}}
+@media (max-width:760px){.lede{font-size:16.5px}}
 
 /* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%}
@@ -53,15 +50,14 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
-@media (max-width:700px){.btn.wide{width:100%}}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
-.bg-night .lnk:hover,.bg-ink .lnk:hover,.final .lnk:hover{color:#fff;opacity:.8}
+.bg-ink .lnk:hover{color:#fff;opacity:.8}
 .act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
 .micro{font-size:14px;color:var(--muted);line-height:1.45}
 
 /* En-tête fixe */
-.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);backdrop-filter:saturate(1.1) blur(10px);-webkit-backdrop-filter:saturate(1.1) blur(10px);border-bottom:1px solid var(--line)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);border-bottom:1px solid var(--line)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--ink);padding-block:11px;margin-block:-11px}
 .logo svg{height:22px;width:auto;display:block}
@@ -169,9 +165,6 @@ main{padding-top:var(--hh)}
 @keyframes sw{from{opacity:.4}}
 
 /* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
-.oname{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 16px}
-.oname b{font-size:clamp(21px,2vw,24px);font-weight:600;letter-spacing:-.02em}
-.oname span{color:var(--muted);font:500 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
 .path li{padding-top:22px}
 .path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -216,25 +209,9 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 
 /* Nous, avec le contact */
 .close{display:grid;gap:clamp(32px,5vw,88px);align-items:start}
-@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}.close>.final{grid-column:8/13}}
-.people{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line);max-width:34em}
-.people li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 24px;padding:16px 0;border-bottom:1px solid var(--line)}
-.people b{display:block;font-size:18px;font-weight:600;letter-spacing:-.02em}
-.people .role{font-size:15px;color:var(--muted)}
-.final{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(28px,4vw,44px);position:sticky;top:88px}
-.final h2{font-size:clamp(30px,3.2vw,40px);color:#fff}
-.final>p{margin:14px 0 22px;color:rgba(255,255,255,.75)}
-.final .btn{width:100%}
-.final .alt{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:15px}
-.final .alt a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
-.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff;display:inline-block;padding-block:13px;margin-block:-13px}   /* 44 px au toucher, sans changer la ligne */
-.final dl{margin:26px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
-.final dt{font-size:14px;color:rgba(255,255,255,.6)}
-.final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
-.final dd a{text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}.final dd a:hover{text-decoration:underline}
+@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}}
 .qr{display:none}
-@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr svg{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
-@media (max-width:900px){.final{position:static}}
+@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr img{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
 
 /* Pied de page et barre mobile */
 footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
@@ -275,9 +252,9 @@ section{padding-block:clamp(96px,11vw,160px)}
 section.sec2{padding-block:clamp(88px,9vw,128px)}
 .bg-paper+.bg-paper{border-top:0}
 .h-xl{font-size:clamp(48px,7.2vw,112px);line-height:1;letter-spacing:-.04em}
-h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
+h2{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
 .h-m{font-size:clamp(30px,3.4vw,48px);line-height:1.06;letter-spacing:-.03em;max-width:18ch}
-@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2,.h-l{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
+@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
 .lede{font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:34em;color:var(--soft)}
 .mono{font-size:12px;letter-spacing:.14em}
 @media (max-width:760px){.mono{font-size:11px}}
@@ -287,7 +264,7 @@ h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;m
 .nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
 .lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
-.bg-ink .lnk,.bg-night .lnk{color:#fff}
+.bg-ink .lnk{color:#fff}
 footer{border-top:0}
 /* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
 .js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
@@ -314,113 +291,5 @@ footer{border-top:0}
 .also2{font-size:14px;color:var(--muted)}.also2 a{display:inline-block;padding-block:12px;margin-block:-12px}
 /* pied de page : « Aussi » et le QR (ordinateur seulement) */
 .fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
-.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr svg{width:84px;height:84px;flex:none}
+.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr img{width:84px;height:84px;flex:none}
 @media (max-width:900px){.fq .qr{display:none}}
-/* les vidéos (Le Fil, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
-.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
-.bg-ink .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
-.v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
-.v img,.v video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.v video{opacity:0;transition:opacity .25s}.v.live video{opacity:1}
-.v .snd{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:0;cursor:pointer}
-.v .snd svg{width:18px;height:18px}.v .snd .on{display:none}.v.sound .snd .on{display:block}.v.sound .snd .off{display:none}
-.v .pl{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:999px;background:rgba(255,255,255,.88);display:grid;place-items:center;transition:opacity .2s}
-.v .pl svg{width:20px;height:20px;margin-left:3px;color:#111}.v.on .pl{opacity:0}
-.cap{margin-top:16px}
-.cap .mono{font-size:11px;letter-spacing:.14em;display:block}
-.cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
-/* v23 · les démos de nos services vidéo (accueil, Le Fil) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
-   Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
-.v.w{aspect-ratio:16/9}
-.v .snd span{display:none}
-.vd .v .snd{width:auto;padding:0 14px 0 12px;gap:6px;display:flex;align-items:center;font:600 14px var(--sans)}.vd .v .snd span{display:inline}
-.vt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
-.dtag.ia{background:rgba(43,63,255,.08);color:var(--klein)}
-.vlead{display:none}
-.vrail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2*var(--pad) - 16px)/1.6);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;list-style:none;margin:clamp(32px,4vw,48px) calc(-1*var(--pad)) 0;padding:0 var(--pad) 8px;scroll-padding-inline:var(--pad)}
-.vrail::-webkit-scrollbar{display:none}.vrail li{scroll-snap-align:start;min-width:0}
-@media (min-width:861px){
- .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
- .vd .vlead{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:clamp(24px,3vw,48px);align-items:end;margin-top:clamp(32px,4vw,48px)}
- .vd .vlead .cap{margin:0 0 8px}.vd .vlead .cap p:last-child{font-size:clamp(18px,1.6vw,22px)}
- .vd .vrail.has-lead .is-lead{display:none}
-}
-/* v24 · Le Fil (accueil et /fil) : « le matin ». Un crème chaud, l'heure en IBM Plex Mono, le seul bleu Klein sur le rond « en ligne ».
-   Le téléphone : un fil générique (pas de logo), la vidéo de démo muette en boucle ; en défilant, l'heure avance : 18:00 (l'aperçu
-   WhatsApp glisse), 7:30 (le post se pose), la journée. Une seule animation, liée au défilement (fil.js). */
-.bg-morning{background:#F6F1EA}
-.fm{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center;margin-top:clamp(40px,5vw,72px)}
-.fm-ph{width:100%;max-width:320px;aspect-ratio:9/18.6;border-radius:44px;background:#111318;padding:11px;box-shadow:0 50px 90px -50px rgba(60,40,20,.55),0 0 0 1px rgba(17,19,24,.08)}
-.fm-scr{position:relative;height:100%;border-radius:34px;overflow:hidden;background:#fff;display:flex;flex-direction:column;font-family:var(--sans)}
-.fm-sb{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 6px;font:500 13px var(--mono)}
-.fm-clk{font-weight:500;font-variant-numeric:tabular-nums}
-.fm-sig{display:flex;gap:2px;align-items:flex-end;height:10px}.fm-sig i{width:3px;background:#111318;border-radius:1px}.fm-sig i:nth-child(1){height:40%}.fm-sig i:nth-child(2){height:70%}.fm-sig i:nth-child(3){height:100%}
-.fm-app{display:flex;align-items:center;gap:9px;padding:8px 12px}
-.fm-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#C9B79C,#8C6E4E);box-shadow:0 0 0 2px #fff,0 0 0 3px #E2D8CA}
-.fm-id{display:flex;flex-direction:column;line-height:1.15}.fm-id b{font-size:12.5px}.fm-id small{font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.fm-more{margin-left:auto;color:var(--muted);letter-spacing:1px}
-.fm-post{position:relative;aspect-ratio:4/5;background:#EAE3D9;overflow:hidden}
-.fm-post img,.fm-post video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.fm-post video{opacity:0;transition:opacity .4s}.fm.vlive .fm-post video{opacity:1}
-.fm-live{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.92);font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
-.fm-live i{width:7px;height:7px;border-radius:50%;background:var(--klein)}
-.fm-bar{display:flex;gap:12px;padding:10px 12px 4px}.fm-bar i{width:18px;height:16px;border:1.6px solid #111318;border-radius:5px}
-.fm-cap{font-size:12.5px;line-height:1.4;padding:2px 12px;margin:0;color:var(--soft)}.fm-cap b{color:var(--ink)}
-.fm-wa{position:absolute;left:8px;right:8px;top:36px;display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:16px;background:rgba(246,241,234,.97);box-shadow:0 18px 36px -18px rgba(17,19,24,.5);font-size:12.5px;line-height:1.35}
-.fm-wa b{display:block;font-size:12.5px}.fm-wai{flex:none;width:26px;height:26px;border-radius:7px;background:#25D366;color:#fff;display:grid;place-items:center}.fm-wai svg{width:16px;height:16px}
-/* les trois temps (data-st) */
-.fm-post>*,.fm-wa{transition:opacity .5s var(--ez,ease),transform .6s var(--ez,ease)}
-.fm[data-st="0"] .fm-post>*{opacity:0;transform:translateY(18px)}
-.fm:not([data-st="0"]) .fm-wa{opacity:0;transform:translateY(-130%)}
-.fm[data-st="0"] .fm-wa{opacity:1;transform:none}
-.fm-t{list-style:none;margin:0;padding:0;display:grid;gap:clamp(28px,4vw,56px)}
-.fm-t li{border-top:1px solid rgba(17,19,24,.16);padding-top:18px;transition:opacity .4s}
-.fm.js-st .fm-t li{opacity:.4}.fm.js-st .fm-t li.on{opacity:1}
-.fm-t time{display:block;font:500 15px var(--mono);letter-spacing:.02em;color:var(--klein)}
-.fm-t b{display:block;margin-top:8px;font:600 clamp(22px,2.4vw,32px)/1.12 var(--sans);letter-spacing:-.025em;max-width:20ch}
-.fm-t span{display:block;margin-top:10px;color:var(--soft);font-size:clamp(16px,1.4vw,19px);max-width:28em}
-.fm-note{margin-top:20px;font-size:14px;color:var(--muted)}
-@media (max-width:700px){
- .fm{grid-template-columns:132px minmax(0,1fr);gap:18px;align-items:start}
- .fm-ph{position:sticky;top:calc(var(--hh) + 16px);border-radius:24px;padding:6px}.fm-scr{border-radius:19px}
- .fm-sb{padding:7px 11px 2px;font-size:9px}.fm-app{padding:4px 7px;gap:5px}.fm-av{width:16px;height:16px}.fm-id b{font-size:8px}.fm-id small{font-size:6px}.fm-more{font-size:8px}
- .fm-live{left:5px;top:5px;padding:3px 5px;font-size:6.5px;gap:3px}.fm-live i{width:5px;height:5px}
- .fm-bar{gap:7px;padding:6px 7px 2px}.fm-bar i{width:10px;height:9px;border-width:1.2px;border-radius:3px}.fm-cap{font-size:8px;padding:1px 7px}
- .fm-wa{left:4px;right:4px;top:20px;padding:6px;gap:5px;border-radius:9px;font-size:7.5px}.fm-wa b{font-size:7.5px}.fm-wai{width:15px;height:15px;border-radius:4px}.fm-wai svg{width:10px;height:10px}
- .fm-t{gap:22px}.fm-t li{padding-top:12px}.fm-t time{font-size:13px}.fm-t b{font-size:19px;margin-top:5px}.fm-t span{font-size:15px;margin-top:6px}
-}
-@media (prefers-reduced-motion:reduce){.fm-post>*,.fm-wa,.fm-t li{transition:none}}
-/* les vidéos du Fil : même taille, l'étiquette Démo sous chacune (jamais par-dessus) */
-.v3,.v6{list-style:none}
-.cap .ft{margin-top:0;font:600 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
-.cap .ft+p:not(.vt){margin-top:4px;font-size:15px}
-@media (min-width:861px){.vrail.v3{grid-template-columns:repeat(3,minmax(0,1fr))}.vrail.v6{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:48px}}
-/* au téléphone, les boutons longs (« Recevoir un exemple pour mon commerce ») passent sur deux lignes au lieu d'être coupés */
-@media (max-width:480px){main .act .btn{white-space:normal;max-width:100%}main .act .btn span{white-space:normal;text-align:left;line-height:1.25}}
-/* v24 · Le Fil (remplace « La Pub ») : le contenu publié chaque matin, en abonnement. Brief page-vente § 4.
-   Le premier écran au matin (crème), la matinée dans le téléphone, ce qui sort sur le fil, ce que vous faites et ne faites pas,
-   vous gardez la main, ce qu'on ne promet pas, le prix, les questions, l'encre pour finir. */
-.f-hero{padding-block:clamp(64px,9vw,140px) clamp(40px,5vw,72px)}
-.f-hero h1{font-size:clamp(44px,6.2vw,96px);line-height:1.02;letter-spacing:-.04em;max-width:13ch;margin-top:18px}
-.f-hero .lede{margin-top:clamp(20px,2.4vw,32px);font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:26em}
-.f-hero .act{margin-top:clamp(28px,3.4vw,44px);align-items:center;gap:22px}
-.f-sec h2{font-size:clamp(32px,4.4vw,64px);letter-spacing:-.035em;line-height:1.04;max-width:16ch}
-.f-sec .lede{margin-top:18px;max-width:32em}
-.f-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(28px,5vw,80px);margin-top:clamp(36px,5vw,64px)}
-.f-two>div{border-top:1px solid var(--ink);padding-top:20px}
-.f-two h3{font-size:clamp(20px,1.8vw,24px);letter-spacing:-.015em}
-.f-two ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
-.f-two li{font-size:clamp(17px,1.5vw,20px);color:var(--soft)}
-.f-no li{text-decoration:line-through;text-decoration-color:rgba(17,19,24,.35);text-decoration-thickness:1.5px}
-@media (max-width:760px){.f-two{grid-template-columns:1fr}}
-.l4{list-style:none;margin:clamp(32px,4vw,48px) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 48px;max-width:900px}
-.l4 li{font-size:19px;padding-left:28px;position:relative}
-.l4 li b{display:block}.l4 li span{display:block;color:var(--soft);font-size:17px;margin-top:2px}
-.l4 li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:7px;border:solid var(--klein);border-width:0 0 2px 2px;transform:rotate(-45deg)}
-@media (max-width:760px){.l4{grid-template-columns:1fr}.l4 li{font-size:17px}}
-.f-px{margin-top:clamp(28px,3vw,40px);font:600 clamp(24px,2.6vw,36px)/1.15 var(--sans);letter-spacing:-.02em}
-.f-px+p{margin-top:12px;color:var(--soft);max-width:34em}
-.g-note{margin-top:24px;font-size:14px;color:var(--muted);max-width:44em}
-.end h2{font-size:clamp(36px,5vw,72px);letter-spacing:-.035em;line-height:1.04;max-width:14ch}
-.end .act{margin-top:clamp(28px,3.4vw,44px)}
-.end :focus-visible{outline-color:#fff}

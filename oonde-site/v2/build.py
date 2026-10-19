@@ -37,12 +37,22 @@ FIL = {'cadence': 'chaque matin', 'Cadence': 'Chaque matin',
        'veille': 'La veille, 18 h', 'veille_c': '18:00', 'heure': '7 h 30', 'heure_c': '7:30', 'jour_c': '12:00',
        'prix': (f"Dès {chf(FIL_DES)} /mois. Sans engagement." if FIL_DES else 'Prix par écrit sous 48 h. Sans engagement.')}
 def qr(url):
-    """Le code QR en SVG inline (ordinateur seulement) : on scanne avec son téléphone, WhatsApp s'ouvre avec le message."""
-    import qrcode, qrcode.image.svg
-    im = qrcode.make(url, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=2)
-    svg = im.to_string(encoding='unicode')
-    svg = re.sub(r'<\?xml[^>]*>', '', svg).replace('<svg ', '<svg width="96" height="96" aria-hidden="true" focusable="false" ', 1)
-    return svg.replace('fill="#000000"', 'fill="#111318"')
+    """Le code QR (ordinateur seulement) : on scanne avec son téléphone, WhatsApp s'ouvre avec le message.
+    v25 : un fichier SVG à part (img/qr-*.svg), chargé paresseusement et jamais sur téléphone (bloc masqué) ;
+    le dessin en traits par rangée (≈ 4 fois plus léger que le chemin module par module de qrcode)."""
+    import qrcode
+    q = qrcode.QRCode(border=2); q.add_data(url); q.make(fit=True); m = q.get_matrix(); n = len(m)
+    d = []
+    for y, row in enumerate(m):
+        x = 0
+        while x < n:
+            if row[x]:
+                w = 1
+                while x + w < n and row[x + w]: w += 1
+                d.append(f'M{x} {y}.5h{w}'); x += w
+            else: x += 1
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {n} {n}" width="{n * 4}" height="{n * 4}" shape-rendering="crispEdges">'
+            f'<path stroke="#111318" d="{"".join(d)}"/></svg>')
 import datetime
 # Mesure d'audience : Umami Cloud (gratuit, sans cookie). Collez l'identifiant du site (Website ID) dans umami.txt et relancez :
 # sans ce fichier, le site ne charge aucun outil de mesure et la page de confidentialité le dit.
@@ -104,9 +114,18 @@ FV = {
 FV = {k: v for k, v in FV.items() if (D / f'{v[0]}.mp4').exists()}
 SND_SVG = '<svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>'
 PLAY_SVG = '<span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span>'
+def avif(jpg):
+    """v25 : l'affiche d'une vidéo aussi en AVIF (≈ deux fois plus légère), à côté du JPG, gardé en secours ; faite une fois, puis gardée dans les sources."""
+    a = D / (jpg[:-4] + '.avif')
+    if not a.exists() or a.stat().st_mtime < (D / jpg).stat().st_mtime:
+        from PIL import Image
+        Image.open(D / jpg).convert('RGB').save(a, 'AVIF', quality=55)
+    return jpg[:-4] + '.avif'
+def poster(jpg, attrs):
+    return f'<picture><source type="image/avif" srcset="{avif(jpg)}"><img src="{jpg}" {attrs}></picture>'
 def vbox(src, alt, m):
-    return (f'<div class="v" data-v="{src}.mp4"><img src="{src}.jpg" width="720" height="1280" alt="Démo : {alt}" loading="lazy" decoding="async">'
-            f'<button type="button" class="vp" aria-label="Lire la démo : {m}" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%">{PLAY_SVG}</button>'
+    return (f'<div class="v" data-v="{src}.mp4">' + poster(f'{src}.jpg', f'width="720" height="1280" alt="Démo : {alt}" loading="lazy" decoding="async"')
+            + f'<button type="button" class="vp" aria-label="Lire la démo : {m}" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%">{PLAY_SVG}</button>'
             f'<button type="button" class="snd" aria-label="Son de la démo : {m}" aria-pressed="false">{SND_SVG}<span>Son</span></button></div>')
 def ftile(k, line=True):
     src, t, d, tags, alt = FV[k]
@@ -116,7 +135,11 @@ FIL_HOME = '<ul class="vrail v3">' + ''.join(ftile(k, False) for k in ('plat', '
 FIL_FORMATS = '<ul class="vrail v6">' + ''.join(ftile(k) for k in FV) + '</ul>'
 
 def fill(s, fonts, links):
+    # v25 : le CSS commun (base.css) et le script commun (core.js) dans leurs propres blocs : en production, ce sont deux fichiers
+    # à empreinte partagés par toutes les pages (en cache dès la première), au lieu d'être recopiés dans le fichier de chaque page.
+    s = s.replace('<style>\n{{INC:base.css}}\n', '<style>\n{{INC:base.css}}\n</style>\n<style>\n', 1).replace('<script>\n{{INC:core.js}}\n', '<script>\n{{INC:core.js}}\n</script>\n<script>\n', 1)
     s = inc(s)
+    s = re.sub(r'\{\{POSTER:([^|}]+)\|([^}]*)\}\}', lambda m: poster(m.group(1), m.group(2)), s)   # v25 : une affiche de vidéo écrite à la main
     s = re.sub(r'\{\{NAV:(\w+)\}\}', lambda m: nav(m.group(1)), s)
     s = s.replace('{{FIL_HOME}}', FIL_HOME).replace('{{FIL_FORMATS}}', FIL_FORMATS)
     s = re.sub(r'\{\{FIL:(\w+)\}\}', lambda m: FIL[m.group(1)], s)
@@ -227,8 +250,10 @@ def csp_hashes(html):
     return {"'sha256-" + base64.b64encode(hashlib.sha256(m.encode()).digest()).decode() + "'"
             for m in re.findall(r'<script(?![^>]*application/ld\+json)[^>]*>(.*?)</script>', html, flags=re.S)}
 
+MISSING = []
 layout = (D / 'legal-layout.html').read_text()
-QR_WA, QR_IMM = qr(WA), qr(WA_IMM)
+QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-wa.svg': qr(WA)}   # v25 : les codes QR (bas des pages, ordinateur)
+QR_IMM, QR_WA = ('<img src="img/qr-%s.svg" width="84" height="84" alt="" loading="lazy" decoding="async">' % k for k in ('imm', 'wa'))
 docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'fil': (D / 'fil.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
@@ -280,14 +305,17 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         whole[k] = built[k]   # la page entière (avec ses scripts) : c'est elle qu'on lit pour savoir quels fichiers copier
         if wrap: built[k] = externalize(built[k], o, k)
         (o / f'{k}.html').write_text(built[k])
-    (o / 'img').mkdir(exist_ok=True)   # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
+    (o / 'img').mkdir(exist_ok=True)
+    for f, svg in QRS.items(): (o / f).write_text(svg)
+    # seulement les images réellement citées (reel.*, trattoria.jpg, greves-1/2/3.jpg ne partent plus)
     html = ''.join(whole.values())
     for f in sorted(set(re.findall(r'img/[\w./-]+\.(?:jpe?g|png|webp|avif|mp4)', html))):
-        if os.environ.get('E3TEST') and not (D / f).exists(): print('manque', f); continue   # rendu 3D en cours
+        if not (D / f).exists():   # v25 : une image citée mais absente des sources arrête la construction (plus bas)
+            MISSING.append((out, 'source', f)); continue
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
         big = f.replace('.jpg', '-l.jpg')   # version 1600 px des photos de métier, demandée par l'aperçu en grand
         if f.startswith('img/t-') and (D / big).exists(): shutil.copy2(D / big, o / big)
-    for f in sorted(set(re.findall(r'video/[\w./-]+\.(?:mp4|jpg)', html))):   # les vidéos (video/fil/, video/demos/) et leurs affiches
+    for f in sorted(set(re.findall(r'video/[\w./-]+\.(?:mp4|jpg|avif)', html))):   # les vidéos (video/fil/, video/demos/) et leurs affiches
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
@@ -334,8 +362,10 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'fil', 'telephone', 'assistant', 'visite')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
-        for f in set(re.findall(r'(?:src|href|srcset|poster|data-src)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)):
+        for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):
             if '${' in f or f.startswith(('/', 'mailto', 'tel')) or f in ('./', '') or (out == 'preview' and f in ('favicon.ico', 'favicon.svg', 'apple-touch-icon.png')): continue   # l'aperçu se passe des icônes
             f = f.split(' ')[0]
-            if not ((o / f).exists() or (o / (f + '.html')).exists()): print('MANQUE', out, k, f)
+            if not ((o / f).exists() or (o / (f + '.html')).exists()): MISSING.append((out, k, f))
+if MISSING:   # v25 : un fichier cité mais absent (supprimé par erreur ?) : la construction échoue
+    raise SystemExit('MANQUE :\n' + '\n'.join(f'  {o} {k} {f}' for o, k, f in sorted(set(MISSING))))
 print('ok', sorted(p.name for p in (D / 'dist').iterdir()))

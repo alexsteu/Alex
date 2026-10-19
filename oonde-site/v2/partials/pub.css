@@ -4,7 +4,7 @@
 .v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
 .v img,.v video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .v video{opacity:0;transition:opacity .25s}.v.live video{opacity:1}
-.v .snd{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:0;cursor:pointer}
+.v .snd{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;border:0;cursor:pointer}
 .v .snd svg{width:18px;height:18px}.v .snd .on{display:none}.v.sound .snd .on{display:block}.v.sound .snd .off{display:none}
 .v .pl{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:999px;background:rgba(255,255,255,.88);display:grid;place-items:center;transition:opacity .2s}
 .v .pl svg{width:20px;height:20px;margin-left:3px;color:#111}.v.on .pl{opacity:0}
@@ -18,12 +18,8 @@
 .vd .v .snd{width:auto;padding:0 14px 0 12px;gap:6px;display:flex;align-items:center;font:600 14px var(--sans)}.vd .v .snd span{display:inline}
 .vt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
 .dtag.ia{background:rgba(43,63,255,.08);color:var(--klein)}
-.vlead{display:none}
 .vrail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2*var(--pad) - 16px)/1.6);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;list-style:none;margin:clamp(32px,4vw,48px) calc(-1*var(--pad)) 0;padding:0 var(--pad) 8px;scroll-padding-inline:var(--pad)}
 .vrail::-webkit-scrollbar{display:none}.vrail li{scroll-snap-align:start;min-width:0}
 @media (min-width:861px){
  .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
- .vd .vlead{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:clamp(24px,3vw,48px);align-items:end;margin-top:clamp(32px,4vw,48px)}
- .vd .vlead .cap{margin:0 0 8px}.vd .vlead .cap p:last-child{font-size:clamp(18px,1.6vw,22px)}
- .vd .vrail.has-lead .is-lead{display:none}
 }

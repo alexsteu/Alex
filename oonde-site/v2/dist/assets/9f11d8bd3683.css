@@ -1,0 +1,95 @@
+
+/* La Vitrine : l'essai simple. Le titre et le champ à gauche, l'aperçu à droite (sous le champ, sur téléphone). */
+.hero{position:relative;overflow:hidden}
+.hero-in{position:relative;display:grid;gap:22px 24px;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center}
+.h-txt{grid-column:1/7;display:flex;flex-direction:column;gap:22px}
+.h-prev{grid-column:7/13;position:relative;padding:0 0 46px}
+.kick{margin:0}
+.kick span{white-space:nowrap}
+.h-title{margin:0;max-width:13ch;font-size:clamp(46px,5.2vw,80px)}
+.h-title .w{display:inline-block}
+.js .hero:not(.on) .h-title .w{opacity:0;transform:translateY(.35em)}
+.js .hero.on .h-title .w{opacity:1;transform:none;transition:opacity .5s,transform .7s cubic-bezier(.16,1,.3,1)}
+.js .hero.on .h-title .w:nth-child(2){transition-delay:.06s}.js .hero.on .h-title .w:nth-child(3){transition-delay:.12s}
+.js .hero:not(.end) .h-fade:not(.f-name):not(.f-act){opacity:0;transform:translateY(10px)}
+.js .hero.end .h-fade{opacity:1;transform:none;transition:opacity .45s,transform .45s cubic-bezier(.16,1,.3,1)}
+.h-sub{font-size:clamp(17px,1.35vw,19px);color:var(--soft);max-width:31em}
+.prep{color:var(--klein);font-weight:600;margin-bottom:8px}
+.f-name .lab{color:var(--ink);font-weight:600;font-size:15px}
+.f-name .field{min-height:60px;font-size:20px;border:1.5px solid var(--ink);padding:14px 16px}
+.f-name .field::placeholder{color:#8A8F96}
+.f-act .chips{gap:8px}
+#bMore{width:auto;max-width:11em}
+.h-go{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.h-go .btn{min-height:56px;font-size:16.5px;padding-inline:24px}
+.h-go .micro a{color:var(--ink)}
+.h-go .micro b{color:var(--ink);font-weight:600}
+@media (min-width:901px) and (max-height:800px){.h-title{font-size:clamp(40px,4.2vw,60px)}.h-txt{gap:16px}}
+/* L'aperçu : le site sur ordinateur, et le même sur téléphone, posé devant */
+.pv{position:relative}
+.pv .frame{width:100%}
+.pv .phone{position:absolute;right:-6px;bottom:-46px;width:clamp(150px,27%,190px);border-radius:28px;padding:6px}
+.pv .phone .screen{border-radius:22px}
+.pv-opts{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 24px;margin-top:22px;padding-right:clamp(150px,30%,210px)}
+.pv-opts .lab{margin-bottom:8px}
+#sTown{min-height:44px;border-radius:8px;border:1px solid var(--line);background-color:var(--card);font-weight:500;font-size:15px;padding:9px 14px;cursor:pointer}
+.pv{position:relative}.pv-tag{position:absolute;z-index:3;top:-14px;left:50%;translate:-50% 0;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:#E9E9E6;color:var(--soft)}
+.pv-note{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px;font-size:14px;color:var(--muted)}
+.pv-note a{color:var(--ink);font-weight:600;text-underline-offset:3px}
+html:not(.js) .tool-js{display:none}
+@media (max-width:900px){
+ .hero-in{display:flex;flex-direction:column;align-items:stretch;gap:18px}
+ .h-txt,.h-prev{display:contents}
+ .kick{order:1}.h-title{order:2}.h-sub{order:3}.f-name{order:4}.f-act{order:5}.pv{order:6}.pv-opts{order:7}.h-go{order:8}.pv-note{order:9}
+ .kick>span{display:block}
+ .h-title{font-size:clamp(40px,11vw,60px);max-width:10ch}
+ .f-act .chips>*{flex:0 1 auto}
+ .pv{margin:4px auto 0;width:100%}
+ .pv .frame{display:none}
+ .pv .phone{position:relative;right:auto;bottom:auto;margin:0 auto;width:250px;height:330px;aspect-ratio:auto;border-radius:30px 30px 0 0;padding:7px 7px 0;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent);box-shadow:none}
+ .pv .phone .screen{border-radius:24px 24px 0 0}
+ .pv-opts{padding-right:0;margin-top:-8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}
+ #sTown{width:100%}
+ .h-go .btn{width:100%;white-space:normal;line-height:1.2;text-align:center;padding-block:12px}
+ .f-act .chips button,.f-act .chips select{padding:8px 11px;font-size:14.5px;min-height:42px}
+ .pv-note{margin-top:0}
+ #bigLink{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);text-decoration:none}
+}
+
+/* Relié à Google : la fiche qu'on voit sur la carte, avec le bouton Site Web qui mène au site */
+.gg{display:grid;grid-template-columns:minmax(0,1fr);gap:40px 24px;align-items:center}
+@media (min-width:901px){.gg{grid-template-columns:repeat(12,minmax(0,1fr))}.gg>.txt{grid-column:1/6}.gg>.maps{grid-column:7/13}}
+.gg .txt{display:flex;flex-direction:column;gap:18px;color:var(--soft)}
+.gg .txt h2{color:var(--ink)}
+.gg .q{font:500 15px var(--mono);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap}
+.gg .ig{border-left:2px solid var(--klein);padding-left:14px;color:var(--ink);font-weight:500}
+.maps{position:relative;max-width:520px;width:100%;justify-self:center}
+.m-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 60px -40px rgba(17,19,24,.4);overflow:hidden}
+.m-search{display:flex;align-items:center;gap:10px;margin:12px;padding:10px 14px;border-radius:99px;background:#fff;box-shadow:0 2px 8px rgba(17,19,24,.14);font-size:15px;position:relative;z-index:2}
+.m-search svg{flex:none;color:#5C6169}
+.m-map{position:relative;height:190px;margin-top:-58px;background:#E9ECE6;overflow:hidden}
+.m-map svg{position:absolute;inset:0;width:100%;height:100%}
+.m-info{padding:18px 20px 20px}
+.m-info b{display:block;font-size:22px;letter-spacing:-.02em}
+.m-info .m-cat{font-size:14.5px;color:var(--muted);margin-top:2px}
+.m-info .m-open{font-size:14.5px;margin-top:6px}.m-open i{font-style:normal;color:#137333;font-weight:600}
+.m-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.m-btns span{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:8px 13px;color:#1A5FB4}
+.m-btns span.web{background:var(--klein);border-color:var(--klein);color:#fff;box-shadow:0 0 0 4px rgba(32,56,236,.16)}
+.m-tag{position:absolute;top:-12px;right:16px;z-index:3;font:500 11px var(--mono);letter-spacing:.12em;background:var(--ink);color:#fff;border-radius:99px;padding:5px 10px}
+.m-arrow{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:14px;color:var(--muted)}
+.m-arrow i{display:block;height:1px;width:40px;background:var(--klein)}
+
+/* Prix */
+.p-act{margin-top:32px}
+/* v20 · « Apple minimal » : le téléphone seul et grand ; Google en un écran ; le prix centré */
+.pv .frame{display:none}
+@media (min-width:861px){.h-prev{padding:0}.pv{display:flex;justify-content:center}.pv .phone{position:relative;right:auto;bottom:auto;width:min(340px,80%);border-radius:44px;padding:9px;box-shadow:0 50px 100px -40px rgba(17,19,24,.55)}.pv .phone .screen{border-radius:36px}.pv-opts{padding-right:0;justify-content:center}.pv-note{justify-content:center}}
+.f-act .chips button{border-color:transparent;background:rgba(17,19,24,.06);border-radius:999px}
+.f-act .chips button[aria-checked="true"]{background:var(--ink);color:#fff}
+.gg .q{border:0;background:rgba(17,19,24,.06)}
+.pz{display:block;font-size:clamp(72px,10vw,144px);letter-spacing:-.05em;line-height:.95;margin-bottom:12px}
+#vitrine-prix h2{max-width:18ch}
+.l4c{display:inline-grid;text-align:left;margin-top:36px}
+.g3c{justify-content:center}
+#vitrine-prix .act{justify-content:center;margin-top:40px}

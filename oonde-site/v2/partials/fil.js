@@ -10,4 +10,5 @@
   const upd=()=>{raf=0;const r=fm.getBoundingClientRect(),p=(innerHeight*.6-r.top)/Math.max(1,r.height);set(p<.34?0:p<.68?1:2)};
   const on=()=>{if(!raf)raf=requestAnimationFrame(upd)};
   new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis){addEventListener('scroll',on,{passive:true});upd();play()}else{removeEventListener('scroll',on);if(v&&v.src)v.pause()}},{rootMargin:'0px 0px -10% 0px'}).observe(fm);
+  document.addEventListener('visibilitychange',()=>{if(!v||!v.src)return;if(document.hidden)v.pause();else if(vis)play()});   /* v25 : onglet caché, la vidéo attend */
   set(0)})})();
