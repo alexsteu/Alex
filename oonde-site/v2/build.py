@@ -3,12 +3,20 @@ import os, json, pathlib, re, shutil, urllib.parse, hashlib, base64
 D = pathlib.Path(__file__).parent
 FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
+# v23 · LES PRIX, tous ici (rien d'autre à changer) : les trois paliers par mois, la mise en ligne, l'engagement. Recommandation du 19 oct. 2026,
+# pas encore confirmée par Alexandre : pour l'Entrée 3D à 39.–, changer seulement 'e3' (la page, la FAQ, les conditions et le JSON-LD suivent).
+OFFRES = {'vit': 29, 'e3': 49, 'reel': 149, 'setup': 190, 'reel_setup': 690, 'mois': 12}
+def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
+PX = {'vit_m': chf(OFFRES['vit']), 'e3_m': chf(OFFRES['e3']), 'reel_m': chf(OFFRES['reel']), 'setup': chf(OFFRES['setup']), 'reel_setup': chf(OFFRES['reel_setup']),
+      'engage': f"{OFFRES['mois']} mois", 'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}",
+      'vit_n': str(OFFRES['vit']), 'e3_n': str(OFFRES['e3']), 'reel_n': str(OFFRES['reel']), 'setup_n': str(OFFRES['setup']), 'reel_setup_n': str(OFFRES['reel_setup']), 'mois_n': str(OFFRES['mois'])}
 def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 WA = walink(HELLO + " J’aimerais recevoir ma maquette offerte.\nMon commerce et ma commune : ")
 WA_PASSE = walink(HELLO + " J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ")
 WA_IMM = walink(HELLO + " J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ")
 WA_ASSIST = walink(HELLO + " L’assistant m’intéresse.\nMon commerce et ma commune : ")
+WA_TEL = walink(HELLO + " Le téléphone qui répond quand on ne peut pas décrocher m’intéresse.\nMon commerce et ma commune : ")
 WA_VIDS = walink(HELLO + " J’aimerais une pub pour mon commerce.\nMon commerce et ma commune : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
 WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon lieu.\nType de lieu, commune et le meilleur moment : ")
@@ -61,9 +69,9 @@ def nav(cur):
     """{{NAV:page}} : la navigation du haut, la même partout (v20 : La Pub au premier niveau, à côté de La Vitrine)."""
     H = '' if cur == 'index' else '{{HOME}}'
     a = lambda k: ' aria-current="page"' if k == cur else ''
-    sub = cur in ('assistant', 'visite')
+    sub = cur in ('assistant', 'visite', 'telephone')
     return (f'<a href="{H}#choix">La démo</a><a href="{H}#prix">Prix</a><a class="opt" href="{{{{VITRINE}}}}"{a("vitrine")}>La Vitrine</a><a class="opt" href="{{{{PUB}}}}"{a("pub")}>La Pub</a>'
-            f'<span class="nav-sub opt"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>'
+            f'<span class="nav-sub opt"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="{{{{TELEPHONE}}}}"{a("telephone")}>Le téléphone</a><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>'
             f'<a class="opt2" href="{H}#questions">Questions</a>')
 
 # La Pub : les exemples (v20, jury r1 § 4). Fichiers web 720×1280 dans video/pub/ (la partie pub seule, sans l'appel Instagram de fin).
@@ -80,13 +88,38 @@ SND = '<svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 PLAY = '<span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span>'
 REELS_HTML = '\n  '.join(f'<li><div class="v" data-v="video/pub/{k}.mp4"><img src="video/pub/{k}.jpg" width="720" height="1280" alt="Démo : {alt}" loading="lazy" decoding="async"><button type="button" class="vp" aria-label="Lire la pub : {m}" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%">{PLAY}</button><button type="button" class="snd" aria-label="Son de la pub : {m}" aria-pressed="false">{SND}</button></div><div class="cap"><span class="mono">{m}</span><p>{c}</p></div></li>' for k, m, c, alt in REELS)
 
+# v23 · Les vidéos qu'on vend : UNE démo par service, DA « atelier » (reels/da-exemples). Fichiers web 720 px, H.264, faststart, dans video/demos/
+# (<clé>-9x16.mp4 + .jpg ; la version 16:9, si elle existe, ouvre la rangée à l'ordinateur). Les noms restent stables : la version finale remplace le fichier.
+# Pour ajouter une démo (02 « Tournage au téléphone », 05 « Personnage remplacé ») : déposer ses fichiers et décommenter sa ligne. Sans fichier, la ligne est ignorée.
+VIDEOS = [  # (clé, n° atelier, service, étiquette IA, ce que montre la démo, texte alternatif)
+    ('demo01-motion', '01', 'Motion design', 'voix IA', 'Un message animé, texte et voix, sans tournage.', 'Cycles Ravenelle, un atelier vélo inventé : des mots qui bougent, un vélo dessiné, puis le nom du commerce.'),
+    # ('demo02-telephone', '02', 'Tournage au téléphone', 'voix IA', 'Une prise brute de votre commerce devient un Reel rythmé.', ''),
+    ('demo03-produit', '03', 'Produit qui prend vie', 'voix et images IA', 'La photo de votre produit se met à bouger.', 'Un croissant, un bouquet, un flacon, un café et une bougie, inventés : chaque photo se met à bouger.'),
+    ('demo04-angles', '04', 'Angles infinis', 'voix et images IA', 'Une seule prise devient quatre plans de caméra.', 'Une tasse de café filmée une fois, puis vue de dessus, en macro, au ras de la table et de dos.'),
+    # ('demo05-personnage', '05', 'Personnage remplacé', 'voix et images IA', 'Une personne filmée devient un autre personnage, même geste.', ''),
+    ('demo06-pub-en-un-tap', '06', 'Pub en un tap', 'voix IA', 'Du choix de vos photos à la pub finie.', 'Une appli inventée : on choisit Salon, on coche des photos, et la pub du Salon Mirabelle, un salon fictif, se crée.'),
+]
+VIDEOS = [x for x in VIDEOS if (D / 'video' / 'demos' / f'{x[0]}-9x16.mp4').exists()]
+SND_SVG = '<svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>'
+PLAY_SVG = '<span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span>'
+def vbox(k, r, w, h, alt, m, extra=''):
+    return (f'<div class="v{extra}" data-v="video/demos/{k}-{r}.mp4"><img src="video/demos/{k}-{r}.jpg" width="{w}" height="{h}" alt="Démo : {alt}" loading="lazy" decoding="async">'
+            f'<button type="button" class="vp" aria-label="Lire la démo : {m}" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%">{PLAY_SVG}</button>'
+            f'<button type="button" class="snd" aria-label="Son de la démo : {m}" aria-pressed="false">{SND_SVG}<span>Son</span></button></div>')
+def vcap(n, m, ia, c): return f'<div class="cap"><span class="mono">Atelier {n} · {m}</span><p class="vt"><span class="dtag">Démo</span> <span class="dtag ia">{ia}</span></p><p>{c}</p></div>'
+WIDE = [x for x in VIDEOS if (D / 'video' / 'demos' / f'{x[0]}-16x9.mp4').exists()][:1]
+VIDEOS_HTML = (''.join(f'<div class="vlead">{vbox(k, "16x9", 1280, 720, alt, m, " w")}{vcap(n, m, ia, c)}</div>' for k, n, m, ia, c, alt in WIDE)
+    + '<ul class="vrail' + (' has-lead' if WIDE else '') + '">' + ''.join(f'<li{" class=\"is-lead\"" if WIDE and k == WIDE[0][0] else ""}>{vbox(k, "9x16", 720, 1280, alt, m)}{vcap(n, m, ia, c)}</li>' for k, n, m, ia, c, alt in VIDEOS) + '</ul>')
+
 def fill(s, fonts, links):
     s = inc(s)
     s = re.sub(r'\{\{NAV:(\w+)\}\}', lambda m: nav(m.group(1)), s)
     s = s.replace('{{REELS}}', REELS_HTML)
+    s = s.replace('{{VIDEOS}}', VIDEOS_HTML)
+    s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
     for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_VIDS}}', WA_VIDS), ('{{WA_VID}}', WA_VID), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_VIDS}}', WA_VIDS), ('{{WA_TEL}}', WA_TEL), ('{{WA_VID}}', WA_VID), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
                  ('{{QR_WA}}', QR_WA), ('{{QR_IMM}}', QR_IMM), ('{{CAL}}', CAL)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)
@@ -192,7 +225,7 @@ def csp_hashes(html):
 
 layout = (D / 'legal-layout.html').read_text()
 QR_WA, QR_IMM = qr(WA), qr(WA_IMM)
-docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'pub': (D / 'pub.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'pub': (D / 'pub.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -200,8 +233,8 @@ for k, (title, desc, cur) in PAGES.items():
     docs[k] = s
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{PUB}}': 'pub'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{PUB}}': 'pub.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{PUB}}': 'pub', '{{TELEPHONE}}': 'telephone'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{PUB}}': 'pub.html', '{{TELEPHONE}}': 'telephone.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     # v22 : les paquets d'images de l'accueil, avant les pages : E3M (nom logique → fichiers) est écrit dans la page.
@@ -237,7 +270,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         s = fill(s, fonts, LINKS[out]).replace('{{E3M}}', E3MJ).replace('{{E3PRE}}', E3PRE)
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'w' / k2 / 'blur.webp').read_bytes()).decode())
-        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'pub'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'pub', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         whole[k] = built[k]   # la page entière (avec ses scripts) : c'est elle qu'on lit pour savoir quels fichiers copier
@@ -294,7 +327,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
         (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/videos /pub 301\n/videos.html /pub 301\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'visite', 'assistant', 'pub')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'visite', 'telephone', 'assistant', 'pub')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)):

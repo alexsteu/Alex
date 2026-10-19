@@ -18,6 +18,7 @@ const MSG={
  imm:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
  e3:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
  assist:()=>HELLO+' L’assistant m’intéresse.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' Le téléphone qui répond quand on ne peut pas décrocher m’intéresse.\nMon commerce et ma commune : ',
  vids:()=>HELLO+' J’aimerais une pub pour mon commerce.\nMon commerce et ma commune : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',

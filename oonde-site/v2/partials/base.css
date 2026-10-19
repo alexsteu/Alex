@@ -163,7 +163,7 @@ main{padding-top:var(--hh)}
 .fview>.tpl.sw,.screen>.tpl.sw{animation:sw .18s var(--ease)}
 @keyframes sw{from{opacity:.4}}
 
-/* Prix : un chemin dans le temps (0.– aujourd'hui, 490.– si elle vous plaît, 20.– ensuite) */
+/* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
 .oname{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 16px}
 .oname b{font-size:clamp(21px,2vw,24px);font-weight:600;letter-spacing:-.02em}
 .oname span{color:var(--muted);font:500 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}

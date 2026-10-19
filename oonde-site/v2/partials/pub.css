@@ -11,3 +11,19 @@
 .cap{margin-top:16px}
 .cap .mono{font-size:11px;letter-spacing:.14em;display:block}
 .cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
+/* v23 · les démos de nos services vidéo (accueil, La Pub) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
+   Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
+.v.w{aspect-ratio:16/9}
+.v .snd span{display:none}
+.vd .v .snd{width:auto;padding:0 14px 0 12px;gap:6px;display:flex;align-items:center;font:600 14px var(--sans)}.vd .v .snd span{display:inline}
+.vt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
+.dtag.ia{background:rgba(43,63,255,.08);color:var(--klein)}
+.vlead{display:none}
+.vrail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2*var(--pad) - 16px)/1.6);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;list-style:none;margin:clamp(32px,4vw,48px) calc(-1*var(--pad)) 0;padding:0 var(--pad) 8px;scroll-padding-inline:var(--pad)}
+.vrail::-webkit-scrollbar{display:none}.vrail li{scroll-snap-align:start;min-width:0}
+@media (min-width:861px){
+ .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
+ .vd .vlead{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:clamp(24px,3vw,48px);align-items:end;margin-top:clamp(32px,4vw,48px)}
+ .vd .vlead .cap{margin:0 0 8px}.vd .vlead .cap p:last-child{font-size:clamp(18px,1.6vw,22px)}
+ .vd .vrail.has-lead .is-lead{display:none}
+}

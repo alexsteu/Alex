@@ -18,6 +18,7 @@ const MSG={
  imm:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
  e3:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
  assist:()=>HELLO+' L’assistant m’intéresse.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' Le téléphone qui répond quand on ne peut pas décrocher m’intéresse.\nMon commerce et ma commune : ',
  vids:()=>HELLO+' J’aimerais une pub pour mon commerce.\nMon commerce et ma commune : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
@@ -336,20 +337,16 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   went=true;const s=store[set];if(s&&s.ask){const t=FACi(k);s.ask(t<A[set]+40?'H2':'H3')}glideTo(FACi(k));if(s&&!s.film.get(Math.round(FACi(k))))ld.textContent='Vers la façade : '+E3[k].lab+'…'}
  const rwall=$('rWall');function wall(){if(rwall&&E3[met])e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici')}
  /* le rappel, aux étapes 2 et 3 : « Coiffure · changer », « Café du Lac · Coiffure · modifier » */
- function recall(){const m=E3[met]?E3[met].lab:'';const nx=stop.querySelector('.r-next');if(nx){nx.setAttribute('aria-label','Suivant : '+m);requestAnimationFrame(()=>{const w=nx.offsetWidth;if(w)stop.style.setProperty('--nx',(w+2)+'px')})}u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
+ function recall(){const m=E3[met]?E3[met].lab:'';u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
  metier(E3S.st.sc,false);
- /* ——— la carte, une étape à la fois : 1 le métier, 2 le nom, 3 « Entrer » ——— */
- let step=chosen?3:1,segT=0,segMe=0,segU=false;
- function go(n,focus){if(n!==1||LIVE&&armed)thumb();if(n!==2&&document.activeElement===nameIn){kbY=-1;nameIn.blur()}step=n;stop.dataset.step=n;const dots=stop.querySelectorAll('.r-dots i');dots.forEach((d,i)=>d.classList.toggle('on',i<n));
-  stop.querySelectorAll('.r-s').forEach(el=>{const on=el.classList.contains('r-s'+n);el.hidden=LIVE&&!on;   /* sans film (mouvement réduit) : les trois étapes à la suite */if(on){el.classList.remove('r-in');void el.offsetWidth;el.classList.add('r-in')}});
-  if(n===1)centre(false);
-  if(focus){const f=n===1?seg.querySelector('[tabindex="0"]'):n===2?nameIn:stop.querySelector('.r-enter');if(f&&(n!==2||!COARSE))f.focus({preventScroll:true});else stop.focus({preventScroll:true})}}
- go(step,false);
- stop.addEventListener('click',e=>{const b=e.target.closest('[data-to],.r-next,.r-pass');if(!b)return;e.preventDefault();
-  if(b.classList.contains('r-next')){if(!chosen)metier(met,true);go(2,true)}else if(b.classList.contains('r-pass')){rel();go(3,true)}else go(+b.dataset.to,true)});
- /* les tuiles : un toucher choisit (et centre la tuile) ; toucher la tuile déjà choisie passe au nom. Au doigt, faire défiler le carrousel
+ /* ——— v23 : la carte de l'arrêt, une seule : le nom (il s'allume sur l'enseigne) et le métier (la caméra glisse jusqu'à sa façade, le nom la suit),
+    « Entrer » ; faire défiler, ensuite, montre le site de démo de ce métier ——— */
+ let segT=0,segMe=0,segU=false;
+ function go(){if(LIVE&&armed)thumb();centre(false)}
+ go();
+  /* les tuiles : un toucher choisit (et centre la tuile) ; toucher la tuile déjà choisie passe au nom. Au doigt, faire défiler le carrousel
     choisit la tuile qui s'arrête au centre (le glissement la suit). Au clavier : ← → (role=radiogroup). */
- seg.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;if(chosen&&b.dataset.m===met){if(went||!LIVE)go(2,true);else goMet(met);return}metier(b.dataset.m,true);centre(true)});
+ seg.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;if(chosen&&b.dataset.m===met){if(!went&&LIVE)goMet(met);return}metier(b.dataset.m,true);centre(true)});
  seg.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(e.key))return;e.preventDefault();const bs=tiles(),i=Math.max(0,bs.findIndex(b=>b.dataset.m===met)),n=e.key==='Home'?bs[0]:e.key==='End'?bs[bs.length-1]:bs[(i+(/Right|Down/.test(e.key)?1:bs.length-1))%bs.length];metier(n.dataset.m,true);n.focus();centre(true)});
  function centre(sm){const b=seg.querySelector(`[data-m="${met}"]`);if(!b||seg.scrollWidth<=seg.clientWidth+2)return;const x=Math.min(b.offsetLeft-padL(),seg.scrollWidth-seg.clientWidth);   /* v22.1 : la tuile choisie à gauche du carrousel (pas de vide au départ) */segMe=performance.now();seg.scrollTo({left:x,behavior:sm&&!RM?'smooth':'instant'})}
  seg.addEventListener('scroll',()=>{if(!segU||performance.now()-segMe<700)return;clearTimeout(segT);segT=setTimeout(()=>{const c=seg.scrollLeft+padL(),mx=seg.scrollWidth-seg.clientWidth,cur=seg.querySelector(`[data-m="${met}"]`);
@@ -359,7 +356,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  for(const ev of ['pointerdown','touchstart','wheel','focusin'])seg.addEventListener(ev,()=>{if(ev!=='focusin')segU=true;more()},{passive:true});   /* le carrousel ne choisit qu'après un geste sur lui (pas l'aimantation du navigateur au chargement) */
  document.addEventListener('oonde-e3',e=>{if(e.detail.sc!==met)metier(e.detail.sc,false);if(e.detail.name&&!nameIn.value){nameIn.value=e.detail.name;named(e.detail.name,false)}wall()});
  u.querySelector('.r-enter').addEventListener('click',e=>{e.preventDefault();enter()});
- nameIn.addEventListener('input',()=>named(nameIn.value,true));nameIn.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();nameIn.blur();go(3,true)}});
+ nameIn.addEventListener('input',()=>named(nameIn.value,true));nameIn.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();nameIn.blur()}});
  {const v=E3S.st.name;if(v){nameIn.value=v;named(v,false)}else named('',false)}
  if(document.fonts)document.fonts.ready.then(()=>{fit();wall();dirty=true;tick()});
  /* une image : les deux voisines fondues l'une dans l'autre (si elles sont décodées et à deux images au plus) ; les enseignes, interpolées de même */
@@ -442,7 +439,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* l'arrivée à l'arrêt : l'enseigne pulse deux fois, puis la carte monte (rien n'apparaît avant d'être à l'arrêt) */
  let arrT=0;
  function ui(now){if(!LIVE)return;
-  const h=ss(clamp((.1-pV)/.06,0,1));put(t1,'opacity',h.toFixed(3));flag(t1,'off',pV>.1);{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(document.body,'hero-cta',h>.5&&vis);put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
+  const h=ss(clamp((.1-pV)/.06,0,1));put(t1,'opacity',h.toFixed(3));flag(t1,'off',pV>.1);{const v=h.toFixed(2);if(veil.dataset.hv!==v){veil.dataset.hv=v;veil.style.setProperty('--hv',v)}}flag(u,'intro',pV<.06);   /* v23 : la carte-titre (« Passer l'intro » dessous) ; le WhatsApp de l'en-tête reste visible */put(cue,'opacity',clamp((.03-cP)/.03,0,1).toFixed(2));
   flag(u,'moving',cP>.004);   /* l'affiche vivante s'arrête dès qu'on part */
   const W3=[[.05,.08,.18,.22],[.3,.34,.47,.52]];   /* la première phrase pendant l'approche, la deuxième au début de la marche ; la troisième, une fois la porte passée */
   says.forEach((el,j)=>{const w=W3[j],o=w?fade(...w,pV):mode===2||mode===1&&inOk?fq(.03,.07,.15,.21):0,a0=w?w[0]:.03,b0=w?w[1]:.07,x=w?pV:cQ;put(el,'opacity',o.toFixed(3));put(el,'transform',`translateY(${((1-ss(clamp((x-a0)/(b0-a0),0,1)))*14).toFixed(1)}px)`)});
@@ -458,7 +455,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  /* mouvement réduit : l'image de l'arrêt, et le nom posé sur son enseigne */
  function still(){const s=store[set];if(!s||!s.pins||!poster.naturalWidth)return;const i=HOMEi(),rw=SW,rh=scene.clientHeight,sc=Math.max(rw/poster.naturalWidth,rh/poster.naturalHeight),w=poster.naturalWidth*sc,h=poster.naturalHeight*sc;
   place(pinAt(s,i),{ox:(rw-w)/2,oy:(rh-h)/2,w,h},-1)}
- window.__e3=()=>{const z=ins[inKey()],s=store[set];return{mode,cF:+cF.toFixed(2),cI:+cI.toFixed(2),cP:+cP.toFixed(3),cQ:+cQ.toFixed(3),gate,key:inKey(),z:z&&{req:z.req,got:z.got,bad:!!z.bad,f0:!!z.film.get(0)},w:s&&{req:s.req,got:s.got,n:s.n},vx,went,vg:!!vg,home:HOMEi(),A:A[set],set,step,chosen,nudged,on:stop.classList.contains('on'),tg:+frameOf(Math.min(Math.max(cP,0),HOLD[1])).toFixed(2),wt:wOn,pV:+pV.toFixed(3),ok:s&&Object.keys(s.ok).join()}};   /* état, pour les tests */
+ window.__e3=()=>{const z=ins[inKey()],s=store[set];return{mode,cF:+cF.toFixed(2),cI:+cI.toFixed(2),cP:+cP.toFixed(3),cQ:+cQ.toFixed(3),gate,key:inKey(),z:z&&{req:z.req,got:z.got,bad:!!z.bad,f0:!!z.film.get(0)},w:s&&{req:s.req,got:s.got,n:s.n},vx,went,vg:!!vg,home:HOMEi(),A:A[set],set,chosen,nudged,on:stop.classList.contains('on'),tg:+frameOf(Math.min(Math.max(cP,0),HOLD[1])).toFixed(2),wt:wOn,pV:+pV.toFixed(3),ok:s&&Object.keys(s.ok).join(),fs:s&&Array.from({length:10},(_,i)=>{const f=Math.round(cF)-2+i;return f+(s.film.get(f)?(s.film.hi(f)?'H':'g'):s.film.has(f)?'.':'-')}).join(' ')}};   /* état, pour les tests */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  /* le film suit sa cible sans jamais sauter une image : une image décodée à la fois, au plus une par image affichée */
  function follow(film,c,t,dt,rest){
@@ -525,7 +522,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  if(!LIVE)toStill();
  /* le film ne vient pas (réseau, fichier absent) : la page passe au rendu fixe, comme en mouvement réduit ; rien ne bloque l'offre ni le contact */
  function flat(){if(!LIVE)return;const deep=walk.getBoundingClientRect().top<-innerHeight*.3;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');document.body.classList.remove('hero-cta');
-  for(const el of [t1,...says,stop,cue,sbar,end]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();go(step,false);if(deep)stop.scrollIntoView({block:'start'})}
+  for(const el of [t1,...says,stop,cue,sbar,end]){el.style.opacity='';el.style.visibility='';el.style.transform='';el.style.translate=''}memo.clear();toStill();geo();go();if(deep)stop.scrollIntoView({block:'start'})}
  function r0(){return scene.getBoundingClientRect().width<scene.getBoundingClientRect().height*.95?'m':'d'}
  addEventListener('resize',()=>{size();tick()});
  /* retour d'un autre onglet, de l'arrière-plan ou du cache (bouton Retour) : on redessine (iOS peut avoir vidé le canevas) */
@@ -549,11 +546,10 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  stop.addEventListener('focusin',e=>{if(LIVE&&!u.classList.contains('stop')){if(kb(e)){arm();geo();jump(yAt(STOP),0,e);arrT=performance.now()-2000}else toStop()}});
  t1.addEventListener('focusin',e=>{if(LIVE&&t1.classList.contains('off'))jump(yAt(0),undefined,e)});
  /* ——— le clavier du téléphone : la carte de l'étape 2 se colle au-dessus du clavier, sur une ligne ; la scène se recadre sur l'enseigne (jusqu'à ×1,6, l'enseigne entière à l'écran) ——— */
- nameIn.addEventListener('focus',()=>{kbY=scrollY;if(step!==2)go(2,false)});
+ nameIn.addEventListener('focus',()=>{kbY=scrollY});
  function rel(){if(document.activeElement===nameIn){kbY=-1;nameIn.blur()}}
  let kbH=0;
  nameIn.addEventListener('blur',e=>{const was=frz;frz=false;kbH=0;stop.style.setProperty('--kb','0px');flag(stop,'kbo',false);
-  const to=e.relatedTarget;if(step===2&&!(to&&stop.contains(to)))setTimeout(()=>{if(step===2&&document.activeElement!==nameIn&&!stop.contains(document.activeElement))go(3,false)},0);   /* « Terminé » ou toucher hors du champ : l'étape 3 */
   if(was&&LIVE&&kbY>=0&&Math.abs(scrollY-kbY)>4){const y=kbY;requestAnimationFrame(()=>e3glide(y,420))}kbY=-1;tick()});
  const vv=window.visualViewport;if(vv){const k=()=>{const o=document.activeElement===nameIn?Math.max(0,Math.round(innerHeight-vv.height-vv.offsetTop)):0;kbH=o;stop.style.setProperty('--kb',o+'px');flag(stop,'kbo',o>40);tick()};vv.addEventListener('resize',k);vv.addEventListener('scroll',k)}
  let zm='';
@@ -565,7 +561,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
     v22 : aux étapes 1 et 2, le premier glissé neuf ne passe pas (« Continuer sans choisir ↓ », 2 s), le second passe ; à l'étape 3, le premier passe.
     « Entrer », un lien, « Passer l'intro » passent toujours. Remonter n'est jamais bloqué ; arriver d'en dessous (ou par un lien) ouvre le portail. ——— */
  let nudged=false,nt=0,nt0=0,tY0=-1,tX0=0,swp=false;const nudge=()=>{nudged=true;u.classList.add('push');clearTimeout(nt);nt=setTimeout(()=>u.classList.remove('push'),2000)};
- const pass1=()=>{if(step===3||nudged)open();else nudge()};
+ const pass1=()=>{if(chosen||shown||nudged)open();else nudge()};   /* v23 : un nom tapé ou un métier choisi : le premier glissé passe ; sinon, il est d'abord retenu */
  let gate='closed',pP=-1,lastW=0,rt=0,wt=0,tY=-1,pass=0,w0=0,wMax=0,pt=0;
  const rest=()=>{const p=curP();if(gate==='closed'&&p>=HOLD[0]-.03&&p<=GATE[1]+.005&&!e3touch.n&&performance.now()-lastW>350)gate='rested'};
  const open=(ms=0)=>{gate='open';u.classList.remove('push');if(ms)pass=performance.now()+ms};
@@ -596,7 +592,7 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
   stop.addEventListener('touchmove',e=>{const q=e.touches[0];if(t0&&q)t0.m=Math.max(t0.m,Math.hypot(q.clientX-t0.x,q.clientY-t0.y))},{passive:true});
   stop.addEventListener('touchend',e=>{const k=t0;t0=null;if(!k)return;const q=e.changedTouches[0];if(!q)return;const m=Math.max(k.m,Math.hypot(q.clientX-k.x,q.clientY-k.y));
    if(m>14||performance.now()-k.t>800)return;const h=document.elementFromPoint(q.clientX,q.clientY);if(!h||!(k.el.contains(h)||h.contains(k.el)))return;
-   if(e.cancelable)e.preventDefault();if(k.el.tagName==='INPUT')k.el.focus();else{if(k.el!==nameIn&&!k.el.closest('.r-s2'))rel();k.el.click()}},{passive:false})}
+   if(e.cancelable)e.preventDefault();if(k.el.tagName==='INPUT')k.el.focus();else{if(k.el!==nameIn&&!k.el.closest('.r-f'))rel();k.el.click()}},{passive:false})}
  /* l'aimantation : arrêté juste avant l'arrivée, on se pose à l'arrêt ; dans la salle, en avant la fin du site, en arrière l'arrêt.
     Jamais doigt posé, jamais pendant la frappe ; le moindre geste l'arrête (e3glide). */
  if(LIVE){let idle=0;addEventListener('scroll',()=>{if(e3gliding())return;clearTimeout(idle);idle=setTimeout(()=>{if(!LIVE||!vis||frz||e3touch.n)return;
@@ -607,5 +603,25 @@ const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched
  requestAnimationFrame(()=>{size();if(LIVE)arm();ui(performance.now());tick()});
  /* sans le film (mouvement réduit) : le WhatsApp de l'en-tête se retire tant que celui du titre est à l'écran */
  {const w=u.querySelector('.r-wa');if(w)new IntersectionObserver(es=>{if(!LIVE)flag(document.body,'hero-cta',es[0].isIntersecting)},{rootMargin:'-64px 0px 0px 0px'}).observe(w)}
+})();
+/* La Pub (v20) : les vidéos ne se chargent qu'à la lecture (preload="none", la <video> n'est créée qu'au premier geste) ;
+   une seule joue à la fois ; muettes par défaut, le son au tap, sur une seule ; hors de l'écran, elle s'arrête.
+   Mouvement réduit : rien ne part tout seul (ni la pub du haut, ni au survol) ; on lance au tap. */
+(()=>{const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;let cur=null;
+ const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(!e.isIntersecting&&v&&!v.paused)stop(e.target)}),{threshold:.25});
+ function vid(box){let v=box.querySelector('video');if(!v){v=document.createElement('video');v.muted=true;v.playsInline=true;v.loop=true;v.preload='none';v.setAttribute('playsinline','');v.setAttribute('aria-hidden','true');v.tabIndex=-1;v.src=box.dataset.v;v.addEventListener('playing',()=>box.classList.add('live'));box.insertBefore(v,box.querySelector('.vp'))}return v}
+ function play(box,sound){if(cur&&cur!==box)stop(cur);cur=box;const v=vid(box);v.muted=!sound;box.classList.toggle('sound',!!sound);box.querySelector('.snd').setAttribute('aria-pressed',!!sound);
+  const p=v.play();if(p&&p.catch)p.catch(()=>{});box.classList.add('on');box.querySelector('.vp').setAttribute('aria-pressed','true')}
+ function stop(box){const v=box.querySelector('video');if(v){v.pause();v.muted=true}box.classList.remove('on','sound','live');box.querySelector('.vp').setAttribute('aria-pressed','false');box.querySelector('.snd').setAttribute('aria-pressed','false');if(cur===box)cur=null}
+ document.querySelectorAll('.v[data-v]').forEach(box=>{io.observe(box);
+  box.querySelector('.vp').addEventListener('click',()=>{const on=box.classList.contains('on');if(!on)play(box,false);else if(FINE&&!RM&&!box.classList.contains('sound'))play(box,true);else stop(box)});   /* souris : le survol la lance muette, le clic lui donne le son, un second clic l'arrête */
+  box.querySelector('.snd').addEventListener('click',e=>{e.stopPropagation();const on=box.classList.contains('sound');if(on){box.querySelector('video').muted=true;box.classList.remove('sound');e.currentTarget.setAttribute('aria-pressed','false')}else play(box,true)});
+  if(FINE&&!RM){box.addEventListener('mouseenter',()=>{if(!cur||!cur.classList.contains('sound'))play(box,false)});box.addEventListener('mouseleave',()=>{if(cur===box&&!box.classList.contains('sound'))stop(box)})}});
+ /* les flèches de la rangée (souris) ; au clavier et au doigt, la rangée défile d'elle-même */
+ const rail=document.getElementById('rail');if(rail){const bs=document.querySelectorAll('[data-g]'),upd=()=>{bs[0].disabled=rail.scrollLeft<8;bs[1].disabled=rail.scrollLeft>rail.scrollWidth-rail.clientWidth-8};
+  bs.forEach(b=>b.addEventListener('click',()=>rail.scrollBy({left:+b.dataset.g*rail.clientWidth*.75,behavior:RM?'auto':'smooth'})));rail.addEventListener('scroll',upd,{passive:true});upd()}
+ /* la pub du haut : muette, en boucle, seulement à l'écran */
+ const h=document.querySelector('.ph1 video');if(h&&!RM){new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting){if(!h.src)h.src=h.dataset.src;const p=h.play();if(p&&p.catch)p.catch(()=>{})}else h.pause()},{threshold:.3}).observe(h.parentNode);
+  h.addEventListener('playing',()=>{h.style.opacity=1},{once:true});h.style.opacity=0;h.style.transition='opacity .4s'}
 })();
 

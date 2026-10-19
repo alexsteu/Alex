@@ -1,0 +1,153 @@
+<meta charset="utf-8">
+<title>Le téléphone : quand vous ne pouvez pas décrocher, une voix répond · OONDE</title>
+<meta name="description" content="Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas : horaires, questions fréquentes, rendez-vous ou message, et un résumé sur WhatsApp. Elle dit toujours qu’elle est l’assistante virtuelle. De Genève à Montreux.">
+<link rel="canonical" href="https://oonde.ch/telephone">
+<meta property="og:title" content="Le téléphone : quand vous ne pouvez pas décrocher, une voix répond · OONDE">
+<meta property="og:description" content="Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas. Elle dit toujours qu’elle est l’assistante virtuelle.">
+<meta property="og:url" content="https://oonde.ch/telephone">
+<meta property="og:image" content="https://oonde.ch/img/og-e3d.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="OONDE">
+<meta name="twitter:card" content="summary_large_image">
+{{FONTS}}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{INC:base.css}}
+/* v23 · Le téléphone : la page du service principal en plus du site. Même écriture que L’assistant : un héros centré, un appel de démo,
+   quatre écrans d’une phrase, ce qu’elle ne fait pas, les questions, le dernier écran. Aucun chiffre, aucun client, aucun prix (« Sur devis »). */
+.tl{padding-block:clamp(56px,7vw,112px) clamp(96px,11vw,160px)}
+.tl h1{max-width:14ch;margin:16px auto 0}
+.tl .lede{margin:24px auto 0;max-width:30em}
+.tl .act{justify-content:center;margin-top:28px}
+.call{margin:clamp(40px,5vw,64px) auto 0;max-width:440px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(17,19,24,.03),0 30px 60px -36px rgba(17,19,24,.35)}
+.call .top{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.call .ic{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;flex:none}
+.call .ic svg{width:19px;height:19px}
+.call .who b{display:block;font-size:15px}
+.call .who span{font-size:13px;color:var(--muted)}
+.call .wave{display:flex;gap:3px;align-items:center;height:18px;margin-left:auto}
+.call .wave i{width:3px;border-radius:2px;background:var(--klein);height:30%}
+@media (prefers-reduced-motion:no-preference){.call .wave i{animation:tw 1.1s ease-in-out infinite}.call .wave i:nth-child(2){animation-delay:.15s}.call .wave i:nth-child(3){animation-delay:.3s}.call .wave i:nth-child(4){animation-delay:.45s}.call .wave i:nth-child(5){animation-delay:.6s}}
+@keyframes tw{50%{height:100%}}
+.call .log{display:flex;flex-direction:column;gap:10px;padding:18px 16px;background:var(--paper)}
+.call .foot{font-size:12.5px;color:var(--muted);padding:12px 16px 14px;border-top:1px solid var(--line)}
+.m{max-width:85%;padding:10px 13px;border-radius:14px;font-size:15px;line-height:1.45;margin:0}
+.m.b{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.m.u{background:var(--ink);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.m small{display:block;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.m.u small{color:rgba(255,255,255,.6)}
+.sum{background:#E7F8EE;border:1px solid #BFE8CF;border-radius:14px;padding:12px 14px;font-size:14.5px;line-height:1.45;align-self:stretch;margin:6px 0 0}
+.sum b{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:4px}.sum b svg{width:15px;height:15px;color:#1FA855}
+.say{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,96px);align-items:center}
+.say+.say{margin-top:clamp(96px,11vw,160px)}
+.say h2{max-width:14ch}
+.say>div>p{margin-top:20px;color:var(--soft);font-size:clamp(19px,1.7vw,24px);line-height:1.4;max-width:22em}
+.bub{display:flex;flex-direction:column;gap:14px}
+.bub .m{font-size:clamp(17px,1.5vw,21px);max-width:88%;padding:16px 20px;border-radius:22px}
+.bub .m.b{border-bottom-left-radius:6px;box-shadow:0 30px 60px -40px rgba(17,19,24,.35)}
+.bub .m.u{border-bottom-right-radius:6px}
+.bub .who{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase;align-self:flex-end}
+.bub .sum{font-size:clamp(15px,1.3vw,18px)}
+@media (max-width:860px){.say{grid-template-columns:minmax(0,1fr)}}
+.non3{list-style:none;margin:clamp(40px,5vw,64px) 0 0;padding:0;display:grid;gap:clamp(20px,2.4vw,32px)}
+.non3 li{font-size:clamp(22px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:600;max-width:30ch}
+.non3 li span{display:block;font-weight:400;font-size:clamp(17px,1.5vw,20px);letter-spacing:0;color:var(--soft);margin-top:6px}
+.pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}
+.dnum{margin:20px auto 0;font-size:15px;color:var(--muted)}
+</style>
+
+<a class="skip" href="#top">Aller au contenu</a>
+<header class="nav">
+ <div class="in">
+  <a class="logo landed" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
+  <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
+  <nav aria-label="Pages" id="navL">{{NAV:telephone}}<a class="nav-wa" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler du téléphone</span></a></nav>
+  <a class="btn" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Parler du téléphone</span><span class="s">WhatsApp</span></a>
+ </div>
+</header>
+
+<main id="top">
+
+<section class="tl bg-paper c" data-hero aria-labelledby="h1"><div class="in">
+ <p class="mono">Le téléphone</p>
+ <h1 class="h-xl" id="h1">Quand vous ne pouvez pas décrocher, une voix répond.</h1>
+ <p class="lede">Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas. Elle donne vos horaires, répond aux questions de tous les jours, prend un rendez-vous ou un message, et vous envoie un résumé sur WhatsApp.</p>
+ <div class="act"><a class="btn" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span>En parler sur WhatsApp</span></a></div>
+ <!-- v23 : le numéro de démo à appeler viendra plus tard (accord d’Alexandre). Pour l’afficher : remplir le lien et retirer « hidden ». -->
+ <p class="dnum" id="demoTel" hidden>Essayez-la : appelez le <a href="tel:">numéro de démo</a>. <span class="dtag">Démo</span></p>
+ <div class="call" aria-label="Exemple d’appel">
+  <div class="top"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><div class="who"><b>Un salon de coiffure</b><span>Appel · 19 h 40 · l’équipe est occupée</span></div><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="dtag" style="margin-left:10px">Démo</span></div>
+  <div class="log">
+   <p class="m b"><small>La voix</small>Bonjour, ici l’assistante virtuelle du salon. L’équipe est occupée : je peux vous aider ?</p>
+   <p class="m u"><small>Un client</small>Vous êtes ouverts samedi ?</p>
+   <p class="m b"><small>La voix</small>Oui, samedi de 9 h à 16 h. Vous voulez un rendez-vous ?</p>
+   <p class="m u"><small>Un client</small>Oui, une coupe, en fin de matinée.</p>
+   <p class="m b"><small>La voix</small>Je note votre demande pour samedi en fin de matinée. Le salon vous confirme l’heure par message.</p>
+   <p class="sum"><b><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Résumé envoyé au salon</b>Appel de 19 h 40. Demande de rendez-vous : coupe, samedi en fin de matinée. À confirmer au client.</p>
+  </div>
+  <p class="foot">Démo : le salon, les horaires et l’appel sont inventés.</p>
+ </div>
+</div></section>
+
+<section class="bg-white" aria-label="Comment elle travaille"><div class="in">
+ <div class="say">
+  <div><h2 class="rv">Vous gardez votre numéro.</h2><p class="rv">Rien ne change pour vos clients. Quand la ligne est occupée, quand personne ne décroche ou en dehors de vos horaires, l’appel passe à la voix.</p></div>
+  <div class="bub rv"><span class="who">Votre numéro</span><p class="m u">Occupé, pas de réponse, ou fermé ?</p><p class="m b">La voix répond à votre place.</p></div>
+ </div>
+ <div class="say">
+  <div><h2 class="rv">Elle répond.</h2><p class="rv">Vos horaires, vos prix, l’accès, les questions qu’on vous pose tous les jours. Avec vos informations, et rien d’autre.</p></div>
+  <div class="bub rv"><span class="who">Un client</span><p class="m u">Il y a une place pour se garer ?</p><p class="m b">Oui, le parking de la place, à deux minutes à pied.</p></div>
+ </div>
+ <div class="say">
+  <div><h2 class="rv">Elle prend le rendez-vous ou le message.</h2><p class="rv">Et quand il faut quelqu’un de l’équipe, elle transfère l’appel ou promet un rappel.</p></div>
+  <div class="bub rv"><span class="who">Un client</span><p class="m u">C’est pour une demande un peu spéciale.</p><p class="m b">Je transmets votre message à l’équipe : on vous rappelle.</p></div>
+ </div>
+ <div class="say">
+  <div><h2 class="rv">Vous recevez le résumé sur WhatsApp.</h2><p class="rv">Qui a appelé, pourquoi, ce qui est à faire. Vous rappelez quand vous avez le temps.</p></div>
+  <div class="bub rv"><span class="who">Sur votre téléphone</span><p class="sum"><b><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Résumé d’appel</b>Demande de rendez-vous pour samedi matin. À confirmer.</p></div>
+ </div>
+ <p class="micro" style="margin-top:clamp(64px,7vw,96px);color:var(--muted)"><span class="dtag">Démo</span>&nbsp; Exemples d’appels inventés.</p>
+</div></section>
+
+<section class="bg-paper" aria-labelledby="hN"><div class="in">
+ <h2 id="hN" class="rv">Ce qu’elle ne fait pas.</h2>
+ <ul class="non3">
+  <li class="rv">Elle ne se fait jamais passer pour une personne.<span>Dès le premier mot, elle dit qu’elle est l’assistante virtuelle de votre commerce.</span></li>
+  <li class="rv">Elle n’invente rien.<span>Si elle n’a pas la réponse, elle prend un message pour l’équipe.</span></li>
+  <li class="rv">Elle ne promet rien à votre place.<span>Pas de prix spécial, pas de rendez-vous confirmé sans votre accord.</span></li>
+ </ul>
+ <p class="pz2 rv">On met tout en place et on s’en occupe : la voix, ce qu’elle sait de votre commerce, les essais avec vous. Prix : sur devis.</p>
+</div></section>
+
+<section class="bg-white" aria-labelledby="hQ"><div class="in qa">
+ <h2 class="h-m" id="hQ">Vos questions.</h2>
+ <div class="faq">
+  <details><summary>Mes clients savent-ils qu’ils parlent à une IA ?</summary><div class="fa"><div><p>Oui. La voix se présente toujours comme l’assistante virtuelle de votre commerce. Elle ne prétend jamais être une personne.</p></div></div></details>
+  <details><summary>Je dois changer de numéro ?</summary><div class="fa"><div><p>Non. Vous gardez votre numéro et vous activez un renvoi d’appel : si c’est occupé, s’il n’y a pas de réponse, ou en dehors de vos horaires.</p></div></div></details>
+  <details><summary>Et si le client veut parler à quelqu’un ?</summary><div class="fa"><div><p>Elle transfère l’appel à l’équipe si vous le voulez, ou prend un message pour qu’on le rappelle.</p></div></div></details>
+  <details><summary>Qui la prépare ?</summary><div class="fa"><div><p>Nous. Vous nous dites ce que vos clients demandent et ce que vous répondez ; on prépare la voix, on l’essaie avec vous, et on la met à jour quand quelque chose change.</p></div></div></details>
+  <details><summary>Les appels sont-ils enregistrés ?</summary><div class="fa"><div><p>Seulement si vous le décidez, et l’appelant en est alors informé au début de l’appel. Les informations servent à vous faire le résumé, rien d’autre.</p></div></div></details>
+  <details><summary>Combien ça coûte ?</summary><div class="fa"><div><p>Sur devis : écrivez-nous sur WhatsApp, on vous répond par écrit.</p></div></div></details>
+ </div>
+</div></section>
+
+<section class="bg-ink end"><div class="in">
+ <h2 class="rv">Une voix pour les appels que vous manquez ?</h2>
+ <div class="act rv"><a class="btn inv" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler du téléphone</span></a></div>
+</div></section>
+
+</main>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span>Parler du téléphone</span></a></nav>
+
+<footer><div class="in">
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{HOME}}">L’entrée 3D</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{TELEPHONE}}" aria-current="page">Le téléphone</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p></div>
+ <p class="seo">Un assistant vocal pour le téléphone, des sites internet, un assistant et des vidéos courtes pour les commerces de Genève à Montreux. © 2026 OONDE.</p>
+</div></footer>
+
+<script>
+{{INC:core.js}}
+</script>
