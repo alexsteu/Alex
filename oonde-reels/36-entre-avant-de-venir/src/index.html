@@ -187,10 +187,10 @@ function render(t) {
   const g = $('#gcard'); const gi = E.out(seg(t, 14.2, 14.6));
   vis(g, gi); g.style.transform = `translateY(${(1 - gi) * 40}px) scale(${0.96 + 0.04 * gi + 0.012 * seg(t, 14.6, 18.4)})`;
   vis($('#photos'), E.out(seg(t, 14.8, 15.1)));
-  popIn($('#t3'), t, 14.4, 16.5);
-  popIn($('#q'), t, 16.65, 18.5);
-  const yn = $('#yn'); const yo = E.out(seg(t, 16.95, 17.25)) * (1 - seg(t, 18.3, 18.5)); vis(yn, yo);
-  yn.style.transform = `translateY(${(1 - E.out(seg(t, 16.95, 17.25))) * 24}px)`;
+  popIn($('#t3'), t, 14.4, 17.0);
+  popIn($('#q'), t, 17.05, 18.5);
+  const yn = $('#yn'); const yo = E.out(seg(t, 17.3, 17.6)) * (1 - seg(t, 18.3, 18.5)); vis(yn, yo);
+  yn.style.transform = `translateY(${(1 - E.out(seg(t, 17.3, 17.6))) * 24}px)`;
   // ===== fin 18,5 → 25,0 =====
   const F = $('#fin'); vis(F, t >= 18.5 ? 1 : 0);
   const ft = t - 18.5;
