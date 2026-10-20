@@ -57,13 +57,13 @@ one("avant même qu'il vous appelle.</p>",
 
 # 6. Contact et mentions
 one('<div style="font-size:13px;opacity:.7">Ou écrivez directement à <span id="mail" style="user-select:all">alex.sbjo@gmail.com</span> · Alexandre Steudler, Préverenges</div>',
-    '<div class="direct">Ou contactez-nous directement :<br><a href="mailto:oonde.signal@gmail.com" id="mail">oonde.signal@gmail.com</a> · <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="https://wa.me/41764882710" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://www.instagram.com/oonde.studio" target="_blank" rel="noopener">@oonde.studio</a></div>')
+    '<div class="direct">Ou contactez-nous directement :<br><a href="mailto:oonde.signal@gmail.com" id="mail">oonde.signal@gmail.com</a> · <a href="tel:+41779283540">077 928 35 40</a> · <a href="https://wa.me/41779283540" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://www.instagram.com/oonde.studio" target="_blank" rel="noopener">@oonde.studio</a></div>')
 one('<span>© 2026 Enseigne · Sites internet et fiches Google pour les commerces de La Côte</span>',
     '<span><b style="color:var(--ink)">● OONDE</b> · Sites internet, fiches Google et IA pour les commerces de La Côte · © 2026 Alexandre Steudler &amp; Serhat Dogar</span>')
 one('<p>Enseigne est une activité indépendante de Alexandre Steudler, Chemin des Écureuils 1, 1028 Préverenges, Suisse. Contact\u00a0: alex.sbjo@gmail.com.<br>',
-    '<p>OONDE est une activité d\'Alexandre Steudler et Serhat Dogar. Responsable : Alexandre Steudler, Chemin des Écureuils 1, 1028 Préverenges, Suisse. Contact : oonde.signal@gmail.com, +41 76 488 27 10.<br>')
+    '<p>OONDE est une activité d\'Alexandre Steudler et Serhat Dogar. Responsable : Alexandre Steudler, Chemin des Écureuils 1, 1028 Préverenges, Suisse. Contact : oonde.signal@gmail.com, 077 928 35 40.<br>')
 one("done.innerHTML='L\\'envoi n\\'a pas fonctionné depuis cette page. Copiez ce message et envoyez-le à l\\'adresse ci-dessous :<br>",
-    "done.innerHTML='L\\'envoi n\\'a pas fonctionné depuis cette page. Copiez ce message et envoyez-le par WhatsApp au +41 76 488 27 10 ou à oonde.signal@gmail.com :<br>")
+    "done.innerHTML='L\\'envoi n\\'a pas fonctionné depuis cette page. Copiez ce message et envoyez-le par WhatsApp au 077 928 35 40 ou à oonde.signal@gmail.com :<br>")
 assert 'Enseigne' not in s.replace('enseigne-essai', ''), [m.start() for m in re.finditer('Enseigne', s)]
 assert 'alex.sbjo' not in s
 

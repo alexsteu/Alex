@@ -1,4 +1,4 @@
-const WA_NUM='41764882710',MAIL='oonde.contact@gmail.com';
+const WA_NUM='41779283540',MAIL='oonde.contact@gmail.com';
 const $=id=>document.getElementById(id);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));

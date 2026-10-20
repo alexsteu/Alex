@@ -9,6 +9,8 @@ export default async function ({ THREE, kit, scene, portrait }) {
   // ?int=<métier>&at=1 : la suite derrière la façade de ce métier (toute la rue glisse pour la poser en x = 0 : la caméra et la salle ne bougent pas).
   const Q = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
   const INT = Q.get('int'), VA = Q.get('va') === '1', AT = !!INT && Q.get('at') === '1', SIX = VA || AT;
+  // v27 : ?n3=restaurant,coiffure,institut : trois façades côte à côte (la rue courte, en vidéo) ; ?clip=in|a-b (voir camN3, camGlide)
+  const N3 = Q.get('n3') ? Q.get('n3').split(',') : null;
   const St = new THREE.Group(); scene.add(St);
   kit.sky(scene, { top: 0x1d2156, mid: 0x7d5f98, hor: 0xf0a08e, stars: .35 });
   kit.env(scene, 'qwantani_dusk_2', .26, 1.0);
@@ -31,7 +33,9 @@ export default async function ({ THREE, kit, scene, portrait }) {
     { id: 'onglerie', x: -1 * S, o: { facade: 'stone', stone: 'long_white_tiles', stoneTint: 0xf6e1e2, wall: 0xf0d4d6, plaster: 'clay_plaster', shutter: 0xd99aa6, base: 0xe9c3c8, frame: 0xd8b7a0, awning: ['#e7a9b6', '#fbefee'], awningDepth: 1.2, signFrame: 0xd8b07a }, warm: 0xffd6d6 },
   ];
   // v21 : le logement, à droite de la vôtre (à la place du voisin éteint) : seulement dans le glissement et les suites « at »
+  const ALL = shops.slice();
   if (SIX) shops.push({ id: 'logement', x: S, o: { stone: 'plastered_wall', stoneTint: 0xddd3c3, wall: 0xe6d9c3, plaster: 'painted_plaster_wall', shutter: 0x55636c, base: 0x2e3a40, frame: 0x22282c, awning: ['#3d4a52', '#ebe5d8'], awningDepth: 1.1, signFrame: 0x7a7468 }, warm: 0xffc996 });
+  if (N3) { shops.length = 0; N3.forEach((id, i) => { const s = ALL.find(x => x.id === id) || { id, x: 0, o: {}, warm: 0xffc996 }; shops.push({ ...s, x: (i - 1) * S }); }); }
   const X0 = AT ? -shops.find(s => s.id === INT).x : 0; St.position.x = X0;
   const pins = [];
   for (const s of shops) {
@@ -58,12 +62,19 @@ export default async function ({ THREE, kit, scene, portrait }) {
     if (s.id === 'onglerie') { const pol = [0xc2182b, 0xe2566f, 0xf2a7b5, 0x8e2440, 0xb38bd0, 0xe8743b, 0x4b6fa8]; for (let r = 0; r < 4; r++) kit.bottles(g, -1.7, 1.0 + r * .32, -3.3, 30, pol.slice(r % 3).concat(pol), { dir: [1, 0, 0], step: .11, h: .1, r: .02 }); kit.model('modern_arm_chair_01', { pos: [1.6, .15, -1.8], h: .82, parent: g, tint: 0xf1d8d3 }); }
   }
   // les voisins aux deux bouts, éteints
+  if (N3) {   // v27 : deux voisins éteints de chaque côté des trois façades
+    kit.shopfront(St, { w: S,  x: -2 * S, wall: 0xd9c9b4, shutter: 0x6a5546, dark: true, seed: 2, floors: 4, lit });
+    kit.shopfront(St, { w: S,  x: -3 * S, wall: 0xcdbfae, shutter: 0x5c524a, dark: true, seed: 3, lit });
+    kit.shopfront(St, { w: S,  x: 2 * S, wall: 0xd8cbb6, shutter: 0x6a5c4e, dark: true, seed: 7, lit });
+    kit.shopfront(St, { w: S,  x: 3 * S, wall: 0xe6d9c3, shutter: 0x5b6670, dark: true, seed: 5, lit });
+  } else {
   kit.shopfront(St, { w: S,  x: -6 * S, wall: 0xd9c9b4, shutter: 0x6a5546, dark: true, seed: 2, floors: 4, lit });
   if (!SIX) kit.shopfront(St, { w: S,  x: S, wall: 0xe6d9c3, shutter: 0x5b6670, dark: true, seed: 5, lit });
   else kit.shopfront(St, { w: S,  x: 2 * S, wall: 0xd8cbb6, shutter: 0x6a5c4e, dark: true, seed: 7, lit });
+  }
 
   // ——— la façade d'arrivée : la vôtre, enseigne vide ———
-  const T = kit.shopfront(St, { w: S,  x: 0, stone: 'white_sandstone_blocks_02', wall: 0xeee3d3, shutter: 0x3f4a56, base: 0x23272d, frame: 0x15171a, signW: 5.2, signH: .66, signFrame: 0x3a3c40, spillOp: .24, lit });
+  const T = N3 ? null : kit.shopfront(St, { w: S,  x: 0, stone: 'white_sandstone_blocks_02', wall: 0xeee3d3, shutter: 0x3f4a56, base: 0x23272d, frame: 0x15171a, signW: 5.2, signH: .66, signFrame: 0x3a3c40, spillOp: .24, lit });
   // v19 : ?int=restaurant… derrière cette même façade, la salle du métier (celle de sa démo), et la caméra continue
   // depuis l'arrêt : la porte s'ouvre, on entre, on s'arrête dans la salle. Le dehors du métier (sa rue, sa terrasse) est laissé
   // de côté : on ne garde que ce que kit.room() construit, posé dans cette scène.
@@ -73,13 +84,13 @@ export default async function ({ THREE, kit, scene, portrait }) {
     const kp = { ...kit, room: (sc, o) => kit.room(scene, o), cubeEnv: (sc, ...r) => kit.cubeEnv(scene, ...r) };
     M = await mod.default({ THREE, kit: kp, scene: dummy, portrait });
   }
-  const R = INT ? { g: new THREE.Group() } : kit.room(scene, { d: 6.2,
+  const R = INT || N3 ? { g: new THREE.Group() } : kit.room(scene, { d: 6.2,
     floor: kit.pbr('wood_floor', { s: 2, roughness: .7, color: 0xe7d3bb }),
     wall: kit.pbr('plastered_wall', { s: 2.4, color: 0xf4e8da }),
     back: kit.std(0xd9c2a6, { r: .85 }),
     ceiling: kit.std(0xf3ece3, { r: .95 }) });
   const g = R.g;
-  if (!INT) {
+  if (!INT && !N3) {
   for (const [x, z] of [[-1.8, -1.8], [1.8, -1.8], [0, -3.8]]) { kit.model('hanging_industrial_lamp', { pos: [x, 2.35, z], h: .7, parent: g, cast: false }); kit.pendant(g, x, 2.4, z, { i: 3.2, dist: 7 }); }
   kit.model('potted_plant_02', { pos: [-2.9, .14, -5.4], h: 1.4, parent: g });
   kit.model('pachira_aquatica_01', { pos: [3.0, .14, -4.8], h: 1.6, parent: g });
@@ -91,10 +102,10 @@ export default async function ({ THREE, kit, scene, portrait }) {
   kit.model('ceramic_vase_03', { pos: [.4, .94, -4.4], h: .3, parent: g });
   const fill = new THREE.PointLight(0xffc48a, 3.0, 10, 2); fill.position.set(0, 2.8, -2); g.add(fill);
   }
-  pins.push({ id: 'sign', corners: T.sign.map(v => v.clone().add(new THREE.Vector3(X0, 0, 0))) });
+  if (T) pins.push({ id: 'sign', corners: T.sign.map(v => v.clone().add(new THREE.Vector3(X0, 0, 0))) });
 
   // le réverbère du début : son globe est le point bleu
-  const LX = HEAD[0];
+  const LX = N3 ? N3HEAD[0] : HEAD[0];
   // un lampadaire à globe : mât fin en fonte, crosse, globe opalin qui brille bleu
   const iron = kit.std(0x15171b, { m: .7, r: .4 });
   const post = new THREE.Mesh(new THREE.CylinderGeometry(.05, .09, 4.1, 20), iron); post.position.set(LX, .14 + 2.05, 2.85); post.castShadow = true; St.add(post);
@@ -103,15 +114,16 @@ export default async function ({ THREE, kit, scene, portrait }) {
   const glow = new THREE.Mesh(new THREE.SphereGeometry(.26, 48, 32), kit.std(0x000000, { e: BLUE, ei: 2.4 })); glow.userData.noOcclude = true; St.add(glow);
   const bl = new THREE.PointLight(0x5b6cff, 9, 12, 2); St.add(bl);
   // un second réverbère, chaud, au milieu de la rue
-  kit.model('street_lamp_01', { pos: [-2.5 * S, .14, 2.85], h: 4.4, parent: St });
-  const wl = new THREE.PointLight(0xffc38a, 14, 14, 2); wl.position.set(-2.5 * S, 4.1, 2.4); St.add(wl);
+  const WX = N3 ? 1.5 * S : -2.5 * S;   // v27 : le réverbère chaud à droite des trois façades
+  kit.model('street_lamp_01', { pos: [WX, .14, 2.85], h: 4.4, parent: St });
+  const wl = new THREE.PointLight(0xffc38a, 14, 14, 2); wl.position.set(WX, 4.1, 2.4); St.add(wl);
 
   // le crépuscule : un soleil rose très bas, le ciel bleu violet
   const sun = new THREE.DirectionalLight(0xff9fb0, .45); sun.position.set(-30, 6, 14); sun.target.position.set(-20, 0, 0); sun.castShadow = true;
   sun.shadow.mapSize.set(4096, 2048); Object.assign(sun.shadow.camera, { left: -40, right: 40, top: 16, bottom: -8, far: 90 }); sun.shadow.bias = -.0004; sun.shadow.normalBias = .02; St.add(sun, sun.target);
   scene.add(new THREE.HemisphereLight(0x5a66b8, 0x2a2028, .32));
 
-  const head = HEAD;
+  const head = N3 ? N3HEAD : HEAD;
   glow.position.set(...head); bl.position.set(head[0], head[1] - .1, head[2] + .1);
   const door = AT ? shops.find(s => s.id === INT).f : T;
   if (M) {
@@ -125,6 +137,10 @@ export default async function ({ THREE, kit, scene, portrait }) {
       expAt(p) { return .9 + (e1 - .9) * sm((p - .25) / .35); },
       bloomAt(p) { return .42 + ((M.bloom?.[0] ?? .3) - .42) * sm((p - .25) / .35); },
     };
+  }
+  if (N3) {   // v27 : l'intro (clip=in : le globe bleu, puis l'arrivée devant la façade du milieu) ou un glissement (clip=a-b : de la façade a à la façade b)
+    const clip = Q.get('clip') || 'in', ks = clip === 'in' ? camN3(portrait) : camGlide(portrait, N3, clip);
+    return { path: ks, fov: portrait ? 58 : 42, bloom: [.42, .55, .9], exposure: .9, pins, after() {} };
   }
   if (VA) return { path: Q.get('ap') === '1' ? camAp(portrait) : camVa(portrait), fov: 42, bloom: [.42, .55, .9], exposure: .9, pins, after() { kit.dimEnv(g, .3, .45); } };
   const path = camPath(portrait);
@@ -171,6 +187,30 @@ export function camAp(portrait) {
 // L'ouverture : un seul tour autour du réverbère, à rayon croissant, le globe au centre ; puis le recul sur la rue.
 // (La v16 faisait ce tour en trois clés : la caméra frôlait le mur et l'image sautait.)
 export const HEAD = [-5 * 9.6 - 5.4, 4.6, 2.85];
+// v27 : la rue courte : le réverbère bleu entre la façade de gauche et son voisin éteint
+export const N3HEAD = [-1.5 * 9.6, 4.6, 2.85];
+// v27 : la pose de l'arrêt devant la façade x (la même que camPath p .88) ; téléphone 9:16, ordinateur 16:9
+export const N3STOP = (portrait, x = 0) => portrait ? { pos: [x, 1.72, 11.4], tgt: [x, 2.55, 0], fov: 58 } : { pos: [x, 1.72, 9.4], tgt: [x, 2.3, 0], fov: 42 };
+// l'intro : ouverture serrée sur le globe bleu (le point du logo), 0,5 s ; puis la caméra recule, découvre la rue et se pose devant la façade du milieu
+export function camN3(portrait) {
+  const H = N3HEAD, st = N3STOP(portrait), G = [H[0], H[1] - .15, H[2]];
+  return portrait ? [
+    { p: 0, pos: [H[0] + .55, H[1] - .75, H[2] + 2.3], tgt: G, fov: 50 },
+    { p: .2, pos: [H[0] + 1.25, H[1] - 1.0, H[2] + 3.3], tgt: [G[0] + .25, G[1] - .15, G[2] - .6], fov: 52 },
+    { p: .62, pos: [-5.2, 2.3, 9.2], tgt: [-3.4, 2.6, 0], fov: 56 },
+    { p: 1, ...st },
+  ] : [
+    { p: 0, pos: [H[0] + .6, H[1] - .7, H[2] + 2.0], tgt: G, fov: 38 },
+    { p: .2, pos: [H[0] + 1.3, H[1] - .95, H[2] + 2.9], tgt: [G[0] + .25, G[1] - .15, G[2] - .6], fov: 40 },
+    { p: .62, pos: [-5.0, 2.2, 7.8], tgt: [-3.2, 2.45, 0], fov: 42 },
+    { p: 1, ...st },
+  ];
+}
+// un glissement, à la pose de l'arrêt, de la façade a à la façade b (ids de ?n3) : droit, la vitesse en S (plist)
+export function camGlide(portrait, ids, clip) {
+  const [a, b] = clip.split('-'), S = 9.6, xa = (ids.indexOf(a) - 1) * S, xb = (ids.indexOf(b) - 1) * S, A = N3STOP(portrait, xa), B = N3STOP(portrait, xb);
+  return [{ p: 0, ...A }, { p: 1, ...B }];
+}
 export function camPath(portrait) {
   const H = HEAD, sm = x => x * x * (3 - 2 * x), mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
   const k0 = portrait ? { pos: [H[0] - .5, H[1] - 1.2, H[2] - 1.9], tgt: [H[0] + .1, H[1] + .25, H[2] + 1], fov: 50 }
