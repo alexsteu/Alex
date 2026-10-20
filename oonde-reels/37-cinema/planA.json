@@ -1,0 +1,123 @@
+{
+ "fps": 30,
+ "fonts": "/home/user/k2/fonts",
+ "plans": [
+  {
+   "src": "drag1.mp4",
+   "in": 0,
+   "out": 5.0
+  },
+  {
+   "src": "drag2.mp4",
+   "in": 0,
+   "out": 5.0,
+   "hold": 1.2
+  },
+  {
+   "card": true,
+   "dur": 7.0,
+   "entree": "noir"
+  }
+ ],
+ "textes": [
+  {
+   "t": "Ta boulangerie mérite\nune pub comme ça.",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 78,
+   "y": 1150,
+   "t0": 6.3,
+   "t1": 8.9
+  },
+  {
+   "t": "Le dragon,\non peut l'enlever.",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 78,
+   "y": 1150,
+   "t0": 9.0,
+   "t1": 11.2
+  },
+  {
+   "t": "Le budget de film aussi.",
+   "font": "cormorant-garamond-latin-400-italic.woff2",
+   "size": 84,
+   "y": 560,
+   "t0": 11.9,
+   "t1": 18.2
+  },
+  {
+   "t": "Écris MAQUETTE\nen commentaire",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 96,
+   "y": 820,
+   "t0": 14.1,
+   "t1": 18.2
+  },
+  {
+   "t": "ta maquette gratuite arrive en DM",
+   "font": "instrument-sans-latin-500-normal.woff2",
+   "size": 48,
+   "y": 1080,
+   "t0": 14.5,
+   "t1": 18.2,
+   "color": [
+    220,
+    222,
+    216
+   ]
+  },
+  {
+   "img": "logo.png",
+   "w": 360,
+   "y": 1300,
+   "t0": 14.7,
+   "t1": 18.2
+  }
+ ],
+ "audio": [
+  {
+   "src": "m_drag.m4a",
+   "in": 5.5,
+   "out": 10.55,
+   "t": 0,
+   "gain": 1.0,
+   "fi": 0.05,
+   "fo": 0.04
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/whoosh.wav",
+   "t": 3.7,
+   "gain": 0.8
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/sub.wav",
+   "t": 4.3,
+   "gain": 0.6
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/tick.wav",
+   "t": 5.5,
+   "gain": 0.45
+  },
+  {
+   "src": "m_drag.m4a",
+   "in": 0,
+   "out": 12.5,
+   "t": 6.0,
+   "gain": 0.45,
+   "fi": 1.0,
+   "fo": 1.0
+  },
+  {
+   "src": "vo/l0.mp3",
+   "t": 6.3
+  },
+  {
+   "src": "vo/l1.mp3",
+   "t": 9.0
+  },
+  {
+   "src": "vo/l7.mp3",
+   "t": 14.1
+  }
+ ]
+}

@@ -1,0 +1,111 @@
+{
+ "fps": 30,
+ "fonts": "/home/user/k2/fonts",
+ "plans": [
+  {
+   "src": "garage.mp4",
+   "in": 0,
+   "out": 6.04,
+   "hold": 2.5
+  },
+  {
+   "card": true,
+   "dur": 6.5,
+   "entree": "noir"
+  }
+ ],
+ "textes": [
+  {
+   "t": "« …Ah. Vous êtes pour la vidange ? »",
+   "font": "instrument-sans-latin-500-normal.woff2",
+   "size": 50,
+   "y": 1250,
+   "t0": 5.0,
+   "t1": 7.0,
+   "pill": true
+  },
+  {
+   "t": "Ton garage,\nfilmé comme un film d'action.",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 66,
+   "y": 520,
+   "t0": 7.4,
+   "t1": 15.0
+  },
+  {
+   "t": "Écris MAQUETTE\nen commentaire",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 96,
+   "y": 820,
+   "t0": 10.6,
+   "t1": 15.0
+  },
+  {
+   "t": "ta maquette gratuite arrive en DM",
+   "font": "instrument-sans-latin-500-normal.woff2",
+   "size": 48,
+   "y": 1080,
+   "t0": 11.0,
+   "t1": 15.0,
+   "color": [
+    220,
+    222,
+    216
+   ]
+  },
+  {
+   "img": "logo.png",
+   "w": 360,
+   "y": 1300,
+   "t0": 11.2,
+   "t1": 15.0
+  }
+ ],
+ "audio": [
+  {
+   "src": "m_garage.m4a",
+   "in": 0,
+   "out": 4.6,
+   "t": 0,
+   "gain": 1.0,
+   "fo": 0.04
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/whoosh.wav",
+   "t": 1.9,
+   "gain": 0.8
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/whoosh.wav",
+   "t": 3.3,
+   "gain": 0.7
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/tick.wav",
+   "t": 4.6,
+   "gain": 0.4
+  },
+  {
+   "src": "vo/l5.mp3",
+   "in": 1.45,
+   "t": 5.0
+  },
+  {
+   "src": "m_garage.m4a",
+   "in": 8.0,
+   "out": 16,
+   "t": 7.2,
+   "gain": 0.55,
+   "fi": 0.3,
+   "fo": 1.0
+  },
+  {
+   "src": "vo/l6.mp3",
+   "t": 7.4
+  },
+  {
+   "src": "vo/l7.mp3",
+   "t": 10.6
+  }
+ ]
+}
