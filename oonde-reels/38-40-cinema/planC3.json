@@ -5,22 +5,17 @@
   {
    "src": "garage.mp4",
    "in": 0.5,
-   "out": 4.8
+   "out": 4.25
   },
   {
    "src": "garext.mp4",
-   "in": 0.8,
-   "out": 1.5
-  },
-  {
-   "src": "garext.mp4",
-   "in": 2.6,
+   "in": 3.0,
    "out": 5.0,
-   "speed": 0.7
+   "speed": 0.5
   },
   {
    "card": true,
-   "dur": 4.6,
+   "dur": 5.25,
    "entree": "noir"
   }
  ],
@@ -28,9 +23,9 @@
   {
    "type": "osd",
    "t0": 0,
-   "t1": 4.3,
+   "t1": 3.75,
    "v0": 96,
-   "stop": 3.7,
+   "stop": 3.3,
    "tc0": 3
   }
  ],
@@ -40,8 +35,8 @@
    "font": "instrument-sans-latin-500-normal.woff2",
    "size": 50,
    "y": 1250,
-   "t0": 4.0,
-   "t1": 5.6,
+   "t0": 3.9,
+   "t1": 5.5,
    "pill": true
   },
   {
@@ -49,7 +44,7 @@
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 66,
    "y": 520,
-   "t0": 5.8,
+   "t0": 5.7,
    "t1": 13.0
   },
   {
@@ -85,7 +80,7 @@
   {
    "src": "m_garage.m4a",
    "in": 0.5,
-   "out": 4.4,
+   "out": 4.25,
    "t": 0,
    "gain": 1.0,
    "fo": 0.04
@@ -102,31 +97,31 @@
   },
   {
    "src": "/home/user/k2/hybride/sons/tick.wav",
-   "t": 3.9,
+   "t": 3.45,
    "gain": 0.4
   },
   {
    "src": "vo/l5.mp3",
    "in": 1.45,
-   "t": 4.0
+   "t": 3.9
   },
   {
    "src": "/home/user/k2/hybride/sons/whoosh.wav",
-   "t": 4.9,
+   "t": 7.7,
    "gain": 0.5
   },
   {
    "src": "m_garage.m4a",
    "in": 8.0,
    "out": 16.5,
-   "t": 5.0,
+   "t": 3.75,
    "gain": 0.5,
    "fi": 0.3,
    "fo": 1.0
   },
   {
    "src": "vo/l8.mp3",
-   "t": 5.8
+   "t": 5.7
   },
   {
    "src": "vo/l7.mp3",
