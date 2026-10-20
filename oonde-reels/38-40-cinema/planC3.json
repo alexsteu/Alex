@@ -5,17 +5,22 @@
   {
    "src": "garage.mp4",
    "in": 0.5,
-   "out": 6.04
+   "out": 4.8
+  },
+  {
+   "src": "garext.mp4",
+   "in": 0.8,
+   "out": 1.5
   },
   {
    "src": "garext.mp4",
    "in": 2.6,
-   "out": 6.0,
+   "out": 5.0,
    "speed": 0.7
   },
   {
    "card": true,
-   "dur": 4.3,
+   "dur": 4.6,
    "entree": "noir"
   }
  ],
@@ -23,7 +28,7 @@
   {
    "type": "osd",
    "t0": 0,
-   "t1": 4.6,
+   "t1": 4.3,
    "v0": 96,
    "stop": 3.7,
    "tc0": 3
@@ -36,7 +41,7 @@
    "size": 50,
    "y": 1250,
    "t0": 4.0,
-   "t1": 5.7,
+   "t1": 5.6,
    "pill": true
   },
   {
@@ -44,24 +49,24 @@
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 66,
    "y": 520,
-   "t0": 6.4,
-   "t1": 14.7
+   "t0": 5.8,
+   "t1": 13.0
   },
   {
    "t": "Écris MAQUETTE\nen commentaire",
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 96,
    "y": 820,
-   "t0": 10.7,
-   "t1": 14.7
+   "t0": 9.1,
+   "t1": 13.0
   },
   {
    "t": "ta maquette gratuite arrive en DM",
    "font": "instrument-sans-latin-500-normal.woff2",
    "size": 48,
    "y": 1080,
-   "t0": 11.1,
-   "t1": 14.7,
+   "t0": 9.5,
+   "t1": 13.0,
    "color": [
     220,
     222,
@@ -72,8 +77,8 @@
    "img": "logo.png",
    "w": 360,
    "y": 1300,
-   "t0": 11.299999999999999,
-   "t1": 14.7
+   "t0": 9.7,
+   "t1": 13.0
   }
  ],
  "audio": [
@@ -107,25 +112,25 @@
   },
   {
    "src": "/home/user/k2/hybride/sons/whoosh.wav",
-   "t": 5.4,
+   "t": 4.9,
    "gain": 0.5
   },
   {
    "src": "m_garage.m4a",
    "in": 8.0,
    "out": 16.5,
-   "t": 5.6,
+   "t": 5.0,
    "gain": 0.5,
    "fi": 0.3,
    "fo": 1.0
   },
   {
    "src": "vo/l8.mp3",
-   "t": 6.4
+   "t": 5.8
   },
   {
    "src": "vo/l7.mp3",
-   "t": 10.7
+   "t": 9.1
   }
  ]
 }
