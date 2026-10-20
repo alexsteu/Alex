@@ -159,7 +159,7 @@ function draw(t) {
   const M = $('#motion'); vis(M, t >= 6.7 && t < 18.6 ? 1 : 0);
   // téléphone : présent à 7,2 (le rétrécissement le rejoint), se replie à 14,0
   const ph = $('#phone');
-  const pIn = seg(t, 7.0, 7.15), pFold = E.inOut(seg(t, 13.9, 14.25));
+  const pIn = seg(t, 7.0, 7.15), pFold = E.inOut(seg(t, 13.4, 13.7));
   vis(ph, pIn * (1 - pFold));
   ph.style.transform = `scale(${(0.985 + 0.015 * pIn) * (1 + 0.015 * seg(t, 8, 14)) * (1 - 0.25 * pFold)})`;
   // défilement du site
@@ -186,9 +186,9 @@ function draw(t) {
   kw.textContent = k; vis(kw, ko);
   popIn($('#sit'), t, 6.57, 8.1);
   // fiche Google 14,2 → 18,5
-  const g = $('#gcard'); const gi = E.out(seg(t, 14.3, 14.7));
+  const g = $('#gcard'); const gi = E.out(seg(t, 13.65, 14.05));
   vis(g, gi); g.style.transform = `translateY(${(1 - gi) * 40}px) scale(${0.96 + 0.04 * gi + 0.012 * seg(t, 14.6, 18.4)})`;
-  vis($('#photos'), E.out(seg(t, 14.8, 15.1)));
+  vis($('#photos'), E.out(seg(t, 14.2, 14.5)));
   popIn($('#t4'), t, 13.8, 15.0);
   popIn($('#t3'), t, 15.1, 16.95);
   popIn($('#q'), t, 17.05, 18.5);

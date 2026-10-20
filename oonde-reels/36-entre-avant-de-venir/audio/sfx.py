@@ -54,7 +54,7 @@ def tick(f=1800, d=.05, g=1.0):
 
 for a in (8.4, 10.2, 12.0): add(tick(1400, .08), a, .18)          # mots-clés
 add(tick(2600, .04) + tick(900, .04), 12.85, .3)                 # tap sur Itinéraire
-add(tick(700, .12), 14.3, .22); add(tick(1100, .1), 14.4, .12)   # fiche Google
+add(tick(700, .12), 13.65, .22); add(tick(1100, .1), 13.75, .12)   # fiche Google
 add(tick(1500, .07), 17.3, .16); add(tick(1900, .07), 17.5, .14) # OUI / NON
 
 # anneaux de fin 18,5 : petit « ding » sourd
