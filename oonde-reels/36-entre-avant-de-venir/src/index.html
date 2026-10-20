@@ -39,7 +39,7 @@ html,body{margin:0;overflow:hidden;background:var(--paper)}
 #gcard{left:130px;top:470px;width:820px;border-radius:24px;background:var(--card);border:2px solid var(--line);box-shadow:0 24px 60px rgba(17,19,24,.12);overflow:hidden}
 #gcard img{width:820px;height:400px;object-fit:cover;display:block}
 #gcard .b{padding:28px 34px}
-#gcard .n{font-weight:600;font-size:54px;letter-spacing:-.02em}
+#gcard .n{font-weight:600;font-size:60px;letter-spacing:-.02em}
 #gcard .c{font-size:36px;color:var(--soft);margin-top:6px;font-weight:500}
 #gcard .row{display:flex;gap:16px;margin-top:24px}
 #gcard .pill{flex:1;height:76px;border-radius:999px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:30px}
@@ -170,13 +170,14 @@ function draw(t) {
   const drag = (a, b) => seg(t, a, b);
   let ty = 760, tx = 300, to = 0;
   [[8.6, 9.6], [10.3, 11.0]].forEach(([a, b]) => { if (t >= a - .2 && t <= b + .15) { to = 1; ty = 760 - 260 * E.inOut(drag(a, b)); } });
-  if (t >= 12.4 && t <= 13.4) { // le doigt rejoint le bouton Itinéraire et tape
+  if (t >= 11.85 && t <= 13.0) { // avec « LE CHEMIN » : le doigt rejoint Itinéraire, tape, puis s'écarte vers le bas
     const it = $('#itin'), bx = it.offsetLeft + it.offsetWidth / 2 - 35, by = it.offsetTop - (y1 + y2 + y3) + it.offsetHeight / 2 - 35;
-    const m = E.inOut(seg(t, 12.4, 12.8)); to = 1; tx = lerp(300, bx, m); ty = lerp(760, by, m);
-    tap.style.transform = `scale(${1 - .15 * seg(t, 12.8, 12.88) + .15 * seg(t, 12.95, 13.05)})`;
+    const m = E.inOut(seg(t, 11.85, 12.12)), aw = E.inOut(seg(t, 12.35, 12.7)); to = 1 - seg(t, 12.6, 12.8);
+    tx = lerp(300, bx, m); ty = lerp(760, by, m) + 260 * aw;
+    tap.style.transform = `scale(${1 - .15 * seg(t, 12.15, 12.22) + .15 * seg(t, 12.27, 12.35)})`;
   } else tap.style.transform = '';
   tap.style.left = tx + 'px'; tap.style.top = ty + 'px'; vis(tap, to * .9);
-  const press = seg(t, 12.85, 12.95);
+  const press = seg(t, 12.2, 12.3);
   $('#itin').style.background = press > 0 ? '#2038EC' : 'transparent';
   $('#itin').style.color = press > 0 ? '#fff' : '#111318';
   $('#itin').style.borderColor = press > 0 ? '#2038EC' : '#111318';
@@ -207,7 +208,7 @@ function draw(t) {
   for (let i = 0; i < NR; i++) {
     const p = seg(ft, .15 + i * .8, .15 + i * .8 + 1.9), e = E.out(p), el = $('#r' + i);
     el.setAttribute('r', 16 + (RMAX - 16) * e);
-    el.setAttribute('opacity', p > 0 && .15 + i * .8 < 5.7 ? (0.55 * Math.pow(1 - p, 1.6)).toFixed(3) : 0);
+    el.setAttribute('opacity', p > 0 && .15 + i * .8 < 5.7 ? (0.55 * Math.pow(1 - p, 1.6) * (1 - E.out(seg(ft, 5.7, 5.85)))).toFixed(3) : 0);
   }
   const out = 1 - seg(ft, 5.7, 5.85);
   [['#l1', .2], ['#l2', .45], ['#l3', 1.8]].forEach(([s, a]) => { const p = E.out(seg(ft, a, a + .4)); const el = $(s); vis(el, p * out); el.style.transform = `translateY(${(1 - p) * 14}px)`; });
