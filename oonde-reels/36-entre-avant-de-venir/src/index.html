@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel 36 · Entre avant de venir</title>
+<link rel="icon" href="data:,">
+<style>
+/* Reel 36 « Entre avant de venir » : intro IA (images intro/fNNN.jpg) 0–6,5 s, puis motion OONDE. 25,0 s. ?safe = zone sûre */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--grey:#6B7078;--line:#DCDED8;--klein:#2038EC}
+html,body{margin:0;overflow:hidden;background:var(--paper)}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:var(--ink)}
+.abs{position:absolute}
+#cv{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.big{font-weight:600;letter-spacing:-.025em;line-height:1.04;text-align:center;left:60px;width:960px}
+.onvid{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55),0 0 4px rgba(0,0,0,.4)}
+.mono{font-family:PM,monospace;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+#badge{left:50%;top:262px;transform:translateX(-50%);font-family:PM,monospace;font-weight:600;font-size:34px;letter-spacing:.06em;padding:12px 26px;border-radius:999px;white-space:nowrap}
+#badge.dark{background:rgba(17,19,24,.55);color:#fff}
+#badge.light{background:var(--paper);color:var(--ink);border:2px solid var(--line)}
+/* téléphone */
+#phone{left:290px;top:360px;width:500px;height:1000px;border-radius:64px;background:var(--ink);box-shadow:0 30px 70px rgba(17,19,24,.18)}
+#scr{position:absolute;left:14px;top:14px;width:472px;height:972px;border-radius:52px;overflow:hidden;background:var(--paper)}
+#scroll{position:absolute;left:0;top:0;width:472px}
+#hero{position:relative;width:472px;height:640px;overflow:hidden}
+#hero img{position:absolute;left:0;top:0;width:472px;height:640px;object-fit:cover}
+#hero .nm{position:absolute;left:28px;bottom:28px;color:#fff;font-weight:600;font-size:44px;letter-spacing:-.02em;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+#hero .vt{position:absolute;left:28px;top:30px;font-family:PM;font-weight:600;font-size:22px;color:#fff;background:rgba(17,19,24,.5);padding:6px 14px;border-radius:999px;letter-spacing:.06em}
+.sec{padding:30px 28px;border-bottom:1px solid var(--line)}
+.lab{font-family:PM;font-weight:600;font-size:22px;letter-spacing:.08em;color:var(--grey)}
+.hrs{font-weight:600;font-size:42px;letter-spacing:-.02em;margin-top:10px}
+.btn{margin-top:22px;height:84px;border-radius:14px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:34px}
+#tap{position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(17,19,24,.18);border:3px solid rgba(17,19,24,.35)}
+#kw{left:0;width:1080px;top:1404px;text-align:center;font-size:46px;color:var(--ink)}
+/* fiche Google */
+#gcard{left:130px;top:470px;width:820px;border-radius:24px;background:var(--card);border:2px solid var(--line);box-shadow:0 24px 60px rgba(17,19,24,.12);overflow:hidden}
+#gcard img{width:820px;height:400px;object-fit:cover;display:block}
+#gcard .b{padding:28px 34px}
+#gcard .n{font-weight:600;font-size:54px;letter-spacing:-.02em}
+#gcard .c{font-size:34px;color:var(--grey);margin-top:6px;font-weight:500}
+#gcard .row{display:flex;gap:16px;margin-top:24px}
+#gcard .pill{flex:1;height:76px;border-radius:999px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:30px}
+#photos{left:0;width:1080px;top:1090px;text-align:center;font-size:32px;color:var(--soft)}
+#t3{top:1180px;font-size:84px}
+#q{top:1180px;font-size:80px}
+#yn{top:1300px;left:0;width:1080px;display:flex;justify-content:center;gap:36px}
+#yn div{width:240px;height:110px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-family:PM;font-weight:600;font-size:48px;border:3px solid var(--ink);background:var(--paper)}
+/* fin */
+#rings{position:absolute;left:0;top:0}
+.ft{position:absolute;left:0;width:1080px;text-align:center;font-weight:600;letter-spacing:-.025em;line-height:1.02;white-space:nowrap;text-shadow:0 0 14px var(--paper),0 0 14px var(--paper)}
+.ft.s{font-weight:500;letter-spacing:-.005em;color:var(--soft)}
+.k{color:var(--klein)}
+#logo{position:absolute;height:64px}
+#glow{position:absolute;background:#fff;border-radius:22px;box-shadow:0 0 60px 20px rgba(255,214,150,.7)}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;display:none;z-index:99}
+.show-safe #safe{display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="cv" width="1080" height="1920"></canvas>
+  <div id="motion" class="abs" style="left:0;top:0;width:1080px;height:1920px">
+    <div id="phone" class="abs"><div id="scr"><div id="scroll">
+      <div id="hero"><img id="heroimg" src="intro/last.jpg" alt=""><div class="vt">VISITE 360°</div><div class="nm">Épicerie Brindille</div></div>
+      <div class="sec"><div class="lab">LA BOUTIQUE</div>
+        <svg width="416" height="300" viewBox="0 0 416 300" style="margin-top:14px;display:block">
+          <rect x="0" y="0" width="416" height="300" rx="14" fill="#EFE7DA"/>
+          <g fill="#8A6A45"><rect x="16" y="88" width="384" height="10" rx="3"/><rect x="16" y="188" width="384" height="10" rx="3"/><rect x="16" y="282" width="384" height="10" rx="3"/></g>
+          <g fill="#C9B79A" stroke="#8A6A45" stroke-width="2"><rect x="30" y="34" width="34" height="54" rx="6"/><rect x="74" y="34" width="34" height="54" rx="6"/><rect x="118" y="34" width="34" height="54" rx="6"/><rect x="162" y="34" width="34" height="54" rx="6"/></g>
+          <g fill="#6E2B2B"><rect x="232" y="20" width="16" height="68" rx="5"/><rect x="258" y="20" width="16" height="68" rx="5"/><rect x="284" y="20" width="16" height="68" rx="5"/><rect x="310" y="20" width="16" height="68" rx="5"/><rect x="336" y="20" width="16" height="68" rx="5"/></g>
+          <g fill="#F2D27A" stroke="#B8902E" stroke-width="2"><ellipse cx="70" cy="168" rx="44" ry="20"/><ellipse cx="170" cy="168" rx="44" ry="20"/><path d="M240 188 L290 140 L340 188 Z"/></g>
+          <g fill="#7FA05A"><circle cx="60" cy="262" r="18"/><circle cx="96" cy="262" r="18"/><circle cx="132" cy="262" r="18"/></g>
+          <g fill="#D9823B"><circle cx="210" cy="262" r="18"/><circle cx="246" cy="262" r="18"/><circle cx="282" cy="262" r="18"/><circle cx="318" cy="262" r="18"/></g>
+        </svg></div>
+      <div class="sec"><div class="lab">HORAIRES</div><div class="hrs">Ouvert aujourd'hui<br>jusqu'à 19 h</div></div>
+      <div class="sec" style="border:0"><div class="lab">ACCÈS</div><div class="btn" id="itin">Itinéraire</div></div>
+      <div style="height:400px"></div>
+    </div><div id="tap"></div></div></div>
+    <div id="kw" class="abs mono"></div>
+    <div id="gcard" class="abs"><img src="intro/last.jpg" alt=""><div class="b"><div class="n">Épicerie Brindille</div><div class="c">Épicerie fine · Nyon</div>
+      <div class="row"><div class="pill">Site web</div><div class="pill">Itinéraire</div></div></div></div>
+    <div id="photos" class="abs mono">CHEZ TOI : TES VRAIES PHOTOS</div>
+    <div id="t3" class="abs big">Tes clients entrent<br>avant de venir.</div>
+    <div id="q" class="abs big">Toi, t'entrerais ?</div>
+    <div id="yn" class="abs"><div id="oui">OUI</div><div id="non">NON</div></div>
+  </div>
+  <div id="fin" class="abs" style="left:0;top:0;width:1080px;height:1920px;background:var(--paper)">
+    <svg id="rings" width="1080" height="1920" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="ft" id="l1" style="top:1010px;font-size:128px">Écris <span class="k">MAQUETTE</span></div>
+    <div class="ft" id="l2" style="top:1153px;font-size:96px">en commentaire</div>
+    <div class="ft s" id="l3" style="top:1268px;font-size:48px">ta maquette gratuite arrive en DM</div>
+    <img id="logo" src="/_kit/brand/logo.svg" alt="" style="top:1400px;left:369px">
+    <div id="glow"></div>
+  </div>
+  <div id="t1" class="abs big onvid" style="top:380px;font-size:92px">Cette épicerie,<br>tu peux y entrer d'ici.</div>
+  <div id="t2" class="abs big onvid" style="top:1380px;font-size:110px">Vas-y. Entre.</div>
+  <div id="badge" class="abs dark">DÉMO · LIEU FICTIF · IMAGES IA</div>
+  <div id="sit" class="abs mono" style="left:0;width:1080px;top:1404px;text-align:center;font-size:52px">ÇA, C'EST UN SITE.</div>
+  <div id="safe"></div>
+</div>
+<script src="frames.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, p) => a + (b - a) * p;
+const E = { out: t => 1 - Math.pow(1 - t, 3), inOut: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2 };
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+window.DURATION = 25.0;
+const NF = window.NF || 0;               // nombre d'images de l'intro (intro/f001.jpg …), défini dans frames.js
+const INTRO = 6.5;
+const cv = $('#cv'), cx = cv.getContext('2d');
+const frames = [];
+function vis(el, o) { el.style.opacity = o; el.style.visibility = o > 0.001 ? 'visible' : 'hidden'; }
+function rise(el, t, a, d = .35, dy = 18) { const p = E.out(seg(t, a, a + d)); return p; }
+function popIn(el, t, a, b) { // entrée vive + sortie nette
+  const pi = E.out(seg(t, a, a + .3)), po = seg(t, b - .2, b);
+  const o = pi * (1 - po); vis(el, o);
+  el.style.transform = `${el.dataset.base || ''} scale(${0.94 + 0.06 * pi})`;
+}
+// anneaux de fin
+const RC = 540, RCY = 640, NR = 4, RMAX = Math.hypot(1080, 1920) * .62;
+let h = ''; for (let i = 0; i < NR; i++) h += `<circle id="r${i}" cx="${RC}" cy="${RCY}" r="0" fill="none" stroke="#111318" stroke-width="3" opacity="0"/>`;
+h += `<circle id="pt" cx="${RC}" cy="${RCY}" r="0" fill="#2038EC"/>`; $('#rings').innerHTML = h;
+// écran du téléphone de l'image 0 (pour la boucle)
+const LOOP = { x: 400, y: 872, w: 232, h: 508 };
+
+function drawFrame(i) { const im = frames[Math.max(0, Math.min(NF - 1, i))]; if (im) cx.drawImage(im, 0, 0, 1080, 1920); }
+
+function render(t) {
+  // ===== intro IA 0 → 6,5 (image figée ensuite jusqu'à 7,2) =====
+  const intro = t < 7.25;
+  vis(cv, intro ? 1 : 0);
+  if (intro && NF) {
+    const fi = Math.floor(Math.min(t, INTRO) / INTRO * (NF - 1));
+    cx.clearRect(0, 0, 1080, 1920);
+    // rétrécissement dans le téléphone 6,7 → 7,2
+    const s = E.inOut(seg(t, 6.7, 7.2));
+    if (s > 0) {
+      cx.fillStyle = '#F7F7F4'; cx.fillRect(0, 0, 1080, 1920);
+      const x = lerp(0, 304, s), y = lerp(0, 374, s), w = lerp(1080, 472, s), hh = lerp(1920, 640, s);
+      cx.save(); cx.beginPath(); cx.roundRect(x, y, w, hh, 52 * s); cx.clip();
+      const im = frames[NF - 1]; const sc = Math.max(w / 1080, hh / 1920);
+      cx.drawImage(im, x + (w - 1080 * sc) / 2, y + (hh - 1920 * sc) / 2, 1080 * sc, 1920 * sc); cx.restore();
+    } else drawFrame(fi);
+  }
+  // textes de l'intro
+  const t1 = E.out(seg(t, 0, .25)) * (1 - seg(t, 2.9, 3.1)); vis($('#t1'), t < .02 ? 1 : t1);
+  popIn($('#t2'), t, 3.25, 5.2);
+  // badge : sombre sur la vidéo, clair sur le papier, jusqu'à 18,4
+  const bd = $('#badge'); bd.className = 'abs ' + (t < 6.75 ? 'dark' : 'light'); vis(bd, t < 18.4 ? 1 : 0);
+  // ===== motion 6,7 → 18,5 =====
+  const M = $('#motion'); vis(M, t >= 6.7 && t < 18.6 ? 1 : 0);
+  // téléphone : présent à 7,2 (le rétrécissement le rejoint), se replie à 14,0
+  const ph = $('#phone');
+  const pIn = E.out(seg(t, 6.75, 7.2)), pFold = E.inOut(seg(t, 14.0, 14.4));
+  vis(ph, pIn * (1 - pFold));
+  ph.style.transform = `scale(${(0.985 + 0.015 * pIn) * (1 + 0.015 * seg(t, 8, 14)) * (1 - 0.25 * pFold)})`;
+  // défilement du site
+  const y1 = E.inOut(seg(t, 8.6, 9.6)) * 600, y2 = E.inOut(seg(t, 10.3, 11.0)) * 330, y3 = E.inOut(seg(t, 12.0, 12.5)) * 200;
+  $('#scroll').style.transform = `translateY(${-(y1 + y2 + y3)}px)`;
+  // doigt : glisse pendant les défilements, tape sur Itinéraire à 12,9
+  const tap = $('#tap');
+  const drag = (a, b) => seg(t, a, b);
+  let ty = 760, tx = 300, to = 0;
+  [[8.6, 9.6], [10.3, 11.0], [12.0, 12.5]].forEach(([a, b]) => { if (t >= a - .2 && t <= b + .15) { to = 1; ty = 760 - 260 * E.inOut(drag(a, b)); } });
+  if (t >= 12.65 && t <= 13.4) { to = 1; tx = 200; ty = 640 - 0 * 1; }
+  tap.style.left = tx + 'px'; tap.style.top = ty + 'px'; vis(tap, to * .9);
+  const press = seg(t, 12.85, 12.95);
+  $('#itin').style.background = press > 0 ? '#2038EC' : 'transparent';
+  $('#itin').style.color = press > 0 ? '#fff' : '#111318';
+  $('#itin').style.borderColor = press > 0 ? '#2038EC' : '#111318';
+  // mots-clés sous le téléphone
+  const kw = $('#kw'); let k = '', ko = 0;
+  [['LA VISITE', 8.4, 10.0], ['LES HORAIRES', 10.2, 11.8], ['LE CHEMIN', 12.0, 13.8]].forEach(([w, a, b]) => { if (t >= a && t < b) { k = w; ko = E.out(seg(t, a, a + .25)) * (1 - seg(t, b - .15, b)); } });
+  kw.textContent = k; vis(kw, ko);
+  popIn($('#sit'), t, 6.85, 8.1);
+  // fiche Google 14,2 → 18,5
+  const g = $('#gcard'); const gi = E.out(seg(t, 14.2, 14.6));
+  vis(g, gi); g.style.transform = `translateY(${(1 - gi) * 40}px) scale(${0.96 + 0.04 * gi + 0.012 * seg(t, 14.6, 18.4)})`;
+  vis($('#photos'), E.out(seg(t, 14.8, 15.1)));
+  popIn($('#t3'), t, 14.4, 16.5);
+  popIn($('#q'), t, 16.65, 18.5);
+  const yn = $('#yn'); const yo = E.out(seg(t, 16.95, 17.25)) * (1 - seg(t, 18.3, 18.5)); vis(yn, yo);
+  yn.style.transform = `translateY(${(1 - E.out(seg(t, 16.95, 17.25))) * 24}px)`;
+  // ===== fin 18,5 → 25,0 =====
+  const F = $('#fin'); vis(F, t >= 18.5 ? 1 : 0);
+  const ft = t - 18.5;
+  const pp = seg(ft, 0, .25), over = 1 + .25 * Math.sin(Math.PI * pp) * (1 - pp);
+  $('#pt').setAttribute('r', 16 * E.out(pp) * over * (1 - seg(ft, 5.6, 5.9)));
+  for (let i = 0; i < NR; i++) {
+    const p = seg(ft, .15 + i * .32, .15 + i * .32 + 1.9), e = E.out(p), el = $('#r' + i);
+    el.setAttribute('r', 16 + (RMAX - 16) * e);
+    el.setAttribute('opacity', p > 0 ? (0.55 * Math.pow(1 - p, 1.6)).toFixed(3) : 0);
+  }
+  const out = 1 - seg(ft, 5.5, 5.75);
+  [['#l1', .45], ['#l2', .85], ['#l3', 1.25]].forEach(([s, a]) => { const p = E.out(seg(ft, a, a + .4)); const el = $(s); vis(el, p * out); el.style.transform = `translateY(${(1 - p) * 14}px)`; });
+  const lp = E.out(seg(ft, 1.8, 2.2)); vis($('#logo'), lp * (1 - seg(ft, 6.1, 6.25)));
+  // boucle : un rectangle lumineux se pose à la place de l'écran du téléphone de l'image 0
+  const gl = $('#glow'), gp = E.inOut(seg(ft, 6.0, 6.5));
+  vis(gl, seg(ft, 6.0, 6.15));
+  Object.assign(gl.style, { left: lerp(369, LOOP.x, gp) + 'px', top: lerp(1400, LOOP.y, gp) + 'px', width: lerp(342, LOOP.w, gp) + 'px', height: lerp(64, LOOP.h, gp) + 'px' });
+  F.style.background = `rgb(${Math.round(lerp(247, 22, gp))},${Math.round(lerp(247, 22, gp))},${Math.round(lerp(244, 26, gp))})`;
+}
+window.render = render;
+const loadImg = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
+(async () => {
+  for (let i = 1; i <= NF; i++) frames.push(await loadImg(`intro/f${String(i).padStart(3, '0')}.jpg`));
+  await Promise.all(['600 40px IS', '500 40px IS', '600 40px PM'].map(f => document.fonts.load(f)));
+  await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+  render(q.has('t') ? +q.get('t') : 0); window.READY = true;
+})();
+</script>
+</body>
+</html>
