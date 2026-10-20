@@ -38,7 +38,7 @@
 .sv3 em{font-style:normal;font-weight:600;white-space:nowrap;border-bottom:1.5px solid currentColor;padding-bottom:1px}
 .sv3 a:hover b,.sv3 a:hover em{color:var(--klein)}
 @media (max-width:700px){.sv3 a{grid-template-columns:32px minmax(0,1fr)}.sv3 em{grid-column:2;justify-self:start;margin-top:4px}}
-/* v24 · Le Fil (le matin) */
+/* v24 · Le Fil, v27.1 Réseaux sociaux (le matin) */
 .fil h2{margin-top:14px;max-width:18ch}
 .f-lede{margin-top:20px;max-width:34em}
 .f-h3{margin-top:clamp(64px,8vw,112px);font-size:clamp(24px,2.4vw,32px);letter-spacing:-.02em}
@@ -159,7 +159,7 @@ html:not(.js) .e-pick{display:none}
  <h2 id="hW" class="rv">Votre commerce, en ligne et en mouvement.</h2>
  <ol class="sv3">
   <li class="rv"><a href="#prix"><i>01</i><span class="sv-t"><b>Votre site.</b><span>Il s’ouvre sur votre commerce en 3D, avec vos prix, vos horaires et WhatsApp.</span></span><em>Sites et prix <span aria-hidden="true">→</span></em></a></li>
-  <li class="rv"><a href="#fil"><i>02</i><span class="sv-t"><b>Votre contenu, {{FIL:cadence}}.</b><span>Une vidéo ou un post pour Instagram, fait par nous et publié pour vous.</span></span><em>Le Fil <span aria-hidden="true">→</span></em></a></li>
+  <li class="rv"><a href="#reseaux"><i>02</i><span class="sv-t"><b>Votre contenu, {{FIL:cadence}}.</b><span>Une vidéo ou un post pour Instagram, fait par nous et publié pour vous.</span></span><em>Réseaux sociaux <span aria-hidden="true">→</span></em></a></li>
   <li class="rv"><a href="#telephone"><i>03</i><span class="sv-t"><b>Votre téléphone, quand vous ne pouvez pas décrocher.</b><span>Une voix prend le message ou le rendez-vous.</span></span><em>Le téléphone <span aria-hidden="true">→</span></em></a></li>
  </ol>
 </div></section>
@@ -230,8 +230,8 @@ html:not(.js) .e-pick{display:none}
  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Si vous arrêtez, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
 </div></section>
 
-<section class="bg-morning fil" id="fil" data-sw="fil" data-swl="Un exemple pour mon commerce" aria-labelledby="hF"><div class="in">
- <p class="mono rv">Le Fil · contenu pour vos réseaux</p>
+<section class="bg-morning fil" id="reseaux" data-sw="fil" data-swl="Un exemple pour mon commerce" aria-labelledby="hF"><div class="in">
+ <p class="mono rv">Réseaux sociaux · du contenu {{FIL:cadence}}, publié tout seul</p>
  <h2 id="hF" class="rv">{{FIL:Cadence}}, votre commerce publie. Vous, vous ne faites rien.</h2>
  <p class="lede rv f-lede">Une vidéo courte ou un post, fait par nous dans le style de votre commerce, mis en ligne sur votre Instagram {{FIL:cadence}}, automatiquement.</p>
  {{INC:fil-matin.html}}
@@ -241,7 +241,7 @@ html:not(.js) .e-pick{display:none}
   <div class="rv"><h3>Ce qu’on ne promet pas.</h3><p>Des abonnés, des likes ou des ventes. On promet la régularité : votre commerce visible {{FIL:cadence}}, dans un style soigné.</p></div>
  </div>
  <p class="f-px rv">{{FIL:prix}}</p>
- <div class="act f-act rv"><a class="btn" href="{{WA_FIL}}" data-wa="fil" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir un exemple pour mon commerce</span></a><a class="lnk" href="{{FIL}}">Tout sur Le Fil →</a></div>
+ <div class="act f-act rv"><a class="btn" href="{{WA_FIL}}" data-wa="fil" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir un exemple pour mon commerce</span></a><a class="lnk" href="{{RESEAUX}}">Tout sur les réseaux sociaux →</a></div>
 </div></section>
 
 <section class="bg-ink tel" id="telephone" data-sw="tel" data-swl="Une voix pour mes appels" aria-labelledby="hT"><div class="in tel-in">
@@ -279,12 +279,12 @@ html:not(.js) .e-pick{display:none}
  <div class="in qa">
   <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
   <div class="faq">
-   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine {{PX:vit_m}} par mois, l’Entrée 3D {{PX:e3_m}} par mois, l’Entrée réelle {{PX:reel_m}} par mois. Sans engagement : résiliable chaque mois. La mise en ligne coûte {{PX:setup}} pour La Vitrine, {{PX:e3_setup}} pour l’Entrée 3D et {{PX:reel_setup}} pour l’Entrée réelle, tournage compris ; elle se paie seulement si le site terminé vous plaît.</p><p>Avant tout paiement, vous recevez votre maquette, ou une première image de votre façade en 3D, offerte. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit.</p><p>Le Fil : {{FIL:prix}} Le téléphone : dès {{PX:tel_ess}} par mois, sans engagement, <a href="{{TELEPHONE}}#prix">voir les forfaits</a>.</p></div></div></details>
+   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine {{PX:vit_m}} par mois, l’Entrée 3D {{PX:e3_m}} par mois, l’Entrée réelle {{PX:reel_m}} par mois. Sans engagement : résiliable chaque mois. La mise en ligne coûte {{PX:setup}} pour La Vitrine, {{PX:e3_setup}} pour l’Entrée 3D et {{PX:reel_setup}} pour l’Entrée réelle, tournage compris ; elle se paie seulement si le site terminé vous plaît.</p><p>Avant tout paiement, vous recevez votre maquette, ou une première image de votre façade en 3D, offerte. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit.</p><p>Les réseaux sociaux : {{FIL:prix}} Le téléphone : dès {{PX:tel_ess}} par mois, sans engagement, <a href="{{TELEPHONE}}#prix">voir les forfaits</a>.</p></div></div></details>
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
    <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour l’Entrée 3D : nous envoyer quelques photos de votre façade et de votre salle. On en fait votre entrée en 3D, en motion design (les exemples de cette page, eux, sont des commerces inventés). Pour l’Entrée réelle, on vient tourner chez vous. Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l'entrée et on s'occupe de votre fiche Google.</p></div></div></details>
-   <details><summary>Le Fil, c’est vraiment automatique ?</summary><div class="fa"><div><p>Oui. On prépare chaque publication, vous recevez l’aperçu la veille, et elle se publie seule le matin. Vous pouvez dire « Stop », jamais être obligé de dire « Oui ».</p></div></div></details>
+   <details><summary>Mes réseaux sociaux, c’est vraiment automatique ?</summary><div class="fa"><div><p>Oui. On prépare chaque publication, vous recevez l’aperçu la veille, et elle se publie seule le matin. Vous pouvez dire « Stop », jamais être obligé de dire « Oui ».</p></div></div></details>
    <details><summary>Il me faut un compte particulier ?</summary><div class="fa"><div><p>Un compte Instagram professionnel (gratuit). On vous aide à le passer en professionnel si besoin. Instagram se publie automatiquement ; pour TikTok et votre fiche Google, on vous dit ce qui est possible pour votre compte.</p></div></div></details>
-   <details><summary>Le Fil sans site OONDE ?</summary><div class="fa"><div><p>Oui, il se prend seul.</p></div></div></details>
+   <details><summary>Les réseaux sociaux sans site OONDE ?</summary><div class="fa"><div><p>Oui, ce service se prend seul.</p></div></div></details>
    <details><summary>Le téléphone : mes clients savent que c’est une IA ?</summary><div class="fa"><div><p>Oui, la voix se présente. Ce qu’elle ne sait pas, elle vous le passe, avec le résumé de l’appel par message. <a href="{{TELEPHONE}}">Comment ça marche</a></p></div></div></details>
    <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements envoyés par message. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine, c'est compris.</p><p>Pour Google, on met en place tout ce qu'il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
    <details><summary>Et le site, sur un téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
@@ -302,7 +302,7 @@ html:not(.js) .e-pick{display:none}
 <nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="e3" data-swb="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l data-swl="Recevoir mon aperçu 3D">Recevoir mon aperçu 3D</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{FIL}}">Le Fil</a><a href="{{TELEPHONE}}">Le téléphone</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VISITE}}">La visite complète</a><a href="{{VITRINE}}">La Vitrine</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{RESEAUX}}">Réseaux sociaux</a><a href="{{TELEPHONE}}">Le téléphone</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VISITE}}">La visite complète</a><a href="{{VITRINE}}">La Vitrine</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
  <div class="fq"><p class="also2">Aussi : <a href="tel:+41779283540">077 928 35 40</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon commerce</a></p><div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
  <p class="cours">Cours et formations pour commerçants : sur demande, <a href="{{WA_COURS}}" data-wa="cours" target="_blank" rel="noopener">par WhatsApp</a>.</p>
  <p class="seo">Sites internet avec entrée en 3D, sites simples, contenu pour Instagram et voix au téléphone, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>

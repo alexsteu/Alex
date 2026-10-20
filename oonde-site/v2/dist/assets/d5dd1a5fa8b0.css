@@ -1,5 +1,5 @@
 
-/* les vidéos (Le Fil, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
+/* les vidéos (Réseaux sociaux, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
 .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
 .bg-ink .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
 .v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
@@ -12,7 +12,7 @@
 .cap{margin-top:16px}
 .cap .mono{font-size:11px;letter-spacing:.14em;display:block}
 .cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
-/* v23 · les démos de nos services vidéo (accueil, Le Fil) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
+/* v23 · les démos de nos services vidéo (accueil, Réseaux sociaux) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
    Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
 .v.w{aspect-ratio:16/9}
 .v .snd span{display:none}
@@ -24,7 +24,7 @@
 @media (min-width:861px){
  .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
 }
-/* v24 · Le Fil (accueil et /fil) : « le matin ». Un crème chaud, l'heure en IBM Plex Mono, le seul bleu Klein sur le rond « en ligne ».
+/* v24 · Le Fil, v27.1 Réseaux sociaux (accueil et /reseaux) : « le matin ». Un crème chaud, l'heure en IBM Plex Mono, le seul bleu Klein sur le rond « en ligne ».
    Le téléphone : un fil générique (pas de logo), la vidéo de démo muette en boucle ; en défilant, l'heure avance : 18:00 (l'aperçu
    WhatsApp glisse), 7:30 (le post se pose), la journée. Une seule animation, liée au défilement (fil.js). */
 .bg-morning{background:#F6F1EA}
@@ -76,7 +76,7 @@
 @media (min-width:861px){.vrail.v3{grid-template-columns:repeat(3,minmax(0,1fr))}.vrail.v6{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:48px}}
 /* au téléphone, les boutons longs (« Recevoir un exemple pour mon commerce ») passent sur deux lignes au lieu d'être coupés */
 @media (max-width:480px){main .act .btn{white-space:normal;max-width:100%}main .act .btn span{white-space:normal;text-align:left;line-height:1.25}}
-/* v24 · Le Fil (remplace « La Pub ») : le contenu publié chaque matin, en abonnement. Brief page-vente § 4.
+/* v24 · Le Fil, v27.1 Réseaux sociaux (remplace « La Pub ») : le contenu publié chaque matin, en abonnement. Brief page-vente § 4.
    Le premier écran au matin (crème), la matinée dans le téléphone, ce qui sort sur le fil, ce que vous faites et ne faites pas,
    vous gardez la main, ce qu'on ne promet pas, le prix, les questions, l'encre pour finir. */
 .f-hero{padding-block:clamp(64px,9vw,140px) clamp(40px,5vw,72px)}

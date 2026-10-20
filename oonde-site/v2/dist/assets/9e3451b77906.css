@@ -32,7 +32,7 @@
 .pz{font:600 clamp(48px,6.4vw,80px)/1 var(--sans);letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin-top:clamp(32px,4vw,48px)}
 .pz small{font-size:.3em;font-weight:500;letter-spacing:0;color:var(--muted);margin-right:.3em;vertical-align:.9em}
 #prix .lede{margin-top:28px}#prix .micro{margin:24px auto 0;max-width:40em;color:var(--muted)}#prix .go{margin-top:28px}
-/* les vidéos (Le Fil, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
+/* les vidéos (Réseaux sociaux, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
 .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
 .bg-ink .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
 .v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
@@ -45,7 +45,7 @@
 .cap{margin-top:16px}
 .cap .mono{font-size:11px;letter-spacing:.14em;display:block}
 .cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
-/* v23 · les démos de nos services vidéo (accueil, Le Fil) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
+/* v23 · les démos de nos services vidéo (accueil, Réseaux sociaux) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
    Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
 .v.w{aspect-ratio:16/9}
 .v .snd span{display:none}

@@ -384,7 +384,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
   if(FINE&&!RM){box.addEventListener('mouseenter',()=>{if(!cur||!cur.classList.contains('sound'))play(box,false)});box.addEventListener('mouseleave',()=>{if(cur===box&&!box.classList.contains('sound'))stop(box)})}});
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&cur)stop(cur)});   /* v25 : onglet caché, la vidéo s'arrête */
 })();
-/* v24 · Le Fil : la matinée dans le téléphone suit le défilement (une seule animation). La vidéo de démo, muette, ne se charge
+/* v24 · Le Fil, v27.1 Réseaux sociaux : la matinée dans le téléphone suit le défilement (une seule animation). La vidéo de démo, muette, ne se charge
    qu'une fois le bloc à l'écran. Mouvement réduit : l'état « publié », sans animation, les trois temps lisibles. */
 (()=>{const RMf=matchMedia('(prefers-reduced-motion: reduce)').matches;
  document.querySelectorAll('[data-fm]').forEach(fm=>{const c=fm.dataset.c.split('|'),clk=fm.querySelector('.fm-clk'),li=[...fm.querySelectorAll('.fm-t li')],v=fm.querySelector('video');let st=-1,raf=0,vis=false;
