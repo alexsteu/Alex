@@ -110,7 +110,7 @@ const lerp = (a, b, p) => a + (b - a) * p;
 const E = { out: t => 1 - Math.pow(1 - t, 3), inOut: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2 };
 const q = new URLSearchParams(location.search);
 if (q.has('safe')) document.body.classList.add('show-safe');
-window.DURATION = 25.0;
+window.DURATION = 25.3;
 const NF = window.NF || 0;               // nombre d'images de l'intro (intro/f001.jpg …), défini dans frames.js
 const INTRO = 6.5;
 const cv = $('#cv'), cx = cv.getContext('2d');
@@ -195,18 +195,18 @@ function render(t) {
   const F = $('#fin'); vis(F, t >= 18.5 ? 1 : 0);
   const ft = t - 18.5;
   const pp = seg(ft, 0, .25), over = 1 + .25 * Math.sin(Math.PI * pp) * (1 - pp);
-  $('#pt').setAttribute('r', 16 * E.out(pp) * over * (1 - seg(ft, 5.6, 5.9)));
+  $('#pt').setAttribute('r', 16 * E.out(pp) * over * (1 - seg(ft, 5.85, 6.05)));
   for (let i = 0; i < NR; i++) {
     const p = seg(ft, .15 + i * .32, .15 + i * .32 + 1.9), e = E.out(p), el = $('#r' + i);
     el.setAttribute('r', 16 + (RMAX - 16) * e);
     el.setAttribute('opacity', p > 0 ? (0.55 * Math.pow(1 - p, 1.6)).toFixed(3) : 0);
   }
-  const out = 1 - seg(ft, 5.5, 5.75);
+  const out = 1 - seg(ft, 5.85, 6.05);
   [['#l1', .45], ['#l2', .85], ['#l3', 1.25]].forEach(([s, a]) => { const p = E.out(seg(ft, a, a + .4)); const el = $(s); vis(el, p * out); el.style.transform = `translateY(${(1 - p) * 14}px)`; });
   const lp = E.out(seg(ft, 1.8, 2.2)); vis($('#logo'), lp * out);
   // boucle : un rectangle lumineux se pose à la place de l'écran du téléphone de l'image 0
-  const gl = $('#glow'), gp = E.inOut(seg(ft, 6.0, 6.5));
-  vis(gl, seg(ft, 6.0, 6.15));
+  const gl = $('#glow'), gp = E.inOut(seg(ft, 6.0, 6.55));
+  vis(gl, seg(ft, 6.0, 6.12));
   Object.assign(gl.style, { left: lerp(369, LOOP.x, gp) + 'px', top: lerp(1400, LOOP.y, gp) + 'px', width: lerp(342, LOOP.w, gp) + 'px', height: lerp(64, LOOP.h, gp) + 'px' });
   F.style.background = `rgb(${Math.round(lerp(247, 22, gp))},${Math.round(lerp(247, 22, gp))},${Math.round(lerp(244, 26, gp))})`;
 }
