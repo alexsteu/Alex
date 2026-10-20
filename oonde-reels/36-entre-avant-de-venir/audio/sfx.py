@@ -1,4 +1,5 @@
-# Reel 36 : bruitages synthétisés (pluie, carillon, clac, tap, pops, anneaux). Usage : python3 sfx.py out.wav DUR
+# Reel 36 : bruitages synthétisés (pluie, carillon, clac, tap, pops, anneaux), en temps du contenu
+# (avant les deux coupes du montage). Usage : python3 sfx.py out.wav DUR
 import sys, wave
 import numpy as np
 out, DUR = sys.argv[1], float(sys.argv[2])
@@ -53,13 +54,17 @@ def tick(f=1800, d=.05, g=1.0):
 
 for a in (8.4, 10.2, 12.0): add(tick(1400, .08), a, .18)          # mots-clés
 add(tick(2600, .04) + tick(900, .04), 12.85, .3)                 # tap sur Itinéraire
-add(tick(700, .12), 14.2, .22); add(tick(1100, .1), 14.3, .12)   # fiche Google
-add(tick(1500, .07), 17.3, .16); add(tick(1900, .07), 17.4, .14) # OUI / NON
+add(tick(700, .12), 14.3, .22); add(tick(1100, .1), 14.4, .12)   # fiche Google
+add(tick(1500, .07), 17.3, .16); add(tick(1900, .07), 17.5, .14) # OUI / NON
 
 # anneaux de fin 18,5 : petit « ding » sourd
 x = np.arange(int(1.4 * SR)) / SR
 add(np.sin(2 * np.pi * 587.3 * x) * np.exp(-x / .5) * np.minimum(1, x / .01), 18.5, .12)
 
+# la pluie revient sur la boucle (fin du contenu, 0,4 s) pour rejoindre l'image 0
+r0 = int((DUR - .4) * SR)
+for ch in (L, R):
+    w = rng.standard_normal(n - r0); ch[r0:] += 0.05 * (w - lp(w, 0.35)) * np.linspace(0, 1, n - r0)
 st = np.stack([L, R], 1); st = st / max(1e-9, np.abs(st).max()) * 0.5
 w = wave.open(out, 'wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
 w.writeframes((st * 32767).astype('<i2').tobytes()); w.close()
