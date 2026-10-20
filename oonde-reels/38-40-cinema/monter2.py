@@ -111,6 +111,35 @@ for T, arr in layers:
         lay = np.roll(arr, dy, axis=0) if dy else arr
         al = lay[..., 3:4].astype(np.float32) / 255 * op
         frames[i] = (frames[i] * (1 - al) + lay[..., :3][..., ::-1].astype(np.float32) * al).astype(np.uint8)
+# calques animés image par image : interface de drone (osd) et notification qui descend (notif)
+def blend(i, im):
+    a = np.array(im); al = a[..., 3:4].astype(np.float32) / 255
+    frames[i] = (frames[i] * (1 - al) + a[..., :3][..., ::-1].astype(np.float32) * al).astype(np.uint8)
+mono = lambda s: font('ibm-plex-mono-latin-600-normal.woff2', s)
+for D in P.get('dyn', []):
+    a0, a1 = int(D['t0'] * FPS), min(len(frames), int(D['t1'] * FPS))
+    for i in range(a0, a1):
+        t = (i - a0) / FPS; im = Image.new('RGBA', (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+        if D['type'] == 'osd':
+            wh = (255, 255, 255, 215); m, L = 90, 70
+            for (x, y, sx, sy) in ((m, 330, 1, 1), (W - m, 330, -1, 1), (m, 1480, 1, -1), (W - m, 1480, -1, -1)):
+                d.line((x, y, x + sx * L, y), fill=wh, width=4); d.line((x, y, x, y + sy * L), fill=wh, width=4)
+            if int(t * 2) % 2 == 0: d.ellipse((m + 20, 360, m + 44, 384), fill=(235, 40, 40, 230))
+            f = mono(34); d.text((m + 56, 354), 'REC', font=f, fill=wh)
+            tc = D.get('tc0', 0) + t; d.text((W - m - 260, 354), f"00:00:{int(tc):02d}:{int(tc % 1 * 25):02d}", font=f, fill=wh)
+            sp = D['spd'](t) if callable(D.get('spd')) else max(0, D.get('v0', 92) * (1 - (t / max(.01, D.get('stop', 99))) ** 3) if t < D.get('stop', 99) else 0)
+            d.text((m + 20, 1400), f"{sp:5.0f} KM/H", font=f, fill=wh)
+            d.text((W - m - 250, 1400), f"ALT {1.4 + 0.3 * np.sin(t * 2.1):.1f} M", font=f, fill=wh)
+            cx, cy = W // 2, H // 2; d.line((cx - 26, cy, cx + 26, cy), fill=(255, 255, 255, 120), width=3); d.line((cx, cy - 26, cx, cy + 26), fill=(255, 255, 255, 120), width=3)
+        elif D['type'] == 'notif':
+            u = min(1, t / 0.45); e = 1 - (1 - u) ** 3; v = min(1, (a1 - i) / (0.3 * FPS)); y = int(-260 + (D.get('y', 330) + 260) * e - (1 - v) * 300)
+            x0, x1 = 80, W - 80; d.rounded_rectangle((x0, y, x1, y + 190), 34, fill=(247, 247, 244, 245))
+            d.ellipse((x0 + 34, y + 47, x0 + 130, y + 143), fill=(32, 56, 236, 255))
+            d.text((x0 + 82, y + 95), D.get('icon', '✓'), font=font('instrument-sans-latin-600-normal.woff2', 52), fill=(255, 255, 255, 255), anchor='mm')
+            d.text((x0 + 160, y + 44), D['title'], font=font('instrument-sans-latin-600-normal.woff2', 44), fill=(17, 19, 24, 255))
+            d.text((x0 + 160, y + 106), D['body'], font=font('instrument-sans-latin-500-normal.woff2', 38), fill=(58, 63, 71, 255))
+            d.text((x1 - 34, y + 48), D.get('when', 'maintenant'), font=font('instrument-sans-latin-500-normal.woff2', 30), fill=(107, 112, 120, 255), anchor='ra')
+        blend(i, im)
 tmp = OUT + '.avi'; vw = cv2.VideoWriter(tmp, cv2.VideoWriter_fourcc(*'MJPG'), FPS, (W, H))
 for f in frames: vw.write(f)
 vw.release(); dur = len(frames) / FPS
