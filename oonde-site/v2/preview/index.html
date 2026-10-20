@@ -1294,7 +1294,8 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  /* les enseignes (pins.json : à l'arrêt devant chaque façade, le rectangle de son enseigne ; dans sa salle, le mur du fond) */
  fetch('img/e3d/v/pins.json').then(r=>r.json()).then(j=>{PINS=j;place()}).catch(()=>{});
  let signQ=null;
- function place(){if(!PINS||!fitB){return}const P=PINS[set]||{};const q=st==='in'?null:P.stop&&P.stop[met];
+ /* v27.4.1 : l'enseigne attend l'arrêt : pendant le titre, l'intro et le saut (la façade n'est pas encore là), rien ; arrive() → place() la fait fondre (.35 s) */
+ function place(){if(!PINS||!fitB){return}const P=PINS[set]||{};const q=(st==='in'||st==='title'||st==='intro'||st==='skip')?null:P.stop&&P.stop[met];
   if(q&&st!=='glide'&&st!=='door'){e3quad(sign,q,1000,127,fitB);put(sign,'opacity','1');signQ={c:q,f:fitB}}else{put(sign,'opacity','0')}
   const w=st==='in'?P.room&&P.room[met]:null;if(st!=='door')e3place(rwall,w?[{id:'wall',c:w,vis:1}]:null,fitB)}
  /* le nom : sur l'enseigne, en néon. Seules les lettres nouvelles s'allument ; la largeur et la taille suivent en douceur. */
@@ -1392,7 +1393,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  const curY=()=>scrollY-y0;
  function size(){const k=r0();if(k!==set){set=k;hold.src='';flag(u,'held',false);if(st==='intro'||st==='title'){try{vIn.pause()}catch(e){}flag(vIn,'on',false);holdTo('stop-'+HOME).then(()=>{if(st==='intro'||st==='title')arrive()})}else if(st==='stop'||st==='glide'){holdTo('stop-'+met);ent=null;entryLoad()}else if(st==='in')holdTo('room-'+met);else if(st==='door'){ent=null}}geo()}
  /* mouvement réduit, ou le film qui ne vient pas : l'image de l'arrêt, la carte, rien ne bloque */
- function toStill(){thumb();u.classList.add('static');poster.src=img('stop-'+HOME);poster.parentNode.querySelectorAll('source').forEach(s=>s.remove());flag(u,'intro',false);st='stop';met=met||HOME;card(true);pin(false)}
+ function toStill(){thumb();u.classList.add('static');poster.src=img('stop-'+HOME);poster.parentNode.querySelectorAll('source').forEach(s=>s.remove());flag(u,'intro',false);st='stop';met=met||HOME;card(true);pin(false);place()}
  function flat(){if(!LIVE)return;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');for(const el of [t1,say,stop,sbar,end,sign]){el.style.opacity='';el.style.transform=''}memo.clear();for(const v of [vIn,vG,vE]){try{v.pause();v.removeAttribute('src');v.load()}catch(e){}flag(v,'on',false)}toStill();geo()}
  E3F.then(x=>{fmt=x==='a'?'avif':'jpg';set=r0();if(!LIVE){toStill();return}if(vIn.error||vIn.networkState===3&&!vIn.readyState){flat();return}   /* le clip manque (ou le réseau) : l'image de l'arrêt, sans attendre */
   /* l'intro : prête, elle attend HOLD_MS sur la carte-titre (ou un geste), puis part ; réseau lent si elle n'est pas prête à 4 s */
