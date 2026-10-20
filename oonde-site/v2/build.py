@@ -11,9 +11,13 @@ def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
 # Source : telephone-ia/offre.md, « Texte pour le site » (proposition v2, à valider par Alexandre).
 TEL_OFFRES = {'tel_ess': 149, 'tel_pro': 249, 'tel_pre': 449, 'tel_ess_setup': 290, 'tel_pro_setup': 390, 'tel_pre_setup': 490}
 TEL_MIN = '0.40'   # la minute au-delà du forfait, en francs
+# v27.2 · Rush (gros volume) : une ligne discrète sous les cartes, jamais une quatrième carte (Pro reste le centre).
+TEL_RUSH = {'tel_rush': 590, 'tel_rush_setup': 490}
+TEL_RUSH_MIN, TEL_RUSH_CALLS = '1 800', '1 200'
 PX = {k + '_m': chf(OFFRES[k]) for k in ('vit', 'e3', 'reel')} | {k: chf(OFFRES[k]) for k in ('setup', 'e3_setup', 'reel_setup')} \
    | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}"} \
    | {k: chf(v) for k, v in TEL_OFFRES.items()} | {k + '_n': str(v) for k, v in TEL_OFFRES.items()} | {'tel_min': TEL_MIN} \
+   | {k: chf(v) for k, v in TEL_RUSH.items()} | {'tel_rush_min': TEL_RUSH_MIN, 'tel_rush_calls': TEL_RUSH_CALLS} \
    | {'tel_pro_jour': f"moins de {-(-TEL_OFFRES['tel_pro'] * 12 // 365)}.–"}
 def walink(msg): return 'https://wa.me/41779283540?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
