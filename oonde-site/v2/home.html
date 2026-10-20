@@ -13,7 +13,7 @@
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="OONDE">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Sites internet avec une entrée en 3D pour les commerces de Genève à Montreux, et sites simples reliés à la fiche Google.","url":"https://oonde.ch/","telephone":"+41764882710","email":"oonde.contact@gmail.com","image":"https://oonde.ch/img/og-e3d.jpg","logo":"https://oonde.ch/apple-touch-icon.png","priceRange":"CHF 490 – 1490","currenciesAccepted":"CHF","paymentAccepted":"Virement bancaire, TWINT","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressLocality":"Préverenges","postalCode":"1028","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"sameAs":["https://www.instagram.com/oonde_studio","https://www.tiktok.com/@oonde"],"makesOffer":[{"@type":"Offer","name":"La Vitrine : site relié à la fiche Google","url":"https://oonde.ch/vitrine#vitrine-prix","priceCurrency":"CHF","price":"490","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Création, facturée seulement si le site est validé","price":"490","priceCurrency":"CHF"},{"@type":"UnitPriceSpecification","name":"Hébergement, domaine et petites modifications","price":"20","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1}],"itemOffered":{"@type":"Service","name":"La Vitrine","serviceType":"Création de site internet"}},{"@type":"Offer","name":"L’entrée 3D : site avec une entrée en 3D","url":"https://oonde.ch/#prix","itemOffered":{"@type":"Service","name":"L’entrée 3D","serviceType":"Site internet avec entrée en 3D, visite complète du lieu en option"},"priceSpecification":{"@type":"PriceSpecification","priceCurrency":"CHF","minPrice":"990","description":"Selon le lieu, prix par écrit sous 48 heures"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","description":"Sites internet avec une entrée en 3D pour les commerces de Genève à Montreux, et sites simples reliés à la fiche Google.","url":"https://oonde.ch/","telephone":"+41764882710","email":"oonde.contact@gmail.com","image":"https://oonde.ch/img/og-e3d.jpg","logo":"https://oonde.ch/apple-touch-icon.png","priceRange":"CHF {{PX:vit_n}} – {{PX:reel_n}} par mois","currenciesAccepted":"CHF","paymentAccepted":"Virement bancaire, TWINT","knowsLanguage":"fr","address":{"@type":"PostalAddress","addressLocality":"Préverenges","postalCode":"1028","addressRegion":"Vaud","addressCountry":"CH"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"sameAs":["https://www.instagram.com/oonde_studio","https://www.tiktok.com/@oonde"],"makesOffer":[{"@type":"Offer","name":"La Vitrine","url":"https://oonde.ch/#prix","priceCurrency":"CHF","price":"{{PX:vit_n}}","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Abonnement mensuel, sans engagement, résiliable chaque mois","price":"{{PX:vit_n}}","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1},{"@type":"UnitPriceSpecification","name":"Mise en ligne, facturée seulement si le site terminé plaît","price":"{{PX:setup_n}}","priceCurrency":"CHF"}],"itemOffered":{"@type":"Service","name":"La Vitrine","serviceType":"Site internet et fiche Google"}},{"@type":"Offer","name":"Entrée 3D","url":"https://oonde.ch/#prix","priceCurrency":"CHF","price":"{{PX:e3_n}}","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Abonnement mensuel, sans engagement, résiliable chaque mois","price":"{{PX:e3_n}}","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1},{"@type":"UnitPriceSpecification","name":"Mise en ligne, facturée seulement si le site terminé plaît","price":"{{PX:e3_setup_n}}","priceCurrency":"CHF"}],"itemOffered":{"@type":"Service","name":"Entrée 3D","serviceType":"Site internet avec entrée en 3D"}},{"@type":"Offer","name":"Entrée réelle","url":"https://oonde.ch/#prix","priceCurrency":"CHF","price":"{{PX:reel_n}}","priceSpecification":[{"@type":"UnitPriceSpecification","name":"Abonnement mensuel, sans engagement, résiliable chaque mois","price":"{{PX:reel_n}}","priceCurrency":"CHF","unitCode":"MON","billingIncrement":1},{"@type":"UnitPriceSpecification","name":"Mise en ligne et tournage, facturés seulement si le site terminé plaît","price":"{{PX:reel_setup_n}}","priceCurrency":"CHF"}],"itemOffered":{"@type":"Service","name":"Entrée réelle","serviceType":"Site internet avec entrée et visite filmées sur place"}}]},{"@type":"WebSite","@id":"https://oonde.ch/#site","url":"https://oonde.ch/","name":"OONDE","inLanguage":"fr-CH","publisher":{"@id":"https://oonde.ch/#oonde"}}]}</script>
 {{FONTS}}
 <script>document.documentElement.classList.add('js');{const q=new URLSearchParams(location.search);if(q.get('m'))location.replace('{{VITRINE}}'+location.search)}</script>
 {{E3PRE}}
@@ -21,19 +21,67 @@
 {{INC:base.css}}
 {{INC:e3d.css}}
 {{INC:rue.css}}
+{{INC:pub.css}}
+{{INC:fil.css}}
+{{INC:chat.css}}
 /* v20 · l'accueil « Apple minimal » : une idée par écran */
 /* les deux offres : deux colonnes sans bordure, le prix en grand */
 #prix>.in>h2{margin-bottom:clamp(48px,6vw,88px)}
-.offers2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,6vw,96px)}
-.offers2 h3{font-size:clamp(24px,2.2vw,30px);letter-spacing:-.02em}
-.o-p{font:600 clamp(56px,6vw,80px)/1 var(--sans);letter-spacing:-.04em;margin-top:14px;font-variant-numeric:tabular-nums}
-.o-p small{font-size:.36em;font-weight:500;letter-spacing:-.01em;color:var(--muted);vertical-align:.9em;margin-right:.2em}
-.o-m{margin-top:10px;font-size:16px;color:var(--muted)}
-.o-s{margin-top:24px;color:var(--soft);max-width:30em}
-.o-go{margin-top:32px;display:grid;gap:14px;justify-items:start}
-.o-opt{margin-top:clamp(56px,7vw,96px);color:var(--soft);max-width:44em}
-@media (max-width:860px){.offers2{grid-template-columns:minmax(0,1fr)}.o-p{font-size:48px}}
-@media (max-width:480px){.o-go .btn{width:100%}}
+{{INC:offres.css}}
+/* v24 · « Ce qu'on fait pour vous » : trois lignes, des ancres (pas des cartes), dans l'ordre d'Alexandre */
+.sv h2{margin-top:14px;max-width:16ch}
+.sv3{list-style:none;margin:clamp(36px,5vw,64px) 0 0;padding:0;border-top:1px solid var(--ink)}
+.sv3 li{border-bottom:1px solid var(--line)}
+.sv3 a{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:clamp(12px,3vw,40px);align-items:baseline;padding:clamp(20px,2.6vw,32px) 0;text-decoration:none;color:inherit}
+.sv3 i{font:500 13px var(--mono);letter-spacing:.14em;color:var(--muted);font-style:normal}
+.sv3 b{display:block;font:600 clamp(22px,2.6vw,36px)/1.1 var(--sans);letter-spacing:-.025em}
+.sv3 .sv-t>span{display:block;margin-top:8px;color:var(--soft);font-size:clamp(16px,1.4vw,19px);max-width:34em}
+.sv3 em{font-style:normal;font-weight:600;white-space:nowrap;border-bottom:1.5px solid currentColor;padding-bottom:1px}
+.sv3 a:hover b,.sv3 a:hover em{color:var(--klein)}
+@media (max-width:700px){.sv3 a{grid-template-columns:32px minmax(0,1fr)}.sv3 em{grid-column:2;justify-self:start;margin-top:4px}}
+/* v24 · Le Fil (le matin) */
+.fil h2{margin-top:14px;max-width:18ch}
+.f-lede{margin-top:20px;max-width:34em}
+.f-h3{margin-top:clamp(64px,8vw,112px);font-size:clamp(24px,2.4vw,32px);letter-spacing:-.02em}
+.fil .vrail{margin-top:clamp(24px,3vw,36px)}
+.f-do{margin-top:clamp(48px,6vw,80px);border-top:1px solid rgba(17,19,24,.16);padding-top:clamp(24px,3vw,36px);max-width:44em}   /* v24.1 : une seule colonne, pleine largeur de lecture */
+.f-do h3{font-size:clamp(20px,1.8vw,24px);letter-spacing:-.015em}
+.f-do ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;color:var(--soft)}.f-do p{margin-top:14px;color:var(--soft)}
+.f-px{margin-top:clamp(36px,4vw,52px);font:600 clamp(19px,1.7vw,23px) var(--sans);letter-spacing:-.01em}
+.f-act{margin-top:18px;align-items:center;gap:22px}
+/* v24 · Le téléphone (l'encre) : le résultat, pas la technologie */
+.tel-in{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(40px,6vw,96px);align-items:center}
+.tel .mono{color:rgba(255,255,255,.6)}.tel h2{margin-top:14px;max-width:15ch}
+.tel .lede{margin-top:20px;color:rgba(255,255,255,.74);max-width:30em}
+.tel-l{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:12px}
+.tel-l li{position:relative;padding-left:26px;font-size:18px}.tel-l li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:7px;border:solid #fff;border-width:0 0 2px 2px;transform:rotate(-45deg)}
+.tel-px{margin-top:28px;color:rgba(255,255,255,.74)}
+.tel .act{margin-top:20px;align-items:center;gap:22px}.tel .act .lnk{color:#fff}
+.tel-d{margin:0;position:relative}
+.tel-wv{display:block;width:100%;height:56px;margin-bottom:22px}.tel-wv path{fill:none;stroke:rgba(255,255,255,.4);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.tel-card{display:grid;gap:12px}
+.tel-card p{margin:0;display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;line-height:1.35}
+.tel-card b{display:block;font-size:16px}.tel-card small{font:500 13px var(--mono);color:rgba(255,255,255,.6)}
+.tel-miss{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+.tel-ic{flex:none;width:40px;height:40px;border-radius:50%;background:rgba(255,80,80,.16);color:#FF8A80;display:grid;place-items:center}.tel-ic svg{width:18px;height:18px}
+.tel-msg{background:#F6F1EA;color:var(--ink);font-size:17px}
+.tel-wai{flex:none;width:40px;height:40px;border-radius:12px;background:#25D366;color:#fff;display:grid;place-items:center}.tel-wai svg{width:22px;height:22px}
+.tel-d figcaption{margin-top:16px;font-size:14px;color:rgba(255,255,255,.6)}
+.js .tel-d .tel-msg{opacity:0;transform:translateY(14px) scale(.98);transition:opacity .6s var(--ez),transform .7s var(--ez)}
+.js .tel-d .tel-miss{transition:opacity .6s var(--ez),transform .6s var(--ez)}
+.js .tel-d.on .tel-msg{opacity:1;transform:none}.js .tel-d.on .tel-miss{opacity:.55;transform:scale(.97)}
+@media (max-width:860px){.tel-in{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.js .tel-d .tel-msg{opacity:1;transform:none;transition:none}}
+/* v24 · Et aussi : une rangée discrète ; la démo de l'assistant s'ouvre sur place */
+.ea{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,64px);margin-top:clamp(28px,4vw,48px)}
+.ea article{border-top:1px solid var(--ink);padding-top:20px}
+.ea h3{font-size:clamp(20px,1.8vw,24px);letter-spacing:-.015em}.ea p{margin-top:10px;color:var(--soft);max-width:30em}
+.ea-go{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:20px!important}
+.ea-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}.ea-go .btn svg{color:var(--ink)}
+.ea-chat{margin-top:clamp(32px,4vw,48px);max-width:440px;scroll-margin-top:96px}.ea-chat .chat{height:520px}
+.ea-own{margin-top:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ea-own .lnk{display:inline-flex;align-items:center;gap:8px}.ea-own .lnk svg{width:18px;height:18px;color:#25D366}
+@media (max-width:760px){.ea{grid-template-columns:1fr}}
+footer .cours{margin-top:18px;font-size:14px;color:var(--muted)}footer .cours a{text-decoration:underline;text-underline-offset:3px}
 /* le pied de page de l'accueil : les autres moyens de nous joindre et le code QR */
 .e-pick{display:inline-flex;align-items:center;gap:8px;font:500 14px var(--sans);color:var(--soft)}
 .e-pick select{min-height:46px;padding:8px 36px 8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111318' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;appearance:none;-webkit-appearance:none;font:500 15px var(--sans);color:var(--ink);cursor:pointer}
@@ -48,12 +96,12 @@ html:not(.js) .e-pick{display:none}
   <a class="logo landed" id="navLogo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
   <nav aria-label="Pages" id="navL">{{NAV:index}}<a class="nav-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
-  <a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span class="l" data-e3l>Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
+  <a class="btn" href="{{WA_IMM}}" data-wa="e3" data-swb="e3" target="_blank" rel="noopener">{{WA_ICON}}<span class="l" data-e3l data-swl="Recevoir mon aperçu 3D">Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
 
 <main id="top">
-<section id="univers" class="r" data-hero aria-labelledby="h1">
+<section id="univers" class="r intro" data-hero aria-labelledby="h1">
  <div class="r-walk" id="rWalk">
   <span class="r-anchor" id="choix" aria-hidden="true"></span><span class="r-x" aria-hidden="true"></span>
   <div class="r-stage" id="rStage">
@@ -63,27 +111,25 @@ html:not(.js) .e-pick{display:none}
     <div class="e-pins r-wall" id="rWall" aria-hidden="true"><div class="e-wall" data-id="wall"><span></span></div></div></div>
    <div class="r-sbar" id="rSbar" aria-hidden="true"><span class="r-sbn"><span id="rSbN">Votre commerce</span> <small>DÉMO</small></span><span class="r-sbb" id="rSbB">Réserver</span></div>
    <div class="r-veil" aria-hidden="true"></div>
-   <a class="r-skip" href="#choix">Passer l’intro ↓</a>
-   <div class="r-tx r-t1"><p class="mono">SITES INTERNET · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">clients</span> <em><span class="w" style="--i:2">poussent</span> <span class="w" style="--i:3">votre</span> <span class="w" style="--i:4">porte</span></em> <span class="w" style="--i:5">avant</span> <span class="w" style="--i:6">de</span> <span class="w" style="--i:7">venir.</span></h1>
+   <a class="r-skip" href="#choix">Passer l’intro</a>
+   <div class="r-tx r-t1"><span class="r-mk" aria-hidden="true">{{MARK}}</span><p class="mono r-k">SITES INTERNET · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">clients</span> <em><span class="w" style="--i:2">poussent</span> <span class="w" style="--i:3">votre</span> <span class="w" style="--i:4">porte</span></em> <span class="w" style="--i:5">avant</span> <span class="w" style="--i:6">de</span> <span class="w" style="--i:7">venir.</span></h1>
     <p class="r-sub">Nous créons votre site internet, qui s’ouvre sur votre commerce en 3D.</p>
     <div class="r-act"><a class="btn inv r-demo" href="#choix">Voir la démo</a><a class="r-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener"><span>Recevoir mon aperçu 3D</span> <span aria-hidden="true">→</span></a>
      <p class="r-off">Votre aperçu 3D : une première image de votre façade, offerte, avec le devis. Sans engagement. <a href="#prix">Voir les offres</a></p></div></div>
-   <p class="r-tx r-say" aria-hidden="true">Dehors, on hésite.</p>
-   <p class="r-tx r-say" aria-hidden="true">Sur votre site, on a déjà vu l’intérieur.</p>
    <p class="r-tx r-say r-top" aria-hidden="true">Alors on entre.</p>
-   <div class="r-tx r-stop" id="rStop" role="group" aria-labelledby="rStopH" data-step="1" tabindex="-1">
-    <div class="r-hd"><p class="r-sh" id="rStopH"><span class="r-st r-st1">Votre commerce, c’est…</span><span class="r-st r-st2">Et son nom ?</span><span class="r-st r-st3">Votre démo est prête</span> <b>Démo</b></p><span class="r-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
-    <div class="r-s r-s1"><div class="r-seg" role="radiogroup" aria-label="Votre métier"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-restaurant.jpg" width="96" height="72" alt="" decoding="async"><span>Restaurant</span></button><button type="button" role="radio" data-m="boulangerie" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-boulangerie.jpg" width="96" height="72" alt="" decoding="async"><span>Boulangerie</span></button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-coiffure.jpg" width="96" height="72" alt="" decoding="async"><span>Coiffure</span></button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-institut.jpg" width="96" height="72" alt="" decoding="async"><span>Institut</span></button><button type="button" role="radio" data-m="onglerie" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-onglerie.jpg" width="96" height="72" alt="" decoding="async"><span>Onglerie</span></button><button type="button" role="radio" data-m="logement" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-logement.jpg" width="96" height="72" alt="" decoding="async"><span>Logement</span></button></div><button type="button" class="r-next" aria-label="Suivant : Restaurant"><span class="r-nx" data-rc-m>Restaurant</span> <span aria-hidden="true">→</span></button></div>
-    <div class="r-s r-s2" hidden><div class="r-f"><label for="rName">Le nom de votre commerce <small>facultatif</small></label><input id="rName" type="text" maxlength="40" placeholder="Tapez-le, il s’allume" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div><button type="button" class="r-pass">Passer</button><p class="r-rc"><span data-rc-m>Restaurant</span> · <button type="button" class="r-chg" data-to="1">changer</button></p></div>
-    <div class="r-s r-s3" hidden><div class="r-go"><a class="r-enter" href="#rEnd">Entrer <span aria-hidden="true">→</span></a><a class="r-wa2" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></div><p class="r-rc"><span data-rc-n>Restaurant</span> · <button type="button" class="r-chg" data-to="2">modifier</button></p><p class="r-note">Rue et commerces imaginés. Pour le vôtre : on vient, on photographie, on construit.</p></div>
-    <button type="button" class="r-more" tabindex="-1" aria-hidden="true">Continuer sans choisir <span>↓</span></button>
+   <div class="r-tx r-stop" id="rStop" role="group" aria-labelledby="rStopH" tabindex="-1">
+    <div class="r-hd"><p class="r-sh" id="rStopH">Votre commerce <b>Démo</b></p><a class="r-enter" href="#rEnd">Entrer <span aria-hidden="true">→</span></a></div>
+    <div class="r-f"><label for="rName">Le nom de votre commerce (facultatif)</label><input id="rName" type="text" maxlength="40" placeholder="Le nom de votre commerce" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
+    <div class="r-seg" role="radiogroup" aria-label="Votre métier"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-restaurant.jpg" width="96" height="72" alt="" decoding="async"><span>Restaurant</span></button><button type="button" role="radio" data-m="boulangerie" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-boulangerie.jpg" width="96" height="72" alt="" decoding="async"><span>Boulangerie</span></button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-coiffure.jpg" width="96" height="72" alt="" decoding="async"><span>Coiffure</span></button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-institut.jpg" width="96" height="72" alt="" decoding="async"><span>Institut</span></button><button type="button" role="radio" data-m="onglerie" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-onglerie.jpg" width="96" height="72" alt="" decoding="async"><span>Onglerie</span></button><button type="button" role="radio" data-m="logement" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-logement.jpg" width="96" height="72" alt="" decoding="async"><span>Logement</span></button></div>
+    <p class="r-note">Rue et commerces imaginés. Pour le vôtre : on construit votre entrée d’après vos photos.</p>
+    <button type="button" class="r-more" tabindex="-1" aria-hidden="true">Continuer vers le site <span>↓</span></button>
    </div>
    <div class="r-tx r-end" id="rEnd" role="group" aria-labelledby="rEndH" tabindex="-1">
     <p class="r-eeb"><span id="rEndEb">Restaurant</span> <i class="dtag">Démo</i></p>
     <p class="r-eh" id="rEndH">Ce soir, une table vous attend.</p>
     <div class="r-ebt"><a class="r-esee" href="#entree">Voir le site <span aria-hidden="true">↓</span></a></div>
    </div>
-   <p class="r-cue" aria-hidden="true">FAITES DÉFILER<i></i></p>
+   <p class="r-cue" aria-hidden="true">Faire défiler <span>↓</span></p>
    <p class="r-load" role="status" aria-live="polite"></p>
   </div>
  </div>
@@ -105,27 +151,69 @@ html:not(.js) .e-pick{display:none}
 </section>
 <div class="w-toast" id="eToast" role="dialog" aria-labelledby="eToastT" hidden><button type="button" class="w-x" id="eX" aria-label="Fermer">×</button><b id="eToastT">Ici, vos clients vous écrivent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande par WhatsApp. Et l’entrée est faite d’après votre vrai commerce.<br><a class="btn" id="eWa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></div>
 
+<section class="bg-paper sv" id="services" aria-labelledby="hW"><div class="in">
+ <p class="mono rv">Ce qu’on fait pour vous</p>
+ <h2 id="hW" class="rv">Votre commerce, en ligne et en mouvement.</h2>
+ <ol class="sv3">
+  <li class="rv"><a href="#prix"><i>01</i><span class="sv-t"><b>Votre site.</b><span>Il s’ouvre sur votre commerce en 3D, avec vos prix, vos horaires et WhatsApp.</span></span><em>Sites et prix <span aria-hidden="true">→</span></em></a></li>
+  <li class="rv"><a href="#fil"><i>02</i><span class="sv-t"><b>Votre contenu, {{FIL:cadence}}.</b><span>Une vidéo ou un post pour Instagram, fait par nous et publié pour vous.</span></span><em>Le Fil <span aria-hidden="true">→</span></em></a></li>
+  <li class="rv"><a href="#telephone"><i>03</i><span class="sv-t"><b>Votre téléphone, quand vous ne pouvez pas décrocher.</b><span>Une voix prend le message ou le rendez-vous.</span></span><em>Le téléphone <span aria-hidden="true">→</span></em></a></li>
+ </ol>
+</div></section>
+
 <section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
- <h2 id="hP" class="rv">Deux sites, selon ce qu’il vous faut.</h2>
- <div class="offers2">
-  <article class="rv" aria-labelledby="oE">
-   <h3 id="oE">L’entrée 3D</h3>
-   <p class="o-p"><small>dès </small>990.–</p>
-   <p class="o-m">puis 20.– par mois, résiliable chaque mois</p>
-   <p class="o-s">Votre site s’ouvre sur votre façade, votre porte et votre salle, reconstruites en 3D d’après nos photos. Puis il continue, comme un site normal.</p>
-   <ul class="l4"><li>Tout ce que comprend La Vitrine</li><li>Les photos de votre lieu</li><li>L’entrée 3D, sur ordinateur et téléphone</li><li>30 % à la commande, le solde à la mise en ligne</li></ul>
-   <div class="o-go"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a><p class="micro">Première image de votre façade et devis offerts, sous 48 heures, sans engagement.</p></div>
-  </article>
-  <article class="rv" aria-labelledby="oV">
+ <h2 id="hP" class="rv">Votre site, au mois. Sans engagement.</h2>
+ <p class="lede rv o-lede">Vous voyez votre maquette avant de payer quoi que ce soit. La mise en ligne se paie seulement si le site terminé vous plaît. Vous arrêtez quand vous voulez, d’un message.</p>
+ <!-- v23 · les trois paliers. Les montants viennent tous de OFFRES dans build.py : un seul endroit à changer. -->
+ <div class="offers3">
+  <article class="o3 rv" aria-labelledby="oV">
    <h3 id="oV">La Vitrine</h3>
-   <p class="o-p">490.–</p>
-   <p class="o-m">puis 20.– par mois, résiliable chaque mois</p>
-   <p class="o-s">Un site d’une page, sans 3D, pour être bien trouvé sur Google. Vous voyez la maquette avant de payer : 490.– une fois, seulement si vous validez le site terminé.</p>
-   <ul class="l4"><li>Prestations, prix, horaires, plan et WhatsApp</li><li>Les textes et votre fiche Google</li><li>L’adresse .ch et l’hébergement</li><li>Deux séries de corrections</li></ul>
-   <div class="o-go"><a class="lnk" href="{{VITRINE}}">Voir La Vitrine →</a><p class="micro">Maquette offerte en 48 heures.</p></div>
+   <p class="o-p">{{PX:vit_m}}<small>/mois</small></p>
+   <p class="o-s">Un site clair et votre fiche Google, pour être bien trouvé.</p>
+   <ul class="l4">
+    <li>Votre site d’une page : prix, horaires, plan, bouton WhatsApp ou Réserver</li>
+    <li>Votre fiche Google créée ou mise au propre, reliée au site</li>
+    <li>L’adresse .ch et l’hébergement</li>
+    <li>Vos changements par message, en ligne sous 3 jours ouvrables</li>
+    <li>Les photos de votre téléphone, choisies et retouchées</li>
+    <li class="no"><s>L’entrée 3D de votre commerce</s></li>
+   </ul>
+   <p class="o-f">Mise en ligne {{PX:setup}}, seulement si le site terminé vous plaît.</p>
+   <div class="o-go"><a class="btn light" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a><a class="lnk" href="{{VITRINE}}">Voir La Vitrine →</a></div>
+  </article>
+  <article class="o3 o3-k rv" aria-labelledby="oE">
+   <p class="o-badge">Notre conseil</p>
+   <h3 id="oE">Entrée 3D</h3>
+   <p class="o-p">{{PX:e3_m}}<small>/mois</small></p>
+   <p class="o-d">soit environ {{PX:e3_jour}} par jour</p>
+   <p class="o-s">Votre site s’ouvre sur votre commerce en 3D, comme la démo en haut de cette page.</p>
+   <ul class="l4">
+    <li>Tout ce que contient La Vitrine</li>
+    <li><b>L’entrée 3D de votre commerce</b>, sur téléphone et ordinateur</li>
+    <li>Faite par nous en motion design, à partir de vos photos : pas besoin qu’on vienne</li>
+    <li>Votre entrée en courte vidéo, pour Instagram et votre fiche Google</li>
+    <li>Une mise à jour de la 3D par an : nouvelle déco, nouvelle enseigne</li>
+   </ul>
+   <p class="o-f">Mise en ligne {{PX:e3_setup}}, seulement si le site terminé vous plaît.</p>
+   <div class="o-go"><a class="btn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a><p class="micro">Une première image de votre façade, offerte.</p></div>
+  </article>
+  <article class="o3 rv" aria-labelledby="oR">
+   <h3 id="oR">Entrée réelle</h3>
+   <p class="o-p">{{PX:reel_m}}<small>/mois</small></p>
+   <p class="o-s">On vient chez vous : photos et vidéo, pour une entrée 100 % réelle.</p>
+   <ul class="l4">
+    <li>Tout ce que contient l’Entrée 3D, en vrai</li>
+    <li><b>Une demi-journée de tournage chez vous</b>, photos et vidéo</li>
+    <li>Une entrée et une visite filmées et montées</li>
+    <li>Vos photos professionnelles, à utiliser partout</li>
+    <li>Le suivi de votre fiche Google : avis, publications, rapport</li>
+    <li>Un nouveau tournage court chaque année</li>
+   </ul>
+   <p class="o-f">Mise en ligne et tournage {{PX:reel_setup}}, seulement si le site terminé vous plaît.</p>
+   <div class="o-go"><a class="btn light" href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">{{WA_ICON}}<span>Venez voir mon commerce</span></a><a class="lnk" href="{{VISITE}}">Voir une visite complète →</a></div>
   </article>
  </div>
- <p class="o-opt rv">La visite complète, pièce par pièce, en option de l’entrée 3D : dès 1&#8239;490.–. <a class="lnk" href="{{VISITE}}">Voir la démo Les Grèves →</a></p>
+ <p class="o-all rv"><b>Sans engagement</b>, pour les trois : résiliable chaque mois. Le site, l’adresse et les textes restent à vous.</p>
 </div></section>
 
 <section class="bg-white" aria-labelledby="hC"><div class="in">
@@ -133,21 +221,70 @@ html:not(.js) .e-pick{display:none}
  <ol class="t3">
   <li class="rv"><i>01</i><b>Vous écrivez.</b><span>Le nom et la commune de votre commerce, sur WhatsApp.</span></li>
   <li class="rv"><i>02</i><b>Vous voyez.</b><span>Sous 48 heures, une première image de votre façade en 3D et le prix par écrit, offerts.</span></li>
-  <li class="rv"><i>03</i><b>Vous décidez.</b><span>Sans engagement. Si vous dites oui : 30 % à la commande, on vient photographier, et vous corrigez avant la mise en ligne.</span></li>
+  <li class="rv"><i>03</i><b>Vous décidez.</b><span>Rien à payer avant d’avoir vu votre site. Si vous dites oui, vous corrigez le site terminé ; la mise en ligne se paie seulement s’il vous plaît.</span></li>
  </ol>
- <p class="g3 rv"><span>Le prix du devis, ni plus ni moins.</span><span>Résiliable chaque mois, par un message.</span><span>Le site et l’adresse sont à vous.</span></p>
+ <p class="g3 rv"><span>Un prix par mois, écrit d’avance.</span><span>Sans engagement, résiliable chaque mois.</span><span>Le site et l’adresse sont à vous.</span></p>
  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Si vous arrêtez, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
+</div></section>
+
+<section class="bg-morning fil" id="fil" data-sw="fil" data-swl="Un exemple pour mon commerce" aria-labelledby="hF"><div class="in">
+ <p class="mono rv">Le Fil · contenu pour vos réseaux</p>
+ <h2 id="hF" class="rv">{{FIL:Cadence}}, votre commerce publie. Vous, vous ne faites rien.</h2>
+ <p class="lede rv f-lede">Une vidéo courte ou un post, fait par nous dans le style de votre commerce, mis en ligne sur votre Instagram {{FIL:cadence}}, automatiquement.</p>
+ {{INC:fil-matin.html}}
+ <h3 class="f-h3 rv">Ce qui sort sur votre fil.</h3>
+ {{FIL_HOME}}
+ <div class="f-do">
+  <div class="rv"><h3>Ce qu’on ne promet pas.</h3><p>Des abonnés, des likes ou des ventes. On promet la régularité : votre commerce visible {{FIL:cadence}}, dans un style soigné.</p></div>
+ </div>
+ <p class="f-px rv">{{FIL:prix}}</p>
+ <div class="act f-act rv"><a class="btn" href="{{WA_FIL}}" data-wa="fil" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir un exemple pour mon commerce</span></a><a class="lnk" href="{{FIL}}">Tout sur Le Fil →</a></div>
+</div></section>
+
+<section class="bg-ink tel" id="telephone" data-sw="tel" data-swl="Une voix pour mes appels" aria-labelledby="hT"><div class="in tel-in">
+ <div>
+  <p class="mono rv">Le téléphone</p>
+  <h2 id="hT" class="rv">Quand vous ne pouvez pas décrocher, une voix répond.</h2>
+  <p class="lede rv">Les mains dans une couleur, une table à servir, un client devant vous. La voix prend l’appel, note le rendez-vous ou le message, et vous envoie le résumé par message.</p>
+  <ul class="tel-l rv"><li>Vous gardez votre numéro.</li><li>Elle dit qu’elle est une voix d’IA.</li><li>Ce qu’elle ne sait pas, elle vous le passe.</li></ul>
+  <p class="tel-px rv">Dès {{PX:tel_ess}} par mois, sans engagement. Une démo gratuite d’abord.</p>
+  <div class="act rv"><a class="btn inv" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">{{WA_ICON}}<span>Une voix pour mes appels manqués</span></a><a class="lnk" href="{{TELEPHONE}}">Comment ça marche →</a></div>
+ </div>
+ <figure class="tel-d" data-teld>
+  <svg class="tel-wv" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C 20 30, 25 12, 40 12 S 60 48, 80 48 S 100 20, 120 22 S 140 40, 160 38 S 180 6, 200 6 S 220 54, 240 54 S 260 26, 280 26 S 300 36, 320 36 S 340 18, 360 18 S 380 30, 400 30"/></svg>
+  <div class="tel-card">
+   <p class="tel-miss"><span class="tel-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><span><b>Appel manqué</b><small>12:41</small></span></p>
+   <p class="tel-msg"><span class="tel-wai" aria-hidden="true">{{WA_ICON}}</span><span><b>Résumé de l’appel</b>Mme R. · rendez-vous jeudi 10 h</span></p>
+  </div>
+  <figcaption><span class="dtag">Démo</span> Un appel manqué à 12 h 41 devient un message sur votre WhatsApp. Cliente inventée.</figcaption>
+ </figure>
+</div></section>
+
+<section class="bg-paper aussi" id="aussi" aria-labelledby="hA"><div class="in">
+ <h2 id="hA" class="h-m rv">Et aussi.</h2>
+ <div class="ea">
+  <article class="rv"><h3>L’assistant de votre site.</h3><p>Il répond aux questions de vos clients, même à 23 h, et vous passe la main quand il ne sait pas.</p><p class="ea-go"><a class="btn light" href="{{ASSISTANT}}#essai" data-try aria-expanded="false" aria-controls="essaiBox"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a><a class="lnk" href="{{ASSISTANT}}">En savoir plus</a></p></article>
+  <article class="rv"><h3>La visite complète.</h3><p>Une entrée et une visite filmées chez vous.</p><p class="ea-go"><a class="lnk" href="{{VISITE}}">Voir une visite complète →</a></p></article>
+ </div>
+ <div class="ea-chat" id="essaiBox" hidden>
+{{INC:chat.html}}
+  <p class="ea-own"><a class="lnk" href="{{WA_ASSIST}}" data-wa="assist" target="_blank" rel="noopener">{{WA_ICON}}<span>L’avoir sur mon site</span></a> <span class="micro">sur WhatsApp</span></p>
+ </div>
 </div></section>
 
 <section class="bg-paper sec2" id="questions" aria-labelledby="hQ">
  <div class="in qa">
   <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
   <div class="faq">
-   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>L'entrée 3D avec le site complet, dès 990.–, selon la taille du lieu ; la visite complète, pièce par pièce, dès 1&#8239;490.–. Vous recevez le prix par écrit sous 48 heures, avec une première image offerte. Ensuite, 20.– par mois pour l'hébergement et les petites modifications. La Vitrine, sans 3D, coûte 490.– et 20.– par mois.</p><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. L'entrée 3D en fait un site qu'on remarque et qu'on partage. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
+   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine {{PX:vit_m}} par mois, l’Entrée 3D {{PX:e3_m}} par mois, l’Entrée réelle {{PX:reel_m}} par mois. Sans engagement : résiliable chaque mois. La mise en ligne coûte {{PX:setup}} pour La Vitrine, {{PX:e3_setup}} pour l’Entrée 3D et {{PX:reel_setup}} pour l’Entrée réelle, tournage compris ; elle se paie seulement si le site terminé vous plaît.</p><p>Avant tout paiement, vous recevez votre maquette, ou une première image de votre façade en 3D, offerte. Si vous voulez simplement être bien trouvé, <a href="{{VITRINE}}">La Vitrine</a> suffit.</p><p>Le Fil : {{FIL:prix}} Le téléphone : dès {{PX:tel_ess}} par mois, sans engagement, <a href="{{TELEPHONE}}#prix">voir les forfaits</a>.</p></div></div></details>
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
-   <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Nous ouvrir votre porte : on vient voir votre lieu, on le photographie, et on reconstruit votre vraie façade, votre porte et votre salle en 3D (les exemples de cette page, eux, sont des commerces inventés). Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l'entrée et on s'occupe de votre fiche Google.</p></div></div></details>
-   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>20.– par mois pour l'hébergement et les petites modifications, sans durée minimale. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine, c'est compris.</p><p>Pour Google, on met en place tout ce qu'il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
-   <details><summary>Et sur téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
+   <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour l’Entrée 3D : nous envoyer quelques photos de votre façade et de votre salle. On en fait votre entrée en 3D, en motion design (les exemples de cette page, eux, sont des commerces inventés). Pour l’Entrée réelle, on vient tourner chez vous. Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l'entrée et on s'occupe de votre fiche Google.</p></div></div></details>
+   <details><summary>Le Fil, c’est vraiment automatique ?</summary><div class="fa"><div><p>Oui. On prépare chaque publication, vous recevez l’aperçu la veille, et elle se publie seule le matin. Vous pouvez dire « Stop », jamais être obligé de dire « Oui ».</p></div></div></details>
+   <details><summary>Il me faut un compte particulier ?</summary><div class="fa"><div><p>Un compte Instagram professionnel (gratuit). On vous aide à le passer en professionnel si besoin. Instagram se publie automatiquement ; pour TikTok et votre fiche Google, on vous dit ce qui est possible pour votre compte.</p></div></div></details>
+   <details><summary>Le Fil sans site OONDE ?</summary><div class="fa"><div><p>Oui, il se prend seul.</p></div></div></details>
+   <details><summary>Le téléphone : mes clients savent que c’est une IA ?</summary><div class="fa"><div><p>Oui, la voix se présente. Ce qu’elle ne sait pas, elle vous le passe, avec le résumé de l’appel par message. <a href="{{TELEPHONE}}">Comment ça marche</a></p></div></div></details>
+   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements envoyés par message. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine, c'est compris.</p><p>Pour Google, on met en place tout ce qu'il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
+   <details><summary>Et le site, sur un téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
    <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux. On démarre : on n'a pas encore de clients à vous montrer. C'est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit. Quand vous écrivez, c'est nous qui répondons.</p></div></div></details>
   </div>
  </div>
@@ -159,12 +296,13 @@ html:not(.js) .e-pick{display:none}
 </div></section>
 
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l>Recevoir mon aperçu 3D</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="e3" data-swb="e3" target="_blank" rel="noopener">{{WA_ICON}}<span data-e3l data-swl="Recevoir mon aperçu 3D">Recevoir mon aperçu 3D</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{FIL}}">Le Fil</a><a href="{{TELEPHONE}}">Le téléphone</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{VISITE}}">La visite complète</a><a href="{{VITRINE}}">La Vitrine</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
  <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon commerce</a></p><div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
- <p class="seo">Sites internet avec entrée en 3D, et sites simples, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
+ <p class="cours">Cours et formations pour commerçants : sur demande, <a href="{{WA_COURS}}" data-wa="cours" target="_blank" rel="noopener">par WhatsApp</a>.</p>
+ <p class="seo">Sites internet avec entrée en 3D, sites simples, contenu pour Instagram et voix au téléphone, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
 </div></footer>
 
 <script>window.E3M={{E3M}}</script>
@@ -174,5 +312,10 @@ html:not(.js) .e-pick{display:none}
 
 {{INC:e3d.js}}
 {{INC:rue.js}}
-
+{{INC:pub.js}}
+{{INC:fil.js}}
+{{INC:chat.js}}
+/* v24 · Le téléphone : l'appel manqué devient le message, une fois, à l'écran */
+(()=>{const d=document.querySelector('[data-teld]');if(!d)return;if(RM||!('IntersectionObserver' in window)){d.classList.add('on');return}
+ const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){io.disconnect();setTimeout(()=>d.classList.add('on'),700)}},{threshold:.5});io.observe(d)})();
 </script>

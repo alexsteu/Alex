@@ -49,24 +49,21 @@ p{margin:0;text-wrap:pretty}
 h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
 /* trois niveaux de titre : l'accueil, les sections clés, les sections secondaires */
 .h-xl{font-size:clamp(40px,5.6vw,78px);line-height:.98;letter-spacing:-.035em}
-h2,.h-l{font-size:clamp(32px,4vw,54px);max-width:18ch}
+h2{font-size:clamp(32px,4vw,54px);max-width:18ch}
 .h-m{font-size:clamp(26px,2.6vw,36px);max-width:22ch}
 h3{font-size:clamp(19px,1.8vw,22px);letter-spacing:-.02em;line-height:1.15}
 .mono{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 section{padding-block:clamp(64px,9vw,128px)}
 section.sec2{padding-block:clamp(56px,6.5vw,88px)}
-.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}
-.bg-night{background:var(--night);color:#fff}.bg-ink{background:var(--ink);color:#fff}
+.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}.bg-ink{background:var(--ink);color:#fff}
 .bg-paper+.bg-paper{border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid var(--klein);outline-offset:3px}
-.bg-night :focus-visible,.bg-ink :focus-visible,.final :focus-visible{outline-color:#fff}
+.bg-ink :focus-visible{outline-color:#fff}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:fixed;left:12px;top:12px;z-index:40;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;text-decoration:none;transform:translateY(-200%)}
 .skip:focus-visible{transform:none}
-.sec-head{margin-bottom:clamp(32px,4.5vw,56px)}
-.sec-head p{margin-top:16px;max-width:38em;color:var(--muted);font-size:18px}
 .lede{color:var(--soft);font-size:18px;max-width:36em}
-@media (max-width:760px){.lede,.sec-head p{font-size:16.5px}}
+@media (max-width:760px){.lede{font-size:16.5px}}
 
 /* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%}
@@ -78,15 +75,14 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
-@media (max-width:700px){.btn.wide{width:100%}}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
-.bg-night .lnk:hover,.bg-ink .lnk:hover,.final .lnk:hover{color:#fff;opacity:.8}
+.bg-ink .lnk:hover{color:#fff;opacity:.8}
 .act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
 .micro{font-size:14px;color:var(--muted);line-height:1.45}
 
 /* En-tête fixe */
-.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);backdrop-filter:saturate(1.1) blur(10px);-webkit-backdrop-filter:saturate(1.1) blur(10px);border-bottom:1px solid var(--line)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);border-bottom:1px solid var(--line)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--ink);padding-block:11px;margin-block:-11px}
 .logo svg{height:22px;width:auto;display:block}
@@ -106,6 +102,10 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
 @media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
+/* v24 : le bouton de l'en-tête suit l'étage (« Un exemple pour mon commerce ») : entre 701 et 1180 px, « Et aussi » puis « Questions » cèdent la place (ils restent dans le pied de page et sur l'accueil) */
+@media (min-width:701px) and (max-width:1180px){.nav nav .nav-sub.opt3{display:none}}
+@media (min-width:701px) and (max-width:1000px){.nav nav a.opt2{display:none}}
+@media (min-width:701px) and (max-width:860px){.nav nav{gap:20px}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
  .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
  body.cta-in .nav .btn,body.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
@@ -189,10 +189,7 @@ main{padding-top:var(--hh)}
 .fview>.tpl.sw,.screen>.tpl.sw{animation:sw .18s var(--ease)}
 @keyframes sw{from{opacity:.4}}
 
-/* Prix : un chemin dans le temps (0.– aujourd'hui, 490.– si elle vous plaît, 20.– ensuite) */
-.oname{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 16px}
-.oname b{font-size:clamp(21px,2vw,24px);font-weight:600;letter-spacing:-.02em}
-.oname span{color:var(--muted);font:500 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+/* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
 .path li{padding-top:22px}
 .path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -237,25 +234,9 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 
 /* Nous, avec le contact */
 .close{display:grid;gap:clamp(32px,5vw,88px);align-items:start}
-@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}.close>.final{grid-column:8/13}}
-.people{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line);max-width:34em}
-.people li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 24px;padding:16px 0;border-bottom:1px solid var(--line)}
-.people b{display:block;font-size:18px;font-weight:600;letter-spacing:-.02em}
-.people .role{font-size:15px;color:var(--muted)}
-.final{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(28px,4vw,44px);position:sticky;top:88px}
-.final h2{font-size:clamp(30px,3.2vw,40px);color:#fff}
-.final>p{margin:14px 0 22px;color:rgba(255,255,255,.75)}
-.final .btn{width:100%}
-.final .alt{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:15px}
-.final .alt a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
-.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff;display:inline-block;padding-block:13px;margin-block:-13px}   /* 44 px au toucher, sans changer la ligne */
-.final dl{margin:26px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
-.final dt{font-size:14px;color:rgba(255,255,255,.6)}
-.final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
-.final dd a{text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}.final dd a:hover{text-decoration:underline}
+@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}}
 .qr{display:none}
-@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr svg{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
-@media (max-width:900px){.final{position:static}}
+@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr img{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
 
 /* Pied de page et barre mobile */
 footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
@@ -296,9 +277,9 @@ section{padding-block:clamp(96px,11vw,160px)}
 section.sec2{padding-block:clamp(88px,9vw,128px)}
 .bg-paper+.bg-paper{border-top:0}
 .h-xl{font-size:clamp(48px,7.2vw,112px);line-height:1;letter-spacing:-.04em}
-h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
+h2{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
 .h-m{font-size:clamp(30px,3.4vw,48px);line-height:1.06;letter-spacing:-.03em;max-width:18ch}
-@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2,.h-l{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
+@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
 .lede{font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:34em;color:var(--soft)}
 .mono{font-size:12px;letter-spacing:.14em}
 @media (max-width:760px){.mono{font-size:11px}}
@@ -308,7 +289,7 @@ h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;m
 .nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
 .lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
-.bg-ink .lnk,.bg-night .lnk{color:#fff}
+.bg-ink .lnk{color:#fff}
 footer{border-top:0}
 /* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
 .js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
@@ -335,8 +316,10 @@ footer{border-top:0}
 .also2{font-size:14px;color:var(--muted)}.also2 a{display:inline-block;padding-block:12px;margin-block:-12px}
 /* pied de page : « Aussi » et le QR (ordinateur seulement) */
 .fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
-.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr svg{width:84px;height:84px;flex:none}
+.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr img{width:84px;height:84px;flex:none}
 @media (max-width:900px){.fq .qr{display:none}}
+</style>
+<style>
 /* L'aperçu en grand : le site d'exemple occupe l'écran, marqué EXEMPLE en haut ; la barre OONDE reste en bas. */
 body{padding-bottom:84px}
 main{padding-top:0}
@@ -435,22 +418,22 @@ main{padding-top:0}
   <p class="lede why" id="why">Quand on cherche « coiffeur Morges » sur Google, votre fiche mène à ce site, à votre nom, avec vos prix et un bouton pour vous écrire. Rien à préparer : on part de votre fiche Google et de votre Instagram.</p>
   <ol class="path">
    <li><span class="when">Aujourd’hui</span><b class="amt">0.–</b><h3>Votre vraie maquette</h3><p>Avec vos textes, vos prix et vos photos. Elle arrive sur votre téléphone en 48 heures.</p></li>
-   <li><span class="when">Si elle vous plaît</span><b class="amt">490.–<small>une fois</small></b><h3>Votre site en ligne</h3><p>Textes écrits par nous, fiche Google reliée, adresse à votre nom, deux séries de corrections.</p></li>
-   <li><span class="when">Ensuite</span><b class="amt">20.–<small>par mois</small></b><h3>On s’en occupe</h3><p>Hébergement, adresse et vos changements faits sous 3 jours ouvrables. Vous arrêtez à la fin de n’importe quel mois.</p></li>
+   <li><span class="when">Si elle vous plaît</span><b class="amt">190.–<small>une fois</small></b><h3>Votre site en ligne</h3><p>Textes écrits par nous, fiche Google reliée, adresse à votre nom, deux séries de corrections.</p></li>
+   <li><span class="when">Ensuite</span><b class="amt">29.–<small>par mois</small></b><h3>On s’en occupe</h3><p>Hébergement, adresse et vos changements faits sous 3 jours ouvrables. Sans engagement : vous arrêtez à la fin de n’importe quel mois.</p></li>
   </ol>
   <ul class="guar">
    <li><b>Payé seulement s’il vous plaît.</b><span>Le site terminé ne vous plaît pas ? Vous ne payez rien.</span></li>
-   <li><b>Sans durée minimale.</b><span>Résiliable à la fin de n’importe quel mois.</span></li>
+   <li><b>Sans engagement.</b><span>Résiliable à la fin de n’importe quel mois.</span></li>
    <li><b>Le site est à vous.</b><span>L’adresse est à votre nom. Si vous arrêtez, on vous remet tout, gratuitement.</span></li>
   </ul>
-  <div class="act go"><a class="btn" id="goLive" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20maquette%20offerte.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Je le veux en ligne</span></a><a class="btn light" id="change" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20maquette%20offerte.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" target="_blank" rel="noopener">Changer quelque chose</a></div>
+  <div class="act go"><a class="btn" id="goLive" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20vu%20ma%20maquette%2C%20je%20la%20veux%20en%20ligne." target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Je le veux en ligne</span></a><a class="btn light" id="change" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20vu%20ma%20maquette%2C%20j%E2%80%99aimerais%20changer%20%3A%20" target="_blank" rel="noopener">Changer quelque chose</a></div>
   <p class="sig">OONDE. On répond le jour même, 7 jours sur 7, au +41 76 488 27 10.</p>
   <p class="note"><span>Cette page n’est publiée nulle part : seuls ceux qui ont le lien la voient.</span><a id="edit" href="vitrine.html#vitrine">Modifier le nom, le métier ou la couleur</a><a href="index.html">Découvrir OONDE</a></p>
  </div>
 </section>
 </main>
 <div class="s-toast" id="toast" role="dialog" aria-label="Exemple" hidden><button type="button" id="tx" aria-label="Fermer">×</button><b>C’est un exemple.</b>Sur votre vrai site, ce bouton ouvre votre WhatsApp, ou votre agenda en ligne (Planity, Salonkee…).</div>
-<nav class="obar" aria-label="OONDE"><div class="in"><p><b>Ce site vous plaît ?</b> On prépare votre vraie maquette, offerte.</p><div class="bt"><a class="btn inv" id="real" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20maquette%20offerte.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Recevoir ma vraie maquette</span><span class="s">Ma vraie maquette</span></a><button type="button" class="btn sh" id="share" aria-label="Transférer cette page à un associé ou un proche" hidden>Transférer</button></div></div></nav>
+<nav class="obar" aria-label="OONDE"><div class="in"><p><b>Ce site vous plaît ?</b> On prépare votre vraie maquette, offerte.</p><div class="bt"><a class="btn inv" id="real" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20la%20maquette%20offerte%20de%20mon%20site%20La%20Vitrine.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Recevoir ma vraie maquette</span><span class="s">Ma vraie maquette</span></a><button type="button" class="btn sh" id="share" aria-label="Transférer cette page à un associé ou un proche" hidden>Transférer</button></div></div></nav>
 
 <script>
 const WA_NUM='41764882710',MAIL='oonde.contact@gmail.com';
@@ -466,17 +449,18 @@ const HELLO={ig:'Bonjour, je viens d’Instagram.',tt:'Bonjour, je viens de TikT
 const wa=t=>'https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(t);
 const mail=(subject,t)=>'mailto:'+MAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(t);
 /* Les messages fixes : une ligne d'où l'on vient, une ligne de ce qu'on veut, et en dernier ce qui reste à remplir (WhatsApp y met le curseur) */
-const MSG={
- vit:()=>HELLO+' J’aimerais recevoir ma maquette offerte.\nMon commerce et ma commune : ',
+const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
+ vit:()=>HELLO+' J’aimerais la maquette offerte de mon site La Vitrine.\nMon commerce et ma commune : ',
  passe:()=>HELLO+' J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ',
- imm:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
- e3:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
- assist:()=>HELLO+' L’assistant m’intéresse.\nMon commerce et ma commune : ',
- vids:()=>HELLO+' J’aimerais une pub pour mon commerce.\nMon commerce et ma commune : ',
+ imm:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
+ e3:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
+ assist:()=>HELLO+' J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ',
+ fil:()=>HELLO+' Le Fil m’intéresse : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
- lieu:()=>HELLO+' J’aimerais que vous veniez voir mon lieu.\nType de lieu, commune et le meilleur moment : ',
- vid:()=>HELLO+' J’aimerais un devis pour des vidéos courtes (Instagram, TikTok).\nMon commerce et ma commune : '};
+ lieu:()=>HELLO+' J’aimerais que vous veniez voir mon commerce pour l’Entrée réelle.\nMon commerce, ma commune et le meilleur moment : ',
+ cours:()=>HELLO+' Les cours et formations m’intéressent.\nSur quel sujet : '};
 if(SRC)document.querySelectorAll('a[data-wa]').forEach(a=>{const m=MSG[a.dataset.wa];if(m)a.href=wa(m())});
 document.querySelectorAll('a[data-mail]').forEach(a=>{const m=MSG[a.dataset.mail];if(m)a.href=mail(a.dataset.mail==='imm'?'L’entrée 3D : mon commerce':'Ma maquette offerte',m().replace(/\n/,'\n\n'))});
 /* Mesure, seulement si Umami est branché (umami.txt) : un clic sur WhatsApp, l'e-mail ou le téléphone compte comme un contact, avec le bouton et la source */
@@ -502,9 +486,22 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  if(hero)new IntersectionObserver(es=>{past=!es[0].isIntersecting;set()}).observe(hero);
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));set()},{threshold:.5,rootMargin:'-64px 0px 0px 0px'});
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
+/* v24 : le bouton de l'en-tête et celui de la barre du bas suivent l'étage à l'écran (accueil : Le Fil, Le téléphone) ; ailleurs, le bouton du site.
+   Une section <… data-sw="fil" data-swl="Un exemple pour mon commerce"> ; les boutons qui changent portent data-swb. Jamais de prix. */
+(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;
+ const on=new Set();let cur='';
+ const ref=()=>document.querySelector('main a[data-wa="e3"]:not([data-swb]) [data-e3l]');
+ const apply=k=>{if(k===cur)return;cur=k;const s=secs.find(x=>x.dataset.sw===k);
+  bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(!l)return;
+   if(s){a.dataset.wa=k;a.href=wa(MSG[k]());l.removeAttribute('data-e3l');l.textContent=s.dataset.swl}
+   else{a.dataset.wa=a.dataset.swb;const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.setAttribute('data-e3l','');l.textContent=r?r.textContent:l.dataset.swl}})};
+ const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?on.add(e.target):on.delete(e.target));const s=secs.find(x=>on.has(x));apply(s?s.dataset.sw:'')},{rootMargin:'-45% 0px -45% 0px'});
+ secs.forEach(s=>io.observe(s))})();
 
 /* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
+</script>
+<script>
 /* Les sites types : photo, cadrage, textes, prestations (les 3 premières dans l'aperçu réduit), horaires, trois couleurs nommées.
    Tout est un exemple, marqué comme tel : les vrais textes et prix viennent du commerce. */
 const T={
@@ -552,8 +549,8 @@ const apercuUrl=(base,s)=>{const p=new URLSearchParams();if(s.name)p.set('n',s.n
  /* la vraie maquette : le message reprend le lien de cette page, pour qu'on sache ce que la personne a vu */
  const hi=SRC?HELLO+' J’ai':'Bonjour, j’ai',what=name?' préparé pour '+name:'';
  $('real').href=wa(`${hi} vu l’exemple de site${what}. J’aimerais recevoir ma vraie maquette, offerte.\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
- $('goLive').href=wa(`${hi} vu l’exemple de site${what}, et je le veux en ligne. On peut commencer ?\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
- $('change').href=wa(`${hi} vu l’exemple de site${what}.\n${location.href}\nCe que j’aimerais changer : `);
+ $('goLive').href=wa(`${hi} vu ma maquette${name?' pour '+name:''}, je la veux en ligne.\n${location.href}${!name?'\nMon commerce et ma commune : ':!town?'\nMa commune : ':''}`);
+ $('change').href=wa(`${hi} vu ma maquette${name?' pour '+name:''}.\n${location.href}\nJ’aimerais changer : `);
  $('why').textContent=`Quand on cherche « ${Q[key]}${town?' '+town:''} » sur Google, votre fiche mène à ce site, à votre nom, avec vos prix et un bouton pour vous écrire. Rien à préparer : on part de votre fiche Google et de votre Instagram.`;
  if(name)$('exT').textContent='Exemple préparé pour '+name+' par OONDE. Textes, prix et photos à remplacer par les vôtres.';
  const p=new URLSearchParams();if(name)p.set('n',name);p.set('m',key);if(town)p.set('v',town);if(sv)p.set('c',sv);$('edit').href='vitrine.html?'+p+'#vitrine';

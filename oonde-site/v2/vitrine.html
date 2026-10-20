@@ -1,6 +1,6 @@
 <meta charset="utf-8">
-<title>La Vitrine : un site simple relié à Google, 490.– · OONDE</title>
-<meta name="description" content="La Vitrine : un site clair pour votre commerce, relié à votre fiche Google. Maquette offerte en 48 heures, 490.– seulement si elle vous plaît, puis 20.– par mois. De Genève à Montreux.">
+<title>La Vitrine : un site simple relié à Google · OONDE</title>
+<meta name="description" content="La Vitrine : un site clair pour votre commerce, relié à votre fiche Google. Maquette offerte en 48 heures, puis {{PX:vit_m}} par mois ; la mise en ligne seulement si le site vous plaît. De Genève à Montreux.">
 <link rel="canonical" href="https://oonde.ch/vitrine">
 <meta property="og:title" content="OONDE · La Vitrine, un site simple vu avant de payer">
 <meta property="og:description" content="Un site clair relié à votre fiche Google. La maquette est offerte : vous payez seulement si elle vous plaît.">
@@ -19,8 +19,6 @@
 {{INC:base.css}}
 /* La Vitrine : l'essai simple. Le titre et le champ à gauche, l'aperçu à droite (sous le champ, sur téléphone). */
 .hero{position:relative;overflow:hidden}
-.ex-more{margin-top:22px;color:var(--muted);font-size:15.5px}
-.launch a{color:var(--ink);font-weight:600}
 .hero-in{position:relative;display:grid;gap:22px 24px;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center}
 .h-txt{grid-column:1/7;display:flex;flex-direction:column;gap:22px}
 .h-prev{grid-column:7/13;position:relative;padding:0 0 46px}
@@ -56,14 +54,12 @@
 .pv{position:relative}.pv-tag{position:absolute;z-index:3;top:-14px;left:50%;translate:-50% 0;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:#E9E9E6;color:var(--soft)}
 .pv-note{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:16px;font-size:14px;color:var(--muted)}
 .pv-note a{color:var(--ink);font-weight:600;text-underline-offset:3px}
-.nojs{display:none}
 html:not(.js) .tool-js{display:none}
-html:not(.js) .nojs{display:block}
 @media (max-width:900px){
  .hero-in{display:flex;flex-direction:column;align-items:stretch;gap:18px}
  .h-txt,.h-prev{display:contents}
  .kick{order:1}.h-title{order:2}.h-sub{order:3}.f-name{order:4}.f-act{order:5}.pv{order:6}.pv-opts{order:7}.h-go{order:8}.pv-note{order:9}
- .kick>span{display:block}.kick .dot{display:none}
+ .kick>span{display:block}
  .h-title{font-size:clamp(40px,11vw,60px);max-width:10ch}
  .f-act .chips>*{flex:0 1 auto}
  .pv{margin:4px auto 0;width:100%}
@@ -103,14 +99,7 @@ html:not(.js) .nojs{display:block}
 .m-arrow i{display:block;height:1px;width:40px;background:var(--klein)}
 
 /* Prix */
-.p-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 40px;margin-bottom:clamp(28px,4vw,48px)}
-.p-head p{color:var(--muted);font-size:17px;max-width:30em}
-.guar-t{margin-top:40px}
-.launch{margin-top:28px;padding:16px 20px;border:1px solid var(--line);border-left:3px solid var(--klein);border-radius:10px;background:var(--card);font-size:15.5px;color:var(--soft);max-width:44em}
-.launch b{color:var(--ink);font-weight:600}
 .p-act{margin-top:32px}
-
-.close.one{display:block;max-width:640px;margin-inline:auto}.close.one .final{position:static}
 /* v20 · « Apple minimal » : le téléphone seul et grand ; Google en un écran ; le prix centré */
 .pv .frame{display:none}
 @media (min-width:861px){.h-prev{padding:0}.pv{display:flex;justify-content:center}.pv .phone{position:relative;right:auto;bottom:auto;width:min(340px,80%);border-radius:44px;padding:9px;box-shadow:0 50px 100px -40px rgba(17,19,24,.55)}.pv .phone .screen{border-radius:36px}.pv-opts{padding-right:0;justify-content:center}.pv-note{justify-content:center}}
@@ -184,13 +173,13 @@ html:not(.js) .nojs{display:block}
 
 <section class="bg-paper" id="vitrine-prix" aria-labelledby="hP2">
  <div class="in txt c">
-  <h2 id="hP2" class="rv"><span class="pz">490.–</span> une fois, seulement si le site vous plaît.</h2>
-  <p class="lede rv" style="margin-top:24px">Puis 20.– par mois : hébergement, adresse <span id="vDom">votre-commerce.ch</span> à votre nom, et vos changements de prix, d'horaires ou de photos.</p>
+  <h2 id="hP2" class="rv"><span class="pz">{{PX:vit_m}}</span> par mois, tout compris.</h2>
+  <p class="lede rv" style="margin-top:24px">Le site, votre fiche Google, l’hébergement, l’adresse <span id="vDom">votre-commerce.ch</span> à votre nom, et vos changements de prix, d’horaires ou de photos. Mise en ligne {{PX:setup}}, payée seulement si le site terminé vous plaît. Sans engagement, résiliable chaque mois.</p>
   <ul class="l4 l4c rv"><li>Maquette offerte en 48 heures</li><li>Deux séries de corrections</li><li>En ligne 5 jours ouvrables après vos photos</li><li>Vos changements faits sous 3 jours ouvrables</li></ul>
-  <p class="g3 g3c rv"><span>Payé seulement s'il vous plaît.</span><span>Résiliable chaque mois.</span><span>Le site et l'adresse sont à vous.</span></p>
+  <p class="g3 g3c rv"><span>Mise en ligne payée seulement s'il vous plaît.</span><span>Sans engagement.</span><span>Le site et l'adresse sont à vous.</span></p>
   <div class="act p-act rv"><a class="btn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a></div>
-  <p class="micro" style="margin-top:20px">Offre de lancement, pour nos dix premiers commerces : deux mois de suivi Google offerts, si vous nous laissez montrer votre site en exemple. En option : suivi Google (avis, publications, rapport), 50.– par mois. <a class="lnk" href="{{PUB}}">La Pub</a>, sur devis.</p>
-  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Le site terminé ne vous plaît pas ? Vous ne payez rien, et on le retire. Si vous arrêtez, ou si nous arrêtons un jour, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
+  <p class="micro" style="margin-top:20px">Offre de lancement, pour nos dix premiers commerces : deux mois de suivi Google offerts, si vous nous laissez montrer votre site en exemple. En option : suivi Google (avis, publications, rapport), 50.– par mois. <a class="lnk" href="{{FIL}}">Le Fil</a> : du contenu publié {{FIL:cadence}} sur votre Instagram.</p>
+  <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n'est pas assujetti à la TVA. Le site terminé ne vous plaît pas ? Vous ne payez rien, et on le retire. Pour votre site s’ouvrant sur votre commerce en 3D : <a href="{{HOME}}#prix">l’Entrée 3D, {{PX:e3_m}} par mois</a>. Si vous arrêtez, ou si nous arrêtons un jour, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
  </div>
 </section>
 
@@ -199,9 +188,9 @@ html:not(.js) .nojs{display:block}
   <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
   <div class="faq">
    <details><summary>L'entrée 3D ou La Vitrine : laquelle choisir ?</summary><div class="fa"><div><p>Les deux font le même travail : vos prix, vos horaires, WhatsApp et Google. <a href="{{HOME}}">L'entrée 3D</a> en fait un site qu'on remarque et qu'on partage. Si vous voulez simplement être bien trouvé, La Vitrine suffit, et vous voyez la maquette avant de payer.</p></div></div></details>
-   <details><summary>Et si la maquette ne me plaît pas ?</summary><div class="fa"><div><p>Vous ne payez rien et vous ne nous devez rien : un « non merci » sur WhatsApp suffit. Si elle vous plaît presque, deux séries de corrections sont comprises dans les 490.–. Sans réponse de votre part, la maquette reste à vous 14 jours, puis on l'efface.</p></div></div></details>
+   <details><summary>Et si la maquette ne me plaît pas ?</summary><div class="fa"><div><p>Vous ne payez rien et vous ne nous devez rien : un « non merci » sur WhatsApp suffit. Si elle vous plaît presque, deux séries de corrections sont comprises. Sans réponse de votre part, la maquette reste à vous 14 jours, puis on l'efface.</p></div></div></details>
    <details><summary>Qu'est-ce que je dois préparer ?</summary><div class="fa"><div><p>Rien pour la maquette : on part de votre fiche Google et de votre Instagram, avec votre accord. Si elle vous plaît, vous nous envoyez sur WhatsApp vos vrais prix, vos horaires et quelques photos, et on écrit les textes.</p></div></div></details>
-   <details><summary>Je suis un restaurant : et mon menu du jour ?</summary><div class="fa"><div><p>Envoyez-le-nous sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine. C'est compris dans les 20.– par mois.</p></div></div></details>
+   <details><summary>Je suis un restaurant : et mon menu du jour ?</summary><div class="fa"><div><p>Envoyez-le-nous sur WhatsApp, une photo de l'ardoise suffit : on le met à jour sur votre site une fois par semaine. C'est compris dans l'abonnement.</p></div></div></details>
    <details><summary>Vous garantissez la première place sur Google ?</summary><div class="fa"><div><p>Non, personne ne peut la garantir honnêtement. On met en place tout ce que Google regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis.</p></div></div></details>
   </div>
  </div>
@@ -215,7 +204,7 @@ html:not(.js) .nojs{display:block}
 <nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA}}" data-wa="vit" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir ma maquette offerte</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{EXEMPLES}}">Exemples</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{PUB}}">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, haut de page">{{LOGO}}</a><nav aria-label="Plan du site"><a href="{{EXEMPLES}}">Exemples</a><a href="{{VITRINE}}">La Vitrine</a><a href="{{VISITE}}">La visite complète</a><a href="{{TELEPHONE}}">Le téléphone</a><a href="{{ASSISTANT}}">L’assistant</a><a href="{{FIL}}">Le Fil</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
  <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="vit">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="{{WA_PASSE}}" data-wa="passe" target="_blank" rel="noopener">Venez me la montrer</a></p><div class="qr" aria-hidden="true">{{QR_WA}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
  <p class="seo">Sites internet avec entrée en 3D, et sites simples, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
 </div></footer>
@@ -252,7 +241,7 @@ function render(anim){const t=T[st.act],town=TOWNS.includes(st.town)?st.town:'';
  const lab2=st.name&&narrow.matches&&st.name.length>12?'Recevoir ma maquette offerte':label;
  $('wantL').textContent=lab2;if(touched)document.querySelectorAll('a[data-wa="vit"]').forEach(a=>a.href=href);else $('wantIt').href=href;
  document.querySelectorAll('a[data-mail="vit"]').forEach(a=>{if(touched)a.href=mail('Ma maquette offerte',msg(town,t).replace(/\n/,'\n\n'))});
- if(st.name)document.querySelectorAll('a[data-wa="vid"]').forEach(a=>a.href=wa(HELLO+' J’aimerais un devis pour des vidéos courtes (Instagram, TikTok).\n'+st.name+(town?', '+town:'')+'.')); 
+ 
  if(st.name){const pa=document.querySelector('a[data-wa="passe"]');if(pa)pa.href=wa(HELLO+' J’aimerais que vous passiez me montrer la maquette de '+st.name+(town?' à '+town:'')+'.\nLe meilleur moment : ')}
  $('bigLink').href=apercuUrl('{{APERCU}}',{name:st.name,act:st.act,town:st.town==='ailleurs'?'':st.town,style:st.style});
  /* la fiche Google d'exemple suit l'essai */

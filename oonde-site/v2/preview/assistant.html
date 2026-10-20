@@ -49,24 +49,21 @@ p{margin:0;text-wrap:pretty}
 h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
 /* trois niveaux de titre : l'accueil, les sections clés, les sections secondaires */
 .h-xl{font-size:clamp(40px,5.6vw,78px);line-height:.98;letter-spacing:-.035em}
-h2,.h-l{font-size:clamp(32px,4vw,54px);max-width:18ch}
+h2{font-size:clamp(32px,4vw,54px);max-width:18ch}
 .h-m{font-size:clamp(26px,2.6vw,36px);max-width:22ch}
 h3{font-size:clamp(19px,1.8vw,22px);letter-spacing:-.02em;line-height:1.15}
 .mono{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 section{padding-block:clamp(64px,9vw,128px)}
 section.sec2{padding-block:clamp(56px,6.5vw,88px)}
-.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}
-.bg-night{background:var(--night);color:#fff}.bg-ink{background:var(--ink);color:#fff}
+.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}.bg-ink{background:var(--ink);color:#fff}
 .bg-paper+.bg-paper{border-top:1px solid var(--line)}
 :focus-visible{outline:2px solid var(--klein);outline-offset:3px}
-.bg-night :focus-visible,.bg-ink :focus-visible,.final :focus-visible{outline-color:#fff}
+.bg-ink :focus-visible{outline-color:#fff}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:fixed;left:12px;top:12px;z-index:40;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;text-decoration:none;transform:translateY(-200%)}
 .skip:focus-visible{transform:none}
-.sec-head{margin-bottom:clamp(32px,4.5vw,56px)}
-.sec-head p{margin-top:16px;max-width:38em;color:var(--muted);font-size:18px}
 .lede{color:var(--soft);font-size:18px;max-width:36em}
-@media (max-width:760px){.lede,.sec-head p{font-size:16.5px}}
+@media (max-width:760px){.lede{font-size:16.5px}}
 
 /* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%}
@@ -78,15 +75,14 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
-@media (max-width:700px){.btn.wide{width:100%}}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
-.bg-night .lnk:hover,.bg-ink .lnk:hover,.final .lnk:hover{color:#fff;opacity:.8}
+.bg-ink .lnk:hover{color:#fff;opacity:.8}
 .act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
 .micro{font-size:14px;color:var(--muted);line-height:1.45}
 
 /* En-tête fixe */
-.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);backdrop-filter:saturate(1.1) blur(10px);-webkit-backdrop-filter:saturate(1.1) blur(10px);border-bottom:1px solid var(--line)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);border-bottom:1px solid var(--line)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--ink);padding-block:11px;margin-block:-11px}
 .logo svg{height:22px;width:auto;display:block}
@@ -106,6 +102,10 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
 @media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
+/* v24 : le bouton de l'en-tête suit l'étage (« Un exemple pour mon commerce ») : entre 701 et 1180 px, « Et aussi » puis « Questions » cèdent la place (ils restent dans le pied de page et sur l'accueil) */
+@media (min-width:701px) and (max-width:1180px){.nav nav .nav-sub.opt3{display:none}}
+@media (min-width:701px) and (max-width:1000px){.nav nav a.opt2{display:none}}
+@media (min-width:701px) and (max-width:860px){.nav nav{gap:20px}}
 @media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
  .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
  body.cta-in .nav .btn,body.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
@@ -189,10 +189,7 @@ main{padding-top:var(--hh)}
 .fview>.tpl.sw,.screen>.tpl.sw{animation:sw .18s var(--ease)}
 @keyframes sw{from{opacity:.4}}
 
-/* Prix : un chemin dans le temps (0.– aujourd'hui, 490.– si elle vous plaît, 20.– ensuite) */
-.oname{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:0 0 16px}
-.oname b{font-size:clamp(21px,2vw,24px);font-weight:600;letter-spacing:-.02em}
-.oname span{color:var(--muted);font:500 12.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+/* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
 .path li{padding-top:22px}
 .path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -237,25 +234,9 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 
 /* Nous, avec le contact */
 .close{display:grid;gap:clamp(32px,5vw,88px);align-items:start}
-@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}.close>.final{grid-column:8/13}}
-.people{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line);max-width:34em}
-.people li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 24px;padding:16px 0;border-bottom:1px solid var(--line)}
-.people b{display:block;font-size:18px;font-weight:600;letter-spacing:-.02em}
-.people .role{font-size:15px;color:var(--muted)}
-.final{background:var(--ink);color:#fff;border-radius:14px;padding:clamp(28px,4vw,44px);position:sticky;top:88px}
-.final h2{font-size:clamp(30px,3.2vw,40px);color:#fff}
-.final>p{margin:14px 0 22px;color:rgba(255,255,255,.75)}
-.final .btn{width:100%}
-.final .alt{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:15px}
-.final .alt a{color:#fff;display:inline-flex;align-items:center;min-height:44px}
-.final .also{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;line-height:1.9;color:rgba(255,255,255,.72)}.final .also a{color:#fff;display:inline-block;padding-block:13px;margin-block:-13px}   /* 44 px au toucher, sans changer la ligne */
-.final dl{margin:26px 0 0;display:grid;gap:12px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
-.final dt{font-size:14px;color:rgba(255,255,255,.6)}
-.final dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
-.final dd a{text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}.final dd a:hover{text-decoration:underline}
+@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}}
 .qr{display:none}
-@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr svg{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
-@media (max-width:900px){.final{position:static}}
+@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr img{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
 
 /* Pied de page et barre mobile */
 footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
@@ -296,9 +277,9 @@ section{padding-block:clamp(96px,11vw,160px)}
 section.sec2{padding-block:clamp(88px,9vw,128px)}
 .bg-paper+.bg-paper{border-top:0}
 .h-xl{font-size:clamp(48px,7.2vw,112px);line-height:1;letter-spacing:-.04em}
-h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
+h2{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
 .h-m{font-size:clamp(30px,3.4vw,48px);line-height:1.06;letter-spacing:-.03em;max-width:18ch}
-@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2,.h-l{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
+@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
 .lede{font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:34em;color:var(--soft)}
 .mono{font-size:12px;letter-spacing:.14em}
 @media (max-width:760px){.mono{font-size:11px}}
@@ -308,7 +289,7 @@ h2,.h-l{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;m
 .nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
 .lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
-.bg-ink .lnk,.bg-night .lnk{color:#fff}
+.bg-ink .lnk{color:#fff}
 footer{border-top:0}
 /* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
 .js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
@@ -335,21 +316,35 @@ footer{border-top:0}
 .also2{font-size:14px;color:var(--muted)}.also2 a{display:inline-block;padding-block:12px;margin-block:-12px}
 /* pied de page : « Aussi » et le QR (ordinateur seulement) */
 .fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
-.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr svg{width:84px;height:84px;flex:none}
+.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr img{width:84px;height:84px;flex:none}
 @media (max-width:900px){.fq .qr{display:none}}
-/* les vidéos (La Pub, l'assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
+</style>
+<style>
+/* les vidéos (Le Fil, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
 .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
 .bg-ink .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
 .v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
 .v img,.v video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .v video{opacity:0;transition:opacity .25s}.v.live video{opacity:1}
-.v .snd{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:0;cursor:pointer}
+.v .snd{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;border:0;cursor:pointer}
 .v .snd svg{width:18px;height:18px}.v .snd .on{display:none}.v.sound .snd .on{display:block}.v.sound .snd .off{display:none}
 .v .pl{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:999px;background:rgba(255,255,255,.88);display:grid;place-items:center;transition:opacity .2s}
 .v .pl svg{width:20px;height:20px;margin-left:3px;color:#111}.v.on .pl{opacity:0}
 .cap{margin-top:16px}
 .cap .mono{font-size:11px;letter-spacing:.14em;display:block}
 .cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
+/* v23 · les démos de nos services vidéo (accueil, Le Fil) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
+   Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
+.v.w{aspect-ratio:16/9}
+.v .snd span{display:none}
+.vd .v .snd{width:auto;padding:0 14px 0 12px;gap:6px;display:flex;align-items:center;font:600 14px var(--sans)}.vd .v .snd span{display:inline}
+.vt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
+.dtag.ia{background:rgba(43,63,255,.08);color:var(--klein)}
+.vrail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2*var(--pad) - 16px)/1.6);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;list-style:none;margin:clamp(32px,4vw,48px) calc(-1*var(--pad)) 0;padding:0 var(--pad) 8px;scroll-padding-inline:var(--pad)}
+.vrail::-webkit-scrollbar{display:none}.vrail li{scroll-snap-align:start;min-width:0}
+@media (min-width:861px){
+ .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
+}
 /* v20 : un héros centré, la conversation en grand ; trois écrans d'une phrase ; une liste ; la vidéo ; le dernier écran */
 .ia{display:grid;grid-template-columns:minmax(0,1fr) min(320px,70vw);gap:clamp(40px,6vw,96px);align-items:center}.ia .lede{margin-top:24px}
 .ia .v{border-radius:24px;box-shadow:0 40px 80px -40px rgba(17,19,24,.5)}@media (max-width:860px){.ia{grid-template-columns:1fr}.ia-v{justify-self:center;width:min(280px,72vw)}}
@@ -372,12 +367,12 @@ footer{border-top:0}
 .non3 li{font-size:clamp(22px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:600;max-width:30ch}
 .non3 li span{display:block;font-weight:400;font-size:clamp(17px,1.5vw,20px);letter-spacing:0;color:var(--soft);margin-top:6px}
 .pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}
+/* v24 · la démo de l'assistant (Trattoria Nonna Pia), commune à /assistant et à l'accueil (« Et aussi ») */
 .chat{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:560px;max-height:78vh;box-shadow:0 1px 0 rgba(17,19,24,.03),0 18px 40px -24px rgba(17,19,24,.25)}
 .chat .top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .chat .av{width:36px;height:36px;border-radius:50%;background:#2B2420;color:#F4EFE7;display:grid;place-items:center;font:400 italic 19px var(--serif);flex:none}
 .chat .who b{display:block;font-size:15px}
 .chat .who span{font-size:13px;color:var(--muted)}
-.chat .tag{margin-left:auto;font:500 11px var(--mono);letter-spacing:.08em;border:1px solid var(--line);border-radius:6px;padding:4px 7px;color:var(--muted)}
 .chat .log{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
 .m{max-width:85%;padding:10px 13px;border-radius:14px;font-size:15px;line-height:1.45;white-space:pre-line}
 .m.b{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
@@ -393,10 +388,11 @@ footer{border-top:0}
 .chat input:focus{outline:2px solid var(--klein);outline-offset:0;border-color:transparent}
 .chat form button{border:0;background:var(--ink);color:#fff;border-radius:10px;padding:0 16px;font-weight:600;cursor:pointer;min-height:44px}
 .chat .foot{font-size:12.5px;color:var(--muted);padding:0 14px 12px}
-.non{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
-.non div{border-top:1px solid var(--ink);padding-top:16px}
-.non p{color:var(--soft);margin-top:8px;font-size:16px}
-@media (max-width:860px){.non{grid-template-columns:1fr}}
+.chat.hey{animation:hey 1.2s ease}@keyframes hey{0%,100%{box-shadow:0 18px 40px -24px rgba(17,19,24,.25)}30%{box-shadow:0 0 0 4px rgba(43,63,255,.35),0 18px 40px -24px rgba(17,19,24,.25)}}
+[data-try] svg{color:currentColor!important}
+.ah .act{justify-content:center;margin-top:28px}.ah .chat{scroll-margin-top:96px}
+.own{margin:20px auto 0;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}.own .lnk,.end .lnk{display:inline-flex;align-items:center;gap:8px;font-weight:600;min-height:44px}.own .lnk svg,.end .lnk svg{width:18px;height:18px;color:#25D366}.own .micro{color:var(--muted)}
+.end .act{align-items:center;gap:20px}.end .lnk.inv{color:#fff;text-decoration:underline;text-underline-offset:4px}.own2{margin-top:20px;color:rgba(255,255,255,.6)}
 </style>
 
 </head>
@@ -406,8 +402,8 @@ footer{border-top:0}
  <div class="in">
   <a class="logo landed" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="index.html#choix">La démo</a><a href="index.html#prix">Prix</a><a class="opt" href="vitrine.html">La Vitrine</a><a class="opt" href="pub.html">La Pub</a><span class="nav-sub opt"><button type="button" class="nav-sb" data-cur aria-expanded="false" aria-controls="navS">Autres services</button><span class="nav-sl" id="navS"><a href="assistant.html" aria-current="page">L’assistant</a><a href="visite.html">La visite complète</a></span></span><a class="opt2" href="index.html#questions">Questions</a><a class="nav-wa" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20L%E2%80%99assistant%20m%E2%80%99int%C3%A9resse.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Parler de mon assistant</span></a></nav>
-  <a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20L%E2%80%99assistant%20m%E2%80%99int%C3%A9resse.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Parler de mon assistant</span><span class="s">WhatsApp</span></a>
+  <nav aria-label="Pages" id="navL"><a href="index.html#choix">La démo</a><a href="index.html#prix">Sites et prix</a><a class="opt" href="fil.html">Le Fil</a><a class="opt" href="telephone.html">Le téléphone</a><span class="nav-sub opt3"><button type="button" class="nav-sb" data-cur aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="assistant.html" aria-current="page">L’assistant</a><a href="visite.html">La visite complète</a><a href="vitrine.html">La Vitrine</a></span></span><a class="opt2" href="index.html#questions">Questions</a><a class="nav-wa" href="#essai" data-try><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a></nav>
+  <a class="btn" href="#essai" data-try><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span class="l">Essayer l’assistant</span><span class="s">Essayer</span></a>
  </div>
 </header>
 
@@ -416,14 +412,17 @@ footer{border-top:0}
 <section class="ah bg-paper c" data-hero aria-labelledby="h1"><div class="in">
  <p class="mono">L’assistant</p>
  <h1 class="h-xl" id="h1">Vos clients ont une réponse, même à 23 h.</h1>
- <p class="lede">Sur votre site, il répond à ce qu’on vous demande tous les jours. Quand il ne sait pas, il vous passe la main sur WhatsApp.</p>
+ <p class="lede">Sur votre site, il répond à ce qu’on vous demande tous les jours : horaires, carte, prix, parking, réservation. Quand il ne sait pas, il ne devine pas : il vous passe la main sur WhatsApp.</p>
+ <div class="act"><a class="btn" href="#essai" data-try><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>L’essayer maintenant</span></a></div>
  <div class="chat" id="essai" aria-label="Démo de l’assistant">
   <div class="top"><span class="av" aria-hidden="true">N</span><div class="who"><b>Trattoria Nonna Pia</b><span>Assistant · répond tout de suite</span></div><span class="dtag" style="margin-left:auto">Démo</span></div>
   <div class="log" id="log" aria-live="polite"></div>
   <div class="qchips" id="chips"></div>
   <form id="f" autocomplete="off"><label class="sr" for="q">Votre question</label><input id="q" placeholder="Votre question…" maxlength="160"><button>Envoyer</button></form>
+  <p class="foot">Démo : le restaurant et ses informations sont inventés.</p>
  </div>
  <p class="micro cap">Démo à essayer : la Trattoria Nonna Pia est un restaurant inventé, à Morges. Écrivez comme un client, ou touchez une question.</p>
+ <p class="own"><a class="lnk" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20essay%C3%A9%20l%E2%80%99assistant.%20J%E2%80%99aimerais%20le%20m%C3%AAme%20pour%20mon%20commerce.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>En avoir un pour mon commerce</span></a> <span class="micro">sur WhatsApp</span></p>
 </div></section>
 
 <section class="bg-white" aria-label="Ce que fait l’assistant"><div class="in">
@@ -454,7 +453,7 @@ footer{border-top:0}
 
 <section class="bg-white" aria-labelledby="ia-t"><div class="in ia">
  <div><span class="dtag">Démo</span><h2 id="ia-t" style="margin-top:18px">On a essayé de le faire mentir.</h2><p class="lede">L’assistant d’un restaurant de démo, interrogé sur ce qu’il ne sait pas. Il répond avec vos informations, et sinon il vous passe la main.</p><p class="micro" style="margin-top:18px;color:var(--muted)">Restaurant de démo, inventé. Voix générées par IA.</p></div>
- <div class="ia-v"><div class="v" data-v="video/pub/assistant.mp4"><img src="video/pub/assistant.jpg" width="720" height="1280" alt="Démo : l’assistant de la Trattoria Nonna Pia face à des questions pièges ; il n’invente rien." loading="lazy" decoding="async"><button type="button" class="vp" aria-label="Lire la vidéo : l’interrogatoire" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></button><button type="button" class="snd" aria-label="Son de la vidéo" aria-pressed="false"><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div></div>
+ <div class="ia-v"><div class="v" data-v="video/fil/assistant.mp4"><picture><source type="image/avif" srcset="video/fil/assistant.avif"><img src="video/fil/assistant.jpg" width="720" height="1280" alt="Démo : l’assistant de la Trattoria Nonna Pia face à des questions pièges ; il n’invente rien." loading="lazy" decoding="async"></picture><button type="button" class="vp" aria-label="Lire la vidéo : l’interrogatoire" aria-pressed="false" style="position:absolute;inset:0;background:none;border:0;cursor:pointer;width:100%"><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span></button><button type="button" class="snd" aria-label="Son de la vidéo" aria-pressed="false"><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button></div></div>
 </div></section>
 
 <section class="bg-paper" aria-labelledby="hQ"><div class="in qa">
@@ -470,14 +469,15 @@ footer{border-top:0}
 
 <section class="bg-ink end" id="contact" aria-labelledby="finalH"><div class="in">
  <h2 id="finalH" class="rv">On prépare l’assistant de votre commerce ?</h2>
- <div class="act rv"><a class="btn inv" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20L%E2%80%99assistant%20m%E2%80%99int%C3%A9resse.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Parler de mon assistant</span></a></div>
+ <div class="act rv"><a class="btn inv" href="#essai" data-try><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a><a class="lnk inv" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20essay%C3%A9%20l%E2%80%99assistant.%20J%E2%80%99aimerais%20le%20m%C3%AAme%20pour%20mon%20commerce.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>En avoir un pour mon commerce</span></a></div>
+ <p class="micro own2">Le premier bouton vous ramène à la démo. Le second ouvre WhatsApp.</p>
 </div></section>
 
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="https://wa.me/41764882710?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20L%E2%80%99assistant%20m%E2%80%99int%C3%A9resse.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Parler de mon assistant</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Essayer l’assistant"><a class="btn" href="#essai" data-try><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a></nav>
 
 <footer><div class="in">
- <div class="fl"><a class="logo" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="index.html">L’entrée 3D</a><a href="vitrine.html">La Vitrine</a><a href="visite.html">La visite complète</a><a href="assistant.html">L’assistant</a><a href="pub.html">La Pub</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="fl"><a class="logo" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="index.html">L’entrée 3D</a><a href="vitrine.html">La Vitrine</a><a href="visite.html">La visite complète</a><a href="telephone.html">Le téléphone</a><a href="assistant.html">L’assistant</a><a href="fil.html">Le Fil</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
  <div class="fq"><p class="also2">Aussi : <a href="tel:+41764882710">+41 76 488 27 10</a> · <a href="mailto:oonde.contact@gmail.com">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p></div>
  <p class="seo">Sites internet avec entrée en 3D, sites simples, assistant et vidéos courtes pour les commerces de Genève à Montreux. © 2026 OONDE.</p>
 </div></footer>
@@ -496,17 +496,18 @@ const HELLO={ig:'Bonjour, je viens d’Instagram.',tt:'Bonjour, je viens de TikT
 const wa=t=>'https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(t);
 const mail=(subject,t)=>'mailto:'+MAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(t);
 /* Les messages fixes : une ligne d'où l'on vient, une ligne de ce qu'on veut, et en dernier ce qui reste à remplir (WhatsApp y met le curseur) */
-const MSG={
- vit:()=>HELLO+' J’aimerais recevoir ma maquette offerte.\nMon commerce et ma commune : ',
+const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
+ vit:()=>HELLO+' J’aimerais la maquette offerte de mon site La Vitrine.\nMon commerce et ma commune : ',
  passe:()=>HELLO+' J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ',
- imm:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
- e3:()=>HELLO+' J’aimerais recevoir une première image 3D de ma façade et le prix d’un site avec une entrée en 3D.\nMon commerce et ma commune : ',
- assist:()=>HELLO+' L’assistant m’intéresse.\nMon commerce et ma commune : ',
- vids:()=>HELLO+' J’aimerais une pub pour mon commerce.\nMon commerce et ma commune : ',
+ imm:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
+ e3:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
+ assist:()=>HELLO+' J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ',
+ fil:()=>HELLO+' Le Fil m’intéresse : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
- lieu:()=>HELLO+' J’aimerais que vous veniez voir mon lieu.\nType de lieu, commune et le meilleur moment : ',
- vid:()=>HELLO+' J’aimerais un devis pour des vidéos courtes (Instagram, TikTok).\nMon commerce et ma commune : '};
+ lieu:()=>HELLO+' J’aimerais que vous veniez voir mon commerce pour l’Entrée réelle.\nMon commerce, ma commune et le meilleur moment : ',
+ cours:()=>HELLO+' Les cours et formations m’intéressent.\nSur quel sujet : '};
 if(SRC)document.querySelectorAll('a[data-wa]').forEach(a=>{const m=MSG[a.dataset.wa];if(m)a.href=wa(m())});
 document.querySelectorAll('a[data-mail]').forEach(a=>{const m=MSG[a.dataset.mail];if(m)a.href=mail(a.dataset.mail==='imm'?'L’entrée 3D : mon commerce':'Ma maquette offerte',m().replace(/\n/,'\n\n'))});
 /* Mesure, seulement si Umami est branché (umami.txt) : un clic sur WhatsApp, l'e-mail ou le téléphone compte comme un contact, avec le bouton et la source */
@@ -532,12 +533,25 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  if(hero)new IntersectionObserver(es=>{past=!es[0].isIntersecting;set()}).observe(hero);
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));set()},{threshold:.5,rootMargin:'-64px 0px 0px 0px'});
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
+/* v24 : le bouton de l'en-tête et celui de la barre du bas suivent l'étage à l'écran (accueil : Le Fil, Le téléphone) ; ailleurs, le bouton du site.
+   Une section <… data-sw="fil" data-swl="Un exemple pour mon commerce"> ; les boutons qui changent portent data-swb. Jamais de prix. */
+(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;
+ const on=new Set();let cur='';
+ const ref=()=>document.querySelector('main a[data-wa="e3"]:not([data-swb]) [data-e3l]');
+ const apply=k=>{if(k===cur)return;cur=k;const s=secs.find(x=>x.dataset.sw===k);
+  bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(!l)return;
+   if(s){a.dataset.wa=k;a.href=wa(MSG[k]());l.removeAttribute('data-e3l');l.textContent=s.dataset.swl}
+   else{a.dataset.wa=a.dataset.swb;const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.setAttribute('data-e3l','');l.textContent=r?r.textContent:l.dataset.swl}})};
+ const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?on.add(e.target):on.delete(e.target));const s=secs.find(x=>on.has(x));apply(s?s.dataset.sw:'')},{rootMargin:'-45% 0px -45% 0px'});
+ secs.forEach(s=>io.observe(s))})();
 
 /* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
-/* La Pub (v20) : les vidéos ne se chargent qu'à la lecture (preload="none", la <video> n'est créée qu'au premier geste) ;
+</script>
+<script>
+/* Les vidéos (v20) : les vidéos ne se chargent qu'à la lecture (preload="none", la <video> n'est créée qu'au premier geste) ;
    une seule joue à la fois ; muettes par défaut, le son au tap, sur une seule ; hors de l'écran, elle s'arrête.
-   Mouvement réduit : rien ne part tout seul (ni la pub du haut, ni au survol) ; on lance au tap. */
+   Mouvement réduit : rien ne part tout seul (ni la vidéo du haut, ni au survol) ; on lance au tap. */
 (()=>{const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;let cur=null;
  const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(!e.isIntersecting&&v&&!v.paused)stop(e.target)}),{threshold:.25});
  function vid(box){let v=box.querySelector('video');if(!v){v=document.createElement('video');v.muted=true;v.playsInline=true;v.loop=true;v.preload='none';v.setAttribute('playsinline','');v.setAttribute('aria-hidden','true');v.tabIndex=-1;v.src=box.dataset.v;v.addEventListener('playing',()=>box.classList.add('live'));box.insertBefore(v,box.querySelector('.vp'))}return v}
@@ -548,12 +562,7 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
   box.querySelector('.vp').addEventListener('click',()=>{const on=box.classList.contains('on');if(!on)play(box,false);else if(FINE&&!RM&&!box.classList.contains('sound'))play(box,true);else stop(box)});   /* souris : le survol la lance muette, le clic lui donne le son, un second clic l'arrête */
   box.querySelector('.snd').addEventListener('click',e=>{e.stopPropagation();const on=box.classList.contains('sound');if(on){box.querySelector('video').muted=true;box.classList.remove('sound');e.currentTarget.setAttribute('aria-pressed','false')}else play(box,true)});
   if(FINE&&!RM){box.addEventListener('mouseenter',()=>{if(!cur||!cur.classList.contains('sound'))play(box,false)});box.addEventListener('mouseleave',()=>{if(cur===box&&!box.classList.contains('sound'))stop(box)})}});
- /* les flèches de la rangée (souris) ; au clavier et au doigt, la rangée défile d'elle-même */
- const rail=document.getElementById('rail');if(rail){const bs=document.querySelectorAll('[data-g]'),upd=()=>{bs[0].disabled=rail.scrollLeft<8;bs[1].disabled=rail.scrollLeft>rail.scrollWidth-rail.clientWidth-8};
-  bs.forEach(b=>b.addEventListener('click',()=>rail.scrollBy({left:+b.dataset.g*rail.clientWidth*.75,behavior:RM?'auto':'smooth'})));rail.addEventListener('scroll',upd,{passive:true});upd()}
- /* la pub du haut : muette, en boucle, seulement à l'écran */
- const h=document.querySelector('.ph1 video');if(h&&!RM){new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting){if(!h.src)h.src=h.dataset.src;const p=h.play();if(p&&p.catch)p.catch(()=>{})}else h.pause()},{threshold:.3}).observe(h.parentNode);
-  h.addEventListener('playing',()=>{h.style.opacity=1},{once:true});h.style.opacity=0;h.style.transition='opacity .4s'}
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&cur)stop(cur)});   /* v25 : onglet caché, la vidéo s'arrête */
 })();
 (()=>{const log=document.getElementById('log'),chips=document.getElementById('chips'),f=document.getElementById('f'),q=document.getElementById('q');
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -582,6 +591,10 @@ const ask=t=>{t=t.trim();if(!t||busy)return;busy=true;add(t,'u');const r=R.find(
 Q.forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.onclick=()=>ask(x);chips.appendChild(b)});
 f.addEventListener('submit',e=>{e.preventDefault();ask(q.value);q.value=''});
 add('Bonjour ! Je suis l’assistant de la Trattoria Nonna Pia. Une question sur les horaires, la carte ou une réservation ?','b');
+/* v23 : « Essayer l’assistant » (en-tête, menu, barre, fin) : la démo, ici, sur la page ; seul « En avoir un pour mon commerce » ouvre WhatsApp */
+const chat=document.getElementById('essai');
+/* v24 : sur l'accueil, la démo est repliée : « Essayer l'assistant » l'ouvre sur place */
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('[data-try]');if(!a)return;e.preventDefault();{const h=chat.closest('[hidden]');if(h){h.hidden=false;document.querySelectorAll('[data-try][aria-expanded]').forEach(b=>b.setAttribute('aria-expanded','true'))}}const m=document.querySelector('.nav-m[aria-expanded=true]');if(m)m.click();chat.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});chat.classList.remove('hey');void chat.offsetWidth;chat.classList.add('hey');if(matchMedia('(hover:hover)').matches)setTimeout(()=>q.focus({preventScroll:true}),RM?0:600);history.replaceState(null,'','#essai')});
 })();
 </script>
 </body>
