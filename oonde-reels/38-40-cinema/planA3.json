@@ -9,7 +9,7 @@
   },
   {
    "src": "drag3.mp4",
-   "in": 0,
+   "in": 1.0,
    "out": 6.0,
    "hold": 0.8
   },
@@ -22,8 +22,8 @@
  "dyn": [
   {
    "type": "notif",
-   "t0": 9.2,
-   "t1": 12.4,
+   "t0": 8.4,
+   "t1": 11.0,
    "title": "Commande livrée",
    "body": "1 sachet de croissants · par les airs",
    "when": "maintenant",
@@ -36,32 +36,32 @@
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 78,
    "y": 1150,
-   "t0": 9.7,
-   "t1": 11.8
+   "t0": 8.8,
+   "t1": 10.8
   },
   {
    "t": "Le dragon,\non peut l'enlever.",
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 78,
    "y": 520,
-   "t0": 12.2,
-   "t1": 18.8
+   "t0": 11.3,
+   "t1": 17.8
   },
   {
    "t": "Écris MAQUETTE\nen commentaire",
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 96,
    "y": 820,
-   "t0": 14.9,
-   "t1": 18.8
+   "t0": 14.0,
+   "t1": 17.8
   },
   {
    "t": "ta maquette gratuite arrive en DM",
    "font": "instrument-sans-latin-500-normal.woff2",
    "size": 48,
    "y": 1080,
-   "t0": 15.3,
-   "t1": 18.8,
+   "t0": 14.4,
+   "t1": 17.8,
    "color": [
     220,
     222,
@@ -72,15 +72,15 @@
    "img": "logo.png",
    "w": 360,
    "y": 1300,
-   "t0": 15.5,
-   "t1": 18.8
+   "t0": 14.6,
+   "t1": 17.8
   }
  ],
  "audio": [
   {
    "src": "m_drag.m4a",
    "in": 5.5,
-   "out": 11.6,
+   "out": 11.0,
    "t": 0,
    "gain": 1.0,
    "fi": 0.05,
@@ -93,36 +93,36 @@
   },
   {
    "src": "/home/user/k2/hybride/sons/sub.wav",
-   "t": 9.0,
+   "t": 8.2,
    "gain": 0.6
   },
   {
    "src": "/home/user/k2/hybride/sons/tick.wav",
-   "t": 9.25,
+   "t": 8.45,
    "gain": 0.5
   },
   {
    "src": "m_drag.m4a",
    "in": 0,
    "out": 10,
-   "t": 10.6,
+   "t": 9.6,
    "gain": 0.45,
    "fi": 0.8,
    "fo": 1.0
   },
   {
    "src": "vo/l0.mp3",
-   "t": 9.7
+   "t": 8.8
   },
   {
    "src": "vo/l1.mp3",
    "out": 2.5,
-   "t": 12.2,
+   "t": 11.3,
    "fo": 0.15
   },
   {
    "src": "vo/l7.mp3",
-   "t": 14.9
+   "t": 14.0
   }
  ]
 }
