@@ -45,11 +45,11 @@ if (q.get('bloom') !== '0') composer.addPass(bloom);
 composer.addPass(new OutputPass());
 // Grain léger et vignettage : l'image a l'air filmée, pas calculée
 const fin = new ShaderPass({
-  uniforms: { tDiffuse: { value: null }, uT: { value: 0 }, uV: { value: S.vignette ?? 0.32 } },
+  uniforms: { tDiffuse: { value: null }, uT: { value: 0 }, uV: { value: S.vignette ?? 0.32 }, uG: { value: q.get('grain') === '0' ? 0 : .018 } },   // v27 : ?grain=0 : pas de grain (vidéo)
   vertexShader: 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-  fragmentShader: `uniform sampler2D tDiffuse;uniform float uT,uV;varying vec2 vUv;
+  fragmentShader: `uniform sampler2D tDiffuse;uniform float uT,uV,uG;varying vec2 vUv;
   float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233))+uT)*43758.5453);}
-  void main(){vec4 c=texture2D(tDiffuse,vUv);vec2 d=vUv-.5;c.rgb*=1.-uV*dot(d,d)*2.2;c.rgb+=(h(vUv*913.)-.5)*.018;gl_FragColor=c;}`
+  void main(){vec4 c=texture2D(tDiffuse,vUv);vec2 d=vUv-.5;c.rgb*=1.-uV*dot(d,d)*2.2;c.rgb+=(h(vUv*913.)-.5)*uG;gl_FragColor=c;}`
 });
 composer.addPass(fin);
 

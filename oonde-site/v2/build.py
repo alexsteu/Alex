@@ -11,11 +11,15 @@ def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
 # Source : telephone-ia/offre.md, « Texte pour le site » (proposition v2, à valider par Alexandre).
 TEL_OFFRES = {'tel_ess': 149, 'tel_pro': 249, 'tel_pre': 449, 'tel_ess_setup': 290, 'tel_pro_setup': 390, 'tel_pre_setup': 490}
 TEL_MIN = '0.40'   # la minute au-delà du forfait, en francs
+# v27.2 · Rush (gros volume) : une ligne discrète sous les cartes, jamais une quatrième carte (Pro reste le centre).
+TEL_RUSH = {'tel_rush': 590, 'tel_rush_setup': 490}
+TEL_RUSH_MIN, TEL_RUSH_CALLS = '1 800', '1 200'
 PX = {k + '_m': chf(OFFRES[k]) for k in ('vit', 'e3', 'reel')} | {k: chf(OFFRES[k]) for k in ('setup', 'e3_setup', 'reel_setup')} \
    | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}"} \
    | {k: chf(v) for k, v in TEL_OFFRES.items()} | {k + '_n': str(v) for k, v in TEL_OFFRES.items()} | {'tel_min': TEL_MIN} \
+   | {k: chf(v) for k, v in TEL_RUSH.items()} | {'tel_rush_min': TEL_RUSH_MIN, 'tel_rush_calls': TEL_RUSH_CALLS} \
    | {'tel_pro_jour': f"moins de {-(-TEL_OFFRES['tel_pro'] * 12 // 365)}.–"}
-def walink(msg): return 'https://wa.me/41764882710?text=' + urllib.parse.quote(msg)
+def walink(msg): return 'https://wa.me/41779283540?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 # v24 · les messages pré-remplis (brief page-vente § 3.8) ; les mêmes textes que MSG dans partials/core.js
 WA = walink(HELLO + " J’aimerais la maquette offerte de mon site La Vitrine.\nMon commerce et ma commune : ")
@@ -23,14 +27,14 @@ WA_PASSE = walink(HELLO + " J’aimerais que vous passiez me montrer une maquett
 WA_IMM = walink(HELLO + " J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ")
 WA_ASSIST = walink(HELLO + " J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ")
 WA_TEL = walink(HELLO + " J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ")
-WA_FIL = walink(HELLO + " Le Fil m’intéresse : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ")
+WA_FIL = walink(HELLO + " Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
 WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce pour l’Entrée réelle.\nMon commerce, ma commune et le meilleur moment : ")
 WA_Q = walink(HELLO + " J’ai une question : ")
 WA_COURS = walink(HELLO + " Les cours et formations m’intéressent.\nSur quel sujet : ")
 WA_APL = walink(HELLO + " J’ai vu ma maquette, je la veux en ligne.")
 WA_APC = walink(HELLO + " J’ai vu ma maquette, j’aimerais changer : ")
-# v24 · LE FIL, tout ici : la cadence et les heures (pas encore confirmées par Alexandre), et le prix.
+# v24 · LE FIL (v27.1 : « Réseaux sociaux » pour le visiteur ; les clés FIL restent), tout ici : la cadence et les heures (pas encore confirmées par Alexandre), et le prix.
 # FIL_DES = None : « Prix par écrit sous 48 h. Sans engagement. » ; un nombre (ex. 39) : « Dès 39.– /mois. Sans engagement. » (jamais 0, jamais barré).
 FIL_DES = None
 FIL = {'cadence': 'chaque matin', 'Cadence': 'Chaque matin',
@@ -90,14 +94,15 @@ def inc(s):
     return re.sub(r'\{\{INC:([\w.-]+)\}\}', lambda m: (D / 'partials' / m.group(1)).read_text().rstrip('\n'), s)
 
 def nav(cur):
-    """{{NAV:page}} : la navigation du haut, la même partout (v24 : La démo · Sites et prix · Le Fil · Le téléphone · Questions, et « Et aussi »).
-    Sur l'accueil, Le Fil et Le téléphone mènent à leur étage ; ailleurs, à leur page."""
+    """{{NAV:page}} : la navigation du haut, la même partout (v24 : La démo · Sites et prix · Réseaux sociaux · Le téléphone · Questions, et « Et aussi »).
+    Sur l'accueil, Réseaux sociaux et Le téléphone mènent à leur étage ; ailleurs, à leur page.
+    v27.1 : « Le Fil » s'appelle Réseaux sociaux (page /reseaux) ; La Vitrine quitte « Et aussi » (elle reste au pied de page et sur les cartes d'offre)."""
     H = '' if cur == 'index' else '{{HOME}}'
     a = lambda k: ' aria-current="page"' if k == cur else ''
     sub = cur in ('assistant', 'visite', 'vitrine')
-    fil, tel = ('#fil', '#telephone') if cur == 'index' else ('{{FIL}}', '{{TELEPHONE}}')
-    return (f'<a href="{H}#choix">La démo</a><a href="{H}#prix">Sites et prix</a><a class="opt" href="{fil}"{a("fil")}>Le Fil</a><a class="opt" href="{tel}"{a("telephone")}>Le téléphone</a>'
-            f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a><a href="{{{{VITRINE}}}}"{a("vitrine")}>La Vitrine</a></span></span>'
+    rs, tel = ('#reseaux', '#telephone') if cur == 'index' else ('{{RESEAUX}}', '{{TELEPHONE}}')
+    return (f'<a href="{H}#choix">La démo</a><a href="{H}#prix">Sites et prix</a><a class="opt" href="{rs}"{a("reseaux")}>Réseaux sociaux</a><a class="opt" href="{tel}"{a("telephone")}>Le téléphone</a>'
+            f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>'
             f'<a class="opt2" href="{H}#questions">Questions</a>')
 
 # v24 · Le Fil : les vidéos de démo, nommées pour la commerçante (ce qui sort sur son fil), et non par nos ateliers.
@@ -173,51 +178,7 @@ def full(s, theme='#F7F7F4', base=''):
             + f'<meta name="theme-color" content="{theme}">\n<link rel="icon" href="favicon.ico" sizes="32x32">\n<link rel="icon" href="favicon.svg" type="image/svg+xml">\n<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
             + s[:i] + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
 
-def pack(src, dst, start=0, fr=None, p0x=()):
-    """Les images d'une entrée en 4 fichiers, dans l'ordre où le lecteur les veut : p0 = la première, la dernière et une sur 8,
-    p1 = les 4 + 8k, p2 = les 2 + 4k, p3 = les impaires. Rend (numéro, octets) : voir blob() pour le format ; v22 : écrits par put()
-    (dist : .bin à empreinte ; preview : base64 dans un .txt, l'aperçu claude.ai ne servant pas les .bin)."""
-    fr = fr or sorted(src.glob('f*.webp')); n = len(fr)
-    # v20.1 : start = la première image que le lecteur montre (S0 dans rue.js) ; celles d'avant ne partent plus (un tiers du poids en moins)
-    J = lambda i: i - start
-    k1 = -1
-    if start and (src / 'pins.json').exists():   # v20.1 : l'image de l'arrêt part dans le premier paquet (réseau lent : on ne reste pas sur l'affiche du début à l'arrêt)
-        k1 = next((i for i, x in enumerate(json.loads((src / 'pins.json').read_text())) if x['p'] >= .88), -1)
-    # v21.2 : la rue, dense au départ : les 16 premières images montrées sont toutes dans p0/p1 (avant tout geste) ; le premier défilement n'attend plus p2
-    dense = set(range(start, start + 16)) if start else set()
-    g0 = [i for i in range(start, n) if J(i) % 8 == 0 or i == n - 1 or i == k1 or i in p0x]   # p0x : v21.2, toutes les façades du glissement dans p0
-    groups = [g0, [i for i in range(start, n) if (J(i) % 8 == 4 or i in dense) and i != k1 and i not in g0], [i for i in range(start, n) if J(i) % 4 == 2 and i != k1 and i not in dense], [i for i in range(start, n) if J(i) % 2 == 1 and i != n - 1 and i != k1 and i not in dense]]
-    for g, idx in enumerate(groups):
-        head, body, off = [], b'', 0
-        for i in idx:
-            d = fr[i].read_bytes(); head.append([int(fr[i].stem[1:]), off, len(d)]); body += d; off += len(d)
-        h = json.dumps(head, separators=(',', ':')).encode()
-        yield g, len(h).to_bytes(4, 'little') + h + body
-
-def blob(fr):
-    """Un paquet : 4 octets (longueur de l'en-tête), l'en-tête JSON [[image, début, longueur], …], puis les images bout à bout."""
-    head, body, off = [], b'', 0
-    for i, f in fr:
-        d = f.read_bytes(); head.append([i, off, len(d)]); body += d; off += len(d)
-    h = json.dumps(head, separators=(',', ':')).encode()
-    return len(h).to_bytes(4, 'little') + h + body
-
-WA_N = {'d': 45, 'm': 55}   # v22 : le film de l'intro (img/e3d/w/<jeu>) : A images d'approche (rendues, plus montrées depuis v26), puis les 73 du glissement (va)
-WA_S0 = 52   # v26 : l'arrivée = les images A+52 … A+60 de la marche (rue.js S0F … HV)
-def wpacks(k):
-    """v26 : les 6 paquets du film, dans l'ordre de rue.js (PK) : S0 = l'arrivée (A+52 … A+60), nette, demandée dès la tête du HTML : le premier mouvement ;
-    Kb = une image sur quatre de la marche (270×480 / 480×300), L2/L3 = la marche en basse définition (360×640 / 640×400), paires/impaires ;
-    H2 et H3 les deux moitiés de la marche, nettes (sans les images de S0). L'approche (images 0 … A-1) n'est plus servie (v26 : l'intro en deux temps)."""
-    src = D / 'img' / 'e3d' / 'w' / k; A = WA_N[k]; n = len(list(src.glob('h*.webp')))
-    if os.environ.get('E3TEST') and n != A + 73: print('incomplet', k, n); return
-    assert n == A + 73, (k, n)
-    j = lambda i: i if i < A else i - A
-    s0 = list(range(A + WA_S0, A + 61))
-    G = {'S0': ('h', s0), 'Kb': ('k', list(range(6 + (A - 6 + 3) // 4 * 4, n, 4))),
-         'L2': ('l', [i for i in range(A, n) if j(i) % 2 == 0]), 'L3': ('l', [i for i in range(A, n) if j(i) % 2 == 1]),
-         'H2': ('h', [i for i in range(A, A + 37) if i not in s0]), 'H3': ('h', [i for i in range(A + 37, n) if i not in s0])}
-    for nm, (t, idx) in G.items():
-        yield nm, {x: blob([(i, src / f'{t}{i:03d}.{e}') for i in idx]) for x, e in (('a', 'avif'), ('w', 'webp'))}
+# v27 : le film de l'intro est une vidéo (video/e3d/<jeu>/*.mp4, affiches img/e3d/v/<jeu>/) ; les paquets d'images (pack, wpacks, E3M, E3PRE) ont disparu.
 
 def externalize(html, o, name):
     crit = name == 'index'   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé
@@ -252,7 +213,7 @@ MISSING = []
 layout = (D / 'legal-layout.html').read_text()
 QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-wa.svg': qr(WA)}   # v25 : les codes QR (bas des pages, ordinateur)
 QR_IMM, QR_WA = ('<img src="img/qr-%s.svg" width="84" height="84" alt="" loading="lazy" decoding="async">' % k for k in ('imm', 'wa'))
-docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'fil': (D / 'fil.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'reseaux': (D / 'reseaux.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -260,44 +221,15 @@ for k, (title, desc, cur) in PAGES.items():
     docs[k] = s
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{FIL}}': 'fil', '{{TELEPHONE}}': 'telephone'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{FIL}}': 'fil.html', '{{TELEPHONE}}': 'telephone.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{RESEAUX}}': 'reseaux', '{{TELEPHONE}}': 'telephone'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{RESEAUX}}': 'reseaux.html', '{{TELEPHONE}}': 'telephone.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
-    # v22 : les paquets d'images de l'accueil, avant les pages : E3M (nom logique → fichiers) est écrit dans la page.
-    # dist : des .bin binaires, nommés par empreinte (img/e3d/h/), en cache immuable ; AVIF + WebP en secours pour le film de l'intro.
-    # preview : des .txt en base64 (l'aperçu claude.ai refuse les .bin), au chemin lisible.
-    E3M = {}
-    def put(key, x, data, path):
-        if out == 'dist':
-            f = f'img/e3d/h/{hashlib.sha256(data).hexdigest()[:12]}.bin'; (o / f).parent.mkdir(parents=True, exist_ok=True); (o / f).write_bytes(data)
-        else:
-            f = path; (o / f).parent.mkdir(parents=True, exist_ok=True); (o / f).write_bytes(base64.b64encode(data))
-        E3M.setdefault(key, {})[x] = f
-    for k in ('d', 'm'):
-        for nm, by in wpacks(k):
-            for x, data in by.items(): put(f'w/{k}/{nm}', x, data, f'img/e3d/w/{k}/{nm}.{x}.txt')
-    for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name.startswith('in-')]:
-        for k in ('da', 'ma', 'd', 'm'):
-            if not (sd / k).is_dir(): continue
-            if k in ('da', 'ma'):   # v21 : la suite derrière la façade du métier : ses images de la porte (da/, ma/), puis celles de la salle, communes (d/, m/)
-                own = sorted((sd / k).glob('f*.webp')); fr = own + sorted((sd / k[0]).glob('f*.webp'))[len(own):]
-            else: fr = None
-            for g, data in pack(sd / k, None, 0, fr): put(f'{sd.name}/{k}/p{g}', 'w', data, f'img/e3d/{sd.name}/{k}/p{g}.txt')
-    E3MJ = json.dumps(E3M, separators=(',', ':'))
-    # le premier paquet du film (S0, AVIF) part dès la tête de la page, avant le reste du HTML ; e3get le reprend (window.E3P).
-    # (un <link rel=preload as=fetch> n'est pas repris par WebKit : le paquet partait deux fois)
-    E3PRE = ''
-    if 'w/m/S0' in E3M and 'w/d/S0' in E3M:   # v26 : dès la tête : S0 (l'arrivée, AVIF), les enseignes, puis Kb (les clés de la marche, en priorité basse) du jeu de l'écran ; e3get et rue.js les reprennent (window.E3P)
-        U = {k: [E3M[f'w/{k}/S0']['a'], f'img/e3d/w/{k}/pins.json', E3M[f'w/{k}/Kb']['a']] for k in ('m', 'd')}
-        E3PRE = ("<script>window.E3P={};(function(){var L=innerWidth<innerHeight*.95?%s:%s;"
-                 "try{L.forEach(function(u,i){var p=fetch(u,{priority:i==2?'low':'high'}).then(function(r){if(!r.ok)throw r.status;return r});p.catch(function(){});E3P[u]=p})}catch(e){}})()</script>"
-                 % (json.dumps(U['m']), json.dumps(U['d'])))
     for k, s in docs.items():
-        s = fill(s, fonts, LINKS[out]).replace('{{E3M}}', E3MJ).replace('{{E3PRE}}', E3PRE)
+        s = fill(s, fonts, LINKS[out])
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
-            s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'w' / k2 / 'blur.webp').read_bytes()).decode())
-        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'fil', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+            s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
+        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'reseaux', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         whole[k] = built[k]   # la page entière (avec ses scripts) : c'est elle qu'on lit pour savoir quels fichiers copier
@@ -317,22 +249,17 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
-    if 'img/e3d/' in html:   # l'entrée 3D de l'accueil : le film de l'intro (w) et, par métier, la porte et la salle (in-*), en paquets (E3M)
-        for k in ('d', 'm'):
-            src, dst = D / 'img' / 'e3d' / 'w' / k, o / 'img' / 'e3d' / 'w' / k; dst.mkdir(parents=True, exist_ok=True)
-            for f in ('pins.json', 'stop.jpg', 'poster.jpg', 'poster.avif'):
-                if (src / f).exists(): shutil.copy2(src / f, dst / f)
+    if 'img/e3d/' in html:   # v27 : l'entrée 3D de l'accueil : les clips (video/e3d/<jeu>/), leurs affiches et enseignes (img/e3d/v/), et les photos de la salle par métier (in-*, E3IN)
+        for sub in ('img/e3d/v', 'video/e3d'):
+            if (D / sub).is_dir(): shutil.copytree(D / sub, o / sub, dirs_exist_ok=True, ignore=shutil.ignore_patterns('*.json.tmp'))
+        ph = re.search(r"E3IN=\{d:\[([\d,]+)\],m:\[([\d,]+)\]\}", html)
         for sd in [d for d in sorted((D / 'img' / 'e3d').iterdir()) if d.name.startswith('in-')]:
             for k in ('d', 'm'):
-                src, dst = sd / k, o / sd.relative_to(D) / k; dst.mkdir(parents=True, exist_ok=True)
-                lastf = [x.name for x in sorted(src.glob('f*.webp'))[-1:]]   # la dernière image : l'affiche en mouvement réduit (univers)
-                ph = re.search(r"E3IN=\{d:\[([\d,]+)\],m:\[([\d,]+)\]\}", html)   # les photos du site (e3d.js, E3IN) : trois images de la salle
+                src, dst = sd / k, o / sd.relative_to(D) / k
                 phs = [f'f{int(i):03d}.webp' for i in ph.group(1 if k == 'd' else 2).split(',')] if ph else []
-                for f in ['f000.webp', 'pins.json', 'poster.jpg', 'open.jpg', 'stop.jpg'] + lastf + phs:
-                    if (src / f).exists() and not (dst / f).exists(): shutil.copy2(src / f, dst / f)
-            for k in ('da', 'ma'):
-                if (sd / k).is_dir():
-                    (o / sd.relative_to(D) / k).mkdir(parents=True, exist_ok=True); shutil.copy2(sd / k / 'pins.json', o / sd.relative_to(D) / k / 'pins.json')
+                for f in phs:
+                    if (src / f).exists():
+                        dst.mkdir(parents=True, exist_ok=True); shutil.copy2(src / f, dst / f)
     (o / 'fonts').mkdir()
     for f, p, ws in FACES:
         for w in ws: shutil.copy(FONTDIR / (p % w), o / 'fonts')
@@ -352,12 +279,12 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
-            '\n/img/e3d/h/*\n  Cache-Control: public, max-age=31536000, immutable\n'
+            '\n/video/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
-        (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /fil  301\n/pub.html /fil 301\n/videos /fil  301\n/videos.html /fil 301\n')
+        (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /reseaux  301\n/pub.html /reseaux 301\n/videos /reseaux  301\n/videos.html /reseaux 301\n/fil    /reseaux  301\n/fil.html /reseaux 301\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'fil', 'telephone', 'assistant', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'reseaux', 'telephone', 'assistant', 'visite')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):

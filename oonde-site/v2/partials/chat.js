@@ -1,6 +1,6 @@
 (()=>{const log=document.getElementById('log'),chips=document.getElementById('chips'),f=document.getElementById('f'),q=document.getElementById('q');
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const WAL='<a href="https://wa.me/41764882710" target="_blank" rel="noopener">WhatsApp</a>';
+const WAL='<a href="https://wa.me/41779283540" target="_blank" rel="noopener">WhatsApp</a>';
 const R=[
  {k:/ouvert|horaire|heure|ferm|ce soir|demain|dimanche|lundi|midi/,a:'Nous sommes ouverts du mardi au samedi, de 11 h 30 à 14 h et de 18 h 30 à 22 h 30. Fermé le dimanche et le lundi.\nCe soir, la cuisine prend les commandes jusqu’à 21 h 45.'},
  {k:/r[ée]serv|table|place pour|personnes|anniversaire|groupe/,a:'Avec plaisir. Pour réserver, le plus rapide est d’écrire à l’équipe sur '+WAL+' : le jour, l’heure et le nombre de personnes.\nJe ne peux pas garantir une table moi-même, c’est l’équipe qui confirme.'},

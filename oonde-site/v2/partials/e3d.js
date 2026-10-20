@@ -105,7 +105,7 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
    horaires, prix, photos de la salle. Ce module tient l'état (métier, nom, couleur) ; rue.js le lit et le change (E3S.set). */
 const E3IN={d:[22,38,55],m:[26,44,63]};   /* les photos du site : trois images de la salle (entree3d, ?int=) */
 const e3in=k=>'img/e3d/in-'+k+'/';
-const E3S=(()=>{const st={sc:'restaurant',name:'',style:0,styleSet:false,touched:false};
+const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:false};   /* v27 : la façade du milieu de la rue */
  const sec=$('entree'),u=$('univers');let ph='';
  const sty=()=>{const s=E3[st.sc];return s.lodge?['#3D4A52','#fff','ardoise']:T[s.t].styles[st.style]};
  /* le message WhatsApp : ce que la personne a tapé et choisi, rien d'autre */

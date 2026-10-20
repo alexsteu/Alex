@@ -16,13 +16,15 @@ fs.mkdirSync(out, { recursive: true });
   if (a.dump) { fs.writeFileSync(a.dump, JSON.stringify(await pg.evaluate(() => window.PATH.map(k => ({ p: k.p, pos: k.pos, tgt: k.tgt, fov: k.fov }))))); await b.close(); return; }
   const pins = []; const t0 = Date.now();
   for (let i = I0; i < Math.min(I1, ps.length); i++) {
+    const name = a.p ? `p${String(ps[i]).replace('.', '_')}` : `f${String(i).padStart(3, '0')}`;
+    if (a.resume && fs.existsSync(path.join(out, name + '.json')) && fs.existsSync(path.join(out, name + '.' + fmt))) { pins.push(JSON.parse(fs.readFileSync(path.join(out, name + '.json'), 'utf8'))); continue; }   // v27 : --resume : l'image déjà rendue (et ses enseignes) est gardée
     const r = await pg.evaluate(p => { const r = window.frame(p); return { ...r, img: document.querySelector('canvas').toDataURL('image/png') }; }, ps[i]);
     const buf = Buffer.from(r.img.split(',')[1], 'base64');
-    const name = a.p ? `p${String(ps[i]).replace('.', '_')}` : `f${String(i).padStart(3, '0')}`;
     let im = sharp(buf).resize(W, H, { kernel: 'lanczos3' });
     if (fmt === 'webp') await im.webp({ quality: +a.quality || 80, effort: 5 }).toFile(path.join(out, name + '.webp'));
+    else if (fmt === 'png') await im.png({ compressionLevel: 3 }).toFile(path.join(out, name + '.png'));   // v27 : images sans perte, pour ffmpeg
     else await im.jpeg({ quality: 88 }).toFile(path.join(out, name + '.jpg'));
-    pins.push({ p: +ps[i].toFixed(4), pins: r.pins });
+    pins.push({ p: +ps[i].toFixed(4), pins: r.pins }); if (a.resume) fs.writeFileSync(path.join(out, name + '.json'), JSON.stringify(pins[pins.length - 1]));
     if (i % 8 === 0 || a.p) console.log(`${name} p=${ps[i].toFixed(3)} ${((Date.now() - t0) / 1000 / (i - I0 + 1)).toFixed(1)} s/image`);
   }
   if (!a.p) fs.writeFileSync(path.join(out, a.from || a.to ? `pins-${I0}.json` : 'pins.json'), JSON.stringify(pins));

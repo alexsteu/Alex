@@ -1,0 +1,105 @@
+
+/* les vidéos (Réseaux sociaux, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
+.dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
+.bg-ink .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+.v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
+.v img,.v video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v video{opacity:0;transition:opacity .25s}.v.live video{opacity:1}
+.v .snd{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;border:0;cursor:pointer}
+.v .snd svg{width:18px;height:18px}.v .snd .on{display:none}.v.sound .snd .on{display:block}.v.sound .snd .off{display:none}
+.v .pl{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:999px;background:rgba(255,255,255,.88);display:grid;place-items:center;transition:opacity .2s}
+.v .pl svg{width:20px;height:20px;margin-left:3px;color:#111}.v.on .pl{opacity:0}
+.cap{margin-top:16px}
+.cap .mono{font-size:11px;letter-spacing:.14em;display:block}
+.cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
+/* v23 · les démos de nos services vidéo (accueil, Réseaux sociaux) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
+   Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
+.v.w{aspect-ratio:16/9}
+.v .snd span{display:none}
+.vd .v .snd{width:auto;padding:0 14px 0 12px;gap:6px;display:flex;align-items:center;font:600 14px var(--sans)}.vd .v .snd span{display:inline}
+.vt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px!important}
+.dtag.ia{background:rgba(43,63,255,.08);color:var(--klein)}
+.vrail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2*var(--pad) - 16px)/1.6);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;list-style:none;margin:clamp(32px,4vw,48px) calc(-1*var(--pad)) 0;padding:0 var(--pad) 8px;scroll-padding-inline:var(--pad)}
+.vrail::-webkit-scrollbar{display:none}.vrail li{scroll-snap-align:start;min-width:0}
+@media (min-width:861px){
+ .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
+}
+/* v24 · Le Fil, v27.1 Réseaux sociaux (accueil et /reseaux) : « le matin ». Un crème chaud, l'heure en IBM Plex Mono, le seul bleu Klein sur le rond « en ligne ».
+   Le téléphone : un fil générique (pas de logo), la vidéo de démo muette en boucle ; en défilant, l'heure avance : 18:00 (l'aperçu
+   WhatsApp glisse), 7:30 (le post se pose), la journée. Une seule animation, liée au défilement (fil.js). */
+.bg-morning{background:#F6F1EA}
+.fm{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(28px,6vw,96px);align-items:center;margin-top:clamp(40px,5vw,72px)}
+.fm-ph{width:100%;max-width:320px;aspect-ratio:9/18.6;border-radius:44px;background:#111318;padding:11px;box-shadow:0 50px 90px -50px rgba(60,40,20,.55),0 0 0 1px rgba(17,19,24,.08)}
+.fm-scr{position:relative;height:100%;border-radius:34px;overflow:hidden;background:#fff;display:flex;flex-direction:column;font-family:var(--sans)}
+.fm-sb{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 6px;font:500 13px var(--mono)}
+.fm-clk{font-weight:500;font-variant-numeric:tabular-nums}
+.fm-sig{display:flex;gap:2px;align-items:flex-end;height:10px}.fm-sig i{width:3px;background:#111318;border-radius:1px}.fm-sig i:nth-child(1){height:40%}.fm-sig i:nth-child(2){height:70%}.fm-sig i:nth-child(3){height:100%}
+.fm-app{display:flex;align-items:center;gap:9px;padding:8px 12px}
+.fm-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#C9B79C,#8C6E4E);box-shadow:0 0 0 2px #fff,0 0 0 3px #E2D8CA}
+.fm-id{display:flex;flex-direction:column;line-height:1.15}.fm-id b{font-size:12.5px}.fm-id small{font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.fm-more{margin-left:auto;color:var(--muted);letter-spacing:1px}
+.fm-post{position:relative;aspect-ratio:4/5;background:#EAE3D9;overflow:hidden}
+.fm-post img,.fm-post video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fm-post video{opacity:0;transition:opacity .4s}.fm.vlive .fm-post video{opacity:1}
+.fm-live{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.92);font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.fm-live i{width:7px;height:7px;border-radius:50%;background:var(--klein)}
+.fm-bar{display:flex;gap:12px;padding:10px 12px 4px}.fm-bar i{width:18px;height:16px;border:1.6px solid #111318;border-radius:5px}
+.fm-cap{font-size:12.5px;line-height:1.4;padding:2px 12px;margin:0;color:var(--soft)}.fm-cap b{color:var(--ink)}
+.fm-wa{position:absolute;left:8px;right:8px;top:36px;display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:16px;background:rgba(246,241,234,.97);box-shadow:0 18px 36px -18px rgba(17,19,24,.5);font-size:12.5px;line-height:1.35}
+.fm-wa b{display:block;font-size:12.5px}.fm-wai{flex:none;width:26px;height:26px;border-radius:7px;background:#25D366;color:#fff;display:grid;place-items:center}.fm-wai svg{width:16px;height:16px}
+/* les trois temps (data-st) */
+.fm-post>*,.fm-wa{transition:opacity .5s var(--ez,ease),transform .6s var(--ez,ease)}
+.fm[data-st="0"] .fm-post>*{opacity:0;transform:translateY(18px)}
+.fm:not([data-st="0"]) .fm-wa{opacity:0;transform:translateY(-130%)}
+.fm[data-st="0"] .fm-wa{opacity:1;transform:none}
+.fm-t{list-style:none;margin:0;padding:0;display:grid;gap:clamp(28px,4vw,56px)}
+.fm-t li{border-top:1px solid rgba(17,19,24,.16);padding-top:18px;transition:opacity .4s}
+.fm.js-st .fm-t li{opacity:.4}.fm.js-st .fm-t li.on{opacity:1}
+.fm-t time{display:block;font:500 15px var(--mono);letter-spacing:.02em;color:var(--klein)}
+.fm-t b{display:block;margin-top:8px;font:600 clamp(22px,2.4vw,32px)/1.12 var(--sans);letter-spacing:-.025em;max-width:20ch}
+.fm-t span{display:block;margin-top:10px;color:var(--soft);font-size:clamp(16px,1.4vw,19px);max-width:28em}
+.fm-note{margin-top:20px;font-size:14px;color:var(--muted)}
+@media (max-width:700px){
+ .fm{grid-template-columns:132px minmax(0,1fr);gap:18px;align-items:start}
+ .fm-ph{position:sticky;top:calc(var(--hh) + 16px);border-radius:24px;padding:6px}.fm-scr{border-radius:19px}
+ .fm-sb{padding:7px 11px 2px;font-size:9px}.fm-app{padding:4px 7px;gap:5px}.fm-av{width:16px;height:16px}.fm-id b{font-size:8px}.fm-id small{font-size:6px}.fm-more{font-size:8px}
+ .fm-live{left:5px;top:5px;padding:3px 5px;font-size:6.5px;gap:3px}.fm-live i{width:5px;height:5px}
+ .fm-bar{gap:7px;padding:6px 7px 2px}.fm-bar i{width:10px;height:9px;border-width:1.2px;border-radius:3px}.fm-cap{font-size:8px;padding:1px 7px}
+ .fm-wa{left:4px;right:4px;top:20px;padding:6px;gap:5px;border-radius:9px;font-size:7.5px}.fm-wa b{font-size:7.5px}.fm-wai{width:15px;height:15px;border-radius:4px}.fm-wai svg{width:10px;height:10px}
+ .fm-t{gap:22px}.fm-t li{padding-top:12px}.fm-t time{font-size:13px}.fm-t b{font-size:19px;margin-top:5px}.fm-t span{font-size:15px;margin-top:6px}
+}
+@media (prefers-reduced-motion:reduce){.fm-post>*,.fm-wa,.fm-t li{transition:none}}
+/* les vidéos du Fil : même taille, l'étiquette Démo sous chacune (jamais par-dessus) */
+.v3,.v6{list-style:none}
+.cap .ft{margin-top:0;font:600 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.cap .ft+p:not(.vt){margin-top:4px;font-size:15px}
+@media (min-width:861px){.vrail.v3{grid-template-columns:repeat(3,minmax(0,1fr))}.vrail.v6{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:48px}}
+/* au téléphone, les boutons longs (« Recevoir un exemple pour mon commerce ») passent sur deux lignes au lieu d'être coupés */
+@media (max-width:480px){main .act .btn{white-space:normal;max-width:100%}main .act .btn span{white-space:normal;text-align:left;line-height:1.25}}
+/* v24 · Le Fil, v27.1 Réseaux sociaux (remplace « La Pub ») : le contenu publié chaque matin, en abonnement. Brief page-vente § 4.
+   Le premier écran au matin (crème), la matinée dans le téléphone, ce qui sort sur le fil, ce que vous faites et ne faites pas,
+   vous gardez la main, ce qu'on ne promet pas, le prix, les questions, l'encre pour finir. */
+.f-hero{padding-block:clamp(64px,9vw,140px) clamp(40px,5vw,72px)}
+.f-hero h1{font-size:clamp(44px,6.2vw,96px);line-height:1.02;letter-spacing:-.04em;max-width:13ch;margin-top:18px}
+.f-hero .lede{margin-top:clamp(20px,2.4vw,32px);font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:26em}
+.f-hero .act{margin-top:clamp(28px,3.4vw,44px);align-items:center;gap:22px}
+.f-sec h2{font-size:clamp(32px,4.4vw,64px);letter-spacing:-.035em;line-height:1.04;max-width:16ch}
+.f-sec .lede{margin-top:18px;max-width:32em}
+.f-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(28px,5vw,80px);margin-top:clamp(36px,5vw,64px)}
+.f-two>div{border-top:1px solid var(--ink);padding-top:20px}
+.f-two h3{font-size:clamp(20px,1.8vw,24px);letter-spacing:-.015em}
+.f-two ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.f-two li{font-size:clamp(17px,1.5vw,20px);color:var(--soft)}
+.f-no li{text-decoration:line-through;text-decoration-color:rgba(17,19,24,.35);text-decoration-thickness:1.5px}
+@media (max-width:760px){.f-two{grid-template-columns:1fr}}
+.l4{list-style:none;margin:clamp(32px,4vw,48px) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 48px;max-width:900px}
+.l4 li{font-size:19px;padding-left:28px;position:relative}
+.l4 li b{display:block}.l4 li span{display:block;color:var(--soft);font-size:17px;margin-top:2px}
+.l4 li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:7px;border:solid var(--klein);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+@media (max-width:760px){.l4{grid-template-columns:1fr}.l4 li{font-size:17px}}
+.f-px{margin-top:clamp(28px,3vw,40px);font:600 clamp(24px,2.6vw,36px)/1.15 var(--sans);letter-spacing:-.02em}
+.f-px+p{margin-top:12px;color:var(--soft);max-width:34em}
+.g-note{margin-top:24px;font-size:14px;color:var(--muted);max-width:44em}
+.end h2{font-size:clamp(36px,5vw,72px);letter-spacing:-.035em;line-height:1.04;max-width:14ch}
+.end .act{margin-top:clamp(28px,3.4vw,44px)}
+.end :focus-visible{outline-color:#fff}
