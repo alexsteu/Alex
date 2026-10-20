@@ -1,7 +1,8 @@
 /* La rue au crépuscule, en haut de page. v27 : plus d'images pilotées par le défilement : des vidéos, lues en avant, jamais cherchées
    (entree3d ?n3=restaurant,coiffure,institut, rendues à 60 i/s en H.264 ; video/e3d/<jeu>/, affiches img/e3d/v/<jeu>/) :
    1. l'intro (in.mp4, 2,5 s) : la page s'ouvre sur la carte-titre OONDE posée sur sa première image, et y reste HOLD_MS (3 s, comptées depuis
-      le moment où le clip est prêt : un réseau lent ne mange pas la pause) ; un geste (roulette, doigt, clic, Espace…) la fait partir plus tôt (v27.3).
+      le moment où le clip est prêt : un réseau lent ne mange pas la pause) ; un geste (roulette, doigt, clic, Espace…) ou le bouton « Entrée »
+      la fait partir plus tôt (v27.3, v27.4). Pendant la pause et l'intro, la page est tenue (épinglée, comme pendant l'entrée) : rien ne file vers le bas.
       Puis 0,5 s sur le globe bleu du réverbère (le point du logo) sous la carte-titre, puis la caméra
       se pose devant la façade du milieu (Coiffure) ; elle reste sur sa dernière image, la carte monte : le nom (il s'allume sur l'enseigne),
       le métier (trois tuiles : un glissement g-<a>-<b>.mp4 d'une façade à l'autre), « Entrer ».
@@ -66,7 +67,7 @@
  const onEnd=(v,fn,ms)=>{let done=false;const f=()=>{if(done)return;done=true;v.removeEventListener('ended',f);clearTimeout(t);fn()};v.addEventListener('ended',f);const t=setTimeout(()=>{if(v.ended||v.currentTime>=v.duration-.05||v.paused)f()},ms);return f};
  /* la carte : à l'arrêt seulement (le film posé) ; l'enseigne pulse deux fois à l'arrivée */
  let arrT=0;function card(on){if(stop._e===on)return;stop._e=on;flag(stop,'on',on);flag(u,'stop',on);if(on){thumb();if(SLOW)Promise.all(TRIO.map(x=>pre('stop-'+x))).then(()=>{if(st==='stop')entryLoad()});else entryLoad()}}   /* réseau lent : d'abord les trois images de l'arrêt (les coupes), puis l'entrée */
- function arrive(){st='stop';flag(u,'intro',false);put(t1,'opacity','0');flag(t1,'off',true);veil.style.setProperty('--hv','0');flag(u,'moving',true);place();
+ function arrive(){st='stop';pin(false);flag(u,'intro',false);put(t1,'opacity','0');flag(t1,'off',true);veil.style.setProperty('--hv','0');flag(u,'moving',true);place();
   flag(sign,'pulse',!shown);setTimeout(()=>flag(sign,'pulse',false),1300);arrT=performance.now();rested=true;setTimeout(()=>{if(st==='stop')card(true)},shown||chosen?250:400)}
  /* 1. l'intro : dès qu'elle joue, la vidéo remplace l'affiche ; la carte-titre s'efface sur son premier temps (0,55 → 1 s) ; à la fin, l'arrêt.
     v27.3 : elle ne part plus toute seule (plus d'autoplay) : prête (canplaythrough, ou le clip entier chargé), elle attend HOLD_MS sur la carte-titre, ou le premier geste ; play() en muet, en ligne, sans geste (iOS l'accepte) */
@@ -76,12 +77,14 @@
  const full=()=>{try{const b=vIn.buffered,d=vIn.duration;return b.length>0&&d>0&&b.end(b.length-1)>=d-.15}catch(e){return false}};
  function armed(){if(ready||st!=='title')return;if(vIn.readyState<4&&!full())return;ready=true;clearTimeout(holdT);clearInterval(armI);if(want)go();else holdT=setTimeout(go,HOLD_MS)}
  let armI=0;
- /* le geste qui part plus tôt : roulette, doigt, clic sur la scène, Espace / flèche bas / page suivante / Entrée ; la page ne bouge pas (l'intro s'en charge) */
- function early(e){if(st!=='title'||!LIVE)return;const tg=e.target;if(tg&&tg.closest&&tg.closest('a,button,input,select,textarea,.r-seg'))return;
-  if(e.type==='keydown'){if(![' ','ArrowDown','PageDown','Enter'].includes(e.key))return;e.preventDefault()}else if(e.type==='wheel'){if(e.deltaY<=0)return;e.preventDefault()}else if(e.type==='touchmove'&&e.cancelable)e.preventDefault();
+ /* le geste qui part plus tôt : roulette, doigt, clic sur la scène, Espace / flèche bas / page suivante / Entrée ; pendant le titre et l'intro, la page est tenue :
+    la roulette, le doigt et les touches de défilement sont avalés (v27.4 : sur iPhone, l'élan du doigt filait jusqu'au site) */
+ function early(e){if((st!=='title'&&st!=='intro')||!LIVE)return;const tg=e.target,ctl=!!(tg&&tg.closest&&tg.closest('a,button,input,select,textarea,.r-seg'));
+  if(e.type==='keydown'){if(ctl||![' ','ArrowDown','PageDown','End','Enter'].includes(e.key))return;e.preventDefault()}else if(e.type==='wheel')e.preventDefault();else if(e.type==='touchmove'){if(e.cancelable)e.preventDefault()}else if(ctl)return;
   go()}
  addEventListener('wheel',early,{passive:false,capture:true});addEventListener('touchstart',early,{passive:true,capture:true});addEventListener('touchmove',early,{passive:false,capture:true});addEventListener('keydown',early,true);
  stg.addEventListener('pointerdown',early);stg.addEventListener('click',early);
+ {const b=u.querySelector('.r-skip');if(b)b.addEventListener('click',e=>{e.preventDefault();if(st==='title')go()})}   /* « Entrée » : comme un geste */
  let wIn=0;vIn.addEventListener('waiting',()=>{if(st!=='intro'||vIn.currentTime<.1)return;if(full()){clearTimeout(wIn);wIn=setTimeout(()=>{if(st==='intro'&&vIn.readyState<3){SLOW=true;toStop()}},700);return}SLOW=true;toStop()});   /* l'intro qui cale : réseau lent, on passe à l'arrêt (fondu) plutôt que de saccader ; le clip entier déjà là (v27.3 : il part après la pause, décodeur à froid), on lui laisse 0,7 s */
  vIn.addEventListener('playing',()=>clearTimeout(wIn));
  function introStart(){if(st!=='title'||!LIVE)return;st='intro';onEnd(vIn,introEnd,7000);flag(vIn,'on',true);flag(u,'moving',true);pre('stop-'+HOME);const tick=()=>{if(st!=='intro')return;const t=vIn.currentTime,h=1-ss(Math.min(1,Math.max(0,(t-.55)/.45)));put(t1,'opacity',h.toFixed(3));flag(t1,'off',h<.02);veil.style.setProperty('--hv',h.toFixed(2));flag(u,'intro',t<.6);requestAnimationFrame(tick)};tick()}
@@ -114,7 +117,7 @@
  /* retour en haut après l'entrée : l'arrêt à nouveau (la carte) ; l'entrée rejouera */
  function backToStop(){if(st!=='in')return;st='stop';gate='closed';rested=true;flag(end,'on',false);put(end,'opacity','0');put(sbar,'opacity','0');flag(u,'past',false);ent=null;entOk=false;flag(vE,'on',false);holdTo('stop-'+met).then(()=>{place();card(true);entryLoad()})}
  /* la page épinglée pendant l'entrée : aucun défilement ne passe (le mur), le clip joue à son rythme (≤ 2 s) */
- function pin(on){const h=document.documentElement;flag(h,'r-pin',on);if(on&&COARSE)h.style.overflow='hidden';else if(!on)h.style.overflow=''}
+ let pinned=false;function pin(on){pinned=on;const h=document.documentElement;flag(h,'r-pin',on);if(on&&COARSE)h.style.overflow='hidden';else if(!on)h.style.overflow=''}
  /* ——— la géométrie : la scène collée (sticky) ; la zone de l'arrêt (0 → HZ), le mur à HZ ——— */
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight);y0=walk.getBoundingClientRect().top+scrollY-hh;fit();place()};
  const curY=()=>scrollY-y0;
@@ -127,7 +130,8 @@
   vIn.addEventListener('playing',introStart,{once:true});setTimeout(()=>{if(st==='title'&&!ready)SLOW=true},4000);   /* le garde-fou de fin (7 s) est posé au départ du clip, dans introStart */
   if(vIn.ended)introEnd();else if(!vIn.paused&&vIn.currentTime>0)introStart();else{armed();if(!ready){vIn.addEventListener('canplaythrough',armed);vIn.addEventListener('progress',armed);armI=setInterval(armed,150)}setTimeout(()=>{if(st==='title'&&vIn.readyState<3)ld.textContent='Chargement de la rue…'},2500);vIn.addEventListener('playing',()=>{if(ld.textContent==='Chargement de la rue…')ld.textContent=''},{once:true});setTimeout(()=>{if(st==='title'){if(vIn.readyState>=2)go(true);else if(vIn.error||vIn.networkState===3)flat();else toStop()}},12000)}   /* 12 s sans rien : on force, ou l'arrêt */
   vIn.addEventListener('error',()=>{if(st==='title')flat()},{once:true});
-  if(new URLSearchParams(location.search).get('e')||location.hash==='#choix')setTimeout(toStop,80)});
+  const H=location.hash,deep=!!new URLSearchParams(location.search).get('e')||H==='#choix'||(H.length>1&&H!=='#top'&&!!document.getElementById(H.slice(1)));
+  if(deep)setTimeout(toStop,80);else{pin(true);if(scrollY>0)scrollTo({top:0,behavior:'instant'})}});   /* ?e=, #choix, une rubrique : droit à l'arrêt, page libre ; sinon la page est tenue en haut jusqu'à l'arrêt (v27.4) */
  poster.addEventListener('error',()=>{poster.style.visibility='hidden'});
  /* l'arrivée par un lien (« Voir la démo », « Passer l'intro ») */
  document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href="#choix"]');if(!a)return;e.preventDefault();toStop()});
@@ -157,7 +161,7 @@
   addEventListener('scroll',()=>{const y=curY();clearTimeout(rt);rt=setTimeout(rest,320);
    if(st==='in'&&y<HZ*.5)backToStop();
    if(y<HZ*.5)nudged=false;
-   if(gate==='open'||st==='title'||st==='intro'){pP=y;return}
+   if(gate==='open'||st==='title'||st==='intro'){if(pinned&&(st==='title'||st==='intro')&&scrollY>0)scrollTo({top:0,behavior:'instant'});pP=y;return}
    const user=performance.now()-lastU<uWin;   /* le mur ne retient que les gestes (roulette, doigt, touches) : un lien vers une rubrique passe */
    if(gate==='door'||y>HZ+2&&user&&!e3gliding()){scrollTo({top:y0+HZ,behavior:'instant'});pP=HZ;if(gate==='closed'&&st==='stop'&&performance.now()-nt0>600&&u.classList.contains('stop')){nt0=performance.now();nudge()}
     if(COARSE){const h=document.documentElement;h.style.overflow='hidden';setTimeout(()=>{if(gate!=='door')h.style.overflow=''},160)}return}
@@ -186,7 +190,7 @@
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis&&st==='stop'&&vE&&!vE.paused)vE.pause()},{rootMargin:'50% 0px'}).observe(walk);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(st==='title'&&want)go(true)}});   /* l'onglet revient pendant le départ : on repart */
  addEventListener('resize',()=>{size()});addEventListener('pageshow',e=>{if(e.persisted)size()});
- window.__e3=()=>({st,met,set,gate,slow:SLOW,ready,want,on:stop.classList.contains('on'),ent,entOk,vin:[vIn.readyState,+vIn.currentTime.toFixed(2),vIn.paused,vIn.ended],vg:[vG.readyState,+vG.currentTime.toFixed(2),vG.paused],ve:[vE.readyState,+vE.currentTime.toFixed(2),vE.paused,vE.ended],y:Math.round(curY()),held:u.classList.contains('held'),shown});   /* état, pour les tests */
+ window.__e3=()=>({st,met,set,gate,slow:SLOW,ready,want,pinned,on:stop.classList.contains('on'),ent,entOk,vin:[vIn.readyState,+vIn.currentTime.toFixed(2),vIn.paused,vIn.ended],vg:[vG.readyState,+vG.currentTime.toFixed(2),vG.paused],ve:[vE.readyState,+vE.currentTime.toFixed(2),vE.paused,vE.ended],y:Math.round(curY()),held:u.classList.contains('held'),shown});   /* état, pour les tests */
  requestAnimationFrame(()=>{geo();u.classList.add('go')});
  {const w=u.querySelector('.r-wa');if(w)new IntersectionObserver(es=>{if(!LIVE)flag(document.body,'hero-cta',es[0].isIntersecting)},{rootMargin:'-64px 0px 0px 0px'}).observe(w)}
 })();
