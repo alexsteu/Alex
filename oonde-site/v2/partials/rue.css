@@ -96,7 +96,8 @@ html:not(.js) .r-poster{display:none}   /* sans JavaScript : l'arrêt (noscript)
 .r-enter span{transition:transform .25s var(--ease)}.r-enter:hover span{transform:translateX(3px)}
 .r-note{font:400 12.5px/1.4 var(--sans);color:rgba(255,255,255,.62);margin:6px 0 0}
 .js .r:not(.static) .r-note{display:none}
-.r-skip{position:absolute;z-index:4;right:clamp(16px,5cqw,72px);top:18px;font:500 13.5px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 14px;text-decoration:none;transition:opacity .25s}
+/* v27.4 : « Entrée », un bouton sous le titre (là où le pouce est) : il lance l'intro tout de suite ; il s'efface avec la carte-titre */
+.r-skip{position:relative;z-index:4;margin-top:clamp(24px,4cqh,40px);font:500 15px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:0 24px;min-height:46px;display:inline-flex;align-items:center;line-height:1;cursor:pointer;text-decoration:none;transition:opacity .25s,background .2s}
 .r-skip:hover{background:rgba(255,255,255,.24)}
 .r.stop .r-skip,.r.past .r-skip,.r.door .r-skip{opacity:0;pointer-events:none}
 /* le chargement : discret, seulement si un film tarde ; en cas d'échec, l'image fixe reste et la page continue */
@@ -139,7 +140,7 @@ html:not(.js) .r-poster{display:none}   /* sans JavaScript : l'arrêt (noscript)
  .r-stop.kbo .r-hd,.r-stop.kbo .r-seg{display:none}
  .r.zoom .r-scene{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
  .r.zoom .r-wall{visibility:hidden}
- .r-skip{top:12px;right:12px;padding:8px 14px;font-size:13.5px;min-height:44px;display:inline-flex;align-items:center}
+ .r-skip{padding:0 22px;font-size:14.5px;min-height:44px}
  .r-sign .r-met{top:auto;bottom:calc(100% + 30px)}
  .r-load{top:14px;left:16px;translate:none}
  .r-sbar{height:54px;padding:0 14px}.r-sbb{padding:8px 14px;font-size:13px}
@@ -202,5 +203,3 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 @keyframes rMkDot{from{opacity:0;transform:scale(0)}}
 .js .r:not(.static) .r-veil::before{display:block;background:radial-gradient(ellipse at 50% 46%,rgba(8,10,28,.62),rgba(8,10,28,.82));opacity:var(--hv,1)}
 @keyframes rIn{from{filter:opacity(0)}}
-.js .r:not(.static).intro .r-skip{top:auto;right:auto;left:50%;bottom:14px;translate:-50% 0;background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:13.5px;color:rgba(255,255,255,.78);text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center;padding:0 12px;animation:rIn .6s ease-out .9s both}
-.js .r:not(.static).intro .r-skip:hover{color:#fff}
