@@ -11,11 +11,11 @@
    "src": "drag2.mp4",
    "in": 0,
    "out": 5.0,
-   "hold": 1.2
+   "hold": 0.7
   },
   {
    "card": true,
-   "dur": 7.0,
+   "dur": 6.9,
    "entree": "noir"
   }
  ],
@@ -34,31 +34,31 @@
    "size": 78,
    "y": 1150,
    "t0": 9.0,
-   "t1": 11.2
+   "t1": 10.7
   },
   {
    "t": "Le budget de film aussi.",
    "font": "cormorant-garamond-latin-400-italic.woff2",
    "size": 84,
    "y": 560,
-   "t0": 11.9,
-   "t1": 18.2
+   "t0": 11.4,
+   "t1": 17.7
   },
   {
    "t": "Écris MAQUETTE\nen commentaire",
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 96,
    "y": 820,
-   "t0": 14.1,
-   "t1": 18.2
+   "t0": 13.6,
+   "t1": 17.7
   },
   {
    "t": "ta maquette gratuite arrive en DM",
    "font": "instrument-sans-latin-500-normal.woff2",
    "size": 48,
    "y": 1080,
-   "t0": 14.5,
-   "t1": 18.2,
+   "t0": 14.0,
+   "t1": 17.7,
    "color": [
     220,
     222,
@@ -69,8 +69,8 @@
    "img": "logo.png",
    "w": 360,
    "y": 1300,
-   "t0": 14.7,
-   "t1": 18.2
+   "t0": 14.2,
+   "t1": 17.7
   }
  ],
  "audio": [
@@ -117,7 +117,7 @@
   },
   {
    "src": "vo/l7.mp3",
-   "t": 14.1
+   "t": 13.6
   }
  ]
 }

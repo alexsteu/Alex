@@ -5,8 +5,8 @@
   {
    "src": "farine.mp4",
    "in": 0,
-   "out": 5.0,
-   "entree": "noir"
+   "out": 3.45,
+   "entree": "cut"
   },
   {
    "src": "four.mp4",
@@ -41,17 +41,17 @@
    "t": "et un four.",
    "font": "cormorant-garamond-latin-400-italic.woff2",
    "size": 120,
-   "y": 1150,
+   "y": 1440,
    "t0": 3.46,
-   "t1": 4.9
+   "t1": 5.3
   },
   {
    "t": "SORTIE : DEMAIN, 7 H",
    "font": "ibm-plex-mono-latin-600-normal.woff2",
    "size": 66,
    "y": 600,
-   "t0": 10.4,
-   "t1": 15.0,
+   "t0": 8.85,
+   "t1": 13.45,
    "cut_in": true
   },
   {
@@ -59,32 +59,32 @@
    "font": "cormorant-garamond-latin-400-italic.woff2",
    "size": 82,
    "y": 720,
-   "t0": 13.3,
-   "t1": 15.0
+   "t0": 11.75,
+   "t1": 13.45
   },
   {
    "t": "Tout commerce a son film.\nOn le tourne.",
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 66,
    "y": 520,
-   "t0": 15.2,
-   "t1": 19.3
+   "t0": 13.65,
+   "t1": 17.75
   },
   {
    "t": "Écris MAQUETTE\nen commentaire",
    "font": "instrument-sans-latin-600-normal.woff2",
    "size": 96,
    "y": 820,
-   "t0": 15.3,
-   "t1": 19.3
+   "t0": 13.75,
+   "t1": 17.75
   },
   {
    "t": "ta maquette gratuite arrive en DM",
    "font": "instrument-sans-latin-500-normal.woff2",
    "size": 48,
    "y": 1080,
-   "t0": 15.700000000000001,
-   "t1": 19.3,
+   "t0": 14.15,
+   "t1": 17.75,
    "color": [
     220,
     222,
@@ -95,15 +95,15 @@
    "img": "logo.png",
    "w": 360,
    "y": 1300,
-   "t0": 15.9,
-   "t1": 19.3
+   "t0": 14.35,
+   "t1": 17.75
   }
  ],
  "audio": [
   {
    "src": "m_trailer.m4a",
    "in": 0,
-   "out": 10.0,
+   "out": 8.45,
    "t": 0,
    "gain": 0.9,
    "fi": 0.3,
@@ -111,12 +111,12 @@
   },
   {
    "src": "/home/user/k2/hybride/sons/impact.wav",
-   "t": 5.0,
+   "t": 3.45,
    "gain": 0.9
   },
   {
    "src": "/home/user/k2/hybride/sons/sub.wav",
-   "t": 9.9,
+   "t": 8.35,
    "gain": 0.9
   },
   {
@@ -127,20 +127,20 @@
   },
   {
    "src": "vo/l3.mp3",
-   "t": 10.4
+   "t": 8.85
   },
   {
    "src": "m_trailer.m4a",
    "in": 11.5,
    "out": 16,
-   "t": 14.8,
+   "t": 13.25,
    "gain": 0.35,
    "fi": 0.5,
    "fo": 1.0
   },
   {
    "src": "vo/l7.mp3",
-   "t": 15.3
+   "t": 13.75
   }
  ]
 }

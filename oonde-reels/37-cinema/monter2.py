@@ -35,8 +35,12 @@ def load(pl):
     return fr
 
 def card(prev, n):
-    b = cv2.GaussianBlur(prev, (0, 0), 28); b = (b * 0.32).astype(np.uint8)
-    return [b.copy() for _ in range(n)]
+    b = (cv2.GaussianBlur(prev, (0, 0), 9) * 0.42).astype(np.uint8)
+    out = []
+    for k in range(n):   # le décor reste vivant : poussée lente
+        M = cv2.getRotationMatrix2D((W / 2, H / 2), 0, 1.03 + 0.06 * k / n)
+        out.append(cv2.warpAffine(b, M, (W, H), borderMode=cv2.BORDER_REFLECT))
+    return out
 
 seqs = []
 for pl in P['plans']:
