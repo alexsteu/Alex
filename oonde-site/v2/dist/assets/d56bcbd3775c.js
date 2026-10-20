@@ -267,22 +267,31 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  function arrive(){st='stop';pin(false);flag(u,'intro',false);put(t1,'opacity','0');flag(t1,'off',true);veil.style.setProperty('--hv','0');flag(u,'moving',true);place();
   flag(sign,'pulse',!shown);setTimeout(()=>flag(sign,'pulse',false),1300);arrT=performance.now();rested=true;setTimeout(()=>{if(st==='stop')card(true)},shown||chosen?250:400)}
  /* 1. l'intro : dès qu'elle joue, la vidéo remplace l'affiche ; la carte-titre s'efface sur son premier temps (0,55 → 1 s) ; à la fin, l'arrêt.
-    v27.3 : elle ne part plus toute seule (plus d'autoplay) : prête (canplaythrough, ou le clip entier chargé), elle attend HOLD_MS sur la carte-titre, ou le premier geste ; play() en muet, en ligne, sans geste (iOS l'accepte) */
- let ready=false,want=false,holdT=0;
- function go(force){if(st!=='title'||!LIVE)return;want=true;if(!ready&&!force)return;clearTimeout(holdT);const pr=vIn.play();if(pr&&pr.catch)pr.catch(()=>{if(st==='title')setTimeout(()=>{if(st==='title'&&vIn.paused)toStop()},400)})}
- /* prête : le navigateur promet de la lire d'une traite (canplaythrough, readyState 4) ou le clip est entièrement là (buffered) ; sinon, partie trop tôt, elle calerait au premier temps */
+    v27.3 : prête, elle attend HOLD_MS sur la carte-titre, ou le premier geste. v27.5 : l'autoplay est de retour (sans lui, iOS ne charge qu'un bout et n'est jamais prête) :
+    le premier plan joue caché et se pose aussitôt (prime), la pause part de là ; play() en muet, en ligne, sans geste. Sans autoplay du tout : prête quand le clip est là (secours) */
+ let ready=false,want=false,primed=false,userGo=false,holdT=0,goT=0,readyT=0;
+ /* v27.5 : l'autoplay reste (iOS ne charge vraiment le clip qu'en jouant) : au premier « playing », pause sur le premier plan (fixe jusqu'à 0,5 s), prête ;
+    la pause HOLD_MS part de là. go() reprend la lecture (muet, en ligne : permis sans geste après un départ en autoplay) ; le « playing » qui suit lance l'intro. */
  const full=()=>{try{const b=vIn.buffered,d=vIn.duration;return b.length>0&&d>0&&b.end(b.length-1)>=d-.15}catch(e){return false}};
- function armed(){if(ready||st!=='title')return;if(vIn.readyState<4&&!full())return;ready=true;clearTimeout(holdT);clearInterval(armI);if(want)go();else holdT=setTimeout(go,HOLD_MS)}
+ const fed=()=>vIn.readyState>=4||full();
+ /* le départ : au bout de la pause, si le clip n'est pas encore entièrement là (buffered), on lui laisse jusqu'à 2,5 s de plus (jamais plus) ; un geste ou le bouton : tout de suite ; forcé (12 s) : tout de suite */
+ function go(force){if(st!=='title'||!LIVE)return;want=true;if(!ready&&!force)return;clearTimeout(holdT);
+  if(!force&&!userGo&&!full()&&performance.now()-readyT<HOLD_MS+2500){holdT=setTimeout(go,150);return}
+  goT=performance.now();const pr=vIn.play();if(pr&&pr.catch)pr.catch(()=>{if(st==='title')setTimeout(()=>{if(st==='title'&&vIn.paused)toStop()},400)})}
+ function armed(force){if(ready||st!=='title')return;if(!force&&!fed())return;ready=true;readyT=performance.now();clearTimeout(holdT);clearInterval(armI);if(want)go();else holdT=setTimeout(go,HOLD_MS)}
  let armI=0;
+ /* l'amorce : le premier plan joue (caché : l'affiche est devant), on le pose aussitôt ; passé 0,45 s (onglet lent), retour à 0,1 s */
+ function prime(){if(primed||st!=='title')return;primed=true;try{vIn.pause()}catch(e){}if(vIn.currentTime>.45){try{vIn.currentTime=.1}catch(e){}}armed(true)}
+ function onPlaying(){if(st!=='title'||!LIVE)return;if(want&&ready&&goT)introStart();else if(!primed)prime();else{try{vIn.pause()}catch(e){}}}
  /* le geste qui part plus tôt : roulette, doigt, clic sur la scène, Espace / flèche bas / page suivante / Entrée ; pendant le titre et l'intro, la page est tenue :
     la roulette, le doigt et les touches de défilement sont avalés (v27.4 : sur iPhone, l'élan du doigt filait jusqu'au site) */
  function early(e){if((st!=='title'&&st!=='intro')||!LIVE)return;const tg=e.target,ctl=!!(tg&&tg.closest&&tg.closest('a,button,input,select,textarea,.r-seg'));
   if(e.type==='keydown'){if(ctl||![' ','ArrowDown','PageDown','End','Enter'].includes(e.key))return;e.preventDefault()}else if(e.type==='wheel')e.preventDefault();else if(e.type==='touchmove'){if(e.cancelable)e.preventDefault()}else if(ctl)return;
-  go()}
+  userGo=true;go()}
  addEventListener('wheel',early,{passive:false,capture:true});addEventListener('touchstart',early,{passive:true,capture:true});addEventListener('touchmove',early,{passive:false,capture:true});addEventListener('keydown',early,true);
  stg.addEventListener('pointerdown',early);stg.addEventListener('click',early);
- {const b=u.querySelector('.r-skip');if(b)b.addEventListener('click',e=>{e.preventDefault();if(st==='title')go()})}   /* « Entrée » : comme un geste */
- let wIn=0;vIn.addEventListener('waiting',()=>{if(st!=='intro'||vIn.currentTime<.1)return;if(full()){clearTimeout(wIn);wIn=setTimeout(()=>{if(st==='intro'&&vIn.readyState<3){SLOW=true;toStop()}},700);return}SLOW=true;toStop()});   /* l'intro qui cale : réseau lent, on passe à l'arrêt (fondu) plutôt que de saccader ; le clip entier déjà là (v27.3 : il part après la pause, décodeur à froid), on lui laisse 0,7 s */
+ {const b=u.querySelector('.r-skip');if(b)b.addEventListener('click',e=>{e.preventDefault();if(st==='title'){userGo=true;go()}})}   /* « Entrée » : comme un geste */
+ let wIn=0;vIn.addEventListener('waiting',()=>{if(st!=='intro'||vIn.currentTime<.1)return;if(full()||performance.now()-goT<1500){clearTimeout(wIn);wIn=setTimeout(()=>{if(st==='intro'&&vIn.readyState<3){SLOW=true;toStop()}},700);return}SLOW=true;toStop()});   /* l'intro qui cale : réseau lent, on passe à l'arrêt (fondu) plutôt que de saccader ; le clip entier déjà là, ou la reprise après la pause (décodeur à froid, v27.5 : quoi qu'en dise buffered sur iOS), on lui laisse 0,7 s */
  vIn.addEventListener('playing',()=>clearTimeout(wIn));
  function introStart(){if(st!=='title'||!LIVE)return;st='intro';onEnd(vIn,introEnd,7000);flag(vIn,'on',true);flag(u,'moving',true);pre('stop-'+HOME);const tick=()=>{if(st!=='intro')return;const t=vIn.currentTime,h=1-ss(Math.min(1,Math.max(0,(t-.55)/.45)));put(t1,'opacity',h.toFixed(3));flag(t1,'off',h<.02);veil.style.setProperty('--hv',h.toFixed(2));flag(u,'intro',t<.6);requestAnimationFrame(tick)};tick()}
  function introEnd(){if(st!=='intro'&&st!=='title')return;holdTo('stop-'+HOME).then(()=>{flag(vIn,'on',false);try{vIn.removeAttribute('src');vIn.load()}catch(e){}arrive()})}
@@ -324,8 +333,11 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  function flat(){if(!LIVE)return;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');for(const el of [t1,say,stop,sbar,end,sign]){el.style.opacity='';el.style.transform=''}memo.clear();for(const v of [vIn,vG,vE]){try{v.pause();v.removeAttribute('src');v.load()}catch(e){}flag(v,'on',false)}toStill();geo()}
  E3F.then(x=>{fmt=x==='a'?'avif':'jpg';set=r0();if(!LIVE){toStill();return}if(vIn.error||vIn.networkState===3&&!vIn.readyState){flat();return}   /* le clip manque (ou le réseau) : l'image de l'arrêt, sans attendre */
   /* l'intro : prête, elle attend HOLD_MS sur la carte-titre (ou un geste), puis part ; réseau lent si elle n'est pas prête à 4 s */
-  vIn.addEventListener('playing',introStart,{once:true});setTimeout(()=>{if(st==='title'&&!ready)SLOW=true},4000);   /* le garde-fou de fin (7 s) est posé au départ du clip, dans introStart */
-  if(vIn.ended)introEnd();else if(!vIn.paused&&vIn.currentTime>0)introStart();else{armed();if(!ready){vIn.addEventListener('canplaythrough',armed);vIn.addEventListener('progress',armed);armI=setInterval(armed,150)}setTimeout(()=>{if(st==='title'&&vIn.readyState<3)ld.textContent='Chargement de la rue…'},2500);vIn.addEventListener('playing',()=>{if(ld.textContent==='Chargement de la rue…')ld.textContent=''},{once:true});setTimeout(()=>{if(st==='title'){if(vIn.readyState>=2)go(true);else if(vIn.error||vIn.networkState===3)flat();else toStop()}},12000)}   /* 12 s sans rien : on force, ou l'arrêt */
+  vIn.addEventListener('playing',onPlaying);vIn.addEventListener('timeupdate',()=>{if(st==='title'&&!primed&&!goT&&!vIn.paused&&vIn.currentTime>0)prime()});
+  setTimeout(()=>{if(st==='title'&&!ready)SLOW=true},4000);   /* réseau lent : pas prête 4 s après le chargement (l'amorce rend prête tout de suite : la pause ne compte jamais) ; le garde-fou de fin (7 s) est posé au départ du clip, dans introStart */
+  if(vIn.ended){primed=true;try{vIn.currentTime=.1}catch(e){}armed(true)}else if(!vIn.paused&&vIn.currentTime>0)prime();   /* l'autoplay a déjà fait son premier plan avant nous */
+  {const fb=()=>{if(ready||primed||st!=='title')return;if(vIn.readyState>=3||full())armed(true)};setTimeout(()=>{if(ready||primed||st!=='title')return;fb();if(!ready){vIn.addEventListener('canplaythrough',fb);vIn.addEventListener('progress',fb);armI=setInterval(fb,150)}},1500)}   /* secours : l'autoplay refusé (même muet) : prête quand le clip est là, la pause sur l'affiche */
+  {setTimeout(()=>{if(st==='title'&&!ready)ld.textContent='Chargement de la rue…'},2500);vIn.addEventListener('playing',()=>{if(ld.textContent==='Chargement de la rue…')ld.textContent=''});setTimeout(()=>{if(st==='title'){if(vIn.readyState>=2)go(true);else if(vIn.error||vIn.networkState===3)flat();else toStop()}},12000)}   /* 12 s sans rien : on force, ou l'arrêt */
   vIn.addEventListener('error',()=>{if(st==='title')flat()},{once:true});
   const H=location.hash,deep=!!new URLSearchParams(location.search).get('e')||H==='#choix'||(H.length>1&&H!=='#top'&&!!document.getElementById(H.slice(1)));
   if(deep)setTimeout(toStop,80);else{pin(true);if(scrollY>0)scrollTo({top:0,behavior:'instant'})}});   /* ?e=, #choix, une rubrique : droit à l'arrêt, page libre ; sinon la page est tenue en haut jusqu'à l'arrêt (v27.4) */
@@ -387,7 +399,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(!vis&&st==='stop'&&vE&&!vE.paused)vE.pause()},{rootMargin:'50% 0px'}).observe(walk);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(st==='title'&&want)go(true)}});   /* l'onglet revient pendant le départ : on repart */
  addEventListener('resize',()=>{size()});addEventListener('pageshow',e=>{if(e.persisted)size()});
- window.__e3=()=>({st,met,set,gate,slow:SLOW,ready,want,pinned,on:stop.classList.contains('on'),ent,entOk,vin:[vIn.readyState,+vIn.currentTime.toFixed(2),vIn.paused,vIn.ended],vg:[vG.readyState,+vG.currentTime.toFixed(2),vG.paused],ve:[vE.readyState,+vE.currentTime.toFixed(2),vE.paused,vE.ended],y:Math.round(curY()),held:u.classList.contains('held'),shown});   /* état, pour les tests */
+ window.__e3=()=>({st,met,set,gate,slow:SLOW,ready,want,primed,pinned,on:stop.classList.contains('on'),ent,entOk,vin:[vIn.readyState,+vIn.currentTime.toFixed(2),vIn.paused,vIn.ended],vg:[vG.readyState,+vG.currentTime.toFixed(2),vG.paused],ve:[vE.readyState,+vE.currentTime.toFixed(2),vE.paused,vE.ended],y:Math.round(curY()),held:u.classList.contains('held'),shown});   /* état, pour les tests */
  requestAnimationFrame(()=>{geo();u.classList.add('go')});
  {const w=u.querySelector('.r-wa');if(w)new IntersectionObserver(es=>{if(!LIVE)flag(document.body,'hero-cta',es[0].isIntersecting)},{rootMargin:'-64px 0px 0px 0px'}).observe(w)}
 })();
