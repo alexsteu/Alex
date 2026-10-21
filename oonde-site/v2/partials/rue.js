@@ -1,6 +1,6 @@
 /* La rue au crépuscule, en haut de page. v27 : plus d'images pilotées par le défilement : des vidéos, lues en avant, jamais cherchées
    (entree3d ?n3=restaurant,coiffure,institut, rendues à 60 i/s en H.264 ; video/e3d/<jeu>/, affiches img/e3d/v/<jeu>/) :
-   1. l'intro (in.mp4, 2,5 s) : la page s'ouvre sur la carte-titre OONDE posée sur sa première image, et y reste HOLD_MS (3 s, comptées depuis
+   1. l'intro (in.mp4, 2,5 s) : la page s'ouvre sur la carte-titre OONDE posée sur sa première image, et y reste HOLD_MS (5 s, comptées depuis
       le moment où le clip est prêt : un réseau lent ne mange pas la pause) ; un geste (roulette, doigt, clic, Espace…) ou le bouton « Entrée »
       la fait partir plus tôt (v27.3, v27.4). Pendant la pause et l'intro, la page est tenue (épinglée, comme pendant l'entrée) : rien ne file vers le bas.
       Puis 0,5 s sur le globe bleu du réverbère (le point du logo) sous la carte-titre, puis la caméra
@@ -12,7 +12,7 @@
 (()=>{const u=$('univers');if(!u)return;
  const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),poster=$('rPoster'),hold=$('rHold'),vIn=$('rVin'),vG=$('rVg'),vE=$('rVe'),pins=$('rPins'),anchor=$('choix');
  const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),say=u.querySelector('.r-say'),stop=$('rStop'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg'),rwall=$('rWall'),sbar=$('rSbar'),end=$('rEnd');
- const HOLD_MS=3000;   /* v27.3 : la pause sur OONDE avant la rue, une fois l'intro prête ; un geste part plus tôt */
+ const HOLD_MS=5000;   /* v27.3 : la pause sur OONDE avant la rue, une fois l'intro prête ; un geste part plus tôt. v28 : 5 s (3 s, « trop faible ») */
  const TRIO=['restaurant','coiffure','institut'],HOME='coiffure',VS={m:[1080,1920],d:[1920,1080]},HZ=140;   /* HZ : la zone de l'arrêt (px) : jusqu'au mur, avant l'entrée */
  let SLOW=false,stalls=0;try{const cn=navigator.connection;if(cn&&(cn.saveData||/2g|3g/.test(cn.effectiveType||'')||cn.downlink&&cn.downlink<3))SLOW=true}catch(e){}   /* réseau lent : on précharge moins, et un clip qui tarde est coupé (image tenue) plutôt qu'attendu */
  const COARSE=matchMedia('(pointer:coarse)').matches;let LIVE=!RM,set='d',fmt='jpg',st='title',met='',frz=false,kbY=-1,SW=1,SH=1,hh=64,D=HZ,dn=1,y0=0,ent=null,entOk=false,vis=true,fitB=null,PINS=null,sIn=false,skipT=0;
@@ -24,11 +24,13 @@
  function fit(){const r=scene.getBoundingClientRect(),[w0,h0]=VS[set],sc=Math.max(r.width/w0,r.height/h0),w=w0*sc,h=h0*sc;SW=r.width;SH=r.height;fitB={ox:(r.width-w)/2,oy:(r.height-h)/2,w,h}}
  /* les enseignes (pins.json : à l'arrêt devant chaque façade, le rectangle de son enseigne ; dans sa salle, le mur du fond) */
  fetch('img/e3d/v/pins.json').then(r=>r.json()).then(j=>{PINS=j;place()}).catch(()=>{});
- let signQ=null;
- /* v27.4.1 : l'enseigne attend l'arrêt : pendant le titre, l'intro et le saut (la façade n'est pas encore là), rien ; arrive() → place() la fait fondre (.35 s) */
+ let signQ=null,signH={};
+ /* v27.4.1 : l'enseigne attend l'arrêt : pendant le titre, l'intro et le saut (la façade n'est pas encore là), rien ; arrive() → place() la fait fondre (.35 s)
+    v28 : la hauteur du bloc suit les proportions de l'enseigne (e3qh, une fois par jeu et métier) : le nom n'est plus écrasé (le bloc fixe de 127 px l'aplatissait de 15 à 22 %) */
  function place(){if(!PINS||!fitB){return}const P=PINS[set]||{};const q=(st==='in'||st==='title'||st==='intro'||st==='skip')?null:P.stop&&P.stop[met];
-  if(q&&st!=='glide'&&st!=='door'){e3quad(sign,q,1000,127,fitB);put(sign,'opacity','1');signQ={c:q,f:fitB}}else{put(sign,'opacity','0')}
-  const w=st==='in'?P.room&&P.room[met]:null;if(st!=='door')e3place(rwall,w?[{id:'wall',c:w,vis:1}]:null,fitB)}
+  if(q&&st!=='glide'&&st!=='door'){const hk=set+met,h=signH[hk]||(signH[hk]=e3qh(q,fitB));put(sign,'height',h+'px');e3quad(sign,q,1000,h,fitB);put(sign,'opacity','1');signQ={c:q,f:fitB}}else{put(sign,'opacity','0')}
+  const rq=P.room&&P.room[met];if(rq&&rwall.firstElementChild){const h=e3qh(rq,fitB);if(Math.abs((rwall.firstElementChild._h||0)-h)>.5)wall()}   /* v28 : le mur suit ses proportions ; reposé si le jeu ou le cadrage a changé depuis */
+  const w=st==='in'?rq:null;if(st!=='door')e3place(rwall,w?[{id:'wall',c:w,vis:1}]:null,fitB)}
  /* le nom : sur l'enseigne, en néon. Seules les lettres nouvelles s'allument ; la largeur et la taille suivent en douceur. */
  let shown='';
  const fitN=()=>{e3meas.font='400 86px "Cormorant Garamond"';const w=e3meas.measureText(shown).width;nm.style.setProperty('--w',Math.ceil(w)+'px');nm.style.setProperty('--s',Math.min(1,860/(w||1)).toFixed(3))};
@@ -44,7 +46,7 @@
   tiles().forEach(b=>{const on=b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});
   if(k!==was){const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');b.classList.add('a')}else mets[mi].classList.add('a');
   recall();if(push)E3S.set({sc:k});wall();if(k!==was&&was&&LIVE&&st!=='title'&&st!=='intro')glide(was,k);else if(k!==was)entryLoad();place()}
- function wall(){if(rwall&&E3[met])e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici')}
+ function wall(){if(!rwall||!E3[met])return;const w=PINS&&PINS[set]&&PINS[set].room&&PINS[set].room[met];e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici',w&&fitB?e3qh(w,fitB):undefined)}   /* v28 : la hauteur du mur suit ses proportions (e3qh) */
  function recall(){const m=E3[met]?E3[met].lab:'';u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
  metier(TRIO.includes(E3S.st.sc)?E3S.st.sc:HOME,false);
  let segT=0,segMe=0,segU=false;

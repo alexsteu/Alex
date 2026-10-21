@@ -26,7 +26,12 @@ WA = walink(HELLO + " J’aimerais la maquette offerte de mon site La Vitrine.\n
 WA_PASSE = walink(HELLO + " J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ")
 WA_IMM = walink(HELLO + " J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ")
 WA_ASSIST = walink(HELLO + " J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ")
-WA_TEL = walink(HELLO + " J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ")
+WA_TEL = walink(HELLO + " J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ")
+# v28 · « Je veux celui-ci » sur chaque forfait du téléphone : le forfait est nommé dans le message
+WA_TEL_ESS = walink(HELLO + " Le téléphone m’intéresse, forfait Essentiel. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
+WA_TEL_PRO = walink(HELLO + " Le téléphone m’intéresse, forfait Pro. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
+WA_TEL_PRE = walink(HELLO + " Le téléphone m’intéresse, forfait Premium. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
+WA_TEL_RUSH = walink(HELLO + " Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
 WA_FIL = walink(HELLO + " Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
 WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce pour l’Entrée réelle.\nMon commerce, ma commune et le meilleur moment : ")
@@ -151,7 +156,7 @@ def fill(s, fonts, links):
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
     for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
                  ('{{QR_WA}}', QR_WA), ('{{QR_IMM}}', QR_IMM), ('{{CAL}}', CAL)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)

@@ -115,8 +115,9 @@ html:not(.js) .r-poster{display:none}   /* sans JavaScript : l'arrêt (noscript)
 .r-eh{font:400 clamp(38px,5.4cqw,72px)/1.02 var(--serif);margin-top:12px;text-wrap:balance}
 .r-end .r-eeb,.r-end .r-eh{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.5)}
 .r-ebt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px}
-.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.r-esee:hover{text-decoration:underline;text-underline-offset:4px}
+.r-esee,.r-ewa{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-ewa{font-weight:600;margin-right:6px}   /* v28 : la maquette, en sortant de la démo */
+.r-esee:hover,.r-ewa:hover{text-decoration:underline;text-underline-offset:4px}
 .r-end:focus{outline:none}
 .js .r .r-end.kb{opacity:1!important;visibility:visible!important}.js .r .r-end.kb,.js .r .r-end.kb *{pointer-events:auto!important}   /* le focus clavier dans la fin du site */
 /* téléphone : le titre en haut, l'arrêt en bas, plein large ; les trois tuiles en colonne (vignette, métier) */

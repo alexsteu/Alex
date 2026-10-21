@@ -52,9 +52,9 @@ function render(anim){const t=T[st.act],town=TOWNS.includes(st.town)?st.town:'';
  const s={name:st.name,town,style:st.style},look=st.act+st.style;
  if(near){site($('liveDesk'),st.act,s,'d');site($('livePhone'),st.act,s,'m');if(anim&&look!==shown)document.querySelectorAll('#liveDesk>.tpl,#livePhone>.tpl').forEach(n=>n.classList.add('sw'));shown=look}
  $('liveUrl').textContent=slug(st.name)+'.ch';$('vDom').textContent=st.name?slug(st.name)+'.ch':'votre-commerce.ch';
- const href=wa(msg(town,t)),label=st.name?'Recevoir la maquette de '+short(st.name):'Recevoir ma maquette offerte';
+ const href=wa(msg(town,t)),label=st.name?'Recevoir la maquette de '+short(st.name):'Recevoir ma maquette gratuite';
  /* tous les boutons « maquette » de la page suivent l'essai ; sur téléphone, un nom long reste dans le message, pas sur le bouton */
- const lab2=st.name&&narrow.matches&&st.name.length>12?'Recevoir ma maquette offerte':label;
+ const lab2=st.name&&narrow.matches&&st.name.length>12?'Recevoir ma maquette gratuite':label;
  $('wantL').textContent=lab2;if(touched)document.querySelectorAll('a[data-wa="vit"]').forEach(a=>a.href=href);else $('wantIt').href=href;
  document.querySelectorAll('a[data-mail="vit"]').forEach(a=>{if(touched)a.href=mail('Ma maquette offerte',msg(town,t).replace(/\n/,'\n\n'))});
  

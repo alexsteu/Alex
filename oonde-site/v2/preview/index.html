@@ -59,7 +59,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 @media (max-width:760px){.lede{font-size:16.5px}}
 
 /* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%;position:relative;overflow:hidden}
 .btn span{overflow:hidden;text-overflow:ellipsis}
 .btn:hover{background:#262B33}
 .btn:active{background:#000;transform:translateY(1px);transition-duration:.06s}
@@ -68,6 +68,19 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
+/* v28 : boutons vivants, sans kitsch : un reflet qui passe toutes les 7 s sur les boutons principaux (à l'écran seulement, .sh posé par core.js),
+   la flèche qui avance de 3 px au survol, le bouton WhatsApp collant qui respire (1 → 1,03 toutes les 5 s). Rien en mouvement réduit ; rien ne bouge la mise en page. */
+.btn::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:38%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.22) 50%,rgba(255,255,255,0));transform:translateX(-170%) skewX(-14deg);pointer-events:none}
+.btn.inv::after{background:linear-gradient(100deg,rgba(17,19,24,0),rgba(17,19,24,.07) 50%,rgba(17,19,24,0))}
+.btn.light::after{display:none}
+.ar{display:inline-block;font-style:normal;transition:transform .2s var(--ease)}
+@media (prefers-reduced-motion:no-preference){.btn.sh::after{animation:sheen 7s linear infinite}.mbar.on .btn,.nav .btn{animation:breath 5s ease-in-out infinite}a:focus-visible .ar{transform:translateX(3px)}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
+@keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
+@keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
+/* v28 : « Tester la démo » à la souris : le numéro de la ligne de démo, en grand */
+.tel-rev{margin-top:18px}.tel-rev[hidden]{display:none}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
 .bg-ink .lnk:hover{color:#fff;opacity:.8}
@@ -365,8 +378,6 @@ footer{border-top:0}
 .ds-cap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 24px;margin-top:22px;padding-top:18px;border-top:1px solid #E4DCCF}
 .ds-cap>p{font-size:14.5px;color:#4B4F5A;max-width:44em}.ds-cap b{color:var(--night,#111318);font-weight:600}
 .ds-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}.ds-cta .btn{min-height:46px;padding:11px 18px;font-size:15px}
-.ds .e-sw{display:flex;align-items:center;gap:12px;font:500 14px var(--sans);color:#4B4F5A}.ds .e-sw[hidden]{display:none}.ds .e-sw b{font-weight:500;margin-left:4px}
-.ds .swatches{gap:8px}.ds .swatches button{width:36px;height:36px}
 .ds :focus-visible{outline:2px solid var(--night,#111318);outline-offset:3px}
 @media (max-width:860px){.ds-top{grid-template-columns:minmax(0,1fr)}.ds-more{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.ds-ph{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ds-ph img{aspect-ratio:9/14}.ds-ph img:nth-child(n+3){display:none}.ds-cta{width:100%}.ds-cta .btn{flex:1 1 100%}.ds-cta .e-pick{flex:1}.ds-cta .e-pick select{flex:1}}
@@ -493,8 +504,9 @@ html:not(.js) .r-poster{display:none}   /* sans JavaScript : l'arrêt (noscript)
 .r-eh{font:400 clamp(38px,5.4cqw,72px)/1.02 var(--serif);margin-top:12px;text-wrap:balance}
 .r-end .r-eeb,.r-end .r-eh{text-shadow:0 1px 2px rgba(0,0,0,.5),0 4px 24px rgba(0,0,0,.5)}
 .r-ebt{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:22px}
-.r-esee{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.r-esee:hover{text-decoration:underline;text-underline-offset:4px}
+.r-esee,.r-ewa{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 0;border:0;color:#fff;font:500 15px var(--sans);text-decoration:none;background:rgba(10,12,32,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.r-ewa{font-weight:600;margin-right:6px}   /* v28 : la maquette, en sortant de la démo */
+.r-esee:hover,.r-ewa:hover{text-decoration:underline;text-underline-offset:4px}
 .r-end:focus{outline:none}
 .js .r .r-end.kb{opacity:1!important;visibility:visible!important}.js .r .r-end.kb,.js .r .r-end.kb *{pointer-events:auto!important}   /* le focus clavier dans la fin du site */
 /* téléphone : le titre en haut, l'arrêt en bas, plein large ; les trois tuiles en colonne (vignette, métier) */
@@ -794,11 +806,11 @@ html:not(.js) .e-pick{display:none}
    <div class="r-tx r-t1"><span class="r-mk" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/></svg></span><p class="mono r-k">SITES INTERNET · DE GENÈVE À MONTREUX</p><h1 id="h1"><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">clients</span> <em><span class="w" style="--i:2">poussent</span> <span class="w" style="--i:3">votre</span> <span class="w" style="--i:4">porte</span></em> <span class="w" style="--i:5">avant</span> <span class="w" style="--i:6">de</span> <span class="w" style="--i:7">venir.</span></h1>
     <button type="button" class="r-skip" id="rGo">Entrée</button>
     <p class="r-sub">Nous créons votre site internet, qui s’ouvre sur votre commerce en 3D.</p>
-    <div class="r-act"><a class="btn inv r-demo" href="#choix">Voir la démo</a><a class="r-wa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><span>Recevoir mon aperçu 3D</span> <span aria-hidden="true">→</span></a>
-     <p class="r-off">Votre aperçu 3D : une première image de votre façade, offerte, avec le devis. Sans engagement. <a href="#prix">Voir les offres</a></p></div></div>
+    <div class="r-act"><a class="btn inv r-demo" href="#choix">Voir la démo</a><a class="r-wa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><span>Recevoir mon aperçu 3D</span> <span class="ar" aria-hidden="true">→</span></a>
+     <p class="r-off">Votre aperçu 3D : une première image de votre façade, offerte, avec le devis, sans engagement. <a href="#prix">Voir les offres</a></p></div></div>
    <p class="r-tx r-say r-top" aria-hidden="true">Alors on entre.</p>
    <div class="r-tx r-stop" id="rStop" role="group" aria-labelledby="rStopH" tabindex="-1">
-    <div class="r-hd"><p class="r-sh" id="rStopH">Votre commerce <b>Démo</b></p><a class="r-enter" href="#rEnd">Entrer <span aria-hidden="true">→</span></a></div>
+    <div class="r-hd"><p class="r-sh" id="rStopH">Votre commerce <b>Démo</b></p><a class="r-enter" href="#rEnd">Entrer <span class="ar" aria-hidden="true">→</span></a></div>
     <div class="r-f"><label for="rName">Le nom de votre commerce (facultatif)</label><input id="rName" type="text" maxlength="40" placeholder="Le nom de votre commerce" autocomplete="organization" autocapitalize="words" enterkeyhint="done" spellcheck="false"></div>
     <div class="r-seg" role="radiogroup" aria-label="Votre métier"><button type="button" role="radio" data-m="restaurant" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-restaurant.jpg" width="96" height="72" alt="" decoding="async"><span>Restaurant</span></button><button type="button" role="radio" data-m="coiffure" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-coiffure.jpg" width="96" height="72" alt="" decoding="async"><span>Coiffure</span></button><button type="button" role="radio" data-m="institut" aria-checked="false" tabindex="-1"><img data-src="img/e3d/w/t-institut.jpg" width="96" height="72" alt="" decoding="async"><span>Institut</span></button></div>
     <p class="r-note">Rue et commerces imaginés. Pour le vôtre : on construit votre entrée d’après vos photos. Boulangerie, onglerie, logement : plus bas, dans le site.</p>
@@ -807,7 +819,7 @@ html:not(.js) .e-pick{display:none}
    <div class="r-tx r-end" id="rEnd" role="group" aria-labelledby="rEndH" tabindex="-1">
     <p class="r-eeb"><span id="rEndEb">Coiffure</span> <i class="dtag">Démo</i></p>
     <p class="r-eh" id="rEndH">Un fauteuil vous attend.</p>
-    <div class="r-ebt"><a class="r-esee" href="#entree">Voir le site <span aria-hidden="true">↓</span></a></div>
+    <div class="r-ebt"><a class="r-ewa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><span data-e3l>Recevoir ma maquette gratuite</span> <span class="ar" aria-hidden="true">→</span></a><a class="r-esee" href="#entree">Voir le site <span aria-hidden="true">↓</span></a></div>
    </div>
    <p class="r-load" role="status" aria-live="polite"></p>
   </div>
@@ -821,7 +833,7 @@ html:not(.js) .e-pick{display:none}
    <div class="ds-card"><p class="ds-k">MENU DU JOUR</p><p class="ds-row"><span>Menu du jour</span><b>21.50</b></p><p class="ds-row"><span>Filets de perche</span><b>34.–</b></p><p class="ds-row"><span>Dessert maison</span><b>9.–</b></p><p class="ds-row"><span>Plat végétarien</span><b>24.–</b></p><button type="button" class="ds-go" data-book>Réserver une table</button><p class="ds-n">Ouvert · jusqu’à 23:00</p></div></div></div>
   <div class="ds-ph" id="ePh"><img src="img/e3d/in-restaurant/d/f022.webp" width="1280" height="800" alt="Démo : la salle, vue depuis l’entrée" loading="lazy" decoding="async"><img src="img/e3d/in-restaurant/d/f038.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><img src="img/e3d/in-restaurant/d/f055.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"></div>
   <div class="ds-cap"><p><b>Démo :</b> commerce, textes et prix inventés. Votre entrée est faite d’après votre vrai lieu.</p>
-   <div class="ds-cta"><label class="e-pick"><span>Métier</span><select id="eSel" aria-label="Changer le métier de la démo"></select></label><div class="e-sw"><span id="lE3">Couleur <b id="eStyleN"></b></span><div class="swatches" id="eStyle" role="radiogroup" aria-labelledby="lE3"></div></div><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></div></div>
+   <div class="ds-cta"><label class="e-pick"><span>Métier</span><select id="eSel" aria-label="Changer le métier de la démo"></select></label><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a></div></div>
  </div>
  <template id="eLodge"><div class="ds-top"><div><p class="ds-eb">Le logement · <i class="dtag">Démo</i></p><h2 class="ds-t" id="hS"><span class="sr">Démo, la suite du site : </span><span id="eSiteT"></span></h2><p class="ds-sub">Un appartement d’hôtes au cœur de la ville, à deux pas du lac.</p>
    <p class="ds-facts"><span><b>4</b>voyageurs</span><span><b>2</b>chambres</span><span><b>62</b>m²</span></p>
@@ -834,15 +846,15 @@ html:not(.js) .e-pick{display:none}
  <p class="mono rv">Ce qu’on fait pour vous</p>
  <h2 id="hW" class="rv">Votre commerce, en ligne et en mouvement.</h2>
  <ol class="sv3">
-  <li class="rv"><a href="#prix"><i>01</i><span class="sv-t"><b>Votre site.</b><span>Il s’ouvre sur votre commerce en 3D, avec vos prix, vos horaires et WhatsApp.</span></span><em>Sites et prix <span aria-hidden="true">→</span></em></a></li>
-  <li class="rv"><a href="#reseaux"><i>02</i><span class="sv-t"><b>Votre contenu, chaque matin.</b><span>Une vidéo ou un post pour Instagram, fait par nous et publié pour vous.</span></span><em>Réseaux sociaux <span aria-hidden="true">→</span></em></a></li>
-  <li class="rv"><a href="#telephone"><i>03</i><span class="sv-t"><b>Votre téléphone, quand vous ne pouvez pas décrocher.</b><span>Une voix prend le message ou le rendez-vous.</span></span><em>Le téléphone <span aria-hidden="true">→</span></em></a></li>
+  <li class="rv"><a href="#prix"><i>01</i><span class="sv-t"><b>Votre site.</b><span>Il s’ouvre sur votre commerce en 3D, avec vos prix, vos horaires et WhatsApp.</span></span><em>Voir les sites et les prix <span class="ar" aria-hidden="true">→</span></em></a></li>
+  <li class="rv"><a href="#reseaux"><i>02</i><span class="sv-t"><b>Votre contenu, chaque matin.</b><span>Une vidéo ou un post pour Instagram, fait par nous et publié pour vous.</span></span><em>Voir les réseaux sociaux <span class="ar" aria-hidden="true">→</span></em></a></li>
+  <li class="rv"><a href="#telephone"><i>03</i><span class="sv-t"><b>Votre téléphone, quand vous ne pouvez pas décrocher.</b><span>Une voix prend le message ou le rendez-vous.</span></span><em>Tester la démo du téléphone <span class="ar" aria-hidden="true">→</span></em></a></li>
  </ol>
 </div></section>
 
 <section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
  <h2 id="hP" class="rv">Votre site, au mois. Sans engagement.</h2>
- <p class="lede rv o-lede">Vous voyez votre maquette avant de payer quoi que ce soit. La mise en ligne se paie seulement si le site terminé vous plaît. Vous arrêtez quand vous voulez, d’un message.</p>
+ <p class="lede rv o-lede">Vous voyez votre maquette avant de payer quoi que ce soit ; la mise en ligne se paie seulement si le site terminé vous plaît. Vous arrêtez quand vous voulez, d’un message.</p>
  <!-- v23 · les trois paliers. Les montants viennent tous de OFFRES dans build.py : un seul endroit à changer. -->
  <div class="offers3">
   <article class="o3 rv" aria-labelledby="oV">
@@ -858,7 +870,7 @@ html:not(.js) .e-pick{display:none}
     <li class="no"><s>L’entrée 3D de votre commerce</s></li>
    </ul>
    <p class="o-f">Mise en ligne 190.–, seulement si le site terminé vous plaît.</p>
-   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20la%20maquette%20offerte%20de%20mon%20site%20La%20Vitrine.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="vit" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma maquette offerte</span></a><a class="lnk" href="vitrine.html">Voir La Vitrine →</a></div>
+   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20la%20maquette%20offerte%20de%20mon%20site%20La%20Vitrine.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="vit" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma maquette gratuite</span></a><a class="lnk" href="vitrine.html">Voir La Vitrine <i class="ar">→</i></a></div>
   </article>
   <article class="o3 o3-k rv" aria-labelledby="oE">
    <p class="o-badge">Notre conseil</p>
@@ -874,7 +886,7 @@ html:not(.js) .e-pick{display:none}
     <li>Une mise à jour de la 3D par an : nouvelle déco, nouvelle enseigne</li>
    </ul>
    <p class="o-f">Mise en ligne 290.–, seulement si le site terminé vous plaît.</p>
-   <div class="o-go"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a><p class="micro">Une première image de votre façade, offerte.</p></div>
+   <div class="o-go"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l>Recevoir mon aperçu 3D</span></a><p class="micro">Une première image de votre façade en 3D, offerte.</p></div>
   </article>
   <article class="o3 rv" aria-labelledby="oR">
    <h3 id="oR">Entrée réelle</h3>
@@ -889,7 +901,7 @@ html:not(.js) .e-pick{display:none}
     <li>Un nouveau tournage court chaque année</li>
    </ul>
    <p class="o-f">Mise en ligne et tournage 490.–, seulement si le site terminé vous plaît.</p>
-   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20que%20vous%20veniez%20voir%20mon%20commerce%20pour%20l%E2%80%99Entr%C3%A9e%20r%C3%A9elle.%0AMon%20commerce%2C%20ma%20commune%20et%20le%20meilleur%20moment%20%3A%20" data-wa="lieu" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Venez voir mon commerce</span></a><a class="lnk" href="visite.html">Voir une visite complète →</a></div>
+   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20que%20vous%20veniez%20voir%20mon%20commerce%20pour%20l%E2%80%99Entr%C3%A9e%20r%C3%A9elle.%0AMon%20commerce%2C%20ma%20commune%20et%20le%20meilleur%20moment%20%3A%20" data-wa="lieu" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Demander une visite chez moi</span></a><a class="lnk" href="visite.html">Voir une visite complète <i class="ar">→</i></a></div>
   </article>
  </div>
  <p class="o-all rv"><b>Sans engagement</b>, pour les trois : résiliable chaque mois. Le site, l’adresse et les textes restent à vous.</p>
@@ -900,10 +912,10 @@ html:not(.js) .e-pick{display:none}
  <ol class="t3">
   <li class="rv"><i>01</i><b>Vous écrivez.</b><span>Le nom et la commune de votre commerce, sur WhatsApp.</span></li>
   <li class="rv"><i>02</i><b>Vous voyez.</b><span>Sous 48 heures, une première image de votre façade en 3D et le prix par écrit, offerts.</span></li>
-  <li class="rv"><i>03</i><b>Vous décidez.</b><span>Rien à payer avant d’avoir vu votre site. Si vous dites oui, vous corrigez le site terminé ; la mise en ligne se paie seulement s’il vous plaît.</span></li>
+  <li class="rv"><i>03</i><b>Vous décidez.</b><span>Rien à payer avant d’avoir vu votre site. Si vous dites oui, vous corrigez le site terminé, et la mise en ligne se paie seulement s’il vous plaît.</span></li>
  </ol>
  <p class="g3 rv"><span>Un prix par mois, écrit d’avance.</span><span>Sans engagement, résiliable chaque mois.</span><span>Le site et l’adresse sont à vous.</span></p>
- <p class="small">Prix en francs suisses, payables par virement ou TWINT. OONDE n’est pas assujetti à la TVA. Si vous arrêtez, on vous remet tout, gratuitement. Tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
+ <p class="small">Prix en francs suisses, par virement ou TWINT ; OONDE n’est pas assujetti à la TVA. Si vous arrêtez, on vous remet tout, gratuitement : tout est écrit dans nos <a href="conditions.html">conditions générales</a>.</p>
 </div></section>
 
 <section class="bg-morning fil" id="reseaux" data-sw="fil" data-swl="Un exemple pour mon commerce" aria-labelledby="hF"><div class="in">
@@ -932,17 +944,19 @@ html:not(.js) .e-pick{display:none}
   <div class="rv"><h3>Ce qu’on ne promet pas.</h3><p>Des abonnés, des likes ou des ventes. On promet la régularité : votre commerce visible chaque matin, dans un style soigné.</p></div>
  </div>
  <p class="f-px rv">Prix par écrit sous 48 h. Sans engagement.</p>
- <div class="act f-act rv"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Les%20r%C3%A9seaux%20sociaux%20m%E2%80%99int%C3%A9ressent%20%3A%20du%20contenu%20publi%C3%A9%20chaque%20matin%20sur%20mon%20Instagram.%20J%E2%80%99aimerais%20un%20exemple%20pour%20mon%20commerce.%0AMon%20commerce%2C%20ma%20commune%20et%20mon%20compte%20Instagram%20%3A%20" data-wa="fil" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir un exemple pour mon commerce</span></a><a class="lnk" href="reseaux.html">Tout sur les réseaux sociaux →</a></div>
+ <div class="act f-act rv"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Les%20r%C3%A9seaux%20sociaux%20m%E2%80%99int%C3%A9ressent%20%3A%20du%20contenu%20publi%C3%A9%20chaque%20matin%20sur%20mon%20Instagram.%20J%E2%80%99aimerais%20un%20exemple%20pour%20mon%20commerce.%0AMon%20commerce%2C%20ma%20commune%20et%20mon%20compte%20Instagram%20%3A%20" data-wa="fil" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir un exemple pour mon commerce</span></a><a class="lnk" href="reseaux.html">Tout voir sur les réseaux sociaux <i class="ar">→</i></a></div>
 </div></section>
 
-<section class="bg-ink tel" id="telephone" data-sw="tel" data-swl="Une voix pour mes appels" aria-labelledby="hT"><div class="in tel-in">
+<section class="bg-ink tel" id="telephone" data-sw="tel" data-swl="Ma démo à mon nom" aria-labelledby="hT"><div class="in tel-in">
  <div>
   <p class="mono rv">Le téléphone</p>
   <h2 id="hT" class="rv">Quand vous ne pouvez pas décrocher, une voix répond.</h2>
   <p class="lede rv">Les mains dans une couleur, une table à servir, un client devant vous. La voix prend l’appel, note le rendez-vous ou le message, et vous envoie le résumé par message.</p>
   <ul class="tel-l rv"><li>Vous gardez votre numéro.</li><li>Elle dit qu’elle est une voix d’IA.</li><li>Ce qu’elle ne sait pas, elle vous le passe.</li></ul>
-  <p class="tel-px rv">Dès 149.– par mois, sans engagement. Une démo gratuite d’abord.</p>
-  <div class="act rv"><a class="btn inv" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Une voix pour mes appels manqués</span></a><a class="lnk" href="telephone.html">Comment ça marche →</a></div>
+  <p class="tel-px rv">Dès 149.– par mois, sans engagement. Une démo gratuite d’abord. <a href="telephone.html#prix">Voir les forfaits <i class="ar">→</i></a></p>
+  <div class="act rv"><a class="btn inv" href="tel:+41215390122" data-tel="telRevH"><span>Tester la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
+   <p class="micro tel-sub">Appelez, elle répond comme un employé. <span class="dtag">Démo</span> · pizzeria fictive.</p>
+   <p class="tel-rev" id="telRevH" hidden><b>021 539 01 22</b><span>Appelez depuis votre téléphone : elle répond comme un employé. Démo, pizzeria fictive.</span></p></div>
  </div>
  <figure class="tel-d" data-teld>
   <svg class="tel-wv" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C 20 30, 25 12, 40 12 S 60 48, 80 48 S 100 20, 120 22 S 140 40, 160 38 S 180 6, 200 6 S 220 54, 240 54 S 260 26, 280 26 S 300 36, 320 36 S 340 18, 360 18 S 380 30, 400 30"/></svg>
@@ -957,8 +971,8 @@ html:not(.js) .e-pick{display:none}
 <section class="bg-paper aussi" id="aussi" aria-labelledby="hA"><div class="in">
  <h2 id="hA" class="h-m rv">Et aussi.</h2>
  <div class="ea">
-  <article class="rv"><h3>L’assistant de votre site.</h3><p>Il répond aux questions de vos clients, même à 23 h, et vous passe la main quand il ne sait pas.</p><p class="ea-go"><a class="btn light" href="assistant.html#essai" data-try aria-expanded="false" aria-controls="essaiBox"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a><a class="lnk" href="assistant.html">En savoir plus</a></p></article>
-  <article class="rv"><h3>La visite complète.</h3><p>Une entrée et une visite filmées chez vous.</p><p class="ea-go"><a class="lnk" href="visite.html">Voir une visite complète →</a></p></article>
+  <article class="rv"><h3>L’assistant de votre site.</h3><p>Il répond aux questions de vos clients, même à 23 h, et vous passe la main quand il ne sait pas.</p><p class="ea-go"><a class="btn light" href="assistant.html#essai" data-try aria-expanded="false" aria-controls="essaiBox"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a><a class="lnk" href="assistant.html">Voir l’assistant <i class="ar">→</i></a></p></article>
+  <article class="rv"><h3>La visite complète.</h3><p>Une entrée et une visite filmées chez vous.</p><p class="ea-go"><a class="lnk" href="visite.html">Voir une visite complète <i class="ar">→</i></a></p></article>
  </div>
  <div class="ea-chat" id="essaiBox" hidden>
  <div class="chat" id="essai" aria-label="Démo de l’assistant">
@@ -968,24 +982,24 @@ html:not(.js) .e-pick{display:none}
   <form id="f" autocomplete="off"><label class="sr" for="q">Votre question</label><input id="q" placeholder="Votre question…" maxlength="160"><button>Envoyer</button></form>
   <p class="foot">Démo : le restaurant et ses informations sont inventés.</p>
  </div>
-  <p class="ea-own"><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20essay%C3%A9%20l%E2%80%99assistant.%20J%E2%80%99aimerais%20le%20m%C3%AAme%20pour%20mon%20commerce.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>L’avoir sur mon site</span></a> <span class="micro">sur WhatsApp</span></p>
+  <p class="ea-own"><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20essay%C3%A9%20l%E2%80%99assistant.%20J%E2%80%99aimerais%20le%20m%C3%AAme%20pour%20mon%20commerce.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="assist" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Demander mon assistant</span></a> <span class="micro">sur WhatsApp</span></p>
  </div>
 </div></section>
 
 <section class="bg-paper sec2" id="questions" aria-labelledby="hQ">
  <div class="in qa">
-  <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20une%20question%20%3A%20" data-wa="q" target="_blank" rel="noopener">Écrivez-nous sur WhatsApp →</a> On répond le jour même.</p></div>
+  <div><h2 class="h-m" id="hQ">Vos questions.</h2><p class="lede" style="margin-top:16px;font-size:clamp(17px,1.5vw,20px)">Une autre question ? <a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20une%20question%20%3A%20" data-wa="q" target="_blank" rel="noopener">Poser ma question sur WhatsApp <i class="ar">→</i></a> On répond le jour même.</p></div>
   <div class="faq">
-   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine 29.– par mois, l’Entrée 3D 49.– par mois, l’Entrée réelle 99.– par mois. Sans engagement : résiliable chaque mois. La mise en ligne coûte 190.– pour La Vitrine, 290.– pour l’Entrée 3D et 490.– pour l’Entrée réelle, tournage compris ; elle se paie seulement si le site terminé vous plaît.</p><p>Avant tout paiement, vous recevez votre maquette, ou une première image de votre façade en 3D, offerte. Si vous voulez simplement être bien trouvé, <a href="vitrine.html">La Vitrine</a> suffit.</p><p>Les réseaux sociaux : Prix par écrit sous 48 h. Sans engagement. Le téléphone : dès 149.– par mois, sans engagement, <a href="telephone.html#prix">voir les forfaits</a>.</p></div></div></details>
+   <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>La Vitrine 29.–, l’Entrée 3D 49.–, l’Entrée réelle 99.– par mois, sans engagement ; mise en ligne 190.–, 290.– ou 490.– (tournage compris), payée seulement si le site terminé vous plaît. Avant tout paiement, votre maquette ou une première image de votre façade en 3D, offerte ; les réseaux sociaux : Prix par écrit sous 48 h. Sans engagement. Le téléphone : dès 149.– par mois, <a href="telephone.html#prix">voir les forfaits</a>.</p></div></div></details>
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
-   <details><summary>Qu’est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour l’Entrée 3D : nous envoyer quelques photos de votre façade et de votre salle. On en fait votre entrée en 3D, en motion design (les exemples de cette page, eux, sont des commerces inventés). Pour l’Entrée réelle, on vient tourner chez vous. Puis nous envoyer sur WhatsApp vos vrais prix et vos horaires. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
+   <details><summary>Qu’est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour l’Entrée 3D, quelques photos de votre façade et de votre salle, puis vos vrais prix et vos horaires sur WhatsApp ; pour l’Entrée réelle, on vient tourner chez vous. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
    <details><summary>Mes réseaux sociaux, c’est vraiment automatique ?</summary><div class="fa"><div><p>Oui. On prépare chaque publication, vous recevez l’aperçu la veille, et elle se publie seule le matin. Vous pouvez dire « Stop », jamais être obligé de dire « Oui ».</p></div></div></details>
-   <details><summary>Il me faut un compte particulier ?</summary><div class="fa"><div><p>Un compte Instagram professionnel (gratuit). On vous aide à le passer en professionnel si besoin. Instagram se publie automatiquement ; pour TikTok et votre fiche Google, on vous dit ce qui est possible pour votre compte.</p></div></div></details>
+   <details><summary>Il me faut un compte particulier ?</summary><div class="fa"><div><p>Un compte Instagram professionnel (gratuit) ; on vous aide à le passer en professionnel si besoin. Pour TikTok et votre fiche Google, on vous dit ce qui est possible pour votre compte.</p></div></div></details>
    <details><summary>Les réseaux sociaux sans site OONDE ?</summary><div class="fa"><div><p>Oui, ce service se prend seul.</p></div></div></details>
    <details><summary>Le téléphone : mes clients savent que c’est une IA ?</summary><div class="fa"><div><p>Oui, la voix se présente. Ce qu’elle ne sait pas, elle vous le passe, avec le résumé de l’appel par message. <a href="telephone.html">Comment ça marche</a></p></div></div></details>
-   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements envoyés par message. Vous êtes un restaurant ? Envoyez votre menu du jour sur WhatsApp, une photo de l’ardoise suffit : on le met à jour sur votre site une fois par semaine, c’est compris.</p><p>Pour Google, on met en place tout ce qu’il regarde : une fiche complète, la bonne catégorie, des horaires à jour, un site relié et des avis. La première place, en revanche, personne ne peut la garantir honnêtement.</p></div></div></details>
+   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements par message : un restaurant envoie son menu du jour sur WhatsApp, une photo de l’ardoise suffit. Pour Google, on met en place tout ce qu’il regarde ; la première place, personne ne peut la garantir honnêtement.</p></div></div></details>
    <details><summary>Et le site, sur un téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
-   <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux. On démarre : on n’a pas encore de clients à vous montrer. C’est pour ça que nos exemples sont inventés, et que votre prix et une première image sont offerts, avant que vous payiez quoi que ce soit. Quand vous écrivez, c’est nous qui répondons.</p></div></div></details>
+   <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux, qui démarre : nos exemples sont inventés, et votre prix et une première image sont offerts avant que vous payiez quoi que ce soit. Quand vous écrivez, c’est nous qui répondons.</p></div></div></details>
   </div>
  </div>
 </section>
@@ -996,11 +1010,11 @@ html:not(.js) .e-pick{display:none}
 </div></section>
 
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" data-swb="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l data-swl="Recevoir mon aperçu 3D">Recevoir mon aperçu 3D</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="e3" data-swb="e3" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span data-e3l="court" data-swl="Ma maquette gratuite">Ma maquette gratuite</span></a></nav>
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="#top" aria-label="OONDE, haut de page"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="reseaux.html">Réseaux sociaux</a><a href="telephone.html">Le téléphone</a><a href="assistant.html">L’assistant</a><a href="visite.html">La visite complète</a><a href="vitrine.html">La Vitrine</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
- <div class="fq"><p class="also2">Aussi : <a href="tel:+41779283540">077 928 35 40</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20que%20vous%20veniez%20voir%20mon%20commerce%20pour%20l%E2%80%99Entr%C3%A9e%20r%C3%A9elle.%0AMon%20commerce%2C%20ma%20commune%20et%20le%20meilleur%20moment%20%3A%20" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon commerce</a></p><div class="qr" aria-hidden="true"><img src="img/qr-imm.svg" width="84" height="84" alt="" loading="lazy" decoding="async"><span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
+ <div class="fq"><p class="also2">Aussi : <a href="tel:+41779283540">077 928 35 40</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a></p><div class="qr" aria-hidden="true"><img src="img/qr-imm.svg" width="84" height="84" alt="" loading="lazy" decoding="async"><span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
  <p class="cours">Cours et formations pour commerçants : sur demande, <a href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Les%20cours%20et%20formations%20m%E2%80%99int%C3%A9ressent.%0ASur%20quel%20sujet%20%3A%20" data-wa="cours" target="_blank" rel="noopener">par WhatsApp</a>.</p>
  <p class="seo">Sites internet avec entrée en 3D, sites simples, contenu pour Instagram et voix au téléphone, pour les commerces de Genève à Montreux : Genève, Coppet, Nyon, Rolle, Morges, Lausanne, Vevey, Montreux et les communes entre deux.<br>Coiffeurs, ongleries, barbiers, instituts de beauté, restaurants, cafés, boulangeries, fleuristes, garages, artisans. © 2026 OONDE.</p>
 </div></footer>
@@ -1025,7 +1039,11 @@ const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
  imm:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
  e3:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
  assist:()=>HELLO+' J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ',
- tel:()=>HELLO+' J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ',
+ tel_ess:()=>HELLO+' Le téléphone m’intéresse, forfait Essentiel. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_pro:()=>HELLO+' Le téléphone m’intéresse, forfait Pro. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_pre:()=>HELLO+' Le téléphone m’intéresse, forfait Premium. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_rush:()=>HELLO+' Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
  fil:()=>HELLO+' Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
@@ -1058,15 +1076,21 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
 /* v24 : le bouton de l'en-tête et celui de la barre du bas suivent l'étage à l'écran (accueil : Réseaux sociaux, Le téléphone) ; ailleurs, le bouton du site.
    Une section <… data-sw="fil" data-swl="Un exemple pour mon commerce"> ; les boutons qui changent portent data-swb. Jamais de prix. */
-(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;
+(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(l)l._e3=l.getAttribute('data-e3l')||''});
  const on=new Set();let cur='';
  const ref=()=>document.querySelector('main a[data-wa="e3"]:not([data-swb]) [data-e3l]');
  const apply=k=>{if(k===cur)return;cur=k;const s=secs.find(x=>x.dataset.sw===k);
   bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(!l)return;
    if(s){a.dataset.wa=k;a.href=wa(MSG[k]());l.removeAttribute('data-e3l');l.textContent=s.dataset.swl}
-   else{a.dataset.wa=a.dataset.swb;const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.setAttribute('data-e3l','');l.textContent=r?r.textContent:l.dataset.swl}})};
+   else{a.dataset.wa=a.dataset.swb;l.setAttribute('data-e3l',l._e3||'');if(typeof E3S!=='undefined')E3S.paint();else{const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.textContent=l.dataset.swl}}})};
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?on.add(e.target):on.delete(e.target));const s=secs.find(x=>on.has(x));apply(s?s.dataset.sw:'')},{rootMargin:'-45% 0px -45% 0px'});
  secs.forEach(s=>io.observe(s))})();
+
+/* v28 : « Tester la démo » : au doigt, l'appel part (tel:) ; à la souris, le numéro s'affiche en grand sous le bouton (data-tel = l'id du bloc caché) */
+if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-tel]');if(!a)return;const r=document.getElementById(a.dataset.tel);if(!r)return;e.preventDefault();r.hidden=false;r.tabIndex=-1;r.focus({preventScroll:true});
+ const b=r.getBoundingClientRect();if(b.top<0||b.bottom>innerHeight)r.scrollIntoView({block:'nearest',behavior:RM?'instant':'smooth'})});
+/* v28 : le reflet des boutons principaux (base.css, .sh) ne tourne qu'à l'écran */
+(()=>{const bs=document.querySelectorAll('.btn:not(.light)');if(!bs.length||!('IntersectionObserver' in window)||RM)return;const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('sh',e.isIntersecting)));bs.forEach(b=>io.observe(b))})();
 
 /* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
@@ -1119,13 +1143,16 @@ function e3quad(el,c,w,h,f){const X=c.map(q=>f.ox+q[0]*f.w),Y=c.map(q=>f.oy+q[1]
  const dx1=X[1]-X[2],dx2=X[3]-X[2],dx3=X[0]-X[1]+X[2]-X[3],dy1=Y[1]-Y[2],dy2=Y[3]-Y[2],dy3=Y[0]-Y[1]+Y[2]-Y[3],den=dx1*dy2-dx2*dy1||1e-9;
  const g=(dx3*dy2-dx2*dy3)/den,k=(dx1*dy3-dx3*dy1)/den,a=X[1]-X[0]+g*X[1],b=X[3]-X[0]+k*X[3],d=Y[1]-Y[0]+g*Y[1],e=Y[3]-Y[0]+k*Y[3];
  el.style.transform=`matrix3d(${a/w},${d/w},0,${g/w},${b/h},${e/h},0,${k/h},0,0,1,0,${X[0]},${Y[0]},0,1)`}
+/* v28 : la hauteur (px, pour 1000 de large) qui garde les proportions : 1000 × bord vertical moyen / bord horizontal moyen du rectangle projeté
+   (sans elle, un bloc de hauteur fixe posé sur une enseigne plus plate écrase le texte) */
+function e3qh(c,f){const X=c.map(q=>q[0]*f.w),Y=c.map(q=>q[1]*f.h),d=(i,j)=>Math.hypot(X[i]-X[j],Y[i]-Y[j]);return Math.round(1000*(d(0,3)+d(1,2))/((d(0,1)+d(3,2))||1)*10)/10}
 /* Le texte tient dans sa place : la taille baisse pour les noms longs */
 const e3meas=document.createElement('canvas').getContext('2d');
 function e3fit(el,txt,font,max,w){e3meas.font=font.replace('{s}',max);const tw=e3meas.measureText(txt).width||1;el.style.fontSize=Math.min(max,max*w/tw).toFixed(1)+'px'}
-function e3pins(box,s,name){const sg=box.querySelector('.e-sign>span'),wl=box.querySelector('.e-wall>span'),sans=s.sf==='sans';
+function e3pins(box,s,name,h){const sg=box.querySelector('.e-sign>span'),wl=box.querySelector('.e-wall>span'),sans=s.sf==='sans';   /* v28 : h, la hauteur d'après le rectangle projeté du mur (e3qh), sinon 1000/wall */
  box.dataset.sf=s.sf||'';box.dataset.wf=s.wf||'';box.dataset.ss=s.ss||'';
  if(sg){sg.textContent=sans?name.toUpperCase():name;e3fit(sg,sg.textContent,sans?'600 {s}px "Instrument Sans"':'400 {s}px "Cormorant Garamond"',sans?54:80,sans?760:860)}
- const wh=1000/(s.wall||5.8),we=box.querySelector('.e-wall');we.style.height=wh.toFixed(1)+'px';we._h=+wh.toFixed(1);if(sg)sg.parentNode._h=0;
+ const wh=h||1000/(s.wall||5.8),we=box.querySelector('.e-wall');we.style.height=wh.toFixed(1)+'px';we._h=+wh.toFixed(1);if(sg)sg.parentNode._h=0;
  wl.textContent=name;e3fit(wl,name,s.wf==='neon'?'italic 400 {s}px "Cormorant Garamond"':'400 {s}px "Cormorant Garamond"',Math.round(wh*.66),900)}
 function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.find(x=>x.id===el.dataset.id);
  if(!q||q.vis<=0){if(el._o!==0){el._o=0;el.style.opacity=0}continue}e3quad(el,q.c,1000,el._h||(el._h=el.offsetHeight||111),f);if(el._o!==q.vis){el._o=q.vis;el.style.opacity=q.vis}}}   /* hauteur gardée (e3pins la remet) : aucune lecture de mise en page par image */
@@ -1206,19 +1233,19 @@ const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;retur
 
 /* v19 : la démo, c'est la rue. Le nom et le métier choisis à l'arrêt suivent la caméra dans la salle (le nom au mur du fond),
    jusqu'à la fin du site (le bouton du métier, marqué Démo), puis dans les rubriques du site, plus bas (#entree) :
-   horaires, prix, photos de la salle. Ce module tient l'état (métier, nom, couleur) ; rue.js le lit et le change (E3S.set). */
+   horaires, prix, photos de la salle. Ce module tient l'état (métier, nom) ; rue.js le lit et le change (E3S.set). */
 const E3IN={d:[22,38,55],m:[26,44,63]};   /* les photos du site : trois images de la salle (entree3d, ?int=) */
 const e3in=k=>'img/e3d/in-'+k+'/';
-const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:false};   /* v27 : la façade du milieu de la rue */
+const E3S=(()=>{const st={sc:'coiffure',name:'',touched:false};   /* v27 : la façade du milieu de la rue. v28 : plus de choix de couleur (chaque métier garde sa couleur, sites.js) */
  const sec=$('entree'),u=$('univers');let ph='';
- const sty=()=>{const s=E3[st.sc];return s.lodge?['#3D4A52','#fff','ardoise']:T[s.t].styles[st.style]};
+ const sty=()=>{const s=E3[st.sc];return s.lodge?['#3D4A52','#fff','ardoise']:T[s.t].styles[0]};
  /* le message WhatsApp : ce que la personne a tapé et choisi, rien d'autre */
  function msg(){const s=E3[st.sc],t=s.lodge?null:T[s.t];if(!st.touched)return MSG.imm();
-  const what=s.lodge?'logement':t.noun,col=st.styleSet&&t?', couleur '+sty()[2]:'';
+  const what=s.lodge?'logement':t.noun;
   /* v24 (brief § 3.8) : avec le nom tapé à l'arrêt, « l'aperçu 3D de [Nom] ([métier]) » */
-  return st.name?`${HELLO} J’aimerais l’aperçu 3D de ${st.name} (${what}${col}) et le prix de son site.\nMa commune : `:`${HELLO} J’aimerais voir ma façade en 3D (${what}${col}) et recevoir le prix de mon site.\nMon commerce et ma commune : `}
+  return st.name?`${HELLO} J’aimerais l’aperçu 3D de ${st.name} (${what}) et le prix de son site.\nMa commune : `:`${HELLO} J’aimerais voir ma façade en 3D (${what}) et recevoir le prix de mon site.\nMon commerce et ma commune : `}
  const txt=(id,v)=>{const e=$(id);if(e&&e.textContent!==v)e.textContent=v};
- function paint(){const s=E3[st.sc],t=s.lodge?null:T[s.t],[c,ct,cn]=sty(),name=st.name||'Votre commerce',lab=s.lodge?'Logement':t.label;
+ function paint(){const s=E3[st.sc],t=s.lodge?null:T[s.t],[c,ct]=sty(),name=st.name||'Votre commerce',lab=s.lodge?'Logement':t.label;
   for(const el of [u,sec])if(el){el.style.setProperty('--c',c);el.style.setProperty('--ct',ct)}
   const cta=s.lodge?'Réserver un séjour':t.cta,see=s.lodge?'Voir les dates':'Voir '+({'Menu du jour':'le menu du jour','Nos produits':'nos produits'}[t.sec]||'les '+t.sec.toLowerCase());
   /* la fin de la rue : la barre du site, le titre et le bouton du métier */
@@ -1235,27 +1262,22 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
   $('eToastT').textContent=s.lodge?'Ici, vos clients réservent.':t.cta==='Commander'?'Ici, vos clients commandent.':/table/.test(t.cta)?'Ici, vos clients réservent leur table.':'Ici, vos clients prennent rendez-vous.';
   /* les boutons « Recevoir mon aperçu 3D » de la page suivent l'essai */
   const href=wa(msg());document.querySelectorAll('a[data-wa="e3"]').forEach(a=>a.href=href);
-  const l=st.name?'Aperçu 3D pour '+(st.name.length>18?st.name.slice(0,17)+'…':st.name):'Recevoir mon aperçu 3D';document.querySelectorAll('[data-e3l]').forEach(n=>n.textContent=l);
+  /* v28 : « Recevoir ma maquette gratuite » ; avec le nom tapé, « Recevoir la maquette de [Nom] » ; la barre du bas (data-e3l="court") dit « Ma maquette gratuite » / « Maquette de [Nom] » */
+  const nm=st.name?(st.name.length>18?st.name.slice(0,17)+'…':st.name):'';document.querySelectorAll('[data-e3l]').forEach(n=>n.textContent=n.dataset.e3l==='court'?(nm?'Maquette de '+nm:'Ma maquette gratuite'):(nm?'Recevoir la maquette de '+nm:'Recevoir ma maquette gratuite'));
   const se=$('eSel');if(se)se.value=st.sc;
-  const bs=$('eStyle');if(bs){bs.parentNode.hidden=!!s.lodge;if(!s.lodge){if(bs.dataset.t!==st.sc){bs.dataset.t=st.sc;bs.innerHTML=T[s.t].styles.map(([c,,n],i)=>`<button type="button" role="radio" aria-label="${esc(n)}" style="--g:${c}" data-i="${i}"></button>`).join('')}
-   [...bs.children].forEach((b,i)=>{b.setAttribute('aria-checked',i===st.style);b.tabIndex=i===st.style?0:-1});txt('eStyleN',cn)}}
-  if(st.touched)try{localStorage.setItem('oonde-e3',JSON.stringify({sc:st.sc,name:st.name,style:st.style,s:st.styleSet}))}catch(e){}
+  if(st.touched)try{localStorage.setItem('oonde-e3',JSON.stringify({sc:st.sc,name:st.name}))}catch(e){}
   document.dispatchEvent(new CustomEvent('oonde-e3',{detail:{name:st.name,t:s.t||'',sc:st.sc}}))}
  /* les photos de la salle : trois images de son film (deux sur téléphone) ; leur place est tenue d'avance (width/height), le navigateur ne les charge qu'à l'approche (loading=lazy) */
  function photos(){const box=$('ePh');if(!box)return;const k=innerWidth<innerHeight*.95?'m':'d',key=st.sc+k;if(ph===key)return;ph=key;
   box.innerHTML=E3IN[k].slice(0,k==='m'?2:3).map((i,j)=>`<img src="${e3in(st.sc)}${k}/f0${String(i).padStart(2,'0')}.webp" width="${k==='m'?540:1280}" height="${k==='m'?960:800}" alt="${j?'':'Démo : la salle, vue depuis l’entrée'}" loading="lazy" decoding="async">`).join('')}
- function set(o){let ch=false;if(o.sc&&E3[o.sc]&&o.sc!==st.sc){st.sc=o.sc;st.style=0;st.styleSet=false;ch=true}
+ function set(o){let ch=false;if(o.sc&&E3[o.sc]&&o.sc!==st.sc){st.sc=o.sc;ch=true}
   if(typeof o.name==='string'){const n=o.name.trim().slice(0,40);if(n!==st.name){st.name=n;ch=true}}
-  if(Number.isInteger(o.style)){st.style=clamp(o.style,0,2);st.styleSet=true;ch=true}
   if(ch||o.force){if(!o.quiet)st.touched=true;paint()}}
- /* un lien préparé (?e=restaurant&n=Chez%20Marco&c=1) remplit l'essai ; sinon, la dernière visite */
+ /* un lien préparé (?e=restaurant&n=Chez%20Marco) remplit l'essai ; sinon, la dernière visite */
  {const q=new URLSearchParams(location.search);let m={};
-  if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||'',style:+q.get('c')||0,s:q.has('c')};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
-  if(E3[m.sc]){st.sc=m.sc;st.touched=true}if(typeof m.name==='string'&&m.name){st.name=m.name.slice(0,40);st.touched=true}
-  if(Number.isInteger(m.style))st.style=clamp(m.style,0,2),st.styleSet=!!m.s}
+  if(q.get('e'))m={sc:q.get('e'),name:q.get('n')||''};else try{m=JSON.parse(localStorage.getItem('oonde-e3')||'{}')}catch(e){}
+  if(E3[m.sc]){st.sc=m.sc;st.touched=true}if(typeof m.name==='string'&&m.name){st.name=m.name.slice(0,40);st.touched=true}}
  if(sec){const se=$('eSel');if(se){se.innerHTML=E3K.map(k=>`<option value="${k}">${E3[k].lab}</option>`).join('');se.addEventListener('change',()=>set({sc:se.value}))}
-  const bs=$('eStyle');bs.addEventListener('click',e=>{const b=e.target.closest('button');if(b)set({style:+b.dataset.i})});
-  bs.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft'].includes(e.key))return;e.preventDefault();set({style:(st.style+(e.key==='ArrowRight'?1:2))%3});bs.children[st.style].focus()});
   addEventListener('resize',photos)}
  /* au clavier, dans le site de démo : l'élément qui prend le focus est à l'écran tout de suite (sans attendre le défilement doux) */
  if(sec)sec.addEventListener('focusin',e=>{const t=e.target,r=t.getBoundingClientRect(),top=parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||84;if(r.top<top||r.bottom>innerHeight-8)t.scrollIntoView({block:'center',behavior:'instant'})});
@@ -1269,7 +1291,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  return{st,set,sty,paint}})();
 /* La rue au crépuscule, en haut de page. v27 : plus d'images pilotées par le défilement : des vidéos, lues en avant, jamais cherchées
    (entree3d ?n3=restaurant,coiffure,institut, rendues à 60 i/s en H.264 ; video/e3d/<jeu>/, affiches img/e3d/v/<jeu>/) :
-   1. l'intro (in.mp4, 2,5 s) : la page s'ouvre sur la carte-titre OONDE posée sur sa première image, et y reste HOLD_MS (3 s, comptées depuis
+   1. l'intro (in.mp4, 2,5 s) : la page s'ouvre sur la carte-titre OONDE posée sur sa première image, et y reste HOLD_MS (5 s, comptées depuis
       le moment où le clip est prêt : un réseau lent ne mange pas la pause) ; un geste (roulette, doigt, clic, Espace…) ou le bouton « Entrée »
       la fait partir plus tôt (v27.3, v27.4). Pendant la pause et l'intro, la page est tenue (épinglée, comme pendant l'entrée) : rien ne file vers le bas.
       Puis 0,5 s sur le globe bleu du réverbère (le point du logo) sous la carte-titre, puis la caméra
@@ -1281,7 +1303,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
 (()=>{const u=$('univers');if(!u)return;
  const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),poster=$('rPoster'),hold=$('rHold'),vIn=$('rVin'),vG=$('rVg'),vE=$('rVe'),pins=$('rPins'),anchor=$('choix');
  const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),say=u.querySelector('.r-say'),stop=$('rStop'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg'),rwall=$('rWall'),sbar=$('rSbar'),end=$('rEnd');
- const HOLD_MS=3000;   /* v27.3 : la pause sur OONDE avant la rue, une fois l'intro prête ; un geste part plus tôt */
+ const HOLD_MS=5000;   /* v27.3 : la pause sur OONDE avant la rue, une fois l'intro prête ; un geste part plus tôt. v28 : 5 s (3 s, « trop faible ») */
  const TRIO=['restaurant','coiffure','institut'],HOME='coiffure',VS={m:[1080,1920],d:[1920,1080]},HZ=140;   /* HZ : la zone de l'arrêt (px) : jusqu'au mur, avant l'entrée */
  let SLOW=false,stalls=0;try{const cn=navigator.connection;if(cn&&(cn.saveData||/2g|3g/.test(cn.effectiveType||'')||cn.downlink&&cn.downlink<3))SLOW=true}catch(e){}   /* réseau lent : on précharge moins, et un clip qui tarde est coupé (image tenue) plutôt qu'attendu */
  const COARSE=matchMedia('(pointer:coarse)').matches;let LIVE=!RM,set='d',fmt='jpg',st='title',met='',frz=false,kbY=-1,SW=1,SH=1,hh=64,D=HZ,dn=1,y0=0,ent=null,entOk=false,vis=true,fitB=null,PINS=null,sIn=false,skipT=0;
@@ -1293,11 +1315,13 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
  function fit(){const r=scene.getBoundingClientRect(),[w0,h0]=VS[set],sc=Math.max(r.width/w0,r.height/h0),w=w0*sc,h=h0*sc;SW=r.width;SH=r.height;fitB={ox:(r.width-w)/2,oy:(r.height-h)/2,w,h}}
  /* les enseignes (pins.json : à l'arrêt devant chaque façade, le rectangle de son enseigne ; dans sa salle, le mur du fond) */
  fetch('img/e3d/v/pins.json').then(r=>r.json()).then(j=>{PINS=j;place()}).catch(()=>{});
- let signQ=null;
- /* v27.4.1 : l'enseigne attend l'arrêt : pendant le titre, l'intro et le saut (la façade n'est pas encore là), rien ; arrive() → place() la fait fondre (.35 s) */
+ let signQ=null,signH={};
+ /* v27.4.1 : l'enseigne attend l'arrêt : pendant le titre, l'intro et le saut (la façade n'est pas encore là), rien ; arrive() → place() la fait fondre (.35 s)
+    v28 : la hauteur du bloc suit les proportions de l'enseigne (e3qh, une fois par jeu et métier) : le nom n'est plus écrasé (le bloc fixe de 127 px l'aplatissait de 15 à 22 %) */
  function place(){if(!PINS||!fitB){return}const P=PINS[set]||{};const q=(st==='in'||st==='title'||st==='intro'||st==='skip')?null:P.stop&&P.stop[met];
-  if(q&&st!=='glide'&&st!=='door'){e3quad(sign,q,1000,127,fitB);put(sign,'opacity','1');signQ={c:q,f:fitB}}else{put(sign,'opacity','0')}
-  const w=st==='in'?P.room&&P.room[met]:null;if(st!=='door')e3place(rwall,w?[{id:'wall',c:w,vis:1}]:null,fitB)}
+  if(q&&st!=='glide'&&st!=='door'){const hk=set+met,h=signH[hk]||(signH[hk]=e3qh(q,fitB));put(sign,'height',h+'px');e3quad(sign,q,1000,h,fitB);put(sign,'opacity','1');signQ={c:q,f:fitB}}else{put(sign,'opacity','0')}
+  const rq=P.room&&P.room[met];if(rq&&rwall.firstElementChild){const h=e3qh(rq,fitB);if(Math.abs((rwall.firstElementChild._h||0)-h)>.5)wall()}   /* v28 : le mur suit ses proportions ; reposé si le jeu ou le cadrage a changé depuis */
+  const w=st==='in'?rq:null;if(st!=='door')e3place(rwall,w?[{id:'wall',c:w,vis:1}]:null,fitB)}
  /* le nom : sur l'enseigne, en néon. Seules les lettres nouvelles s'allument ; la largeur et la taille suivent en douceur. */
  let shown='';
  const fitN=()=>{e3meas.font='400 86px "Cormorant Garamond"';const w=e3meas.measureText(shown).width;nm.style.setProperty('--w',Math.ceil(w)+'px');nm.style.setProperty('--s',Math.min(1,860/(w||1)).toFixed(3))};
@@ -1313,7 +1337,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',style:0,styleSet:false,touched:f
   tiles().forEach(b=>{const on=b.dataset.m===k;b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});
   if(k!==was){const a=mets[mi],b=mets[mi^=1];b.textContent=E3[k].lab;a.classList.remove('a');b.classList.add('a')}else mets[mi].classList.add('a');
   recall();if(push)E3S.set({sc:k});wall();if(k!==was&&was&&LIVE&&st!=='title'&&st!=='intro')glide(was,k);else if(k!==was)entryLoad();place()}
- function wall(){if(rwall&&E3[met])e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici')}
+ function wall(){if(!rwall||!E3[met])return;const w=PINS&&PINS[set]&&PINS[set].room&&PINS[set].room[met];e3pins(rwall,E3[met],E3S.st.name||'Votre nom ici',w&&fitB?e3qh(w,fitB):undefined)}   /* v28 : la hauteur du mur suit ses proportions (e3qh) */
  function recall(){const m=E3[met]?E3[met].lab:'';u.querySelectorAll('[data-rc-m]').forEach(e=>e.textContent=m);u.querySelectorAll('[data-rc-n]').forEach(e=>e.textContent=(shown?shown+' · ':'')+m)}
  metier(TRIO.includes(E3S.st.sc)?E3S.st.sc:HOME,false);
  let segT=0,segMe=0,segU=false;

@@ -66,7 +66,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 @media (max-width:760px){.lede{font-size:16.5px}}
 
 /* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%;position:relative;overflow:hidden}
 .btn span{overflow:hidden;text-overflow:ellipsis}
 .btn:hover{background:#262B33}
 .btn:active{background:#000;transform:translateY(1px);transition-duration:.06s}
@@ -75,6 +75,19 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
+/* v28 : boutons vivants, sans kitsch : un reflet qui passe toutes les 7 s sur les boutons principaux (à l'écran seulement, .sh posé par core.js),
+   la flèche qui avance de 3 px au survol, le bouton WhatsApp collant qui respire (1 → 1,03 toutes les 5 s). Rien en mouvement réduit ; rien ne bouge la mise en page. */
+.btn::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:38%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.22) 50%,rgba(255,255,255,0));transform:translateX(-170%) skewX(-14deg);pointer-events:none}
+.btn.inv::after{background:linear-gradient(100deg,rgba(17,19,24,0),rgba(17,19,24,.07) 50%,rgba(17,19,24,0))}
+.btn.light::after{display:none}
+.ar{display:inline-block;font-style:normal;transition:transform .2s var(--ease)}
+@media (prefers-reduced-motion:no-preference){.btn.sh::after{animation:sheen 7s linear infinite}.mbar.on .btn,.nav .btn{animation:breath 5s ease-in-out infinite}a:focus-visible .ar{transform:translateX(3px)}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
+@keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
+@keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
+/* v28 : « Tester la démo » à la souris : le numéro de la ligne de démo, en grand */
+.tel-rev{margin-top:18px}.tel-rev[hidden]{display:none}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
 .bg-ink .lnk:hover{color:#fff;opacity:.8}
@@ -340,50 +353,18 @@ footer{border-top:0}
 @media (max-width:960px){.offers3{grid-template-columns:minmax(0,1fr);gap:28px}.o3-k{order:-1;margin-block:0;padding-block:clamp(28px,3vw,40px)}}
 @media (max-width:480px){.o-go .btn{width:100%}}
 .o-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}
-/* v23 · Le téléphone : la page du service principal en plus du site. Même écriture que L’assistant : un héros centré, un appel de démo,
-   quatre écrans d’une phrase, ce qu’elle ne fait pas, les questions, le dernier écran. Aucun chiffre ni client inventé ; v24.1 : les trois forfaits (TEL_OFFRES dans build.py). */
-.tl{padding-block:clamp(56px,7vw,112px) clamp(96px,11vw,160px)}
+/* v23 · Le téléphone. v28 : la page coupée à l’essentiel : un héros (« Tester la démo » : on appelle la ligne de démo ; un ordinateur affiche le numéro),
+   l’écran des commandes comme preuve, cinq points, les trois forfaits (offres.css), trois étapes, quatre questions, le dernier écran. Aucun chiffre ni client inventé. */
+.tl{padding-block:clamp(56px,7vw,112px) clamp(80px,9vw,128px)}
 .tl h1{max-width:14ch;margin:16px auto 0}
 .tl .lede{margin:24px auto 0;max-width:30em}
-.tl .act{justify-content:center;margin-top:28px}
-.call{margin:clamp(40px,5vw,64px) auto 0;max-width:440px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(17,19,24,.03),0 30px 60px -36px rgba(17,19,24,.35)}
-.call .top{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
-.call .ic{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;flex:none}
-.call .ic svg{width:19px;height:19px}
-.call .who b{display:block;font-size:15px}
-.call .who span{font-size:13px;color:var(--muted)}
-.call .wave{display:flex;gap:3px;align-items:center;height:18px;margin-left:auto}
-.call .wave i{width:3px;border-radius:2px;background:var(--klein);height:100%;transform:scaleY(.3)}
-@media (prefers-reduced-motion:no-preference){.call .wave i{animation:tw 1.1s ease-in-out infinite}.call .wave i:nth-child(2){animation-delay:.15s}.call .wave i:nth-child(3){animation-delay:.3s}.call .wave i:nth-child(4){animation-delay:.45s}.call .wave i:nth-child(5){animation-delay:.6s}}
-@keyframes tw{50%{transform:none}}
-.call .log{display:flex;flex-direction:column;gap:10px;padding:18px 16px;background:var(--paper)}
-.call .foot{font-size:12.5px;color:var(--muted);padding:12px 16px 14px;border-top:1px solid var(--line)}
-.m{max-width:85%;padding:10px 13px;border-radius:14px;font-size:15px;line-height:1.45;margin:0}
-.m.b{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
-.m.u{background:var(--ink);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
-.m small{display:block;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.m.u small{color:rgba(255,255,255,.6)}
-.sum{background:#E7F8EE;border:1px solid #BFE8CF;border-radius:14px;padding:12px 14px;font-size:14.5px;line-height:1.45;align-self:stretch;margin:6px 0 0}
-.sum b{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:4px}.sum b svg{width:15px;height:15px;color:#1FA855}
-.say{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,96px);align-items:center}
-.say+.say{margin-top:clamp(96px,11vw,160px)}
-.say h2{max-width:14ch}
-.say>div>p{margin-top:20px;color:var(--soft);font-size:clamp(19px,1.7vw,24px);line-height:1.4;max-width:22em}
-.bub{display:flex;flex-direction:column;gap:14px}
-.bub .m{font-size:clamp(17px,1.5vw,21px);max-width:88%;padding:16px 20px;border-radius:22px}
-.bub .m.b{border-bottom-left-radius:6px;box-shadow:0 30px 60px -40px rgba(17,19,24,.35)}
-.bub .m.u{border-bottom-right-radius:6px}
-.bub .who{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase;align-self:flex-end}
-.bub .sum{font-size:clamp(15px,1.3vw,18px)}
-@media (max-width:860px){.say{grid-template-columns:minmax(0,1fr)}}
-.non3{list-style:none;margin:clamp(40px,5vw,64px) 0 0;padding:0;display:grid;gap:clamp(20px,2.4vw,32px)}
-.non3 li{font-size:clamp(22px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:600;max-width:30ch}
-.non3 li span{display:block;font-weight:400;font-size:clamp(17px,1.5vw,20px);letter-spacing:0;color:var(--soft);margin-top:6px}
-.pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}
-.dnum{margin:20px auto 0;font-size:15px;color:var(--muted)}
-.cmd{margin:0;justify-self:center;width:min(540px,100%)}.cmd img{display:block;width:100%;height:auto;border-radius:24px;border:1px solid var(--line);box-shadow:0 40px 80px -48px rgba(17,19,24,.45)}.cmd figcaption{margin-top:14px;font-size:14px;color:var(--muted)}
-/* v24.1 · les trois forfaits : les cartes des offres du site (offres.css). Pro surélevée, filet Klein, « Notre conseil », seule au bouton encre ; au téléphone, en premier. */
+.tl .act{justify-content:center;margin-top:28px;flex-direction:column;gap:14px}
+.tl .act .lnk{font-size:15.5px}
+.tl .tel-sub{margin-top:0}
+.cmd{margin:clamp(40px,5vw,64px) auto 0;width:min(320px,100%)}.cmd img{display:block;width:100%;height:auto;border-radius:24px;border:1px solid var(--line);box-shadow:0 40px 80px -48px rgba(17,19,24,.45)}.cmd figcaption{margin-top:14px;font-size:14px;color:var(--muted)}
+.five{margin-top:clamp(32px,4vw,48px);gap:16px;max-width:40em;font-size:clamp(17px,1.5vw,20px)}
 #prix h2{max-width:18ch}.tp-n{margin-top:clamp(40px,5vw,56px);display:grid;gap:10px;color:var(--soft);max-width:46em}.tp-n p{margin:0}
+.p-try{margin-top:24px}.p-try .tel-rev,.end .tel-rev{flex-basis:100%;margin-top:4px}
 .o3 .l4 b{font-weight:600}
 </style>
 
@@ -394,8 +375,8 @@ footer{border-top:0}
  <div class="in">
   <a class="logo landed" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
   <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
-  <nav aria-label="Pages" id="navL"><a href="index.html#choix">La démo</a><a href="index.html#prix">Sites et prix</a><a class="opt" href="reseaux.html">Réseaux sociaux</a><a class="opt" href="telephone.html" aria-current="page">Le téléphone</a><span class="nav-sub opt3"><button type="button" class="nav-sb" aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="assistant.html">L’assistant</a><a href="visite.html">La visite complète</a></span></span><a class="opt2" href="index.html#questions">Questions</a><a class="nav-wa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Parler du téléphone</span></a></nav>
-  <a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Parler du téléphone</span><span class="s">WhatsApp</span></a>
+  <nav aria-label="Pages" id="navL"><a href="index.html#choix">La démo</a><a href="index.html#prix">Sites et prix</a><a class="opt" href="reseaux.html">Réseaux sociaux</a><a class="opt" href="telephone.html" aria-current="page">Le téléphone</a><span class="nav-sub opt3"><button type="button" class="nav-sb" aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="assistant.html">L’assistant</a><a href="visite.html">La visite complète</a></span></span><a class="opt2" href="index.html#questions">Questions</a><a class="nav-wa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo à mon nom</span></a></nav>
+  <a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Recevoir ma démo à mon nom</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
 
@@ -404,57 +385,31 @@ footer{border-top:0}
 <section class="tl bg-paper c" data-hero aria-labelledby="h1"><div class="in">
  <p class="mono">Le téléphone</p>
  <h1 class="h-xl" id="h1">Quand vous ne pouvez pas décrocher, une voix répond.</h1>
- <p class="lede">Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas. Elle donne vos horaires, répond aux questions de tous les jours, prend un rendez-vous ou un message, et vous envoie un résumé par message.</p>
- <div class="act"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>En parler sur WhatsApp</span></a></div>
- <!-- v23 : le numéro de démo à appeler viendra plus tard (accord d’Alexandre). Pour l’afficher : remplir le lien et retirer « hidden ». -->
- <p class="dnum" id="demoTel" hidden>Essayez-la : appelez le <a href="tel:">numéro de démo</a>. <span class="dtag">Démo</span></p>
- <div class="call" aria-label="Exemple d’appel">
-  <div class="top"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span><div class="who"><b>Un salon de coiffure</b><span>Appel · 19 h 40 · l’équipe est occupée</span></div><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="dtag" style="margin-left:10px">Démo</span></div>
-  <div class="log">
-   <p class="m b"><small>La voix</small>Bonjour, ici l’assistante virtuelle du salon. L’équipe est occupée : je peux vous aider ?</p>
-   <p class="m u"><small>Un client</small>Vous êtes ouverts samedi ?</p>
-   <p class="m b"><small>La voix</small>Oui, samedi de 9 h à 16 h. Vous voulez un rendez-vous ?</p>
-   <p class="m u"><small>Un client</small>Oui, une coupe, en fin de matinée.</p>
-   <p class="m b"><small>La voix</small>Je note votre demande pour samedi en fin de matinée. Le salon vous confirme l’heure par message.</p>
-   <p class="sum"><b><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Résumé envoyé au salon</b>Appel de 19 h 40. Demande de rendez-vous : coupe, samedi en fin de matinée. À confirmer au client.</p>
-  </div>
-  <p class="foot">Démo : le salon, les horaires et l’appel sont inventés.</p>
+ <p class="lede">Une voix d’IA répond quand l’équipe ne peut pas : horaires, questions, rendez-vous ou message, et vous recevez le résumé.</p>
+ <div class="act">
+  <div><a class="btn" href="tel:+41215390122" data-tel="telRev" aria-controls="telRev"><span>Tester la démo</span></a>
+   <p class="micro tel-sub">Appelez, elle répond comme un employé. <span class="dtag">Démo</span> · pizzeria fictive.</p></div>
+  <p class="tel-rev" id="telRev" hidden><b>021 539 01 22</b><span>Appelez depuis votre téléphone.</span></p>
+  <a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
  </div>
+ <figure class="cmd"><picture><source type="image/avif" srcset="img/tel/commande-demo.avif"><source type="image/webp" srcset="img/tel/commande-demo.webp"><img src="img/tel/commande-demo.jpg" width="1080" height="1920" alt="Démo : l’écran des commandes de la Trattoria Nonna Pia, un restaurant inventé. Trois commandes prises au téléphone par l’assistant ; en haut, Mme Keller, à l’emporter pour 19 h 30, une Margherita sans gluten, une burrata sans pignons pour une allergie et deux tiramisus, 56 francs, SMS de confirmation envoyé." loading="lazy" decoding="async"></picture><figcaption><span class="dtag">Démo</span> La commande prise au téléphone, prête à préparer.</figcaption></figure>
 </div></section>
 
-<section class="bg-white" aria-label="Comment elle travaille"><div class="in">
- <div class="say">
-  <div><h2 class="rv">Vous gardez votre numéro.</h2><p class="rv">Rien ne change pour vos clients. Quand la ligne est occupée, quand personne ne décroche ou en dehors de vos horaires, l’appel passe à la voix.</p></div>
-  <div class="bub rv"><span class="who">Votre numéro</span><p class="m u">Occupé, pas de réponse, ou fermé ?</p><p class="m b">La voix répond à votre place.</p></div>
- </div>
- <div class="say">
-  <div><h2 class="rv">Elle répond.</h2><p class="rv">Vos horaires, vos prix, l’accès, les questions qu’on vous pose tous les jours. Avec vos informations, et rien d’autre.</p></div>
-  <div class="bub rv"><span class="who">Un client</span><p class="m u">Il y a une place pour se garer ?</p><p class="m b">Oui, le parking de la place, à deux minutes à pied.</p></div>
- </div>
- <div class="say">
-  <div><h2 class="rv">Elle prend le rendez-vous ou le message.</h2><p class="rv">Et quand il faut quelqu’un de l’équipe, elle transfère l’appel ou promet un rappel.</p></div>
-  <div class="bub rv"><span class="who">Un client</span><p class="m u">C’est pour une demande un peu spéciale.</p><p class="m b">Je transmets votre message à l’équipe : on vous rappelle.</p></div>
- </div>
- <div class="say">
-  <div><h2 class="rv">Vous recevez le résumé, ou la commande.</h2><p class="rv">Qui a appelé, pourquoi, ce qui est à faire. Avec Pro, la commande arrive prête à préparer : les articles, l’heure, les allergies signalées.</p></div>
-  <figure class="cmd rv"><picture><source type="image/avif" srcset="img/tel/commande-demo.avif"><source type="image/webp" srcset="img/tel/commande-demo.webp"><img src="img/tel/commande-demo.jpg" width="1080" height="1920" alt="Démo : l’écran des commandes de la Trattoria Nonna Pia, un restaurant inventé. Trois commandes prises au téléphone par l’assistant ; en haut, Mme Keller, à l’emporter pour 19 h 30, une Margherita sans gluten, une burrata sans pignons pour une allergie et deux tiramisus, 56 francs, SMS de confirmation envoyé." loading="lazy" decoding="async"></picture><figcaption><span class="dtag">Démo</span> Restaurant, clients et commandes inventés.</figcaption></figure>
- </div>
- <p class="micro" style="margin-top:clamp(64px,7vw,96px);color:var(--muted)"><span class="dtag">Démo</span>&nbsp; Exemples d’appels inventés.</p>
-</div></section>
-
-<section class="bg-paper" aria-labelledby="hN"><div class="in">
- <h2 id="hN" class="rv">Ce qu’elle ne fait pas.</h2>
- <ul class="non3">
-  <li class="rv">Elle ne se fait jamais passer pour une personne.<span>Dès le premier mot, elle dit qu’elle est l’assistante virtuelle de votre commerce.</span></li>
-  <li class="rv">Elle n’invente rien.<span>Si elle n’a pas la réponse, elle prend un message pour l’équipe.</span></li>
-  <li class="rv">Elle ne promet rien à votre place.<span>Pas de prix spécial, pas de rendez-vous confirmé sans votre accord.</span></li>
+<section class="bg-white" aria-labelledby="hN"><div class="in">
+ <h2 id="hN" class="rv">Vous gardez votre numéro.</h2>
+ <ul class="l4 five">
+  <li class="rv">Occupé, pas de réponse, ou fermé : l’appel passe à la voix.</li>
+  <li class="rv">Elle dit qu’elle est une assistante, et que l’appel est enregistré.</li>
+  <li class="rv">Elle répond avec vos informations : horaires, prix, accès.</li>
+  <li class="rv">Elle note le message ou la commande, et vous envoie le résumé.</li>
+  <li class="rv">S’il faut quelqu’un de l’équipe, elle vous passe l’appel.</li>
  </ul>
- <p class="pz2 rv">On met tout en place et on s’en occupe : la voix, ce qu’elle sait de votre commerce, les essais avec vous.</p>
 </div></section>
 
-<section class="bg-white" id="prix" aria-labelledby="hP"><div class="in">
+<section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
  <h2 id="hP" class="rv">Trois forfaits, au mois. Sans engagement.</h2>
- <p class="lede rv o-lede">Vous essayez d’abord une démo avec vos vraies informations. Vous payez seulement quand l’assistant est en service.</p>
+ <p class="lede rv o-lede">Démo d’abord, avec vos vraies informations ; vous payez seulement quand l’assistant est en service.</p>
+ <div class="act p-try rv"><a class="btn" href="tel:+41215390122" data-tel="telRev2"><span>Tester la démo</span></a><p class="tel-rev" id="telRev2" hidden><b>021 539 01 22</b><span>Appelez depuis votre téléphone.</span></p></div>
  <!-- v24.1 · les montants viennent de TEL_OFFRES dans build.py -->
  <div class="offers3">
   <article class="o3 rv" aria-labelledby="tE">
@@ -472,7 +427,7 @@ footer{border-top:0}
     <li class="no"><s>Bilan mensuel des appels</s></li>
    </ul>
    <p class="o-f">Mise en place 290.–, payée seulement quand l’assistant est en service.</p>
-   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo gratuite</span></a></div>
+   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Le%20t%C3%A9l%C3%A9phone%20m%E2%80%99int%C3%A9resse%2C%20forfait%20Essentiel.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel_ess" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Je veux celui-ci</span></a></div>
   </article>
   <article class="o3 o3-k rv" aria-labelledby="tR">
    <p class="o-badge">Notre conseil</p>
@@ -490,7 +445,7 @@ footer{border-top:0}
     <li>En français</li>
    </ul>
    <p class="o-f">Mise en place 390.–, payée seulement quand l’assistant est en service.</p>
-   <div class="o-go"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo gratuite</span></a></div>
+   <div class="o-go"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Le%20t%C3%A9l%C3%A9phone%20m%E2%80%99int%C3%A9resse%2C%20forfait%20Pro.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel_pro" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Je veux celui-ci</span></a></div>
   </article>
   <article class="o3 rv" aria-labelledby="tX">
    <h3 id="tX">Premium</h3>
@@ -504,45 +459,41 @@ footer{border-top:0}
     <li>Changements illimités, faits le jour même</li>
    </ul>
    <p class="o-f">Mise en place 490.–, payée seulement quand l’assistant est en service.</p>
-   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir ma démo gratuite</span></a></div>
+   <div class="o-go"><a class="btn light" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Le%20t%C3%A9l%C3%A9phone%20m%E2%80%99int%C3%A9resse%2C%20forfait%20Premium.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel_pre" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Je veux celui-ci</span></a></div>
   </article>
  </div>
  <div class="tp-n rv">
-  <p><b>Gros volume ?</b> Forfait Rush : 1 800 minutes (environ 1 200 appels) pour 590.– par mois, tout Premium inclus, mise en place 490.–. <a href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo gratuite</a></p>
-  <p>Minute au-delà du forfait : 0.40. Prix en francs suisses, sans TVA. <b>Sans engagement</b>, résiliable à la fin de chaque mois.</p>
-  <p>Vous gardez votre numéro : vos appels sont renvoyés vers l’assistant quand vous ne décrochez pas.</p>
-  <p>L’assistant dit qu’il est un assistant vocal et prévient que l’appel est enregistré.</p>
+  <p><b>Gros volume ?</b> Forfait Rush : 1 800 minutes (environ 1 200 appels) pour 590.– par mois, tout Premium inclus, mise en place 490.–. <a href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20Le%20t%C3%A9l%C3%A9phone%20m%E2%80%99int%C3%A9resse%2C%20forfait%20Rush.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel_rush" target="_blank" rel="noopener">Je veux celui-ci</a></p>
+  <p>Minute au-delà : 0.40. Prix en francs suisses, sans TVA ; <b>sans engagement</b>, résiliable chaque mois.</p>
  </div>
 </div></section>
 
-<section class="bg-paper" aria-labelledby="hC"><div class="in">
+<section class="bg-white" aria-labelledby="hC"><div class="in">
  <h2 id="hC" class="rv">Comment ça se passe.</h2>
  <ol class="t3">
   <li class="rv"><i>01</i><b>Vous écrivez.</b><span>Le nom de votre commerce, sur WhatsApp.</span></li>
-  <li class="rv"><i>02</i><b>Vous l’appelez.</b><span>Sous 48 h, vous recevez une démo gratuite avec vos vraies informations. Vous l’appelez comme un client.</span></li>
-  <li class="rv"><i>03</i><b>Elle répond pour vous.</b><span>Si elle vous plaît, l’assistant est en service en 5 jours. Vous payez seulement à ce moment-là.</span></li>
+  <li class="rv"><i>02</i><b>Vous l’appelez.</b><span>Sous 48 h, votre démo à votre nom, avec vos vraies informations.</span></li>
+  <li class="rv"><i>03</i><b>Elle répond pour vous.</b><span>En service en 5 jours ; vous payez seulement à ce moment-là.</span></li>
  </ol>
 </div></section>
 
-<section class="bg-white" aria-labelledby="hQ"><div class="in qa">
+<section class="bg-paper" aria-labelledby="hQ"><div class="in qa">
  <h2 class="h-m" id="hQ">Vos questions.</h2>
  <div class="faq">
-  <details><summary>Mes clients savent-ils qu’ils parlent à une IA ?</summary><div class="fa"><div><p>Oui. La voix se présente toujours comme l’assistante virtuelle de votre commerce. Elle ne prétend jamais être une personne.</p></div></div></details>
-  <details><summary>Je dois changer de numéro ?</summary><div class="fa"><div><p>Non. Vous gardez votre numéro et vous activez un renvoi d’appel : si c’est occupé, s’il n’y a pas de réponse, ou en dehors de vos horaires.</p></div></div></details>
-  <details><summary>Et si le client veut parler à quelqu’un ?</summary><div class="fa"><div><p>Elle transfère l’appel à l’équipe si vous le voulez, ou prend un message pour qu’on le rappelle.</p></div></div></details>
-  <details><summary>Qui la prépare ?</summary><div class="fa"><div><p>Nous. Vous nous dites ce que vos clients demandent et ce que vous répondez ; on prépare la voix, on l’essaie avec vous, et on la met à jour quand quelque chose change.</p></div></div></details>
-  <details><summary>Les appels sont-ils enregistrés ?</summary><div class="fa"><div><p>Oui, et l’assistant le dit au début de l’appel. Les informations servent à vous faire le résumé, rien d’autre.</p></div></div></details>
-  <details><summary>Combien ça coûte ?</summary><div class="fa"><div><p>Essentiel 149.– par mois, Pro 249.–, Premium 449.–, sans engagement. Mise en place 290.–, 390.– ou 490.–, payée seulement quand l’assistant est en service, après une démo gratuite. Gros volume : forfait Rush, 1 800 minutes pour 590.– par mois, tout Premium inclus, mise en place 490.–. <a href="#prix">Voir les forfaits</a></p></div></div></details>
+  <details><summary>Combien ça coûte ?</summary><div class="fa"><div><p>Dès 149.– par mois, sans engagement ; mise en place dès 290.–, payée quand l’assistant est en service. <a href="#prix">Voir les forfaits</a></p></div></div></details>
+  <details><summary>Je dois changer de numéro ?</summary><div class="fa"><div><p>Non : un renvoi d’appel suffit, quand c’est occupé, sans réponse ou fermé.</p></div></div></details>
+  <details><summary>Et si elle ne sait pas ?</summary><div class="fa"><div><p>Elle le dit et prend un message, ou vous passe l’appel ; elle n’invente rien.</p></div></div></details>
+  <details><summary>Et pour arrêter ?</summary><div class="fa"><div><p>Un message, et c’est fini à la fin du mois, sans frais.</p></div></div></details>
  </div>
 </div></section>
 
 <section class="bg-ink end"><div class="in">
  <h2 class="rv">Une voix pour les appels que vous manquez ?</h2>
- <div class="act rv"><a class="btn inv" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Parler du téléphone</span></a></div>
+ <div class="act rv"><a class="btn inv" href="tel:+41215390122" data-tel="telRev3"><span>Tester la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a><p class="tel-rev" id="telRev3" hidden><b>021 539 01 22</b><span>Appelez depuis votre téléphone.</span></p></div>
 </div></section>
 
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20une%20voix%20qui%20r%C3%A9ponde%20quand%20je%20ne%20peux%20pas%20d%C3%A9crocher.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Parler du téléphone</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Ma démo à mon nom</span></a></nav>
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="index.html">L’entrée 3D</a><a href="vitrine.html">La Vitrine</a><a href="visite.html">La visite complète</a><a href="telephone.html" aria-current="page">Le téléphone</a><a href="assistant.html">L’assistant</a><a href="reseaux.html">Réseaux sociaux</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
@@ -570,7 +521,11 @@ const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
  imm:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
  e3:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
  assist:()=>HELLO+' J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ',
- tel:()=>HELLO+' J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ',
+ tel_ess:()=>HELLO+' Le téléphone m’intéresse, forfait Essentiel. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_pro:()=>HELLO+' Le téléphone m’intéresse, forfait Pro. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_pre:()=>HELLO+' Le téléphone m’intéresse, forfait Premium. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_rush:()=>HELLO+' Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
  fil:()=>HELLO+' Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
@@ -603,15 +558,21 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
 /* v24 : le bouton de l'en-tête et celui de la barre du bas suivent l'étage à l'écran (accueil : Réseaux sociaux, Le téléphone) ; ailleurs, le bouton du site.
    Une section <… data-sw="fil" data-swl="Un exemple pour mon commerce"> ; les boutons qui changent portent data-swb. Jamais de prix. */
-(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;
+(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(l)l._e3=l.getAttribute('data-e3l')||''});
  const on=new Set();let cur='';
  const ref=()=>document.querySelector('main a[data-wa="e3"]:not([data-swb]) [data-e3l]');
  const apply=k=>{if(k===cur)return;cur=k;const s=secs.find(x=>x.dataset.sw===k);
   bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(!l)return;
    if(s){a.dataset.wa=k;a.href=wa(MSG[k]());l.removeAttribute('data-e3l');l.textContent=s.dataset.swl}
-   else{a.dataset.wa=a.dataset.swb;const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.setAttribute('data-e3l','');l.textContent=r?r.textContent:l.dataset.swl}})};
+   else{a.dataset.wa=a.dataset.swb;l.setAttribute('data-e3l',l._e3||'');if(typeof E3S!=='undefined')E3S.paint();else{const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.textContent=l.dataset.swl}}})};
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?on.add(e.target):on.delete(e.target));const s=secs.find(x=>on.has(x));apply(s?s.dataset.sw:'')},{rootMargin:'-45% 0px -45% 0px'});
  secs.forEach(s=>io.observe(s))})();
+
+/* v28 : « Tester la démo » : au doigt, l'appel part (tel:) ; à la souris, le numéro s'affiche en grand sous le bouton (data-tel = l'id du bloc caché) */
+if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-tel]');if(!a)return;const r=document.getElementById(a.dataset.tel);if(!r)return;e.preventDefault();r.hidden=false;r.tabIndex=-1;r.focus({preventScroll:true});
+ const b=r.getBoundingClientRect();if(b.top<0||b.bottom>innerHeight)r.scrollIntoView({block:'nearest',behavior:RM?'instant':'smooth'})});
+/* v28 : le reflet des boutons principaux (base.css, .sh) ne tourne qu'à l'écran */
+(()=>{const bs=document.querySelectorAll('.btn:not(.light)');if(!bs.length||!('IntersectionObserver' in window)||RM)return;const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('sh',e.isIntersecting)));bs.forEach(b=>io.observe(b))})();
 
 /* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();

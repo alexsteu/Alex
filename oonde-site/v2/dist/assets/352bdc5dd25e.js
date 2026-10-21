@@ -18,7 +18,11 @@ const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
  imm:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
  e3:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
  assist:()=>HELLO+' J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ',
- tel:()=>HELLO+' J’aimerais une voix qui réponde quand je ne peux pas décrocher.\nMon commerce et ma commune : ',
+ tel:()=>HELLO+' J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ',
+ tel_ess:()=>HELLO+' Le téléphone m’intéresse, forfait Essentiel. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_pro:()=>HELLO+' Le téléphone m’intéresse, forfait Pro. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_pre:()=>HELLO+' Le téléphone m’intéresse, forfait Premium. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
+ tel_rush:()=>HELLO+' Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
  fil:()=>HELLO+' Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
@@ -51,15 +55,21 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
 /* v24 : le bouton de l'en-tête et celui de la barre du bas suivent l'étage à l'écran (accueil : Réseaux sociaux, Le téléphone) ; ailleurs, le bouton du site.
    Une section <… data-sw="fil" data-swl="Un exemple pour mon commerce"> ; les boutons qui changent portent data-swb. Jamais de prix. */
-(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;
+(()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(l)l._e3=l.getAttribute('data-e3l')||''});
  const on=new Set();let cur='';
  const ref=()=>document.querySelector('main a[data-wa="e3"]:not([data-swb]) [data-e3l]');
  const apply=k=>{if(k===cur)return;cur=k;const s=secs.find(x=>x.dataset.sw===k);
   bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(!l)return;
    if(s){a.dataset.wa=k;a.href=wa(MSG[k]());l.removeAttribute('data-e3l');l.textContent=s.dataset.swl}
-   else{a.dataset.wa=a.dataset.swb;const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.setAttribute('data-e3l','');l.textContent=r?r.textContent:l.dataset.swl}})};
+   else{a.dataset.wa=a.dataset.swb;l.setAttribute('data-e3l',l._e3||'');if(typeof E3S!=='undefined')E3S.paint();else{const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.textContent=l.dataset.swl}}})};
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?on.add(e.target):on.delete(e.target));const s=secs.find(x=>on.has(x));apply(s?s.dataset.sw:'')},{rootMargin:'-45% 0px -45% 0px'});
  secs.forEach(s=>io.observe(s))})();
+
+/* v28 : « Tester la démo » : au doigt, l'appel part (tel:) ; à la souris, le numéro s'affiche en grand sous le bouton (data-tel = l'id du bloc caché) */
+if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-tel]');if(!a)return;const r=document.getElementById(a.dataset.tel);if(!r)return;e.preventDefault();r.hidden=false;r.tabIndex=-1;r.focus({preventScroll:true});
+ const b=r.getBoundingClientRect();if(b.top<0||b.bottom>innerHeight)r.scrollIntoView({block:'nearest',behavior:RM?'instant':'smooth'})});
+/* v28 : le reflet des boutons principaux (base.css, .sh) ne tourne qu'à l'écran */
+(()=>{const bs=document.querySelectorAll('.btn:not(.light)');if(!bs.length||!('IntersectionObserver' in window)||RM)return;const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('sh',e.isIntersecting)));bs.forEach(b=>io.observe(b))})();
 
 /* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();

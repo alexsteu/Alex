@@ -40,7 +40,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 @media (max-width:760px){.lede{font-size:16.5px}}
 
 /* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%;position:relative;overflow:hidden}
 .btn span{overflow:hidden;text-overflow:ellipsis}
 .btn:hover{background:#262B33}
 .btn:active{background:#000;transform:translateY(1px);transition-duration:.06s}
@@ -49,6 +49,19 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
+/* v28 : boutons vivants, sans kitsch : un reflet qui passe toutes les 7 s sur les boutons principaux (à l'écran seulement, .sh posé par core.js),
+   la flèche qui avance de 3 px au survol, le bouton WhatsApp collant qui respire (1 → 1,03 toutes les 5 s). Rien en mouvement réduit ; rien ne bouge la mise en page. */
+.btn::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:38%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.22) 50%,rgba(255,255,255,0));transform:translateX(-170%) skewX(-14deg);pointer-events:none}
+.btn.inv::after{background:linear-gradient(100deg,rgba(17,19,24,0),rgba(17,19,24,.07) 50%,rgba(17,19,24,0))}
+.btn.light::after{display:none}
+.ar{display:inline-block;font-style:normal;transition:transform .2s var(--ease)}
+@media (prefers-reduced-motion:no-preference){.btn.sh::after{animation:sheen 7s linear infinite}.mbar.on .btn,.nav .btn{animation:breath 5s ease-in-out infinite}a:focus-visible .ar{transform:translateX(3px)}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
+@keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
+@keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
+/* v28 : « Tester la démo » à la souris : le numéro de la ligne de démo, en grand */
+.tel-rev{margin-top:18px}.tel-rev[hidden]{display:none}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
 .bg-ink .lnk:hover{color:#fff;opacity:.8}
