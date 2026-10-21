@@ -2,7 +2,9 @@
 import os, json, pathlib, re, shutil, urllib.parse, hashlib, base64
 D = pathlib.Path(__file__).parent
 FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
-WA_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>'
+# v28.1 : l'icône WhatsApp est un symbole posé une fois par page (après le lien d'évitement) ; chaque bouton n'en garde qu'un renvoi
+WA_SYM = '<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="iWa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></symbol></svg>'
+WA_ICON = '<svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg>'
 # v23.2 · LES PRIX, tous ici (rien d'autre à changer) : les trois paliers par mois, sans engagement, et leurs mises en ligne
 # (payées seulement si le site terminé plaît). Option recommandée du 19 oct. 2026 (« sans engagement », Entrée réelle moins chère).
 OFFRES = {'vit': 29, 'e3': 49, 'reel': 99, 'setup': 190, 'e3_setup': 290, 'reel_setup': 490}
@@ -151,6 +153,9 @@ def fill(s, fonts, links):
     s = inc(s)
     s = re.sub(r'\{\{POSTER:([^|}]+)\|([^}]*)\}\}', lambda m: poster(m.group(1), m.group(2)), s)   # v25 : une affiche de vidéo écrite à la main
     s = re.sub(r'\{\{NAV:(\w+)\}\}', lambda m: nav(m.group(1)), s)
+    if '{{WA_ICON}}' in s:   # v28.1 : le symbole de l'icône WhatsApp, une fois, juste après le lien d'évitement (full() coupe <body> à ce lien)
+        s, n = re.subn(r'(<a class="skip"[^>]*>.*?</a>)', lambda m: m.group(1) + WA_SYM, s, count=1)
+        assert n == 1, 'pas de lien d’évitement pour poser le symbole WhatsApp'
     s = s.replace('{{FIL_HOME}}', FIL_HOME).replace('{{FIL_FORMATS}}', FIL_FORMATS)
     s = re.sub(r'\{\{FIL:(\w+)\}\}', lambda m: FIL[m.group(1)], s)
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
@@ -184,6 +189,102 @@ def full(s, theme='#F7F7F4', base=''):
             + s[:i] + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
 
 # v27 : le film de l'intro est une vidéo (video/e3d/<jeu>/*.mp4, affiches img/e3d/v/<jeu>/) ; les paquets d'images (pack, wpacks, E3M, E3PRE) ont disparu.
+
+
+# v28.1 : les commentaires du CSS et du JS restent dans les sources (partials/, pages) mais ne partent pas dans les fichiers construits
+# (≈ 15 % du texte, 14 Ko gzip sur l'ensemble). strip_js lit chaînes, gabarits, expressions régulières et commentaires comme le
+# ferait l'analyseur, pour ne rien retirer dans une chaîne ; vérifié jeton par jeton (TypeScript) sur chaque script du site. SLIM = False pour débrayer.
+SLIM = True
+def strip_css(s):
+    out=[];i=0;n=len(s)
+    while i<n:
+        c=s[i]
+        if c in '"\'':
+            j=i+1
+            while j<n and s[j]!=c:
+                if s[j]=='\\': j+=1
+                j+=1
+            out.append(s[i:j+1]);i=j+1;continue
+        if s.startswith('url(',i):
+            j=s.find(')',i);j=n if j<0 else j+1;out.append(s[i:j]);i=j;continue
+        if c=='/' and s.startswith('/*',i):
+            j=s.find('*/',i+2);i=n if j<0 else j+2;continue
+        out.append(c);i+=1
+    t=''.join(out)
+    t=re.sub(r'[ \t]+\n','\n',t);t=re.sub(r'\n{2,}','\n',t)
+    return t.strip('\n')+'\n' if t.strip() else ''
+KW={'return','typeof','instanceof','in','of','new','delete','void','throw','case','do','else','yield','await'}
+def strip_js(s):
+    n=len(s);out=[]
+    def last_sig():
+        for k in range(len(out)-1,-1,-1):
+            t=out[k].rstrip()
+            if t: return t
+        return ''
+    def regex_ok():
+        t=last_sig()
+        if not t: return True
+        c=t[-1]
+        if c in '(,=:[!&|?{};+-*%<>~^': return True
+        if c=='}': return True
+        m=re.search(r'([A-Za-z_$][\w$]*)$',t)
+        return bool(m and m.group(1) in KW)
+    def str_end(i):
+        q=s[i];j=i+1
+        while j<n and s[j]!=q:
+            if s[j]=='\\': j+=1
+            j+=1
+        return j+1
+    def regex_end(i):
+        j=i+1;cls=False
+        while j<n:
+            c=s[j]
+            if c=='\\': j+=2;continue
+            if cls:
+                if c==']': cls=False
+            elif c=='[': cls=True
+            elif c=='/': j+=1;break
+            elif c=='\n': raise ValueError('regex sans fin ligne '+str(s.count(chr(10),0,i)+1))
+            j+=1
+        while j<n and (s[j].isalpha()): j+=1
+        return j
+    def code(i,in_tpl):
+        depth=0
+        while i<n:
+            c=s[i]
+            if c=='/' and s.startswith('/*',i):
+                j=s.find('*/',i+2);j=n if j<0 else j+2
+                a=s[i-1] if i>0 else ' ';b=s[j] if j<n else ' '
+                if (a.isalnum() or a in '_$') and (b.isalnum() or b in '_$'): out.append(' ')
+                i=j;continue
+            if c=='/' and s.startswith('//',i):
+                j=s.find('\n',i);i=n if j<0 else j;continue
+            if c in '"\'':
+                j=str_end(i);out.append(s[i:j]);i=j;continue
+            if c=='`':
+                out.append('`');i+=1
+                while i<n and s[i]!='`':
+                    if s[i]=='\\': out.append(s[i:i+2]);i+=2;continue
+                    if s[i]=='$' and s.startswith('${',i): out.append('${');i=code(i+2,True);continue
+                    out.append(s[i]);i+=1
+                out.append('`');i+=1;continue
+            if c=='/' and regex_ok():
+                j=regex_end(i);out.append(s[i:j]);i=j;continue
+            if in_tpl:
+                if c=='{': depth+=1
+                elif c=='}':
+                    if depth==0: out.append('}');return i+1
+                    depth-=1
+            out.append(c);i+=1
+        return i
+    code(0,False)
+    t=''.join(out)
+    t=re.sub(r'[ \t]+\n','\n',t);t=re.sub(r'\n{2,}','\n',t)
+    return t.strip('\n')+'\n' if t.strip() else ''
+def slim(html):
+    if not SLIM: return html
+    html = re.sub(r'<style([^>]*)>(.*?)</style>', lambda m: f'<style{m.group(1)}>{strip_css(m.group(2))}</style>', html, flags=re.S)
+    return re.sub(r'<script((?:\s[^>]*)?)>(.*?)</script>', lambda m: m.group(0) if 'type=' in m.group(1) or 'src=' in m.group(1) else f'<script{m.group(1)}>{strip_js(m.group(2))}</script>', html, flags=re.S)
 
 def externalize(html, o, name):
     crit = name == 'index'   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé
@@ -236,6 +337,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
         if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'reseaux', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
+        s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
         whole[k] = built[k]   # la page entière (avec ses scripts) : c'est elle qu'on lit pour savoir quels fichiers copier
         if wrap: built[k] = externalize(built[k], o, k)

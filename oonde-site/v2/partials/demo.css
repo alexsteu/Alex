@@ -75,7 +75,7 @@ html:not(.js) .w-ch.c1{display:block}
 }
 @media (max-width:760px){
  .w-stage .in{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
- .w-stage{padding:8px 0 6px}.w-frame{border-radius:22px}.w-frame>.fbar{display:none}
+ .w-stage{padding:8px 0 6px}.w-frame{border-radius:22px}
  .w-scene{aspect-ratio:4/5}.w-cap{font-size:12.5px;padding-top:8px}
 }
 /* La visite pilotée (JavaScript et mouvement autorisé) */

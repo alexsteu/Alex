@@ -23,11 +23,11 @@
 <meta property="og:site_name" content="OONDE">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"L’entrée 3D","serviceType":"Site internet avec visite filmée ou en 3D","url":"https://oonde.ch/visite","provider":{"@id":"https://oonde.ch/#oonde","@type":"ProfessionalService","name":"OONDE","url":"https://oonde.ch/"},"areaServed":{"@type":"AdministrativeArea","name":"De Genève à Montreux"},"audience":{"@type":"BusinessAudience","name":"Hôtels, chambres d'hôtes, logements de vacances, restaurants, salles, caves"}}</script>
-<link rel="preload" href="fonts/instrument-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}</style>
-<script>document.documentElement.classList.add('js')</script>
-<style>
-/* OONDE · base commune aux pages (accueil, La Visite, aperçu). Papier, encre, un accent. Grille 1 144 px, filets 1 px, rayons 8/10/14. */
-@font-face{font-family:'Instrument Repli';src:local('Arial'),local('Helvetica Neue'),local('Helvetica');size-adjust:106%;ascent-override:91%;descent-override:23.5%;line-gap-override:0%}
+<link rel="preload" href="fonts/instrument-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+</style>
+<script>document.documentElement.classList.add('js')
+</script>
+<style>@font-face{font-family:'Instrument Repli';src:local('Arial'),local('Helvetica Neue'),local('Helvetica');size-adjust:106%;ascent-override:91%;descent-override:23.5%;line-gap-override:0%}
 :root{
  --paper:#F7F7F4;--ink:#111318;--muted:#5C6169;--soft:#3A3F47;--line:#DCDED8;--card:#FFFFFF;--klein:#2038EC;--wa:#14803C;--night:#141826;--cream:#F4EFE7;
  --pad:clamp(20px,4vw,48px);--hh:64px;
@@ -49,7 +49,6 @@ button,input,select{font:inherit;color:inherit}
 p{margin:0;text-wrap:pretty}
 .in{max-width:1240px;margin:0 auto;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
 h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
-/* trois niveaux de titre : l'accueil, les sections clés, les sections secondaires */
 .h-xl{font-size:clamp(40px,5.6vw,78px);line-height:.98;letter-spacing:-.035em}
 h2{font-size:clamp(32px,4vw,54px);max-width:18ch}
 .h-m{font-size:clamp(26px,2.6vw,36px);max-width:22ch}
@@ -66,8 +65,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .skip:focus-visible{transform:none}
 .lede{color:var(--soft);font-size:18px;max-width:36em}
 @media (max-width:760px){.lede{font-size:16.5px}}
-
-/* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%;position:relative;overflow:hidden}
 .btn span{overflow:hidden;text-overflow:ellipsis}
 .btn:hover{background:#262B33}
@@ -77,8 +74,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .btn.light:hover{border-color:var(--ink)}
 .btn.light svg{color:var(--wa)}
 .btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
-/* v28 : boutons vivants, sans kitsch : un reflet qui passe toutes les 7 s sur les boutons principaux (à l'écran seulement, .sh posé par core.js),
-   la flèche qui avance de 3 px au survol, le bouton WhatsApp collant qui respire (1 → 1,03 toutes les 5 s). Rien en mouvement réduit ; rien ne bouge la mise en page. */
 .btn::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:38%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.22) 50%,rgba(255,255,255,0));transform:translateX(-170%) skewX(-14deg);pointer-events:none}
 .btn.inv::after{background:linear-gradient(100deg,rgba(17,19,24,0),rgba(17,19,24,.07) 50%,rgba(17,19,24,0))}
 .btn.light::after{display:none}
@@ -87,7 +82,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
 @keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
 @keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
-/* v28 : « Tester la démo » à la souris : le numéro de la ligne de démo, en grand */
 .tel-rev{margin-top:18px}.tel-rev[hidden]{display:none}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
 .bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
@@ -95,8 +89,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .bg-ink .lnk:hover{color:#fff;opacity:.8}
 .act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
 .micro{font-size:14px;color:var(--muted);line-height:1.45}
-
-/* En-tête fixe */
 .nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);border-bottom:1px solid var(--line)}
 .nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
 .logo{display:flex;align-items:center;text-decoration:none;color:var(--ink);padding-block:11px;margin-block:-11px}
@@ -105,8 +97,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav a{text-decoration:none;color:var(--muted);padding:12px 0;white-space:nowrap}.nav nav a:hover,.nav nav a[aria-current]{color:var(--ink)}
 .nav .btn{flex:none;padding:10px 14px;font-size:14px;min-height:44px;transition:opacity .2s,visibility 0s,background-color .12s}
 .nav .btn .s{display:none}
-   /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
-/* « Autres services » : l'assistant et les vidéos, rangés sous un seul bouton (ouvert au clic, Échap le ferme) */
 .nav-sub{position:relative;display:flex}
 .nav-sb{appearance:none;border:0;background:none;font:inherit;color:var(--muted);padding:12px 0;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .nav-sb::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
@@ -117,7 +107,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 .nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
 @media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
 @media (max-width:480px){.nav nav a.opt2{display:none}}
-/* v24 : le bouton de l'en-tête suit l'étage (« Un exemple pour mon commerce ») : entre 701 et 1180 px, « Et aussi » puis « Questions » cèdent la place (ils restent dans le pied de page et sur l'accueil) */
 @media (min-width:701px) and (max-width:1180px){.nav nav .nav-sub.opt3{display:none}}
 @media (min-width:701px) and (max-width:1000px){.nav nav a.opt2{display:none}}
 @media (min-width:701px) and (max-width:860px){.nav nav{gap:20px}}
@@ -125,8 +114,6 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
  .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
  body.cta-in .nav .btn,body.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
 main{padding-top:var(--hh)}
-
-/* Cadres de navigateur et de téléphone */
 .frame{border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 60px -40px rgba(17,19,24,.35);overflow:hidden}
 .fbar{display:flex;align-items:center;gap:6px;padding:9px 14px;border-bottom:1px solid var(--line);background:#FBFBF9}
 .fbar i{width:10px;height:10px;border-radius:50%;background:#E3E5E0}
@@ -134,8 +121,6 @@ main{padding-top:var(--hh)}
 .fview{position:relative;aspect-ratio:16/10;background:#0E1116;overflow:hidden}
 .phone{border-radius:34px;background:#111;padding:8px;box-shadow:0 24px 48px -28px rgba(17,19,24,.55);aspect-ratio:9/19.2;position:relative;flex:none}
 .screen{border-radius:27px;overflow:hidden;height:100%;position:relative;background:#fff}
-
-/* Choix : puces, listes, pastilles de couleur */
 .lab{display:block;font:500 14px var(--sans);color:var(--muted);margin-bottom:10px}
 .lab b{font-weight:500;color:var(--ink);margin-left:4px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -149,8 +134,6 @@ main{padding-top:var(--hh)}
 .swatches{display:flex;gap:10px}
 .swatches button{width:44px;height:44px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);background:var(--g);cursor:pointer;padding:0}
 .swatches button[aria-checked="true"]{box-shadow:0 0 0 2px var(--ink)}
-
-/* Site type vendu aux clients : une page réelle, photo en grand, réduite à l'échelle du cadre */
 .tpl{position:absolute;top:0;left:0;transform-origin:0 0;background:#fff;color:#15171B;font-family:var(--sans);display:flex;flex-direction:column;--c:#2038EC;--ct:#fff;overflow:hidden}
 .tpl.d{width:1120px;height:700px}
 .tpl.m{width:390px;height:832px}
@@ -203,8 +186,6 @@ main{padding-top:var(--hh)}
 .th.solid::after{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(0,0,0,.18))}
 .fview>.tpl.sw,.screen>.tpl.sw{animation:sw .18s var(--ease)}
 @keyframes sw{from{opacity:.4}}
-
-/* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
 .path li{padding-top:22px}
 .path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
@@ -229,8 +210,6 @@ main{padding-top:var(--hh)}
 @media (max-width:860px){.guar{grid-template-columns:minmax(0,1fr)}}
 .small{font-size:13.5px;color:var(--muted);margin-top:22px}
 .small a{color:var(--ink)}
-
-/* Questions */
 .faq{border-top:1px solid var(--line)}
 details{border-bottom:1px solid var(--line)}
 summary{cursor:pointer;list-style:none;font-weight:600;font-size:17px;padding:17px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}
@@ -246,14 +225,10 @@ html:not(.js) details[open] summary::after{transform:rotate(45deg)}
 .fa a{color:var(--ink)}
 .qa{display:grid;gap:28px}
 @media (min-width:901px){.qa{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}.qa>:first-child{grid-column:1/6}.qa>.faq{grid-column:6/13}}
-
-/* Nous, avec le contact */
 .close{display:grid;gap:clamp(32px,5vw,88px);align-items:start}
 @media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}}
 .qr{display:none}
 @media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr img{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
-
-/* Pied de page et barre mobile */
 footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
 footer .in{display:flex;flex-direction:column;gap:20px}
 .fl{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
@@ -264,7 +239,6 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:un
 footer .seo{max-width:62em;font-size:13.5px}
 .mbar{display:none}
 @media (max-width:700px){body{padding-bottom:78px}}
-/* le menu sur téléphone : un bouton, les quatre liens dessous */
 .nav-m{display:none;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 14.5px var(--sans);cursor:pointer;margin-left:auto}
 .nav-m i{display:block;width:14px;height:1.5px;background:currentColor;box-shadow:0 -4.5px 0 currentColor,0 4.5px 0 currentColor}
 @media (max-width:700px){.nav-m{display:inline-flex}
@@ -277,12 +251,10 @@ footer .seo{max-width:62em;font-size:13.5px}
  .nav .in>nav .nav-sl{position:static;min-width:0;padding:0 0 8px 14px;border:0;border-radius:0;box-shadow:none;background:none}
  .nav .in>nav .nav-sl a{border-bottom:0;padding:12px 0;font-size:16px}
  .nav.open .in>nav a.nav-wa{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;min-height:48px;padding:12px 16px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:600}.nav-wa svg{width:18px;height:18px;color:#5ED489}}
-.nav nav a.nav-wa{display:none}   /* le WhatsApp du menu : seulement dans le menu du téléphone (le bouton de l'en-tête suffit ailleurs) */
+.nav nav a.nav-wa{display:none}
 @media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
 @media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
 *{transition:none!important;animation:none!important}}
-
-/* ── v20 · « Apple minimal » (jury v20 § 2) : une idée par écran, typographie grande, palette calme, ni filet ni carte décoratifs ── */
 :root{--muted:#6B7078;--ez:cubic-bezier(.16,1,.3,1)}
 body{font-size:19px;line-height:1.5}
 @media (max-width:760px){body{font-size:17px}}
@@ -306,37 +278,29 @@ h2{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-wi
 .lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
 .bg-ink .lnk{color:#fff}
 footer{border-top:0}
-/* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
 .js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
 .js .rv.on{opacity:1;translate:none}
 @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;translate:none;transition:none}}
 @media print{.js .rv{opacity:1;translate:none}}
-/* trois temps, en très grand */
 .t3{list-style:none;margin:clamp(48px,6vw,80px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,64px)}
 .t3 i{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);font-style:normal;display:block;margin-bottom:16px}
 .t3 b{display:block;font:600 clamp(28px,3vw,44px)/1.06 var(--sans);letter-spacing:-.03em}
 .t3 span{display:block;margin-top:14px;color:var(--soft);font-size:18px;line-height:1.45;max-width:22em}
 @media (max-width:760px){.t3{grid-template-columns:minmax(0,1fr)}.t3 span{font-size:17px}}
-/* quatre puces, sans filet */
 .l4{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
 .l4 li{padding-left:28px;position:relative;line-height:1.4}
 .l4 li::before{content:"";position:absolute;left:2px;top:.42em;width:11px;height:6px;border:solid var(--klein);border-width:0 0 2px 2px;transform:rotate(-45deg)}
-/* une ligne de garanties */
 .g3{display:flex;flex-wrap:wrap;gap:8px 32px;margin-top:clamp(40px,5vw,64px);font-size:clamp(17px,1.5vw,20px);font-weight:500;letter-spacing:-.01em}
 .g3 span{display:inline-flex;gap:10px;align-items:baseline}.g3 span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--klein);flex:none;transform:translateY(-2px)}
-/* le dernier écran : encre, un titre, un bouton blanc */
 .end h2{font-size:clamp(36px,5vw,72px);max-width:15ch}
 .end .act{margin-top:clamp(32px,3.6vw,48px)}
 .end :focus-visible{outline-color:#fff}
 .also2{font-size:14px;color:var(--muted)}.also2 a{display:inline-block;padding-block:12px;margin-block:-12px}
-/* pied de page : « Aussi » et le QR (ordinateur seulement) */
 .fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
 .fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr img{width:84px;height:84px;flex:none}
 @media (max-width:900px){.fq .qr{display:none}}
 </style>
-<style>
-/* v20 : le héros plein écran sur la démo Les Grèves, le titre posé sur l'image */
-.vh{position:relative;min-height:calc(100svh - var(--hh,64px));display:flex;align-items:flex-end;color:#fff;background:#0E1420;padding-block:0;overflow:hidden}
+<style>.vh{position:relative;min-height:calc(100svh - var(--hh,64px));display:flex;align-items:flex-end;color:#fff;background:#0E1420;padding-block:0;overflow:hidden}
 .vh-img{position:absolute;inset:0}.vh-img img{width:100%;height:100%;object-fit:cover;display:block}
 .vh::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,20,.72) 0%,rgba(8,12,20,.35) 45%,rgba(8,12,20,0) 75%),linear-gradient(0deg,rgba(8,12,20,.55),rgba(8,12,20,0) 45%)}
 .vh-t{position:relative;z-index:1;width:100%;padding-block:clamp(56px,9vh,120px)}
@@ -348,7 +312,6 @@ footer{border-top:0}
 .vh :focus-visible{outline-color:#fff}
 .vh-cap{position:absolute;z-index:1;right:max(20px,calc((100vw - 1280px)/2 + 24px));bottom:20px;margin:0;font-size:13px;color:rgba(255,255,255,.8);display:flex;gap:10px;align-items:center}
 @media (max-width:760px){.vh{min-height:calc(100svh - 120px)}.vh::after{background:linear-gradient(0deg,rgba(8,12,20,.85) 0%,rgba(8,12,20,.5) 55%,rgba(8,12,20,.1) 100%)}.vh .act .btn{width:100%}.vh-cap{left:20px;right:auto;top:16px;bottom:auto}}
-/* l'écran collant : l'image reste, trois phrases défilent */
 .sk-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(32px,5vw,80px)}
 .sk-v{position:sticky;top:calc(var(--hh,64px) + 8vh);align-self:start;aspect-ratio:16/10;border-radius:14px;overflow:hidden;box-shadow:0 40px 80px -48px rgba(17,19,24,.45);order:2}
 .sk-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s var(--ez)}
@@ -359,16 +322,13 @@ footer{border-top:0}
 .sk-s p{margin-top:20px;color:var(--soft);font-size:clamp(19px,1.7vw,24px);line-height:1.4;max-width:22em}
 @media (max-width:860px){.sk-g{grid-template-columns:minmax(0,1fr);gap:0}.sk-v{order:0;top:calc(var(--hh,56px) + 12px);z-index:1}.sk-s{min-height:55svh}.sk-s:first-of-type{min-height:auto;padding-top:48px}}
 @media (prefers-reduced-motion:reduce){.sk-v img{transition:none}}
-/* le calendrier, seul, en grand */
 .cal2{margin:clamp(48px,6vw,80px) auto 0;max-width:560px;background:#fff;border-radius:14px;box-shadow:0 40px 80px -48px rgba(17,19,24,.45);padding:clamp(20px,3vw,36px);text-align:left}
 .cal2 .ck{display:flex;justify-content:space-between;align-items:center;gap:12px;font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted)}
 .cal2 .w-days{gap:6px;margin-top:20px;font-size:16px}.cal2 .w-days b{font-size:11px}.cal2 .w-days span{padding:10px 0;border-radius:8px}
 .cal2 .w-n{margin-top:18px;font-size:14px;color:var(--muted)}
-/* le prix, en un écran */
 .pz{font:600 clamp(48px,6.4vw,80px)/1 var(--sans);letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin-top:clamp(32px,4vw,48px)}
 .pz small{font-size:.3em;font-weight:500;letter-spacing:0;color:var(--muted);margin-right:.3em;vertical-align:.9em}
 #prix .lede{margin-top:28px}#prix .micro{margin:24px auto 0;max-width:40em;color:var(--muted)}#prix .go{margin-top:28px}
-/* les vidéos (Réseaux sociaux, l’assistant) : vignette 9:16, affiche, lecture au tap, son sur une seule ; l'étiquette Démo, une par bloc */
 .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
 .bg-ink .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
 .v{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#111;border:0;padding:0;cursor:pointer}
@@ -381,8 +341,6 @@ footer{border-top:0}
 .cap{margin-top:16px}
 .cap .mono{font-size:11px;letter-spacing:.14em;display:block}
 .cap p{margin-top:6px;font-size:16px;line-height:1.45;color:var(--soft)}
-/* v23 · les démos de nos services vidéo (accueil, Réseaux sociaux) : une par service ; la version 16:9 ouvre la rangée à l'ordinateur.
-   Elles ont du son : toujours muettes au départ, le bouton « Son » bien visible. */
 .v.w{aspect-ratio:16/9}
 .v .snd span{display:none}
 .vd .v .snd{width:auto;padding:0 14px 0 12px;gap:6px;display:flex;align-items:center;font:600 14px var(--sans)}.vd .v .snd span{display:inline}
@@ -393,9 +351,6 @@ footer{border-top:0}
 @media (min-width:861px){
  .vrail{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;margin-inline:0;padding:0;gap:24px}
 }
-/* La démo Les Grèves : un vrai site dans le cadre. Le cadre se fige, le défilement fait entrer dans la maison,
-   puis le site du lieu monte (photos, tarif, Réserver). Par défaut la mise en page est posée (sans JavaScript,
-   mouvement réduit) ; l'épinglage n'existe qu'avec JavaScript et le mouvement autorisé. */
 :root{--wd:1300px}
 @media (max-width:760px){:root{--wd:1100px}}
 .walk{position:relative}
@@ -459,7 +414,6 @@ footer{border-top:0}
 .w-cap a:not(.btn){color:var(--ink);text-underline-offset:3px;white-space:nowrap;padding-block:10px;margin-block:-10px}
 html:not(.js) .w-ch.c1{display:block}
 @media (prefers-reduced-motion:reduce){.js .w-ch.c3{display:block}}
-/* Cadre étroit (téléphone, petite fenêtre) : la barre du site passe en version mobile */
 @container (max-width:640px){
  .w-bar{height:58px;padding:0 16px}.w-bar .w-logo{font-size:25px;gap:8px}.w-bar nav{display:none}.w-bar .w-book{padding:8px 14px;font-size:13px;min-height:44px}.w-burger{display:block}
  .w-ch{left:16px;right:16px;bottom:62px}.w-h{font-size:min(44px,12cqw)}.w-ch.c2 .w-h{font-size:min(40px,11cqw)}.w-p{font-size:15px}.w-eb{font-size:11px}.w-price{display:none}
@@ -470,10 +424,9 @@ html:not(.js) .w-ch.c1{display:block}
 }
 @media (max-width:760px){
  .w-stage .in{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
- .w-stage{padding:8px 0 6px}.w-frame{border-radius:22px}.w-frame>.fbar{display:none}
+ .w-stage{padding:8px 0 6px}.w-frame{border-radius:22px}
  .w-scene{aspect-ratio:4/5}.w-cap{font-size:12.5px;padding-top:8px}
 }
-/* La visite pilotée (JavaScript et mouvement autorisé) */
 @media (prefers-reduced-motion:no-preference){
  .js .walk{height:calc(100vh - var(--hh) + var(--wd));height:calc(100svh - var(--hh) + var(--wd))}
  .js .w-stage{position:sticky;top:var(--hh);height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));display:flex;flex-direction:column}
@@ -493,7 +446,7 @@ html:not(.js) .w-ch.c1{display:block}
  .js .w-prog .w-pb i{position:absolute;inset:0 auto 0 0;width:0;background:#fff}
  .js .w-site{position:absolute;left:0;right:0;bottom:0;top:clamp(150px,calc(100% - 540px),250px);overflow:hidden;transform:translateY(110%);will-change:transform}
  .js body.walking .mbar.on{transform:translateY(110%)}
- .js body.walking .nav .btn{opacity:0;visibility:hidden}   /* pendant la visite, la barre WhatsApp du bas se range : le cadre a sa propre réservation */
+ .js body.walking .nav .btn{opacity:0;visibility:hidden}
  @container (max-width:640px){
   .js .w-prog{left:16px;right:16px;bottom:18px;gap:14px;font-size:10.5px}.js .w-prog span[data-k]:not(.on){display:none}.js .w-prog .w-pb{flex:1;width:auto}
   .js .w-site{top:clamp(120px,calc(100% - 470px),170px)}
@@ -505,12 +458,12 @@ html:not(.js) .w-ch.c1{display:block}
 
 </head>
 <body>
-<a class="skip" href="#demo">Aller au contenu</a>
+<a class="skip" href="#demo">Aller au contenu</a><svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="iWa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></symbol></svg>
 <header class="nav">
  <div class="in">
   <a class="logo" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a>
-  <nav aria-label="Pages" id="navL"><a href="index.html#choix">La démo</a><a href="index.html#prix">Sites et prix</a><a class="opt" href="reseaux.html">Réseaux sociaux</a><a class="opt" href="telephone.html">Le téléphone</a><span class="nav-sub opt3"><button type="button" class="nav-sb" data-cur aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="assistant.html">L’assistant</a><a href="visite.html" aria-current="page">La visite complète</a></span></span><a class="opt2" href="index.html#questions">Questions</a><a class="nav-wa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir mon aperçu 3D</span></a></nav>
-  <a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span class="l">Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
+  <nav aria-label="Pages" id="navL"><a href="index.html#choix">La démo</a><a href="index.html#prix">Sites et prix</a><a class="opt" href="reseaux.html">Réseaux sociaux</a><a class="opt" href="telephone.html">Le téléphone</a><span class="nav-sub opt3"><button type="button" class="nav-sb" data-cur aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="assistant.html">L’assistant</a><a href="visite.html" aria-current="page">La visite complète</a></span></span><a class="opt2" href="index.html#questions">Questions</a><a class="nav-wa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg><span>Recevoir mon aperçu 3D</span></a></nav>
+  <a class="btn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg><span class="l">Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
  </div>
 </header>
 
@@ -521,7 +474,7 @@ html:not(.js) .w-ch.c1{display:block}
   <p class="mono">L’entrée 3D · la visite complète</p>
   <h1 class="h-xl" id="h1">Un site qui s’ouvre sur votre lieu.</h1>
   <p class="lede">En faisant défiler, vos clients passent votre porte. Puis ils trouvent vos prix, vos horaires et WhatsApp.</p>
-  <div class="act"><a class="btn inv" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="#demo">Entrer ↓</a></div>
+  <div class="act"><a class="btn inv" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg><span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="#demo">Entrer ↓</a></div>
  </div>
  <p class="vh-cap"><i class="dtag">Démo</i> Les Grèves, Rolle · logement inventé</p>
 </section>
@@ -551,7 +504,7 @@ html:not(.js) .w-ch.c1{display:block}
         <div class="w-card"><p class="w-k">TARIF (DÉMO)</p><p class="w-v">dès 180.– <small>la nuit</small></p><button type="button" class="w-go" data-book>Réserver en direct</button><p class="w-n">Sans commission · 2 nuits minimum</p></div></div>
        <div class="w-ph"><figure><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><figcaption>Le salon et la terrasse, côté lac</figcaption></figure></div>
       </div>
-      <div class="w-toast" id="wToast" role="dialog" aria-label="Réservation" hidden><button type="button" class="w-x" id="wX" aria-label="Fermer">×</button><b>Ici, vos clients réservent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande avec les dates, par WhatsApp ou par e-mail, sans commission.<br><a class="btn" id="wWa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20vu%20la%20d%C3%A9mo%20Les%20Gr%C3%A8ves.%20J%E2%80%99aimerais%20une%20entr%C3%A9e%20en%203D%20pour%20mon%20lieu.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="demo" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>Je veux ça pour mon lieu</a></div>
+      <div class="w-toast" id="wToast" role="dialog" aria-label="Réservation" hidden><button type="button" class="w-x" id="wX" aria-label="Fermer">×</button><b>Ici, vos clients réservent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande avec les dates, par WhatsApp ou par e-mail, sans commission.<br><a class="btn" id="wWa" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99ai%20vu%20la%20d%C3%A9mo%20Les%20Gr%C3%A8ves.%20J%E2%80%99aimerais%20une%20entr%C3%A9e%20en%203D%20pour%20mon%20lieu.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="demo" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg>Je veux ça pour mon lieu</a></div>
      </div>
     </div>
     <p class="w-cap"><span><b>Démo : Les Grèves, Rolle.</b> Logement inventé, ici avec la visite complète.</span><a href="#pourquoi">Sauter la démo ↓</a></p>
@@ -605,10 +558,10 @@ html:not(.js) .w-ch.c1{display:block}
 
 <section class="bg-ink end" id="contact" aria-labelledby="finalH"><div class="in">
  <h2 id="finalH" class="rv">Parlez-nous de votre lieu.</h2>
- <div class="act rv"><a class="btn inv" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="vitrine.html">Voir La Vitrine, plus simple <i class="ar">→</i></a></div>
+ <div class="act rv"><a class="btn inv" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg><span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="vitrine.html">Voir La Vitrine, plus simple <i class="ar">→</i></a></div>
 </div></section>
 </main>
-<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg><span>Recevoir mon aperçu 3D</span></a></nav>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20voir%20ma%20fa%C3%A7ade%20en%203D%20et%20recevoir%20le%20prix%20de%20mon%20site.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="imm" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg><span>Recevoir mon aperçu 3D</span></a></nav>
 
 <footer><div class="in">
  <div class="fl"><a class="logo" href="index.html" aria-label="OONDE, accueil"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/><path d="M55.13888888888889 101.38888888888889Q44.30555555555556 101.38888888888889 35.13888888888889 97.63888888888889Q25.972222222222225 93.88888888888889 19.236111111111114 86.94444444444444Q12.5 80.0 8.819444444444445 70.48611111111111Q5.138888888888889 60.97222222222222 5.138888888888889 49.58333333333333Q5.138888888888889 34.44444444444444 11.527777777777779 22.986111111111107Q17.916666666666668 11.527777777777771 29.236111111111114 5.069444444444436Q40.55555555555556 -1.3888888888889 55.0 -1.3888888888889Q69.72222222222223 -1.3888888888889 81.04166666666667 5.069444444444436Q92.36111111111111 11.527777777777771 98.75 23.05555555555555Q105.1388888888889 34.58333333333333 105.1388888888889 49.72222222222222Q105.1388888888889 61.11111111111111 101.45833333333334 70.55555555555556Q97.77777777777779 80.0 91.04166666666667 86.94444444444444Q84.30555555555556 93.88888888888889 75.13888888888889 97.63888888888889Q65.97222222222223 101.38888888888889 55.13888888888889 101.38888888888889ZM55.0 86.66666666666667Q64.44444444444444 86.66666666666667 71.59722222222223 81.94444444444446Q78.75 77.22222222222223 82.77777777777777 68.81944444444444Q86.80555555555556 60.416666666666664 86.80555555555556 49.44444444444444Q86.80555555555556 38.61111111111111 82.84722222222223 30.48611111111111Q78.88888888888889 22.361111111111114 71.73611111111111 17.84722222222222Q64.58333333333334 13.333333333333329 55.0 13.333333333333329Q45.55555555555556 13.333333333333329 38.40277777777778 17.84722222222222Q31.25 22.361111111111114 27.361111111111114 30.416666666666668Q23.472222222222225 38.47222222222222 23.472222222222225 49.44444444444444Q23.472222222222225 60.55555555555556 27.430555555555557 68.88888888888889Q31.38888888888889 77.22222222222223 38.54166666666667 81.94444444444446Q45.69444444444445 86.66666666666667 55.0 86.66666666666667Z" fill="currentColor" transform="translate(108,0)"/><path d="M126.8888888888889 100.0V0.0H149.25L198.0 86.94444444444444L192.86111111111114 88.19444444444444V0.0H210.36111111111114V100.0H188.0L139.25 13.055555555555557L144.38888888888889 11.805555555555557V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M246.55555555555557 100.0V85.55555555555556H272.3888888888889Q283.77777777777777 85.55555555555556 291.83333333333337 80.97222222222223Q299.8888888888889 76.38888888888889 304.125 68.19444444444444Q308.3611111111111 60.0 308.3611111111111 49.44444444444444Q308.3611111111111 39.02777777777778 304.125 31.11111111111111Q299.8888888888889 23.194444444444443 291.9027777777778 18.819444444444443Q283.9166666666667 14.444444444444443 272.3888888888889 14.444444444444443H246.83333333333334V0.0H272.3888888888889Q288.77777777777777 0.0 301.0 6.111111111111107Q313.22222222222223 12.222222222222214 319.95833333333337 23.40277777777777Q326.69444444444446 34.58333333333333 326.69444444444446 49.72222222222222Q326.69444444444446 64.86111111111111 319.8888888888889 76.18055555555556Q313.08333333333337 87.5 300.93055555555554 93.75Q288.77777777777777 100.0 272.52777777777777 100.0ZM235.58333333333334 100.0V0.0H253.63888888888889V100.0Z" fill="currentColor" transform="translate(108,0)"/><path d="M348.44444444444446 100.0V0.0H366.50000000000006V100.0ZM357.0555555555556 100.0V85.69444444444444H420.3888888888889V100.0ZM357.0555555555556 55.55555555555556V41.52777777777778H415.5277777777778V55.55555555555556ZM357.0555555555556 14.305555555555557V0.0H418.86111111111114V14.305555555555557Z" fill="currentColor" transform="translate(108,0)"/></svg></a><nav aria-label="Plan du site"><a href="index.html">L’entrée 3D</a><a href="index.html#choix">Exemples</a><a href="vitrine.html">La Vitrine</a><a href="telephone.html">Le téléphone</a><a href="assistant.html">L’assistant</a><a href="reseaux.html">Réseaux sociaux</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
@@ -616,21 +569,17 @@ html:not(.js) .w-ch.c1{display:block}
  <p class="seo">L’entrée 3D : sites avec une entrée en 3D pour les restaurants, salons de coiffure, ongleries, boutiques, cabinets, hôtels, chambres d’hôtes et salles, et visite complète du lieu en option, de Genève à Montreux. © 2026 OONDE.</p>
 </div></footer>
 
-<script>
-const WA_NUM='41779283540',MAIL='oonde.contact@gmail.com';
+<script>const WA_NUM='41779283540',MAIL='oonde.contact@gmail.com';
 const $=id=>document.getElementById(id);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const WAI='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>';
-/* D'où vient la personne (?s=ig, ?s=carte…) : le premier mot du message le dit, sans cookie ni outil de mesure.
-   Vous lisez la source dans chaque premier message WhatsApp. */
 const SRC=(()=>{let s='';try{s=new URLSearchParams(location.search).get('s')||sessionStorage.getItem('oonde-s')||'';if(s)sessionStorage.setItem('oonde-s',s)}catch(e){}return s})();
 const HELLO={ig:'Bonjour, je viens d’Instagram.',tt:'Bonjour, je viens de TikTok.',carte:'Bonjour, vous êtes passés me voir.',gbp:'Bonjour, je vous ai trouvés sur Google.'}[SRC]||'Bonjour, je viens de votre site.';
 const wa=t=>'https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(t);
 const mail=(subject,t)=>'mailto:'+MAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(t);
-/* Les messages fixes : une ligne d'où l'on vient, une ligne de ce qu'on veut, et en dernier ce qui reste à remplir (WhatsApp y met le curseur) */
-const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
+const MSG={
  vit:()=>HELLO+' J’aimerais la maquette offerte de mon site La Vitrine.\nMon commerce et ma commune : ',
  passe:()=>HELLO+' J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ',
  imm:()=>HELLO+' J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ',
@@ -648,19 +597,11 @@ const MSG={   /* v24 : brief page-vente § 3.8 (les mêmes que build.py) */
  cours:()=>HELLO+' Les cours et formations m’intéressent.\nSur quel sujet : '};
 if(SRC)document.querySelectorAll('a[data-wa]').forEach(a=>{const m=MSG[a.dataset.wa];if(m)a.href=wa(m())});
 document.querySelectorAll('a[data-mail]').forEach(a=>{const m=MSG[a.dataset.mail];if(m)a.href=mail(a.dataset.mail==='imm'?'L’entrée 3D : mon commerce':'Ma maquette offerte',m().replace(/\n/,'\n\n'))});
-/* Mesure, seulement si Umami est branché (umami.txt) : un clic sur WhatsApp, l'e-mail ou le téléphone compte comme un contact, avec le bouton et la source */
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="https://wa.me"],a[href^="mailto:"],a[href^="tel:"]');if(a&&window.umami)try{umami.track('contact',{par:a.href.startsWith('mailto')?'e-mail':a.href.startsWith('tel')?'téléphone':'whatsapp',bouton:a.dataset.wa||a.dataset.mail||a.id||'',source:SRC||'direct'})}catch(x){}});
-
-/* Questions : ouverture et fermeture en 220 ms (le natif ne sait pas fermer en douceur) */
 document.querySelectorAll('details').forEach(d=>{const s=d.querySelector('summary');d.addEventListener('toggle',()=>{if(d.open)requestAnimationFrame(()=>d.classList.add('is'));else d.classList.remove('is')});s.addEventListener('click',e=>{e.preventDefault();
  if(d.open){d.classList.remove('is');setTimeout(()=>{if(!d.classList.contains('is'))d.open=false},RM?0:230)}else{d.open=true;requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('is')))}})});
-
-/* Un seul bouton WhatsApp à la fois : celui de la barre du haut s'efface quand un bouton de la page est à l'écran ;
-   sur téléphone, la barre du bas arrive une fois l'accueil passé, et se retire tant qu'un autre bouton est visible */
-/* le menu sur téléphone */
-/* au doigt, WhatsApp s'ouvre directement (sans nouvel onglet : iOS passe la main à l'application) */
 if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa.me"][target]').forEach(a=>a.removeAttribute('target'));
-(()=>{const w=document.querySelector('.nav-sub');if(!w)return;const b=w.querySelector('.nav-sb'),t=o=>{w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};   /* « Autres services » */
+(()=>{const w=document.querySelector('.nav-sub');if(!w)return;const b=w.querySelector('.nav-sb'),t=o=>{w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};
  b.addEventListener('click',()=>t(!w.classList.contains('open')));w.addEventListener('focusout',e=>{if(!w.contains(e.relatedTarget)&&!matchMedia('(max-width:700px)').matches)t(false)});
  document.addEventListener('click',e=>{if(!w.contains(e.target)&&!matchMedia('(max-width:700px)').matches)t(false)});w.addEventListener('keydown',e=>{if(e.key==='Escape'&&w.classList.contains('open')){e.stopPropagation();t(false);b.focus()}})})();
 (()=>{const b=document.querySelector('.nav-m'),n=document.querySelector('.nav');if(!b)return;const t=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};
@@ -671,8 +612,6 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
  if(hero)new IntersectionObserver(es=>{past=!es[0].isIntersecting;set()}).observe(hero);
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));set()},{threshold:.5,rootMargin:'-64px 0px 0px 0px'});
  document.querySelectorAll('main a.btn[href*="wa.me"]:not(.r-wa),main [data-cta]').forEach(a=>io.observe(a));set()})();
-/* v24 : le bouton de l'en-tête et celui de la barre du bas suivent l'étage à l'écran (accueil : Réseaux sociaux, Le téléphone) ; ailleurs, le bouton du site.
-   Une section <… data-sw="fil" data-swl="Un exemple pour mon commerce"> ; les boutons qui changent portent data-swb. Jamais de prix. */
 (()=>{const secs=[...document.querySelectorAll('[data-sw]')],bs=[...document.querySelectorAll('[data-swb]')];if(!secs.length||!bs.length)return;bs.forEach(a=>{const l=a.querySelector('[data-swl]');if(l)l._e3=l.getAttribute('data-e3l')||''});
  const on=new Set();let cur='';
  const ref=()=>document.querySelector('main a[data-wa="e3"]:not([data-swb]) [data-e3l]');
@@ -682,33 +621,22 @@ if(matchMedia('(pointer:coarse)').matches)document.querySelectorAll('a[href*="wa
    else{a.dataset.wa=a.dataset.swb;l.setAttribute('data-e3l',l._e3||'');if(typeof E3S!=='undefined')E3S.paint();else{const r=ref();a.href=r?r.closest('a').href:wa(MSG[a.dataset.swb]());l.textContent=l.dataset.swl}}})};
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?on.add(e.target):on.delete(e.target));const s=secs.find(x=>on.has(x));apply(s?s.dataset.sw:'')},{rootMargin:'-45% 0px -45% 0px'});
  secs.forEach(s=>io.observe(s))})();
-
-/* v28 : « Tester la démo » : au doigt, l'appel part (tel:) ; à la souris, le numéro s'affiche en grand sous le bouton (data-tel = l'id du bloc caché) */
 if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-tel]');if(!a)return;const r=document.getElementById(a.dataset.tel);if(!r)return;e.preventDefault();r.hidden=false;r.tabIndex=-1;r.focus({preventScroll:true});
  const b=r.getBoundingClientRect();if(b.top<0||b.bottom>innerHeight)r.scrollIntoView({block:'nearest',behavior:RM?'instant':'smooth'})});
-/* v28 : le reflet des boutons principaux (base.css, .sh) ne tourne qu'à l'écran */
 (()=>{const bs=document.querySelectorAll('.btn:not(.light)');if(!bs.length||!('IntersectionObserver' in window)||RM)return;const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('sh',e.isIntersecting)));bs.forEach(b=>io.observe(b))})();
-
-/* v20 : les entrées (.rv) : fondu + 12 px, une seule fois, à 20 % de visibilité */
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
 </script>
-<script>
-/* La démo : la visite Les Grèves. Le cadre se fige ; faire défiler fait avancer la caméra, image par image,
-   puis le site du lieu monte dans le cadre. Les images (une sur huit, puis une sur quatre, deux, toutes) ne se
-   chargent qu'à l'approche, après la page. Mouvement réduit ou sans JavaScript : l'image et le site posés. */
-(()=>{const walk=$('walk'),stg=$('wStage'),view=$('wView'),cv=$('wCv'),cx=cv.getContext('2d'),site=$('wSite'),bar=$('wBar'),fill=$('wFill'),toast=$('wToast');
+<script>(()=>{const walk=$('walk'),stg=$('wStage'),view=$('wView'),cv=$('wCv'),cx=cv.getContext('2d'),site=$('wSite'),bar=$('wBar'),fill=$('wFill'),toast=$('wToast');
  const chs=[...view.querySelectorAll('.w-ch')],c3=view.querySelector('.c3'),ks=[...view.querySelectorAll('[data-k]')],poster=view.querySelector('.w-poster img');
  const LIVE=!RM;
  let hh=64,D=1,P=0,cur=0,raf=0,last=-1,vis=false,dirty=true,drawn=null,W=0,H=0;
  const geo=()=>{hh=parseFloat(getComputedStyle(stg).top)||0;D=Math.max(1,walk.offsetHeight-stg.offsetHeight)};
- /* « Réserver », le menu, le logo : le faux site réagit comme un vrai */
  const goTo=p=>{if(!LIVE){(p>=.8?site:view).scrollIntoView({block:'start'});return}geo();scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+p*D})};
  const open=o=>{toast.hidden=!o;if(o)$('wWa').focus({preventScroll:true})};
  view.addEventListener('click',e=>{const g=e.target.closest('[data-go]'),b=e.target.closest('[data-book]');
   if(g){open(false);goTo(+g.dataset.go)}else if(b)open(true);else if(e.target.closest('#wX'))open(false)});
  view.addEventListener('keydown',e=>{if(e.key==='Escape'&&!toast.hidden){open(false);view.querySelector('.w-book').focus()}});
  if(!LIVE)return;
- /* 1. Images : jeu « ordinateur » (16:10) ou « téléphone » (portrait), selon la forme du cadre */
  const SETS={d:96,m:72},store={};let set='';
  const near=(k,i)=>{const s=store[k];if(!s)return null;const n=SETS[k];for(let d=0;d<n;d++){if(i-d>=0&&s.ok[i-d])return s.img[i-d];if(i+d<n&&s.ok[i+d])return s.img[i+d]}return null};
  function load(k){if(store[k])return;const n=SETS[k],s=store[k]={img:new Array(n),ok:new Uint8Array(n)},order=[],seen=new Set([n-1]);
@@ -719,16 +647,13 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
  let armed=false;
  function size(){const r=view.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=cv.width=Math.round(r.width*d);H=cv.height=Math.round(r.height*d);
   set=r.width<r.height*.95?'m':'d';if(armed)load(set);geo();dirty=true}
- /* 2. Rythme : la part du défilement figé (P) donne la position de la caméra (p). La porte est franchie à p = 0,53. */
  const K=[[0,0],[.03,0],[.25,.53],[.55,.85],[.66,1],[1,1]];
  const camOf=P=>{for(let j=1;j<K.length;j++)if(P<=K[j][0]){const[a,pa]=K[j-1],[b,pb]=K[j],t=(P-a)/(b-a||1);return pa+(pb-pa)*(j===4?1-(1-t)*(1-t):t)}return 1};
  const ease=t=>1-Math.pow(1-t,3);
- /* 3. Dessin : l'image la plus proche déjà chargée (pas de fondu : il dédouble l'image à l'arrêt) */
  function draw(p){if(!W||!H)return;let im=near(set,Math.round(p*(SETS[set]-1)));
   if(!im){const o=set==='d'?'m':'d';im=near(o,Math.round(p*(SETS[o]-1)))}
   if(!im||(im===drawn&&!dirty))return;const s=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;
   cx.drawImage(im,(W-w)/2,(H-h)/2,w,h);drawn=im;dirty=false;view.classList.add('live')}
- /* 4. Textes, barre de progression, et le site qui monte */
  function ui(p){
   for(const c of chs){const i=+c.dataset.in,o=+c.dataset.out;let a=i<0?clamp((o-P)/.06,0,1):Math.min(clamp((P-i)/.04,0,1),clamp((o-P)/.04,0,1));
    const s=c===c3?ease(clamp((P-.68)/.22,0,1)):0;c.style.opacity=Math.max(0,a*(1-s*1.4));c.style.transform=`translateY(${(1-a)*14-s*260}px)`;
@@ -737,7 +662,6 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
   const band=parseFloat(getComputedStyle(site).top)||150,vh=view.clientHeight,y=`translateY(${-s*Math.max(0,vh*(mob?.5:.56)-band*.6)}px)`;cv.style.transform=y;poster.style.transform=y;
   bar.classList.toggle('solid',s>.82);view.querySelector('.w-prog').style.opacity=1-Math.min(1,s*2.5);
   fill.style.width=(p*100)+'%';const k=p<.53?1:p<.85?2:3;ks.forEach(x=>x.classList.toggle('on',+x.dataset.k===k))}
- /* 5. Boucle : la position affichée rattrape la cible en ~80 ms ; rien ne tourne quand la démo est loin */
  function tick(){if(!raf)raf=requestAnimationFrame(loop)}
  function loop(){raf=0;const r=walk.getBoundingClientRect();P=clamp((hh-r.top)/D,0,1);
   document.body.classList.toggle('walking',r.top<=hh+1&&r.bottom>=innerHeight-1);
@@ -748,14 +672,11 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
  const go=()=>new IntersectionObserver(es=>{if(es[0].isIntersecting&&!armed)arm()},{rootMargin:'100% 0px'}).observe(walk);
  document.readyState==='complete'?go():addEventListener('load',go,{once:true});
  addEventListener('scroll',()=>{if(vis)tick()},{passive:true});
-
- /* 6. Arrêt entre deux moments : la visite se pose doucement sur le plus proche (l'arrivée, le salon, la vue, le site) */
  const STOPS=[0,.40,.66,1];let idle=0;
  addEventListener('scroll',()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!vis||P<=0||P>=1)return;const n=STOPS.reduce((a,b)=>Math.abs(b-P)<Math.abs(a-P)?b:a);
   if(Math.abs(n-P)>.015&&Math.abs(n-P)<.12)scrollTo({top:walk.getBoundingClientRect().top+scrollY-hh+n*D,behavior:'smooth'})},220)},{passive:true});
  addEventListener('resize',()=>{size();tick()});size();ui(0);tick();
 })();
-/* l'écran collant : l'image suit la phrase lue */
 (()=>{const im=document.querySelectorAll('.sk-v img'),st=document.querySelectorAll('.sk-s');if(!im.length||!('IntersectionObserver' in window))return;
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const i=[...st].indexOf(e.target);im.forEach((x,j)=>x.classList.toggle('on',j===i))}}),{rootMargin:'-45% 0px -45% 0px'});st.forEach(x=>io.observe(x))})();
 </script>

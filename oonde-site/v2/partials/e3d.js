@@ -29,67 +29,9 @@ function e3pins(box,s,name,h){const sg=box.querySelector('.e-sign>span'),wl=box.
 function e3place(box,pins,f){for(const el of box.children){const q=pins&&pins.find(x=>x.id===el.dataset.id);
  if(!q||q.vis<=0){if(el._o!==0){el._o=0;el.style.opacity=0}continue}e3quad(el,q.c,1000,el._h||(el._h=el.offsetHeight||111),f);if(el._o!==q.vis){el._o=q.vis;el.style.opacity=q.vis}}}   /* hauteur gardée (e3pins la remet) : aucune lecture de mise en page par image */
 
-/* Les films (rue et démo). Les paquets (build.py, pack()) : en binaire (.bin, dist) ou en base64 (.txt, l'aperçu claude.ai) ;
-   fetch(data:) décode le base64 hors du fil principal (atob en secours). v22 : chaque paquet existe en AVIF et en WebP
-   (E3M, posé par build.py : le nom logique d'un paquet → ses fichiers) ; AVIF si le navigateur le décode, WebP sinon.
-   Chaque image reste compressée (Blob) ; seules les images proches de celle affichée sont décodées
-   (createImageBitmap, lui aussi hors du fil principal), les autres sont libérées (close) : la mémoire reste petite. */
+/* v27 : le film de l'intro est une vidéo (rue.js) ; il ne reste des paquets d'images (v22) que la détection AVIF, pour les affiches (E3F : 'a' ou 'w') */
 const E3F=(()=>{try{const b=Uint8Array.from(atob('AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAANZtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAACJpbG9jAAAAAERAAAEAAQAAAAAA+gABAAAAAAAAACIAAAAjaWluZgAAAAAAAQAAABVpbmZlAgAAAAABAABhdjAxAAAAAA5waXRtAAAAAAABAAAAVmlwcnAAAAA4aXBjbwAAAAxhdjFDgQAMAAAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAABZpcG1hAAAAAAAAAAEAAQOBAgMAAAAqbWRhdBIACggYADbICGg0IDIUHEeHhd3AACwAACDsJLhGXp8ww9A='),c=>c.charCodeAt(0));
  return window.createImageBitmap?createImageBitmap(new Blob([b],{type:'image/avif'})).then(m=>{if(m.close)m.close();return 'a'},()=>'w'):Promise.resolve('w')}catch(e){return Promise.resolve('w')}})();
-/* le corps d'une réponse, lu au fil de l'eau : hd() quand il en reste peu (≈ un aller-retour en 4G lente), pour que le paquet suivant parte
-   à temps sans partager la bande passante avec celui-ci ; sans longueur connue, hd() à la fin */
-function e3body(r,hd,pr){const n=+r.headers.get('content-length')||0;if(!hd||!n||!r.body||!r.body.getReader)return r.arrayBuffer().then(b=>{if(hd)hd();return b});
- const rd=r.body.getReader(),cs=[];let got=0,fired=false;const step=()=>rd.read().then(({done,value})=>{if(done){if(!fired)hd();const a=new Uint8Array(got);let o=0;for(const c of cs){a.set(c,o);o+=c.length}return a.buffer}
-  cs.push(value);got+=value.length;if(pr)pr(Math.min(got,n),n);if(!fired&&n-got<48e3){fired=true;hd()}return step()});return step()}
-function e3pack(url,signal,type,pre,hd,pr){return (pre||fetch(url,signal?{signal}:undefined)).then(r=>{if(!r.ok){if(hd)hd();throw r.status}return e3body(r,hd,pr)})
- .then(b=>/\.bin$/.test(url)?b:(t=>fetch('data:application/octet-stream;base64,'+t).then(r=>r.arrayBuffer()).catch(()=>{const s=atob(t),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a.buffer}))(new TextDecoder().decode(b)))
- .then(buf=>{const v=new DataView(buf),hl=v.getUint32(0,true),head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
-  return head.map(([i,o,l])=>[i,new Blob([new Uint8Array(buf,4+hl+o,l)],{type:type||'image/webp'})])})}
-/* v22 : un paquet par son nom logique (« w/m/L0 », « in-coiffure/ma/p1 ») : AVIF d'abord si possible, WebP en secours */
-function e3get(k,signal,hd,pr){const f=(window.E3M||{})[k];if(!f)return Promise.reject('?'+k);
- const E=window.E3P||{},pre=f.a&&E[f.a];if(pre)delete E[f.a];   /* le premier paquet, demandé dès la tête de la page (build.py, E3PRE) */
- return E3F.then(x=>x==='a'&&f.a?e3pack(f.a,signal,'image/avif',pre,hd,pr).catch(e=>{if(signal&&signal.aborted)throw e;return e3pack(f.w,signal,'image/webp',null,hd,pr)}):e3pack(f.w,signal,'image/webp',null,hd,pr))}   /* hd : la réponse commence (le paquet suivant peut partir) */
-const e3url=k=>{const f=(window.E3M||{})[k];return f&&(f.u||f.w)};
-/* v22 : deux définitions par image : l (basse, demi-taille, pour bouger tout de suite) et h (nette). La nette remplace la basse dès qu'elle est décodée. */
-/* v22.2 : une troisième définition, les images clés (k, paquet K : une sur quatre, plus petites), qui arrivent avant les basses : tant que les images
-   entre deux clés manquent, le film fond une clé dans la suivante (G : l'écart permis entre deux images dessinées, si celles d'entre elles manquent) */
-function e3film(n,R,at,onimg,G=2){const bl=new Array(n),ll=new Array(n),bm=new Array(n),bq=new Uint8Array(n),bz=new Uint8Array(n),kq=new Uint8Array(n);let act=0,on=true,dir=1,par=4,mv=0,mt=0;   /* par : décodages en parallèle (8 pendant un glissement) */
- const cl=m=>{if(!m)return;if(m.close)m.close();else URL.revokeObjectURL(m.src)};
- const free=i=>{const m=bm[i];bm[i]=null;bq[i]=0;cl(m)};
- const asImg=b=>{const m=new Image();m.src=URL.createObjectURL(b);return m.decode().then(()=>m,()=>{URL.revokeObjectURL(m.src);return null})};
- const rk=q=>q===1?2:q===2?0:1;   /* bq : 1 nette, 0 basse, 2 clé */
- const dec=(i,hi)=>{bz[i]=1;act++;const b=hi?bl[i]:ll[i],q=hi?1:kq[i]?2:0;(window.createImageBitmap?createImageBitmap(b).catch(()=>asImg(b)):asImg(b)).catch(()=>null).then(m=>{act--;bz[i]=0;
-  if(m){if(on&&!out(i)&&(!bm[i]||rk(q)>rk(bq[i]))){const o=bm[i];bm[i]=m;bq[i]=q;if(o&&o!==m)cl(o);onimg(i)}else cl(m)}pump()})};
- /* la fenêtre décodée regarde devant : 1,5 R dans le sens du mouvement, 0,5 R derrière (même mémoire qu'avant, ±R) */
- const out=i=>{const a=dir>0?i-at:at-i;return a>Math.round(R*1.5)+6||a<-Math.round(R*.5)-6};
- const nb=(i,s,m)=>{for(let j=0;j<m;j++){const c=i+j*s;if(c<0||c>=n)return -1;if(bm[c])return c;if(bl[c]||ll[c])return -1}return -1},   /* la première image décodée à partir de i, si celles d'avant manquent */
-  gap=(k,s)=>{const c=nb(k+s,s,G);return c>=0&&Math.abs(c-k)>2?c:-1};
- const near=d=>{const Bk=Math.round(R*.5);return d?(d<=Bk?[at+d*dir,at-d*dir]:[at+d*dir]):[at]};
- function pump(){if(!on)return;for(let i=0;i<n;i++)if(bm[i]&&out(i))free(i);const A=Math.round(R*1.5);
-  /* d'abord une image partout (la nette dès qu'elle est là, même en mouvement ; sinon la basse), puis, une fois le film posé
-     (250 ms sans changer d'image), les basses déjà décodées remplacées par les nettes, au plus près d'abord */
-  const still=performance.now()-mv>250;
-  for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&!bz[i]&&(!bm[i]&&(bl[i]||ll[i])||bm[i]&&bq[i]===2&&(bl[i]||!kq[i]))&&act<par)dec(i,!!bl[i]);   /* une clé décodée : remplacée dès que mieux arrive, même en mouvement */
-  if(!still){clearTimeout(mt);mt=setTimeout(pump,260);return}
-  for(let d=0;d<=A&&act<par;d++)for(const i of near(d))if(i>=0&&i<n&&bm[i]&&!bq[i]&&bl[i]&&!bz[i]&&act<par)dec(i,1)}
- return{n,get:i=>bm[i],hi:i=>!!bm[i]&&bq[i]===1,any:()=>bl.some(Boolean)||ll.some(Boolean),has:i=>!!(bl[i]||ll[i]),blob:i=>bl[i]||ll[i],boost(k){par=k;pump()},
-  /* v20.1 : de a à b, les fichiers sont-ils là (jamais deux images manquantes de suite) ? sinon le film attendrait un paquet encore en route */
-  dl(a,b){a=clamp(Math.round(a),0,n-1);b=clamp(Math.round(b),0,n-1);const s=b>a?1:-1,h=j=>bl[j]||ll[j];for(let k=a;k!==b;k+=s){const j=k+s;if(!h(j)&&(j===b||!h(j+s)))return false}return true},
-  near(f){const r=clamp(Math.round(f),0,n-1);for(let d=0;d<n;d++){if(r-d>=0&&bm[r-d])return r-d;if(r+d<n&&bm[r+d])return r+d}return r},add(i,b){bl[i]=b;pump()},addLo(i,b){if(!ll[i]||kq[i]){ll[i]=b;kq[i]=0;pump()}},addKey(i,b){if(!ll[i]){ll[i]=b;kq[i]=1;pump()}},
-  seek(f){const i=clamp(Math.round(f),0,n-1);if(i!==at){dir=i>at?1:-1;at=i;mv=performance.now();pump()}},
-  /* jusqu'où l'on peut aller de f vers t sans trou de plus d'une image (deux images décodées au plus l'une de l'autre) */
-  reach(f,t){let k=clamp(Math.round(f),0,n-1);const s=t>f?1:-1,e=clamp(t,0,n-1),f0=f;if(!bm[k]){const x=G>2?nb(k,-s,G):-1;if(x<0)return f;k=x}while(s>0?k<e:k>e){const a=k+s,b=k+2*s;if(a>=0&&a<n&&bm[a])k=a;else if(b>=0&&b<n&&bm[b]&&(s>0?b<=Math.ceil(e)+1:b>=Math.floor(e)-1))k=b;else{const c=gap(k,s);if(c<0)break;k=c}}return s>0?Math.max(f0,Math.min(t,k)):Math.min(f0,Math.max(t,k))},
-  /* v22.2 : f est-elle dessinable (son image décodée, ou entre deux clés fondues) ? */
-  ok(f){const r=clamp(Math.round(f),0,n-1);if(bm[r])return true;if(G<=2)return false;const a=Math.floor(f),x=nb(a,-1,G),y=nb(a+1,1,G);return x>=0&&y>x&&y-x<=G},
-  /* v22.2 : la prochaine image décodée à plus de deux pas (au plus G), si toutes celles d'entre elles manquent encore (pas un décodage en retard) */
-  gap(k,s){return gap(k,s)},
-  sleep(){on=false;for(let i=0;i<n;i++)free(i)},wake(){if(!on){on=true;pump()}},
-  /* ce qu'on dessine pour la position f : les deux voisines fondues si elles sont décodées et à deux images au plus l'une de l'autre ;
-     sinon l'image décodée la plus proche, seule (jamais deux images éloignées superposées) */
-  pair(f){f=clamp(f,0,n-1);const a=Math.floor(f),b=Math.ceil(f),lo=bm[a]?a:a>0&&bm[a-1]?a-1:-1,hi=bm[b]?b:b<n-1&&bm[b+1]?b+1:-1;
-   if(lo>=0&&hi>=0&&hi-lo<=2)return[lo,hi,hi>lo?(f-lo)/(hi-lo):0];
-   if(G>2){const x=nb(a,-1,G),y=b===a?nb(a+1,1,G):nb(b,1,G);if(x>=0&&y>x&&y-x<=G)return[x,y,(f-x)/(y-x)]}   /* deux clés fondues */
-   for(let d=0;d<n;d++){const x=Math.round(f)-d,y=Math.round(f)+d;if(x>=0&&bm[x])return[x,x,0];if(y<n&&bm[y])return[y,y,0]}return null}}}
 /* Une aimantation douce : la page glisse jusqu'à y ; tout geste (molette, doigt, clavier, clic) l'arrête aussitôt.
    Jamais pendant qu'un doigt est posé ; jamais en mouvement réduit (les appelants vérifient RM). */
 const e3touch={n:0};for(const ev of ['touchstart','touchend','touchcancel'])addEventListener(ev,e=>{e3touch.n=e.touches?e.touches.length:0},{passive:true,capture:true});
@@ -100,8 +42,6 @@ function e3glide(y,ms){e3halt();const y0=scrollY,d=y-y0;if(Math.abs(d)<2)return;
   if(!t0)t0=now;const t=Math.min(1,(now-t0)/ms),e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;e3own=Math.round(y0+d*e);scrollTo({top:e3own,behavior:'instant'});e3gl=t<1?requestAnimationFrame(st):0};e3gl=requestAnimationFrame(st)}
 /* vrai pendant le glissement, et pour le défilement qu'il a lui-même causé (même arrêté) : l'aimantation ne se relance jamais d'elle-même */
 const e3gliding=()=>{if(e3gl)return true;if(e3own>=0&&Math.abs(scrollY-e3own)<1.5)return true;e3own=-1;return false};
-/* les enseignes entre deux images fondues : leurs coins interpolés de même */
-const e3mix=(A,B,a)=>A&&B&&a>0?A.map(q=>{const r=B.find(x=>x.id===q.id)||q;return{id:q.id,vis:q.vis+(r.vis-q.vis)*a,c:q.c.map((c,k)=>[c[0]+(r.c[k][0]-c[0])*a,c[1]+(r.c[k][1]-c[1])*a])}}):A;
 
 /* v19 : la démo, c'est la rue. Le nom et le métier choisis à l'arrêt suivent la caméra dans la salle (le nom au mur du fond),
    jusqu'à la fin du site (le bouton du métier, marqué Démo), puis dans les rubriques du site, plus bas (#entree) :
