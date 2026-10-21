@@ -31,11 +31,11 @@
  ],
  "textes": [
   {
-   "t": "« …Ah. Vous êtes pour la vidange ? »",
+   "t": "Tout ça… pour une vidange.",
    "font": "instrument-sans-latin-500-normal.woff2",
    "size": 50,
    "y": 1250,
-   "t0": 3.9,
+   "t0": 3.85,
    "t1": 5.5,
    "pill": true
   },
@@ -101,9 +101,8 @@
    "gain": 0.4
   },
   {
-   "src": "vo/l5.mp3",
-   "in": 1.45,
-   "t": 3.9
+   "src": "vo/l9.mp3",
+   "t": 3.85
   },
   {
    "src": "/home/user/k2/hybride/sons/whoosh.wav",
