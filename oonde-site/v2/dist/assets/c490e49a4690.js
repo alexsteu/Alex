@@ -12,17 +12,6 @@ const T={
 };
 const Q={coiffure:'coiffeur',ongles:'onglerie',barbier:'barbier',beaute:'institut beauté',restaurant:'restaurant',boulangerie:'boulangerie',fleuriste:'fleuriste',garage:'garage',artisan:'menuisier',autre:'commerce'};
 const TOWNS=['Genève','Coppet','Nyon','Rolle','Morges','Lausanne','Pully','Vevey','Montreux'];
-const slug=n=>(n||'votre-commerce').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'votre-commerce';
-function site(el,key,s,layout){const t=T[key]||T.autre,[c,ct]=t.styles[s.style]||t.styles[0],name=esc(s.name||'Votre commerce'),town=esc(s.town||'');
- const h=s.town?t.h.replace('{t}',s.town):t.h.replace(/ (à|de) \{t\}/,'');
- el.innerHTML=`<div class="tpl ${layout}" style="--c:${c};--ct:${ct}">
-  <header class="tn"><b>${name}</b><nav><span>${esc(t.sec)}</span><span>Horaires</span><span>Contact</span></nav><span class="tb">${WAI}WhatsApp</span></header>
-  <div class="th${t.photo?'':' solid'}"${t.photo?` style="background-image:url(${t.photo});--bp:${t.bp||'50% 50%'}"`:''}><div class="th-in"><span class="tt">${esc(t.label)}${town?' · '+town:''}</span><strong>${s.name?name:esc(h)}</strong><p>${s.name?esc(h)+' ':''}${esc(t.sub)}</p><div class="th-act"><span class="tb">${WAI}${esc(t.cta)}</span><span class="to"><i></i>${esc(t.open)}</span></div></div></div>
-  <div class="tg"><div class="tl"><div class="tk">${esc(t.sec)}</div>${t.rows.slice(0,3).map(([a,b])=>`<div class="tr"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join('')}</div>
-   <div class="ti"><div class="tk">Horaires</div><p>${t.hours}</p><div class="tgo"><i></i>Avis Google · Itinéraire${town?' · '+town:''}</div></div></div>
-  <div class="tfoot"><span class="tb">${WAI}${esc(t.cta)}</span></div></div>`;fit(el)}
-function fit(el){const n=el.firstElementChild;if(!n)return;const w=n.classList.contains('d')?1120:390;n.style.transform=`scale(${el.clientWidth/w})`}
-const apercuUrl=(base,s)=>{const p=new URLSearchParams();if(s.name)p.set('n',s.name);p.set('m',s.act||'coiffure');if(s.town)p.set('v',s.town);if(s.style)p.set('c',s.style);return base+'#'+p}
 (()=>{const q=new URLSearchParams(location.hash.slice(1)),key=T[q.get('m')]?q.get('m'):'coiffure',t=T[key],sv=clamp(+q.get('c')||0,0,2);
  const name=(q.get('n')||'').slice(0,40),town=TOWNS.includes(q.get('v'))?q.get('v'):'',[c,ct]=t.styles[sv];
  const s=$('s');s.style.setProperty('--c',c);s.style.setProperty('--ct',ct);
@@ -43,7 +32,6 @@ const apercuUrl=(base,s)=>{const p=new URLSearchParams();if(s.name)p.set('n',s.n
  $('change').href=wa(`${hi} vu ma maquette${name?' pour '+name:''}.\n${location.href}\nJ’aimerais changer : `);
  $('why').textContent=`Quand on cherche « ${Q[key]}${town?' '+town:''} » sur Google, votre fiche mène à ce site, à votre nom, avec vos prix et un bouton pour vous écrire. Rien à préparer : on part de votre fiche Google et de votre Instagram.`;
  if(name)$('exT').textContent='Exemple préparé pour '+name+' par OONDE. Textes, prix et photos à remplacer par les vôtres.';
- const p=new URLSearchParams();if(name)p.set('n',name);p.set('m',key);if(town)p.set('v',town);if(sv)p.set('c',sv);$('edit').href='vitrine?'+p+'#vitrine';
  new IntersectionObserver(es=>document.querySelector('.obar').classList.toggle('off',es[0].isIntersecting)).observe(document.querySelector('.next .go'));
  {const b=$('share');b.hidden=false;b.addEventListener('click',()=>{if(navigator.share)navigator.share({title:nm+' · exemple de site',url:location.href}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent('Regarde, un exemple de site pour '+nm+' : '+location.href),'_blank','noopener')})}
 })();

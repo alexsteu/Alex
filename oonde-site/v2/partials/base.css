@@ -98,83 +98,8 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
  body.cta-in .nav .btn,body.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
 main{padding-top:var(--hh)}
 
-/* Cadres de navigateur et de téléphone */
+/* Cadre de navigateur */
 .frame{border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 60px -40px rgba(17,19,24,.35);overflow:hidden}
-.fbar{display:flex;align-items:center;gap:6px;padding:9px 14px;border-bottom:1px solid var(--line);background:#FBFBF9}
-.fbar i{width:10px;height:10px;border-radius:50%;background:#E3E5E0}
-.fbar span{margin-left:12px;flex:1;font:500 13px var(--mono);color:#5C6169;background:#F1F2EE;border-radius:6px;padding:5px 12px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fview{position:relative;aspect-ratio:16/10;background:#0E1116;overflow:hidden}
-.phone{border-radius:34px;background:#111;padding:8px;box-shadow:0 24px 48px -28px rgba(17,19,24,.55);aspect-ratio:9/19.2;position:relative;flex:none}
-.screen{border-radius:27px;overflow:hidden;height:100%;position:relative;background:#fff}
-
-/* Choix : puces, listes, pastilles de couleur */
-.lab{display:block;font:500 14px var(--sans);color:var(--muted);margin-bottom:10px}
-.lab b{font-weight:500;color:var(--ink);margin-left:4px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips button,.chips select{font-weight:500;font-size:15px;padding:9px 14px;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);cursor:pointer;transition:border-color .12s,background-color .12s,color .12s}
-.chips button:hover,.chips select:hover{border-color:var(--ink)}
-.chips button[aria-checked="true"],.chips select.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111318' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;padding-right:36px!important}
-.chips select.on.sel{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E")}
-.field{width:100%;font:500 17px var(--sans);padding:12px 14px;min-height:48px;border-radius:10px;border:1px solid #878B92;background:var(--card);color:var(--ink)}
-.field:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 2px var(--klein)}
-.swatches{display:flex;gap:10px}
-.swatches button{width:44px;height:44px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);background:var(--g);cursor:pointer;padding:0}
-.swatches button[aria-checked="true"]{box-shadow:0 0 0 2px var(--ink)}
-
-/* Site type vendu aux clients : une page réelle, photo en grand, réduite à l'échelle du cadre */
-.tpl{position:absolute;top:0;left:0;transform-origin:0 0;background:#fff;color:#15171B;font-family:var(--sans);display:flex;flex-direction:column;--c:#2038EC;--ct:#fff;overflow:hidden}
-.tpl.d{width:1120px;height:700px}
-.tpl.m{width:390px;height:832px}
-.tn{display:flex;align-items:center;justify-content:space-between;gap:24px;flex:none}
-.tn b{font-weight:600;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:58%}
-.tn nav{display:flex;gap:28px;font-size:14px;color:#4B5058}
-.tb{background:var(--c);color:var(--ct);font-weight:600;border-radius:8px;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
-.th{position:relative;background-size:cover;background-position:var(--bp,center);flex:none;overflow:hidden}
-.th::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,12,.74),rgba(10,10,12,.12) 62%,transparent)}
-.th-in{position:absolute;left:0;right:0;bottom:0;z-index:1;color:#fff}
-.th-in .tt{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.85;display:block}
-.th-in strong{display:block;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
-.th-in p{opacity:.92}
-.th-act{display:flex;align-items:center;flex-wrap:wrap}
-.to{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 11px}
-.to i{width:7px;height:7px;border-radius:50%;background:#3DDC84}
-.tg{display:grid;flex:1;min-height:0}
-.tk{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
-.tr{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #E8E8E3;font-size:15px}
-.tr b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.ti p{font-size:15px;color:#4B5058;line-height:1.5}
-.tgo{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:#4B5058}
-.tgo i{width:12px;height:12px;border-radius:50%;background:conic-gradient(#4285F4 0 25%,#34A853 0 50%,#FBBC05 0 75%,#EA4335 0);flex:none}
-.tpl.d .tn{height:68px;padding:0 44px}
-.tpl.d .tn b{font-size:21px}
-.tpl.d .tb{font-size:14px;padding:10px 16px}
-.tpl.d .th{height:436px}
-.tpl.d .th-in{padding:0 44px 40px;max-width:640px}
-.tpl.d .th-in strong{font-size:50px;margin-top:10px}
-.tpl.d .th-in p{font-size:18px;margin-top:10px}
-.tpl.d .th-act{gap:14px;margin-top:22px}
-.tpl.d .th-act .tb{font-size:15px;padding:12px 18px}
-.tpl.d .tg{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;padding:26px 44px 0}
-.tpl.m .tn{height:58px;padding:0 18px}
-.tpl.m .tn b{font-size:17px}
-.tpl.m .tn nav{display:none}
-.tpl.m .tb{font-size:13px;padding:8px 12px}
-.tpl.m .th{height:400px}
-.tpl.m .th-in{padding:0 20px 22px}
-.tpl.m .th-in strong{font-size:34px;margin-top:8px}
-.tpl.m .th-in p{font-size:15px;margin-top:8px}
-.tpl.m .th-act{gap:10px;margin-top:16px}
-.tpl.m .th-act .tb{padding:11px 16px;font-size:14px}
-.tpl.m .tg{grid-template-columns:minmax(0,1fr);gap:18px;padding:18px 20px 0}
-.tpl.m .ti{padding-top:4px}
-.tpl.m .tfoot{margin-top:auto;padding:12px 16px 16px;display:flex;justify-content:center}
-.tpl.m .tfoot .tb{width:100%;justify-content:center;padding:13px;font-size:14px}
-.tpl.d .tfoot{display:none}
-.th.solid{background:var(--c)}
-.th.solid::after{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(0,0,0,.18))}
-.fview>.tpl.sw,.screen>.tpl.sw{animation:sw .18s var(--ease)}
-@keyframes sw{from{opacity:.4}}
 
 /* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
 .path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}

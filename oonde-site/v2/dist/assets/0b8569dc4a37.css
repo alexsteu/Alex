@@ -40,7 +40,7 @@
 .non3{list-style:none;margin:clamp(40px,5vw,64px) 0 0;padding:0;display:grid;gap:clamp(20px,2.4vw,32px)}
 .non3 li{font-size:clamp(22px,2.4vw,34px);line-height:1.2;letter-spacing:-.02em;font-weight:600;max-width:30ch}
 .non3 li span{display:block;font-weight:400;font-size:clamp(17px,1.5vw,20px);letter-spacing:0;color:var(--soft);margin-top:6px}
-.pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}
+.pz2{margin-top:clamp(40px,5vw,64px);color:var(--muted);font-size:15px}.pz-go{margin-top:10px}
 .chat{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:560px;max-height:78vh;box-shadow:0 1px 0 rgba(17,19,24,.03),0 18px 40px -24px rgba(17,19,24,.25)}
 .chat .top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .chat .av{width:36px;height:36px;border-radius:50%;background:#2B2420;color:#F4EFE7;display:grid;place-items:center;font:400 italic 19px var(--serif);flex:none}
@@ -64,5 +64,5 @@
 .chat.hey{animation:hey 1.2s ease}@keyframes hey{0%,100%{box-shadow:0 18px 40px -24px rgba(17,19,24,.25)}30%{box-shadow:0 0 0 4px rgba(43,63,255,.35),0 18px 40px -24px rgba(17,19,24,.25)}}
 [data-try] svg{color:currentColor!important}
 .ah .act{justify-content:center;margin-top:28px}.ah .chat{scroll-margin-top:96px}
-.own{margin:20px auto 0;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}.own .lnk,.end .lnk{display:inline-flex;align-items:center;gap:8px;font-weight:600;min-height:44px}.own .lnk svg,.end .lnk svg{width:18px;height:18px;color:#25D366}.own .micro{color:var(--muted)}
+.own{margin:20px auto 0;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}.own .lnk,.end .lnk,.pz-go .lnk{display:inline-flex;align-items:center;gap:8px;font-weight:600;min-height:44px}.own .lnk svg,.end .lnk svg,.pz-go .lnk svg{width:18px;height:18px;color:#25D366}.own .micro{color:var(--muted)}
 .end .act{align-items:center;gap:20px}.end .lnk.inv{color:#fff;text-decoration:underline;text-underline-offset:4px}

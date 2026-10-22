@@ -5,10 +5,13 @@ FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 # v28.1 : l'icône WhatsApp est un symbole posé une fois par page (après le lien d'évitement) ; chaque bouton n'en garde qu'un renvoi
 WA_SYM = '<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="iWa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></symbol></svg>'
 WA_ICON = '<svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg>'
-# v23.2 · LES PRIX, tous ici (rien d'autre à changer) : les trois paliers par mois, sans engagement, et leurs mises en ligne
-# (payées seulement si le site terminé plaît). Option recommandée du 19 oct. 2026 (« sans engagement », Entrée réelle moins chère).
-OFFRES = {'vit': 29, 'e3': 49, 'reel': 99, 'setup': 190, 'e3_setup': 290, 'reel_setup': 490}
+# v29 · LES PRIX DU SITE, tous ici (rien d'autre à changer) : trois formules par mois, sans engagement, et leurs mises en ligne.
+# Essentiel (le site qui s'ouvre en 3D), Pro (notre conseil : + l'assistant, les changements sans limite, la fiche Google suivie),
+# Premium (+ le tournage chez vous). Décision : offres-abonnement/offre-sites-v29.md (22.10.2026), grille du 22.10 01:29 (abonnement :
+# mise en ligne offerte, sauf le tournage de Premium). Une mise en ligne à 0 s'écrit « offerte » partout (cartes, FAQ, conditions, aperçu).
+OFFRES = {'ess': 29, 'pro': 49, 'pre': 99, 'ess_setup': 0, 'pro_setup': 0, 'pre_setup': 290}
 def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
+def jour(n): return f"moins de {-(-n * 12 // 365)}.–"   # le prix par jour, arrondi au franc supérieur
 # v24.1 · LE TÉLÉPHONE (assistant vocal), tout ici : trois forfaits par mois, leur mise en place, la minute au-delà du forfait.
 # Source : telephone-ia/offre.md, « Texte pour le site » (proposition v2, à valider par Alexandre).
 TEL_OFFRES = {'tel_ess': 149, 'tel_pro': 249, 'tel_pre': 449, 'tel_ess_setup': 290, 'tel_pro_setup': 390, 'tel_pre_setup': 490}
@@ -16,18 +19,59 @@ TEL_MIN = '0.40'   # la minute au-delà du forfait, en francs
 # v27.2 · Rush (gros volume) : une ligne discrète sous les cartes, jamais une quatrième carte (Pro reste le centre).
 TEL_RUSH = {'tel_rush': 590, 'tel_rush_setup': 490}
 TEL_RUSH_MIN, TEL_RUSH_CALLS = '1 800', '1 200'
-PX = {k + '_m': chf(OFFRES[k]) for k in ('vit', 'e3', 'reel')} | {k: chf(OFFRES[k]) for k in ('setup', 'e3_setup', 'reel_setup')} \
-   | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'e3_jour': f"{round(OFFRES['e3'] * 12 / 365, 1):.2f}"} \
+def mel(k, tournage=False, cond=True, low=False):
+    """v29 : la phrase de mise en ligne suit le montant : 0 → « Mise en ligne offerte », sinon le prix, payé seulement si le site plaît."""
+    n, what = OFFRES[k], 'Mise en ligne et tournage' if tournage else 'Mise en ligne'
+    s = (what + (' offerts' if tournage else ' offerte')) if not n else f'{what} {chf(n)}' + (', seulement si le site terminé vous plaît' if cond else '')
+    return s[0].lower() + s[1:] if low else s
+_E, _P, _R = (OFFRES[k] for k in ('ess_setup', 'pro_setup', 'pre_setup'))
+def faq_px():
+    """La réponse « Ça coûte combien ? » de l'accueil, écrite d'après OFFRES."""
+    m = f"Essentiel {chf(OFFRES['ess'])}, Pro {chf(OFFRES['pro'])}, Premium {chf(OFFRES['pre'])} par mois, sans engagement."
+    if not (_E or _P or _R): s = 'Mise en ligne offerte, tournage compris.'
+    elif not (_E or _P): s = f'Mise en ligne offerte ; Premium {chf(_R)} avec le tournage, payé seulement si le site vous plaît.'
+    elif _E and _P and _R: s = f'Mise en ligne dès {chf(min(_E, _P, _R))}, payée seulement si le site vous plaît.'
+    else: s = 'Mise en ligne : ' + ', '.join(f'{n} {chf(v) if v else "offerte"}' for n, v in (('Essentiel', _E), ('Pro', _P), ('Premium', _R))) + ', payée seulement si le site vous plaît.'
+    return m + ' ' + s
+def cg_setup():
+    """Conditions générales, art. 6 : les mises en ligne, d'après OFFRES (0 → offerte)."""
+    v = lambda n: '<b>offerte</b>' if not n else f'<b>{n} CHF</b>'
+    seul = ", une seule fois, facturée à la mise en ligne, <b>seulement si vous acceptez le site terminé</b>"
+    a = (f"Mise en ligne d'Essentiel et de Pro : {v(_E)}" if _E == _P else f"Mise en ligne : Essentiel {v(_E)}, Pro {v(_P)}") + (seul if (_E or _P) else '')
+    a += ". Si vous refusez le site terminé, vous ne payez rien, l'abonnement ne commence pas, et nous retirons le site."
+    r = f"Mise en ligne et tournage de Premium : {v(_R)}" + (seul.replace('facturée', 'facturés') if _R else '') + '.'
+    return f'<li>{a}</li>\n <li>{r}</li>'
+def ld_offers():
+    """Les trois formules en données structurées (accueil), d'après OFFRES."""
+    out = []
+    for k, name, svc, tour in (('ess', 'Essentiel', 'Site internet qui s’ouvre sur le commerce en 3D', False),
+                               ('pro', 'Pro', 'Site internet en 3D, avec l’assistant qui répond aux clients et la fiche Google suivie', False),
+                               ('pre', 'Premium', 'Site internet avec une entrée et une visite filmées sur place', True)):
+        n, s = OFFRES[k], OFFRES[k + '_setup']
+        what = 'Mise en ligne et tournage' if tour else 'Mise en ligne'
+        out.append({'@type': 'Offer', 'name': 'Site ' + name, 'url': 'https://oonde.ch/#prix', 'priceCurrency': 'CHF', 'price': str(n),
+                    'priceSpecification': [{'@type': 'UnitPriceSpecification', 'name': 'Abonnement mensuel, sans engagement, résiliable chaque mois', 'price': str(n), 'priceCurrency': 'CHF', 'unitCode': 'MON', 'billingIncrement': 1},
+                                           {'@type': 'UnitPriceSpecification', 'name': what + (' offert' + ('s' if tour else 'e') if not s else (', facturés' if tour else ', facturée') + ' seulement si le site terminé plaît'), 'price': str(s), 'priceCurrency': 'CHF'}],
+                    'itemOffered': {'@type': 'Service', 'name': 'Site ' + name, 'serviceType': svc}})
+    return json.dumps(out, ensure_ascii=False, separators=(',', ':'))
+PX = {k + '_m': chf(OFFRES[k]) for k in ('ess', 'pro', 'pre')} | {k: chf(OFFRES[k]) for k in ('ess_setup', 'pro_setup', 'pre_setup')} \
+   | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'pro_jour': jour(OFFRES['pro'])} \
+   | {'ess_f': mel('ess_setup'), 'pro_f': mel('pro_setup'), 'pre_f': mel('pre_setup', tournage=True), 'ess_f_court': mel('ess_setup', cond=False, low=True)} \
+   | {'faq_px': faq_px(), 'cg_setup': cg_setup(), 'ld_offers': ld_offers()} \
+   | {'o_lede': 'Vous voyez votre maquette avant de payer quoi que ce soit' + (' ; la mise en ligne se paie seulement si le site terminé vous plaît' if _E and _P and _R else '') + '. Vous arrêtez quand vous voulez, d’un message.'} \
+   | {'apl_step': f'<b class="amt">{chf(_E)}<small>une fois</small></b><h3>Votre site en ligne</h3>' if _E else f'<b class="amt">{chf(0)}</b><h3>Mise en ligne offerte</h3>'} \
    | {k: chf(v) for k, v in TEL_OFFRES.items()} | {k + '_n': str(v) for k, v in TEL_OFFRES.items()} | {'tel_min': TEL_MIN} \
    | {k: chf(v) for k, v in TEL_RUSH.items()} | {'tel_rush_min': TEL_RUSH_MIN, 'tel_rush_calls': TEL_RUSH_CALLS} \
-   | {'tel_pro_jour': f"moins de {-(-TEL_OFFRES['tel_pro'] * 12 // 365)}.–"}
+   | {'tel_pro_jour': jour(TEL_OFFRES['tel_pro'])}
 def walink(msg): return 'https://wa.me/41779283540?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 # v24 · les messages pré-remplis (brief page-vente § 3.8) ; les mêmes textes que MSG dans partials/core.js
-WA = walink(HELLO + " J’aimerais la maquette offerte de mon site La Vitrine.\nMon commerce et ma commune : ")
-WA_PASSE = walink(HELLO + " J’aimerais que vous passiez me montrer une maquette.\nMon commerce, ma commune et le meilleur moment : ")
+# v29 · « Je veux celui-ci » sur chaque formule du site : la formule est nommée (« formule Pro du site », jamais confondue avec les forfaits du téléphone)
+WA_SITE_ESS = walink(HELLO + " J’aimerais la formule Essentiel du site, et recevoir mon aperçu 3D.\nMon commerce et ma commune : ")
+WA_SITE_PRO = walink(HELLO + " J’aimerais la formule Pro du site, avec l’assistant, et recevoir mon aperçu 3D.\nMon commerce et ma commune : ")
+WA_SITE_PRE = walink(HELLO + " J’aimerais la formule Premium du site, avec le tournage chez moi.\nMon commerce, ma commune et le meilleur moment pour passer : ")
 WA_IMM = walink(HELLO + " J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ")
-WA_ASSIST = walink(HELLO + " J’ai essayé l’assistant. J’aimerais le même pour mon commerce.\nMon commerce et ma commune : ")
+WA_ASSIST = walink(HELLO + " J’ai essayé l’assistant. J’aimerais le même sur mon site, avec la formule Pro.\nMon commerce et ma commune : ")
 WA_TEL = walink(HELLO + " J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ")
 # v28 · « Je veux celui-ci » sur chaque forfait du téléphone : le forfait est nommé dans le message
 WA_TEL_ESS = walink(HELLO + " Le téléphone m’intéresse, forfait Essentiel. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
@@ -36,7 +80,7 @@ WA_TEL_PRE = walink(HELLO + " Le téléphone m’intéresse, forfait Premium. J�
 WA_TEL_RUSH = walink(HELLO + " Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
 WA_FIL = walink(HELLO + " Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
-WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce pour l’Entrée réelle.\nMon commerce, ma commune et le meilleur moment : ")
+WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce, pour la formule Premium du site.\nMon commerce, ma commune et le meilleur moment : ")
 WA_Q = walink(HELLO + " J’ai une question : ")
 WA_COURS = walink(HELLO + " Les cours et formations m’intéressent.\nSur quel sujet : ")
 WA_APL = walink(HELLO + " J’ai vu ma maquette, je la veux en ligne.")
@@ -94,7 +138,7 @@ PAGES = {'mentions-legales': ('Mentions légales', "Éditeur, hébergement et so
          'conditions': ('Conditions générales', "Conditions générales des prestations OONDE : site internet, fiche Google et suivi.", 'G'),
          '404': ('Page introuvable', "Cette page n’existe pas ou a été déplacée.", '')}
 BODY404 = ('<span class="eyebrow">Erreur 404</span>\n<h1>Cette page n’existe pas.</h1>\n<p class="lead">Le lien est peut-être incomplet, ou la page a été déplacée.</p>\n'
-           '<p><a href="./">Revenir à l’accueil</a> · <a href="./#prix">Voir les prix</a> · <a href="{{WA}}" target="_blank" rel="noopener">Nous écrire sur WhatsApp</a></p>\n')
+           '<p><a href="./">Revenir à l’accueil</a> · <a href="./#prix">Voir les prix</a> · <a href="{{WA_Q}}" target="_blank" rel="noopener">Nous écrire sur WhatsApp</a></p>\n')
 
 def inc(s):
     """{{INC:base.css}} : les morceaux communs aux pages (partials/)."""
@@ -103,10 +147,10 @@ def inc(s):
 def nav(cur):
     """{{NAV:page}} : la navigation du haut, la même partout (v24 : La démo · Sites et prix · Réseaux sociaux · Le téléphone · Questions, et « Et aussi »).
     Sur l'accueil, Réseaux sociaux et Le téléphone mènent à leur étage ; ailleurs, à leur page.
-    v27.1 : « Le Fil » s'appelle Réseaux sociaux (page /reseaux) ; La Vitrine quitte « Et aussi » (elle reste au pied de page et sur les cartes d'offre)."""
+    v27.1 : « Le Fil » s'appelle Réseaux sociaux (page /reseaux) ; La Vitrine quitte « Et aussi ». v29 : La Vitrine n'existe plus (/vitrine mène à /#prix)."""
     H = '' if cur == 'index' else '{{HOME}}'
     a = lambda k: ' aria-current="page"' if k == cur else ''
-    sub = cur in ('assistant', 'visite', 'vitrine')
+    sub = cur in ('assistant', 'visite')
     rs, tel = ('#reseaux', '#telephone') if cur == 'index' else ('{{RESEAUX}}', '{{TELEPHONE}}')
     return (f'<a href="{H}#choix">La démo</a><a href="{H}#prix">Sites et prix</a><a class="opt" href="{rs}"{a("reseaux")}>Réseaux sociaux</a><a class="opt" href="{tel}"{a("telephone")}>Le téléphone</a>'
             f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>'
@@ -161,8 +205,8 @@ def fill(s, fonts, links):
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
     for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_PASSE}}', WA_PASSE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{WA}}', WA), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
-                 ('{{QR_WA}}', QR_WA), ('{{QR_IMM}}', QR_IMM), ('{{QR_021}}', QR_021), ('{{CAL}}', CAL)]:
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_SITE_ESS}}', WA_SITE_ESS), ('{{WA_SITE_PRO}}', WA_SITE_PRO), ('{{WA_SITE_PRE}}', WA_SITE_PRE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
+                 ('{{QR_IMM}}', QR_IMM), ('{{QR_021}}', QR_021), ('{{CAL}}', CAL)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)
 
@@ -317,10 +361,10 @@ def csp_hashes(html):
 
 MISSING = []
 layout = (D / 'legal-layout.html').read_text()
-QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-wa.svg': qr(WA), 'img/qr-021.svg': qr('tel:+41215390122')}   # v28.2 : la ligne démo 021, à scanner depuis l'ordinateur   # v25 : les codes QR (bas des pages, ordinateur)
-QR_IMM, QR_WA = ('<img src="img/qr-%s.svg" width="84" height="84" alt="" loading="lazy" decoding="async">' % k for k in ('imm', 'wa'))
+QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-021.svg': qr('tel:+41215390122')}   # v28.2 : la ligne démo 021, à scanner depuis l'ordinateur   # v25 : les codes QR (bas des pages, ordinateur)
+QR_IMM = '<img src="img/qr-imm.svg" width="84" height="84" alt="" loading="lazy" decoding="async">'   # v29 : le code de La Vitrine (qr-wa) est parti avec elle
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
-docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'vitrine': (D / 'vitrine.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'reseaux': (D / 'reseaux.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'reseaux': (D / 'reseaux.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -328,15 +372,15 @@ for k, (title, desc, cur) in PAGES.items():
     docs[k] = s
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{VITRINE}}': 'vitrine', '{{ASSISTANT}}': 'assistant', '{{RESEAUX}}': 'reseaux', '{{TELEPHONE}}': 'telephone'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{VITRINE}}': 'vitrine.html', '{{ASSISTANT}}': 'assistant.html', '{{RESEAUX}}': 'reseaux.html', '{{TELEPHONE}}': 'telephone.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{ASSISTANT}}': 'assistant', '{{RESEAUX}}': 'reseaux', '{{TELEPHONE}}': 'telephone'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{ASSISTANT}}': 'assistant.html', '{{RESEAUX}}': 'reseaux.html', '{{TELEPHONE}}': 'telephone.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out])
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
-        if out == 'dist' and k in ('index', 'exemples', 'vitrine', 'visite', 'apercu', 'assistant', 'reseaux', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'exemples', 'visite', 'apercu', 'assistant', 'reseaux', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
@@ -390,9 +434,9 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             '\n/video/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
-        (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /reseaux  301\n/pub.html /reseaux 301\n/videos /reseaux  301\n/videos.html /reseaux 301\n/fil    /reseaux  301\n/fil.html /reseaux 301\n')
+        (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /reseaux  301\n/pub.html /reseaux 301\n/videos /reseaux  301\n/videos.html /reseaux 301\n/fil    /reseaux  301\n/fil.html /reseaux 301\n/vitrine  /#prix  301\n/vitrine.html /#prix 301\n')   # v29 : La Vitrine n'existe plus, ses liens mènent aux trois formules
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'vitrine', 'reseaux', 'telephone', 'assistant', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'reseaux', 'telephone', 'assistant', 'visite')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):
