@@ -81,7 +81,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
 @keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
 @keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
-.tel-rev{margin-top:18px}.tel-rev[hidden]{display:none}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.tel-rev{margin-top:18px;display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:center;max-width:34em}.tel-rev[hidden]{display:none}.tel-rev b,.tel-rev span{grid-column:2}.tel-qr{grid-column:1;grid-row:1/3;width:112px;height:112px;background:#fff;border-radius:8px;padding:8px;box-sizing:content-box;border:1px solid rgba(17,19,24,.12)}@media (max-width:520px){.tel-rev{display:block}.tel-qr{display:none}}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
 .bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}

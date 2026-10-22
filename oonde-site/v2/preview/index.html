@@ -73,7 +73,7 @@ section.sec2{padding-block:clamp(56px,6.5vw,88px)}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
 @keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
 @keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
-.tel-rev{margin-top:18px}.tel-rev[hidden]{display:none}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.tel-rev{margin-top:18px;display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:center;max-width:34em}.tel-rev[hidden]{display:none}.tel-rev b,.tel-rev span{grid-column:2}.tel-qr{grid-column:1;grid-row:1/3;width:112px;height:112px;background:#fff;border-radius:8px;padding:8px;box-sizing:content-box;border:1px solid rgba(17,19,24,.12)}@media (max-width:520px){.tel-rev{display:block}.tel-qr{display:none}}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
 .bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
 .lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
 .lnk:hover{color:var(--klein)}
@@ -873,8 +873,8 @@ html:not(.js) .e-pick{display:none}
   <ul class="tel-l rv"><li>Vous gardez votre numéro.</li><li>Elle dit qu’elle est une voix d’IA.</li><li>Ce qu’elle ne sait pas, elle vous le passe.</li></ul>
   <p class="tel-px rv">Dès 149.– par mois, sans engagement. Une démo gratuite d’abord. <a href="telephone.html#prix">Voir les forfaits <i class="ar">→</i></a></p>
   <div class="act rv"><a class="btn inv" href="tel:+41215390122" data-tel="telRevH"><span>Tester la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
-   <p class="micro tel-sub">Appelez, elle répond comme un employé. <span class="dtag">Démo</span> · pizzeria fictive.</p>
-   <p class="tel-rev" id="telRevH" hidden><b>021 539 01 22</b><span>Appelez depuis votre téléphone : elle répond comme un employé. Démo, pizzeria fictive.</span></p></div>
+   <p class="micro tel-sub"><span class="dtag">Démo</span> · Appelez et dites votre métier : pizzeria, coiffeur, garage…</p>
+   <p class="tel-rev" id="telRevH" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
  </div>
  <figure class="tel-d" data-teld>
   <svg class="tel-wv" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C 20 30, 25 12, 40 12 S 60 48, 80 48 S 100 20, 120 22 S 140 40, 160 38 S 180 6, 200 6 S 220 54, 240 54 S 260 26, 280 26 S 300 36, 320 36 S 340 18, 360 18 S 380 30, 400 30"/></svg>
