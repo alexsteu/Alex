@@ -238,42 +238,67 @@ footer{border-top:0}
 @media (max-width:960px){.offers3{grid-template-columns:minmax(0,1fr);gap:28px}.o3-k{order:-1;margin-block:0;padding-block:clamp(28px,3vw,40px)}}
 @media (max-width:480px){.o-go .btn{width:100%}}
 .o-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}
-.tl{padding-block:clamp(64px,7vw,104px) clamp(72px,8vw,112px);overflow:hidden}
-.tl .in{display:flex;flex-direction:column;align-items:center}
-.tl .mono{color:rgba(255,255,255,.62)}
-.tl h1{font-size:clamp(40px,5.4vw,80px);max-width:16ch;margin:16px auto 0}
-.tl .lede{margin:24px auto 0;max-width:30em;color:rgba(255,255,255,.78)}
-.tl .act{justify-content:center;margin-top:28px;flex-direction:column;gap:14px}
-.tl .act .lnk{font-size:15.5px}
-.tl .tel-sub{margin-top:0;color:rgba(255,255,255,.62)}
-.tl .dtag{background:rgba(255,255,255,.12);color:rgba(255,255,255,.82)}
-.tl-sites{margin-top:clamp(36px,5vw,56px);font-size:15.5px;color:rgba(255,255,255,.7)}
-.tl-sites a{color:#fff;font-weight:600;text-decoration:none;display:inline-block;padding-block:12px;margin-block:-12px}.tl-sites a:hover{text-decoration:underline;text-underline-offset:4px}
-.hx-mk{position:relative;width:clamp(88px,11vw,128px);aspect-ratio:1;color:#fff}
-.hx-mk svg{position:relative;z-index:1;display:block;width:100%;height:100%}
-.hx-w{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);opacity:0;pointer-events:none}
-.hx-st{position:relative;display:grid;place-items:center;height:28px;margin:clamp(20px,3vw,28px) 0 clamp(24px,3.4vw,36px);font:500 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.8)}
-.hx-st>span{grid-area:1/1;display:inline-flex;align-items:center;gap:12px;white-space:nowrap}
-.hx-a{opacity:0}
-.hx-v{display:inline-flex;align-items:center;gap:3px;height:20px}
-.hx-v i{display:block;width:3px;height:100%;border-radius:2px;background:#fff;transform:scaleY(.25)}
-.hx-v i:nth-child(3n+2){background:#8F9CFF}
-@media (prefers-reduced-motion:no-preference){
- .hx-w{animation:hxRing 2.6s cubic-bezier(.2,.7,.3,1) .5s 2 both}
- .hx-w+.hx-w{animation-delay:.74s}
- .hx-w+.hx-w+.hx-w{animation-delay:1s}
- .hx-r{animation:hxOut .35s ease 5.6s both}
- .hx-a{animation:hxIn .45s cubic-bezier(.16,1,.3,1) 5.8s both}
- .hx-v i{animation:hxV .9s ease-in-out 5.8s infinite alternate}
- .hx-v i:nth-child(2){animation-duration:.7s}.hx-v i:nth-child(3){animation-duration:1.1s}.hx-v i:nth-child(4){animation-duration:.6s}.hx-v i:nth-child(5){animation-duration:.95s}.hx-v i:nth-child(6){animation-duration:.75s}.hx-v i:nth-child(7){animation-duration:1.05s}
- .hx-mk svg circle:last-child{transform-box:fill-box;transform-origin:center;animation:hxDot .9s ease-in-out 5.8s infinite alternate}
+.lac{position:relative;padding:0;background:#14161b;color:#fff}
+.lac .lnk{color:#fff}
+.lac-st{position:relative;height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));min-height:480px;overflow:hidden;container-type:size;background:#3a3533 url("data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABQBACdASoYAA4APtFWo0uoJKMhsAgBABoJZACdMoR3ACnSwh+EHRbpkZgAAP6MPQNAlfqOyFXbhtBbqAsBeWk58wd/7ObLSBXAxnq388NYKI0zB67tMHqBTbrdRcsftTm7DAAA") 62% 50%/cover no-repeat}
+@media (max-aspect-ratio:1/1){.lac-st{background-image:url("data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAACwBQCdASoYACsAPslSo0unpLohtVQMA0AZCWMAwQ80RviIdoM9DhF+NcLLbcVyu1aITPHQ8wAA/u6f2tO0DumCOs5GoNCX3Uy7kOE08M2m654S8NT53ZMBNaSRxyGcVAirTGoXRPsBa+ZtcaPgQ1FGLpzTL1AO+q8qRbiG22BUD+9N21LfvUrOP1XU65FHI2CtC62xaW2PQAAA");background-position:50% 50%}}
+.lac-sc{position:absolute;inset:0}
+.lac-sc img,.lac-sc video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;display:block;background:transparent}
+@media (max-aspect-ratio:1/1){.lac-sc img,.lac-sc video{object-position:50% 50%}}
+.lac-h{opacity:0}.lac.held .lac-h{opacity:1}
+.lac-v{opacity:0;pointer-events:none}.lac-v.on{opacity:1}
+.lac-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.42) 34%,rgba(10,12,18,0) 60%),linear-gradient(0deg,rgba(10,12,18,.35),rgba(10,12,18,0) 28%)}
+@media (max-aspect-ratio:1/1){.lac-veil{background:linear-gradient(180deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.34) 30%,rgba(10,12,18,0) 46%,rgba(10,12,18,0) 62%,rgba(10,12,18,.72) 100%)}}
+.lac-tx{position:absolute;z-index:3;left:clamp(20px,6cqw,96px);top:50%;width:min(36rem,44cqw);translate:0 calc(-50% + 12px);opacity:0;pointer-events:none;transition:opacity .35s ease,translate .35s ease}
+.lac.s1 .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{opacity:1;translate:0 -50%;pointer-events:auto;transition:opacity .6s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
+.lac .mono{color:rgba(255,255,255,.78)}
+.lac h1{font:600 clamp(38px,4.7cqw,74px)/1 var(--sans);letter-spacing:-.035em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 28px rgba(5,6,12,.45)}
+.lac-hd{font:600 clamp(30px,3.6cqw,56px)/1.04 var(--sans);letter-spacing:-.03em;margin:12px 0 0;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,12,.45)}
+.lac-p{margin:16px 0 0;font:500 clamp(17px,1.45cqw,20px)/1.45 var(--sans);color:rgba(255,255,255,.9);max-width:30em;text-shadow:0 1px 14px rgba(5,6,12,.6)}
+.lac-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:26px}
+.lac-act .btn{min-height:50px}
+.lac-sub{flex-basis:100%;margin:0;color:rgba(255,255,255,.75)}
+.lac .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff}
+.lac .tel-rev{margin-top:4px}
+.lac .tel-rev span{color:rgba(255,255,255,.75)}
+.lac-sites{margin:22px 0 0;font-size:15.5px;color:rgba(255,255,255,.75)}
+.lac-sites a{color:#fff;font-weight:600;text-decoration:none;display:inline-block;padding-block:12px;margin-block:-12px}.lac-sites a:hover{text-decoration:underline;text-underline-offset:4px}
+.lac-go{margin-top:clamp(22px,4cqh,36px);font:500 15px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.24);border-radius:99px;padding:0 22px;min-height:46px;display:inline-flex;align-items:center;gap:10px;line-height:1;cursor:pointer;transition:background .2s}
+.lac-go:hover{background:rgba(255,255,255,.24)}
+.lac-go i{font-style:normal;display:inline-block}
+@media (prefers-reduced-motion:no-preference){.lac.s1 .lac-go i{animation:lacNudge 1.8s ease-in-out 1.2s infinite}}
+@keyframes lacNudge{0%,60%,100%{transform:none}30%{transform:translateY(4px)}}
+.lac-skip{position:absolute;z-index:4;right:clamp(16px,3cqw,40px);bottom:clamp(14px,3cqh,28px);font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);text-decoration:none;padding:12px 4px;transition:opacity .3s}
+.lac-skip:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.lac.s3 .lac-skip{opacity:0;pointer-events:none}
+.lac-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);background:rgba(10,12,18,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
+.lac-load:not(:empty){opacity:1}
+.lac-tx :focus-visible,.lac-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (max-aspect-ratio:1/1){
+ .lac-tx{left:var(--pad);right:var(--pad);width:auto;top:clamp(16px,4.5cqh,40px);bottom:clamp(18px,4cqh,36px);translate:0 12px;display:flex;flex-direction:column}
+ .lac.s1 .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{translate:0 0}
+ .lac h1{font-size:min(40px,9.6cqw);margin-top:10px}
+ .lac-hd{font-size:min(32px,8.2cqw);margin-top:10px}
+ .lac-p{font-size:16.5px;margin-top:10px}
+ .lac-low{margin-top:auto}
+ .lac-act{margin-top:0;gap:10px 18px}
+ .lac-act .btn{flex:1 1 auto;justify-content:center}
+ .lac-go{margin-top:14px;width:100%;justify-content:center}
+ .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
+ .lac-tx .mono{padding-right:72px}
+ .lac .tel-rev{display:none}
 }
-@media (prefers-reduced-motion:reduce){.hx-r{display:none}.hx-a{opacity:1}.hx-v i{transform:scaleY(.6)}}
-@keyframes hxRing{0%{opacity:.75;transform:scale(1)}55%,100%{opacity:0;transform:scale(2.3)}}
-@keyframes hxOut{to{opacity:0;transform:translateY(-6px)}}
-@keyframes hxIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@keyframes hxV{from{transform:scaleY(.2)}to{transform:scaleY(1)}}
-@keyframes hxDot{from{transform:scale(1)}to{transform:scale(1.12)}}
+.lac.static .lac-st,html:not(.js) .lac-st{height:auto;min-height:0;overflow:visible;container-type:inline-size;display:flex;flex-direction:column;background:#14161b}
+.lac.static .lac-sc,html:not(.js) .lac-sc{position:relative;inset:auto;aspect-ratio:16/9;max-height:54vh;overflow:hidden}
+.lac.static .lac-v,.lac.static .lac-h,.lac.static .lac-go,.lac.static .lac-skip,.lac.static .lac-3 .mono,html:not(.js) .lac-v,html:not(.js) .lac-h,html:not(.js) .lac-go,html:not(.js) .lac-skip,html:not(.js) .lac-3 .mono{display:none}
+.lac.static .lac-veil,html:not(.js) .lac-veil{display:none}
+.lac.static .lac-tx,html:not(.js) .lac-tx{position:relative;inset:auto;width:auto;max-width:44rem;translate:none;opacity:1;pointer-events:auto;padding:0 var(--pad);display:block}
+.lac.static .lac-1,html:not(.js) .lac-1{padding-top:clamp(28px,5vw,56px)}
+.lac.static .lac-2,html:not(.js) .lac-2{padding-top:4px}
+.lac.static .lac-2 .lac-hd,html:not(.js) .lac-2 .lac-hd{display:none}
+.lac.static .lac-3,html:not(.js) .lac-3{padding-block:8px clamp(48px,6vw,80px)}
+.lac.static .lac-3 .lac-hd,html:not(.js) .lac-3 .lac-hd,.lac.static .lac-1 .lac-low,html:not(.js) .lac-1 .lac-low{display:none}
+@media (max-aspect-ratio:1/1){.lac.static .lac-sc,html:not(.js) .lac-sc{aspect-ratio:1/1;max-height:46vh}.lac.static .lac-sc img,html:not(.js) .lac-sc img{object-position:50% 62%}.lac.static .lac-tx .mono,html:not(.js) .lac-tx .mono{padding-right:0}}
 .es h2{margin-top:14px;max-width:17ch}
 .es .t3 b{font-size:clamp(24px,2.4vw,34px)}
 .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
@@ -324,20 +349,37 @@ footer{border-top:0}
 
 <main id="top">
 
-<section class="tl bg-ink c" data-hero aria-labelledby="h1"><div class="in">
- <div class="hx-mk" aria-hidden="true"><span class="hx-w"></span><span class="hx-w"></span><span class="hx-w"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="43.5" fill="none" stroke="currentColor" stroke-width="13"/><circle cx="50" cy="50" r="17" fill="#2038EC"/></svg></div>
- <p class="hx-st" aria-hidden="true"><span class="hx-r">Ça sonne…</span><span class="hx-a"><span class="hx-v"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Elle répond</span></p>
- <p class="mono">Assistant téléphonique · Genève et Vaud</p>
- <h1 class="h-xl" id="h1">Quand vous ne pouvez pas décrocher, une voix répond.</h1>
- <p class="lede">Pizzeria, restaurant : une voix d’IA répond quand l’équipe ne peut pas. Elle prend la commande ou le message, et vous envoie le résumé.</p>
- <div class="act">
-  <div><a class="btn inv" href="tel:+41215390122" data-tel="telRev" aria-controls="telRev"><span>Tester la démo</span></a>
-   <p class="micro tel-sub"><span class="dtag">Démo</span> · Appelez et dites votre métier : pizzeria, restaurant, coiffeur…</p></div>
-  <p class="tel-rev" id="telRev" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p>
-  <a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
+<section class="lac" id="lac" data-hero aria-labelledby="h1">
+ <div class="lac-st" id="lacSt">
+  <div class="lac-sc"><picture><source media="(max-aspect-ratio: 1/1)" type="image/avif" srcset="img/lac/m/c1.avif" width="720" height="1280"><source media="(max-aspect-ratio: 1/1)" srcset="img/lac/m/c1.jpg" width="720" height="1280"><source type="image/avif" srcset="img/lac/d/c1.avif" width="1280" height="720"><img class="lac-pp" id="lacP" src="img/lac/d/c1.jpg" width="1280" height="720" alt="Démo : un téléphone géant sur une plateforme au bord du lac, au coucher du soleil. Il sonne." decoding="async" fetchpriority="high"></picture>
+   <img class="lac-h" id="lacH" alt="" aria-hidden="true" decoding="async">
+   <video class="lac-v" id="lacA" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+   <script>(function(v){var h=location.hash;if(!v||matchMedia('(prefers-reduced-motion: reduce)').matches||h.length>1&&h!=='#top')return;v.src='video/lac/'+(innerWidth<=innerHeight?'m':'d')+'/a.'+(v.canPlayType('video/mp4; codecs="avc1.64002A"')||!v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'mp4':'webm')})(document.getElementById('lacA'))
+</script>
+   <video class="lac-v" id="lacB" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
+  <div class="lac-veil" aria-hidden="true"></div>
+  <div class="lac-tx lac-1" id="lac1">
+   <div><p class="mono">Assistant téléphonique · Genève et Vaud</p>
+   <h1 id="h1">Quand vous ne pouvez pas décrocher, une voix répond.</h1></div>
+   <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRev" aria-controls="telRev"><span>Tester la démo</span></a><p class="micro lac-sub"><span class="dtag">Démo</span> Appelez et dites votre métier : pizzeria, restaurant, coiffeur…</p>
+    <p class="tel-rev" id="telRev" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
+   <button type="button" class="lac-go" id="lacGo">Entrer <i aria-hidden="true">↓</i></button></div>
+  </div>
+  <div class="lac-tx lac-2" id="lac2">
+   <p class="lac-hd">Elle répond comme chez vous.</p>
+   <p class="lac-p">Pizzeria, restaurant : quand l’équipe ne peut pas, elle prend la commande ou le message. Elle dit qu’elle est l’assistante virtuelle, et que l’appel est enregistré.</p>
+  </div>
+  <div class="lac-tx lac-3" id="lac3">
+   <div><p class="mono"><span class="dtag">Démo</span> Trattoria Nonna Pia, restaurant inventé</p>
+   <p class="lac-hd">Vous recevez le résumé.</p></div>
+   <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRevL" aria-controls="telRevL"><span>Tester la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
+    <p class="tel-rev" id="telRevL" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
+   <p class="lac-sites">Un site internet ? <a href="sites.html">Entrez dans notre démo en 3D <i class="ar">→</i></a></p></div>
+  </div>
+  <a class="lac-skip" href="#esprit" id="lacSkip">Passer</a>
+  <p class="lac-load" role="status" aria-live="polite"></p>
  </div>
- <p class="tl-sites">Un site internet ? <a href="sites.html">Entrez dans notre démo en 3D <i class="ar">→</i></a></p>
-</div></section>
+</section>
 
 <section class="bg-paper es" id="esprit" aria-labelledby="hE"><div class="in">
  <p class="mono rv">Notre esprit</p>
@@ -540,4 +582,79 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
 (()=>{const bs=document.querySelectorAll('.btn:not(.light)');if(!bs.length||!('IntersectionObserver' in window)||RM)return;const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('sh',e.isIntersecting)));bs.forEach(b=>io.observe(b))})();
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
 </script>
-<script></script>
+<script>(()=>{const u=$('lac');if(!u)return;
+ const vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ const blocks={c1:$('lac1'),c2:$('lac2'),c3:$('lac3')},COARSE=matchMedia('(pointer:coarse)').matches,C2_MS=3200,WAIT_MS=2500;
+ const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
+ const VX=(()=>{try{const v=document.createElement('video');return v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
+ const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+'.jpg';
+ const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
+ let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,bPrimed=false,bReady=false,wantB=false,t2=0,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
+ function state(s){st=s;lastStep=performance.now();const c={c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
+  for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE;if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
+ const loading=on=>{ld.textContent=on?'Chargement de l’entrée…':''};
+ const cache={};function pre(k){const s=img(k);if(!cache[s]){const i=new Image();i.decoding='async';i.src=s;cache[s]=(i.decode?i.decode():Promise.resolve()).catch(()=>{}).then(()=>s)}return cache[s]}
+ function holdTo(k){return pre(k).then(s=>{if(!hold.src.endsWith(s))hold.src=s;return (hold.decode?hold.decode():Promise.resolve()).catch(()=>{})}).then(()=>flag(u,'held',true))}
+ function play(v){try{const p=v.play();if(p&&p.catch)p.catch(()=>{});return p}catch(e){return null}}
+ const onEnd=(v,fn,ms)=>{let done=false;const f=()=>{if(done)return;done=true;v.removeEventListener('ended',f);clearTimeout(t);fn()};v.addEventListener('ended',f);const t=setTimeout(f,ms);return f};
+ const stop=v=>{try{v.pause()}catch(e){}};
+ function pin(on){pinned=on;const h=document.documentElement;h.style.overflow=on&&COARSE?'hidden':'';if(on&&scrollY>0)scrollTo({top:0,behavior:'instant'})}
+ addEventListener('scroll',()=>{if(pinned&&scrollY>0)scrollTo({top:0,behavior:'instant'})},{passive:true});
+ function primeA(){if(primed||st!=='c1')return;primed=true;ready=true;if(want){runA();return}stop(vA);try{vA.currentTime=0}catch(e){}}
+ vA.addEventListener('playing',()=>{if(st==='c1'&&!primed)primeA();else if(st!=='a')stop(vA)});
+ function startA(){if(st!=='c1'||!LIVE)return;if(ready){runA();return}
+  want=true;play(vA);
+  clearTimeout(tW);tW=setTimeout(()=>{if(st==='c1'&&want){loading(true);tW=setTimeout(()=>{if(st==='c1'&&want){want=false;loading(false);state('a');pin(true);cut('c2')}},WAIT_MS)}},500)}
+ function runA(){want=false;loading(false);clearTimeout(tW);state('a');pin(true);loadB();
+  if(!vA.paused&&vA.readyState>2)flag(vA,'on',true);else vA.addEventListener('playing',()=>flag(vA,'on',true),{once:true});
+  const p=play(vA);if(p&&p.then)p.then(null,()=>{if(st==='a')cut('c2')});
+  onEnd(vA,endA,((vA.duration||4)+2.5)*1000);
+  setTimeout(()=>{if(st==='a'&&vA.paused&&!vA.ended)cut('c2')},WAIT_MS);
+  pre('c2')}
+ let wA=0;vA.addEventListener('waiting',()=>{if(st!=='a')return;clearTimeout(wA);const t=vA.currentTime;wA=setTimeout(()=>{if(st==='a'&&vA.currentTime-t<.2)cut('c2')},1200)});vA.addEventListener('playing',()=>clearTimeout(wA));
+ function endA(){if(st!=='a')return;holdTo('c2');state('c2');primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}
+ function loadB(){if(vB.getAttribute('src'))return;vB.src=vid('b');try{vB.load()}catch(e){}}
+ function primeB(){if(bPrimed)return;bPrimed=true;loadB();vB.addEventListener('playing',function f(){if(st==='b')return;vB.removeEventListener('playing',f);bReady=true;if(wantB&&st==='c2'){startB();return}stop(vB);try{vB.currentTime=0}catch(e){}});
+  const p=play(vB);if(p&&p.then)p.then(null,()=>{if(vB.readyState>=3){bReady=true;if(wantB)startB()}else vB.addEventListener('canplaythrough',()=>{bReady=true;if(wantB)startB()},{once:true})})}
+ function startB(){clearTimeout(t2);if(st!=='c2'||!LIVE)return;if(!bReady){if(wantB)return;wantB=true;play(vB);clearTimeout(tW);tW=setTimeout(()=>{if(st==='c2'&&wantB)loading(true)},600);setTimeout(()=>{if(st==='c2'&&wantB){wantB=false;loading(false);cut('c3')}},WAIT_MS+600);return}
+  wantB=false;loading(false);clearTimeout(tW);state('b');
+  const showB=()=>{flag(vB,'on',true);setTimeout(()=>{if(st==='b'||st==='c3')flag(vA,'on',false)},120)};if(!vB.paused&&vB.readyState>2)showB();else vB.addEventListener('playing',showB,{once:true});
+  const p=play(vB);if(p&&p.then)p.then(null,()=>{if(st==='b')cut('c3')});
+  onEnd(vB,endB,((vB.duration||4.4)+2.5)*1000);
+  setTimeout(()=>{if(st==='b'&&vB.paused&&!vB.ended)cut('c3')},WAIT_MS);
+  pre('c3')}
+ let wB=0;vB.addEventListener('waiting',()=>{if(st!=='b')return;clearTimeout(wB);const t=vB.currentTime;wB=setTimeout(()=>{if(st==='b'&&vB.currentTime-t<.2)cut('c3')},1200)});vB.addEventListener('playing',()=>clearTimeout(wB));
+ function endB(){if(st!=='b')return;holdTo('c3');state('c3');pin(false)}
+ function cut(s){stop(vA);stop(vB);loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
+  if(s==='c2'){primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}else pin(false)}
+ function toEnd(){if(st==='c3')return;clearTimeout(t2);clearTimeout(tW);want=wantB=false;cut('c3')}
+ const next=()=>{if(!LIVE)return;if(st==='c1')startA();else if(st==='c2')startB()};
+ const live=()=>LIVE&&st!=='c3';
+ const ctl=t=>!!(t&&t.closest&&t.closest('a,button,input,select,textarea,.tel-rev'));
+ addEventListener('wheel',e=>{if(!live())return;const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.ctrlKey)return;e.preventDefault();
+  if(e.deltaY>0&&quiet&&t-lastStep>450)next()},{passive:false});
+ addEventListener('touchstart',e=>{const q=e.touches[0];tY0=q?q.clientY:-1;tX0=q?q.clientX:0;swp=false},{passive:true});
+ addEventListener('touchmove',e=>{if(!live())return;if(e.touches.length>1)return;if(e.cancelable)e.preventDefault();const q=e.touches[0];if(!q||swp||tY0<0)return;const dy=tY0-q.clientY;
+  if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0)){swp=true;next()}},{passive:false});
+ addEventListener('touchend',()=>{if(want&&st==='c1')play(vA);else if(wantB&&st==='c2')play(vB)},{passive:true});
+ addEventListener('keydown',e=>{if(!live())return;if(![' ','ArrowDown','PageDown','End'].includes(e.key))return;if(e.key===' '&&ctl(e.target))return;e.preventDefault();next()});
+ stg.addEventListener('click',e=>{if(!live()||ctl(e.target))return;next()});
+ go.addEventListener('click',e=>{e.preventDefault();next()});
+ skip.addEventListener('click',e=>{e.preventDefault();toEnd();const t=$('esprit');if(t)requestAnimationFrame(()=>t.scrollIntoView({behavior:RM?'instant':'smooth',block:'start'}))});
+ document.addEventListener('click',e=>{if(!live())return;const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a===skip)return;const h=a.getAttribute('href');if(h==='#top'||h==='#'||h==='#lac')return;toEnd()},true);
+ addEventListener('hashchange',()=>{if(live()&&location.hash.length>1&&location.hash!=='#top')toEnd()});
+ addEventListener('resize',()=>{const k=K();if(k===set)return;set=k;flag(u,'held',false);hold.removeAttribute('src');
+  if(st==='c1'){stop(vA);flag(vA,'on',false);primed=ready=false;vA.src=vid('a');play(vA)}
+  else if(st==='a'||st==='c2')cut('c2');else cut('c3');
+  vB.removeAttribute('src');bPrimed=bReady=false;if(st==='c2')primeB()});
+ function flat(){LIVE=false;u.classList.add('static');for(const v of [vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);state('c3')}
+ if(!LIVE){flat();return}
+ const H=location.hash,deep=H.length>1&&H!=='#top'&&H!=='#lac'&&!!document.getElementById(H.slice(1));
+ if(!deep&&!vA.getAttribute('src'))vA.src=vid('a');
+ if(vA.error){flat();return}
+ vA.addEventListener('error',()=>{if(st==='c1'||st==='a')flat()},{once:true});
+ if(!vA.paused&&vA.currentTime>0)primeA();else if(vA.ended){primed=true;ready=true;try{vA.currentTime=0}catch(e){}}
+ setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200);
+ if(deep||scrollY>40){toEnd()}else{state('c1');pin(true)}
+})();
+</script>
