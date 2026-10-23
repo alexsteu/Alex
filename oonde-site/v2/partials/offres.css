@@ -1,4 +1,4 @@
-/* v24.1 · les cartes à trois paliers, communes aux offres du site (accueil) et au téléphone (/telephone) */
+/* v24.1 · les cartes à trois paliers, communes aux offres du site (/sites) et au téléphone (v31 : l’accueil) */
 /* v23 · trois paliers, celui du milieu mis en avant (plus haut, bordure Klein, « Notre conseil ») ; au téléphone, il passe en premier */
 .o-lede{margin-top:20px;max-width:34em}
 .offers3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);align-items:stretch;margin-top:clamp(40px,5vw,64px)}
