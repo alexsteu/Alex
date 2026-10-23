@@ -403,6 +403,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         s = fill(s, fonts, LINKS[out])
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
+            s = s.replace('{{LACB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'lac' / k2 / 'blur.webp').read_bytes()).decode())   # v34 : le lac, flou, avant l'image du ponton
         if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'reseaux'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
@@ -424,6 +425,13 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
+    if 'video/lac/' in html:   # v34 : l'entrée du lac (accueil) : les deux films par format (l'aperçu : le MP4 seul) et les images des trois arrêts
+        for k2 in ('d', 'm'):
+            for f in sorted((D / 'video' / 'lac' / k2).iterdir()):
+                if f.suffix == '.mp4' or (out == 'dist' and f.suffix == '.webm'):
+                    (o / 'video' / 'lac' / k2).mkdir(parents=True, exist_ok=True); shutil.copy2(f, o / 'video' / 'lac' / k2 / f.name)
+            for f in ('c1.jpg', 'c1.avif', 'c2.jpg', 'c3.jpg'):
+                (o / 'img' / 'lac' / k2).mkdir(parents=True, exist_ok=True); shutil.copy2(D / 'img' / 'lac' / k2 / f, o / 'img' / 'lac' / k2 / f)
     if 'img/e3d/' in html:   # v27 : l'entrée 3D de l'accueil : les clips (video/e3d/<jeu>/), leurs affiches et enseignes (img/e3d/v/), et les photos de la salle par métier (in-*, E3IN)
         for sub in ('img/e3d/v', 'video/e3d'):
             if (D / sub).is_dir(): shutil.copytree(D / sub, o / sub, dirs_exist_ok=True, ignore=shutil.ignore_patterns('*.json.tmp'))
