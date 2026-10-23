@@ -8,11 +8,11 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta charset="utf-8">
-<title>Le téléphone : quand vous ne pouvez pas décrocher, une voix répond · OONDE</title>
-<meta name="description" content="Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas : horaires, questions fréquentes, rendez-vous ou message, et un résumé sur WhatsApp. Elle dit toujours qu’elle est l’assistante virtuelle. De Genève à Montreux.">
+<title>Assistant téléphonique pour restaurants et pizzerias · OONDE</title>
+<meta name="description" content="Une voix d’IA répond au téléphone de votre pizzeria ou restaurant quand l’équipe ne peut pas : commandes, horaires, messages. Genève et Vaud. Elle dit toujours qu’elle est l’assistante virtuelle.">
 <link rel="canonical" href="https://oonde.ch/telephone">
-<meta property="og:title" content="Le téléphone : quand vous ne pouvez pas décrocher, une voix répond · OONDE">
-<meta property="og:description" content="Une voix d’IA répond au téléphone de votre commerce quand l’équipe ne peut pas. Elle dit toujours qu’elle est l’assistante virtuelle.">
+<meta property="og:title" content="Assistant téléphonique pour restaurants et pizzerias · OONDE">
+<meta property="og:description" content="Une voix d’IA répond au téléphone de votre pizzeria ou restaurant quand l’équipe ne peut pas : commandes, horaires, messages. Genève et Vaud.">
 <meta property="og:url" content="https://oonde.ch/telephone">
 <meta property="og:image" content="https://oonde.ch/img/og-e3d.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,6 +21,7 @@
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="OONDE">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Service","name":"Assistant téléphonique","serviceType":"Assistant vocal IA pour le téléphone des commerces, restaurants et pizzerias","url":"https://oonde.ch/telephone","provider":{"@id":"https://oonde.ch/#oonde"},"areaServed":[{"@type":"AdministrativeArea","name":"Genève"},{"@type":"AdministrativeArea","name":"Vaud"}],"description":"Une voix d’IA répond quand l’équipe ne peut pas : commandes, horaires, rendez-vous ou message. Elle dit toujours qu’elle est l’assistante virtuelle."},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Elle prend les commandes d’une pizzeria ?","acceptedAnswer":{"@type":"Answer","text":"Oui, avec Pro et Premium : elle note la commande, les allergies et l’heure de retrait, et vous les envoie. Avec Essentiel, elle prend un message."}},{"@type":"Question","name":"Je dois changer de numéro ?","acceptedAnswer":{"@type":"Answer","text":"Non : un renvoi d’appel suffit, quand c’est occupé, sans réponse ou fermé."}},{"@type":"Question","name":"Et si elle ne sait pas ?","acceptedAnswer":{"@type":"Answer","text":"Elle le dit et prend un message, ou vous passe l’appel ; elle n’invente rien."}}]}]}</script>
 <link rel="preload" href="fonts/instrument-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Instrument Sans";src:url(fonts/instrument-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}@font-face{font-family:"IBM Plex Mono";src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Cormorant Garamond";src:url(fonts/cormorant-garamond-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
 </style>
 <script>document.documentElement.classList.add('js')
@@ -256,6 +257,16 @@ footer{border-top:0}
 #prix h2{max-width:18ch}.tp-n{margin-top:clamp(40px,5vw,56px);display:grid;gap:10px;color:var(--soft);max-width:46em}.tp-n p{margin:0}
 .p-try{margin-top:24px}.p-try .tel-rev,.end .tel-rev{flex-basis:100%;margin-top:4px}
 .o3 .l4 b{font-weight:600}
+.pz-g{margin-top:clamp(28px,4vw,48px);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,80px);align-items:start}
+.pz-g .cmd{margin:0;width:min(320px,100%);justify-self:center}
+.pz-d{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px;max-width:34em}
+.pz-d li{padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.pz-d li.a{border-left:3px solid var(--klein);background:var(--card)}
+.pz-d b{display:block;font:500 12px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pz-d span{display:block;margin-top:6px;color:var(--ink);font-size:17px;line-height:1.5}
+.pz .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
+.pz-n{margin-top:18px;max-width:34em;color:var(--soft)}
+@media (max-width:760px){.pz-g{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 </head>
@@ -282,7 +293,23 @@ footer{border-top:0}
   <p class="tel-rev" id="telRev" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p>
   <a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
  </div>
- <figure class="cmd"><picture><source type="image/avif" srcset="img/tel/commande-demo.avif"><source type="image/webp" srcset="img/tel/commande-demo.webp"><img src="img/tel/commande-demo.jpg" width="1080" height="1920" alt="Démo : l’écran des commandes de la Trattoria Nonna Pia, un restaurant inventé. Trois commandes prises au téléphone par l’assistant ; en haut, Mme Keller, à l’emporter pour 19 h 30, une Margherita sans gluten, une burrata sans pignons pour une allergie et deux tiramisus, 56 francs, SMS de confirmation envoyé." loading="lazy" decoding="async"></picture><figcaption><span class="dtag">Démo</span> La commande prise au téléphone, prête à préparer.</figcaption></figure>
+</div></section>
+
+<section class="bg-white pz" aria-labelledby="hZ"><div class="in">
+ <p class="mono rv">Pizzerias et restaurants · Genève et Vaud</p>
+ <h2 id="hZ" class="rv">Au coup de feu, personne ne décroche. Elle, si.</h2>
+ <div class="pz-g">
+  <div class="rv">
+   <p class="micro"><span class="dtag">Démo</span> Un appel, mot pour mot. Restaurant inventé.</p>
+   <ol class="pz-d" aria-label="Exemple d’appel, démo">
+    <li class="a"><b>L’assistante</b><span>« Trattoria Nonna Pia, bonsoir. Je suis l’assistante virtuelle, l’appel est enregistré. Que puis-je faire pour vous ? »</span></li>
+    <li><b>Le client</b><span>« Une commande à emporter pour 19 h 30. Une Margherita sans gluten, une burrata sans pignons, c’est pour une allergie, et deux tiramisus. »</span></li>
+    <li class="a"><b>L’assistante</b><span>« C’est noté, avec l’allergie. Cela fait 56 francs, à retirer à 19 h 30. »</span></li>
+   </ol>
+   <p class="pz-n">Commandes, allergies et heure de retrait arrivent à l’écran, prêtes à préparer. Avec Pro et Premium. <a href="#prix">Voir les forfaits</a></p>
+  </div>
+  <figure class="cmd"><picture><source type="image/avif" srcset="img/tel/commande-demo.avif"><source type="image/webp" srcset="img/tel/commande-demo.webp"><img src="img/tel/commande-demo.jpg" width="1080" height="1920" alt="Démo : l’écran des commandes de la Trattoria Nonna Pia, un restaurant inventé. Trois commandes prises au téléphone par l’assistant ; en haut, Mme Keller, à l’emporter pour 19 h 30, une Margherita sans gluten, une burrata sans pignons pour une allergie et deux tiramisus, 56 francs, SMS de confirmation envoyé." loading="lazy" decoding="async"></picture><figcaption><span class="dtag">Démo</span>La commande prise au téléphone, prête à préparer.</figcaption></figure>
+ </div>
 </div></section>
 
 <section class="bg-white" aria-labelledby="hN"><div class="in">
@@ -371,6 +398,7 @@ footer{border-top:0}
  <h2 class="h-m" id="hQ">Vos questions.</h2>
  <div class="faq">
   <details><summary>Combien ça coûte ?</summary><div class="fa"><div><p>Dès 149.– par mois, sans engagement ; mise en place dès 290.–, payée quand l’assistant est en service. <a href="#prix">Voir les forfaits</a></p></div></div></details>
+  <details><summary>Elle prend les commandes d’une pizzeria ?</summary><div class="fa"><div><p>Oui, avec Pro et Premium : elle note la commande, les allergies et l’heure de retrait, et vous les envoie. Avec Essentiel, elle prend un message.</p></div></div></details>
   <details><summary>Je dois changer de numéro ?</summary><div class="fa"><div><p>Non : un renvoi d’appel suffit, quand c’est occupé, sans réponse ou fermé.</p></div></div></details>
   <details><summary>Et si elle ne sait pas ?</summary><div class="fa"><div><p>Elle le dit et prend un message, ou vous passe l’appel ; elle n’invente rien.</p></div></div></details>
   <details><summary>Et pour arrêter ?</summary><div class="fa"><div><p>Un message, et c’est fini à la fin du mois, sans frais.</p></div></div></details>
