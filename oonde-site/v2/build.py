@@ -430,7 +430,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             for f in sorted((D / 'video' / 'lac' / k2).iterdir()):
                 if f.suffix == '.mp4' or (out == 'dist' and f.suffix == '.webm'):
                     (o / 'video' / 'lac' / k2).mkdir(parents=True, exist_ok=True); shutil.copy2(f, o / 'video' / 'lac' / k2 / f.name)
-            for f in ('c1.jpg', 'c1.avif', 'c2.jpg', 'c3.jpg'):
+            for f in ('c0.jpg', 'c0.avif', 'c1.jpg', 'c2.jpg', 'c3.jpg'):
                 (o / 'img' / 'lac' / k2).mkdir(parents=True, exist_ok=True); shutil.copy2(D / 'img' / 'lac' / k2 / f, o / 'img' / 'lac' / k2 / f)
     if 'img/e3d/' in html:   # v27 : l'entrée 3D de l'accueil : les clips (video/e3d/<jeu>/), leurs affiches et enseignes (img/e3d/v/), et les photos de la salle par métier (in-*, E3IN)
         for sub in ('img/e3d/v', 'video/e3d'):
