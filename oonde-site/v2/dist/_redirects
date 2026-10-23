@@ -1,8 +1,4 @@
-/telephone  /  301
-/telephone.html  /  301
-/vitrine  /sites#prix  301
-/vitrine.html  /sites#prix  301
-/exemples  /sites  301
+/exemples  /  301
 /ig     /?s=ig     302
 /tt     /?s=tt     302
 /carte  /?s=carte  302
@@ -13,3 +9,5 @@
 /videos.html /reseaux 301
 /fil    /reseaux  301
 /fil.html /reseaux 301
+/vitrine  /#prix  301
+/vitrine.html /#prix 301

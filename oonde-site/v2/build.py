@@ -42,29 +42,18 @@ def cg_setup():
     r = f"Mise en ligne et tournage de Premium : {v(_R)}" + (seul.replace('facturée', 'facturés') if _R else '') + '.'
     return f'<li>{a}</li>\n <li>{r}</li>'
 def ld_offers():
-    """Les trois formules en données structurées (v31 : /sites), d'après OFFRES."""
+    """Les trois formules en données structurées (accueil), d'après OFFRES."""
     out = []
     for k, name, svc, tour in (('ess', 'Essentiel', 'Site internet qui s’ouvre sur le commerce en 3D', False),
                                ('pro', 'Pro', 'Site internet en 3D, avec l’assistant qui répond aux clients et la fiche Google suivie', False),
                                ('pre', 'Premium', 'Site internet avec une entrée et une visite filmées sur place', True)):
         n, s = OFFRES[k], OFFRES[k + '_setup']
         what = 'Mise en ligne et tournage' if tour else 'Mise en ligne'
-        out.append({'@type': 'Offer', 'name': 'Site ' + name, 'url': 'https://oonde.ch/sites#prix', 'priceCurrency': 'CHF', 'price': str(n),
+        out.append({'@type': 'Offer', 'name': 'Site ' + name, 'url': 'https://oonde.ch/#prix', 'priceCurrency': 'CHF', 'price': str(n),
                     'priceSpecification': [{'@type': 'UnitPriceSpecification', 'name': 'Abonnement mensuel, sans engagement, résiliable chaque mois', 'price': str(n), 'priceCurrency': 'CHF', 'unitCode': 'MON', 'billingIncrement': 1},
                                            {'@type': 'UnitPriceSpecification', 'name': what + (' offert' + ('s' if tour else 'e') if not s else (', facturés' if tour else ', facturée') + ' seulement si le site terminé plaît'), 'price': str(s), 'priceCurrency': 'CHF'}],
                     'itemOffered': {'@type': 'Service', 'name': 'Site ' + name, 'serviceType': svc}})
     return json.dumps(out, ensure_ascii=False, separators=(',', ':'))
-def ld_tel_offers():
-    """v31 · les forfaits du téléphone en données structurées (accueil), d'après TEL_OFFRES et TEL_RUSH : le forfait au mois, la mise en place."""
-    out = []
-    for k, name in (('tel_ess', 'Essentiel'), ('tel_pro', 'Pro'), ('tel_pre', 'Premium'), ('tel_rush', 'Rush')):
-        n, s = (TEL_RUSH if k == 'tel_rush' else TEL_OFFRES)[k], (TEL_RUSH if k == 'tel_rush' else TEL_OFFRES)[k + '_setup']
-        out.append({'@type': 'Offer', 'name': 'Téléphone ' + name, 'url': 'https://oonde.ch/#prix', 'priceCurrency': 'CHF', 'price': str(n),
-                    'priceSpecification': [{'@type': 'UnitPriceSpecification', 'name': 'Forfait mensuel, sans engagement, résiliable chaque mois', 'price': str(n), 'priceCurrency': 'CHF', 'unitCode': 'MON', 'billingIncrement': 1},
-                                           {'@type': 'UnitPriceSpecification', 'name': 'Mise en place, payée seulement quand l’assistant est en service', 'price': str(s), 'priceCurrency': 'CHF'}],
-                    'itemOffered': {'@id': 'https://oonde.ch/#telephone'}})
-    return json.dumps(out, ensure_ascii=False, separators=(',', ':'))
-_tm = [TEL_OFFRES[k] for k in ('tel_ess', 'tel_pro', 'tel_pre')] + [TEL_RUSH['tel_rush']]
 PX = {k + '_m': chf(OFFRES[k]) for k in ('ess', 'pro', 'pre')} | {k: chf(OFFRES[k]) for k in ('ess_setup', 'pro_setup', 'pre_setup')} \
    | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'pro_jour': jour(OFFRES['pro'])} \
    | {'ess_f': mel('ess_setup'), 'pro_f': mel('pro_setup'), 'pre_f': mel('pre_setup', tournage=True), 'ess_f_court': mel('ess_setup', cond=False, low=True)} \
@@ -73,8 +62,7 @@ PX = {k + '_m': chf(OFFRES[k]) for k in ('ess', 'pro', 'pre')} | {k: chf(OFFRES[
    | {'apl_step': f'<b class="amt">{chf(_E)}<small>une fois</small></b><h3>Votre site en ligne</h3>' if _E else f'<b class="amt">{chf(0)}</b><h3>Mise en ligne offerte</h3>'} \
    | {k: chf(v) for k, v in TEL_OFFRES.items()} | {k + '_n': str(v) for k, v in TEL_OFFRES.items()} | {'tel_min': TEL_MIN} \
    | {k: chf(v) for k, v in TEL_RUSH.items()} | {'tel_rush_min': TEL_RUSH_MIN, 'tel_rush_calls': TEL_RUSH_CALLS} \
-   | {'tel_pro_jour': jour(TEL_OFFRES['tel_pro'])} \
-   | {'ld_tel_offers': ld_tel_offers(), 'tel_range': f'CHF {min(_tm)} – {max(_tm)} par mois'}
+   | {'tel_pro_jour': jour(TEL_OFFRES['tel_pro'])}
 def walink(msg): return 'https://wa.me/41779283540?text=' + urllib.parse.quote(msg)
 HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans partials/core.js (qui les réécrit si l'on vient d'Instagram, de TikTok…)
 # v24 · les messages pré-remplis (brief page-vente § 3.8) ; les mêmes textes que MSG dans partials/core.js
@@ -150,31 +138,23 @@ PAGES = {'mentions-legales': ('Mentions légales', "Éditeur, hébergement et so
          'conditions': ('Conditions générales', "Conditions générales des prestations OONDE : site internet, fiche Google et suivi.", 'G'),
          '404': ('Page introuvable', "Cette page n’existe pas ou a été déplacée.", '')}
 BODY404 = ('<span class="eyebrow">Erreur 404</span>\n<h1>Cette page n’existe pas.</h1>\n<p class="lead">Le lien est peut-être incomplet, ou la page a été déplacée.</p>\n'
-           '<p><a href="{{HOME}}">Revenir à l’accueil</a> · <a href="{{SITES}}#prix">Voir les prix des sites</a> · <a href="{{WA_Q}}" target="_blank" rel="noopener">Nous écrire sur WhatsApp</a></p>\n')
+           '<p><a href="./">Revenir à l’accueil</a> · <a href="./#prix">Voir les prix</a> · <a href="{{WA_Q}}" target="_blank" rel="noopener">Nous écrire sur WhatsApp</a></p>\n')
 
 def inc(s):
     """{{INC:base.css}} : les morceaux communs aux pages (partials/)."""
     return re.sub(r'\{\{INC:([\w.-]+)\}\}', lambda m: (D / 'partials' / m.group(1)).read_text().rstrip('\n'), s)
 
 def nav(cur):
-    """{{NAV:page}} : la navigation du haut, la même partout. v31 : le téléphone est l'accueil : La démo · Forfaits · Sites · Réseaux sociaux · « Et aussi » · Questions
-    (sur l'accueil, des ancres ; ailleurs, l'accueil et ses ancres). Seule exception, /sites garde ses ancres (la démo 3D, les trois formules) et mène au téléphone.
-    v27.1 : « Le Fil » s'appelle Réseaux sociaux (page /reseaux). v29 : La Vitrine n'existe plus (/vitrine mène à /sites#prix)."""
+    """{{NAV:page}} : la navigation du haut, la même partout (v24 : La démo · Sites et prix · Réseaux sociaux · Le téléphone · Questions, et « Et aussi » ; v32 : Le téléphone passe en deuxième et reste visible).
+    Sur l'accueil, Réseaux sociaux et Le téléphone mènent à leur étage ; ailleurs, à leur page.
+    v27.1 : « Le Fil » s'appelle Réseaux sociaux (page /reseaux) ; La Vitrine quitte « Et aussi ». v29 : La Vitrine n'existe plus (/vitrine mène à /#prix)."""
+    H = '' if cur == 'index' else '{{HOME}}'
     a = lambda k: ' aria-current="page"' if k == cur else ''
     sub = cur in ('assistant', 'visite')
-    et = (f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>')
-    if cur == 'sites':
-        return ('<a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{HOME}}">Le téléphone</a><a class="opt" href="{{RESEAUX}}">Réseaux sociaux</a>'
-                + et + '<a class="opt2" href="#questions">Questions</a>')
-    H = '' if cur == 'index' else '{{HOME}}'
-    return (f'<a href="{H}#demo">La démo</a><a href="{H}#prix">Forfaits</a><a href="{{{{SITES}}}}">Sites</a><a class="opt" href="{{{{RESEAUX}}}}"{a("reseaux")}>Réseaux sociaux</a>'
-            + et + f'<a class="opt2" href="{H}#questions">Questions</a>')
-
-def fnav(cur):
-    """{{FNAV:page}} : v31, le plan du site du pied de page, le même partout (les pages légales suivent, écrites dans chaque page)."""
-    cu = ' aria-current="page"'
-    return ''.join(f'<a href="{{{{{t}}}}}"{cu if k == cur else ""}>{n}</a>' for k, t, n in
-                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites'), ('reseaux', 'RESEAUX', 'Réseaux sociaux'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète')))
+    rs, tel = ('#reseaux', '#telephone') if cur == 'index' else ('{{RESEAUX}}', '{{TELEPHONE}}')
+    return (f'<a href="{H}#choix">La démo</a><a href="{tel}"{a("telephone")}>Le téléphone</a><a href="{H}#prix">Sites et prix</a><a class="opt" href="{rs}"{a("reseaux")}>Réseaux sociaux</a>'
+            f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>'
+            f'<a class="opt2" href="{H}#questions">Questions</a>')
 
 # v24 · Le Fil : les vidéos de démo, nommées pour la commerçante (ce qui sort sur son fil), et non par nos ateliers.
 # Fichiers web 720×1280 : video/fil/ (exemples de commerces) et video/demos/ (une démo par façon de faire ; les noms restent stables).
@@ -217,7 +197,6 @@ def fill(s, fonts, links):
     s = inc(s)
     s = re.sub(r'\{\{POSTER:([^|}]+)\|([^}]*)\}\}', lambda m: poster(m.group(1), m.group(2)), s)   # v25 : une affiche de vidéo écrite à la main
     s = re.sub(r'\{\{NAV:(\w+)\}\}', lambda m: nav(m.group(1)), s)
-    s = re.sub(r'\{\{FNAV:(\w*)\}\}', lambda m: fnav(m.group(1)), s)
     if '{{WA_ICON}}' in s:   # v28.1 : le symbole de l'icône WhatsApp, une fois, juste après le lien d'évitement (full() coupe <body> à ce lien)
         s, n = re.subn(r'(<a class="skip"[^>]*>.*?</a>)', lambda m: m.group(1) + WA_SYM, s, count=1)
         assert n == 1, 'pas de lien d’évitement pour poser le symbole WhatsApp'
@@ -352,7 +331,7 @@ def slim(html):
     return re.sub(r'<script((?:\s[^>]*)?)>(.*?)</script>', lambda m: m.group(0) if 'type=' in m.group(1) or 'src=' in m.group(1) else f'<script{m.group(1)}>{strip_js(m.group(2))}</script>', html, flags=re.S)
 
 def externalize(html, o, name):
-    crit = name in ('index', 'sites')   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé. v31 : l'accueil (le téléphone) et /sites (l'entrée 3D)
+    crit = name == 'index'   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé
     """dist : les gros blocs <style> et <script> en ligne partent dans assets/<empreinte>.css|js, en cache long (le HTML,
     lui, est revalidé à chaque visite). Les petits restent en ligne (le script de tête qui pose .js, les polices, le JSON-LD).
     Même position, même ordre d'exécution (script classique, sans defer). L'aperçu claude.ai garde tout en ligne."""
@@ -385,8 +364,7 @@ layout = (D / 'legal-layout.html').read_text()
 QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-021.svg': qr('tel:+41215390122')}   # v28.2 : la ligne démo 021, à scanner depuis l'ordinateur   # v25 : les codes QR (bas des pages, ordinateur)
 QR_IMM = '<img src="img/qr-imm.svg" width="84" height="84" alt="" loading="lazy" decoding="async">'   # v29 : le code de La Vitrine (qr-wa) est parti avec elle
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
-# v31 : l'accueil est le téléphone (home.html, l'ancienne page /telephone) ; l'entrée 3D et les formules du site passent sur /sites (sites.html, l'ancien accueil)
-docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'reseaux': (D / 'reseaux.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'reseaux': (D / 'reseaux.html').read_text(), 'telephone': (D / 'telephone.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -394,16 +372,15 @@ for k, (title, desc, cur) in PAGES.items():
     docs[k] = s
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
-# v31 : {{SITES}} (l'entrée 3D, les formules du site) ; {{TELEPHONE}} et {{EXEMPLES}} disparaissent (le téléphone est l'accueil, les exemples sont sur /sites)
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{RESEAUX}}': 'reseaux'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{RESEAUX}}': 'reseaux.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{EXEMPLES}}': './#choix', '{{ASSISTANT}}': 'assistant', '{{RESEAUX}}': 'reseaux', '{{TELEPHONE}}': 'telephone'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{EXEMPLES}}': 'index.html#choix', '{{ASSISTANT}}': 'assistant.html', '{{RESEAUX}}': 'reseaux.html', '{{TELEPHONE}}': 'telephone.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
         s = fill(s, fonts, LINKS[out])
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
-        if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'reseaux'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'exemples', 'visite', 'apercu', 'assistant', 'reseaux', 'telephone'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
@@ -457,12 +434,9 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             '\n/video/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
             '\n/apple-touch-icon.png\n  Cache-Control: public, max-age=604800\n')
         # Liens courts pour les bios et les cartes : oonde.ch/ig, /tt, /carte, /g (fiche Google) gardent la source dans le message WhatsApp
-        # v29 : La Vitrine n'existe plus, ses liens mènent aux trois formules (v31 : sur /sites). v31 : /telephone devient l'accueil (/telephone#prix → /#prix, les forfaits) ;
-        # /ig, /tt, /carte, /g mènent à l'accueil, donc au téléphone (voulu)
-        (o / '_redirects').write_text('/telephone  /  301\n/telephone.html  /  301\n/vitrine  /sites#prix  301\n/vitrine.html  /sites#prix  301\n/exemples  /sites  301\n'
-            '/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /reseaux  301\n/pub.html /reseaux 301\n/videos /reseaux  301\n/videos.html /reseaux 301\n/fil    /reseaux  301\n/fil.html /reseaux 301\n')
+        (o / '_redirects').write_text('/exemples  /  301\n/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /reseaux  301\n/pub.html /reseaux 301\n/videos /reseaux  301\n/videos.html /reseaux 301\n/fil    /reseaux  301\n/fil.html /reseaux 301\n/vitrine  /#prix  301\n/vitrine.html /#prix 301\n')   # v29 : La Vitrine n'existe plus, ses liens mènent aux trois formules
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'sites', 'reseaux', 'assistant', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'reseaux', 'telephone', 'assistant', 'visite')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):
