@@ -240,8 +240,8 @@ footer{border-top:0}
 .o-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}
 .lac{position:relative;padding:0;background:#14161b;color:#fff}
 .lac .lnk{color:#fff}
-.lac-st{position:relative;height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));min-height:480px;overflow:hidden;container-type:size;background:#3a3533 url("data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABQBACdASoYAA4APtFWo0uoJKMhsAgBABoJZACdMoR3ACnSwh+EHRbpkZgAAP6MPQNAlfqOyFXbhtBbqAsBeWk58wd/7ObLSBXAxnq388NYKI0zB67tMHqBTbrdRcsftTm7DAAA") 62% 50%/cover no-repeat}
-@media (max-aspect-ratio:1/1){.lac-st{background-image:url("data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAACwBQCdASoYACsAPslSo0unpLohtVQMA0AZCWMAwQ80RviIdoM9DhF+NcLLbcVyu1aITPHQ8wAA/u6f2tO0DumCOs5GoNCX3Uy7kOE08M2m654S8NT53ZMBNaSRxyGcVAirTGoXRPsBa+ZtcaPgQ1FGLpzTL1AO+q8qRbiG22BUD+9N21LfvUrOP1XU65FHI2CtC62xaW2PQAAA");background-position:50% 50%}}
+.lac-st{position:relative;height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));min-height:480px;overflow:hidden;container-type:size;background:#3a3533 url("data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAwCdASoYAA4ALplotFoiqCgoCACYSgCdMoAGgVL3jTXdOEKw0AD+01QgRc9jfdXVr9V+kkU2scPTFyaFZJgXTFK6gf0E5Z1bM38KzgTm3nuvVn7Gr1plaorgAA==") 62% 50%/cover no-repeat}
+@media (max-aspect-ratio:1/1){.lac-st{background-image:url("data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAACQBgCdASoYACsAPtFYpE0oJSMiMBVaqQAaCWUArk/pCz6PjJhffnIXmFqi3XfpDp6kgkabYjs9FUj8gHAAAP7nP2Uw3z3R39+zjXvMdlWH00xPULPQIKBwHy29K5fIFYBmnjAgEc+ZJXB0RszLkaTB4E7MLQzSlWTOhFzhXH9i9qC1zQqrJkg8ZOdQO5gr/YH7RSZSGwfeXU3/y4ajJc+wAAA=");background-position:50% 50%}}
 .lac-sc{position:absolute;inset:0}
 .lac-sc img,.lac-sc video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;display:block;background:transparent}
 @media (max-aspect-ratio:1/1){.lac-sc img,.lac-sc video{object-position:50% 50%}}
@@ -250,7 +250,7 @@ footer{border-top:0}
 .lac-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.42) 34%,rgba(10,12,18,0) 60%),linear-gradient(0deg,rgba(10,12,18,.35),rgba(10,12,18,0) 28%)}
 @media (max-aspect-ratio:1/1){.lac-veil{background:linear-gradient(180deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.34) 30%,rgba(10,12,18,0) 46%,rgba(10,12,18,0) 62%,rgba(10,12,18,.72) 100%)}}
 .lac-tx{position:absolute;z-index:3;left:clamp(20px,6cqw,96px);top:50%;width:min(36rem,44cqw);translate:0 calc(-50% + 12px);opacity:0;pointer-events:none;transition:opacity .35s ease,translate .35s ease}
-.lac.s1 .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{opacity:1;translate:0 -50%;pointer-events:auto;transition:opacity .6s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
+.lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{opacity:1;translate:0 -50%;pointer-events:auto;transition:opacity .6s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
 .lac .mono{color:rgba(255,255,255,.78)}
 .lac h1{font:600 clamp(38px,4.7cqw,74px)/1 var(--sans);letter-spacing:-.035em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 28px rgba(5,6,12,.45)}
 .lac-hd{font:600 clamp(30px,3.6cqw,56px)/1.04 var(--sans);letter-spacing:-.03em;margin:12px 0 0;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,12,.45)}
@@ -276,7 +276,7 @@ footer{border-top:0}
 .lac-tx :focus-visible,.lac-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (max-aspect-ratio:1/1){
  .lac-tx{left:var(--pad);right:var(--pad);width:auto;top:clamp(16px,4.5cqh,40px);bottom:clamp(18px,4cqh,36px);translate:0 12px;display:flex;flex-direction:column}
- .lac.s1 .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{translate:0 0}
+ .lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{translate:0 0}
  .lac h1{font-size:min(40px,9.6cqw);margin-top:10px}
  .lac-hd{font-size:min(32px,8.2cqw);margin-top:10px}
  .lac-p{font-size:16.5px;margin-top:10px}
@@ -287,11 +287,13 @@ footer{border-top:0}
  .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
  .lac-tx .mono{padding-right:72px}
  .lac .tel-rev{display:none}
+ .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}
 }
 .lac.static .lac-st,html:not(.js) .lac-st{height:auto;min-height:0;overflow:visible;container-type:inline-size;display:flex;flex-direction:column;background:#14161b}
 .lac.static .lac-sc,html:not(.js) .lac-sc{position:relative;inset:auto;aspect-ratio:16/9;max-height:54vh;overflow:hidden}
-.lac.static .lac-v,.lac.static .lac-h,.lac.static .lac-go,.lac.static .lac-skip,.lac.static .lac-3 .mono,html:not(.js) .lac-v,html:not(.js) .lac-h,html:not(.js) .lac-go,html:not(.js) .lac-skip,html:not(.js) .lac-3 .mono{display:none}
+.lac.static .lac-v,.lac.static .lac-pp,.lac.static .lac-go,.lac.static .lac-skip,.lac.static .lac-3 .mono,html:not(.js) .lac-v,html:not(.js) .lac-h,html:not(.js) .lac-go,html:not(.js) .lac-skip,html:not(.js) .lac-3 .mono{display:none}
 .lac.static .lac-veil,html:not(.js) .lac-veil{display:none}
+.lac.static .lac-h{position:static;opacity:1}
 .lac.static .lac-tx,html:not(.js) .lac-tx{position:relative;inset:auto;width:auto;max-width:44rem;translate:none;opacity:1;pointer-events:auto;padding:0 var(--pad);display:block}
 .lac.static .lac-1,html:not(.js) .lac-1{padding-top:clamp(28px,5vw,56px)}
 .lac.static .lac-2,html:not(.js) .lac-2{padding-top:4px}
@@ -351,11 +353,12 @@ footer{border-top:0}
 
 <section class="lac" id="lac" data-hero aria-labelledby="h1">
  <div class="lac-st" id="lacSt">
-  <div class="lac-sc"><picture><source media="(max-aspect-ratio: 1/1)" type="image/avif" srcset="img/lac/m/c1.avif" width="720" height="1280"><source media="(max-aspect-ratio: 1/1)" srcset="img/lac/m/c1.jpg" width="720" height="1280"><source type="image/avif" srcset="img/lac/d/c1.avif" width="1280" height="720"><img class="lac-pp" id="lacP" src="img/lac/d/c1.jpg" width="1280" height="720" alt="Démo : un téléphone géant sur une plateforme au bord du lac, au coucher du soleil. Il sonne." decoding="async" fetchpriority="high"></picture>
+  <div class="lac-sc"><picture><source media="(max-aspect-ratio: 1/1)" type="image/avif" srcset="img/lac/m/c0.avif" width="720" height="1280"><source media="(max-aspect-ratio: 1/1)" srcset="img/lac/m/c0.jpg" width="720" height="1280"><source type="image/avif" srcset="img/lac/d/c0.avif" width="1280" height="720"><img class="lac-pp" id="lacP" src="img/lac/d/c0.jpg" width="1280" height="720" alt="Démo : un téléphone géant posé sur le lac, au coucher du soleil. Il sonne, des cercles partent sur l’eau." decoding="async" fetchpriority="high"></picture>
    <img class="lac-h" id="lacH" alt="" aria-hidden="true" decoding="async">
-   <video class="lac-v" id="lacA" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
-   <script>(function(v){var h=location.hash;if(!v||matchMedia('(prefers-reduced-motion: reduce)').matches||h.length>1&&h!=='#top')return;v.src='video/lac/'+(innerWidth<=innerHeight?'m':'d')+'/a.'+(v.canPlayType('video/mp4; codecs="avc1.64002A"')||!v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'mp4':'webm')})(document.getElementById('lacA'))
+   <video class="lac-v" id="lacO" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+   <script>(function(v){var h=location.hash;if(!v||matchMedia('(prefers-reduced-motion: reduce)').matches||h.length>1&&h!=='#top')return;v.src='video/lac/'+(innerWidth<=innerHeight?'m':'d')+'/o.'+(v.canPlayType('video/mp4; codecs="avc1.64002A"')||!v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'mp4':'webm')})(document.getElementById('lacO'))
 </script>
+   <video class="lac-v" id="lacA" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
    <video class="lac-v" id="lacB" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
   <div class="lac-veil" aria-hidden="true"></div>
   <div class="lac-tx lac-1" id="lac1">
@@ -583,15 +586,15 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
 </script>
 <script>(()=>{const u=$('lac');if(!u)return;
- const vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ const vO=$('lacO'),vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
  const blocks={c1:$('lac1'),c2:$('lac2'),c3:$('lac3')},COARSE=matchMedia('(pointer:coarse)').matches,C2_MS=3200,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
  const VX=(()=>{try{const v=document.createElement('video');return v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
  const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+'.jpg';
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,bPrimed=false,bReady=false,wantB=false,t2=0,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
- function state(s){st=s;lastStep=performance.now();const c={c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
-  for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE;if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
+ function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
+  for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE||(s==='o'&&k==='c1');if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
  const loading=on=>{ld.textContent=on?'Chargement de l’entrée…':''};
  const cache={};function pre(k){const s=img(k);if(!cache[s]){const i=new Image();i.decoding='async';i.src=s;cache[s]=(i.decode?i.decode():Promise.resolve()).catch(()=>{}).then(()=>s)}return cache[s]}
  function holdTo(k){return pre(k).then(s=>{if(!hold.src.endsWith(s))hold.src=s;return (hold.decode?hold.decode():Promise.resolve()).catch(()=>{})}).then(()=>flag(u,'held',true))}
@@ -625,10 +628,10 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
   pre('c3')}
  let wB=0;vB.addEventListener('waiting',()=>{if(st!=='b')return;clearTimeout(wB);const t=vB.currentTime;wB=setTimeout(()=>{if(st==='b'&&vB.currentTime-t<.2)cut('c3')},1200)});vB.addEventListener('playing',()=>clearTimeout(wB));
  function endB(){if(st!=='b')return;holdTo('c3');state('c3');pin(false)}
- function cut(s){stop(vA);stop(vB);loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
+ function cut(s){stop(vO);stop(vA);stop(vB);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
   if(s==='c2'){primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}else pin(false)}
  function toEnd(){if(st==='c3')return;clearTimeout(t2);clearTimeout(tW);want=wantB=false;cut('c3')}
- const next=()=>{if(!LIVE)return;if(st==='c1')startA();else if(st==='c2')startB()};
+ const next=()=>{if(!LIVE)return;if(st==='o'){stop(vO);toC1()}if(st==='c1')startA();else if(st==='c2')startB()};
  const live=()=>LIVE&&st!=='c3';
  const ctl=t=>!!(t&&t.closest&&t.closest('a,button,input,select,textarea,.tel-rev'));
  addEventListener('wheel',e=>{if(!live())return;const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.ctrlKey)return;e.preventDefault();
@@ -644,17 +647,26 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
  document.addEventListener('click',e=>{if(!live())return;const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a===skip)return;const h=a.getAttribute('href');if(h==='#top'||h==='#'||h==='#lac')return;toEnd()},true);
  addEventListener('hashchange',()=>{if(live()&&location.hash.length>1&&location.hash!=='#top')toEnd()});
  addEventListener('resize',()=>{const k=K();if(k===set)return;set=k;flag(u,'held',false);hold.removeAttribute('src');
+  if(st==='o'){stop(vO);toC1()}
   if(st==='c1'){stop(vA);flag(vA,'on',false);primed=ready=false;vA.src=vid('a');play(vA)}
   else if(st==='a'||st==='c2')cut('c2');else cut('c3');
   vB.removeAttribute('src');bPrimed=bReady=false;if(st==='c2')primeB()});
- function flat(){LIVE=false;u.classList.add('static');for(const v of [vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);state('c3')}
+ function flat(){LIVE=false;u.classList.add('static');for(const v of [vO,vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);hold.src=img('c1');flag(u,'held',true);state('c3')}
  if(!LIVE){flat();return}
  const H=location.hash,deep=H.length>1&&H!=='#top'&&H!=='#lac'&&!!document.getElementById(H.slice(1));
- if(!deep&&!vA.getAttribute('src'))vA.src=vid('a');
- if(vA.error){flat();return}
+ function loadA(){if(vA.getAttribute('src'))return;vA.src=vid('a');try{vA.load()}catch(e){}}
  vA.addEventListener('error',()=>{if(st==='c1'||st==='a')flat()},{once:true});
- if(!vA.paused&&vA.currentTime>0)primeA();else if(vA.ended){primed=true;ready=true;try{vA.currentTime=0}catch(e){}}
- setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200);
- if(deep||scrollY>40){toEnd()}else{state('c1');pin(true)}
+ let tO=0,oOn=false;
+ function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);
+  setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
+ if(deep||scrollY>40){stop(vO);vO.removeAttribute('src');try{vO.load()}catch(e){}toEnd();return}
+ state('o');pin(true);
+ if(!vO.getAttribute('src'))vO.src=vid('o');
+ const onO=()=>{if(oOn||st!=='o')return;oOn=true;clearTimeout(tO);flag(vO,'on',true);loadA();setTimeout(()=>{if(st==='o')u.classList.add('pre')},900);onEnd(vO,toC1,((vO.duration||2)+1.5)*1000)};
+ if(vO.ended)toC1();else if(!vO.paused&&vO.currentTime>0)onO();else vO.addEventListener('playing',onO,{once:true});
+ vO.addEventListener('error',()=>{if(st==='o')toC1()},{once:true});
+ const oNo=()=>{clearTimeout(tO);tO=setTimeout(()=>{if(!oOn&&st==='o')toC1()},1200)};
+ vO.addEventListener('canplay',oNo,{once:true});vO.addEventListener('loadeddata',oNo,{once:true});if(vO.readyState>=2)oNo();
+ tO=setTimeout(()=>{if(!oOn&&st==='o')toC1()},5000);
 })();
 </script>

@@ -1,13 +1,13 @@
 (()=>{const u=$('lac');if(!u)return;
- const vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ const vO=$('lacO'),vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
  const blocks={c1:$('lac1'),c2:$('lac2'),c3:$('lac3')},COARSE=matchMedia('(pointer:coarse)').matches,C2_MS=3200,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
  const VX=(()=>{try{const v=document.createElement('video');return v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
  const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+'.jpg';
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,bPrimed=false,bReady=false,wantB=false,t2=0,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
- function state(s){st=s;lastStep=performance.now();const c={c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
-  for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE;if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
+ function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
+  for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE||(s==='o'&&k==='c1');if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
  const loading=on=>{ld.textContent=on?'Chargement de l’entrée…':''};
  const cache={};function pre(k){const s=img(k);if(!cache[s]){const i=new Image();i.decoding='async';i.src=s;cache[s]=(i.decode?i.decode():Promise.resolve()).catch(()=>{}).then(()=>s)}return cache[s]}
  function holdTo(k){return pre(k).then(s=>{if(!hold.src.endsWith(s))hold.src=s;return (hold.decode?hold.decode():Promise.resolve()).catch(()=>{})}).then(()=>flag(u,'held',true))}
@@ -41,10 +41,10 @@
   pre('c3')}
  let wB=0;vB.addEventListener('waiting',()=>{if(st!=='b')return;clearTimeout(wB);const t=vB.currentTime;wB=setTimeout(()=>{if(st==='b'&&vB.currentTime-t<.2)cut('c3')},1200)});vB.addEventListener('playing',()=>clearTimeout(wB));
  function endB(){if(st!=='b')return;holdTo('c3');state('c3');pin(false)}
- function cut(s){stop(vA);stop(vB);loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
+ function cut(s){stop(vO);stop(vA);stop(vB);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
   if(s==='c2'){primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}else pin(false)}
  function toEnd(){if(st==='c3')return;clearTimeout(t2);clearTimeout(tW);want=wantB=false;cut('c3')}
- const next=()=>{if(!LIVE)return;if(st==='c1')startA();else if(st==='c2')startB()};
+ const next=()=>{if(!LIVE)return;if(st==='o'){stop(vO);toC1()}if(st==='c1')startA();else if(st==='c2')startB()};
  const live=()=>LIVE&&st!=='c3';
  const ctl=t=>!!(t&&t.closest&&t.closest('a,button,input,select,textarea,.tel-rev'));
  addEventListener('wheel',e=>{if(!live())return;const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.ctrlKey)return;e.preventDefault();
@@ -60,16 +60,25 @@
  document.addEventListener('click',e=>{if(!live())return;const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a===skip)return;const h=a.getAttribute('href');if(h==='#top'||h==='#'||h==='#lac')return;toEnd()},true);
  addEventListener('hashchange',()=>{if(live()&&location.hash.length>1&&location.hash!=='#top')toEnd()});
  addEventListener('resize',()=>{const k=K();if(k===set)return;set=k;flag(u,'held',false);hold.removeAttribute('src');
+  if(st==='o'){stop(vO);toC1()}
   if(st==='c1'){stop(vA);flag(vA,'on',false);primed=ready=false;vA.src=vid('a');play(vA)}
   else if(st==='a'||st==='c2')cut('c2');else cut('c3');
   vB.removeAttribute('src');bPrimed=bReady=false;if(st==='c2')primeB()});
- function flat(){LIVE=false;u.classList.add('static');for(const v of [vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);state('c3')}
+ function flat(){LIVE=false;u.classList.add('static');for(const v of [vO,vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);hold.src=img('c1');flag(u,'held',true);state('c3')}
  if(!LIVE){flat();return}
  const H=location.hash,deep=H.length>1&&H!=='#top'&&H!=='#lac'&&!!document.getElementById(H.slice(1));
- if(!deep&&!vA.getAttribute('src'))vA.src=vid('a');
- if(vA.error){flat();return}
+ function loadA(){if(vA.getAttribute('src'))return;vA.src=vid('a');try{vA.load()}catch(e){}}
  vA.addEventListener('error',()=>{if(st==='c1'||st==='a')flat()},{once:true});
- if(!vA.paused&&vA.currentTime>0)primeA();else if(vA.ended){primed=true;ready=true;try{vA.currentTime=0}catch(e){}}
- setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200);
- if(deep||scrollY>40){toEnd()}else{state('c1');pin(true)}
+ let tO=0,oOn=false;
+ function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);
+  setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
+ if(deep||scrollY>40){stop(vO);vO.removeAttribute('src');try{vO.load()}catch(e){}toEnd();return}
+ state('o');pin(true);
+ if(!vO.getAttribute('src'))vO.src=vid('o');
+ const onO=()=>{if(oOn||st!=='o')return;oOn=true;clearTimeout(tO);flag(vO,'on',true);loadA();setTimeout(()=>{if(st==='o')u.classList.add('pre')},900);onEnd(vO,toC1,((vO.duration||2)+1.5)*1000)};
+ if(vO.ended)toC1();else if(!vO.paused&&vO.currentTime>0)onO();else vO.addEventListener('playing',onO,{once:true});
+ vO.addEventListener('error',()=>{if(st==='o')toC1()},{once:true});
+ const oNo=()=>{clearTimeout(tO);tO=setTimeout(()=>{if(!oOn&&st==='o')toC1()},1200)};
+ vO.addEventListener('canplay',oNo,{once:true});vO.addEventListener('loadeddata',oNo,{once:true});if(vO.readyState>=2)oNo();
+ tO=setTimeout(()=>{if(!oOn&&st==='o')toC1()},5000);
 })();

@@ -55,6 +55,7 @@
  .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
  .lac-tx .mono{padding-right:72px}   /* « Passer », en haut à droite */
  .lac .tel-rev{display:none}
+ .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}   /* au téléphone, c1 garde le titre, le bouton et « Entrer » : le téléphone géant respire entre les deux */
 }
 
 /* sans film : mouvement réduit, film absent, ou sans JavaScript ; l'image du ponton puis le texte, en page normale */
