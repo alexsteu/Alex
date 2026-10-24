@@ -1,20 +1,19 @@
-/* v35 · L'entrée du lac (accueil). Deux films lus en avant, jamais cherchés (la leçon de v27 : une image pilotée par le défilement saccade sur iPhone) :
-   c1 (le ponton, le téléphone géant sonne ; le titre) → un geste (roulette, doigt, flèche bas, Espace, clic, « Entrer ») → film A (4 s) :
-   on marche sur le ponton, on tourne autour du téléphone qui s'ouvre en pièces détachées → c2 (le texte, 3,2 s ou un geste) → film B (4,4 s) :
-   le tour se finit, les pièces se referment, l'écran passe de « ça sonne » à « elle répond » → c3 (« Tester la démo »), la page est libre.
-   Pendant c1 → c3 la page est tenue en haut (les gestes font avancer l'entrée, pas la page). « Passer », un lien de la page, un retour au milieu
-   de la page : droit à c3. L'autoplay (muet, en ligne) fait charger le film A sur iPhone : il joue caché sous l'image du ponton et se pose aussitôt.
-   Mouvement réduit : l'image et le texte, sans film. Un film qui tarde (réseau lent) : l'image de l'arrêt suivant, sans attendre plus de 2,5 s. */
+/* v38 · L'entrée du lac (accueil). Un film d'ouverture automatique, puis UN film lu au premier geste, jamais cherché (la leçon de v27 : une image pilotée
+   par le défilement saccade sur iPhone) : o (au ras de l'eau, le téléphone géant sonne) → c1 (le titre) → un geste (roulette, doigt, flèche bas, Espace, clic,
+   « Entrer ») → film A (4,6 s) : on s'approche, la vitre se soulève, la conversation sort de l'écran (l'appel, la réponse de l'assistante, la réservation notée)
+   → c2 (« Tester la démo »), la page est libre. Pendant o → c2 la page est tenue en haut (les gestes font avancer l'entrée, pas la page). « Passer », un lien de
+   la page, un retour au milieu de la page : droit à c2. L'autoplay (muet, en ligne) fait charger le film A sur iPhone : il joue caché sous l'image du ponton et
+   se pose aussitôt. Mouvement réduit : l'image et le texte, sans film. Un film qui tarde (réseau lent) : l'image de l'arrêt, sans attendre plus de 2,5 s. */
 (()=>{const u=$('lac');if(!u)return;
- const vO=$('lacO'),vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
- const blocks={c1:$('lac1'),c2:$('lac2'),c3:$('lac3')},COARSE=matchMedia('(pointer:coarse)').matches,C2_MS=3200,WAIT_MS=2500;
+ const vO=$('lacO'),vA=$('lacA'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ const blocks={c1:$('lac1'),c2:$('lac2')},COARSE=matchMedia('(pointer:coarse)').matches,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
  const VX=(()=>{try{const v=document.createElement('video');return v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
  const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+'.jpg';
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
- let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,bPrimed=false,bReady=false,wantB=false,t2=0,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
+ let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
  /* l'état : la classe de la section (le texte de l'arrêt), et les blocs cachés inertes (pas de lien invisible au clavier) */
- function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
+ function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2'};for(const k in c)flag(u,c[k],k===s);
   for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE||(s==='o'&&k==='c1');if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
  const loading=on=>{ld.textContent=on?'Chargement de l’entrée…':''};
  /* les images des arrêts : décodées avant d'être montrées */
@@ -33,36 +32,21 @@
  function startA(){if(st!=='c1'||!LIVE)return;if(ready){runA();return}
   want=true;play(vA);   /* pas encore là (autoplay refusé, iPhone en économie d'énergie) : un geste peut le lancer ; sinon l'image de c2 au bout de l'attente */
   clearTimeout(tW);tW=setTimeout(()=>{if(st==='c1'&&want){loading(true);tW=setTimeout(()=>{if(st==='c1'&&want){want=false;loading(false);state('a');pin(true);cut('c2')}},WAIT_MS)}},500)}
- function runA(){want=false;loading(false);clearTimeout(tW);state('a');pin(true);loadB();
+ function runA(){want=false;loading(false);clearTimeout(tW);state('a');pin(true);
   if(!vA.paused&&vA.readyState>2)flag(vA,'on',true);else vA.addEventListener('playing',()=>flag(vA,'on',true),{once:true});
   const p=play(vA);if(p&&p.then)p.then(null,()=>{if(st==='a')cut('c2')});
-  onEnd(vA,endA,((vA.duration||4)+2.5)*1000);
+  onEnd(vA,endA,((vA.duration||4.6)+2.5)*1000);
   setTimeout(()=>{if(st==='a'&&vA.paused&&!vA.ended)cut('c2')},WAIT_MS);   /* il ne part pas : l'image de l'arrêt */
   pre('c2')}
  let wA=0;vA.addEventListener('waiting',()=>{if(st!=='a')return;clearTimeout(wA);const t=vA.currentTime;wA=setTimeout(()=>{if(st==='a'&&vA.currentTime-t<.2)cut('c2')},1200)});vA.addEventListener('playing',()=>clearTimeout(wA));
- function endA(){if(st!=='a')return;holdTo('c2');state('c2');primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}
-
- /* ——— film B : chargé pendant A (preload), amorcé à c2 (comme A : il joue caché, se pose), lu au geste ou au bout de C2_MS ——— */
- function loadB(){if(vB.getAttribute('src'))return;vB.src=vid('b');try{vB.load()}catch(e){}}
- function primeB(){if(bPrimed)return;bPrimed=true;loadB();vB.addEventListener('playing',function f(){if(st==='b')return;vB.removeEventListener('playing',f);bReady=true;if(wantB&&st==='c2'){startB();return}stop(vB);try{vB.currentTime=0}catch(e){}});
-  const p=play(vB);if(p&&p.then)p.then(null,()=>{if(vB.readyState>=3){bReady=true;if(wantB)startB()}else vB.addEventListener('canplaythrough',()=>{bReady=true;if(wantB)startB()},{once:true})})}
- function startB(){clearTimeout(t2);if(st!=='c2'||!LIVE)return;if(!bReady){if(wantB)return;wantB=true;play(vB);clearTimeout(tW);tW=setTimeout(()=>{if(st==='c2'&&wantB)loading(true)},600);setTimeout(()=>{if(st==='c2'&&wantB){wantB=false;loading(false);cut('c3')}},WAIT_MS+600);return}
-  wantB=false;loading(false);clearTimeout(tW);state('b');
-  const showB=()=>{flag(vB,'on',true);setTimeout(()=>{if(st==='b'||st==='c3')flag(vA,'on',false)},120)};if(!vB.paused&&vB.readyState>2)showB();else vB.addEventListener('playing',showB,{once:true});
-  const p=play(vB);if(p&&p.then)p.then(null,()=>{if(st==='b')cut('c3')});
-  onEnd(vB,endB,((vB.duration||4.4)+2.5)*1000);
-  setTimeout(()=>{if(st==='b'&&vB.paused&&!vB.ended)cut('c3')},WAIT_MS);
-  pre('c3')}
- let wB=0;vB.addEventListener('waiting',()=>{if(st!=='b')return;clearTimeout(wB);const t=vB.currentTime;wB=setTimeout(()=>{if(st==='b'&&vB.currentTime-t<.2)cut('c3')},1200)});vB.addEventListener('playing',()=>clearTimeout(wB));
- function endB(){if(st!=='b')return;holdTo('c3');state('c3');pin(false)}
+ function endA(){if(st!=='a')return;holdTo('c2');state('c2');pin(false)}
 
  /* un film qui ne vient pas : l'image de l'arrêt, en fondu ; les films s'effacent une fois l'image posée */
- function cut(s){stop(vO);stop(vA);stop(vB);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
-  if(s==='c2'){primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}else pin(false)}
+ function cut(s){stop(vO);stop(vA);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>flag(vA,'on',false));state(s);if(s==='c2')pin(false)}
  /* droit à la fin (« Passer », un lien de la page, une arrivée au milieu de la page) */
- function toEnd(){if(st==='c3')return;clearTimeout(t2);clearTimeout(tW);want=wantB=false;cut('c3')}
- const next=()=>{if(!LIVE)return;if(st==='o'){stop(vO);toC1()}if(st==='c1')startA();else if(st==='c2')startB()};
- const live=()=>LIVE&&st!=='c3';
+ function toEnd(){if(st==='c2')return;clearTimeout(tW);want=false;cut('c2')}
+ const next=()=>{if(!LIVE)return;if(st==='o'){stop(vO);toC1()}if(st==='c1')startA()};
+ const live=()=>LIVE&&st!=='c2';
 
  /* ——— les gestes : pendant l'entrée, ils la font avancer (un geste neuf = un pas ; l'élan d'une roulette ne compte qu'une fois) ——— */
  const ctl=t=>!!(t&&t.closest&&t.closest('a,button,input,select,textarea,.tel-rev'));
@@ -71,7 +55,7 @@
  addEventListener('touchstart',e=>{const q=e.touches[0];tY0=q?q.clientY:-1;tX0=q?q.clientX:0;swp=false},{passive:true});
  addEventListener('touchmove',e=>{if(!live())return;if(e.touches.length>1)return;if(e.cancelable)e.preventDefault();const q=e.touches[0];if(!q||swp||tY0<0)return;const dy=tY0-q.clientY;
   if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0)){swp=true;next()}},{passive:false});
- addEventListener('touchend',()=>{if(want&&st==='c1')play(vA);else if(wantB&&st==='c2')play(vB)},{passive:true});   /* le doigt levé compte comme un geste pour le navigateur : le film qui attend peut partir */
+ addEventListener('touchend',()=>{if(want&&st==='c1')play(vA)},{passive:true});   /* le doigt levé compte comme un geste pour le navigateur : le film qui attend peut partir */
  addEventListener('keydown',e=>{if(!live())return;if(![' ','ArrowDown','PageDown','End'].includes(e.key))return;if(e.key===' '&&ctl(e.target))return;e.preventDefault();next()});
  stg.addEventListener('click',e=>{if(!live()||ctl(e.target))return;next()});
  go.addEventListener('click',e=>{e.preventDefault();next()});
@@ -84,11 +68,10 @@
  addEventListener('resize',()=>{const k=K();if(k===set)return;set=k;flag(u,'held',false);hold.removeAttribute('src');
   if(st==='o'){stop(vO);toC1()}
   if(st==='c1'){stop(vA);flag(vA,'on',false);primed=ready=false;vA.src=vid('a');play(vA)}
-  else if(st==='a'||st==='c2')cut('c2');else cut('c3');
-  vB.removeAttribute('src');bPrimed=bReady=false;if(st==='c2')primeB()});
+  else cut('c2')});
 
  /* ——— le départ : le film d'ouverture (autoplay, visible : au ras de l'eau, l'onde part, le téléphone se révèle), puis c1 ——— */
- function flat(){LIVE=false;u.classList.add('static');for(const v of [vO,vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);hold.src=img('c1');flag(u,'held',true);state('c3')}
+ function flat(){LIVE=false;u.classList.add('static');for(const v of [vO,vA]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);hold.src=img('c1');flag(u,'held',true);state('c2')}
  if(!LIVE){flat();return}
  const H=location.hash,deep=H.length>1&&H!=='#top'&&H!=='#lac'&&!!document.getElementById(H.slice(1));
  function loadA(){if(vA.getAttribute('src'))return;vA.src=vid('a');try{vA.load()}catch(e){}}

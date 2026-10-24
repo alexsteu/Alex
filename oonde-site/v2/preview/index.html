@@ -250,7 +250,7 @@ footer{border-top:0}
 .lac-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.42) 34%,rgba(10,12,18,0) 60%),linear-gradient(0deg,rgba(10,12,18,.35),rgba(10,12,18,0) 28%)}
 @media (max-aspect-ratio:1/1){.lac-veil{background:linear-gradient(180deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.34) 30%,rgba(10,12,18,0) 46%,rgba(10,12,18,0) 62%,rgba(10,12,18,.72) 100%)}}
 .lac-tx{position:absolute;z-index:3;left:clamp(20px,6cqw,96px);top:50%;width:min(36rem,44cqw);translate:0 calc(-50% + 12px);opacity:0;pointer-events:none;transition:opacity .35s ease,translate .35s ease}
-.lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{opacity:1;translate:0 -50%;pointer-events:auto;transition:opacity .6s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
+.lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2{opacity:1;translate:0 -50%;pointer-events:auto;transition:opacity .6s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
 .lac .mono{color:rgba(255,255,255,.78)}
 .lac h1{font:600 clamp(38px,4.7cqw,74px)/1 var(--sans);letter-spacing:-.035em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 28px rgba(5,6,12,.45)}
 .lac-hd{font:600 clamp(30px,3.6cqw,56px)/1.04 var(--sans);letter-spacing:-.03em;margin:12px 0 0;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,12,.45)}
@@ -270,13 +270,13 @@ footer{border-top:0}
 @keyframes lacNudge{0%,60%,100%{transform:none}30%{transform:translateY(4px)}}
 .lac-skip{position:absolute;z-index:4;right:clamp(16px,3cqw,40px);bottom:clamp(14px,3cqh,28px);font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);text-decoration:none;padding:12px 4px;transition:opacity .3s}
 .lac-skip:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
-.lac.s3 .lac-skip{opacity:0;pointer-events:none}
+.lac.s2 .lac-skip{opacity:0;pointer-events:none}
 .lac-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);background:rgba(10,12,18,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
 .lac-load:not(:empty){opacity:1}
 .lac-tx :focus-visible,.lac-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (max-aspect-ratio:1/1){
  .lac-tx{left:var(--pad);right:var(--pad);width:auto;top:clamp(16px,4.5cqh,40px);bottom:clamp(18px,4cqh,36px);translate:0 12px;display:flex;flex-direction:column}
- .lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2,.lac.s3 .lac-3{translate:0 0}
+ .lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2{translate:0 0}
  .lac h1{font-size:min(40px,9.6cqw);margin-top:10px}
  .lac-hd{font-size:min(32px,8.2cqw);margin-top:10px}
  .lac-p{font-size:16.5px;margin-top:10px}
@@ -287,25 +287,19 @@ footer{border-top:0}
  .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
  .lac-tx .mono{padding-right:72px}
  .lac .tel-rev{display:none}
+ .lac-2 .lac-pl{display:none}
  .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}
 }
 .lac.static .lac-st,html:not(.js) .lac-st{height:auto;min-height:0;overflow:visible;container-type:inline-size;display:flex;flex-direction:column;background:#14161b}
 .lac.static .lac-sc,html:not(.js) .lac-sc{position:relative;inset:auto;aspect-ratio:16/9;max-height:54vh;overflow:hidden}
-.lac.static .lac-v,.lac.static .lac-pp,.lac.static .lac-go,.lac.static .lac-skip,.lac.static .lac-3 .mono,html:not(.js) .lac-v,html:not(.js) .lac-h,html:not(.js) .lac-go,html:not(.js) .lac-skip,html:not(.js) .lac-3 .mono{display:none}
+.lac.static .lac-v,.lac.static .lac-pp,.lac.static .lac-go,.lac.static .lac-skip,.lac.static .lac-2 .mono,html:not(.js) .lac-v,html:not(.js) .lac-h,html:not(.js) .lac-go,html:not(.js) .lac-skip,html:not(.js) .lac-2 .mono{display:none}
 .lac.static .lac-veil,html:not(.js) .lac-veil{display:none}
 .lac.static .lac-h{position:static;opacity:1}
 .lac.static .lac-tx,html:not(.js) .lac-tx{position:relative;inset:auto;width:auto;max-width:44rem;translate:none;opacity:1;pointer-events:auto;padding:0 var(--pad);display:block}
 .lac.static .lac-1,html:not(.js) .lac-1{padding-top:clamp(28px,5vw,56px)}
-.lac.static .lac-2,html:not(.js) .lac-2{padding-top:4px}
-.lac.static .lac-2 .lac-hd,html:not(.js) .lac-2 .lac-hd{display:none}
-.lac.static .lac-3,html:not(.js) .lac-3{padding-block:8px clamp(48px,6vw,80px)}
-.lac.static .lac-3 .lac-hd,html:not(.js) .lac-3 .lac-hd,.lac.static .lac-1 .lac-low,html:not(.js) .lac-1 .lac-low{display:none}
+.lac.static .lac-2,html:not(.js) .lac-2{padding-block:4px clamp(48px,6vw,80px)}
+.lac.static .lac-2 .lac-hd,html:not(.js) .lac-2 .lac-hd,.lac.static .lac-1 .lac-low,html:not(.js) .lac-1 .lac-low{display:none}
 @media (max-aspect-ratio:1/1){.lac.static .lac-sc,html:not(.js) .lac-sc{aspect-ratio:1/1;max-height:46vh}.lac.static .lac-sc img,html:not(.js) .lac-sc img{object-position:50% 62%}.lac.static .lac-tx .mono,html:not(.js) .lac-tx .mono{padding-right:0}}
-.lac-q,.lac-2 .lac-ps{display:none}
-.lac-q{font:600 clamp(17px,4.4vw,21px)/1.3 var(--sans);letter-spacing:-.015em;margin-top:14px;padding:12px 14px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(5,6,20,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.lac-q .dtag{display:block;width:max-content;margin-bottom:8px}
-@media (max-aspect-ratio:1/1){.lac-2 .lac-pl{display:none}.lac-2 .lac-q,.lac-2 .lac-ps{display:block}.lac-2 .lac-ps{margin-top:12px;font-size:15px}}
-.lac.static .lac-q,html:not(.js) .lac-q{display:none}
 .es h2{margin-top:14px;max-width:17ch}
 .es .t3 b{font-size:clamp(24px,2.4vw,34px)}
 .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(17,19,24,.06);color:var(--soft)}
@@ -363,8 +357,7 @@ footer{border-top:0}
    <video class="lac-v" id="lacO" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
    <script>(function(v){var h=location.hash;if(!v||matchMedia('(prefers-reduced-motion: reduce)').matches||h.length>1&&h!=='#top')return;v.src='video/lac/'+(innerWidth<=innerHeight?'m':'d')+'/o.'+(v.canPlayType('video/mp4; codecs="avc1.64002A"')||!v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'mp4':'webm')})(document.getElementById('lacO'))
 </script>
-   <video class="lac-v" id="lacA" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
-   <video class="lac-v" id="lacB" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
+   <video class="lac-v" id="lacA" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
   <div class="lac-veil" aria-hidden="true"></div>
   <div class="lac-tx lac-1" id="lac1">
    <div><p class="mono">Assistant téléphonique · Genève et Vaud</p>
@@ -374,14 +367,9 @@ footer{border-top:0}
    <button type="button" class="lac-go" id="lacGo">Entrer <i aria-hidden="true">↓</i></button></div>
   </div>
   <div class="lac-tx lac-2" id="lac2">
-   <p class="lac-hd">Elle répond comme chez vous.</p>
-   <p class="lac-q"><span class="dtag">Démo</span> « Trattoria Nonna Pia, bonsoir ! C’est pour une réservation ? »</p>
-   <p class="lac-p lac-pl">Pizzeria, restaurant : quand l’équipe ne peut pas, elle prend la commande ou le message. Elle dit qu’elle est l’assistante virtuelle, et que l’appel est enregistré.</p>
-   <p class="lac-p lac-ps">Elle prend la commande ou le message, dit qu’elle est une assistante, et que l’appel est enregistré.</p>
-  </div>
-  <div class="lac-tx lac-3" id="lac3">
    <div><p class="mono"><span class="dtag">Démo</span> Trattoria Nonna Pia, restaurant inventé</p>
-   <p class="lac-hd">Vous recevez le résumé.</p></div>
+   <p class="lac-hd">Elle répond, note, et vous envoie le résumé.</p>
+   <p class="lac-p lac-pl">Pizzeria, restaurant : quand l’équipe ne peut pas décrocher, elle prend la réservation, la commande ou le message. Elle dit qu’elle est l’assistante virtuelle, et que l’appel est enregistré.</p></div>
    <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRevL" aria-controls="telRevL"><span>Tester la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
     <p class="tel-rev" id="telRevL" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
    <p class="lac-sites">Un site internet ? <a href="sites.html">Entrez dans notre démo en 3D <i class="ar">→</i></a></p></div>
@@ -593,14 +581,14 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
 (()=>{const els=document.querySelectorAll('.rv');if(!els.length)return;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){els.forEach(e=>e.classList.add('on'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.2,rootMargin:'0px 0px -5% 0px'});els.forEach(e=>{if(e.getBoundingClientRect().top<innerHeight)e.classList.add('on');else io.observe(e)})})();
 </script>
 <script>(()=>{const u=$('lac');if(!u)return;
- const vO=$('lacO'),vA=$('lacA'),vB=$('lacB'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
- const blocks={c1:$('lac1'),c2:$('lac2'),c3:$('lac3')},COARSE=matchMedia('(pointer:coarse)').matches,C2_MS=3200,WAIT_MS=2500;
+ const vO=$('lacO'),vA=$('lacA'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ const blocks={c1:$('lac1'),c2:$('lac2')},COARSE=matchMedia('(pointer:coarse)').matches,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
  const VX=(()=>{try{const v=document.createElement('video');return v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
  const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+'.jpg';
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
- let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,bPrimed=false,bReady=false,wantB=false,t2=0,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
- function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2',b:'sB',c3:'s3'};for(const k in c)flag(u,c[k],k===s);
+ let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
+ function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2'};for(const k in c)flag(u,c[k],k===s);
   for(const k in blocks){const b=blocks[k];if(!b)continue;const on=k===s||!LIVE||(s==='o'&&k==='c1');if(on)b.removeAttribute('inert');else b.setAttribute('inert','')}}
  const loading=on=>{ld.textContent=on?'Chargement de l’entrée…':''};
  const cache={};function pre(k){const s=img(k);if(!cache[s]){const i=new Image();i.decoding='async';i.src=s;cache[s]=(i.decode?i.decode():Promise.resolve()).catch(()=>{}).then(()=>s)}return cache[s]}
@@ -615,38 +603,25 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
  function startA(){if(st!=='c1'||!LIVE)return;if(ready){runA();return}
   want=true;play(vA);
   clearTimeout(tW);tW=setTimeout(()=>{if(st==='c1'&&want){loading(true);tW=setTimeout(()=>{if(st==='c1'&&want){want=false;loading(false);state('a');pin(true);cut('c2')}},WAIT_MS)}},500)}
- function runA(){want=false;loading(false);clearTimeout(tW);state('a');pin(true);loadB();
+ function runA(){want=false;loading(false);clearTimeout(tW);state('a');pin(true);
   if(!vA.paused&&vA.readyState>2)flag(vA,'on',true);else vA.addEventListener('playing',()=>flag(vA,'on',true),{once:true});
   const p=play(vA);if(p&&p.then)p.then(null,()=>{if(st==='a')cut('c2')});
-  onEnd(vA,endA,((vA.duration||4)+2.5)*1000);
+  onEnd(vA,endA,((vA.duration||4.6)+2.5)*1000);
   setTimeout(()=>{if(st==='a'&&vA.paused&&!vA.ended)cut('c2')},WAIT_MS);
   pre('c2')}
  let wA=0;vA.addEventListener('waiting',()=>{if(st!=='a')return;clearTimeout(wA);const t=vA.currentTime;wA=setTimeout(()=>{if(st==='a'&&vA.currentTime-t<.2)cut('c2')},1200)});vA.addEventListener('playing',()=>clearTimeout(wA));
- function endA(){if(st!=='a')return;holdTo('c2');state('c2');primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}
- function loadB(){if(vB.getAttribute('src'))return;vB.src=vid('b');try{vB.load()}catch(e){}}
- function primeB(){if(bPrimed)return;bPrimed=true;loadB();vB.addEventListener('playing',function f(){if(st==='b')return;vB.removeEventListener('playing',f);bReady=true;if(wantB&&st==='c2'){startB();return}stop(vB);try{vB.currentTime=0}catch(e){}});
-  const p=play(vB);if(p&&p.then)p.then(null,()=>{if(vB.readyState>=3){bReady=true;if(wantB)startB()}else vB.addEventListener('canplaythrough',()=>{bReady=true;if(wantB)startB()},{once:true})})}
- function startB(){clearTimeout(t2);if(st!=='c2'||!LIVE)return;if(!bReady){if(wantB)return;wantB=true;play(vB);clearTimeout(tW);tW=setTimeout(()=>{if(st==='c2'&&wantB)loading(true)},600);setTimeout(()=>{if(st==='c2'&&wantB){wantB=false;loading(false);cut('c3')}},WAIT_MS+600);return}
-  wantB=false;loading(false);clearTimeout(tW);state('b');
-  const showB=()=>{flag(vB,'on',true);setTimeout(()=>{if(st==='b'||st==='c3')flag(vA,'on',false)},120)};if(!vB.paused&&vB.readyState>2)showB();else vB.addEventListener('playing',showB,{once:true});
-  const p=play(vB);if(p&&p.then)p.then(null,()=>{if(st==='b')cut('c3')});
-  onEnd(vB,endB,((vB.duration||4.4)+2.5)*1000);
-  setTimeout(()=>{if(st==='b'&&vB.paused&&!vB.ended)cut('c3')},WAIT_MS);
-  pre('c3')}
- let wB=0;vB.addEventListener('waiting',()=>{if(st!=='b')return;clearTimeout(wB);const t=vB.currentTime;wB=setTimeout(()=>{if(st==='b'&&vB.currentTime-t<.2)cut('c3')},1200)});vB.addEventListener('playing',()=>clearTimeout(wB));
- function endB(){if(st!=='b')return;holdTo('c3');state('c3');pin(false)}
- function cut(s){stop(vO);stop(vA);stop(vB);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>{flag(vA,'on',false);flag(vB,'on',false)});state(s);
-  if(s==='c2'){primeB();clearTimeout(t2);t2=setTimeout(()=>startB(),C2_MS)}else pin(false)}
- function toEnd(){if(st==='c3')return;clearTimeout(t2);clearTimeout(tW);want=wantB=false;cut('c3')}
- const next=()=>{if(!LIVE)return;if(st==='o'){stop(vO);toC1()}if(st==='c1')startA();else if(st==='c2')startB()};
- const live=()=>LIVE&&st!=='c3';
+ function endA(){if(st!=='a')return;holdTo('c2');state('c2');pin(false)}
+ function cut(s){stop(vO);stop(vA);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>flag(vA,'on',false));state(s);if(s==='c2')pin(false)}
+ function toEnd(){if(st==='c2')return;clearTimeout(tW);want=false;cut('c2')}
+ const next=()=>{if(!LIVE)return;if(st==='o'){stop(vO);toC1()}if(st==='c1')startA()};
+ const live=()=>LIVE&&st!=='c2';
  const ctl=t=>!!(t&&t.closest&&t.closest('a,button,input,select,textarea,.tel-rev'));
  addEventListener('wheel',e=>{if(!live())return;const t=performance.now(),quiet=t-lastW>350;lastW=t;if(e.ctrlKey)return;e.preventDefault();
   if(e.deltaY>0&&quiet&&t-lastStep>450)next()},{passive:false});
  addEventListener('touchstart',e=>{const q=e.touches[0];tY0=q?q.clientY:-1;tX0=q?q.clientX:0;swp=false},{passive:true});
  addEventListener('touchmove',e=>{if(!live())return;if(e.touches.length>1)return;if(e.cancelable)e.preventDefault();const q=e.touches[0];if(!q||swp||tY0<0)return;const dy=tY0-q.clientY;
   if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0)){swp=true;next()}},{passive:false});
- addEventListener('touchend',()=>{if(want&&st==='c1')play(vA);else if(wantB&&st==='c2')play(vB)},{passive:true});
+ addEventListener('touchend',()=>{if(want&&st==='c1')play(vA)},{passive:true});
  addEventListener('keydown',e=>{if(!live())return;if(![' ','ArrowDown','PageDown','End'].includes(e.key))return;if(e.key===' '&&ctl(e.target))return;e.preventDefault();next()});
  stg.addEventListener('click',e=>{if(!live()||ctl(e.target))return;next()});
  go.addEventListener('click',e=>{e.preventDefault();next()});
@@ -656,9 +631,8 @@ if(!matchMedia('(pointer:coarse)').matches)document.addEventListener('click',e=>
  addEventListener('resize',()=>{const k=K();if(k===set)return;set=k;flag(u,'held',false);hold.removeAttribute('src');
   if(st==='o'){stop(vO);toC1()}
   if(st==='c1'){stop(vA);flag(vA,'on',false);primed=ready=false;vA.src=vid('a');play(vA)}
-  else if(st==='a'||st==='c2')cut('c2');else cut('c3');
-  vB.removeAttribute('src');bPrimed=bReady=false;if(st==='c2')primeB()});
- function flat(){LIVE=false;u.classList.add('static');for(const v of [vO,vA,vB]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);hold.src=img('c1');flag(u,'held',true);state('c3')}
+  else cut('c2')});
+ function flat(){LIVE=false;u.classList.add('static');for(const v of [vO,vA]){stop(v);v.removeAttribute('src');try{v.load()}catch(e){}flag(v,'on',false)}pin(false);hold.src=img('c1');flag(u,'held',true);state('c2')}
  if(!LIVE){flat();return}
  const H=location.hash,deep=H.length>1&&H!=='#top'&&H!=='#lac'&&!!document.getElementById(H.slice(1));
  function loadA(){if(vA.getAttribute('src'))return;vA.src=vid('a');try{vA.load()}catch(e){}}

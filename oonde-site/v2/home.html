@@ -20,7 +20,7 @@
 {{INC:base.css}}
 {{INC:offres.css}}
 {{INC:lac.css}}
-/* v31 · L'accueil : le téléphone (la page /telephone de v30, devenue l'accueil). v34 : l'entrée du lac (lac.css, lac.js : un téléphone géant en 3D, deux films), puis « Notre esprit ». Un héros (« Tester la démo » : on appelle la ligne de démo ;
+/* v31 · L'accueil : le téléphone (la page /telephone de v30, devenue l'accueil). v38 : l'entrée du lac (lac.css, lac.js : un téléphone géant en 3D qui s'ouvre sur la conversation, un film d'ouverture puis un seul geste), puis « Notre esprit ». Un héros (« Tester la démo » : on appelle la ligne de démo ;
    un ordinateur affiche le numéro et le code QR), l'appel en démo et l'écran des commandes, cinq points, les forfaits (offres.css), trois étapes,
    cinq questions, puis « Et aussi pour votre commerce » (le site en 3D, les vidéos), le dernier écran. Aucun chiffre ni client inventé, pas de prix dans le héros. */
 .es h2{margin-top:14px;max-width:17ch}
@@ -80,8 +80,7 @@
    <img class="lac-h" id="lacH" alt="" aria-hidden="true" decoding="async">
    <video class="lac-v" id="lacO" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
    <script>(function(v){var h=location.hash;if(!v||matchMedia('(prefers-reduced-motion: reduce)').matches||h.length>1&&h!=='#top')return;v.src='video/lac/'+(innerWidth<=innerHeight?'m':'d')+'/o.'+(v.canPlayType('video/mp4; codecs="avc1.64002A"')||!v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'mp4':'webm')})(document.getElementById('lacO'))</script>
-   <video class="lac-v" id="lacA" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
-   <video class="lac-v" id="lacB" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
+   <video class="lac-v" id="lacA" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
   <div class="lac-veil" aria-hidden="true"></div>
   <div class="lac-tx lac-1" id="lac1">
    <div><p class="mono">Assistant téléphonique · Genève et Vaud</p>
@@ -91,14 +90,9 @@
    <button type="button" class="lac-go" id="lacGo">Entrer <i aria-hidden="true">↓</i></button></div>
   </div>
   <div class="lac-tx lac-2" id="lac2">
-   <p class="lac-hd">Elle répond comme chez vous.</p>
-   <p class="lac-q"><span class="dtag">Démo</span> « Trattoria Nonna Pia, bonsoir ! C’est pour une réservation ? »</p>
-   <p class="lac-p lac-pl">Pizzeria, restaurant : quand l’équipe ne peut pas, elle prend la commande ou le message. Elle dit qu’elle est l’assistante virtuelle, et que l’appel est enregistré.</p>
-   <p class="lac-p lac-ps">Elle prend la commande ou le message, dit qu’elle est une assistante, et que l’appel est enregistré.</p>
-  </div>
-  <div class="lac-tx lac-3" id="lac3">
    <div><p class="mono"><span class="dtag">Démo</span> Trattoria Nonna Pia, restaurant inventé</p>
-   <p class="lac-hd">Vous recevez le résumé.</p></div>
+   <p class="lac-hd">Elle répond, note, et vous envoie le résumé.</p>
+   <p class="lac-p lac-pl">Pizzeria, restaurant : quand l’équipe ne peut pas décrocher, elle prend la réservation, la commande ou le message. Elle dit qu’elle est l’assistante virtuelle, et que l’appel est enregistré.</p></div>
    <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRevL" aria-controls="telRevL"><span>Tester la démo</span></a><a class="lnk" href="{{WA_TEL}}" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
     <p class="tel-rev" id="telRevL" hidden><b>021 539 01 22</b>{{QR_021}}<span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
    <p class="lac-sites">Un site internet ? <a href="{{SITES}}">Entrez dans notre démo en 3D <i class="ar">→</i></a></p></div>
