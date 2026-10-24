@@ -438,13 +438,15 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / f).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(D / f, o / f)
     if 'img/greves/${k}/' in html or "dir:'greves'" in html:   # la visite de la démo : les deux jeux d'images, appelés par le script
         for k in ('d', 'm'): shutil.copytree(D / 'img' / 'greves' / k, o / 'img' / 'greves' / k, dirs_exist_ok=True)
-    if 'video/lac/' in html:   # v34 : l'entrée du lac (accueil) : les deux films par format (l'aperçu : le MP4 seul) et les images des trois arrêts
+    if 'video/lac/' in html:   # v38 : l'entrée du lac (accueil) : les films o et a par format (l'aperçu : le MP4 seul) et les images des arrêts ; ce qui n'existe plus (b, c3) est retiré
         for k2 in ('d', 'm'):
+            (o / 'video' / 'lac' / k2).mkdir(parents=True, exist_ok=True); (o / 'img' / 'lac' / k2).mkdir(parents=True, exist_ok=True)
             for f in sorted((D / 'video' / 'lac' / k2).iterdir()):
-                if f.suffix == '.mp4' or (out == 'dist' and f.suffix == '.webm'):
-                    (o / 'video' / 'lac' / k2).mkdir(parents=True, exist_ok=True); shutil.copy2(f, o / 'video' / 'lac' / k2 / f.name)
+                if f.suffix == '.mp4' or (out == 'dist' and f.suffix == '.webm'): shutil.copy2(f, o / 'video' / 'lac' / k2 / f.name)
             for f in ('c0.jpg', 'c0.avif', 'c1.jpg', 'c2.jpg', 'c3.jpg'):
-                (o / 'img' / 'lac' / k2).mkdir(parents=True, exist_ok=True); shutil.copy2(D / 'img' / 'lac' / k2 / f, o / 'img' / 'lac' / k2 / f)
+                if (D / 'img' / 'lac' / k2 / f).exists(): shutil.copy2(D / 'img' / 'lac' / k2 / f, o / 'img' / 'lac' / k2 / f)
+            for stale in (o / 'img' / 'lac' / k2 / 'c3.jpg', o / 'video' / 'lac' / k2 / 'b.mp4', o / 'video' / 'lac' / k2 / 'b.webm'):
+                if stale.exists() and not (D / stale.relative_to(o)).exists(): stale.unlink()
     if 'img/e3d/' in html:   # v27 : l'entrée 3D de l'accueil : les clips (video/e3d/<jeu>/), leurs affiches et enseignes (img/e3d/v/), et les photos de la salle par métier (in-*, E3IN)
         for sub in ('img/e3d/v', 'video/e3d'):
             if (D / sub).is_dir(): shutil.copytree(D / sub, o / sub, dirs_exist_ok=True, ignore=shutil.ignore_patterns('*.json.tmp'))

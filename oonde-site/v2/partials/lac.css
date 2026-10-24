@@ -55,7 +55,7 @@
  .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
  .lac-tx .mono{padding-right:72px}   /* « Passer », en haut à droite */
  .lac .tel-rev{display:none}
- .lac-2 .lac-pl{display:none}   /* au téléphone, les cartes du film racontent la conversation : le titre et les boutons suffisent */
+ .lac-2 .lac-pl,.lac-2 .lac-sites{display:none}   /* au téléphone, les cartes du film racontent la conversation : le titre et les boutons suffisent (le lien vers les sites est dans le menu) */
  .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}   /* au téléphone, c1 garde le titre, le bouton et « Entrer » : le téléphone géant respire entre les deux */
 }
 
