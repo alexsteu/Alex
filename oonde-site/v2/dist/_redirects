@@ -7,9 +7,9 @@
 /tt     /?s=tt     302
 /carte  /?s=carte  302
 /g      /?s=gbp    302
-/pub    /reseaux  301
-/pub.html /reseaux 301
-/videos /reseaux  301
-/videos.html /reseaux 301
-/fil    /reseaux  301
-/fil.html /reseaux 301
+/pub    /videos  301
+/pub.html /videos 301
+/reseaux /videos  301
+/reseaux.html /videos 301
+/fil    /videos  301
+/fil.html /videos 301

@@ -89,6 +89,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',touched:false};
  paint();if(document.fonts)document.fonts.ready.then(paint);
  return{st,set,sty,paint}})();
 (()=>{const u=$('univers');if(!u)return;
+const QUICK=true;if(QUICK)u.classList.add('quick');
  const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),poster=$('rPoster'),hold=$('rHold'),vIn=$('rVin'),vG=$('rVg'),vE=$('rVe'),pins=$('rPins'),anchor=$('choix');
  const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),say=u.querySelector('.r-say'),stop=$('rStop'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg'),rwall=$('rWall'),sbar=$('rSbar'),end=$('rEnd');
  const HOLD_MS=5000;
@@ -191,7 +192,7 @@ const E3S=(()=>{const st={sc:'coiffure',name:'',touched:false};
  function size(){const k=r0();if(k!==set){set=k;hold.src='';flag(u,'held',false);if(st==='intro'||st==='title'){try{vIn.pause()}catch(e){}flag(vIn,'on',false);holdTo('stop-'+HOME).then(()=>{if(st==='intro'||st==='title')arrive()})}else if(st==='stop'||st==='glide'){holdTo('stop-'+met);ent=null;entryLoad()}else if(st==='in')holdTo('room-'+met);else if(st==='door'){ent=null}}geo()}
  function toStill(){thumb();u.classList.add('static');poster.src=img('stop-'+HOME);poster.parentNode.querySelectorAll('source').forEach(s=>s.remove());flag(u,'intro',false);st='stop';met=met||HOME;card(true);pin(false);place()}
  function flat(){if(!LIVE)return;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');for(const el of [t1,say,stop,sbar,end,sign]){el.style.opacity='';el.style.transform=''}memo.clear();for(const v of [vIn,vG,vE]){try{v.pause();v.removeAttribute('src');v.load()}catch(e){}flag(v,'on',false)}toStill();geo()}
- E3F.then(x=>{fmt=x==='a'?'avif':'jpg';set=r0();if(!LIVE){toStill();return}if(vIn.error||vIn.networkState===3&&!vIn.readyState){flat();return}
+ E3F.then(x=>{fmt=x==='a'?'avif':'jpg';set=r0();if(!LIVE){toStill();return}if(QUICK){st='title';setTimeout(toStop,60);return}if(vIn.error||vIn.networkState===3&&!vIn.readyState){flat();return}
   vIn.addEventListener('playing',onPlaying);vIn.addEventListener('timeupdate',()=>{if(st==='title'&&!primed&&!goT&&!vIn.paused&&vIn.currentTime>0)prime()});
   setTimeout(()=>{if(st==='title'&&!ready)SLOW=true},4000);
   if(vIn.ended){primed=true;try{vIn.currentTime=.1}catch(e){}armed(true)}else if(!vIn.paused&&vIn.currentTime>0)prime();

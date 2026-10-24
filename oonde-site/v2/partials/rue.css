@@ -204,3 +204,6 @@ html:not(.js) .r-sub,html:not(.js) .r-act{opacity:1;translate:none}
 @keyframes rMkDot{from{opacity:0;transform:scale(0)}}
 .js .r:not(.static) .r-veil::before{display:block;background:radial-gradient(ellipse at 50% 46%,rgba(8,10,28,.62),rgba(8,10,28,.82));opacity:var(--hv,1)}
 @keyframes rIn{from{filter:opacity(0)}}
+
+/* v37 : l'arrivée directe à l'arrêt : la carte-titre ne doit pas apparaître une fraction de seconde (elle reste dans la page pour les lecteurs d'écran) */
+.js .r.quick:not(.static) .r-t1{opacity:0;pointer-events:none}

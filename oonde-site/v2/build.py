@@ -90,7 +90,7 @@ WA_TEL_ESS = walink(HELLO + " Le téléphone m’intéresse, forfait Essentiel. 
 WA_TEL_PRO = walink(HELLO + " Le téléphone m’intéresse, forfait Pro. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
 WA_TEL_PRE = walink(HELLO + " Le téléphone m’intéresse, forfait Premium. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
 WA_TEL_RUSH = walink(HELLO + " Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
-WA_FIL = walink(HELLO + " Les réseaux sociaux m’intéressent : du contenu publié chaque matin sur mon Instagram. J’aimerais un exemple pour mon commerce.\nMon commerce, ma commune et mon compte Instagram : ")
+WA_FIL = walink(HELLO + " Vos vidéos m’intéressent : une pub pour mon commerce, et peut-être la publication sur mon Instagram. J’aimerais une maquette gratuite.\nMon commerce et ma commune : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
 WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce, pour la formule Premium du site.\nMon commerce, ma commune et le meilleur moment : ")
 WA_Q = walink(HELLO + " J’ai une question : ")
@@ -164,17 +164,17 @@ def nav(cur):
     sub = cur in ('assistant', 'visite')
     et = (f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>')
     if cur == 'sites':
-        return ('<a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{HOME}}">Le téléphone</a><a class="opt" href="{{RESEAUX}}">Réseaux sociaux</a>'
+        return ('<a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{HOME}}">Le téléphone</a><a class="opt" href="{{VIDEOS}}">Vidéos &amp; pubs</a>'
                 + et + '<a class="opt2" href="#questions">Questions</a>')
     H = '' if cur == 'index' else '{{HOME}}'
-    return (f'<a href="{H}#demo">La démo</a><a href="{H}#prix">Forfaits</a><a href="{{{{SITES}}}}">Sites internet</a><a class="opt" href="{{{{RESEAUX}}}}"{a("reseaux")}>Réseaux sociaux</a>'
+    return (f'<a href="{H}#demo">La démo</a><a href="{H}#prix">Forfaits</a><a href="{{{{SITES}}}}">Sites internet</a><a class="opt" href="{{{{VIDEOS}}}}"{a("videos")}>Vidéos &amp; pubs</a>'
             + et + f'<a class="opt2" href="{H}#questions">Questions</a>')
 
 def fnav(cur):
     """{{FNAV:page}} : v31, le plan du site du pied de page, le même partout (les pages légales suivent, écrites dans chaque page)."""
     cu = ' aria-current="page"'
     return ''.join(f'<a href="{{{{{t}}}}}"{cu if k == cur else ""}>{n}</a>' for k, t, n in
-                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites internet'), ('reseaux', 'RESEAUX', 'Réseaux sociaux'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète')))
+                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites internet'), ('videos', 'VIDEOS', 'Vidéos &amp; pubs'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète')))
 
 # v24 · Le Fil : les vidéos de démo, nommées pour la commerçante (ce qui sort sur son fil), et non par nos ateliers.
 # Fichiers web 720×1280 : video/fil/ (exemples de commerces) et video/demos/ (une démo par façon de faire ; les noms restent stables).
@@ -187,6 +187,18 @@ FV = {
     'ardoise': ('video/fil/ardoise', 'L’ardoise du jour.', 'Pour les restaurants et les cafés : la photo de l’ardoise devient une vidéo.', ['Démo · commerce inventé', 'voix IA'], 'Café Cormoran, un café inventé : l’ardoise sous la pluie, puis le menu dans le téléphone.'),
     'angles': ('video/demos/demo04-angles-9x16', 'Un produit, sous tous les angles.', 'Une seule prise devient quatre plans.', ['Démo · images IA', 'voix IA'], 'Une tasse de café filmée une fois, puis vue de dessus, en macro, au ras de la table et de dos.'),
 }
+# v37 · les pubs du 23.10 (nos propres vidéos Instagram ; commerces inventés ; aucun numéro) : la page Vidéos & pubs les montre en premier
+PUBS = {
+    'p702': ('video/demos/pub702-9x16', 'Ta pub, dans tous les styles.', 'Ballon, dessin animé, jeu vidéo, pâte à modeler, néon : une pub, cinq styles.', ['Démo · pizzeria inventée', 'voix IA'], 'La même pub pour une pizzeria inventée, dans cinq styles qui se succèdent : ballon, dessin animé, jeu vidéo, pâte à modeler, néon.'),
+    'p600': ('video/demos/pub600-9x16', 'Laisse sonner, qu’ils disaient.', 'Dessin animé des années 30 : le téléphone qui décroche tout seul.', ['Démo · pizzeria inventée', 'voix IA'], 'Un dessin animé rétro : des boutiques qui laissent sonner, puis le téléphone qui répond seul pour une pizzeria inventée.'),
+    'p213': ('video/demos/pub213-9x16', 'Le dernier éclair.', 'Une bande-annonce de blockbuster pour une pâtisserie qui n’existe pas.', ['Démo · pâtisserie inventée', 'voix IA'], 'Nuit d’orage, un éclair au chocolat, la foudre : une fausse bande-annonce pour une pâtisserie inventée.'),
+    'p690': ('video/demos/pub690-9x16', 'Ce que ça doit faire.', 'Jeu vidéo en 3D au coucher du soleil : le rush, et le téléphone qui répond.', ['Démo · lieu fictif', '3D'], 'Une ville sur la pente, le lac, une terrasse pleine, un four, un téléphone qui vibre : des plans de jeu vidéo au coucher du soleil.'),
+    'p210': ('video/demos/pub210-9x16', 'La sonnette.', 'Macro en 3D : on sonne au comptoir, personne ne vient.', ['Démo · pizzeria inventée', 'voix IA'], 'Une sonnette de comptoir chromée : on sonne de plus en plus vite, personne ne vient, le dôme saute et tourne sur le comptoir.'),
+    'p211': ('video/demos/pub211-9x16', 'La marguerite.', 'Un objet, un fil : chaque sonnerie arrache un pétale.', ['Démo · fleuriste inventé', 'voix IA'], 'Une marguerite qu’on effeuille : à chaque sonnerie un pétale tombe, jusqu’à la fleur nue.'),
+    'p212': ('video/demos/pub212-9x16', 'L’élastique.', 'Encre, papier, bleu : l’élastique de physio qui casse.', ['Démo · cabinet inventé', 'voix IA'], 'Un élastique de rééducation noué à un espalier se tend à chaque sonnerie, puis casse.'),
+}
+PUBS = {k: v for k, v in PUBS.items() if (D / f'{v[0]}.mp4').exists()}
+FV.update(PUBS)
 FV = {k: v for k, v in FV.items() if (D / f'{v[0]}.mp4').exists()}
 SND_SVG = '<svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/></svg><svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>'
 PLAY_SVG = '<span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span>'
@@ -208,7 +220,8 @@ def ftile(k, line=True):
     return (f'<li>{vbox(src, alt, t.rstrip("."))}<div class="cap"><p class="ft">{t}</p>' + (f'<p>{d}</p>' if line else '')
             + '<p class="vt">' + ' '.join(f'<span class="dtag{" ia" if i else ""}">{x}</span>' for i, x in enumerate(tags)) + '</p></div></li>')
 FIL_HOME = '<ul class="vrail v3">' + ''.join(ftile(k, False) for k in ('plat', 'produit', 'angles') if k in FV) + '</ul>'   # l'accueil : trois au plus, même taille (v24.1 : les angles remplacent le vélo)
-FIL_FORMATS = '<ul class="vrail v6">' + ''.join(ftile(k) for k in FV) + '</ul>'
+FIL_FORMATS = '<ul class="vrail v6">' + ''.join(ftile(k) for k in FV if k not in PUBS) + '</ul>'
+FIL_PUBS = '<ul class="vrail v6">' + ''.join(ftile(k) for k in PUBS) + '</ul>'   # v37
 
 def fill(s, fonts, links):
     # v25 : le CSS commun (base.css) et le script commun (core.js) dans leurs propres blocs : en production, ce sont deux fichiers
@@ -221,7 +234,7 @@ def fill(s, fonts, links):
     if '{{WA_ICON}}' in s:   # v28.1 : le symbole de l'icône WhatsApp, une fois, juste après le lien d'évitement (full() coupe <body> à ce lien)
         s, n = re.subn(r'(<a class="skip"[^>]*>.*?</a>)', lambda m: m.group(1) + WA_SYM, s, count=1)
         assert n == 1, 'pas de lien d’évitement pour poser le symbole WhatsApp'
-    s = s.replace('{{FIL_HOME}}', FIL_HOME).replace('{{FIL_FORMATS}}', FIL_FORMATS)
+    s = s.replace('{{FIL_HOME}}', FIL_HOME).replace('{{FIL_FORMATS}}', FIL_FORMATS).replace('{{FIL_PUBS}}', FIL_PUBS)
     s = re.sub(r'\{\{FIL:(\w+)\}\}', lambda m: FIL[m.group(1)], s)
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
     for k, v in MESURE.items(): s = s.replace(k, v)
@@ -386,7 +399,7 @@ QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-021.svg': qr('tel:+41215390122')}  
 QR_IMM = '<img src="img/qr-imm.svg" width="84" height="84" alt="" loading="lazy" decoding="async">'   # v29 : le code de La Vitrine (qr-wa) est parti avec elle
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
 # v31 : l'accueil est le téléphone (home.html, l'ancienne page /telephone) ; l'entrée 3D et les formules du site passent sur /sites (sites.html, l'ancien accueil)
-docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'reseaux': (D / 'reseaux.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -395,8 +408,8 @@ for k, (title, desc, cur) in PAGES.items():
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
 # v31 : {{SITES}} (l'entrée 3D, les formules du site) ; {{TELEPHONE}} et {{EXEMPLES}} disparaissent (le téléphone est l'accueil, les exemples sont sur /sites)
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{RESEAUX}}': 'reseaux'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{RESEAUX}}': 'reseaux.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
@@ -404,7 +417,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
             s = s.replace('{{LACB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'lac' / k2 / 'blur.webp').read_bytes()).decode())   # v34 : le lac, flou, avant l'image du ponton
-        if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'reseaux'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'videos'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
@@ -468,9 +481,9 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         # v29 : La Vitrine n'existe plus, ses liens mènent aux trois formules (v31 : sur /sites). v31 : /telephone devient l'accueil (/telephone#prix → /#prix, les forfaits) ;
         # /ig, /tt, /carte, /g mènent à l'accueil, donc au téléphone (voulu)
         (o / '_redirects').write_text('/telephone  /  301\n/telephone.html  /  301\n/vitrine  /sites#prix  301\n/vitrine.html  /sites#prix  301\n/exemples  /sites  301\n'
-            '/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /reseaux  301\n/pub.html /reseaux 301\n/videos /reseaux  301\n/videos.html /reseaux 301\n/fil    /reseaux  301\n/fil.html /reseaux 301\n')
+            '/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /videos  301\n/pub.html /videos 301\n/reseaux /videos  301\n/reseaux.html /videos 301\n/fil    /videos  301\n/fil.html /videos 301\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'sites', 'reseaux', 'assistant', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'sites', 'videos', 'assistant', 'visite')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):

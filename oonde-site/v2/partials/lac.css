@@ -71,3 +71,10 @@
 .lac.static .lac-3,html:not(.js) .lac-3{padding-block:8px clamp(48px,6vw,80px)}
 .lac.static .lac-3 .lac-hd,html:not(.js) .lac-3 .lac-hd,.lac.static .lac-1 .lac-low,html:not(.js) .lac-1 .lac-low{display:none}
 @media (max-aspect-ratio:1/1){.lac.static .lac-sc,html:not(.js) .lac-sc{aspect-ratio:1/1;max-height:46vh}.lac.static .lac-sc img,html:not(.js) .lac-sc img{object-position:50% 62%}.lac.static .lac-tx .mono,html:not(.js) .lac-tx .mono{padding-right:0}}
+
+/* v37 (jury 2) : au téléphone, la phrase que dit l'assistante est écrite dans la page (la carte du film est trop petite sur un iPhone) ; à l'ordinateur, la carte du film suffit */
+.lac-q,.lac-2 .lac-ps{display:none}
+.lac-q{font:600 clamp(17px,4.4vw,21px)/1.3 var(--sans);letter-spacing:-.015em;margin-top:14px;padding:12px 14px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(5,6,20,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.lac-q .dtag{display:block;width:max-content;margin-bottom:8px}
+@media (max-aspect-ratio:1/1){.lac-2 .lac-pl{display:none}.lac-2 .lac-q,.lac-2 .lac-ps{display:block}.lac-2 .lac-ps{margin-top:12px;font-size:15px}}
+.lac.static .lac-q,html:not(.js) .lac-q{display:none}

@@ -10,6 +10,9 @@
       le film s'arrête sur sa dernière image ; seulement alors « Ce soir, une table vous attend. » et la suite du site, dessous.
    Trois façades (TRIO), les autres métiers restent dans les rubriques du site. Mouvement réduit, sans film : l'image de l'arrêt et la carte. */
 (()=>{const u=$('univers');if(!u)return;
+/* v37 (24.10, Alexandre) : le visiteur a déjà vu l'entrée du vrai site (le téléphone sur le lac) ; /sites est un exemple, il passe vite :
+   pas de carte-titre tenue 5 s ni de film d'intro, la page s'ouvre directement sur l'arrêt (la façade, le nom, le métier) ; in.mp4 n'est plus chargé. */
+const QUICK=true;if(QUICK)u.classList.add('quick');
  const walk=$('rWalk'),stg=$('rStage'),scene=u.querySelector('.r-scene'),poster=$('rPoster'),hold=$('rHold'),vIn=$('rVin'),vG=$('rVg'),vE=$('rVe'),pins=$('rPins'),anchor=$('choix');
  const ld=u.querySelector('.r-load'),t1=u.querySelector('.r-t1'),say=u.querySelector('.r-say'),stop=$('rStop'),nameIn=$('rName'),sign=pins.querySelector('.r-sign'),nm=sign.querySelector('.r-nm'),mets=[...sign.querySelectorAll('.r-met i')],veil=u.querySelector('.r-veil'),seg=u.querySelector('.r-seg'),rwall=$('rWall'),sbar=$('rSbar'),end=$('rEnd');
  const HOLD_MS=5000;   /* v27.3 : la pause sur OONDE avant la rue, une fois l'intro prête ; un geste part plus tôt. v28 : 5 s (3 s, « trop faible ») */
@@ -137,7 +140,7 @@
  /* mouvement réduit, ou le film qui ne vient pas : l'image de l'arrêt, la carte, rien ne bloque */
  function toStill(){thumb();u.classList.add('static');poster.src=img('stop-'+HOME);poster.parentNode.querySelectorAll('source').forEach(s=>s.remove());flag(u,'intro',false);st='stop';met=met||HOME;card(true);pin(false);place()}
  function flat(){if(!LIVE)return;LIVE=false;t1.classList.remove('off');u.classList.add('nofilm');for(const el of [t1,say,stop,sbar,end,sign]){el.style.opacity='';el.style.transform=''}memo.clear();for(const v of [vIn,vG,vE]){try{v.pause();v.removeAttribute('src');v.load()}catch(e){}flag(v,'on',false)}toStill();geo()}
- E3F.then(x=>{fmt=x==='a'?'avif':'jpg';set=r0();if(!LIVE){toStill();return}if(vIn.error||vIn.networkState===3&&!vIn.readyState){flat();return}   /* le clip manque (ou le réseau) : l'image de l'arrêt, sans attendre */
+ E3F.then(x=>{fmt=x==='a'?'avif':'jpg';set=r0();if(!LIVE){toStill();return}if(QUICK){st='title';setTimeout(toStop,60);return}if(vIn.error||vIn.networkState===3&&!vIn.readyState){flat();return}   /* le clip manque (ou le réseau) : l'image de l'arrêt, sans attendre */
   /* l'intro : prête, elle attend HOLD_MS sur la carte-titre (ou un geste), puis part ; réseau lent si elle n'est pas prête à 4 s */
   vIn.addEventListener('playing',onPlaying);vIn.addEventListener('timeupdate',()=>{if(st==='title'&&!primed&&!goT&&!vIn.paused&&vIn.currentTime>0)prime()});
   setTimeout(()=>{if(st==='title'&&!ready)SLOW=true},4000);   /* réseau lent : pas prête 4 s après le chargement (l'amorce rend prête tout de suite : la pause ne compte jamais) ; le garde-fou de fin (7 s) est posé au départ du clip, dans introStart */
