@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OONDE pour vous</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0}
+/* Une lettre courte, une seule colonne : le texte, la démo, un bouton. */
+:root{--bg:#FFFFFF;--fg:#16181D;--soft:#4A4F57;--quiet:#7A7F87;--accent:#2038EC;--wa:#14803C;
+--font:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--fg);font:400 18px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+.w{max-width:540px;margin:0 auto;padding-block:28px 56px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+.logo{display:flex;align-items:center;gap:2px;font:700 20px/1 var(--font);letter-spacing:.03em}
+.logo i{display:inline-block;width:17px;height:17px;border:3px solid var(--fg);border-radius:50%;position:relative}
+.logo i:after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--accent)}
+.hello{color:var(--quiet);font-size:16px;margin:8px 0 -10px}
+h1{font:700 32px/1.15 var(--font);letter-spacing:-.02em;margin:0;text-wrap:balance}
+p{margin:0}
+.soft{color:var(--soft)}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:58px;border-radius:999px;background:var(--fg);color:#fff;font:600 18px/1.2 var(--font);text-decoration:none;padding:14px 22px;text-align:center}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.btn.wa{background:var(--wa)}
+.small{font-size:15px;color:var(--quiet)}
+.vid{border-radius:18px;overflow:hidden;background:#0d0f13;aspect-ratio:9/16;max-height:72vh;max-width:100%;margin:0 auto}
+.vid video{width:100%;height:100%;object-fit:contain;display:block}
+h2{font:700 21px/1.3 var(--font);margin:14px 0 -10px}
+.num{font-weight:700;font-size:24px;letter-spacing:.01em;user-select:all}
+.sign{color:var(--soft)}
+.sign b{color:var(--fg);font-weight:600}
+footer{font-size:14px;color:var(--quiet);margin-top:20px}
+</style>
+</head><body>
+
+<div class="w" id="app"></div>
+<script>
+const WA = "41779283540";
+const C = {
+  "la-cuccagna-a": {m:"a", nom:"La Cuccagna", ville:"Carouge", geste:"prend la commande", essai:"un service du soir", agent:"agent_4201m5k25whqff3bpbzzr7vqtkda"},
+  "balzac-cafe-a": {m:"a", nom:"Balzac Café", ville:"Morges", geste:"réserve une table ou prépare un café à emporter", essai:"une demi-journée", agent:"agent_4001m5k25zaqftpbz47nze87twh9"},
+  "garage-des-noirettes-a": {m:"a", nom:"Garage des Noirettes", ville:"Carouge", geste:"prend le rendez-vous des pneus d’hiver", essai:"une demi-journée", agent:"agent_9901m5k261tkex5afr3y8yk3hz1h"},
+  "la-cuccagna-b": {m:"b", nom:"La Cuccagna", ville:"Carouge", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/pub-la-cuccagna.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/pub-la-cuccagna.jpg"},
+  "balzac-cafe-b": {m:"b", nom:"Balzac Café", ville:"Morges", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/pub-balzac-cafe.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/pub-balzac-cafe.jpg"},
+  "garage-des-noirettes-b": {m:"b", nom:"Garage des Noirettes", ville:"Carouge", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/pub-garage-des-noirettes.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/pub-garage-des-noirettes.jpg"},
+  "her-him": {m:"c", nom:"Her Him", ville:"Chêne-Bourg", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-her-him.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-her-him.jpg", vos:"votre salon, des mains au travail, un avant-après, quelques secondes filmées au téléphone"},
+  "her-him-v3": {m:"c", nom:"Her Him", ville:"Chêne-Bourg", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-her-him-v3.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-her-him-v3.jpg", vos:"votre salon, des mains au travail, un avant-après, quelques secondes filmées au téléphone"},
+  "le-pilier": {m:"c", nom:"Le Pilier de l'Immobilier", ville:"Carouge", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-le-pilier.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-le-pilier.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "jouan-de-rham": {m:"c", nom:"Jouan - de Rham", ville:"Coppet", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-jouan-de-rham.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-jouan-de-rham.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "realtown": {m:"c", nom:"Realtown", ville:"Montreux", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-realtown.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-realtown.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "rive-droite": {m:"c", nom:"Rive Droite Immobilier", ville:"Rolle", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-rive-droite.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-rive-droite.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "dvdim": {m:"c", nom:"DVDIM", ville:"Lausanne", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-dvdim.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-dvdim.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "nettilac": {m:"c", nom:"Nettilac", ville:"Genève", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-nettilac.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-nettilac.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "lscourtage": {m:"c", nom:"LS Courtage", ville:"Nyon", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-lscourtage.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-lscourtage.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "milestone": {m:"c", nom:"Milestone Properties", ville:"Lutry", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-milestone.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-milestone.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "thales": {m:"c", nom:"Thales ImmoPartners", ville:"Epalinges", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-thales.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-thales.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "prisme": {m:"c", nom:"Groupe Prisme", ville:"Lausanne", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-prisme.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-prisme.jpg", qui:"agences", h:"On a fait visiter une de vos photos en 3D.", vos:"les photos d'un bien que vous avez en vente, et si vous voulez, quelques secondes filmées sur place"},
+  "her-him-v4": {m:"c", nom:"Her Him", ville:"Chêne-Bourg", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-her-him-v4.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-her-him-v4.jpg", qui:"instituts", h:"On a fait bouger une photo de votre institut.", vos:"votre salon, des mains au travail, un avant-après, quelques secondes filmées au téléphone"},
+  "clos-calamin": {m:"c", nom:"Clos Calamin", ville:"Lavaux", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-clos-calamin.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-clos-calamin.jpg", qui:"domaines", h:"On a fait vivre une photo de votre cave.", vos:"la cave, les vignes, une bouteille, quelques secondes filmées au téléphone"},
+  "lb-paysages": {m:"c", nom:"LB Paysages", ville:"Etoy", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-lb-paysages.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-lb-paysages.jpg", vos:"un jardin avant et après, l'équipe sur un chantier, quelques secondes filmées au téléphone"},
+  "atelier-riccardi": {m:"c", nom:"Atelier Riccardi", ville:"Aigle", video:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-atelier-riccardi.mp4", poster:"https://cdn.jsdelivr.net/gh/alexsteu/Alex@fddb872e97b08cb23dede4e03d8d0886601aad06/v/demo-atelier-riccardi.jpg", vos:"une pièce en cours, l'atelier, la pièce posée chez le client, quelques secondes filmées au téléphone"}
+};
+const slug = (location.hash.slice(1) || new URLSearchParams(location.search).get("c") || "").toLowerCase(), c = C[slug];
+const esc = s => String(s).replace(/[&<>"]/g, x => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]));
+const wa = msg => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+const ico = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.3.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1Z"/></svg>';
+const head = `<div class="logo" aria-label="OONDE"><i></i>ONDE</div>`;
+const sign = `<p class="sign">À bientôt,<br><b>Alexandre</b>, OONDE · de Genève à Montreux</p>`;
+const foot = `<footer>Démo préparée pour ${c ? esc(c.nom) : "vous"}. Les infos et les prix entendus dans la démo sont des exemples.</footer>`;
+function pageA(){ return `${head}<p class="hello">Pour ${esc(c.nom)}, ${esc(c.ville)}</p>
+<h1>Quand vous avez les mains prises, il décroche pour ${esc(c.nom)}.</h1>
+<p class="soft">On vous a préparé un assistant qui répond au téléphone à votre nom et ${esc(c.geste)}. Essayez-le comme si vous étiez un client : une minute, avec le son.</p>
+<a class="btn" href="https://elevenlabs.io/app/talk-to?agent_id=${c.agent}" target="_blank" rel="noopener">Parler à l'assistant de ${esc(c.nom)}</a>
+<p class="small">Votre navigateur vous demandera d'utiliser le micro.</p>
+<p class="soft">C'est une version rapide, faite en quelques minutes avec des infos d'exemple. La vraie, on l'écrit avec vous : votre menu, vos horaires, vos mots. Vous relisez chaque phrase avant qu'elle serve.</p>
+<h2>Essayez-le chez vous, gratuitement</h2>
+<p class="soft">On le branche sur votre numéro pendant ${esc(c.essai)}. Vous gardez votre numéro, il n'y a rien à signer, et l'essai s'arrête tout seul.</p>
+<a class="btn wa" href="${wa(`Bonjour, c'est ${c.nom} (${c.ville}). Je veux essayer l'assistant gratuitement pendant ${c.essai}.`)}">${ico} Je veux l'essayer</a>
+<p class="small">Le bouton ouvre WhatsApp avec le message déjà écrit.</p>
+<h2>Pour entendre une autre démo</h2>
+<p class="soft">Notre ligne d'exemple, la même pour tout le monde, répond à toute heure :</p>
+<p class="num">021 539 01 22</p>
+${sign}${foot}`; }
+function pageB(){ return `${head}<p class="hello">Pour ${esc(c.nom)}, ${esc(c.ville)}</p>
+<h1>On a fait une petite pub pour ${esc(c.nom)}.</h1>
+<p class="soft">Elle a été faite entièrement par IA, en quelques minutes, sans aucune de vos images. Ce n'est pas la version définitive, juste de quoi vous montrer l'idée.</p>
+<div class="vid"><video src="${c.video}" poster="${c.poster}" controls playsinline preload="metadata"></video></div>
+<h2>Avec vos images, c'est une autre histoire</h2>
+<p class="soft">Avec vos photos et vos vidéos, on fait bien mieux : votre lieu, vos produits et votre équipe prennent vie, on monte de vrais Reels, avec une voix ou quelqu'un qui présente votre commerce. On vous envoie le script avant, vous le relisez, puis on la fait.</p>
+<h2>Essayez, c'est gratuit</h2>
+<p class="soft">Envoyez-nous 5 photos sur WhatsApp : la devanture, la salle, deux produits, l'équipe au travail. Le lendemain matin, vous recevez une vraie vidéo faite avec vos images. Gratuite, sans engagement.</p>
+<a class="btn wa" href="${wa(`Bonjour, c'est ${c.nom} (${c.ville}). Je vous envoie mes photos pour une vraie vidéo.`)}">${ico} Envoyer mes photos</a>
+<p class="small">Le bouton ouvre WhatsApp avec le message déjà écrit.</p>
+<h2>On fait aussi répondre le téléphone</h2>
+<p class="soft">Un assistant décroche quand vous avez les mains prises. Notre ligne d'exemple, la même pour tout le monde :</p>
+<p class="num">021 539 01 22</p>
+${sign}${foot}`; }
+function pageC(){ return `${head}<p class="hello">Pour ${esc(c.nom)}, ${esc(c.ville)}</p>
+<h1>${c.h ? esc(c.h) : `On a fait une petite vidéo pour ${esc(c.nom)}, avec les photos de votre site.`}</h1>
+<p class="soft">Une version rapide, montée en quelques minutes, juste pour vous. Elle n'est publiée nulle part. Ce n'est pas la version définitive, c'est de quoi vous montrer l'idée.</p>
+<div class="vid"><video src="${c.video}" poster="${c.poster}" controls playsinline preload="metadata"></video></div>
+<h2>Avec vos vraies images, on fait bien mieux</h2>
+<p class="soft">Avec des photos et de courtes vidéos prises chez vous, on monte de vrais Reels pour Instagram et Facebook : un rythme, une voix, du texte qui donne envie de vous contacter. On vous envoie chaque script avant, vous le relisez, puis on publie.</p>
+<h2>Essayez, c'est gratuit</h2>
+<p class="soft">Envoyez-nous 5 photos ou vidéos sur WhatsApp : ${esc(c.vos)}. Le lendemain matin, vous recevez une vraie vidéo, prête à publier. Gratuite, sans engagement.</p>
+<a class="btn wa" href="${wa(`Bonjour, c'est ${c.nom} (${c.ville}). Je vous envoie mes photos pour une vraie vidéo.`)}">${ico} Envoyer mes photos</a>
+<p class="small">Le bouton ouvre WhatsApp avec le message déjà écrit.</p>
+${c.qui ? `<h2>Offre de lancement</h2><p class="soft">Nous cherchons nos premiers clients : les 10 premiers ${esc(c.qui)} qui nous rejoignent gardent un prix fondateur, tant qu'ils restent. Sites en 3D, contenu chaque semaine, et on vient filmer sur place quand il faut.</p>` : ""}
+${sign}<footer>Démo préparée pour ${esc(c.nom)} avec les photos publiques de son site.</footer>`; }
+const app = document.getElementById("app");
+if (!c) app.innerHTML = `${head}<h1>Ce lien n'est plus valable.</h1><p class="soft">Écrivez-nous sur WhatsApp au 077 928 35 40, on vous renvoie le bon.</p>`;
+else { document.title = `OONDE pour ${c.nom}`; app.innerHTML = c.m === "a" ? pageA() : c.m === "c" ? pageC() : pageB(); }
+</script>
+
+</body></html>
