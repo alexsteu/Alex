@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · Le test des 5 secondes</title>
+<link rel="icon" href="data:,">
+<style>
+/* Kit Reels OONDE : DA v7. Polices et logos servis par render.cjs sous /_kit/ */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2');font-style:italic}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+.abs{position:absolute;left:0;top:0}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+/* zones de sécurité Instagram / TikTok (affichées avec ?safe) : rien d'important hors du cadre vert */
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+
+/* ---------- accroche ---------- */
+#big{position:absolute;left:0;top:0;font:600 720px/1 IS;letter-spacing:0;color:var(--klein);white-space:nowrap;will-change:transform;z-index:6}
+#hEye{left:82px;top:300px;font-size:30px;color:var(--muted)}
+#hTitle{left:80px;top:1018px;width:900px;font:600 128px/1.0 IS;letter-spacing:-.03em}
+#hSub{left:84px;top:1306px;font:500 60px/1.1 IS;letter-spacing:-.015em;color:var(--soft)}
+
+/* ---------- minuteur ---------- */
+#ring{left:80px;top:270px;width:230px;height:230px}
+#ring circle{fill:none}
+#digits{left:95px;top:310px;width:200px;height:150px;border-radius:0;overflow:hidden;z-index:3}   /* fenêtre rectangulaire : roulement net, sans fondu */
+.dg{position:absolute;left:0;top:0;font:600 140px/1 IS;color:var(--klein);white-space:nowrap}
+#colA,#colB{left:352px;top:0;width:600px}
+.lab{font-size:30px;color:var(--muted)}
+#aLab{position:absolute;top:318px;left:0}
+#aTitle{position:absolute;top:360px;left:-3px;font:600 84px/1 IS;letter-spacing:-.03em;white-space:nowrap}
+#bLab{position:absolute;top:278px;left:0}
+.row{position:absolute;left:0;height:56px;display:flex;align-items:center;gap:18px;font:500 44px/1 IS;letter-spacing:-.015em;white-space:nowrap}
+.row .bx{position:relative;width:44px;height:44px;flex:none}
+.row .bx svg{position:absolute;left:0;top:0}
+#demoTag{left:0;top:552px;width:880px;text-align:right;font-size:30px;color:var(--muted)}
+
+/* ---------- téléphone ---------- */
+#phone{left:200px;top:600px;width:680px;height:1439px;border-radius:70px;background:#15171C;
+  box-shadow:0 0 0 2px #2A2D33 inset,0 40px 80px rgba(17,19,24,.16),0 12px 28px rgba(17,19,24,.10);transform-origin:340px 560px}
+#screen{position:absolute;left:14px;top:14px;width:652px;height:1411px;border-radius:56px;overflow:hidden;background:#fff}
+#scr{position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0}
+.sb{position:absolute;left:0;top:0;width:390px;height:50px;z-index:5}
+.sb .time{position:absolute;left:44px;top:15px;font:600 16px/1 IS;letter-spacing:-.01em;color:#000}
+.sb .island{position:absolute;left:133px;top:11px;width:124px;height:36px;border-radius:18px;background:#000}
+.sb svg{position:absolute;top:16px}
+.url{position:absolute;left:12px;top:52px;width:366px;height:38px;border-radius:12px;background:#F0F0F2;z-index:5;
+  display:flex;align-items:center;justify-content:center;gap:6px;font:500 14.5px/1 IS;color:#1C1C1E;letter-spacing:-.005em}
+.urlbg{position:absolute;left:0;top:0;width:390px;height:96px;background:#fff;z-index:4}
+.vp{position:absolute;left:0;top:96px;width:390px;height:748px;overflow:hidden}
+.page{position:absolute;left:0;top:0;width:390px}
+.sbar{position:absolute;right:3px;top:0;width:3px;border-radius:2px;background:rgba(0,0,0,.35);z-index:6}
+
+/* page A : l'ancien site (crédible, pas ridicule) */
+#pA{background:#fff;font-family:'Liberation Sans',Arial,sans-serif;color:#5d5d5d}
+#pA .hd{padding:16px 0 12px;text-align:center;border-bottom:1px solid #e6e2dd}
+#pA .nm{font:italic 400 34px/1 CG;color:#4B2E25;letter-spacing:.01em}
+#pA .nv{margin-top:9px;font-size:10.5px;letter-spacing:.06em;color:#8d8d8d;text-transform:uppercase}
+#pA .bn{height:176px;background:linear-gradient(160deg,#8A5E4C,#6A4235);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center}
+#pA .bn b{font:italic 400 36px/1.05 CG;letter-spacing:.005em}
+#pA .bn i{margin-top:10px;font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+#pA h3{margin:26px 22px 10px;font:400 25px/1.1 CG;color:#4B2E25}
+#pA p{margin:0 22px;font-size:14.5px;line-height:1.6;text-align:justify;hyphens:none}
+#pA .ph{margin:22px 22px 6px;height:214px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);padding:6px;box-sizing:border-box;overflow:hidden}
+#pA .ph div{width:100%;height:100%;overflow:hidden}
+#pA .ph svg{display:block;filter:blur(7px);transform:scale(1.12)}
+#pA .cap{text-align:center;font-size:11.5px;font-style:italic;color:#999}
+#pA .gl{margin:14px 22px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#pA .gl div{height:96px;overflow:hidden}
+#pA .gl svg{display:block;filter:blur(5px);transform:scale(1.15)}
+#pA .lk{display:block;margin:12px 22px 0;color:#8A5E4C;text-decoration:underline;font-size:14px}
+#pA .ft{margin-top:40px;padding:22px 22px 350px;background:#F3F1EE;font-size:9.5px;line-height:1.6;color:#a8a8a8;text-align:center}
+
+/* page B : le même commerce, refait */
+#pB{background:#F7F7F4;color:#111318;font-family:IS}
+#pB .hd{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 6px}
+#pB .nm{font:400 27px/1 CG;letter-spacing:.005em}
+#pB .mn{width:22px;height:12px;border-top:2px solid #111318;border-bottom:2px solid #111318}
+#pB .hero{position:relative;margin:22px 22px 0}
+#pB .kk{font:500 11px/1 PM;letter-spacing:.14em;color:#6B7078;text-transform:uppercase}
+#pB h1{margin:10px 0 0;font:600 43px/1.0 IS;letter-spacing:-.035em}
+#pB .sub{margin-top:10px;font:400 18.5px/1.3 IS;color:#3A3F47;letter-spacing:-.005em}
+#pB .hrs{position:relative;margin:22px 22px 0;padding:15px 14px;background:#fff;border:1px solid #DCDED8;border-radius:14px;display:flex;align-items:center;justify-content:space-between;font:600 19px/1 IS;letter-spacing:-.02em}
+#pB .hrs .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#111318;margin-right:9px;vertical-align:1px;box-shadow:0 0 0 4px rgba(17,19,24,.10)}
+#pB .hrs span:last-child{font-weight:600;color:#111318}
+#pB .cta{position:relative;margin:12px 22px 0;display:flex;gap:10px}
+#pB .bt{flex:1;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:9px;font:600 18px/1 IS;letter-spacing:-.01em}
+#pB .bt.ink{background:#111318;color:#fff}
+#pB .bt.ink svg{color:#5ED489}
+#pB .bt.lt{background:#fff;border:1px solid #DCDED8;color:#111318}
+#pB .ph{margin:18px 22px 0;height:236px;border-radius:14px;overflow:hidden}
+#pB .ph svg{display:block}
+#pB .ls{margin:22px 22px 0;font:400 15px/1.5 IS;color:#3A3F47}
+.hl{position:absolute;pointer-events:none;overflow:visible}
+#pB .bar{position:absolute;left:8px;width:3px;border-radius:2px;background:#111318;transform-origin:50% 0;transform:scaleY(0)}
+
+/* ---------- encre ---------- */
+#ink{left:0;top:0;width:3600px;height:3600px;border-radius:50%;background:var(--ink);transform-origin:1800px 1800px;z-index:2}   /* sous les chiffres : le 0 reste lisible */
+#inkS{left:0;top:0;width:1080px;height:1920px;color:#fff;z-index:4}
+#iLab{position:absolute;left:80px;top:528px;font-size:30px;color:#8A9099}
+#iTitle{position:absolute;left:78px;top:578px;font:600 124px/1.0 IS;letter-spacing:-.03em;white-space:nowrap}
+.q{position:absolute;left:80px;width:820px;height:138px;display:flex;align-items:center;justify-content:space-between;font:500 62px/1 IS;letter-spacing:-.02em;white-space:nowrap}
+.q .x{width:72px;height:72px;flex:none}
+.sep{position:absolute;left:80px;width:820px;height:2px;background:#262A31;transform-origin:0 0}
+
+/* ---------- fin ---------- */
+#end{z-index:4}
+.nn{margin-left:-.12em}   /* espace fine devant ? sur les titres */
+#eKick{position:absolute;left:82px;top:404px;font-size:30px;color:var(--muted);white-space:nowrap}
+#eBio{position:absolute;left:82px;top:1110px;font-size:30px;color:var(--muted);white-space:nowrap}
+#eTitle{position:absolute;left:78px;top:470px;font:600 128px/1.0 IS;letter-spacing:-.03em;white-space:nowrap}
+#eBody{position:absolute;left:82px;top:756px;font:500 54px/1.22 IS;letter-spacing:-.015em;color:var(--soft);white-space:nowrap}
+#ePill{position:absolute;left:80px;top:960px;height:118px;padding:0 46px 0 38px;border-radius:18px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;gap:22px;font:600 44px/1 IS;letter-spacing:-.015em;white-space:nowrap;transform-origin:0 50%}
+#ePill svg{color:#5ED489;flex:none}
+#eRule{position:absolute;left:80px;top:1292px;width:860px;height:2px;background:var(--line);transform-origin:0 0}
+#eLogo{position:absolute;left:80px;top:1336px;height:58px}
+#eHandle{position:absolute;left:0;top:1350px;width:940px;text-align:right;font-size:30px;color:var(--soft)}
+/* couverture de la grille (?grid) : en-tête des posts */
+#gHead{display:none;left:0;top:0;width:1080px}
+.grid #gHead{display:block}
+#gLogo{position:absolute;left:80px;top:372px;height:40px}
+#gLab{position:absolute;left:0;top:380px;width:1000px;text-align:right;font-size:24px;letter-spacing:.2em;color:var(--muted)}
+#gRule{position:absolute;left:80px;top:430px;width:920px;height:2px;background:var(--line)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- accroche -->
+  <div id="hEye" class="abs mono">Une méthode de designers</div>
+  <div id="hTitle" class="abs">Le test des<br>5 secondes.</div>
+  <div id="hSub" class="abs">Votre site le passe&nbsp;?</div>
+
+  <!-- minuteur + colonnes -->
+  <svg id="ring" class="abs" viewBox="0 0 230 230">
+    <circle cx="115" cy="115" r="108" stroke="#E6E7E2" stroke-width="7"/>
+    <circle id="arc" cx="115" cy="115" r="108" stroke="#111318" stroke-width="7" stroke-linecap="round" transform="rotate(-90 115 115)"/>
+  </svg>
+  <div id="digits" class="abs"></div>
+
+  <div id="colA" class="abs">
+    <div id="aLab" class="mono lab">Le test des 5 secondes</div>
+    <div id="aTitle">Regardez bien.</div>
+  </div>
+  <div id="colB" class="abs">
+    <div id="bLab" class="mono lab">Après · même commerce</div>
+  </div>
+  <div id="demoTag" class="abs mono">Démo · lieu fictif</div>
+
+  <!-- téléphone -->
+  <div id="phone" class="abs">
+    <div id="screen"><div id="scr">
+      <div class="urlbg"></div>
+      <div class="sb">
+        <div class="time">9:41</div>
+        <div class="island"></div>
+        <svg style="left:286px" width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="8" width="3.4" height="4" rx="1" fill="#000"/><rect x="5" y="5.5" width="3.4" height="6.5" rx="1" fill="#000"/><rect x="10" y="3" width="3.4" height="9" rx="1" fill="#000"/><rect x="15" y="0" width="3.4" height="12" rx="1" fill="#000"/></svg>
+        <svg style="left:311px" width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.3c2.4 0 4.6.9 6.2 2.5l1.2-1.2C14 1.6 11.4.5 8.5.5S3 1.6 1.1 3.6l1.2 1.2C3.9 3.2 6.1 2.3 8.5 2.3zm0 3.6c1.4 0 2.7.5 3.7 1.5l1.2-1.2C12.1 4.9 10.4 4.1 8.5 4.1S4.9 4.9 3.6 6.2l1.2 1.2c1-1 2.3-1.5 3.7-1.5zm0 3.6c-.5 0-1 .2-1.3.5l1.3 1.6 1.3-1.6c-.3-.3-.8-.5-1.3-.5z" fill="#000"/></svg>
+        <svg style="left:334px" width="28" height="13" viewBox="0 0 28 13"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="#000" stroke-opacity=".4"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="2" fill="#000"/><path d="M25.3 4.3v4.4c.9-.3 1.5-1.2 1.5-2.2s-.6-1.9-1.5-2.2z" fill="#000" fill-opacity=".45"/></svg>
+      </div>
+      <div class="url"><svg width="10" height="13" viewBox="0 0 10 13"><rect x=".5" y="5.2" width="9" height="7.3" rx="1.6" fill="#1C1C1E"/><path d="M2.4 5.6V3.9a2.6 2.6 0 0 1 5.2 0v1.7" fill="none" stroke="#1C1C1E" stroke-width="1.3"/></svg><span>atelier-vellaz.ch</span></div>
+
+      <div class="vp" id="vp">
+        <!-- page A -->
+        <div class="page" id="pA">
+          <div class="hd"><div class="nm">Atelier Vellaz</div><div class="nv">Accueil &nbsp;|&nbsp; Qui sommes-nous &nbsp;|&nbsp; Galerie &nbsp;|&nbsp; Liens</div></div>
+          <div class="bn"><b>Bienvenue sur<br>notre site&nbsp;!</b><i>Atelier Vellaz vous souhaite la bienvenue</i></div>
+          <h3>Qui sommes-nous&nbsp;?</h3>
+          <p>Depuis 1994, toute notre équipe vous accueille avec plaisir dans un cadre chaleureux et convivial. Fidèles à nos valeurs de qualité, de tradition et de savoir-faire, nous mettons tout notre cœur à vous offrir un service soigné et personnalisé, à l’écoute de vos besoins comme de vos envies. Que vous soyez un client de longue date ou que vous veniez pour la première fois, nous serons ravis de vous conseiller. N’hésitez pas à pousser notre porte&nbsp;: au plaisir de vous rencontrer très bientôt&nbsp;!</p>
+          <div class="ph"><div><svg id="photoA" width="334" height="202" viewBox="0 0 334 202"></svg></div></div>
+          <div class="cap">Notre atelier</div>
+          <h3>Notre philosophie</h3>
+          <p>Chez nous, chaque détail compte. Nous prenons le temps de bien faire les choses, avec des matériaux choisis avec soin et le respect du travail bien fait. C’est ce qui fait notre différence, jour après jour, depuis plus de trente ans.</p>
+          <h3>Galerie</h3>
+          <div class="gl"><div><svg class="gs" width="169" height="96" viewBox="0 0 169 96"></svg></div><div><svg class="gs" width="169" height="96" viewBox="0 0 169 96"></svg></div><div><svg class="gs" width="169" height="96" viewBox="0 0 169 96"></svg></div><div><svg class="gs" width="169" height="96" viewBox="0 0 169 96"></svg></div></div>
+          <h3>Nouvelles</h3>
+          <p>Toutes nos informations pratiques se trouvent dans notre brochure, à télécharger ci-dessous.</p>
+          <span class="lk">› Télécharger la brochure (PDF)</span>
+          <h3>Liens</h3>
+          <p>Partenaires, fournisseurs et amis de l’atelier&nbsp;: retrouvez-les dans notre page de liens.</p>
+          <div class="ft">© 2019 Atelier Vellaz · Tous droits réservés<br>Tél. 021 000 00 00 · Mentions légales</div>
+        </div>
+        <!-- page B -->
+        <div class="page" id="pB">
+          <div class="hd"><div class="nm">Atelier Vellaz</div><div class="mn"></div></div>
+          <div class="hero" id="bHero"><div class="kk">Cordonnerie</div><h1>Cordonnier<br>à Vevey.</h1><div class="sub">Chaussures, sacs et clés minute.</div></div>
+          <div class="hrs" id="bHrs"><span><i class="dot"></i>Ouvert aujourd’hui</span><span>8 h 30 – 18 h 30</span></div>
+          <div class="cta" id="bCta"><div class="bt ink"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path id="waPath" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg>WhatsApp</div><div class="bt lt"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#111318" stroke-width="2.2" stroke-linejoin="round"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></svg>Appeler</div></div>
+          <div class="ph"><svg id="photoB" width="346" height="236" viewBox="0 0 346 236"></svg></div>
+          <div class="ls">Ressemelage, talons, teinture, fermetures éclair, clés et badges. Sans rendez-vous.</div>
+        </div>
+        <div class="sbar" id="sbar"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- liste cochée (après) -->
+  <div id="rows" class="abs"></div>
+
+  <!-- encre -->
+  <div id="ink" class="abs"></div>
+  <div id="inkS" class="abs">
+    <div id="iLab" class="mono">Temps écoulé</div>
+    <div id="iTitle">Qu’avez-vous<br>retenu<span class="nn">&nbsp;</span>?</div>
+  </div>
+
+  <!-- le grand 5 (passe au-dessus de tout pendant la métamorphose) -->
+  <div id="big">5</div>
+
+  <!-- fin -->
+  <div id="end" class="abs">
+    <div id="eKick" class="mono">Faites-le avec un ami</div>
+    <div id="eTitle">Le vôtre passe<br>le test<span class="nn">&nbsp;</span>?</div>
+    <div id="eBody">On vous montre votre site<br><span class="k">avant</span> que vous payiez.</div>
+    <div id="ePill"><svg width="54" height="54" viewBox="0 0 24 24" fill="currentColor"><use href="#waPath"/></svg>Maquette offerte sur WhatsApp</div>
+    <div id="eBio" class="mono">Lien dans la bio</div>
+    <div id="eRule"></div>
+    <img id="eLogo" src="/_kit/brand/logo.svg" alt="">
+    <div id="eHandle" class="mono">@oonde_studio</div>
+  </div>
+
+  <div id="gHead" class="abs"><img id="gLogo" src="/_kit/brand/logo.svg" alt=""><div id="gLab" class="mono">Test · 5 secondes</div><div id="gRule"></div></div>
+  <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));          // 0 → 1 entre a et b
+const E = {                                                // courbes
+  out: t => 1 - Math.pow(1 - t, 3),
+  out4: t => 1 - Math.pow(1 - t, 4),
+  in: t => t * t * t,
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  back: t => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
+  spring: t => t >= 1 ? 1 : 1 - Math.exp(-6.5 * t) * Math.cos(9.5 * t),   // ressort doux (≈ 10 % de dépassement)
+};
+function rise(el, t, a, d = .45, dy = 40) { const p = E.out(seg(t, a, a + d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; return p; }
+const show = (el, v) => { el.style.display = v ? '' : 'none'; };
+
+/* ============ temps clés ============ */
+const T = {
+  pulse: 0.90,                  // micro-pulsation du 5 (annonce le minuteur)
+  morph: 1.75, morphEnd: 2.35,
+  cdA: 2.4,                     // le 5 du minuteur ; 4 à 3.4 … 0 à 7.4
+  zero: 7.4,
+  inkIn: 7.78, inkInEnd: 8.12,  // le 0 se pose (7.44) avant que l'encre parte
+  q: [8.68, 9.23, 9.78],        // une question toutes les 0,55 s
+  inkOut: 11.28, inkOutEnd: 11.65,
+  cdB: 11.78,                   // second passage : 5 → 4 à 12.78 …
+  checks: 12.33,
+  endOut: 13.78,                // 1,45 s après les coches
+  eTitle: 14.03, eBody: 14.23, ePill: 14.43, eFoot: 14.63,
+};
+window.DURATION = 17.0;
+T.loop = window.DURATION - .34;  // boucle : l'écran final s'efface, l'accroche revient (dernière image = première)
+const GRID = new URLSearchParams(location.search).has('grid');
+const GY = GRID ? 175 : 0;      // couverture de la grille : l'accroche descend sous l'en-tête
+if (GRID) document.documentElement.classList.add('grid');
+
+/* ============ construction ============ */
+const RC = { x: 195, y: 385 };                  // centre du minuteur
+const S = 652 / 390;                            // échelle du site dans l'écran
+$('#scr').style.transform = `scale(${S})`;
+
+// chiffres du minuteur
+const DG = [];
+for (let i = 0; i <= 5; i++) { const d = document.createElement('div'); d.className = 'dg'; d.textContent = i; $('#digits').appendChild(d); DG.push(d); }
+
+// cercle du minuteur
+const C = 2 * Math.PI * 108;
+$('#arc').setAttribute('stroke-dasharray', `${C} ${C}`);
+
+// liste « après »
+const LABELS = ['Ce que vous faites', 'Vos horaires', 'Comment vous joindre'];
+const ROWS = LABELS.map((txt, i) => {
+  const r = document.createElement('div'); r.className = 'row';
+  r.style.left = '352px'; r.style.top = (326 + i * 62) + 'px';
+  r.innerHTML = `<div class="bx"><svg width="44" height="44" viewBox="0 0 44 44"><circle class="o" cx="22" cy="22" r="20.5" fill="none" stroke="#C9CBC5" stroke-width="3"/><circle class="f" cx="22" cy="22" r="22" fill="#111318"/><path class="v" d="M13 22.5l6 6 12-13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${txt}</span>`;
+  $('#rows').appendChild(r);
+  const v = r.querySelector('.v'); const L = v.getTotalLength(); v.style.strokeDasharray = `${L} ${L}`;
+  return { el: r, f: r.querySelector('.f'), o: r.querySelector('.o'), v, L, sp: r.querySelector('span') };
+});
+
+// questions (encre)
+const QS = ['Ce que vous faites ?', 'Vos horaires ?', 'Comment vous joindre ?'].map((txt, i) => {
+  const top = 842 + i * 140;
+  const q = document.createElement('div'); q.className = 'q'; q.style.top = top + 'px';
+  q.innerHTML = `<span>${txt}</span><svg class="x" viewBox="0 0 72 72"><circle cx="36" cy="36" r="34.5" fill="none" stroke="#3A3F47" stroke-width="3"/><path class="l1" d="M26 26l20 20" stroke="#B4B9C1" stroke-width="4" stroke-linecap="round"/><path class="l2" d="M46 26l-20 20" stroke="#B4B9C1" stroke-width="4" stroke-linecap="round"/></svg>`;
+  $('#inkS').appendChild(q);
+  const s = document.createElement('div'); s.className = 'sep'; s.style.top = (top + 138) + 'px'; $('#inkS').appendChild(s);
+  const l1 = q.querySelector('.l1'), l2 = q.querySelector('.l2');
+  [l1, l2].forEach(l => l.style.strokeDasharray = '29 29');
+  return { el: q, sep: s, l1, l2, x: q.querySelector('.x') };
+});
+const SEP0 = document.createElement('div'); SEP0.className = 'sep'; SEP0.style.top = '842px'; $('#inkS').appendChild(SEP0);
+
+// photos : la même scène d'atelier (floue sur l'ancien site, nette sur le nouveau)
+function workshop(w, h) {
+  const shoe = (x, y, k, c, s) => `<g transform="translate(${x} ${y}) scale(${k})"><path d="M2 30 L2 15 Q2 8 9 7 L24 5 Q31 4 35 10 Q42 18 55 20 L72 22 Q86 25 86 32 L86 34 Q86 37 82 37 L6 37 Q2 37 2 34 Z" fill="${c}"/><rect x="2" y="34" width="84" height="4" rx="1.5" fill="${s}"/></g>`;
+  return `<defs><linearGradient id="wall${w}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9DFD2"/><stop offset="1" stop-color="#D9CBB9"/></linearGradient>
+    <radialGradient id="lamp${w}" cx=".78" cy=".1" r=".7"><stop offset="0" stop-color="#FFF6E6" stop-opacity=".9"/><stop offset="1" stop-color="#FFF6E6" stop-opacity="0"/></radialGradient></defs>
+    <rect width="${w}" height="${h}" fill="url(#wall${w})"/>
+    <rect width="${w}" height="${h}" fill="url(#lamp${w})"/>
+    <rect x="0" y="${h * .40}" width="${w}" height="6" fill="#8B6A4F"/><rect x="0" y="${h * .40 + 6}" width="${w}" height="3" fill="#6F533D" opacity=".5"/>
+    ${shoe(w * .06, h * .40 - 37, 1, '#3B2A22', '#1E1612')}${shoe(w * .34, h * .40 - 37 * .92, .92, '#8C5A36', '#4A3020')}${shoe(w * .62, h * .40 - 37, 1, '#1D1E22', '#0E0F11')}
+    <rect x="0" y="${h * .72}" width="${w}" height="${h * .28}" fill="#7A5A42"/><rect x="0" y="${h * .72}" width="${w}" height="4" fill="#94725A"/>
+    ${shoe(w * .16, h * .72 - 37 * 1.15, 1.15, '#A0703F', '#5A3B22')}
+    <rect x="${w * .60}" y="${h * .72 - 46}" width="54" height="46" rx="4" fill="#C9B79E"/><rect x="${w * .60 + 8}" y="${h * .72 - 38}" width="38" height="5" rx="2" fill="#9E8A70"/>
+    <circle cx="${w * .86}" cy="${h * .72 - 18}" r="16" fill="#B9A386"/><circle cx="${w * .86}" cy="${h * .72 - 18}" r="7" fill="#8F7A60"/>`;
+}
+$('#photoA').innerHTML = workshop(334, 202);
+$('#photoB').innerHTML = workshop(346, 236);
+document.querySelectorAll('#pA .gs').forEach((g, i) => { g.innerHTML = workshop(169, 96); g.style.transform = `scale(${1.15 + i * .12}) translate(${[-6, 10, -12, 4][i]}px, ${[4, -6, 8, -2][i]}px)`; });
+
+let HL = [];
+/* glyphes : centre de l'encre d'un chiffre, pour le poser pile au centre du minuteur */
+function glyphBox(txt, font) {
+  const c = document.createElement('canvas').getContext('2d'); c.font = font;
+  const m = c.measureText(txt);
+  return { l: -m.actualBoundingBoxLeft, r: m.actualBoundingBoxRight, a: m.actualBoundingBoxAscent, d: m.actualBoundingBoxDescent, fa: m.fontBoundingBoxAscent, fd: m.fontBoundingBoxDescent };
+}
+function glyphCenter(txt, size) {      // centre de l'encre, dans la boîte d'un div line-height:1
+  const g = glyphBox(txt, `600 ${size}px IS`);
+  const base = (size - (g.fa + g.fd)) / 2 + g.fa;
+  return { x: (g.l + g.r) / 2, y: base - (g.a - g.d) / 2, w: g.r - g.l, h: g.a + g.d };
+}
+let BIG, DGC, BIGDY = 0, BARS = [];
+function measure() {
+  // contours qui se dessinent autour des trois réponses (page B), mesurés une fois les polices chargées
+  HL = [].map(sel => {
+    const host = $(sel), pad = 7, w = host.offsetWidth + pad * 2, h = host.offsetHeight + pad * 2;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'hl'); svg.setAttribute('width', w); svg.setAttribute('height', h);
+    svg.style.left = -pad + 'px'; svg.style.top = -pad + 'px';
+    svg.innerHTML = `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${sel === '#bHero' ? 12 : 18}" fill="none" stroke="#111318" stroke-width="1.6"/>`;
+    host.appendChild(svg);
+    const r = svg.querySelector('rect'); const L = r.getTotalLength(); r.style.strokeDasharray = `${L} ${L}`;
+    return { r, L };
+  });
+  MAXS = $('#pA').offsetHeight - 748;
+  BIG = glyphCenter('5', 720);
+  BIGDY = glyphCenter('5', 800).h - BIG.h;    // le bas du 5 reste où il était (y ≈ 965)
+  BARS = ['#bHero', '#bHrs', '#bCta'].map(sel => {
+    const host = $(sel), b = document.createElement('div'); b.className = 'bar';
+    b.style.top = host.offsetTop + 'px'; b.style.height = host.offsetHeight + 'px'; $('#pB').appendChild(b); return b;
+  });
+  DGC = []; for (let i = 0; i <= 5; i++) DGC.push(glyphCenter(String(i), 140));
+}
+
+/* ============ défilement de l'ancien site (comme un vrai visiteur qui cherche) ============ */
+let MAXS = 900;                 // défilement max du site A (mesuré)
+const SCROLL = [   // [début, fin, position (px du site) ; 'end' = bas de page]
+  [3.20, 3.80, 250], [3.80, 4.50, 285], [4.50, 5.10, 590], [5.10, 5.70, 625], [5.70, 6.35, -70], [6.35, 7.10, 'end'],
+];
+function scrollA(t) {
+  let y = 0;
+  for (const [a, b, to] of SCROLL) { if (t >= a) { const p = E.out4(seg(t, a, b)); y = lerp(y, to === 'end' ? MAXS : to < 0 ? MAXS + to : Math.min(to, MAXS), p); } }
+  return y;
+}
+function scrollVel(t) { return Math.abs(scrollA(t + 1 / 60) - scrollA(t - 1 / 60)) * 30; }
+
+/* ============ chiffres ============ */
+// rôle d'un chiffre : visible entre in et out, avec un roulement vertical
+// translation pure de 150 px dans une fenêtre rectangulaire, opacité 1 : le nouveau chiffre est posé au tic
+const ROLL0 = .18, ROLL1 = .04;
+function digitAt(el, i, t, tin, tout, col) {
+  const g = DGC[i];
+  const pin = tin == null ? 1 : E.inOut(seg(t, tin - ROLL0, tin + ROLL1));
+  const pout = tout == null ? 0 : E.inOut(seg(t, tout - ROLL0, tout + ROLL1));
+  if (pin <= 0 || pout >= 1) { el.style.opacity = 0; return; }
+  const dy = (1 - pin) * 150 - pout * 150;
+  el.style.opacity = 1; el.style.color = col;
+  el.style.transform = `translate(${100 - g.x}px, ${75 - g.y + dy}px)`;
+}
+
+/* ============ rendu ============ */
+function render(t) {
+  const lp = seg(t, T.loop + .06, window.DURATION - .04);         // retour de l'accroche (boucle)
+  const loopOn = t >= T.loop + .06;
+  /* ---- encre (calculée d'abord : la couleur des chiffres en dépend) ---- */
+  let inkR = 0;
+  if (t >= T.inkIn && t < T.inkOutEnd) {
+    inkR = t < T.inkOut ? E.in(seg(t, T.inkIn, T.inkInEnd)) * 1800 : (1 - E.inOut(seg(t, T.inkOut, T.inkOutEnd))) * 1800;
+  }
+  const wk = seg(inkR, 30, 95);                                    // chiffre : Klein → blanc quand l'encre le recouvre
+  const dCol = `rgb(${Math.round(lerp(32, 255, wk))},${Math.round(lerp(56, 255, wk))},${Math.round(lerp(236, 255, wk))})`;
+
+  /* ---- accroche & métamorphose du 5 ---- */
+  const big = $('#big');
+  const pm = E.inOut(seg(t, T.morph, T.morphEnd));
+  const X0 = 76 + BIG.w / 2, Y0 = 372 + BIGDY + BIG.h / 2 + GY;   // pose initiale (bas du glyphe à y ≈ 965)
+  big.style.transformOrigin = `${BIG.x}px ${BIG.y}px`;
+  if (t < T.morphEnd) {
+    show(big, true); big.style.opacity = 1;
+    const breathe = 1 + 0.012 * E.out(seg(t, 0, T.morph));          // il respire à peine
+    const pulse = 1 - .03 * Math.sin(Math.PI * E.inOut(seg(t, T.pulse, T.pulse + .16)));   // tic à 0,9 s
+    const k = lerp(breathe * pulse, 140 / 720, pm);
+    const x = lerp(X0, RC.x, pm), y = lerp(Y0, RC.y, pm) - Math.sin(Math.PI * pm) * 40;
+    big.style.transform = `translate(${x - BIG.x}px, ${y - BIG.y}px) scale(${k})`;
+  } else if (loopOn) {
+    show(big, true);
+    const p = E.out(lp);
+    big.style.opacity = p;
+    big.style.transform = `translate(${X0 - BIG.x}px, ${Y0 - BIG.y + (1 - p) * 30}px) scale(${.94 + .06 * p})`;
+  } else show(big, false);
+
+  // le texte de l'accroche sort vite (E.out, 0,18 s) avant que le téléphone monte
+  const ph = E.out(seg(t, T.morph, T.morph + .18));
+  const hookOp = loopOn ? E.out(lp) : 1 - ph;
+  const hookDy = loopOn ? (1 - E.out(lp)) * 30 : -40 * ph;
+  ['#hEye', '#hTitle', '#hSub'].forEach(sel => {
+    const e = $(sel); show(e, t < T.morph + .2 || loopOn);
+    e.style.opacity = hookOp; e.style.transform = `translateY(${hookDy + GY}px)`;
+  });
+
+  /* ---- minuteur ---- */
+  const inB = t >= T.inkOut && t < T.endOut + .5;
+  // anneau : il se trace pendant que le 5 vole et se ferme quand il se pose
+  let ringOp = 0, frac = 0;
+  if (t >= T.morph + .25 && t < T.inkInEnd) {
+    const draw = E.out(seg(t, T.morph + .25, T.morphEnd));
+    frac = Math.min(draw, clamp((T.zero - t) / (T.zero - T.cdA)));
+    ringOp = E.out(seg(t, T.morph + .25, T.morph + .4));
+  } else if (inB) {
+    frac = clamp(1 - (t - T.cdB) / 5);
+    ringOp = 1 - E.out(seg(t, T.endOut, T.endOut + .18));
+  }
+  $('#ring').style.opacity = ringOp;
+  $('#arc').style.strokeDashoffset = C * (1 - frac);
+  const ringK = inB ? 1 - .06 * E.out(seg(t, T.endOut, T.endOut + .18)) : 1;
+  $('#ring').style.transform = `scale(${ringK})`;
+
+  // chiffres
+  DG.forEach(d => d.style.opacity = 0);
+  const dA = t >= T.morphEnd - .02 && t < T.inkOut + .12;
+  const dB = !dA && inB;
+  let digOp = 1;
+  if (dA) {
+    for (let i = 5; i >= 0; i--) {
+      const tin = i === 5 ? null : T.cdA + (5 - i);
+      const tout = i === 0 ? null : T.cdA + (6 - i);
+      digitAt(DG[i], i, t, tin, tout, dCol);
+    }
+    // le 0 tape un peu, une fois posé
+    if (t >= T.zero) { const b = Math.sin(Math.PI * seg(t, T.zero + .04, T.zero + .22)) * .08; DG[0].style.transform += ` scale(${1 + b})`; }
+    if (t > T.inkOut - .12) digOp = 1 - E.in(seg(t, T.inkOut - .12, T.inkOut + .12));   // s'efface avec l'écran encre
+  } else if (dB) {
+    for (let i = 5; i >= 3; i--) {
+      const tin = T.cdB + (5 - i);
+      const tout = i === 3 ? null : T.cdB + (6 - i);
+      digitAt(DG[i], i, t, tin, tout, dCol);
+    }
+    digOp = 1 - E.out(seg(t, T.endOut, T.endOut + .18));
+  }
+  $('#digits').style.opacity = digOp;
+
+  /* ---- colonnes de texte ---- */
+  show($('#colA'), t > T.morph && t < T.inkInEnd);
+  rise($('#aLab'), t, T.morph + .42, .4, 24);
+  rise($('#aTitle'), t, T.morph + .5, .45, 30);
+  show($('#colB'), inB); show($('#rows'), inB);
+  if (inB) {
+    const fo = 1 - E.out(seg(t, T.endOut, T.endOut + .18));
+    rise($('#bLab'), t, T.inkOut + .25, .4, 24);
+    $('#colB').style.opacity = fo; $('#rows').style.opacity = fo;
+    ROWS.forEach((r, i) => {
+      rise(r.el, t, T.inkOut + .32 + i * .06, .4, 24);
+      const c = seg(t, T.checks, T.checks + .28);              // les trois d'un coup
+      const ce = E.back(c);
+      r.f.style.transform = `scale(${c > 0 ? ce : 0})`; r.f.style.transformOrigin = '22px 22px';
+      r.o.style.opacity = 1 - c;
+      r.v.style.strokeDashoffset = r.L * (1 - E.out(seg(t, T.checks + .08, T.checks + .34)));
+      r.sp.style.color = c > .3 ? '#111318' : '#9A9EA5';
+    });
+  }
+
+  /* ---- étiquette démo : elle monte avec le téléphone ---- */
+  const tagOn = (t > T.morph + .15 && t < T.inkInEnd) || inB;
+  show($('#demoTag'), tagOn);
+  if (t < T.inkInEnd) rise($('#demoTag'), t, T.morph + .2, .3, 20);
+  else { rise($('#demoTag'), t, T.inkOut + .2, .3, 20); $('#demoTag').style.opacity *= 1 - E.out(seg(t, T.endOut, T.endOut + .18)); }
+
+  /* ---- téléphone ---- */
+  const phone = $('#phone');
+  let py = 2000, pk = 1, useB = false;
+  if (t < T.inkInEnd) {
+    py = lerp(1300, 0, E.out4(seg(t, T.morph + .20, T.morph + .85)));
+  } else if (inB) {
+    useB = true;
+    py = lerp(1300, 0, E.out4(seg(t, T.inkOut + .2, T.inkOut + .85)));
+    const z = E.out(seg(t, T.checks, T.checks + .4));             // zoom sur les trois réponses
+    pk = 1 + .12 * z; py += 60 * z;                               // +60 px : le haut du téléphone reste sous « Démo · lieu fictif »
+    py += 1400 * E.inOut(seg(t, T.endOut, T.endOut + .55));
+  }
+  show(phone, py < 1290 && t > T.morph);
+  phone.style.transform = `translateY(${py}px) scale(${pk})`;
+  show($('#pA'), !useB); show($('#pB'), useB);
+  const vpH = 748;
+  if (!useB) {
+    const y = scrollA(t);
+    $('#pA').style.transform = `translateY(${-y}px)`;
+    const H = $('#pA').offsetHeight;
+    const sb = $('#sbar');
+    // l'indicateur reste visible un peu après chaque geste
+    let vis = 0; for (const [a, b] of SCROLL) if (t >= a && t <= b + .35) vis = Math.max(vis, Math.min(seg(t, a, a + .08), 1 - seg(t, b, b + .35)));
+    sb.style.opacity = vis;
+    sb.style.height = (vpH * vpH / H) + 'px';
+    sb.style.transform = `translateY(${(y / (H - vpH)) * (vpH - vpH * vpH / H)}px)`;
+  } else {
+    $('#pB').style.transform = 'none';
+    $('#sbar').style.opacity = 0;
+    const dim = E.inOut(seg(t, T.checks - .05, T.checks + .35));
+    $('#pB .ph').style.opacity = 1 - .45 * dim; $('#pB .ls').style.opacity = 1 - .45 * dim;
+    const bar = E.out(seg(t, T.checks, T.checks + .25));          // barre d'encre à gauche de chaque réponse
+    BARS.forEach(b => b.style.transform = `scaleY(${bar})`);
+  }
+
+  /* ---- encre ---- */
+  show($('#ink'), inkR > 1);
+  $('#ink').style.transform = `translate(${RC.x - 1800}px, ${RC.y - 1800}px) scale(${inkR / 1800})`;
+  const inkOn = t >= T.inkInEnd - .05 && t < T.inkOut + .2;
+  show($('#inkS'), inkOn);
+  if (inkOn) {
+    const fo = 1 - E.in(seg(t, T.inkOut - .12, T.inkOut + .12));
+    $('#inkS').style.opacity = fo;
+    rise($('#iLab'), t, T.inkInEnd - .02, .35, 20);
+    rise($('#iTitle'), t, T.inkInEnd + .04, .45, 36);
+    const s0 = E.out(seg(t, T.q[0] - .15, T.q[0] + .35)); SEP0.style.transform = `scaleX(${s0})`;
+    QS.forEach((q, i) => {
+      const a = T.q[i], p = seg(t, a, a + .62);
+      q.el.style.opacity = E.out(seg(t, a, a + .2));
+      q.el.style.transform = `translateY(${(E.spring(p) - 1) * 80}px)`;
+      q.sep.style.transform = `scaleX(${E.out(seg(t, a + .05, a + .5))})`;
+      const x1 = E.out(seg(t, a + .42, a + .56)), x2 = E.out(seg(t, a + .52, a + .66));
+      q.l1.style.strokeDashoffset = 29 * (1 - x1); q.l2.style.strokeDashoffset = 29 * (1 - x2);
+      q.x.style.opacity = E.out(seg(t, a + .34, a + .48));
+    });
+  }
+
+  /* ---- fin : construite en 0,95 s, puis tenue ---- */
+  const endOn = t >= T.endOut + .1 && t < T.loop + .24;
+  show($('#end'), endOn);
+  if (endOn) {
+    const D = .35;
+    rise($('#eKick'), t, T.eTitle - .1, D, 20);
+    rise($('#eTitle'), t, T.eTitle, D, 40);
+    rise($('#eBody'), t, T.eBody, D, 32);
+    rise($('#ePill'), t, T.ePill, D, 28);
+    $('#ePill').style.transform += ` scale(${.96 + .04 * E.out(seg(t, T.ePill, T.ePill + D))})`;
+    rise($('#eBio'), t, T.ePill + .1, D, 16);
+    $('#eRule').style.transform = `scaleX(${E.out(seg(t, T.eFoot, T.eFoot + .4))})`;
+    rise($('#eLogo'), t, T.eFoot, D, 16);
+    rise($('#eHandle'), t, T.eFoot, D, 16);
+    const eo = 1 - E.out(seg(t, T.loop, T.loop + .2));             // boucle : l'écran final s'efface
+    $('#end').style.opacity = eo; $('#end').style.transform = `translateY(${-24 * (1 - eo)}px)`;
+  }
+}
+window.render = render;
+
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 40px IS'), document.fonts.load('400 40px IS'), document.fonts.load('500 20px PM'),
+  document.fonts.load('400 30px CG'), document.fonts.load('italic 400 30px CG')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { measure(); render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>

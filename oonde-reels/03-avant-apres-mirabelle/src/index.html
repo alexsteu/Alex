@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · 03 Avant / après · Salon Mirabelle</title>
+<link rel="icon" href="data:,">
+<style>
+/* Kit Reels OONDE : DA v7. Polices et logos servis par render.cjs sous /_kit/ */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2');font-style:italic}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+#stage *{box-sizing:border-box}
+.abs{position:absolute}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+
+/* ---------- titres ---------- */
+#eyebrow{left:0;top:272px;width:1080px;text-align:center;font-size:30px;color:var(--muted)}
+.mask{position:absolute;left:0;width:1080px;height:130px;overflow:hidden}
+.mask > div{position:absolute;left:0;top:0;width:1080px;height:130px;text-align:center;
+  font:600 106px/130px IS;letter-spacing:-.025em;color:var(--ink);white-space:nowrap}
+#m1{top:306px} #m2{top:414px}
+#l2c span.w{display:inline-block}
+.gap{display:inline-block;width:58px}
+
+/* ---------- étiquettes AVANT / APRÈS ---------- */
+.lab{top:568px;height:64px;border-radius:32px;padding:0 28px 0 24px;display:flex;align-items:center;gap:14px;
+  font-size:34px;white-space:nowrap}
+.lab i{display:block;width:12px;height:12px;border-radius:6px}
+#labA{background:var(--ink);color:#fff}
+#labA i{background:#B9BCC2}
+#labB{background:var(--ink);color:#fff}
+#labB i{background:var(--klein);box-shadow:0 0 0 3px rgba(32,56,236,.28)}
+
+/* ---------- téléphone ---------- */
+#rig{left:0;top:0;width:1080px;height:1920px}
+#zoom{left:0;top:0;width:1080px;height:1920px;transform-origin:890px 652px}
+#phone{left:190px;top:652px;width:700px;height:1500px;border-radius:78px;background:#16181D;
+  box-shadow:0 0 0 2px #2B2E35 inset,0 0 0 6px #0E0F12 inset,0 50px 100px rgba(17,19,24,.16),0 16px 36px rgba(17,19,24,.10)}
+#screen{left:204px;top:666px;width:672px;height:1472px;border-radius:64px;overflow:hidden;background:#fff}
+.scale{position:absolute;left:0;top:0;width:375px;height:822px;transform-origin:0 0;transform:scale(1.792)}
+#wrapB{position:absolute;left:0;top:0;width:672px;height:1472px}
+.page{position:absolute;left:0;top:0;width:375px;height:1100px}
+.page .abs{position:absolute}
+
+/* barre d'état iOS (commune) */
+#sb{z-index:5}
+#sb .bg{left:0;top:0;width:375px;height:50px;background:#fff}
+#sb .time{left:38px;top:17px;font:600 16px/1 IS;letter-spacing:-.01em;color:#000}
+#sb .island{left:126px;top:11px;width:123px;height:35px;border-radius:18px;background:#000}
+
+/* avant : site daté mais crédible */
+#pageA{background:#E9E5DE;font-family:'Liberation Serif','DejaVu Serif',serif;color:#333}
+#pageA .col{left:6px;top:50px;width:363px;height:560px;background:#fff;box-shadow:0 0 0 1px #D2C8BB}
+#pageA .bnr{left:6px;top:50px;width:363px;height:72px;background:linear-gradient(#F4EBE1,#E4D4C3);border-bottom:1px solid #C7B29C}
+#pageA .bnr b{position:absolute;left:14px;top:11px;font:italic 400 27px/1 'Liberation Serif',serif;color:#7B4A5C}
+#pageA .bnr span{position:absolute;left:15px;top:45px;font:400 10.5px/1 'Liberation Sans',sans-serif;color:#8A7766}
+#pageA .nav{left:6px;top:122px;width:363px;height:25px;background:#8B5D6E;display:flex;align-items:center;
+  font:400 10.5px/1 'Liberation Sans',sans-serif;color:#fff;padding-left:6px}
+#pageA .nav u{text-decoration:none;padding:7px 8px}
+#pageA .nav u.on{background:#6F4656}
+#pageA .nav s{text-decoration:none;color:#C9A9B5}
+#pageA h1{margin:0;left:18px;top:160px;font:400 31px/1 'Liberation Serif',serif;color:#7B4A5C}
+#pageA .p1{left:134px;top:204px;width:223px;font:400 12.5px/1.38 'Liberation Serif',serif;text-align:justify}
+#pageA .thumb{left:18px;top:206px;width:104px;height:72px;border:3px solid #fff;box-shadow:0 0 0 1px #B9B0A4;object-fit:cover}
+#pageA .cap{left:18px;top:282px;width:104px;font:italic 9.5px/1.2 'Liberation Serif',serif;color:#8A7766;text-align:center}
+#pageA hr{position:absolute;margin:0;border:0;height:1px;background:#D3C2AF;left:18px;width:339px}
+#pageA h2{margin:0;left:18px;font:700 16.5px/1 'Liberation Serif',serif;color:#7B4A5C}
+#pageA .p{left:18px;width:339px;font:400 12px/1.35 'Liberation Serif',serif}
+#pageA .pdf{left:18px;display:flex;align-items:center;gap:6px;font:400 12px/1 'Liberation Serif',serif}
+#pageA .pdf em{font-style:normal;color:#1B4FA8;text-decoration:underline}
+#pageA .pdf small{color:#8A7766;font-size:11px}
+#pageA .ico{width:14px;height:17px;background:#fff;border:1px solid #B33;position:relative}
+#pageA .ico:after{content:'PDF';position:absolute;left:-1px;bottom:1px;width:14px;background:#C33;color:#fff;font:700 5px/7px 'Liberation Sans',sans-serif;text-align:center}
+#pageA .tel{left:18px;width:178px;height:36px;border:1px solid #B9A48F;background:linear-gradient(#FFFDF9,#EADFD1);
+  display:flex;align-items:center;justify-content:center;box-shadow:1px 1px 0 #D6C8B6}
+#pageA .tel span{font:700 14px/1 'Liberation Sans',sans-serif;color:#7B4A5C;filter:blur(.55px);letter-spacing:.02em}
+#pageA .foot{left:6px;top:576px;width:363px;height:34px;background:#E4D4C3;border-top:1px solid #C7B29C;
+  font:400 9.5px/34px 'Liberation Sans',sans-serif;color:#7A6A5A;text-align:center}
+
+/* après : page propre façon OONDE */
+#pageB{background:#fff;font-family:IS,sans-serif;color:var(--ink)}
+#pageB .hdr{left:0;top:50px;width:375px;height:52px}
+#pageB .hdr b{position:absolute;left:20px;top:13px;font:400 24px/1 CG;letter-spacing:.005em;color:var(--ink)}
+#pageB .hdr i{position:absolute;right:20px;width:20px;height:1.6px;background:var(--ink);border-radius:1px}
+#pageB .ph{left:0;top:102px;width:375px;height:218px;overflow:hidden;background:#ddd}
+#pageB .ph img{position:absolute;left:0;top:-30px;width:375px;height:280px;object-fit:cover;object-position:42% 50%}
+#pageB .eb{left:20px;top:340px;font-size:10.5px;color:var(--muted);letter-spacing:.16em}
+#pageB .nm{left:19px;top:356px;font:400 49px/1 CG;letter-spacing:-.012em;color:var(--ink);white-space:nowrap}
+#pageB .tg{left:20px;top:414px;font:500 18px/1.2 IS;color:var(--soft);letter-spacing:-.01em}
+#pageB .btn{left:20px;top:454px;width:335px;height:56px;border-radius:14px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:10px;font:600 16.5px/1 IS;letter-spacing:-.01em}
+#pageB .btn svg{width:24px;height:24px}
+#pageB .hrs{left:20px;top:530px;width:335px;height:154px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--line) inset;padding:15px 16px}
+#pageB .hrs .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+#pageB .hrs .h b{font:600 15px/1 IS;letter-spacing:-.01em}
+#pageB .hrs .h span{font:500 12.5px/1 IS;color:var(--soft);display:flex;align-items:center;gap:6px}
+#pageB .hrs .h span:before{content:'';width:6px;height:6px;border-radius:3px;background:var(--ink)}
+#pageB .row{display:flex;justify-content:space-between;font:400 14px/30px IS;color:var(--soft);border-top:1px solid #EEEFEB}
+#pageB .row b{font-weight:500;color:var(--ink)}
+#pageB .sec{left:20px;top:708px;font:600 15px/1 IS}
+#pageB .chips{left:20px;top:734px;width:340px;display:flex;flex-wrap:wrap;gap:8px}
+#pageB .chips span{font:500 13.5px/1 IS;padding:9px 13px;border-radius:10px;box-shadow:0 0 0 1px var(--line) inset;color:var(--soft)}
+#touch,#ring{left:0;top:0;width:34px;height:34px;border-radius:17px;opacity:0}
+#touch{background:rgba(255,255,255,.35)}
+#ring{box-shadow:0 0 0 1.5px #fff inset}
+#bub{right:22px;top:676px;padding:18px 22px 20px;border-radius:26px 26px 8px 26px;background:var(--wa);color:#fff;
+  font:500 37px/1.2 IS;letter-spacing:-.012em;white-space:nowrap;box-shadow:0 12px 28px rgba(17,19,24,.18);transform-origin:100% 100%;opacity:0}
+
+/* ---------- trait de comparaison ---------- */
+#fx{left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#handle{left:0;top:0;width:76px;height:76px;border-radius:38px;background:#fff;
+  box-shadow:0 0 0 3px var(--klein),0 10px 24px rgba(17,19,24,.18);display:flex;align-items:center;justify-content:center}
+.ptag{top:0;height:56px;border-radius:28px;padding:0 24px 0 20px;background:var(--ink);color:#fff;font-size:32px;white-space:nowrap;
+  display:flex;align-items:center;gap:12px;box-shadow:0 8px 20px rgba(17,19,24,.16)}
+.ptag i{display:block;width:11px;height:11px;border-radius:6px}
+#tagA i{background:#B9BCC2}
+#tagB i{background:var(--klein);box-shadow:0 0 0 3px rgba(32,56,236,.28)}
+
+/* ---------- fin ---------- */
+#sub{left:0;top:580px;width:1080px;text-align:center;font:500 52px/1.15 IS;letter-spacing:-.015em;color:var(--soft)}
+#cta{top:720px;height:112px;border-radius:56px;background:#fff;padding:0 46px 0 34px;display:flex;align-items:center;gap:22px;
+  font:600 46px/1 IS;letter-spacing:-.02em;color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset,0 18px 40px rgba(17,19,24,.08);white-space:nowrap}
+#cta svg{width:58px;height:58px}
+#logo{left:0;top:1200px;width:1080px;text-align:center}
+#logo img{height:66px}
+#handleTxt{left:0;top:1298px;width:1080px;text-align:center;font-size:32px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="eyebrow" class="abs mono">Démo · lieu fictif</div>
+
+  <div id="m1" class="mask"><div id="l1a">Même salon.</div><div id="l1b">Votre</div></div>
+  <div id="m2" class="mask"><div id="l2a">Même photo.</div><div id="l2b">Autre site.</div><div id="l2c"><span class="w" id="wA">avant</span><span class="gap" id="gap"></span><span class="w" id="wB">après&#8239;?</span></div></div>
+
+  <div id="rig" class="abs">
+    <div id="labA" class="abs lab mono"><i></i>Avant</div>
+    <div id="labB" class="abs lab mono"><i></i>Après</div>
+
+    <div id="zoom" class="abs">
+    <div id="phone" class="abs"></div>
+    <div id="screen" class="abs">
+      <!-- AVANT -->
+      <div class="scale"><div id="pageA" class="page">
+        <div class="abs col"></div>
+        <div class="abs bnr"><b>Salon Mirabelle</b><span>Coiffure dames &amp; messieurs</span></div>
+        <div class="abs nav"><u class="on">Accueil</u><s>|</s><u>Le salon</u><s>|</s><u>Prestations</u><s>|</s><u>Contact</u></div>
+        <h1 class="abs">Bienvenue</h1>
+        <div class="abs p1">Bienvenue sur le site du Salon Mirabelle&#8239;! Notre équipe vous accueille dans une ambiance chaleureuse et conviviale. Nous serons heureux de vous recevoir pour une coupe, une couleur ou un brushing.</div>
+        <img class="abs thumb" src="t-coiffure.jpg" alt="">
+        <div class="abs cap">Notre salon</div>
+        <hr style="top:330px">
+        <h2 class="abs" style="top:344px">Nos prestations</h2>
+        <div class="abs p" style="top:367px">La liste de nos prestations est disponible ici&#8239;:</div>
+        <div class="abs pdf" style="top:388px"><span class="ico"></span><em>prestations_2014.pdf</em><small>(1,8 Mo)</small></div>
+        <hr style="top:420px">
+        <h2 class="abs" style="top:434px">Rendez-vous</h2>
+        <div class="abs p" style="top:457px">Pour prendre rendez-vous, merci de nous téléphoner&#8239;:</div>
+        <div class="abs tel" style="top:480px"><span>Tél. 021 000 00 00</span></div>
+        <div class="abs p" style="top:530px;color:#555">Horaires&#8239;: voir la brochure (PDF).</div>
+        <div class="abs foot">© Salon Mirabelle · Dernière mise à jour&#8239;: 12.03.2014</div>
+      </div></div>
+
+      <!-- APRÈS -->
+      <div id="wrapB"><div class="scale"><div id="pageB" class="page">
+        <div class="abs hdr"><b>Mirabelle</b><i style="top:21px"></i><i style="top:29px"></i></div>
+        <div class="abs ph"><img id="phImg" src="t-coiffure.jpg" alt=""></div>
+        <div class="abs eb mono">Coiffure · Montreux</div>
+        <div class="abs nm">Salon Mirabelle</div>
+        <div class="abs tg">Coupe, couleur, brushing.</div>
+        <div class="abs btn" id="btn"><svg viewBox="0 0 24 24"><path fill="#14803C" d="M12 1.6a10.4 10.4 0 0 0-9 15.6L1.6 22.4l5.4-1.4A10.4 10.4 0 1 0 12 1.6z"/><path fill="#fff" d="M8.4 6.9c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .6.4l.9 2c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.4.7 1 1.4 1.7 2 .7.6 1.3.9 1.6 1 .2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1 1-.2 1.7-.3.7-1.7 1.4-2.3 1.4-.6 0-1.4.2-4.3-1.1-2.6-1.2-4.3-3.9-4.4-4.1-.1-.2-1.1-1.4-1.1-2.6s.6-1.9.9-2.2z"/></svg>Réserver sur WhatsApp</div>
+        <div class="abs hrs">
+          <div class="h"><b>Horaires</b><span>Ouvert aujourd’hui</span></div>
+          <div class="row"><b>Mardi – vendredi</b><span>9 h – 18 h 30</span></div>
+          <div class="row"><b>Samedi</b><span>8 h – 16 h</span></div>
+          <div class="row"><b>Dimanche, lundi</b><span>Fermé</span></div>
+        </div>
+        <div class="abs sec">Prestations</div>
+        <div class="abs chips"><span>Coupe</span><span>Couleur</span><span>Brushing</span><span>Mèches</span><span>Soin</span></div>
+        <div class="abs" id="touch"></div><div class="abs" id="ring"></div>
+      </div></div>
+        <div class="abs" id="bub">Une coupe<br>samedi matin&#8239;?</div>
+      </div>
+
+      <!-- barre d'état commune -->
+      <div class="scale" id="sb"><div class="abs bg"></div><div class="abs time">09:41</div><div class="abs island"></div>
+        <svg class="abs" style="left:282px;top:19px" width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#000"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#000"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#000"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg class="abs" style="left:305px;top:19px" width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0z M3.6 7a6.2 6.2 0 0 1 8.8 0l-1.3 1.3a4.4 4.4 0 0 0-6.2 0z M1.5 4.9a9.2 9.2 0 0 1 13 0l-1.3 1.3a7.4 7.4 0 0 0-10.4 0z" fill="#000"/></svg>
+        <svg class="abs" style="left:327px;top:18px" width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="#000" opacity=".4"/><rect x="2" y="2" width="18" height="9" rx="2" fill="#000"/><rect x="25" y="4.5" width="1.6" height="4" rx=".8" fill="#000" opacity=".45"/></svg>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- fin -->
+  <div id="sub" class="abs">La maquette est offerte.</div>
+  <div id="cta" class="abs"><svg viewBox="0 0 24 24"><path fill="#14803C" d="M12 1.6a10.4 10.4 0 0 0-9 15.6L1.6 22.4l5.4-1.4A10.4 10.4 0 1 0 12 1.6z"/><path fill="#fff" d="M8.4 6.9c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .6.4l.9 2c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.4.7 1 1.4 1.7 2 .7.6 1.3.9 1.6 1 .2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1 1-.2 1.7-.3.7-1.7 1.4-2.3 1.4-.6 0-1.4.2-4.3-1.1-2.6-1.2-4.3-3.9-4.4-4.1-.1-.2-1.1-1.4-1.1-2.6s.6-1.9.9-2.2z"/></svg>Écrivez-nous sur WhatsApp</div>
+  <div id="logo" class="abs"><img src="/_kit/brand/logo.svg" alt=""></div>
+  <div id="handleTxt" class="abs mono">@oonde_studio</div>
+
+  <!-- trait de comparaison (devient la barre oblique finale) -->
+  <svg id="fx" class="abs" viewBox="0 0 1080 1920"><line id="ln" x1="-20" y1="560" x2="-20" y2="1920" stroke="#2038EC" stroke-width="3" stroke-linecap="round"/></svg>
+  <div id="handle" class="abs"><svg width="40" height="22" viewBox="0 0 40 22"><path d="M12 3 4 11l8 8M28 3l8 8-8 8" fill="none" stroke="#111318" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div id="tagA" class="abs ptag mono"><i></i>Avant</div>
+  <div id="tagB" class="abs ptag mono"><i></i>Après</div>
+
+  <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const q = new URLSearchParams(location.search);
+const COVER = q.has('cover');
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  out5: t => 1 - Math.pow(1 - t, 5),
+  in: t => t * t * t,
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  inOut5: t => t < .5 ? 16 * Math.pow(t, 5) : 1 - Math.pow(-2 * t + 2, 5) / 2,
+};
+// ressort doux amorti (0 → 1)
+const spring = (t, k = 9, z = 5.5) => t <= 0 ? 0 : 1 - Math.exp(-z * t) * Math.cos(k * t);
+function rise(el, t, a, d = .5, dy = 36) { const p = E.out(seg(t, a, a + d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; }
+const show = (el, o, y = 0) => { el.style.opacity = o; el.style.transform = `translateY(${y}px)`; };
+const SX = 204;                      // bord gauche de l'écran (px vidéo)
+const HY = 1010;                     // hauteur de la poignée
+const X0 = 898;                      // trait au repos : posé sur le bord droit du téléphone dès t = 0
+const ZO = { x: 890, y: 652 };       // origine du zoom (bord droit et haut du téléphone fixes)
+let LAB = {}, GAP = { x: 540, y: 460 }, TC = 2.21;
+
+// Sens de lecture : AVANT à gauche du trait, APRÈS à droite (comme « avant / après »).
+// ----- position du trait (x, px vidéo) -----
+function lineX(t) {
+  if (t < 0.6) return X0;
+  if (t < 0.95) { const u = seg(t, .6, .95); const k = u < .35 ? E.out(u / .35) : 1 - E.inOut((u - .35) / .65); return X0 - 24 * k; } // « tirez-moi »
+  if (t < 1.8) return X0;
+  if (t < 2.7) return lerp(X0, -30, E.inOut(seg(t, 1.8, 2.7)));       // balayage 1 (droite → gauche) : l'après apparaît à droite du trait
+  if (t < 4.8) return -30;
+  if (t < 5.25) return lerp(-30, 556, E.out5(seg(t, 4.8, 5.25)));       // revient au milieu (depuis la gauche : l'avant revient)
+  if (t < 5.55) return lerp(556, 540, E.inOut(seg(t, 5.25, 5.55)));    // une seule petite oscillation (16 px)
+  if (t < 7.05) return 540;                                             // vue partagée AVANT ‹ › APRÈS
+  if (t < 7.5) return lerp(540, 1110, E.inOut(seg(t, 7.05, 7.5)));     // file à droite : tout l'avant
+  if (t < 7.62) return 1110;                                            // pause en bout de course
+  if (t < 8.12) return lerp(1110, 540, E.inOut(seg(t, 7.62, 8.12)));   // repart à gauche : l'après revient, arrêt au centre
+  return 540;
+}
+const zoomAt = t => 1 + .16 * E.inOut(seg(t, .5, 1.25)) - .16 * E.inOut(seg(t, 1.5, 1.8));
+
+window.DURATION = 12.35;
+function render(t) {
+  const X = lineX(t);
+  const z = zoomAt(t);
+
+  // ---- titres ----
+  show($('#l1a'), 1); show($('#l1b'), 0, 110);
+  show($('#l2a'), 1); show($('#l2b'), 1); show($('#l2c'), 0);
+  // le trait balaie aussi la ligne 2 : « Même photo. » à gauche du trait, « Autre site. » à droite
+  const Xw = t < 2.75 ? X : -30;
+  $('#l2a').style.clipPath = `inset(-20px ${clamp(1080 - Xw, 0, 1100)}px -20px -20px)`;
+  $('#l2b').style.clipPath = `inset(-20px -20px -20px ${clamp(Xw, 0, 1100)}px)`;
+  if (COVER) {                                                          // couverture : vue partagée + titre d'accroche, plus bas pour la grille
+    $('#l2a').style.clipPath = 'none'; show($('#l2b'), 0);
+    for (const id of ['#eyebrow', '#m1', '#m2']) $(id).style.marginTop = '46px';
+  }
+  if (t >= 8.15) {                                                      // sortie du titre avec le téléphone
+    for (const [el, a] of [[$('#l1a'), 8.15], [$('#l2b'), 8.19]]) { const p = E.in(seg(t, a, a + .25)); show(el, 1 - p, -70 * p); }
+  }
+  // titre final : « avant » et « après ? » sortent de derrière la barre, puis « Votre » monte
+  const wA = $('#wA'), wB = $('#wB');
+  if (t >= 9.15) {
+    show($('#l2c'), 1);
+    const p = E.out5(seg(t, 9.15, 9.5)), dx = 60 * (1 - p), o = seg(t, 9.15, 9.2);
+    wA.style.opacity = o; wB.style.opacity = o;
+    wA.style.transform = `translateX(${dx}px)`; wA.style.clipPath = `inset(-30px ${dx - 29}px -30px -30px)`;
+    wB.style.transform = `translateX(${-dx}px)`; wB.style.clipPath = `inset(-30px -30px -30px ${dx - 29}px)`;
+    const v = E.out(seg(t, 9.25, 9.67)); show($('#l1b'), v, (1 - v) * 110);
+  }
+  // « DÉMO · LIEU FICTIF » reste tant que le téléphone est dans le cadre
+  show($('#eyebrow'), 1 - E.inOut(seg(t, 8.55, 8.7)));
+
+  // ---- étiquettes AVANT → APRÈS : B visible à droite du trait ----
+  const labO = 1 - seg(t, 4.65, 4.8);
+  for (const id of ['labA', 'labB']) $('#' + id).style.opacity = clamp(labO);
+  const lb = LAB.B || { l: 470, w: 140 };
+  $('#labB').style.clipPath = `inset(-4px -4px -4px ${clamp(X - lb.l, 0, lb.w + 8)}px)`;
+  const ub = Math.max(0, t - TC), bump = t > TC ? Math.exp(-ub * 7) * Math.sin(ub * 18) : 0;
+  $('#labB').style.transform = `scale(${1 + .05 * bump})`;
+
+  // ---- zoom de lecture sur l'avant (revient à 1 avant l'entrée du trait) ----
+  $('#zoom').style.transform = `scale(${z})`;
+
+  // ---- pages ----
+  const scA = 150 * E.inOut(seg(t, 0.5, 1.4));
+  $('#pageA').style.transform = `translateY(${-scA}px)`;
+  const scB = 122 * E.inOut(seg(t, 2.85, 3.8));
+  $('#pageB').style.transform = `translateY(${-scB}px)`;
+  $('#phImg').style.transform = `translateY(${scB * .38}px)`;           // parallaxe douce
+  const XL = ZO.x + (X - ZO.x) / z;                                     // trait en coordonnées non zoomées
+  $('#wrapB').style.clipPath = `inset(0 0 0 ${clamp(XL - SX, 0, 680)}px)`;
+
+  // ---- le bouton réagit une fois, et le message part ----
+  const tp = seg(t, 4.1, 4.32);
+  const press = t < 4.32 ? E.out(tp) : 1 - spring(t - 4.32, 14, 7);
+  $('#btn').style.transform = `scale(${1 - .045 * press})`;
+  $('#btn').style.background = press > 0 ? `rgb(${17 + 22 * press},${19 + 23 * press},${24 + 26 * press})` : '';
+  const to = seg(t, 4.0, 4.12) * (1 - seg(t, 4.45, 4.7));
+  const touch = $('#touch'), ring = $('#ring');
+  touch.style.opacity = to;
+  touch.style.transform = `translate(${322 - 17}px,${482 - 17}px) scale(${1 - .1 * clamp(press)})`;
+  const rs = E.out(seg(t, 4.1, 4.45));
+  ring.style.opacity = t >= 4.1 ? .5 * (1 - rs) : 0;
+  ring.style.transform = `translate(${322 - 17}px,${482 - 17}px) scale(${1 + .7 * rs})`;
+  const bp = E.out(seg(t, 4.27, 4.57));
+  $('#bub').style.opacity = bp;
+  $('#bub').style.transform = `translateY(${(1 - bp) * 40}px) scale(${.96 + .04 * bp})`;
+
+  // ---- trait + poignée ----
+  const ln = $('#ln');
+  const vel = Math.abs(lineX(t + .005) - lineX(t - .005)) / .01;
+  const y1 = t < 2.75 ? 414 : (COVER ? 606 : 560);
+  const mp = E.inOut5(seg(t, 8.7, 9.15));                               // métamorphose : trait → barre oblique
+  const h = 96, dx = h / 2 * Math.tan(17 * Math.PI / 180);
+  ln.setAttribute('x1', lerp(X, GAP.x + dx, mp)); ln.setAttribute('y1', lerp(y1, GAP.y - h / 2, mp));
+  ln.setAttribute('x2', lerp(X, GAP.x - dx, mp)); ln.setAttribute('y2', lerp(1930, GAP.y + h / 2, mp));
+  ln.setAttribute('stroke-width', t < 8.7 ? 3 + clamp(vel / 1500) : lerp(3, 9, mp));
+  const hd = $('#handle');
+  const arr = t > 5.25 ? Math.exp(-(t - 5.25) * 6) * Math.sin((t - 5.25) * 14) : 0;
+  const hsc = (1 + .05 * arr) * (1 - E.in(seg(t, 8.12, 8.27)));
+  hd.style.opacity = X > -20 && X < 1100 ? 1 : 0;
+  hd.style.transform = `translate(${X - 38}px,${HY - 38}px) scale(${hsc})`;
+
+  // étiquettes de la vue partagée : AVANT à gauche, APRÈS à droite (pleinement visibles 1,2 s)
+  const tg = E.out(seg(t, 5.55, 5.75)) * (1 - E.in(seg(t, 6.95, 7.1)));
+  const tA = $('#tagA'), tB = $('#tagB');
+  tA.style.opacity = tg; tB.style.opacity = tg;
+  tA.style.transform = `translate(${X - 62 - tA.offsetWidth - (1 - tg) * 16}px,${HY - 28}px)`;
+  tB.style.transform = `translate(${X + 62 + (1 - tg) * 16}px,${HY - 28}px)`;
+
+  // ---- sortie du téléphone (sans fondu : il sort du cadre) ----
+  const pd = E.in(seg(t, 8.15, 8.55));
+  $('#rig').style.transform = `translateY(${pd * 1400}px)`;
+
+  // ---- fin ----
+  rise($('#sub'), t, 9.45, .45, 30);
+  const c = E.out(seg(t, 9.7, 10.15)), cs = spring(t - 9.7, 11, 6.5);
+  $('#cta').style.opacity = c;
+  $('#cta').style.transform = `translateY(${(1 - c) * 30}px) scale(${.94 + .06 * cs})`;
+  rise($('#logo'), t, 9.9, .4, 24);
+  rise($('#handleTxt'), t, 9.95, .4, 24);
+}
+window.render = render;
+
+
+if (q.has('safe')) document.body.classList.add('show-safe');
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('400 40px IS'),
+  document.fonts.load('500 40px IS'), document.fonts.load('400 40px CG'), document.fonts.load('italic 400 40px CG')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => {
+    // mesures (déterministes, une seule fois)
+    for (const k of ['A', 'B']) { const el = $('#lab' + k); const w = el.offsetWidth; el.style.left = (540 - w / 2) + 'px'; LAB[k] = { l: 540 - w / 2, w }; }
+    const c = $('#cta'); c.style.left = (540 - c.offsetWidth / 2) + 'px';
+    const l2c = $('#l2c'); l2c.style.opacity = 1; l2c.style.transform = 'none';
+    const r = $('#gap').getBoundingClientRect();
+    GAP = { x: r.left + r.width / 2, y: r.bottom - 37 };
+    // instant où le trait passe le centre de l'étiquette (rebond + tic)
+    let a = 1.8, b = 2.7; for (let i = 0; i < 40; i++) { const m = (a + b) / 2; if (lineX(m) > 540) a = m; else b = m; } TC = (a + b) / 2;
+    window.TC = TC; window.GAP = GAP;
+    render(q.has('t') ? +q.get('t') : 0); window.READY = true;
+  });
+</script>
+</body>
+</html>

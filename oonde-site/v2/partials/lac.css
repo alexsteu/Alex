@@ -1,0 +1,72 @@
+/* v38 · L'entrée du lac (accueil) : un téléphone géant sur une plateforme au bord du lac, au coucher du soleil (Blender, tel3d/lac_film4.py).
+   Un film d'ouverture automatique (o) puis un film lu au premier geste (a), jamais cherchés (video/lac/<jeu>/o, a ; H.264 et VP9), et deux arrêts :
+   c1 le ponton (le titre), c2 la conversation sortie du téléphone (« Tester la démo »). Les images des arrêts : img/lac/<jeu>/c1, c2.
+   Pendant l'entrée la page est tenue en haut ; à c2 elle est libre. Mouvement réduit ou sans JavaScript : l'image du ponton et le texte, sans film. */
+.lac{position:relative;padding:0;background:#14161b;color:#fff}
+.lac .lnk{color:#fff}
+.lac-st{position:relative;height:calc(100vh - var(--hh));height:calc(100svh - var(--hh));min-height:480px;overflow:hidden;container-type:size;background:#3a3533 url("{{LACB_D}}") 62% 50%/cover no-repeat}
+@media (max-aspect-ratio:1/1){.lac-st{background-image:url("{{LACB_M}}");background-position:50% 50%}}
+.lac-sc{position:absolute;inset:0}
+.lac-sc img,.lac-sc video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;display:block;background:transparent}
+@media (max-aspect-ratio:1/1){.lac-sc img,.lac-sc video{object-position:50% 50%}}
+.lac-h{opacity:0}.lac.held .lac-h{opacity:1}   /* l'image de l'arrêt, sous les films : posée (décodée) avant qu'un film ne s'efface */
+.lac-v{opacity:0;pointer-events:none}.lac-v.on{opacity:1}
+.lac-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.42) 34%,rgba(10,12,18,0) 60%),linear-gradient(0deg,rgba(10,12,18,.35),rgba(10,12,18,0) 28%)}
+@media (max-aspect-ratio:1/1){.lac-veil{background:linear-gradient(180deg,rgba(10,12,18,.66) 0,rgba(10,12,18,.34) 30%,rgba(10,12,18,0) 46%,rgba(10,12,18,0) 62%,rgba(10,12,18,.72) 100%)}}
+
+/* les deux arrêts : un seul texte à la fois ; il se lève quand la caméra est posée */
+.lac-tx{position:absolute;z-index:3;left:clamp(20px,6cqw,96px);top:50%;width:min(36rem,44cqw);translate:0 calc(-50% + 12px);opacity:0;pointer-events:none;transition:opacity .35s ease,translate .35s ease}
+.lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2{opacity:1;translate:0 -50%;pointer-events:auto;transition:opacity .6s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
+.lac .mono{color:rgba(255,255,255,.78)}
+.lac h1{font:600 clamp(38px,4.7cqw,74px)/1 var(--sans);letter-spacing:-.035em;margin-top:14px;text-wrap:balance;text-shadow:0 2px 28px rgba(5,6,12,.45)}
+.lac-hd{font:600 clamp(30px,3.6cqw,56px)/1.04 var(--sans);letter-spacing:-.03em;margin:12px 0 0;text-wrap:balance;text-shadow:0 2px 24px rgba(5,6,12,.45)}
+.lac-p{margin:16px 0 0;font:500 clamp(17px,1.45cqw,20px)/1.45 var(--sans);color:rgba(255,255,255,.9);max-width:30em;text-shadow:0 1px 14px rgba(5,6,12,.6)}
+.lac-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:26px}
+.lac-act .btn{min-height:50px}
+.lac-sub{flex-basis:100%;margin:0;color:rgba(255,255,255,.75)}
+.lac .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff}
+.lac .tel-rev{margin-top:4px}
+.lac .tel-rev span{color:rgba(255,255,255,.75)}
+.lac-sites{margin:22px 0 0;font-size:15.5px;color:rgba(255,255,255,.75)}
+.lac-sites a{color:#fff;font-weight:600;text-decoration:none;display:inline-block;padding-block:12px;margin-block:-12px}.lac-sites a:hover{text-decoration:underline;text-underline-offset:4px}
+.lac-go{margin-top:clamp(22px,4cqh,36px);font:500 15px var(--sans);color:#fff;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.24);border-radius:99px;padding:0 22px;min-height:46px;display:inline-flex;align-items:center;gap:10px;line-height:1;cursor:pointer;transition:background .2s}
+.lac-go:hover{background:rgba(255,255,255,.24)}
+.lac-go i{font-style:normal;display:inline-block}
+@media (prefers-reduced-motion:no-preference){.lac.s1 .lac-go i{animation:lacNudge 1.8s ease-in-out 1.2s infinite}}
+@keyframes lacNudge{0%,60%,100%{transform:none}30%{transform:translateY(4px)}}
+.lac-skip{position:absolute;z-index:4;right:clamp(16px,3cqw,40px);bottom:clamp(14px,3cqh,28px);font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);text-decoration:none;padding:12px 4px;transition:opacity .3s}
+.lac-skip:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.lac.s2 .lac-skip{opacity:0;pointer-events:none}
+.lac-load{position:absolute;z-index:4;left:50%;top:18px;translate:-50% 0;margin:0;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);background:rgba(10,12,18,.55);border-radius:99px;padding:7px 12px;pointer-events:none;opacity:0;transition:opacity .3s}
+.lac-load:not(:empty){opacity:1}
+.lac-tx :focus-visible,.lac-skip:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* au téléphone (portrait) : le titre en haut, sur le ciel ; les boutons en bas, sur le ponton ; le téléphone géant au milieu */
+@media (max-aspect-ratio:1/1){
+ .lac-tx{left:var(--pad);right:var(--pad);width:auto;top:clamp(16px,4.5cqh,40px);bottom:clamp(18px,4cqh,36px);translate:0 12px;display:flex;flex-direction:column}
+ .lac.s1 .lac-1,.lac.pre .lac-1,.lac.s2 .lac-2{translate:0 0}
+ .lac h1{font-size:min(40px,9.6cqw);margin-top:10px}
+ .lac-hd{font-size:min(32px,8.2cqw);margin-top:10px}
+ .lac-p{font-size:16.5px;margin-top:10px}
+ .lac-low{margin-top:auto}
+ .lac-act{margin-top:0;gap:10px 18px}
+ .lac-act .btn{flex:1 1 auto;justify-content:center}
+ .lac-go{margin-top:14px;width:100%;justify-content:center}
+ .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
+ .lac-tx .mono{padding-right:72px}   /* « Passer », en haut à droite */
+ .lac .tel-rev{display:none}
+ .lac-2 .lac-pl,.lac-2 .lac-sites{display:none}   /* au téléphone, les cartes du film racontent la conversation : le titre et les boutons suffisent (le lien vers les sites est dans le menu) */
+ .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}   /* au téléphone, c1 garde le titre, le bouton et « Entrer » : le téléphone géant respire entre les deux */
+}
+
+/* sans film : mouvement réduit, film absent, ou sans JavaScript ; l'image du ponton puis le texte, en page normale */
+.lac.static .lac-st,html:not(.js) .lac-st{height:auto;min-height:0;overflow:visible;container-type:inline-size;display:flex;flex-direction:column;background:#14161b}
+.lac.static .lac-sc,html:not(.js) .lac-sc{position:relative;inset:auto;aspect-ratio:16/9;max-height:54vh;overflow:hidden}
+.lac.static .lac-v,.lac.static .lac-pp,.lac.static .lac-go,.lac.static .lac-skip,.lac.static .lac-2 .mono,html:not(.js) .lac-v,html:not(.js) .lac-h,html:not(.js) .lac-go,html:not(.js) .lac-skip,html:not(.js) .lac-2 .mono{display:none}
+.lac.static .lac-veil,html:not(.js) .lac-veil{display:none}
+.lac.static .lac-h{position:static;opacity:1}   /* sans film, c'est l'image c1 (le téléphone lisible) qui tient lieu d'affiche */
+.lac.static .lac-tx,html:not(.js) .lac-tx{position:relative;inset:auto;width:auto;max-width:44rem;translate:none;opacity:1;pointer-events:auto;padding:0 var(--pad);display:block}
+.lac.static .lac-1,html:not(.js) .lac-1{padding-top:clamp(28px,5vw,56px)}
+.lac.static .lac-2,html:not(.js) .lac-2{padding-block:4px clamp(48px,6vw,80px)}
+.lac.static .lac-2 .lac-hd,html:not(.js) .lac-2 .lac-hd,.lac.static .lac-1 .lac-low,html:not(.js) .lac-1 .lac-low{display:none}
+@media (max-aspect-ratio:1/1){.lac.static .lac-sc,html:not(.js) .lac-sc{aspect-ratio:1/1;max-height:46vh}.lac.static .lac-sc img,html:not(.js) .lac-sc img{object-position:50% 62%}.lac.static .lac-tx .mono,html:not(.js) .lac-tx .mono{padding-right:0}}

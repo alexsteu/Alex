@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel 20 · Swipe</title>
+<link rel="icon" href="data:,">
+<style>
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2');font-style:italic}
+:root{--paper:#F7F7F4;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+body{font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ink)}
+#cam{position:absolute;inset:0}
+.abs{position:absolute}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.t{position:absolute;left:80px;width:860px;font-weight:600;letter-spacing:-.035em;line-height:.98;opacity:0}
+.q{color:#F7F7F4}
+.q i{font-style:normal;color:#8A9098}
+.k{color:var(--klein)}
+.pill{color:#fff;background:var(--klein);padding:0 18px;border-radius:14px}
+.demo{position:absolute;font:500 24px/1 PM,monospace;letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border-radius:8px;white-space:nowrap;background:#F7F7F4;color:#3A3F47;border:2px solid #DCDED8;z-index:2}
+/* cartes de profil */
+.cd{position:absolute;left:170px;top:620px;width:740px;height:640px;border-radius:28px;background:#fff;overflow:hidden;box-sizing:border-box;transform-origin:50% 130%;opacity:0}
+.cd .im{position:absolute;left:0;top:0;width:740px;height:330px;background:#ECEDE8;overflow:hidden}
+.cd .nm{position:absolute;left:36px;top:360px;font:600 52px/1 IS;letter-spacing:-.025em;color:#111318;white-space:nowrap}
+.cd .nm span{font:500 30px/1 PM,monospace;letter-spacing:.08em;color:#6B7078;margin-left:14px;vertical-align:6px}
+.cd .rw{position:absolute;left:36px;right:36px;display:flex;justify-content:space-between;align-items:center;font:500 38px/1 IS;color:#3A3F47;padding:22px 0;border-top:2px solid #ECEDE8;white-space:nowrap}
+.cd .rw b{font-weight:600;color:#111318;font-variant-numeric:tabular-nums}
+.cd .sh{position:absolute;inset:0;background:#2A2D35;opacity:0;z-index:5}
+.nope{position:absolute;left:40px;top:110px;z-index:4;padding:18px 30px;border-radius:14px;background:#111318;color:#F7F7F4;font:600 64px/1 PM,monospace;letter-spacing:.06em;white-space:nowrap;border:5px solid #F7F7F4;box-shadow:0 0 0 4px #111318;opacity:0}
+/* boutons */
+.bt{position:absolute;top:1300px;width:150px;height:150px;border-radius:50%;background:#1A1D23;border:4px solid #3A3F47;box-sizing:border-box;z-index:4}
+.bt svg{position:absolute;left:35px;top:35px}
+.bt .lb{position:absolute;left:-60px;width:270px;top:166px;text-align:center;font:600 30px/1 PM,monospace;letter-spacing:.1em;color:#9AA0A8}
+#paper{position:absolute;inset:0;background:var(--paper);z-index:10;clip-path:circle(0px at 540px 990px)}
+.pt{color:var(--ink)}
+#phone{position:absolute;left:290px;top:600px;width:500px;height:860px;border:3px solid #C9CBC5;border-radius:56px;background:#fff;overflow:hidden;box-sizing:border-box;opacity:0;transform-origin:50% 0}
+.blk{position:absolute;left:28px;right:28px;opacity:0}
+.row{display:flex;justify-content:space-between;font:500 30px/1 IS;color:#3A3F47;padding:14px 0;border-bottom:2px solid #ECEDE8}
+.row b{font-weight:600;color:#111318;font-variant-numeric:tabular-nums}
+.ch{position:absolute;top:630px;width:360px;height:500px;border-radius:32px;background:#fff;border:3px solid #DCDED8;box-sizing:border-box;opacity:0}
+.ch .cc{position:absolute;left:80px;top:70px;width:200px;height:200px;border-radius:50%;box-sizing:border-box}
+.ch .cl{position:absolute;left:0;right:0;top:320px;text-align:center;font:600 64px/1 IS;letter-spacing:-.03em;color:#111318}
+.ch .cs{position:absolute;left:0;right:0;top:404px;text-align:center;font:600 32px/1 PM,monospace;letter-spacing:.08em;text-transform:uppercase;color:#3A3F47}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;display:none;z-index:99}
+.show-safe #safe{display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="cam">
+  <div id="hud" class="abs" style="left:80px;top:258px;width:860px;height:90px;z-index:4">
+    <div class="mono abs" style="left:0;top:32px;font-size:30px;color:#B4B9C0">Ce soir · il cherche un resto</div>
+    <div id="hudc" class="abs" style="right:40px;top:0;display:flex;align-items:baseline;gap:12px;white-space:nowrap">
+      <span id="cnt" style="display:inline-block;font:600 92px/1 IS;letter-spacing:-.03em;color:#F7F7F4;transform-origin:50% 70%">1</span>
+      <span style="font:600 52px/1 IS;color:#6B7078">/4</span>
+    </div>
+  </div>
+
+  <div id="h0" class="t q" style="top:376px;font-size:108px">Ton client<br><span class="pill">swipe</span> ton site.</div>
+  <div id="f1" class="t q" style="top:400px;font-size:112px">Pas d’horaires.</div>
+  <div id="f2" class="t q" style="top:376px;font-size:108px">Le menu&nbsp;?<br><span id="f2b" style="display:inline-block"><i>En</i> PDF.</span></div>
+  <div id="f3" class="t q" style="top:376px;font-size:100px">En construction.<br><span id="f3b" style="display:inline-block"><i>Depuis</i> 3 ans.</span></div>
+  <div id="f4a" class="t q" style="top:400px;font-size:112px">Et lui…</div>
+  <div id="f4" class="t q" style="top:400px;font-size:112px">Lui&nbsp;: tout y est.</div>
+
+  <div id="cg" class="cd" style="opacity:1;z-index:0;background:#fff"><div class="im" style="background:#D9DBDF"></div><div class="abs" style="left:36px;top:370px;width:300px;height:34px;border-radius:17px;background:#E3E4E0"></div><div class="abs" style="left:36px;top:450px;width:460px;height:28px;border-radius:14px;background:#ECEDE8"></div><div class="abs" style="left:36px;top:520px;width:380px;height:28px;border-radius:14px;background:#ECEDE8"></div><div class="abs" style="left:116px;top:450px;width:110px;height:110px;border-radius:50%;border:8px solid #111318;box-sizing:border-box;background:#fff;transform:rotate(-12deg)"><svg class="abs" style="left:23px;top:23px" width="48" height="48" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="#111318" stroke-width="3.6" stroke-linecap="round"/></svg></div></div>
+  <!-- carte 1 : pas d'horaires -->
+  <div id="c0" class="cd">
+    <div class="im">
+      <div class="demo" style="right:20px;top:20px">Démo · lieu fictif</div>
+            <div class="abs" style="left:150px;top:96px;width:440px;height:66px;background:repeating-linear-gradient(90deg,#3A3F47 0 55px,#F7F7F4 55px 110px);border-radius:0 0 18px 18px"></div>
+      <div class="abs" style="left:170px;top:162px;width:400px;height:168px;background:#fff;border:3px solid #C9CBC5;border-bottom:0;box-sizing:border-box"></div>
+      <div class="abs" style="left:200px;top:196px;width:160px;height:100px;background:#DDE0E6;border-radius:6px"></div>
+      <div class="abs" style="left:400px;top:190px;width:120px;height:140px;background:#3A3F47;border-radius:8px 8px 0 0"></div>
+      <div id="sign" class="abs" style="left:412px;top:222px;width:96px;height:58px;background:#F7F7F4;border-radius:6px;font:600 44px/58px IS;text-align:center;color:#111318;transform-origin:50% 0">?</div>
+    </div>
+    <div class="nm">Bistrot<span>en face</span></div>
+    <div class="rw" style="top:440px">Horaires<b id="h1v" style="font-size:60px;color:#6B7078">?</b></div>
+    <div class="rw" style="top:540px">Ouvert ce soir&nbsp;?<b style="color:#6B7078">—</b></div>
+    <div class="nope" id="n0">✕ À GAUCHE</div>
+    <div class="sh"></div>
+  </div>
+
+  <!-- carte 2 : menu en PDF -->
+  <div id="c1" class="cd">
+    <div class="im">
+      <div class="demo" style="right:20px;top:20px">Démo · lieu fictif</div>
+      <div id="pdf" class="abs" style="left:200px;top:44px;width:180px;height:230px;background:#fff;border:3px solid #C9CBC5;box-sizing:border-box;clip-path:polygon(0 0,72% 0,100% 22%,100% 100%,0 100%)">
+        <div class="abs" style="left:24px;top:60px;width:110px;height:10px;background:#DCDED8;border-radius:5px"></div>
+        <div class="abs" style="left:24px;top:84px;width:90px;height:10px;background:#DCDED8;border-radius:5px"></div>
+        <div class="abs" style="left:24px;top:108px;width:116px;height:10px;background:#DCDED8;border-radius:5px"></div>
+        <div class="mono abs" style="left:24px;top:156px;padding:8px 12px;border-radius:6px;background:#111318;color:#fff;font-size:30px;font-weight:600;letter-spacing:.06em">PDF</div>
+      </div>
+      <div class="abs" style="left:329px;top:44px;width:51px;height:51px;background:#DCDED8;clip-path:polygon(0 0,100% 100%,0 100%)"></div>
+      <div class="mono abs" style="left:0;width:580px;top:288px;text-align:center;font-size:24px;color:#3A3F47;letter-spacing:.02em;text-transform:none">menu_FINAL(2).pdf</div>
+    </div>
+    <div class="nm">Pizzeria<span>au coin</span></div>
+    <div class="rw" style="top:430px">Le menu<b id="dlp" style="font-size:64px;color:#111318">0 %</b></div>
+    <div class="abs" style="left:36px;right:36px;top:556px;height:22px;border-radius:11px;background:#ECEDE8;overflow:hidden"><div id="dlb" style="width:0;height:22px;background:#9AA0A8;border-radius:11px"></div></div>
+    <div class="mono abs" style="left:36px;top:596px;font-size:30px;color:#3A3F47">Téléchargement… <span id="hg" style="display:inline-block;width:24px;height:24px;border-radius:50%;border:4px solid #C9CBC5;border-top-color:#3A3F47;vertical-align:-4px;margin-left:8px"></span></div>
+    <div class="nope" id="n1">✕ À GAUCHE</div>
+    <div class="sh"></div>
+  </div>
+
+  <!-- carte 3 : en construction -->
+  <div id="c2" class="cd">
+    <div class="im">
+      <div class="demo" style="right:20px;top:20px">Démo · lieu fictif</div>
+      <div class="mono abs" style="left:0;right:0;top:92px;text-align:center;font-size:34px;font-weight:600;color:#3A3F47">Site en construction</div>
+      <div class="abs" style="left:150px;top:150px;width:440px;height:76px;border-radius:10px;background:repeating-linear-gradient(-45deg,#111318 0 40px,#F7F7F4 40px 80px);border:3px solid #111318;box-sizing:border-box"></div>
+      <div class="abs" style="left:200px;top:226px;width:16px;height:104px;background:#3A3F47"></div>
+      <div class="abs" style="left:524px;top:226px;width:16px;height:104px;background:#3A3F47"></div>
+      <svg class="abs" style="left:600px;top:200px" width="90" height="130" viewBox="0 0 90 130"><path d="M45 4 L80 120 H10 Z" fill="#6B7078"/><path d="M33 44 H57 L62 62 H28 Z M23 80 H67 L72 98 H18 Z" fill="#F7F7F4"/><rect x="0" y="118" width="90" height="12" rx="4" fill="#3A3F47"/></svg>
+    </div>
+    <div class="nm">Café<span>à deux pas</span></div>
+    <div class="rw" style="top:440px">Site<b style="color:#6B7078">bientôt…</b></div>
+    <div class="rw" style="top:540px">Mis à jour<b id="yr">il y a 3 ans</b></div>
+    <div class="nope" id="n2">✕ À GAUCHE</div>
+    <div class="sh"></div>
+  </div>
+
+  <!-- carte 4 : le bon -->
+  <div id="c3" class="cd">
+    <div class="im">
+      <div class="demo" style="right:20px;top:20px">Démo · lieu fictif</div>
+      <div id="ph4" class="abs" style="inset:0;background:repeating-conic-gradient(#C8452E 0 25%,#F4EEE3 0 50%) 0 0/60px 60px;opacity:0">
+        <div class="abs" style="left:225px;top:20px;width:290px;height:290px;border-radius:50%;background:#fff;box-shadow:0 8px 18px rgba(0,0,0,.2)"></div>
+        <svg class="abs" style="left:255px;top:50px" width="230" height="230" viewBox="0 0 150 150"><circle cx="75" cy="75" r="75" fill="#E2B04A"/><circle cx="75" cy="75" r="64" fill="#F2D27A"/><g fill="none" stroke="#C99A35" stroke-width="3" stroke-linecap="round"><path d="M40 60q20-25 45-5t30 10"/><path d="M35 85q25 15 50-5t35 5"/><path d="M55 105q20 10 40-8"/><path d="M50 40q25-10 45 10"/></g><circle cx="62" cy="75" r="9" fill="#C8452E"/><circle cx="92" cy="92" r="8" fill="#C8452E"/><ellipse cx="85" cy="58" rx="14" ry="7" fill="#2F7A3A" transform="rotate(-30 85 58)"/><ellipse cx="70" cy="100" rx="12" ry="6" fill="#2F7A3A" transform="rotate(25 70 100)"/></svg>
+      </div>
+      
+    </div>
+    <div class="nm" style="font:italic 400 64px/1 CG;letter-spacing:0;top:352px">Trattoria Nonna Pia</div>
+    <div id="sk1" class="abs" style="left:36px;top:470px;width:420px;height:30px;border-radius:15px;background:#D6D8D3"></div><div id="sk2" class="abs" style="left:36px;top:560px;width:668px;height:30px;border-radius:15px;background:#D6D8D3"></div>
+    <div id="h4" class="rw" style="top:440px">Ce soir<b><span style="color:#14803C">●</span> Ouvert · 11:30 – 22:00</b></div>
+    <div id="w4" class="abs" style="left:36px;right:36px;top:538px;height:76px;border-radius:38px;background:#111318;color:#fff;font:600 36px/76px IS;text-align:center;white-space:nowrap"><svg width="40" height="40" viewBox="0 0 32 32" style="vertical-align:-9px;margin-right:12px"><circle cx="16" cy="16" r="16" fill="#14803C"/><path d="M9.5 22.5l1-3.6a7.3 7.3 0 1 1 2.7 2.6zm3.3-11.1c-.4 0-.9.2-1.1.7-.5 1-.4 2.3.8 3.9 1.3 1.7 2.8 2.8 4.6 3.4 1.2.4 2 .1 2.5-.6.3-.4.3-.8.2-.9l-1.9-.9c-.2-.1-.4 0-.5.2l-.6.8c-.1.1-.3.2-.5.1a6 6 0 0 1-2.9-2.6c-.1-.2 0-.3.1-.4l.5-.6c.1-.2.1-.4 0-.6l-.8-1.9c-.1-.4-.3-.6-.4-.6z" fill="#fff"/></svg>Écrire sur WhatsApp</div>
+    <div class="sh"></div>
+  </div>
+
+  <!-- boutons ✕ / ♥ -->
+  <div id="bn" class="bt" style="left:300px"><svg width="72" height="72" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#F7F7F4" stroke-width="3" stroke-linecap="round"/></svg><div class="lb">À GAUCHE</div></div>
+  <div id="bl" class="bt" style="left:630px"><svg width="72" height="72" viewBox="0 0 24 24"><path id="hp" d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4.5 7.2 4.5c2 0 3.5 1.1 4.8 2.9 1.3-1.8 2.8-2.9 4.8-2.9 3.3 0 5.6 3.1 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="none" stroke="#2038EC" stroke-width="2.4" stroke-linejoin="round"/></svg><div class="lb">À DROITE</div></div>
+
+  <!-- match -->
+  <div id="mt" class="t q" style="top:400px;font-size:150px;text-align:center;line-height:1.04">C’est un<br><span class="pill">match&nbsp;!</span></div>
+  <svg id="rings" class="abs" style="left:240px;top:690px;z-index:3;opacity:0" width="600" height="600" viewBox="0 0 600 600"><g fill="none" stroke="#2038EC" stroke-width="9"><circle id="ra" cx="300" cy="300" r="0"/><circle id="rb" cx="300" cy="300" r="0"/><circle id="rc" cx="300" cy="300" r="0"/></g></svg>
+  <div id="mL" class="abs" style="left:250px;top:960px;width:280px;height:280px;border-radius:50%;background:#F7F7F4;border:8px solid #F7F7F4;box-sizing:border-box;opacity:0;z-index:4">
+    <svg class="abs" style="left:82px;top:48px" width="100" height="152" viewBox="0 0 50 76"><rect x="3" y="3" width="44" height="70" rx="9" fill="none" stroke="#111318" stroke-width="5"/><rect x="18" y="62" width="14" height="4" rx="2" fill="#111318"/><circle cx="25" cy="34" r="8" fill="#2038EC"/></svg>
+  </div>
+  <div id="mR" class="abs" style="left:550px;top:960px;width:280px;height:280px;border-radius:50%;background:repeating-conic-gradient(#C8452E 0 25%,#F4EEE3 0 50%) 0 0/52px 52px;border:8px solid #F7F7F4;box-sizing:border-box;opacity:0;z-index:4;overflow:hidden">
+    <svg class="abs" style="left:42px;top:42px" width="180" height="180" viewBox="0 0 150 150"><circle cx="75" cy="75" r="75" fill="#E2B04A"/><circle cx="75" cy="75" r="64" fill="#F2D27A"/><circle cx="62" cy="75" r="9" fill="#C8452E"/><circle cx="92" cy="92" r="8" fill="#C8452E"/><ellipse cx="85" cy="58" rx="14" ry="7" fill="#2F7A3A" transform="rotate(-30 85 58)"/></svg>
+  </div>
+  <div id="mlb" class="mono abs" style="left:200px;width:680px;top:1294px;display:flex;justify-content:space-around;font-size:36px;font-weight:600;color:#F7F7F4;opacity:0;z-index:4"><span>Ton client</span><span>Ton site</span></div>
+  <svg id="mh" class="abs" style="left:470px;top:1030px;z-index:5;opacity:0" width="140" height="140" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4.5 7.2 4.5c2 0 3.5 1.1 4.8 2.9 1.3-1.8 2.8-2.9 4.8-2.9 3.3 0 5.6 3.1 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#2038EC" stroke="#F7F7F4" stroke-width="1.6"/></svg>
+  <div id="burst" class="abs" style="left:540px;top:1100px;z-index:5"></div>
+  <div id="flash" class="abs" style="inset:0;background:#F7F7F4;opacity:0;z-index:7"></div>
+</div>
+
+<!-- ========== bascule papier ========== -->
+<div id="paper">
+  <div id="p1" class="t pt" style="top:280px;font-size:124px">Ton site,<br>on te le <span class="k">fait</span>.</div>
+  <div id="p1s" class="mono abs" style="left:80px;top:548px;font-size:32px;font-weight:600;color:#3A3F47;opacity:0;white-space:nowrap">Par OONDE · arc lémanique</div>
+  <div id="p2" class="t pt" style="top:280px;font-size:118px">La maquette&nbsp;?<br><span class="k">Gratuite.</span></div>
+  <div id="p3" class="t pt" style="top:280px;font-size:118px">Tu la vois<br>avant de payer.</div>
+  <div id="gpill" class="abs" style="left:640px;top:800px;padding:20px 32px;border-radius:44px;background:var(--klein);color:#fff;font:600 60px/1 IS;letter-spacing:-.02em;opacity:0;z-index:9;transform:rotate(-6deg)">Gratuite</div>
+  <div id="phone">
+    <div class="abs" style="left:40px;top:24px;font:600 28px/1 IS;color:#111318">19:30</div>
+    <div class="demo" style="left:28px;top:76px">Démo · lieu fictif</div>
+    <div class="blk" id="s0" style="top:140px"><div style="font:italic 400 66px/1 CG;color:#111318">Trattoria</div><div style="font:italic 400 66px/1 CG;color:#111318">Nonna Pia</div><div class="mono" style="margin-top:12px;font-size:28px;color:#3A3F47">Morges · trattoria</div></div>
+    <div class="blk" id="s1" style="top:350px;height:170px;border-radius:14px;overflow:hidden;background:repeating-conic-gradient(#C8452E 0 25%,#F4EEE3 0 50%) 0 0/40px 40px">
+      <div class="abs" style="left:140px;top:-25px;width:220px;height:220px;border-radius:50%;background:#fff;box-shadow:0 6px 14px rgba(0,0,0,.18)"></div>
+      <div class="abs" style="left:175px;top:10px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#F2D27A,#E2B04A 70%)"></div>
+      <svg class="abs" style="left:175px;top:10px" width="150" height="150" viewBox="0 0 150 150"><g fill="none" stroke="#C99A35" stroke-width="3" stroke-linecap="round"><path d="M40 60q20-25 45-5t30 10"/><path d="M35 85q25 15 50-5t35 5"/><path d="M55 105q20 10 40-8"/><path d="M50 40q25-10 45 10"/></g><circle cx="62" cy="75" r="9" fill="#C8452E"/><circle cx="92" cy="92" r="8" fill="#C8452E"/><ellipse cx="85" cy="58" rx="14" ry="7" fill="#2F7A3A" transform="rotate(-30 85 58)"/><ellipse cx="70" cy="100" rx="12" ry="6" fill="#2F7A3A" transform="rotate(25 70 100)"/></svg>
+    </div>
+    <div class="blk" id="s2" style="top:548px"><div class="mono" style="font-size:24px;color:#6B7078;margin-bottom:4px">Horaires</div>
+      <div class="row">Mar – Ven<b>11:30 – 22:00</b></div><div class="row" style="border:0">Sam – Dim<b>18:00 – 23:00</b></div></div>
+    <div class="blk" id="s3" style="top:730px;height:88px;border-radius:16px;background:#111318;color:#fff;font:600 32px/88px IS;text-align:center;white-space:nowrap"><svg width="40" height="40" viewBox="0 0 32 32" style="vertical-align:-10px;margin-right:10px"><circle cx="16" cy="16" r="16" fill="#14803C"/><path d="M9.5 22.5l1-3.6a7.3 7.3 0 1 1 2.7 2.6zm3.3-11.1c-.4 0-.9.2-1.1.7-.5 1-.4 2.3.8 3.9 1.3 1.7 2.8 2.8 4.6 3.4 1.2.4 2 .1 2.5-.6.3-.4.3-.8.2-.9l-1.9-.9c-.2-.1-.4 0-.5.2l-.6.8c-.1.1-.3.2-.5.1a6 6 0 0 1-2.9-2.6c-.1-.2 0-.3.1-.4l.5-.6c.1-.2.1-.4 0-.6l-.8-1.9c-.1-.4-.3-.6-.4-.6z" fill="#fff"/></svg>Écrire sur WhatsApp</div>
+  </div>
+  <div id="toast" class="abs" style="left:80px;width:860px;top:556px;height:160px;border-radius:36px;background:#fff;box-shadow:0 24px 60px rgba(17,19,24,.16);border:2px solid #DCDED8;box-sizing:border-box;opacity:0;z-index:8">
+    <div class="abs" style="left:30px;top:30px;width:100px;height:100px;border-radius:50%;background:#F7F7F4;border:2px solid #DCDED8;box-sizing:border-box"><svg class="abs" style="left:18px;top:18px" width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="22" fill="none" stroke="#111318" stroke-width="6"/><circle cx="30" cy="30" r="7" fill="#2038EC"/></svg>
+      <svg class="abs" style="right:-8px;bottom:-8px" width="38" height="38" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#14803C"/><path d="M9.5 22.5l1-3.6a7.3 7.3 0 1 1 2.7 2.6zm3.3-11.1c-.4 0-.9.2-1.1.7-.5 1-.4 2.3.8 3.9 1.3 1.7 2.8 2.8 4.6 3.4 1.2.4 2 .1 2.5-.6.3-.4.3-.8.2-.9l-1.9-.9c-.2-.1-.4 0-.5.2l-.6.8c-.1.1-.3.2-.5.1a6 6 0 0 1-2.9-2.6c-.1-.2 0-.3.1-.4l.5-.6c.1-.2.1-.4 0-.6l-.8-1.9c-.1-.4-.3-.6-.4-.6z" fill="#fff"/></svg></div>
+    <div class="abs" style="left:156px;top:34px;font:600 42px/1.2 IS;color:#111318">OONDE · WhatsApp</div>
+    <div class="mono abs" style="right:30px;top:42px;font-size:24px;color:#6B7078">maintenant</div>
+    <div class="abs" style="left:156px;top:88px;font:500 46px/1.2 IS;color:#3A3F47">Ta maquette est prête</div>
+  </div>
+
+  
+
+  <!-- appel au commentaire -->
+  <div id="ct" class="t pt" style="top:276px;font-size:92px">Ton site&nbsp;:<br>gauche ou droite&nbsp;?</div>
+  <div id="ct2" class="mono abs" style="left:80px;top:500px;font-size:37px;font-weight:600;color:#111318;opacity:0">ou celui de ton resto préféré</div>
+  <div id="chL" class="ch" style="left:150px">
+    <div class="cc" style="border:6px solid #111318"><svg class="abs" style="left:44px;top:44px" width="100" height="100" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#111318" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="cl">À gauche</div><div class="cs">il passe</div>
+  </div>
+  <div id="chR" class="ch" style="left:570px">
+    <div id="hcc" class="cc" style="border:6px solid #2038EC"><svg class="abs" style="left:44px;top:48px" width="100" height="100" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4.5 7.2 4.5c2 0 3.5 1.1 4.8 2.9 1.3-1.8 2.8-2.9 4.8-2.9 3.3 0 5.6 3.1 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#2038EC" id="hcp"/></svg></div>
+    <div class="cl">À droite</div><div class="cs">il t’écrit</div>
+  </div>
+  <div id="cm" class="abs" style="left:80px;top:1165px;width:860px;opacity:0;font:600 96px/1.02 IS;letter-spacing:-.035em;color:var(--ink)">Dis-le en<br><span class="k">commentaire</span> <span id="carr" style="display:inline-block;color:var(--klein)">↘</span></div>
+  <div id="cm2" class="mono abs" style="display:none;left:80px;top:1378px;width:860px;opacity:0;font-size:33px;font-weight:600;letter-spacing:0;color:#111318;white-space:nowrap">tague un resto qui mérite <span style="color:var(--klein)">♥</span> à droite</div>
+
+  <!-- final -->
+  <div id="end" class="abs" style="left:140px;top:350px;width:800px;opacity:0">
+    <div id="e5" style="font:600 90px/1 IS;letter-spacing:-.04em;color:var(--ink);white-space:nowrap;text-align:center">Tu veux le <span class="k">match</span>&nbsp;?</div>
+    <div id="e2" style="margin-top:48px;margin-left:20px;width:760px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:22px;padding:54px 0;border-radius:32px;background:var(--ink);color:#fff;font:600 76px/1 IS;letter-spacing:-.025em;white-space:nowrap;transform-origin:50% 50%">
+      <svg width="88" height="88" viewBox="0 0 24 24"><path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5v-3.5H4A1.5 1.5 0 0 1 2.5 16V7A1.5 1.5 0 0 1 4 5.5z" fill="#2038EC"/><circle cx="8" cy="11.5" r="1.3" fill="#fff"/><circle cx="12" cy="11.5" r="1.3" fill="#fff"/><circle cx="16" cy="11.5" r="1.3" fill="#fff"/></svg>
+      Écris MAQUETTE</div>
+    <div id="e3" style="margin-top:36px;width:800px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;gap:14px;padding:14px 0;border-radius:0;border:0;background:transparent;font:600 36px/1 IS;letter-spacing:-.015em;color:#24272D;white-space:nowrap;transform-origin:50% 50%"><span id="e3wa"><b style="color:#111318;font-weight:600">en commentaire</b> · ta maquette gratuite en DM</span>
+      </div>
+    <div id="e6b" class="mono" style="margin-top:18px;text-align:center;font-size:29px;font-weight:600;letter-spacing:.02em;white-space:nowrap;color:#111318">Maquette <span class="k">gratuite</span> · vue avant de payer</div>
+    <div id="e4" style="margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:14px"><img src="/_kit/brand/logo.svg" style="height:64px;margin-bottom:10px" alt=""><span style="font:600 44px/1 IS;color:var(--soft)">@oonde_studio · arc lémanique</span><span id="e7" class="mono" style="display:none;margin-top:26px;font-size:34px;font-weight:600;letter-spacing:.03em;white-space:nowrap;color:#111318">↘ Gauche ou droite en commentaire</span></div>
+    <div id="e8" style="position:relative;margin-top:44px;height:160px"><div id="e8i" style="position:absolute;left:240px;top:0;width:580px;height:280px;transform-origin:0 0;transform:scale(.55)"></div></div>
+  </div>
+</div>
+<div id="wipe" class="abs" style="left:0;top:1920px;width:1080px;height:1960px;background:var(--ink);z-index:20;border-top:10px solid var(--klein);box-sizing:border-box"></div>
+<div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => b <= a ? (t >= a ? 1 : 0) : clamp((t - a) / (b - a));
+const expo = t => t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+const inOut = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const easeIn = t => t * t * t;
+const E_back = x => { const c = 1.70158; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const kick = (t, a, d = .22) => (t < a ? 0 : Math.max(0, 1 - seg(t, a, a + d)));
+
+function title(el, t, a, b, o = {}) {
+  if (!(t >= a && t < b)) { el.style.opacity = 0; return 0; }
+  const p = expo(seg(t, a, a + (o.d || .14))), q = E_back(seg(t, a, a + .22));
+  const sc = lerp(o.s0 ?? .84, 1, q) + (o.punch || 0) * kick(t, a + .1, .3);
+  el.style.opacity = clamp(seg(t, a, a + .034)) * (1 - seg(t, b - .06, b));
+  el.style.transformOrigin = o.origin || '0 50%';
+  el.style.transform = `translate(0px,${(o.dy ?? 30) * (1 - p)}px) scale(${sc})`;
+  return p;
+}
+
+// temps de la prise brute (ElevenLabs Scribe), puis voix accélérée ×SPEED
+const SPEED = 1.05;
+const T = {
+  swipe: 2.00, c1: 2.54, pas: 3.20, g1: 4.08,
+  c2: 4.72, menu: 5.32, pdf: 5.90, g2: 6.72,
+  c3: 7.36, cons: 8.08, dep: 9.06, g3: 9.92,
+  lui: 10.56, hor: 11.08, pho: 11.76, wa4: 12.44, match: 13.40,
+  site: 14.50, onte: 15.04, maq: 15.82, grat: 16.24, vois: 16.88,
+  alors: 18.10, gauche: 19.20, droite: 19.74, dis: 20.44, ecris: 21.38, maquette: 22.04, wa: 22.40,
+  wipe: 24.30, end: 24.65
+};
+for (const k in T) T[k] = +(T[k] / SPEED).toFixed(3);
+window.DURATION = T.end;
+window.T = T;
+const G = [T.g1, T.g2, T.g3];
+const FLY = [T.g1 + .3, T.g2 + .3, T.g3 + .3, T.match - .06];
+const CARD_START = [-1, T.c2 - .1, T.c3 - .1, T.lui - .1];
+
+function card(i, t) {
+  const el = $('#c' + i), sh = el.querySelector('.sh');
+  const prev = i ? FLY[i - 1] : -1, prev2 = i > 1 ? FLY[i - 2] : -1;
+  const dir = i < 3 ? -1 : 1;
+  let x = 0, y = 0, s = 1, r = 0, op = 1, shade = 0, z = 5;
+  if (t >= FLY[i]) {
+    const p = easeIn(seg(t, FLY[i], FLY[i] + (i < 3 ? .3 : .22)));
+    x = dir * (60 + 1150 * p); r = dir * (6 + 20 * p); z = 6; op = p >= 1 ? 0 : 1;
+  } else if (i === 0 || t >= prev) {
+    const q = i ? expo(seg(t, prev, prev + .3)) : 1;
+    s = lerp(.93, 1, q); y = lerp(36, 0, q); shade = 1 - seg(t, prev + .05, prev + .2);
+    if (i < 3) { const d = expo(seg(t, G[i], G[i] + .18)); x = -60 * d; r = -6 * d; }
+    else { const d = expo(seg(t, T.match - .25, T.match - .1)); x = 60 * d; r = 6 * d; }
+    if (i === 0 && t >= T.swipe - .1 && t < T.c1) { const w = Math.sin((t - T.swipe + .1) / (T.c1 - T.swipe + .1) * Math.PI * 2); x = -80 * w; r = -6 * w; }
+    if (i === 0 && t < T.swipe - .1) { y = -8 * Math.sin(t * 4); x = 25 * (1 - E_back(seg(t, 0, .35))); }
+  } else if (i === 1 || t >= prev2) { s = .93; y = 36; shade = 1; z = 4; if (i === 1) op = clamp(seg(t, .3, .45)); }
+  else op = 0;
+  el.style.opacity = op; el.style.zIndex = z;
+  el.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+  sh.style.opacity = shade;
+  if (i < 3) {
+    const n = $('#n' + i), a = G[i], p = E_back(seg(t, a, a + .18));
+    n.style.opacity = t >= a ? clamp(seg(t, a, a + .04)) : 0;
+    n.style.transform = `rotate(-10deg) scale(${lerp(1.8, 1, p)})`;
+  }
+}
+
+function render(t) {
+  // secousse légère à chaque swipe
+  let sh = 0; for (const g of G) sh += kick(t, g, .26); sh += 1.4 * kick(t, T.match + .3, .4);
+  $('#cam').style.transform = `translate(${12 * sh * Math.sin(t * 95)}px,${8 * sh * Math.cos(t * 77)}px)`;
+  $('#flash').style.opacity = 0;
+
+  // ---------- en-tête + compteur ----------
+  const n = t < CARD_START[1] ? 1 : t < CARD_START[2] ? 2 : t < CARD_START[3] ? 3 : 4;
+  $('#cnt').textContent = n;
+  $('#cnt').style.color = n === 4 ? '#2038EC' : '#F7F7F4';
+  let ck = 0; for (const f of CARD_START.slice(1)) ck = Math.max(ck, kick(t, f, .3));
+  $('#cnt').style.transform = `scale(${1 + .45 * ck})`;
+  $('#hud').style.opacity = 1 - seg(t, T.match - .2, T.match - .05);
+
+  // ---------- titres ----------
+  title($('#h0'), t, -1, T.c1 - .02);
+  if (t < T.c1) $('#h0').style.transform = `scale(${1 + .012 * Math.sin(t * 6)})`;
+  title($('#f1'), t, T.c1, CARD_START[1] + .02, { punch: .03 });
+  title($('#f2'), t, CARD_START[1] + .02, CARD_START[2] + .02, { punch: .03 });
+  title($('#f3'), t, CARD_START[2] + .02, CARD_START[3] + .02, { punch: .03 });
+  for (const [id, a] of [['#f2b', T.pdf - .08], ['#f3b', T.dep - .08]]) { const p = E_back(seg(t, a, a + .2)); $(id).style.opacity = t >= a ? clamp(seg(t, a, a + .05)) : 0; $(id).style.transform = `translateY(${(1 - p) * 24}px)`; }
+  title($('#f4a'), t, CARD_START[3] + .02, T.wa4 - .05, { punch: .03 });
+  title($('#f4'), t, T.wa4 - .05, T.match + .1, { punch: .05 });
+
+  // ---------- cartes ----------
+  const cardsOn = t < FLY[3] + .22;
+  for (let i = 0; i < 4; i++) { if (cardsOn) card(i, t); else $('#c' + i).style.opacity = 0; }
+  // détails animés
+  $('#sign').style.transform = `rotate(${8 * Math.sin(t * 5)}deg)`;
+  $('#h1v').style.transform = `scale(${1 + 1.0 * kick(t, T.pas, .45)}) rotate(${10 * Math.sin((t - T.pas) * 30) * kick(t, T.pas, .45)}deg)`;
+  const dl = clamp((t - T.menu + .1) / .5) * .12;  // monte à 12 %, puis bloque
+  $('#dlb').style.width = (dl * 100).toFixed(1) + '%';
+  $('#dlp').textContent = Math.floor(dl * 100) + ' %';
+  $('#hg').style.transform = `rotate(${t * 540}deg)`;
+  $('#pdf').style.transform = `scale(${1 + .12 * kick(t, T.pdf, .35)})`;
+  $('#yr').style.color = t >= T.dep ? '#111318' : '#111318';
+  $('#yr').style.transform = `scale(${1 + .4 * kick(t, T.dep, .35)})`;
+  const pop = (el, a) => { const p = E_back(seg(t, a, a + .24)); el.style.opacity = clamp(seg(t, a, a + .05)); el.style.transform = `scale(${lerp(.7, 1, p)})`; };
+  pop($('#h4'), T.hor - .05); pop($('#ph4'), T.pho - .05); pop($('#w4'), T.wa4 - .05);
+  { const f = seg(t, T.pho - .05, T.pho + .2); $('#ph4').style.filter = `blur(${16 * (1 - f)}px) saturate(${.3 + .7 * f})`; if (t < T.pho - .05) { $('#ph4').style.opacity = .55; $('#ph4').style.transform = 'none'; } }
+  $('#sk1').style.opacity = t < T.hor - .05 ? .5 + .2 * Math.sin(t * 12) : 0; $('#sk2').style.opacity = t < T.wa4 - .05 ? .5 + .2 * Math.sin(t * 12 + 1) : 0;
+
+  { const p = seg(t, 0, .45), el = $('#cg');
+    el.style.opacity = p < 1 ? 1 : 0;
+    el.style.transform = `translate(${-190 - 1070 * easeIn(p)}px,${40 * p}px) rotate(${-6 - 8 * p}deg)`; }
+  // ---------- boutons ----------
+  const bon = 1 - seg(t, T.match + .02, T.match + .2);
+  $('#bn').style.opacity = bon; $('#bl').style.opacity = bon;
+  let pn = 0, gl = 0; for (const g of G) { pn = Math.max(pn, kick(t, g, .2)); gl = Math.max(gl, kick(t, g, .45)); }
+  $('#bn').style.transform = `scale(${1 - .14 * pn})`;
+  $('#bn').style.borderColor = gl > .02 ? `rgb(${lerp(58, 247, gl)},${lerp(63, 247, gl)},${lerp(71, 244, gl)})` : '#3A3F47';
+  const lk = t >= T.match - .25 ? 1 : 0, pl = kick(t, T.match - .25, .25);
+  $('#bl').style.transform = `scale(${1 - .14 * pl + .12 * kick(t, T.match + .2, .3)})`;
+  $('#bl').style.background = lk ? '#2038EC' : '#1A1D23';
+  $('#bl').style.borderColor = lk ? '#2038EC' : '#3A3F47';
+  $('#bl').style.boxShadow = lk ? '0 0 50px 10px rgba(32,56,236,.5)' : 'none';
+  $('#hp').setAttribute('fill', lk ? '#fff' : 'none'); $('#hp').setAttribute('stroke', lk ? '#fff' : '#2038EC');
+
+  // ---------- match ----------
+  const M0 = T.match + .1;
+  title($('#mt'), t, M0, T.site + .4, { origin: '50% 50%', s0: .6, punch: .06 });
+  const mm = E_back(seg(t, M0, M0 + .25)), mon = t >= M0 && t < T.site + .4;
+  $('#mL').style.opacity = mon ? clamp(seg(t, M0 + .05, M0 + .1)) : 0;
+  $('#mR').style.opacity = $('#mL').style.opacity;
+  $('#mL').style.transform = `translateX(${(1 - mm) * -420}px)`;
+  $('#mR').style.transform = `translateX(${(1 - mm) * 420}px)`;
+  const J = M0 + .2, rg = expo(seg(t, J, J + .2));
+  const ring = t >= J ? `0 0 0 10px #111318, 0 0 0 ${10 + 12 * rg}px #2038EC` : 'none';
+  $('#mL').style.boxShadow = ring; $('#mR').style.boxShadow = ring;
+  const hh = E_back(seg(t, J, J + .25));
+  $('#mh').style.opacity = mon && t >= J ? 1 : 0;
+  $('#mh').style.transform = `scale(${lerp(0, 1, hh) + .12 * kick(t, J + .3, .3) + .05 * Math.sin((t - J) * 9) * (t > J + .4 ? 1 : 0)})`;
+  const B = $('#burst');
+  if (!B.children.length) for (let i = 0; i < 6; i++) B.insertAdjacentHTML('beforeend', '<svg class="abs" width="64" height="64" viewBox="0 0 24 24" style="left:-32px;top:-32px"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4.5 7.2 4.5c2 0 3.5 1.1 4.8 2.9 1.3-1.8 2.8-2.9 4.8-2.9 3.3 0 5.6 3.1 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#2038EC"/></svg>');
+  [...B.children].forEach((h, i) => {
+    const a = -Math.PI / 2 + (i - 2.5) * .2, p = seg(t, J + .05, J + .6), d = 225 + 150 * expo(p);
+    h.style.opacity = mon && t >= J + .05 ? 1 - p * p : 0;
+    h.style.transform = `translate(${Math.cos(a) * d}px,${Math.sin(a) * d}px) scale(${.6 + .5 * (i % 3) / 2})`;
+  });
+  $('#mlb').style.opacity = mon ? clamp(seg(t, M0 + .15, M0 + .3)) : 0;
+  $('#rings').style.opacity = 0;
+  ['#ra', '#rb', '#rc'].forEach((id, i) => {
+    const a = M0 + .3 + i * .14, p = seg(t, a, a + .6);
+    $(id).setAttribute('r', (20 + 280 * expo(p)).toFixed(1));
+    $(id).style.opacity = t >= a ? (1 - p) : 0;
+  });
+
+  // ---------- bascule papier ----------
+  const ir = expo(seg(t, T.site, T.site + .38));
+  $('#paper').style.clipPath = `circle(${ir * 2300}px at 540px 990px)`;
+
+  title($('#p1'), t, T.site + .02, T.maq, { punch: .05 });
+  $('#p1s').style.opacity = t >= T.site + .08 && t < T.maq ? expo(seg(t, T.site + .08, T.site + .28)) * (1 - seg(t, T.maq - .06, T.maq)) : 0;
+  title($('#p2'), t, T.maq, T.vois, { punch: .03 });
+  title($('#p3'), t, T.vois, T.alors);
+  const PH0 = T.site - .02, ph = $('#phone'), pin = E_back(seg(t, PH0, PH0 + .3));
+  const pout = expo(seg(t, T.alors, T.alors + .12));
+  const tq = E_back(seg(t, T.vois + .05, T.vois + .3));
+  const down = 85 * expo(seg(t, T.vois, T.vois + .25));
+  ph.style.opacity = t >= PH0 && t < T.alors + .15 ? clamp(seg(t, PH0, PH0 + .05)) * (1 - pout) : 0;
+  ph.style.transform = `translateY(${70 + (1 - pin) * 500 + pout * 200 + down}px) scale(${.98 + .03 * seg(t, PH0, T.vois) - .14 * expo(seg(t, T.vois, T.vois + .25))})`;
+  ['#s0', '#s1', '#s2', '#s3'].forEach((s, i) => { $(s).style.opacity = 1; $(s).style.transform = 'none'; });
+  $('#toast').style.opacity = t >= T.vois + .05 && t < T.alors ? clamp(tq * 2) : 0;
+  $('#toast').style.transform = `translateY(${(1 - clamp(tq)) * -260}px) scale(${lerp(.9, 1, tq)})`;
+  const gp = E_back(seg(t, T.grat - .05, T.grat + .2));
+  $('#gpill').style.opacity = t >= T.grat - .05 && t < T.alors ? clamp(gp * 2) * (1 - pout) : 0;
+  $('#gpill').style.transform = `translateY(${down}px) rotate(-6deg) scale(${lerp(.5, 1, gp)})`;
+
+  // ---------- à gauche ou à droite ? ----------
+  const EC = T.ecris - .02;
+  title($('#ct'), t, T.alors, EC);
+  { const p = expo(seg(t, T.alors + .3, T.alors + .5)); $('#ct2').style.opacity = t >= T.alors + .3 && t < EC ? p : 0; }
+  [['#chL', T.alors + .15, T.gauche], ['#chR', T.alors + .27, T.droite]].forEach(([id, a, hit]) => {
+    const el = $(id), p = E_back(seg(t, a, a + .26));
+    el.style.opacity = t >= a && t < EC ? clamp(seg(t, a, a + .05)) : 0;
+    const k = kick(t, hit, .35);
+    const L = id === '#chL', on = t >= hit && t < (L ? T.droite : T.dis - .1), h = on ? E_back(seg(t, hit, hit + .2)) : 0;
+    el.style.transform = `translateY(${(1 - p) * 80}px) scale(${1 + .04 * h}) rotate(${(L ? -3 : 3) * h}deg)`;
+    el.style.borderColor = on ? (L ? '#111318' : '#2038EC') : '#DCDED8';
+    el.style.borderWidth = on ? '5px' : '3px';
+  });
+  { const on = t >= T.droite; $('#hcc').style.background = on ? '#2038EC' : '#fff'; $('#hcp').setAttribute('fill', on ? '#fff' : '#2038EC'); }
+  const cp = E_back(seg(t, T.gauche - .1, T.gauche + .15));
+  $('#cm').style.opacity = t >= T.gauche - .1 && t < EC ? clamp(cp * 2) : 0;
+  $('#cm').style.transform = `translateY(${(1 - clamp(cp)) * 30}px)`;
+  { const a = 12 * Math.abs(Math.sin((t - T.dis) * Math.PI * 2.4)); $('#carr').style.transform = `translate(${a}px,${a}px)`; }
+  const c2 = E_back(seg(t, T.dis, T.dis + .25));
+  $('#cm2').style.opacity = t >= T.dis && t < EC ? clamp(c2 * 2) : 0;
+
+  // ---------- final ----------
+  const EN = $('#end');
+  if (!$('#e8i').children.length) { for (const id of ['mL', 'mR', 'mh']) { const c = $('#' + id).cloneNode(true); c.id = ''; c.style.left = (parseFloat(c.style.left) - 250) + 'px'; c.style.top = (parseFloat(c.style.top) - 960) + 'px'; c.style.opacity = 1; c.style.transform = 'none'; if (id !== 'mh') { c.style.boxShadow = '0 0 0 10px #F7F7F4, 0 0 0 22px #2038EC'; c.style.borderColor = '#111318'; } $('#e8i').appendChild(c); } }
+  { const q = E_back(seg(t, EC + .32, EC + .6)); $('#e8').style.opacity = clamp(seg(t, EC + .32, EC + .37)); $('#e8').style.transform = `scale(${lerp(.6, 1, q) + .06 * kick(t, T.wa, .3)})`; }
+  EN.style.top = (250 + (1250 - EN.offsetHeight) / 2) + 'px';
+  const endOn = t >= EC && t < T.wipe + .4;
+  EN.style.opacity = endOn ? 1 : 0;
+  if (endOn) {
+    const h = E_back(seg(t, EC, EC + .25));
+    $('#e5').style.opacity = clamp(seg(t, EC, EC + .05)); $('#e5').style.transform = `translateY(${(1 - h) * 30}px) scale(${lerp(.86, 1, h)})`;
+    const b = E_back(seg(t, EC, EC + .3));
+    $('#e2').style.opacity = t >= EC + .1 ? 1 : 0;
+    $('#e2').style.transform = `translateY(${(1 - b) * 80}px) scale(${lerp(.9, 1, b) + .04 * kick(t, T.maquette, .3) + .025 * Math.max(0, Math.sin((t - EC) * 7.8)) * (t > T.ecris + 1.25 ? 1 : 0)})`;
+    const c = E_back(seg(t, EC + .25, EC + .5));
+    $('#e3').style.opacity = clamp(seg(t, EC + .2, EC + .35));
+    const pl2 = kick(t, T.wa + .1, .35) + .8 * kick(t, T.wa + .7, .35) + .6 * kick(t, T.wa + 1.3, .35);
+    $('#e3').style.transform = `scale(${1 + .02 * pl2})`;
+    const l6 = expo(seg(t, EC + .3, EC + .5)); $('#e6b').style.opacity = 0; $('#e6b').style.transform = `translateY(${(1 - l6) * 20}px)`;
+    const lq = expo(seg(t, EC + .22, EC + .45)); $('#e4').style.opacity = lq; $('#e4').style.transform = `translateY(${(1 - lq) * 30}px)`;
+    const l7 = E_back(seg(t, EC + .5, EC + .75)); $('#e7').style.opacity = clamp(seg(t, EC + .5, EC + .55)) * (t < T.maquette ? 1 : lerp(1, .6, seg(t, T.maquette, T.maquette + .3)) + .4 * seg(t, T.maquette + .9, T.maquette + 1.1)); $('#e7').style.transform = `translateY(${(1 - l7) * 16 + 8 * Math.abs(Math.sin((t - EC) * 5)) * (t < T.maquette ? 1 : 0)}px)`;
+  }
+  const w = inOut(seg(t, T.wipe, T.end - .05));
+  $('#wipe').style.top = (1920 - w * 1940) + 'px';
+}
+window.render = render;
+
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('600 20px PM'), document.fonts.load('500 40px IS'), document.fonts.load('italic 400 40px CG')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>
