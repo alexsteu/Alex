@@ -9,7 +9,7 @@ WA_ICON = '<svg width="20" height="20" aria-hidden="true" fill="currentColor"><u
 # Essentiel (le site qui s'ouvre en 3D), Pro (notre conseil : + l'assistant, les changements sans limite, la fiche Google suivie),
 # Premium (+ le tournage chez vous). Décision : offres-abonnement/offre-sites-v29.md (22.10.2026), grille du 22.10 01:29 (abonnement :
 # mise en ligne offerte, sauf le tournage de Premium). Une mise en ligne à 0 s'écrit « offerte » partout (cartes, FAQ, conditions, aperçu).
-OFFRES = {'ess': 29, 'pro': 49, 'pre': 99, 'ess_setup': 0, 'pro_setup': 0, 'pre_setup': 290}
+OFFRES = {'ess': 39, 'pro': 49, 'pre': 99, 'ess_setup': 0, 'pro_setup': 0, 'pre_setup': 290}
 def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
 def jour(n): return f"moins de {-(-n * 12 // 365)}.–"   # le prix par jour, arrondi au franc supérieur
 # v24.1 · LE TÉLÉPHONE (assistant vocal), tout ici : trois forfaits par mois, leur mise en place, la minute au-delà du forfait.
