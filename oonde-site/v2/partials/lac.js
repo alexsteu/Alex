@@ -1,4 +1,4 @@
-/* v38.2 · L'entrée du lac (accueil). Un film d'ouverture automatique, puis UN film lu au premier geste, jamais cherché (la leçon de v27 : une image pilotée
+/* v42 · L'entrée du lac (accueil). Un film d'ouverture automatique, puis UN film lu au premier geste, jamais cherché (la leçon de v27 : une image pilotée
    par le défilement saccade sur iPhone) : o (au ras de l'eau, le téléphone géant sonne) → c1 (le titre) → un geste (roulette, doigt, flèche bas, Espace, clic,
    « Entrer ») → film A (4,6 s) : on s'approche, la vitre se soulève, la conversation sort de l'écran (l'appel, la réponse de l'assistante, la réservation notée)
    → c2 (« Tester la démo »), la page est libre. Pendant o → c2 la page est tenue en haut (les gestes font avancer l'entrée, pas la page). « Passer », un lien de
@@ -36,12 +36,16 @@
   clearTimeout(tW);tW=setTimeout(()=>{if(st==='c1'&&want){loading(true);tW=setTimeout(()=>{if(st==='c1'&&want){want=false;loading(false);state('a');pin(true);cut('c2')}},WAIT_MS)}},500)}
  function runA(){want=false;loading(false);clearTimeout(tW);state('a');pin(true);
   if(!vA.paused&&vA.readyState>2)flag(vA,'on',true);else vA.addEventListener('playing',()=>flag(vA,'on',true),{once:true});
-  const p=play(vA);if(p&&p.then)p.then(null,()=>{if(st==='a')cut('c2')});
+  const p=play(vA);if(p&&p.then)p.then(null,()=>{if(st==='a')refused()});
   onEnd(vA,endA,((vA.duration||4.6)+2.5)*1000);
   setTimeout(()=>{if(st==='a'&&vA.paused&&!vA.ended)cut('c2')},WAIT_MS);   /* il ne part pas : l'image de l'arrêt */
   pre('c2')}
  let wA=0;vA.addEventListener('waiting',()=>{if(st!=='a')return;clearTimeout(wA);const t=vA.currentTime;wA=setTimeout(()=>{if(st==='a'&&vA.currentTime-t<.2)cut('c2')},1200)});vA.addEventListener('playing',()=>clearTimeout(wA));
  function endA(){if(st!=='a')return;holdTo('c2');state('c2');pin(false)}
+ /* v42 : play() refusé au moment de lire A (la vue intégrée d'Instagram sur iPhone : un doigt levé après un balayage n'y vaut pas un geste, un tap oui) :
+    retour au titre, le bouton demande un vrai tap ; refusé une seconde fois : l'image de l'arrêt, comme avant. */
+ let nRef=0;function refused(){if(++nRef>1){cut('c2');return}clearTimeout(tW);want=false;loading(false);stop(vA);flag(vA,'on',false);try{vA.currentTime=0}catch(e){}
+  u.classList.add('tap');go.innerHTML='Touchez pour voir <i aria-hidden="true">↓</i>';state('c1');pin(true)}
 
  /* un film qui ne vient pas : l'image de l'arrêt, en fondu ; les films s'effacent une fois l'image posée */
  function cut(s){stop(vO);stop(vA);flag(vO,'on',false);u.classList.remove('pre');loading(false);holdTo(s).then(()=>flag(vA,'on',false));state(s);if(s==='c2')pin(false)}

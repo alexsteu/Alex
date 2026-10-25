@@ -165,37 +165,37 @@ def nav(cur):
     et = (f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>')
     if cur == 'sites':
         return ('<a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{HOME}}">Le téléphone</a><a class="opt" href="{{VIDEOS}}">Vidéos &amp; pubs</a>'
-                + et + '<a class="opt2" href="#questions">Questions</a>')
+                + et + '<a class="opt2" href="#questions">Questions</a><a href="{{CONTACT}}">Contact</a>')
     H = '' if cur == 'index' else '{{HOME}}'
     return (f'<a href="{H}#demo">La démo</a><a href="{H}#prix">Forfaits</a><a href="{{{{SITES}}}}">Sites internet</a><a class="opt" href="{{{{VIDEOS}}}}"{a("videos")}>Vidéos &amp; pubs</a>'
-            + et + f'<a class="opt2" href="{H}#questions">Questions</a>')
+            + et + f'<a class="opt2" href="{H}#questions">Questions</a><a href="{{{{CONTACT}}}}"{a("contact")}>Contact</a>')
 
 def fnav(cur):
     """{{FNAV:page}} : v31, le plan du site du pied de page, le même partout (les pages légales suivent, écrites dans chaque page)."""
     cu = ' aria-current="page"'
     return ''.join(f'<a href="{{{{{t}}}}}"{cu if k == cur else ""}>{n}</a>' for k, t, n in
-                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites internet'), ('videos', 'VIDEOS', 'Vidéos &amp; pubs'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète')))
+                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites internet'), ('videos', 'VIDEOS', 'Vidéos &amp; pubs'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète'), ('contact', 'CONTACT', 'Contact')))
 
 # v24 · Le Fil : les vidéos de démo, nommées pour la commerçante (ce qui sort sur son fil), et non par nos ateliers.
 # Fichiers web 720×1280 : video/fil/ (exemples de commerces) et video/demos/ (une démo par façon de faire ; les noms restent stables).
 # (clé, chemin sans extension, ce qui sort sur le fil, une ligne, étiquettes sous la vidéo, texte alternatif)
 FV = {
-    'plat': ('video/fil/trattoria', 'Le plat du jour, qui arrive à l’écran.', 'Vos plats, votre salle, et le bouton Réserver à la fin.', ['Démo · commerce inventé', 'voix IA'], 'Trattoria Nonna Pia, un restaurant inventé : des pâtes, une pizza au feu de bois, un tiramisu, puis le bouton Réserver.'),
     'produit': ('video/demos/demo03-produit-9x16', 'Votre produit en photo, qui se met à bouger.', 'Une photo de votre téléphone suffit.', ['Démo · images IA', 'voix IA'], 'Un croissant, un bouquet, un flacon, un café et une bougie, inventés : chaque photo se met à bouger.'),
-    'saison': ('video/demos/demo01-motion-9x16', 'Un message de saison, texte et voix.', 'Une ouverture, les horaires d’été, une nouveauté : sans tournage.', ['Démo · commerce inventé', 'voix IA'], 'Cycles Ravenelle, un atelier vélo inventé : des mots qui bougent, un vélo dessiné, puis le nom du commerce.'),
-    'tap': ('video/demos/demo06-pub-en-un-tap-9x16', 'Une nouveauté, en un tap.', 'Vous choisissez quelques photos, on en fait la vidéo.', ['Démo · commerce inventé', 'voix IA'], 'Une appli inventée : on choisit Salon, on coche des photos, et la vidéo du Salon Mirabelle, un salon fictif, se crée.'),
-    'ardoise': ('video/fil/ardoise', 'L’ardoise du jour.', 'Pour les restaurants et les cafés : la photo de l’ardoise devient une vidéo.', ['Démo · commerce inventé', 'voix IA'], 'Café Cormoran, un café inventé : l’ardoise sous la pluie, puis le menu dans le téléphone.'),
     'angles': ('video/demos/demo04-angles-9x16', 'Un produit, sous tous les angles.', 'Une seule prise devient quatre plans.', ['Démo · images IA', 'voix IA'], 'Une tasse de café filmée une fois, puis vue de dessus, en macro, au ras de la table et de dos.'),
+    'saison': ('video/demos/demo01-motion-9x16', 'Un message de saison, texte et voix.', 'Une ouverture, les horaires d’été, une nouveauté : sans tournage.', ['Démo · commerce inventé', 'voix IA'], 'Cycles Ravenelle, un atelier vélo inventé : des mots qui bougent, un vélo dessiné, puis le nom du commerce.'),
+    'plat': ('video/fil/trattoria', 'Le plat du jour, qui arrive à l’écran.', 'Vos plats, votre salle, et le bouton Réserver à la fin.', ['Démo · commerce inventé', 'voix IA'], 'Trattoria Nonna Pia, un restaurant inventé : des pâtes, une pizza au feu de bois, un tiramisu, puis le bouton Réserver.'),
+    'tap': ('video/demos/demo06-pub-en-un-tap-9x16', 'Une nouveauté, en un tap.', 'Vous choisissez quelques photos, on en fait la vidéo.', ['Démo · commerce inventé', 'voix IA'], 'Une appli inventée : on choisit Salon, on coche des photos, et la vidéo du Salon Mirabelle, un salon fictif, se crée.'),
 }
-# v37 · les pubs du 23.10 (nos propres vidéos Instagram ; commerces inventés ; aucun numéro) : la page Vidéos & pubs les montre en premier
+# v42 (25.10, Alexandre) : d'abord les vidéos faites exprès pour le site (ci-dessus, l'ardoise retirée), puis nos meilleures : les plus vues sur Instagram
+# (le ballon, 6 870 vues) et un style par vidéo (dragon, cinq styles, dessin animé, bande-annonce, créatrice IA). La marguerite, la sonnette, l'élastique
+# et la ville 3D sur le lac sont retirées (les fichiers restent dans video/demos). Commerces inventés ; aucun numéro ; aucun vrai visage.
 PUBS = {
+    'b191': ('video/demos/best191-9x16', 'Le ballon qui sonne.', 'Notre vidéo la plus vue : un ballon, une aiguille, et le téléphone qui sonne en plein rush.', ['Démo · pizzeria inventée', '3D'], 'Un ballon rouge en gros plan, une aiguille qui descend, un compteur d’images avant l’impact ; puis le téléphone qui sonne.'),
+    'dragon': ('video/demos/livreur-dragon-9x16', 'Le livreur.', 'Un dragon survole le Léman pour livrer des croissants. Le dragon, on peut l’enlever.', ['Démo · boulangerie inventée', 'images IA'], 'Un dragon immense survole le lac Léman au coucher du soleil, devant les Alpes, et file vers un village.'),
     'p702': ('video/demos/pub702-9x16', 'Ta pub, dans tous les styles.', 'Ballon, dessin animé, jeu vidéo, pâte à modeler, néon : une pub, cinq styles.', ['Démo · pizzeria inventée', 'voix IA'], 'La même pub pour une pizzeria inventée, dans cinq styles qui se succèdent : ballon, dessin animé, jeu vidéo, pâte à modeler, néon.'),
     'p600': ('video/demos/pub600-9x16', 'Laisse sonner, qu’ils disaient.', 'Dessin animé des années 30 : le téléphone qui décroche tout seul.', ['Démo · pizzeria inventée', 'voix IA'], 'Un dessin animé rétro : des boutiques qui laissent sonner, puis le téléphone qui répond seul pour une pizzeria inventée.'),
     'p213': ('video/demos/pub213-9x16', 'Le dernier éclair.', 'Une bande-annonce de blockbuster pour une pâtisserie qui n’existe pas.', ['Démo · pâtisserie inventée', 'voix IA'], 'Nuit d’orage, un éclair au chocolat, la foudre : une fausse bande-annonce pour une pâtisserie inventée.'),
-    'p690': ('video/demos/pub690-9x16', 'Ce que ça doit faire.', 'Jeu vidéo en 3D au coucher du soleil : le rush, et le téléphone qui répond.', ['Démo · lieu fictif', '3D'], 'Une ville sur la pente, le lac, une terrasse pleine, un four, un téléphone qui vibre : des plans de jeu vidéo au coucher du soleil.'),
-    'p210': ('video/demos/pub210-9x16', 'La sonnette.', 'Macro en 3D : on sonne au comptoir, personne ne vient.', ['Démo · pizzeria inventée', 'voix IA'], 'Une sonnette de comptoir chromée : on sonne de plus en plus vite, personne ne vient, le dôme saute et tourne sur le comptoir.'),
-    'p211': ('video/demos/pub211-9x16', 'La marguerite.', 'Un objet, un fil : chaque sonnerie arrache un pétale.', ['Démo · fleuriste inventé', 'voix IA'], 'Une marguerite qu’on effeuille : à chaque sonnerie un pétale tombe, jusqu’à la fleur nue.'),
-    'p212': ('video/demos/pub212-9x16', 'L’élastique.', 'Encre, papier, bleu : l’élastique de physio qui casse.', ['Démo · cabinet inventé', 'voix IA'], 'Un élastique de rééducation noué à un espalier se tend à chaque sonnerie, puis casse.'),
+    'ugc': ('video/demos/ugc-croissant-9x16', 'La créatrice IA.', 'Une personne inventée présente votre produit face caméra, comme une cliente. Un extrait.', ['Démo · visage inventé par IA', 'voix IA'], 'Une jeune femme inventée par IA, dans une cuisine, montre un croissant face caméra et en parle.'),
 }
 PUBS = {k: v for k, v in PUBS.items() if (D / f'{v[0]}.mp4').exists()}
 FV.update(PUBS)
@@ -402,7 +402,7 @@ TELDEMO = ('<p class="ftel"><span class="ftag">Démo</span> Elle répond au tél
           '<p class="tel-rev" id="telRevF" hidden><b>021 539 01 22</b>{{QR_021}}<span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p>')
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
 # v31 : l'accueil est le téléphone (home.html, l'ancienne page /telephone) ; l'entrée 3D et les formules du site passent sur /sites (sites.html, l'ancien accueil)
-docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text()}
+docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text(), 'contact': (D / 'contact.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -411,8 +411,8 @@ for k, (title, desc, cur) in PAGES.items():
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
 # v31 : {{SITES}} (l'entrée 3D, les formules du site) ; {{TELEPHONE}} et {{EXEMPLES}} disparaissent (le téléphone est l'accueil, les exemples sont sur /sites)
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos', '{{CONTACT}}': 'contact'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html', '{{CONTACT}}': 'contact.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
@@ -420,7 +420,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
             s = s.replace('{{LACB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'lac' / k2 / 'blur.webp').read_bytes()).decode())   # v34 : le lac, flou, avant l'image du ponton
-        if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'videos'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'videos', 'contact'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
@@ -488,7 +488,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / '_redirects').write_text('/telephone  /  301\n/telephone.html  /  301\n/vitrine  /sites#prix  301\n/vitrine.html  /sites#prix  301\n/exemples  /sites  301\n'
             '/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /videos  301\n/pub.html /videos 301\n/reseaux /videos  301\n/reseaux.html /videos 301\n/fil    /videos  301\n/fil.html /videos 301\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'sites', 'videos', 'assistant', 'visite')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'sites', 'videos', 'assistant', 'visite', 'contact')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):

@@ -1,0 +1,123 @@
+<meta charset="utf-8">
+<title>Contact : WhatsApp, e-mail ou téléphone · OONDE</title>
+<meta name="description" content="Écrivez-nous sur WhatsApp, par e-mail ou appelez-nous : on répond vite, et la maquette est offerte. OONDE, de Genève à Montreux.">
+<link rel="canonical" href="https://oonde.ch/contact">
+<meta property="og:title" content="Contact · OONDE">
+<meta property="og:description" content="WhatsApp, e-mail ou téléphone : parlez-nous de votre commerce. La maquette est offerte.">
+<meta property="og:url" content="https://oonde.ch/contact">
+<meta property="og:image" content="https://oonde.ch/img/og-tel.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="OONDE">
+<meta name="twitter:card" content="summary_large_image">
+{{FONTS}}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{INC:base.css}}
+{{INC:pub.css}}
+/* v42 · Contact (25.10, Alexandre : « un onglet nous contacter, avec aussi un mail au cas où les gens n'ont pas WhatsApp, une façon très facile »).
+   Trois voies, dans l'ordre où on les prend : WhatsApp, l'e-mail (un petit formulaire qui ouvre la messagerie, le message déjà écrit ; ou l'adresse à copier),
+   le téléphone. Rien ne part vers un serveur : le message s'ouvre dans l'application mail du visiteur. */
+.c-hero{padding-block:clamp(56px,8vw,120px) clamp(32px,4vw,56px)}
+.c-hero h1{font-size:clamp(40px,5.8vw,88px);line-height:1.02;letter-spacing:-.04em;max-width:14ch;margin-top:18px}
+.c-hero .lede{margin-top:clamp(18px,2.2vw,28px);font-size:clamp(18px,1.8vw,24px);line-height:1.4;max-width:28em}
+.c-ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(8px,2vw,24px);padding-bottom:clamp(56px,7vw,96px)}
+.c-way{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,2.4vw,34px);display:flex;flex-direction:column}
+.c-way h2{font-size:clamp(22px,1.9vw,27px);letter-spacing:-.02em}
+.c-way .mono{display:block;margin-bottom:10px}
+.c-way p{margin-top:12px;color:var(--soft)}
+.c-way .btn{margin-top:22px;align-self:start}
+.c-num{margin-top:14px;font:600 clamp(22px,2vw,28px)/1.1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.c-num a{color:inherit;text-decoration:none}.c-num a:hover{text-decoration:underline;text-underline-offset:4px}
+.c-way .micro{margin-top:auto;padding-top:18px;font-size:13.5px;color:var(--muted)}
+.c-form{display:grid;gap:12px;margin-top:18px}
+.c-form label{display:block;font:500 14px var(--sans);color:var(--soft);margin-bottom:6px}
+.c-form input,.c-form textarea{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font:400 16px/1.4 var(--sans);color:var(--ink)}
+.c-form textarea{min-height:120px;resize:vertical}
+.c-form input:focus-visible,.c-form textarea:focus-visible{outline:2px solid var(--klein);outline-offset:1px;border-color:var(--klein)}
+.c-form .btn{margin-top:4px;width:100%}
+.c-or{margin-top:16px;font-size:14.5px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.c-or a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.c-copy{font:500 13px var(--sans);color:var(--ink);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;min-height:32px;cursor:pointer}
+.c-copy:hover{border-color:var(--ink)}.c-copy.ok{border-color:var(--klein);color:var(--klein)}
+.c-sent{margin-top:12px;font-size:14.5px;color:var(--soft)}.c-sent[hidden]{display:none}
+html:not(.js) .c-form{display:none}
+.c-also{padding-block:clamp(40px,5vw,72px)}
+.c-also h2{font-size:clamp(28px,3.4vw,48px);letter-spacing:-.03em;line-height:1.06;max-width:18ch}
+.c-also p{margin-top:16px;max-width:36em;color:var(--soft)}
+.c-also .act{margin-top:24px}
+@media (max-width:960px){.c-ways{grid-template-columns:minmax(0,1fr)}.c-way.c-mail{order:-1}}
+@media (max-width:480px){.c-way .btn{width:100%}}
+</style>
+
+<a class="skip" href="#top">Aller au contenu</a>
+<header class="nav">
+ <div class="in">
+  <a class="logo landed" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
+  <button type="button" class="nav-m" aria-expanded="false" aria-controls="navL"><i aria-hidden="true"></i>Menu</button>
+  <nav aria-label="Pages" id="navL">{{NAV:contact}}<a class="nav-wa" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">{{WA_ICON}}<span>Écrire sur WhatsApp</span></a></nav>
+  <a class="btn" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Écrire sur WhatsApp</span><span class="s">WhatsApp</span></a>
+ </div>
+</header>
+
+<main id="top">
+
+<section class="bg-paper c-hero" data-hero aria-labelledby="h1"><div class="in">
+ <p class="mono">Contact · de Genève à Montreux</p>
+ <h1 id="h1">Parlez-nous de votre commerce.</h1>
+ <p class="lede">WhatsApp, e-mail ou téléphone : vous choisissez. On répond vite, et la première maquette est offerte.</p>
+</div></section>
+
+<section class="bg-paper" aria-label="Nous joindre"><div class="in">
+ <div class="c-ways">
+  <article class="c-way" aria-labelledby="cW">
+   <span class="mono">Le plus rapide</span>
+   <h2 id="cW">WhatsApp</h2>
+   <p>Écrivez-nous votre commerce et votre commune : on vous répond dans la journée, souvent dans l’heure.</p>
+   <p class="c-num"><a href="tel:+41779283540">077 928 35 40</a></p>
+   <a class="btn" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">{{WA_ICON}}<span>Écrire sur WhatsApp</span></a>
+   <p class="micro">Aussi sur <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a>, en message privé.</p>
+  </article>
+  <article class="c-way c-mail" aria-labelledby="cM">
+   <span class="mono">Sans WhatsApp</span>
+   <h2 id="cM">E-mail</h2>
+   <p>Deux lignes suffisent. Le bouton ouvre votre messagerie avec le message déjà écrit : il ne reste qu’à envoyer.</p>
+   <form class="c-form" id="cForm" novalidate>
+    <div><label for="cNom">Votre commerce et votre commune</label><input id="cNom" name="commerce" type="text" maxlength="80" autocomplete="organization" placeholder="Boulangerie du Lac, Morges"></div>
+    <div><label for="cMsg">Votre message</label><textarea id="cMsg" name="message" maxlength="1500" placeholder="Ce que vous aimeriez : un site, le téléphone, une vidéo… et quand on peut vous rappeler."></textarea></div>
+    <button type="submit" class="btn light"><span>Ouvrir mon e-mail</span></button>
+   </form>
+   <p class="c-sent" id="cSent" hidden>Votre messagerie s’ouvre avec le message. Si rien ne se passe, copiez l’adresse ci-dessous.</p>
+   <p class="c-or">ou directement : <a href="mailto:oonde.contact@gmail.com?subject=Mon%20commerce" id="cMailto">oonde.contact@gmail.com</a> <button type="button" class="c-copy" id="cCopy" aria-label="Copier l’adresse e-mail">Copier</button></p>
+  </article>
+  <article class="c-way" aria-labelledby="cT">
+   <span class="mono">De vive voix</span>
+   <h2 id="cT">Téléphone</h2>
+   <p>Du lundi au samedi. Si on ne décroche pas, laissez un message : on rappelle.</p>
+   <p class="c-num"><a href="tel:+41779283540">077 928 35 40</a></p>
+   <a class="btn light" href="tel:+41779283540"><span>Appeler</span></a>
+   <p class="micro"><span class="dtag">Démo</span> Pour entendre notre assistante répondre : <a href="tel:+41215390122">021 539 01 22</a>. Une pizzeria inventée vous répond ; elle se présente comme assistante, l’appel est enregistré.</p>
+  </article>
+ </div>
+</div></section>
+
+<section class="bg-white c-also" aria-labelledby="hA"><div class="in">
+ <h2 id="hA" class="rv">Vous ne savez pas encore ce qu’il vous faut ?</h2>
+ <p class="rv">Dites-nous juste votre métier et votre commune. On vous propose une première maquette, offerte : votre façade en 3D, une vidéo ou l’assistante qui répond à votre nom.</p>
+ <div class="act rv"><a class="lnk" href="{{HOME}}">L’assistante au téléphone <i class="ar">→</i></a><a class="lnk" href="{{SITES}}">Les sites internet <i class="ar">→</i></a><a class="lnk" href="{{VIDEOS}}">Les vidéos <i class="ar">→</i></a></div>
+</div></section>
+
+</main>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">{{WA_ICON}}<span>Écrire sur WhatsApp</span></a></nav>
+
+<footer><div class="in">
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site">{{FNAV:contact}}<a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <p class="seo">OONDE, Préverenges : assistant téléphonique, sites internet en 3D et vidéos pour les commerces de Genève à Montreux. © 2026 OONDE.</p>
+</div></footer>
+
+<script>
+{{INC:core.js}}
+{{INC:contact.js}}
+</script>
