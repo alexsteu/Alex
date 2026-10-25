@@ -15,6 +15,7 @@
 .o-f{margin-top:auto;padding-top:22px;font-size:14px;color:var(--muted)}
 .o-go{margin-top:18px;display:grid;gap:12px;justify-items:start}
 .o-all{margin-top:clamp(40px,5vw,56px);color:var(--soft);max-width:44em}
+.offers2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:900px;margin-inline:auto}   /* v41 : deux formules du site, centrées */
 @media (max-width:960px){.offers3{grid-template-columns:minmax(0,1fr);gap:28px}.o3-k{order:-1;margin-block:0;padding-block:clamp(28px,3vw,40px)}}
 @media (max-width:480px){.o-go .btn{width:100%}}
 .o-go .btn.light{min-height:48px;padding:12px 20px;font-size:15px}

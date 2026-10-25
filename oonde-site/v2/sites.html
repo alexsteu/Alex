@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>Site internet avec entrée en 3D pour commerces, de Genève à Montreux · OONDE</title>
-<meta name="description" content="Votre site s’ouvre sur votre commerce, en 3D : la façade, la porte, la salle, puis vos prix et WhatsApp. Restaurants, salons, instituts, boulangeries, de Genève à Montreux. Trois formules, sans engagement.">
+<meta name="description" content="Votre site s’ouvre sur votre commerce, en 3D : la façade, la porte, la salle, puis vos prix et WhatsApp. Restaurants, salons, instituts, boulangeries, de Genève à Montreux. Deux formules, sans engagement.">
 <link rel="canonical" href="https://oonde.ch/sites">
 <meta property="og:title" content="OONDE · Votre site s’ouvre sur votre commerce, en 3D">
 <meta property="og:description" content="Restaurant, coiffeur, institut, boulangerie : en faisant défiler, vos clients passent votre porte, puis trouvent vos prix et WhatsApp. De Genève à Montreux.">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="fr_CH">
 <meta property="og:site_name" content="OONDE">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","@id":"https://oonde.ch/sites#service","name":"Site internet qui s’ouvre sur le commerce en 3D","serviceType":"Site internet avec entrée en 3D","url":"https://oonde.ch/sites","description":"Sites internet qui s’ouvrent sur le commerce en 3D, de Genève à Montreux, en trois formules : Essentiel, Pro avec l’assistant qui répond aux clients, Premium filmé sur place.","image":"https://oonde.ch/img/og-e3d.jpg","provider":{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","url":"https://oonde.ch/"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"offers":{{PX:ld_offers}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","@id":"https://oonde.ch/sites#service","name":"Site internet qui s’ouvre sur le commerce en 3D","serviceType":"Site internet avec entrée en 3D","url":"https://oonde.ch/sites","description":"Sites internet qui s’ouvrent sur le commerce en 3D, de Genève à Montreux, en deux formules : Essentiel, et Pro avec l’assistant qui répond aux clients.","image":"https://oonde.ch/img/og-e3d.jpg","provider":{"@type":"ProfessionalService","@id":"https://oonde.ch/#oonde","name":"OONDE","url":"https://oonde.ch/"},"areaServed":[{"@type":"City","name":"Genève"},{"@type":"City","name":"Coppet"},{"@type":"City","name":"Nyon"},{"@type":"City","name":"Rolle"},{"@type":"City","name":"Morges"},{"@type":"City","name":"Lausanne"},{"@type":"City","name":"Vevey"},{"@type":"City","name":"Montreux"}],"offers":{{PX:ld_offers}}}</script>
 {{FONTS}}
 <script>document.documentElement.classList.add('js')</script>
 <style>
@@ -74,7 +74,7 @@ html:not(.js) .e-pick{display:none}
     <button type="button" class="r-skip" id="rGo">Entrée</button>
     <p class="r-sub">Nous créons votre site internet, qui s’ouvre sur votre commerce en 3D.</p>
     <div class="r-act"><a class="btn inv r-demo" href="#choix">Voir la démo</a><a class="r-wa" href="{{WA_IMM}}" data-wa="e3" target="_blank" rel="noopener"><span>Recevoir mon aperçu 3D</span> <span class="ar" aria-hidden="true">→</span></a>
-     <p class="r-off">Votre aperçu 3D : une première image de votre façade, offerte, sans engagement. <a href="#prix">Voir les trois formules</a></p></div></div>
+     <p class="r-off">Votre aperçu 3D : une première image de votre façade, offerte, sans engagement. <a href="#prix">Voir les deux formules</a></p></div></div>
    <p class="r-tx r-say r-top" aria-hidden="true">Alors on entre.</p>
    <div class="r-tx r-stop" id="rStop" role="group" aria-labelledby="rStopH" tabindex="-1">
     <div class="r-hd"><p class="r-sh" id="rStopH">Votre commerce <b>Démo</b></p><a class="r-enter" href="#rEnd">Entrer <span class="ar" aria-hidden="true">→</span></a></div>
@@ -112,8 +112,8 @@ html:not(.js) .e-pick{display:none}
 <section class="bg-paper" id="prix" aria-labelledby="hP"><div class="in">
  <h2 id="hP" class="rv">Votre site, au mois. Sans engagement.</h2>
  <p class="lede rv o-lede">{{PX:o_lede}}</p>
- <!-- v29 · trois formules, la même grammaire que le téléphone. Montants et phrases de mise en ligne : OFFRES dans build.py. -->
- <div class="offers3">
+ <!-- v41 · deux formules : Essentiel, et Pro qui a tout. Le tournage chez le client est une option sur devis (/visite). Montants : OFFRES dans build.py. -->
+ <div class="offers3 offers2">
   <article class="o3 rv" aria-labelledby="oE">
    <h3 id="oE">Essentiel</h3>
    <p class="o-p">{{PX:ess_m}}<small>/mois</small></p>
@@ -142,27 +142,14 @@ html:not(.js) .e-pick{display:none}
     <li>Votre fiche Google tenue à jour : horaires, photos, une publication par mois</li>
     <li>Votre entrée en courte vidéo, pour Instagram et Google</li>
     <li>Une mise à jour de la 3D par an</li>
+    <li>L’assistant en français, allemand, anglais et italien</li>
+    <li>Réponses à vos avis Google</li>
    </ul>
    <p class="o-f">{{PX:pro_f}}.</p>
    <div class="o-go"><a class="btn" href="{{WA_SITE_PRO}}" data-wa="site_pro" target="_blank" rel="noopener">{{WA_ICON}}<span>Je veux celui-ci</span></a></div>
   </article>
-  <article class="o3 rv" aria-labelledby="oR">
-   <h3 id="oR">Premium</h3>
-   <p class="o-p">{{PX:pre_m}}<small>/mois</small></p>
-   <p class="o-s">On vient filmer chez vous : une entrée 100 % réelle.</p>
-   <ul class="l4">
-    <li>Tout ce que fait Pro</li>
-    <li><b>Une demi-journée de tournage chez vous</b> : entrée et visite filmées, photos pro</li>
-    <li>L’assistant en français, allemand, anglais et italien</li>
-    <li>Réponses à vos avis Google</li>
-    <li>Vos changements le jour même</li>
-    <li>Un nouveau tournage court chaque année</li>
-   </ul>
-   <p class="o-f">{{PX:pre_f}}.</p>
-   <div class="o-go"><a class="btn light" href="{{WA_SITE_PRE}}" data-wa="site_pre" target="_blank" rel="noopener">{{WA_ICON}}<span>Je veux celui-ci</span></a><a class="lnk" href="{{VISITE}}">Voir une visite complète <i class="ar">→</i></a></div>
-  </article>
  </div>
- <p class="o-all rv"><b>Sans engagement</b>, pour les trois : résiliable chaque mois. Le site, l’adresse et les textes restent à vous.</p>
+ <p class="o-all rv"><b>Sans engagement</b>, pour les deux : résiliable chaque mois. Le site, l’adresse et les textes restent à vous. Envie d’une visite filmée chez vous&nbsp;? <a href="{{VISITE}}">En option, sur devis</a>.</p>
 </div></section>
 
 <section class="bg-white" aria-labelledby="hC"><div class="in">
@@ -180,7 +167,7 @@ html:not(.js) .e-pick{display:none}
  <h2 id="hA" class="h-m rv">Et aussi.</h2>
  <div class="ea">
   <article class="rv"><h3>L’assistant de votre site.</h3><p>Il répond aux questions de vos clients, même à 23 h, et vous passe la main quand il ne sait pas. Compris dans la formule Pro.</p><p class="ea-go"><a class="btn light" href="{{ASSISTANT}}#essai" data-try aria-expanded="false" aria-controls="essaiBox"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Essayer l’assistant</span></a><a class="lnk" href="{{ASSISTANT}}">Voir l’assistant <i class="ar">→</i></a></p></article>
-  <article class="rv"><h3>La visite complète.</h3><p>Une entrée et une visite filmées chez vous.</p><p class="ea-go"><a class="lnk" href="{{VISITE}}">Voir une visite complète <i class="ar">→</i></a></p></article>
+  <article class="rv"><h3>La visite complète.</h3><p>Une entrée et une visite filmées chez vous, en option, sur devis.</p><p class="ea-go"><a class="lnk" href="{{VISITE}}">Voir une visite complète <i class="ar">→</i></a></p></article>
  </div>
  <div class="ea-chat" id="essaiBox" hidden>
 {{INC:chat.html}}
@@ -195,8 +182,8 @@ html:not(.js) .e-pick{display:none}
   <div class="faq">
    <details><summary>Ça coûte combien ?</summary><div class="fa"><div><p>{{PX:faq_px}}</p></div></div></details>
    <details><summary>Combien de temps ça prend ?</summary><div class="fa"><div><p>Sous 48 heures : une première image de votre façade en 3D et le prix par écrit, offerts. La suite dépend de votre lieu et des photos ; on en fixe le calendrier avec vous avant la commande, et vous recevez le site terminé pour le corriger avant la mise en ligne.</p></div></div></details>
-   <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour Essentiel et Pro, quelques photos de votre façade et de votre salle, puis vos vrais prix et vos horaires sur WhatsApp ; pour Premium, on vient tourner chez vous. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
-   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements par message : un par mois avec Essentiel, sans limite avec Pro et Premium (un restaurant envoie son menu du jour en photo). Pour Google, on met en place tout ce qu’il regarde ; la première place, personne ne peut la garantir honnêtement.</p></div></div></details>
+   <details><summary>Qu'est-ce que je dois faire, moi ?</summary><div class="fa"><div><p>Pour Essentiel et Pro, quelques photos de votre façade et de votre salle, puis vos vrais prix et vos horaires sur WhatsApp. Si vous voulez la visite filmée, on vient tourner chez vous. On écrit les textes, on construit l’entrée et on s’occupe de votre fiche Google.</p></div></div></details>
+   <details><summary>Et après la mise en ligne ?</summary><div class="fa"><div><p>L’abonnement comprend l’hébergement, l’adresse et vos changements par message : un par mois avec Essentiel, sans limite avec Pro (un restaurant envoie son menu du jour en photo). Pour Google, on met en place tout ce qu’il regarde ; la première place, personne ne peut la garantir honnêtement.</p></div></div></details>
    <details><summary>Et le site, sur un téléphone ?</summary><div class="fa"><div><p>Même entrée, en portrait, plus légère sur téléphone. Si votre téléphone réduit les animations, le site montre des images fixes, et tout reste lisible.</p></div></div></details>
    <details><summary>Qui êtes-vous ?</summary><div class="fa"><div><p>Un petit studio de la région, de Genève à Montreux, qui démarre : nos exemples sont inventés, et votre prix et une première image sont offerts avant que vous payiez quoi que ce soit. Quand vous écrivez, c’est nous qui répondons.</p></div></div></details>
   </div>

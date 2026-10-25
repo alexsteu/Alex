@@ -5,11 +5,11 @@ FONTDIR = D.parent.parent / 'oonde-video' / 'fonts'
 # v28.1 : l'icône WhatsApp est un symbole posé une fois par page (après le lien d'évitement) ; chaque bouton n'en garde qu'un renvoi
 WA_SYM = '<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="iWa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></symbol></svg>'
 WA_ICON = '<svg width="20" height="20" aria-hidden="true" fill="currentColor"><use href="#iWa"/></svg>'
-# v29 · LES PRIX DU SITE, tous ici (rien d'autre à changer) : trois formules par mois, sans engagement, et leurs mises en ligne.
-# Essentiel (le site qui s'ouvre en 3D), Pro (notre conseil : + l'assistant, les changements sans limite, la fiche Google suivie),
-# Premium (+ le tournage chez vous). Décision : offres-abonnement/offre-sites-v29.md (22.10.2026), grille du 22.10 01:29 (abonnement :
-# mise en ligne offerte, sauf le tournage de Premium). Une mise en ligne à 0 s'écrit « offerte » partout (cartes, FAQ, conditions, aperçu).
-OFFRES = {'ess': 39, 'pro': 49, 'pre': 99, 'ess_setup': 0, 'pro_setup': 0, 'pre_setup': 290}
+# v29 · LES PRIX DU SITE, tous ici (rien d'autre à changer) : les formules par mois, sans engagement, et leurs mises en ligne.
+# v41 (25.10.2026, Alexandre) : deux formules. Essentiel 39 (le site qui s'ouvre en 3D, pas tous les avantages), Pro 49 (tout :
+# l'assistant, les changements sans limite, la fiche Google suivie, la vidéo, les langues, les avis). Premium 99 retiré ; le tournage
+# chez le client devient une option sur devis (/visite, conditions art. 4). Une mise en ligne à 0 s'écrit « offerte » partout.
+OFFRES = {'ess': 39, 'pro': 49, 'ess_setup': 0, 'pro_setup': 0}
 def chf(n): return f"{n:,}".replace(',', '\u202f') + '.–'
 def jour(n): return f"moins de {-(-n * 12 // 365)}.–"   # le prix par jour, arrondi au franc supérieur
 # v24.1 · LE TÉLÉPHONE (assistant vocal), tout ici : trois forfaits par mois, leur mise en place, la minute au-delà du forfait.
@@ -24,29 +24,26 @@ def mel(k, tournage=False, cond=True, low=False):
     n, what = OFFRES[k], 'Mise en ligne et tournage' if tournage else 'Mise en ligne'
     s = (what + (' offerts' if tournage else ' offerte')) if not n else f'{what} {chf(n)}' + (', seulement si le site terminé vous plaît' if cond else '')
     return s[0].lower() + s[1:] if low else s
-_E, _P, _R = (OFFRES[k] for k in ('ess_setup', 'pro_setup', 'pre_setup'))
+_E, _P = (OFFRES[k] for k in ('ess_setup', 'pro_setup'))
 def faq_px():
     """La réponse « Ça coûte combien ? » de l'accueil, écrite d'après OFFRES."""
-    m = f"Essentiel {chf(OFFRES['ess'])}, Pro {chf(OFFRES['pro'])}, Premium {chf(OFFRES['pre'])} par mois, sans engagement."
-    if not (_E or _P or _R): s = 'Mise en ligne offerte, tournage compris.'
-    elif not (_E or _P): s = f'Mise en ligne offerte ; Premium {chf(_R)} avec le tournage, payé seulement si le site vous plaît.'
-    elif _E and _P and _R: s = f'Mise en ligne dès {chf(min(_E, _P, _R))}, payée seulement si le site vous plaît.'
-    else: s = 'Mise en ligne : ' + ', '.join(f'{n} {chf(v) if v else "offerte"}' for n, v in (('Essentiel', _E), ('Pro', _P), ('Premium', _R))) + ', payée seulement si le site vous plaît.'
-    return m + ' ' + s
+    m = f"Essentiel {chf(OFFRES['ess'])}, Pro {chf(OFFRES['pro'])} par mois, sans engagement."
+    if not (_E or _P): s = 'Mise en ligne offerte.'
+    elif _E == _P: s = f'Mise en ligne {chf(_E)}, payée seulement si le site vous plaît.'
+    else: s = 'Mise en ligne : ' + ', '.join(f'{n} {chf(v) if v else "offerte"}' for n, v in (('Essentiel', _E), ('Pro', _P))) + ', payée seulement si le site vous plaît.'
+    return m + ' ' + s + ' La visite filmée chez vous s’ajoute en option, sur devis.'
 def cg_setup():
     """Conditions générales, art. 6 : les mises en ligne, d'après OFFRES (0 → offerte)."""
     v = lambda n: '<b>offerte</b>' if not n else f'<b>{n} CHF</b>'
     seul = ", une seule fois, facturée à la mise en ligne, <b>seulement si vous acceptez le site terminé</b>"
     a = (f"Mise en ligne d'Essentiel et de Pro : {v(_E)}" if _E == _P else f"Mise en ligne : Essentiel {v(_E)}, Pro {v(_P)}") + (seul if (_E or _P) else '')
     a += ". Si vous refusez le site terminé, vous ne payez rien, l'abonnement ne commence pas, et nous retirons le site."
-    r = f"Mise en ligne et tournage de Premium : {v(_R)}" + (seul.replace('facturée', 'facturés') if _R else '') + '.'
-    return f'<li>{a}</li>\n <li>{r}</li>'
+    return f'<li>{a}</li>'
 def ld_offers():
-    """Les trois formules en données structurées (v31 : /sites), d'après OFFRES."""
+    """Les deux formules en données structurées (v31 : /sites), d'après OFFRES."""
     out = []
     for k, name, svc, tour in (('ess', 'Essentiel', 'Site internet qui s’ouvre sur le commerce en 3D', False),
-                               ('pro', 'Pro', 'Site internet en 3D, avec l’assistant qui répond aux clients et la fiche Google suivie', False),
-                               ('pre', 'Premium', 'Site internet avec une entrée et une visite filmées sur place', True)):
+                               ('pro', 'Pro', 'Site internet en 3D, avec l’assistant qui répond aux clients et la fiche Google suivie', False)):
         n, s = OFFRES[k], OFFRES[k + '_setup']
         what = 'Mise en ligne et tournage' if tour else 'Mise en ligne'
         out.append({'@type': 'Offer', 'name': 'Site ' + name, 'url': 'https://oonde.ch/sites#prix', 'priceCurrency': 'CHF', 'price': str(n),
@@ -65,11 +62,11 @@ def ld_tel_offers():
                     'itemOffered': {'@id': 'https://oonde.ch/#telephone'}})
     return json.dumps(out, ensure_ascii=False, separators=(',', ':'))
 _tm = [TEL_OFFRES[k] for k in ('tel_ess', 'tel_pro', 'tel_pre')] + [TEL_RUSH['tel_rush']]
-PX = {k + '_m': chf(OFFRES[k]) for k in ('ess', 'pro', 'pre')} | {k: chf(OFFRES[k]) for k in ('ess_setup', 'pro_setup', 'pre_setup')} \
+PX = {k + '_m': chf(OFFRES[k]) for k in ('ess', 'pro')} | {k: chf(OFFRES[k]) for k in ('ess_setup', 'pro_setup')} \
    | {k + '_n': str(OFFRES[k]) for k in OFFRES} | {'pro_jour': jour(OFFRES['pro'])} \
-   | {'ess_f': mel('ess_setup'), 'pro_f': mel('pro_setup'), 'pre_f': mel('pre_setup', tournage=True), 'ess_f_court': mel('ess_setup', cond=False, low=True)} \
+   | {'ess_f': mel('ess_setup'), 'pro_f': mel('pro_setup'), 'ess_f_court': mel('ess_setup', cond=False, low=True)} \
    | {'faq_px': faq_px(), 'cg_setup': cg_setup(), 'ld_offers': ld_offers()} \
-   | {'o_lede': 'Vous voyez votre maquette avant de payer quoi que ce soit' + (' ; la mise en ligne se paie seulement si le site terminé vous plaît' if _E and _P and _R else '') + '. Vous arrêtez quand vous voulez, d’un message.'} \
+   | {'o_lede': 'Vous voyez votre maquette avant de payer quoi que ce soit' + (' ; la mise en ligne se paie seulement si le site terminé vous plaît' if _E and _P else '') + '. Vous arrêtez quand vous voulez, d’un message.'} \
    | {'apl_step': f'<b class="amt">{chf(_E)}<small>une fois</small></b><h3>Votre site en ligne</h3>' if _E else f'<b class="amt">{chf(0)}</b><h3>Mise en ligne offerte</h3>'} \
    | {k: chf(v) for k, v in TEL_OFFRES.items()} | {k + '_n': str(v) for k, v in TEL_OFFRES.items()} | {'tel_min': TEL_MIN} \
    | {k: chf(v) for k, v in TEL_RUSH.items()} | {'tel_rush_min': TEL_RUSH_MIN, 'tel_rush_calls': TEL_RUSH_CALLS} \
@@ -81,7 +78,6 @@ HELLO = 'Bonjour, je viens de votre site.'   # les mêmes messages que MSG dans 
 # v29 · « Je veux celui-ci » sur chaque formule du site : la formule est nommée (« formule Pro du site », jamais confondue avec les forfaits du téléphone)
 WA_SITE_ESS = walink(HELLO + " J’aimerais la formule Essentiel du site, et recevoir mon aperçu 3D.\nMon commerce et ma commune : ")
 WA_SITE_PRO = walink(HELLO + " J’aimerais la formule Pro du site, avec l’assistant, et recevoir mon aperçu 3D.\nMon commerce et ma commune : ")
-WA_SITE_PRE = walink(HELLO + " J’aimerais la formule Premium du site, avec le tournage chez moi.\nMon commerce, ma commune et le meilleur moment pour passer : ")
 WA_IMM = walink(HELLO + " J’aimerais voir ma façade en 3D et recevoir le prix de mon site.\nMon commerce et ma commune : ")
 WA_ASSIST = walink(HELLO + " J’ai essayé l’assistant. J’aimerais le même sur mon site, avec la formule Pro.\nMon commerce et ma commune : ")
 WA_TEL = walink(HELLO + " J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ")
@@ -92,7 +88,7 @@ WA_TEL_PRE = walink(HELLO + " Le téléphone m’intéresse, forfait Premium. J�
 WA_TEL_RUSH = walink(HELLO + " Le téléphone m’intéresse, forfait Rush. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ")
 WA_FIL = walink(HELLO + " Vos vidéos m’intéressent : une pub pour mon commerce, et peut-être la publication sur mon Instagram. J’aimerais une maquette gratuite.\nMon commerce et ma commune : ")
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
-WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce, pour la formule Premium du site.\nMon commerce, ma commune et le meilleur moment : ")
+WA_LIEU = walink(HELLO + " J’aimerais que vous veniez filmer chez moi, pour une visite complète de mon lieu sur mon site.\nMon commerce, ma commune et le meilleur moment : ")
 WA_Q = walink(HELLO + " J’ai une question : ")
 WA_COURS = walink(HELLO + " Les cours et formations m’intéressent.\nSur quel sujet : ")
 WA_APL = walink(HELLO + " J’ai vu ma maquette, je la veux en ligne.")
@@ -240,7 +236,7 @@ def fill(s, fonts, links):
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
     for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_SITE_ESS}}', WA_SITE_ESS), ('{{WA_SITE_PRO}}', WA_SITE_PRO), ('{{WA_SITE_PRE}}', WA_SITE_PRE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_SITE_ESS}}', WA_SITE_ESS), ('{{WA_SITE_PRO}}', WA_SITE_PRO), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
                  ('{{QR_IMM}}', QR_IMM), ('{{QR_021}}', QR_021), ('{{CAL}}', CAL)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)
