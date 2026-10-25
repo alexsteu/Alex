@@ -355,6 +355,7 @@ const MSG={
  assist:()=>HELLO+' J’ai essayé l’assistant. J’aimerais le même sur mon site, avec la formule Pro.\nMon commerce et ma commune : ',
  site_ess:()=>HELLO+' J’aimerais la formule Essentiel du site, et recevoir mon aperçu 3D.\nMon commerce et ma commune : ',
  site_pro:()=>HELLO+' J’aimerais la formule Pro du site, avec l’assistant, et recevoir mon aperçu 3D.\nMon commerce et ma commune : ',
+ site_pre:()=>HELLO+' J’aimerais la formule Premium du site, avec le tournage chez moi.\nMon commerce, ma commune et le meilleur moment pour passer : ',
  tel:()=>HELLO+' J’aimerais recevoir ma démo du téléphone, à mon nom.\nMon commerce et ma commune : ',
  tel_ess:()=>HELLO+' Le téléphone m’intéresse, forfait Essentiel. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
  tel_pro:()=>HELLO+' Le téléphone m’intéresse, forfait Pro. J’aimerais recevoir ma démo à mon nom.\nMon commerce et ma commune : ',
@@ -363,7 +364,7 @@ const MSG={
  fil:()=>HELLO+' Vos vidéos m’intéressent : une pub pour mon commerce, et peut-être la publication sur mon Instagram. J’aimerais une maquette gratuite.\nMon commerce et ma commune : ',
  demo:()=>HELLO+' J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ',
  q:()=>HELLO+' J’ai une question : ',
- lieu:()=>HELLO+' J’aimerais que vous veniez filmer chez moi, pour une visite complète de mon lieu sur mon site.\nMon commerce, ma commune et le meilleur moment : ',
+ lieu:()=>HELLO+' J’aimerais que vous veniez voir mon commerce, pour la formule Premium du site.\nMon commerce, ma commune et le meilleur moment : ',
  cours:()=>HELLO+' Les cours et formations m’intéressent.\nSur quel sujet : '};
 if(SRC)document.querySelectorAll('a[data-wa]').forEach(a=>{const m=MSG[a.dataset.wa];if(m)a.href=wa(m())});
 document.querySelectorAll('a[data-mail]').forEach(a=>{const m=MSG[a.dataset.mail];if(m)a.href=mail(a.dataset.mail==='imm'?'L’entrée 3D : mon commerce':'Ma maquette offerte',m().replace(/\n/,'\n\n'))});
