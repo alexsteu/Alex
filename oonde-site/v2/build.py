@@ -234,6 +234,7 @@ def fill(s, fonts, links):
     if '{{WA_ICON}}' in s:   # v28.1 : le symbole de l'icône WhatsApp, une fois, juste après le lien d'évitement (full() coupe <body> à ce lien)
         s, n = re.subn(r'(<a class="skip"[^>]*>.*?</a>)', lambda m: m.group(1) + WA_SYM, s, count=1)
         assert n == 1, 'pas de lien d’évitement pour poser le symbole WhatsApp'
+    s = s.replace('{{TELDEMO}}', TELDEMO)   # v39 : la ligne démo au pied des pages secondaires
     s = s.replace('{{FIL_HOME}}', FIL_HOME).replace('{{FIL_FORMATS}}', FIL_FORMATS).replace('{{FIL_PUBS}}', FIL_PUBS)
     s = re.sub(r'\{\{FIL:(\w+)\}\}', lambda m: FIL[m.group(1)], s)
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
@@ -264,7 +265,7 @@ def full(s, theme='#F7F7F4', base=''):
     return ('<!doctype html>\n<html lang="fr-CH">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
             + (f'<base href="{base}">\n' if base else '')
             + f'<meta name="theme-color" content="{theme}">\n<link rel="icon" href="favicon.ico" sizes="32x32">\n<link rel="icon" href="favicon.svg" type="image/svg+xml">\n<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
-            + s[:i] + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
+            + s[:i].replace('<meta charset="utf-8">\n', '', 1) + '</head>\n<body>\n' + s[i:] + '</body>\n</html>\n')
 
 # v27 : le film de l'intro est une vidéo (video/e3d/<jeu>/*.mp4, affiches img/e3d/v/<jeu>/) ; les paquets d'images (pack, wpacks, E3M, E3PRE) ont disparu.
 
@@ -397,6 +398,8 @@ MISSING = []
 layout = (D / 'legal-layout.html').read_text()
 QRS = {'img/qr-imm.svg': qr(WA_IMM), 'img/qr-021.svg': qr('tel:+41215390122')}   # v28.2 : la ligne démo 021, à scanner depuis l'ordinateur   # v25 : les codes QR (bas des pages, ordinateur)
 QR_IMM = '<img src="img/qr-imm.svg" width="84" height="84" alt="" loading="lazy" decoding="async">'   # v29 : le code de La Vitrine (qr-wa) est parti avec elle
+TELDEMO = ('<p class="ftel"><span class="ftag">Démo</span> Elle répond au téléphone. <a href="tel:+41215390122" data-tel="telRevF" aria-controls="telRevF">Testez-la maintenant</a></p>'
+          '<p class="tel-rev" id="telRevF" hidden><b>021 539 01 22</b>{{QR_021}}<span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p>')
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
 # v31 : l'accueil est le téléphone (home.html, l'ancienne page /telephone) ; l'entrée 3D et les formules du site passent sur /sites (sites.html, l'ancien accueil)
 docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text()}
