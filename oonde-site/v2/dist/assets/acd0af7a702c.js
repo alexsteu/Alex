@@ -2,8 +2,9 @@
  const vO=$('lacO'),vA=$('lacA'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
  const blocks={c1:$('lac1'),c2:$('lac2')},COARSE=matchMedia('(pointer:coarse)').matches,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
- const VX=(()=>{try{const v=document.createElement('video');return v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
- const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+'.jpg';
+ let VX=(()=>{try{const v=document.createElement('video'),h=v.canPlayType('video/mp4; codecs="hvc1.1.6.L93.B0"');return h==='probably'?'h.mp4':v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
+ let AV=false;try{const i=new Image();i.onload=()=>{AV=i.width>0};i.src='data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A='}catch(e){}
+ const vid=k=>'video/lac/'+set+'/'+k+'.'+VX,img=k=>'img/lac/'+set+'/'+k+(AV?'.avif':'.jpg');
  const flag=(el,c,on)=>{if(el.classList.contains(c)!==on)el.classList.toggle(c,on)};
  let st='c1',LIVE=!RM,pinned=false,primed=false,ready=false,want=false,tW=0,lastW=0,tY0=-1,tX0=0,swp=false,lastStep=0;
  function state(s){st=s;lastStep=performance.now();const c={o:'sO',c1:'s1',a:'sA',c2:'s2'};for(const k in c)flag(u,c[k],k===s);
@@ -55,7 +56,8 @@
  if(!LIVE){flat();return}
  const H=location.hash,deep=H.length>1&&H!=='#top'&&H!=='#lac'&&!!document.getElementById(H.slice(1));
  function loadA(){if(vA.getAttribute('src'))return;vA.src=vid('a');try{vA.load()}catch(e){}}
- vA.addEventListener('error',()=>{if(st==='c1'||st==='a')flat()},{once:true});
+ const hFb=v=>{if(VX!=='h.mp4')return false;VX='mp4';const k=v===vO?'o':'a';v.src=vid(k);try{v.load()}catch(e){}return true};
+ vA.addEventListener('error',()=>{if(hFb(vA)){if(st==='c1'){primed=ready=false;play(vA)}else if(st==='a')play(vA);return}if(st==='c1'||st==='a')flat()});
  let tO=0,oOn=false;
  function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);
   setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
@@ -64,7 +66,7 @@
  if(!vO.getAttribute('src'))vO.src=vid('o');
  const onO=()=>{if(oOn||st!=='o')return;oOn=true;clearTimeout(tO);flag(vO,'on',true);loadA();setTimeout(()=>{if(st==='o')u.classList.add('pre')},900);onEnd(vO,toC1,((vO.duration||2)+1.5)*1000)};
  if(vO.ended)toC1();else if(!vO.paused&&vO.currentTime>0)onO();else vO.addEventListener('playing',onO,{once:true});
- vO.addEventListener('error',()=>{if(st==='o')toC1()},{once:true});
+ vO.addEventListener('error',()=>{if(st!=='o')return;if(hFb(vO)){play(vO);vO.addEventListener('playing',onO,{once:true});return}toC1()});
  const oNo=()=>{clearTimeout(tO);tO=setTimeout(()=>{if(!oOn&&st==='o')toC1()},1200)};
  vO.addEventListener('canplay',oNo,{once:true});vO.addEventListener('loadeddata',oNo,{once:true});if(vO.readyState>=2)oNo();
  tO=setTimeout(()=>{if(!oOn&&st==='o')toC1()},5000);

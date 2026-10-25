@@ -446,7 +446,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
             (o / 'video' / 'lac' / k2).mkdir(parents=True, exist_ok=True); (o / 'img' / 'lac' / k2).mkdir(parents=True, exist_ok=True)
             for f in sorted((D / 'video' / 'lac' / k2).iterdir()):
                 if f.suffix == '.mp4' or (out == 'dist' and f.suffix == '.webm'): shutil.copy2(f, o / 'video' / 'lac' / k2 / f.name)
-            for f in ('c0.jpg', 'c0.avif', 'c1.jpg', 'c2.jpg', 'c3.jpg'):
+            for f in ('c0.jpg', 'c0.avif', 'c1.jpg', 'c1.avif', 'c2.jpg', 'c2.avif', 'c3.jpg'):
                 if (D / 'img' / 'lac' / k2 / f).exists(): shutil.copy2(D / 'img' / 'lac' / k2 / f, o / 'img' / 'lac' / k2 / f)
             for stale in (o / 'img' / 'lac' / k2 / 'c3.jpg', o / 'video' / 'lac' / k2 / 'b.mp4', o / 'video' / 'lac' / k2 / 'b.webm'):
                 if stale.exists() and not (D / stale.relative_to(o)).exists(): stale.unlink()
