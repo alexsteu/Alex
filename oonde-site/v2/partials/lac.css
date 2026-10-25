@@ -1,4 +1,4 @@
-/* v38 · L'entrée du lac (accueil) : un téléphone géant sur une plateforme au bord du lac, au coucher du soleil (Blender, tel3d/lac_film4.py).
+/* v40 · L'entrée du lac (accueil) : un téléphone géant sur une plateforme au bord du lac, au coucher du soleil (Blender, tel3d/lac_film4.py).
    Un film d'ouverture automatique (o) puis un film lu au premier geste (a), jamais cherchés (video/lac/<jeu>/o, a ; H.264 et VP9), et deux arrêts :
    c1 le ponton (le titre), c2 la conversation sortie du téléphone (« Tester la démo »). Les images des arrêts : img/lac/<jeu>/c1, c2.
    Pendant l'entrée la page est tenue en haut ; à c2 elle est libre. Mouvement réduit ou sans JavaScript : l'image du ponton et le texte, sans film. */
@@ -24,6 +24,7 @@
 .lac-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:26px}
 .lac-act .btn{min-height:50px}
 .lac-sub{flex-basis:100%;margin:0;color:rgba(255,255,255,.75)}
+.lac-hon{margin:18px 0 -10px;color:rgba(255,255,255,.75)}.lac-hon-d{display:none}   /* v40 : la ligne d'honnêteté, juste au-dessus des boutons ; au téléphone elle porte aussi la mention Démo */
 .lac .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff}
 .lac .tel-rev{margin-top:4px}
 .lac .tel-rev span{color:rgba(255,255,255,.75)}
@@ -55,8 +56,7 @@
  .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
  .lac-tx .mono{padding-right:72px}   /* « Passer », en haut à droite */
  .lac .tel-rev{display:none}
- .lac-2 .lac-pl,.lac-2 .lac-sites{display:none}   /* au téléphone, les cartes du film racontent la conversation : le titre et les boutons suffisent (le lien vers les sites est dans le menu) */
- .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}   /* au téléphone, c1 garde le titre, le bouton et « Entrer » : le téléphone géant respire entre les deux */
+ .lac-2 .lac-pl,.lac-2 .lac-sites,.lac-2 .mono{display:none}.lac-hon{margin:0 0 8px;font-size:12.5px;line-height:1.35}.lac-hon-d{display:inline}   /* au téléphone, les cartes du film racontent la conversation : le titre et les boutons suffisent (le lien vers les sites est dans le menu) */
 }
 
 /* sans film : mouvement réduit, film absent, ou sans JavaScript ; l'image du ponton puis le texte, en page normale */

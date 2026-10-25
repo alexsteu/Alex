@@ -268,6 +268,7 @@ footer{border-top:0}
 .lac-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-top:26px}
 .lac-act .btn{min-height:50px}
 .lac-sub{flex-basis:100%;margin:0;color:rgba(255,255,255,.75)}
+.lac-hon{margin:18px 0 -10px;color:rgba(255,255,255,.75)}.lac-hon-d{display:none}
 .lac .dtag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;font-style:normal;padding:6px 9px;margin-right:6px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff}
 .lac .tel-rev{margin-top:4px}
 .lac .tel-rev span{color:rgba(255,255,255,.75)}
@@ -297,8 +298,7 @@ footer{border-top:0}
  .lac-skip{bottom:auto;top:clamp(10px,2cqh,16px)}
  .lac-tx .mono{padding-right:72px}
  .lac .tel-rev{display:none}
- .lac-2 .lac-pl,.lac-2 .lac-sites{display:none}
- .lac.s1 .lac-1 .lac-sub,.lac.pre .lac-1 .lac-sub{display:none}
+ .lac-2 .lac-pl,.lac-2 .lac-sites,.lac-2 .mono{display:none}.lac-hon{margin:0 0 8px;font-size:12.5px;line-height:1.35}.lac-hon-d{display:inline}
 }
 .lac.static .lac-st,html:not(.js) .lac-st{height:auto;min-height:0;overflow:visible;container-type:inline-size;display:flex;flex-direction:column;background:#14161b}
 .lac.static .lac-sc,html:not(.js) .lac-sc{position:relative;inset:auto;aspect-ratio:16/9;max-height:54vh;overflow:hidden}
@@ -373,19 +373,19 @@ footer{border-top:0}
    <video class="lac-v" id="lacA" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video></div>
   <div class="lac-veil" aria-hidden="true"></div>
   <div class="lac-tx lac-1" id="lac1">
-   <div><p class="mono">Assistant téléphonique · Genève et Vaud</p>
-   <h1 id="h1">Quand vous ne pouvez pas décrocher, une voix répond.</h1></div>
-   <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRev" aria-controls="telRev"><span>Tester la démo</span></a><p class="micro lac-sub"><span class="dtag">Démo</span> Appelez et dites votre métier : pizzeria, restaurant, coiffeur…</p>
+   <div><p class="mono">Assistante téléphonique · de Genève à Montreux</p>
+   <h1 id="h1">Vous ne pouvez pas décrocher&nbsp;? Votre assistante répond.</h1></div>
+   <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRev" aria-controls="telRev"><span>Appeler la démo</span></a>
     <p class="tel-rev" id="telRev" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
-   <button type="button" class="lac-go" id="lacGo">Entrer <i aria-hidden="true">↓</i></button></div>
+   <button type="button" class="lac-go" id="lacGo">Voir comment <i aria-hidden="true">↓</i></button></div>
   </div>
   <div class="lac-tx lac-2" id="lac2">
    <div><p class="mono"><span class="dtag">Démo</span> Trattoria Nonna Pia, restaurant inventé</p>
-   <p class="lac-hd">Elle répond, note, et vous envoie le résumé.</p>
-   <p class="lac-p lac-pl">Pizzeria, restaurant : quand l’équipe ne peut pas décrocher, elle prend la réservation, la commande ou le message. Elle dit qu’elle est l’assistante virtuelle, et que l’appel est enregistré.</p></div>
-   <div class="lac-low"><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRevL" aria-controls="telRevL"><span>Tester la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
+   <p class="lac-hd">Elle répond. Vous recevez le résumé.</p>
+   <p class="lac-p lac-pl">Pizzeria, restaurant, coiffeur, institut : réservation, commande ou message.</p></div>
+   <div class="lac-low"><p class="micro lac-hon"><span class="lac-hon-d"><span class="dtag">Démo</span> Trattoria Nonna Pia, restaurant inventé · </span>Elle se présente comme assistante, l’appel est enregistré.</p><div class="lac-act"><a class="btn inv" href="tel:+41215390122" data-tel="telRevL" aria-controls="telRevL"><span>Appeler la démo</span></a><a class="lnk" href="https://wa.me/41779283540?text=Bonjour%2C%20je%20viens%20de%20votre%20site.%20J%E2%80%99aimerais%20recevoir%20ma%20d%C3%A9mo%20du%20t%C3%A9l%C3%A9phone%2C%20%C3%A0%20mon%20nom.%0AMon%20commerce%20et%20ma%20commune%20%3A%20" data-wa="tel" target="_blank" rel="noopener">Recevoir ma démo à mon nom <i class="ar">→</i></a>
     <p class="tel-rev" id="telRevL" hidden><b>021 539 01 22</b><img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async"><span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
-   <p class="lac-sites">Un site internet ? <a href="sites">Entrez dans notre démo en 3D <i class="ar">→</i></a></p></div>
+   <p class="lac-sites">Un site internet ? <a href="sites">Voir la démo 3D <i class="ar">→</i></a></p></div>
   </div>
   <a class="lac-skip" href="#esprit" id="lacSkip">Passer</a>
   <p class="lac-load" role="status" aria-live="polite"></p>
