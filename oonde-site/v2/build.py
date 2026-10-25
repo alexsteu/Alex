@@ -187,7 +187,7 @@ FV = {
     'tap': ('video/demos/demo06-pub-en-un-tap-9x16', 'Une nouveauté, en un tap.', 'Vous choisissez quelques photos, on en fait la vidéo.', ['Démo · commerce inventé', 'voix IA'], 'Une appli inventée : on choisit Salon, on coche des photos, et la vidéo du Salon Mirabelle, un salon fictif, se crée.'),
 }
 # v42 (25.10, Alexandre) : d'abord les vidéos faites exprès pour le site (ci-dessus, l'ardoise retirée), puis nos meilleures : les plus vues sur Instagram
-# (le ballon, 6 870 vues) et un style par vidéo (dragon, cinq styles, dessin animé, bande-annonce, créatrice IA). La marguerite, la sonnette, l'élastique
+# (le ballon, 24 600 vues selon les Insights Instagram) et un style par vidéo (dragon, cinq styles, dessin animé, bande-annonce, créatrice IA). La marguerite, la sonnette, l'élastique
 # et la ville 3D sur le lac sont retirées (les fichiers restent dans video/demos). Commerces inventés ; aucun numéro ; aucun vrai visage.
 PUBS = {
     'b191': ('video/demos/best191-9x16', 'Le ballon qui sonne.', 'Notre vidéo la plus vue : un ballon, une aiguille, et le téléphone qui sonne en plein rush.', ['Démo · pizzeria inventée', '3D'], 'Un ballon rouge en gros plan, une aiguille qui descend, un compteur d’images avant l’impact ; puis le téléphone qui sonne.'),
