@@ -94,6 +94,7 @@ WA_FIL = walink(HELLO + " Vos vidéos m’intéressent : une pub pour mon commer
 WA_DEMO = walink(HELLO + " J’ai vu la démo Les Grèves. J’aimerais une entrée en 3D pour mon lieu.\nMon commerce et ma commune : ")
 WA_LIEU = walink(HELLO + " J’aimerais que vous veniez voir mon commerce, pour la formule Premium du site.\nMon commerce, ma commune et le meilleur moment : ")
 WA_Q = walink(HELLO + " J’ai une question : ")
+WA_RAPPEL = walink(HELLO + " Pouvez-vous me rappeler ? Mon numéro et le moment qui m’arrange : ")   # v42.1 : le 077 ne prend pas les appels
 WA_COURS = walink(HELLO + " Les cours et formations m’intéressent.\nSur quel sujet : ")
 WA_APL = walink(HELLO + " J’ai vu ma maquette, je la veux en ligne.")
 WA_APC = walink(HELLO + " J’ai vu ma maquette, j’aimerais changer : ")
@@ -240,7 +241,7 @@ def fill(s, fonts, links):
     s = re.sub(r'\{\{PX:(\w+)\}\}', lambda m: PX[m.group(1)], s)
     for k, v in MESURE.items(): s = s.replace(k, v)
     for k, v in links.items(): s = s.replace(k, v)
-    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_SITE_ESS}}', WA_SITE_ESS), ('{{WA_SITE_PRO}}', WA_SITE_PRO), ('{{WA_SITE_PRE}}', WA_SITE_PRE), ('{{WA_Q}}', WA_Q), ('{{WA_LIEU}}', WA_LIEU), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
+    for k, v in [('{{FONTS}}', fonts), ('{{WA_ICON}}', WA_ICON), ('{{WA_IMM}}', WA_IMM), ('{{WA_ASSIST}}', WA_ASSIST), ('{{WA_FIL}}', WA_FIL), ('{{WA_TEL_ESS}}', WA_TEL_ESS), ('{{WA_TEL_PRO}}', WA_TEL_PRO), ('{{WA_TEL_PRE}}', WA_TEL_PRE), ('{{WA_TEL_RUSH}}', WA_TEL_RUSH), ('{{WA_TEL}}', WA_TEL), ('{{WA_COURS}}', WA_COURS), ('{{WA_APL}}', WA_APL), ('{{WA_APC}}', WA_APC), ('{{WA_DEMO}}', WA_DEMO), ('{{WA_SITE_ESS}}', WA_SITE_ESS), ('{{WA_SITE_PRO}}', WA_SITE_PRO), ('{{WA_SITE_PRE}}', WA_SITE_PRE), ('{{WA_Q}}', WA_Q), ('{{WA_RAPPEL}}', WA_RAPPEL), ('{{WA_LIEU}}', WA_LIEU), ('{{MARK}}', MARK), ('{{LOGO}}', LOGO),
                  ('{{QR_IMM}}', QR_IMM), ('{{QR_021}}', QR_021), ('{{CAL}}', CAL)]:
         s = s.replace(k, v.replace('&', '&amp;') if k.startswith('{{WA') and k != '{{WA_ICON}}' else v)
     return typo(s)

@@ -17,7 +17,8 @@
 <style>
 {{INC:base.css}}
 {{INC:pub.css}}
-/* v42 · Contact (25.10, Alexandre : « un onglet nous contacter, avec aussi un mail au cas où les gens n'ont pas WhatsApp, une façon très facile »).
+/* v42.1 · plus d'appel sur le 077 (25.10, Alexandre : on ne peut pas répondre aux appels sur ce numéro WhatsApp) ; le troisième bloc devient « On vous rappelle ».
+   v42 · Contact (25.10, Alexandre : « un onglet nous contacter, avec aussi un mail au cas où les gens n'ont pas WhatsApp, une façon très facile »).
    Trois voies, dans l'ordre où on les prend : WhatsApp, l'e-mail (un petit formulaire qui ouvre la messagerie, le message déjà écrit ; ou l'adresse à copier),
    le téléphone. Rien ne part vers un serveur : le message s'ouvre dans l'application mail du visiteur. */
 .c-hero{padding-block:clamp(56px,8vw,120px) clamp(32px,4vw,56px)}
@@ -76,7 +77,7 @@ html:not(.js) .c-form{display:none}
    <span class="mono">Le plus rapide</span>
    <h2 id="cW">WhatsApp</h2>
    <p>Écrivez-nous votre commerce et votre commune : on vous répond dans la journée, souvent dans l’heure.</p>
-   <p class="c-num"><a href="tel:+41779283540">077 928 35 40</a></p>
+   <p class="c-num">077 928 35 40</p>
    <a class="btn" href="{{WA_Q}}" data-wa="q" target="_blank" rel="noopener">{{WA_ICON}}<span>Écrire sur WhatsApp</span></a>
    <p class="micro">Aussi sur <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a>, en message privé.</p>
   </article>
@@ -94,10 +95,9 @@ html:not(.js) .c-form{display:none}
   </article>
   <article class="c-way" aria-labelledby="cT">
    <span class="mono">De vive voix</span>
-   <h2 id="cT">Téléphone</h2>
-   <p>Du lundi au samedi. Si on ne décroche pas, laissez un message : on rappelle.</p>
-   <p class="c-num"><a href="tel:+41779283540">077 928 35 40</a></p>
-   <a class="btn light" href="tel:+41779283540"><span>Appeler</span></a>
+   <h2 id="cT">On vous rappelle</h2>
+   <p>Notre numéro reçoit les messages, pas les appels. Laissez votre numéro sur WhatsApp ou par e-mail, avec le moment qui vous arrange : on vous rappelle, du lundi au samedi.</p>
+   <a class="btn light" href="{{WA_RAPPEL}}" data-wa="rappel" target="_blank" rel="noopener"><span>Demander un rappel</span></a>
    <p class="micro"><span class="dtag">Démo</span> Pour entendre notre assistante répondre : <a href="tel:+41215390122">021 539 01 22</a>. Une pizzeria inventée vous répond ; elle se présente comme assistante, l’appel est enregistré.</p>
   </article>
  </div>
