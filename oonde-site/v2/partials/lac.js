@@ -1,4 +1,4 @@
-/* v38 · L'entrée du lac (accueil). Un film d'ouverture automatique, puis UN film lu au premier geste, jamais cherché (la leçon de v27 : une image pilotée
+/* v38.1 · L'entrée du lac (accueil). Un film d'ouverture automatique, puis UN film lu au premier geste, jamais cherché (la leçon de v27 : une image pilotée
    par le défilement saccade sur iPhone) : o (au ras de l'eau, le téléphone géant sonne) → c1 (le titre) → un geste (roulette, doigt, flèche bas, Espace, clic,
    « Entrer ») → film A (4,6 s) : on s'approche, la vitre se soulève, la conversation sort de l'écran (l'appel, la réponse de l'assistante, la réservation notée)
    → c2 (« Tester la démo »), la page est libre. Pendant o → c2 la page est tenue en haut (les gestes font avancer l'entrée, pas la page). « Passer », un lien de
@@ -54,8 +54,11 @@
   if(e.deltaY>0&&quiet&&t-lastStep>450)next()},{passive:false});
  addEventListener('touchstart',e=>{const q=e.touches[0];tY0=q?q.clientY:-1;tX0=q?q.clientX:0;swp=false},{passive:true});
  addEventListener('touchmove',e=>{if(!live())return;if(e.touches.length>1)return;if(e.cancelable)e.preventDefault();const q=e.touches[0];if(!q||swp||tY0<0)return;const dy=tY0-q.clientY;
-  if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0)){swp=true;next()}},{passive:false});
- addEventListener('touchend',()=>{if(want&&st==='c1')play(vA)},{passive:true});   /* le doigt levé compte comme un geste pour le navigateur : le film qui attend peut partir */
+  if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0))swp=true},{passive:false});   /* le balayage est reconnu ici, mais le pas se fait au doigt levé */
+ /* v38.1 : le film part au doigt levé, pas pendant le mouvement. Pour le navigateur, un doigt qui bouge n'est pas un geste (play() refusé en économie
+    d'énergie ou dans une vue intégrée) alors qu'un doigt levé l'est, comme un clic : c'est pour ça que « Entrer » marchait et pas le balayage. */
+ const lift=()=>{if(swp){swp=false;if(live())next();return}if(want&&st==='c1')play(vA)};
+ addEventListener('touchend',lift,{passive:true});addEventListener('touchcancel',lift,{passive:true});
  addEventListener('keydown',e=>{if(!live())return;if(![' ','ArrowDown','PageDown','End'].includes(e.key))return;if(e.key===' '&&ctl(e.target))return;e.preventDefault();next()});
  stg.addEventListener('click',e=>{if(!live()||ctl(e.target))return;next()});
  go.addEventListener('click',e=>{e.preventDefault();next()});

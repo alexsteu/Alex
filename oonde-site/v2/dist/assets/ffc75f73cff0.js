@@ -38,8 +38,9 @@
   if(e.deltaY>0&&quiet&&t-lastStep>450)next()},{passive:false});
  addEventListener('touchstart',e=>{const q=e.touches[0];tY0=q?q.clientY:-1;tX0=q?q.clientX:0;swp=false},{passive:true});
  addEventListener('touchmove',e=>{if(!live())return;if(e.touches.length>1)return;if(e.cancelable)e.preventDefault();const q=e.touches[0];if(!q||swp||tY0<0)return;const dy=tY0-q.clientY;
-  if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0)){swp=true;next()}},{passive:false});
- addEventListener('touchend',()=>{if(want&&st==='c1')play(vA)},{passive:true});
+  if(dy>24&&dy>1.3*Math.abs(q.clientX-tX0))swp=true},{passive:false});
+ const lift=()=>{if(swp){swp=false;if(live())next();return}if(want&&st==='c1')play(vA)};
+ addEventListener('touchend',lift,{passive:true});addEventListener('touchcancel',lift,{passive:true});
  addEventListener('keydown',e=>{if(!live())return;if(![' ','ArrowDown','PageDown','End'].includes(e.key))return;if(e.key===' '&&ctl(e.target))return;e.preventDefault();next()});
  stg.addEventListener('click',e=>{if(!live()||ctl(e.target))return;next()});
  go.addEventListener('click',e=>{e.preventDefault();next()});
