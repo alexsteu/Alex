@@ -207,8 +207,10 @@ footer{border-top:0}
 /* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
 .js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
 .js .rv.on{opacity:1;translate:none}
-@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;translate:none;transition:none}}
-@media print{.js .rv{opacity:1;translate:none}}
+/* v43 · titres à la façon Apple : ils arrivent flous et se mettent au point */
+.js h2.rv,.js h3.rv{filter:blur(8px);scale:.985;transition:opacity .7s var(--ez),translate .7s var(--ez),filter .7s var(--ez),scale .7s var(--ez)}.js h2.rv.on,.js h3.rv.on{filter:none;scale:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;translate:none;transition:none;filter:none;scale:none}}
+@media print{.js .rv{opacity:1;translate:none;filter:none;scale:none}}
 /* trois temps, en très grand */
 .t3{list-style:none;margin:clamp(48px,6vw,80px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,64px)}
 .t3 i{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);font-style:normal;display:block;margin-bottom:16px}

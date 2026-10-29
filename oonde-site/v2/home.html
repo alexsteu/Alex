@@ -20,6 +20,7 @@
 {{INC:base.css}}
 {{INC:offres.css}}
 {{INC:lac.css}}
+{{INC:produit.css}}
 /* v31 · L'accueil : le téléphone (la page /telephone de v30, devenue l'accueil). v38 : l'entrée du lac (lac.css, lac.js : un téléphone géant en 3D qui s'ouvre sur la conversation, un film d'ouverture puis un seul geste), puis « Notre esprit ». Un héros (« Tester la démo » : on appelle la ligne de démo ;
    un ordinateur affiche le numéro et le code QR), l'appel en démo et l'écran des commandes, cinq points, les forfaits (offres.css), trois étapes,
    cinq questions, puis « Et aussi pour votre commerce » (le site en 3D, les vidéos), le dernier écran. Aucun chiffre ni client inventé, pas de prix dans le héros. */
@@ -97,8 +98,40 @@
     <p class="tel-rev" id="telRevL" hidden><b>021 539 01 22</b>{{QR_021}}<span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p></div>
    <p class="lac-sites">Un site internet ? <a href="{{SITES}}">Voir la démo 3D <i class="ar">→</i></a></p></div>
   </div>
-  <a class="lac-skip" href="#esprit" id="lacSkip">Passer</a>
+  <a class="lac-skip" href="#pp" id="lacSkip">Passer</a>
   <p class="lac-load" role="status" aria-live="polite"></p>
+ </div>
+</section>
+
+<section class="pp" id="pp" aria-labelledby="hPP">
+ <div class="pp-st"><div class="in" style="width:100%">
+  <div class="pp-bts">
+   <div class="pp-bt" data-b="0"><p class="mono">Un appel, en démo</p><h2 id="hPP">Il sonne.</h2><p>En plein service, les mains prises. Personne ne peut décrocher.</p></div>
+   <div class="pp-bt off" data-b="1"><h2>Elle répond.</h2><p>Au nom de votre commerce, avec vos informations.</p></div>
+   <div class="pp-bt off" data-b="2"><h2>Vous recevez le résumé.</h2><p>La demande est notée, prête à traiter.</p></div>
+   <div class="pp-bt off" data-b="3"><h2>Tout ce qu’elle fait.</h2><p class="pp-hint">Touchez les points pour voir le détail.</p><div class="act"><a class="btn" href="tel:+41215390122"><span>Appeler la démo</span></a><a class="lnk" href="#prix">Voir les forfaits <i class="ar">→</i></a></div></div>
+  </div>
+ </div>
+ <div class="pp-ph" role="img" aria-label="Démo : un téléphone reçoit un appel pour la Trattoria Nonna Pia, un restaurant inventé. L’assistante répond, prend une demande de réservation et envoie le résumé au restaurant.">
+  <div class="pp-fr"><div class="pp-sc">
+   <div class="pp-call" aria-hidden="true"><small>Appel entrant</small><b>Trattoria Nonna Pia</b><small>votre numéro habituel</small><span class="pp-ring"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg></span></div>
+   <div class="pp-chat" aria-hidden="true">
+    <span class="who">L’assistante répond</span>
+    <p class="a">Nonna Pia, bonsoir. Ici l’assistante virtuelle, l’appel est enregistré.</p>
+    <p>Une table pour quatre, samedi à 20 h ?</p>
+    <p class="a">Je transmets au restaurant. Vous recevez la confirmation par SMS dès qu’il valide.</p>
+   </div>
+   <div class="pp-sum" aria-hidden="true"><span class="h"><i></i>Résumé · à l’instant</span><b>Réservation à confirmer</b><ul><li>Samedi, 20 h · 4 personnes</li><li>Au nom de M. Rochat</li></ul><p class="ok">Répondez OK : le client reçoit sa confirmation.</p></div>
+   <p class="pp-tag"><span class="dtag">Démo</span> restaurant inventé</p>
+  </div></div>
+  <div class="pp-cs">
+   <button type="button" class="pp-c" style="--x:98%;--y:12%;--xm:10%" aria-expanded="false"><i></i><span>Votre numéro<em aria-hidden="true">+</em><small>Vous gardez le vôtre. Occupé, pas de réponse ou fermé : l’appel passe à l’assistante.</small></span></button>
+   <button type="button" class="pp-c l" style="--x:2%;--y:30%;--xm:10%" aria-expanded="false"><i></i><span>Elle dit qu’elle est une IA<em aria-hidden="true">+</em><small>Dès le bonjour, elle se présente comme assistante virtuelle et annonce que l’appel est enregistré.</small></span></button>
+   <button type="button" class="pp-c" style="--x:98%;--y:48%;--xm:10%" aria-expanded="false"><i></i><span>Vos informations<em aria-hidden="true">+</em><small>Horaires, carte, accès : elle répond avec ce que vous lui donnez. Si elle ne sait pas, elle prend un message.</small></span></button>
+   <button type="button" class="pp-c l" style="--x:2%;--y:66%;--xm:10%" aria-expanded="false"><i></i><span>Les cas particuliers<em aria-hidden="true">+</em><small>Une allergie, un grand groupe, une demande hors carte : elle vous les transmet pour validation.</small></span></button>
+   <button type="button" class="pp-c" style="--x:98%;--y:84%;--xm:10%" aria-expanded="false"><i></i><span>Le résumé chez vous<em aria-hidden="true">+</em><small>Juste après l’appel, par SMS. Avec Pro et Premium, aussi par WhatsApp ou e-mail.</small></span></button>
+  </div>
+ </div>
  </div>
 </section>
 
@@ -249,4 +282,5 @@
 <script>
 {{INC:core.js}}
 {{INC:lac.js}}
+{{INC:produit.js}}
 </script>

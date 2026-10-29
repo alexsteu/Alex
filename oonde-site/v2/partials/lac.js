@@ -68,7 +68,7 @@
  addEventListener('keydown',e=>{if(!live())return;if(![' ','ArrowDown','PageDown','End'].includes(e.key))return;if(e.key===' '&&ctl(e.target))return;e.preventDefault();next()});
  stg.addEventListener('click',e=>{if(!live()||ctl(e.target))return;next()});
  go.addEventListener('click',e=>{e.preventDefault();next()});
- skip.addEventListener('click',e=>{e.preventDefault();toEnd();const t=$('esprit');if(t)requestAnimationFrame(()=>t.scrollIntoView({behavior:RM?'instant':'smooth',block:'start'}))});
+ skip.addEventListener('click',e=>{e.preventDefault();toEnd();const t=$('pp')||$('esprit');if(t)requestAnimationFrame(()=>t.scrollIntoView({behavior:RM?'instant':'smooth',block:'start'}))});
  /* un lien vers une rubrique de la page (menu, « Voir les forfaits ») : l'entrée se range, la page part */
  document.addEventListener('click',e=>{if(!live())return;const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a===skip)return;const h=a.getAttribute('href');if(h==='#top'||h==='#'||h==='#lac')return;toEnd()},true);
  addEventListener('hashchange',()=>{if(live()&&location.hash.length>1&&location.hash!=='#top')toEnd()});
