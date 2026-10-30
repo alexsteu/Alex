@@ -1,0 +1,33 @@
+// node render.cjs --scene restaurant --w 1280 --h 800 --ss 2 --n 96 --out out/restaurant/d   (ou --p 0,.5,1 pour des images fixes)
+// --plist f.json : les positions des images (tools/plist.mjs), au lieu d'un pas régulier
+const { chromium } = require('playwright'); const sharp = require('sharp'); const fs = require('fs'); const path = require('path');
+const a = Object.fromEntries(process.argv.slice(2).join(' ').split('--').filter(Boolean).map(s => { const [k, ...v] = s.trim().split(' '); return [k, v.join(' ')]; }));
+const W = +a.w || 1280, H = +a.h || 800, SS = +a.ss || 1, out = a.out || 'out/test', fmt = a.fmt || 'webp', port = a.port || 8791;
+const ps = a.plist ? JSON.parse(fs.readFileSync(a.plist, 'utf8')) : a.p ? a.p.split(',').map(Number) : Array.from({ length: +a.n || 96 }, (_, i) => i / ((+a.n || 96) - 1));
+const I0 = +a.from || 0, I1 = a.to !== undefined ? +a.to : ps.length;   // --from/--to : une tranche des images (rendus en parallèle)
+fs.mkdirSync(out, { recursive: true });
+(async () => {
+  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+  const pg = await b.newPage({ viewport: { width: Math.min(W * SS, 3000), height: Math.min(H * SS, 3000) } });
+  pg.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') console.log('[page]', m.text().slice(0, 300)); });
+  pg.on('pageerror', e => console.log('[err]', e.message));
+  await pg.goto(`http://localhost:${port}/render.html?scene=${a.scene || 'restaurant'}&w=${W}&h=${H}&ss=${SS}${a.q ? '&' + a.q : ''}`);
+  await pg.waitForFunction('window.READY === true', null, { timeout: 600000 });
+  if (a.dump) { fs.writeFileSync(a.dump, JSON.stringify(await pg.evaluate(() => window.PATH.map(k => ({ p: k.p, pos: k.pos, tgt: k.tgt, fov: k.fov }))))); await b.close(); return; }
+  const pins = []; const t0 = Date.now();
+  for (let i = I0; i < Math.min(I1, ps.length); i++) {
+    const name = a.p ? `p${String(ps[i]).replace('.', '_')}` : `f${String(i).padStart(3, '0')}`;
+    if (a.resume && fs.existsSync(path.join(out, name + '.json')) && fs.existsSync(path.join(out, name + '.' + fmt))) { pins.push(JSON.parse(fs.readFileSync(path.join(out, name + '.json'), 'utf8'))); continue; }   // v27 : --resume : l'image déjà rendue (et ses enseignes) est gardée
+    const r = await pg.evaluate(p => { const r = window.frame(p); return { ...r, img: document.querySelector('canvas').toDataURL('image/png') }; }, ps[i]);
+    const buf = Buffer.from(r.img.split(',')[1], 'base64');
+    let im = sharp(buf).resize(W, H, { kernel: 'lanczos3' });
+    if (fmt === 'webp') await im.webp({ quality: +a.quality || 80, effort: 5 }).toFile(path.join(out, name + '.webp'));
+    else if (fmt === 'png') await im.png({ compressionLevel: 3 }).toFile(path.join(out, name + '.png'));   // v27 : images sans perte, pour ffmpeg
+    else await im.jpeg({ quality: 88 }).toFile(path.join(out, name + '.jpg'));
+    pins.push({ p: +ps[i].toFixed(4), pins: r.pins }); if (a.resume) fs.writeFileSync(path.join(out, name + '.json'), JSON.stringify(pins[pins.length - 1]));
+    if (i % 8 === 0 || a.p) console.log(`${name} p=${ps[i].toFixed(3)} ${((Date.now() - t0) / 1000 / (i - I0 + 1)).toFixed(1)} s/image`);
+  }
+  if (!a.p) fs.writeFileSync(path.join(out, a.from || a.to ? `pins-${I0}.json` : 'pins.json'), JSON.stringify(pins));
+  else fs.writeFileSync(path.join(out, 'pins-stills.json'), JSON.stringify(pins, null, 1));
+  await b.close();
+})();

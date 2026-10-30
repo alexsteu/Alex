@@ -1,0 +1,27 @@
+{
+  "duration": 12.35,
+  "bpm": 100,
+  "mood": "bright",
+  "seed": 3,
+  "beat_from": 1.8,
+  "beat_until": 8.1,
+  "events": [
+    {"t": 0.05, "type": "tick", "gain": 0.6, "note": 86},
+    {"t": 0.5, "type": "swipe", "gain": 0.8},
+    {"t": 0.62, "type": "tick", "gain": 0.3, "note": 93},
+    {"t": 2.3, "type": "whoosh", "d": 0.8},
+    {"t": 2.21, "type": "tick", "note": 91},
+    {"t": 2.85, "type": "swipe", "gain": 0.7},
+    {"t": 4.12, "type": "pop"},
+    {"t": 4.3, "type": "droplet", "gain": 0.5},
+    {"t": 4.95, "type": "whoosh", "d": 0.5, "gain": 0.8},
+    {"t": 5.55, "type": "tick", "note": 88},
+    {"t": 7.05, "type": "swipe", "gain": 0.9},
+    {"t": 7.62, "type": "swipe", "gain": 0.9},
+    {"t": 9.08, "type": "whoosh", "d": 0.7, "gain": 1.3},
+    {"t": 9.15, "type": "thump"},
+    {"t": 9.25, "type": "pop", "gain": 0.6},
+    {"t": 9.72, "type": "pop", "pan": 0.1},
+    {"t": 10.25, "type": "end"}
+  ]
+}

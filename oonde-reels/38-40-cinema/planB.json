@@ -1,0 +1,146 @@
+{
+ "fps": 30,
+ "fonts": "/home/user/k2/fonts",
+ "plans": [
+  {
+   "src": "farine.mp4",
+   "in": 0,
+   "out": 3.45,
+   "entree": "cut"
+  },
+  {
+   "src": "four.mp4",
+   "in": 0,
+   "out": 5.0,
+   "entree": "flash"
+  },
+  {
+   "card": true,
+   "dur": 9.3,
+   "entree": "cut"
+  }
+ ],
+ "textes": [
+  {
+   "t": "Cet automne…",
+   "font": "cormorant-garamond-latin-400-italic.woff2",
+   "size": 104,
+   "y": 1150,
+   "t0": 0.8,
+   "t1": 2.3
+  },
+  {
+   "t": "un homme…",
+   "font": "cormorant-garamond-latin-400-italic.woff2",
+   "size": 104,
+   "y": 1150,
+   "t0": 2.34,
+   "t1": 3.4
+  },
+  {
+   "t": "et un four.",
+   "font": "cormorant-garamond-latin-400-italic.woff2",
+   "size": 120,
+   "y": 1440,
+   "t0": 3.46,
+   "t1": 5.3
+  },
+  {
+   "t": "SORTIE : DEMAIN, 7 H",
+   "font": "ibm-plex-mono-latin-600-normal.woff2",
+   "size": 66,
+   "y": 600,
+   "t0": 8.85,
+   "t1": 13.45,
+   "cut_in": true
+  },
+  {
+   "t": "À la boulangerie du coin.",
+   "font": "cormorant-garamond-latin-400-italic.woff2",
+   "size": 82,
+   "y": 720,
+   "t0": 11.75,
+   "t1": 13.45
+  },
+  {
+   "t": "Tout commerce a son film.\nOn le tourne.",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 66,
+   "y": 520,
+   "t0": 13.65,
+   "t1": 17.75
+  },
+  {
+   "t": "Écris MAQUETTE\nen commentaire",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 96,
+   "y": 820,
+   "t0": 13.75,
+   "t1": 17.75
+  },
+  {
+   "t": "ta maquette gratuite arrive en DM",
+   "font": "instrument-sans-latin-500-normal.woff2",
+   "size": 48,
+   "y": 1080,
+   "t0": 14.15,
+   "t1": 17.75,
+   "color": [
+    220,
+    222,
+    216
+   ]
+  },
+  {
+   "img": "logo.png",
+   "w": 360,
+   "y": 1300,
+   "t0": 14.35,
+   "t1": 17.75
+  }
+ ],
+ "audio": [
+  {
+   "src": "m_trailer.m4a",
+   "in": 0,
+   "out": 8.45,
+   "t": 0,
+   "gain": 0.9,
+   "fi": 0.3,
+   "fo": 0.08
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/impact.wav",
+   "t": 3.45,
+   "gain": 0.9
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/sub.wav",
+   "t": 8.35,
+   "gain": 0.9
+  },
+  {
+   "src": "vo/l2.mp3",
+   "out": 3.6,
+   "t": 0.8,
+   "fo": 0.15
+  },
+  {
+   "src": "vo/l3.mp3",
+   "t": 8.85
+  },
+  {
+   "src": "m_trailer.m4a",
+   "in": 11.5,
+   "out": 16,
+   "t": 13.25,
+   "gain": 0.35,
+   "fi": 0.5,
+   "fo": 1.0
+  },
+  {
+   "src": "vo/l7.mp3",
+   "t": 13.75
+  }
+ ]
+}

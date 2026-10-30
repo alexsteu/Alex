@@ -1,0 +1,178 @@
+<meta charset="utf-8">
+<title>Site avec entrée en 3D pour restaurants, salons, boutiques et hôtels, de Genève à Montreux · OONDE</title>
+<meta name="description" content="L'entrée 3D : votre site s'ouvre sur votre lieu en 3D. En faisant défiler, vos clients passent votre porte, puis trouvent vos prix, vos horaires et WhatsApp. Pour tous les commerces, avec la visite complète du lieu filmée chez vous. Une première image offerte sous 48 heures.">
+<link rel="canonical" href="https://oonde.ch/visite">
+<meta property="og:title" content="L’entrée 3D · Un site qui s'ouvre sur votre lieu, en 3D">
+<meta property="og:description" content="Restaurant, salon, boutique ou hôtel : en faisant défiler, vos clients passent votre porte. Une première image 3D de votre lieu, offerte.">
+<meta property="og:url" content="https://oonde.ch/visite">
+<meta property="og:image" content="https://oonde.ch/img/og-visite.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Démo Les Grèves : une maison au bord du lac, à l'heure bleue.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="OONDE">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"L’entrée 3D","serviceType":"Site internet avec visite filmée ou en 3D","url":"https://oonde.ch/visite","provider":{"@id":"https://oonde.ch/#oonde","@type":"ProfessionalService","name":"OONDE","url":"https://oonde.ch/"},"areaServed":{"@type":"AdministrativeArea","name":"De Genève à Montreux"},"audience":{"@type":"BusinessAudience","name":"Hôtels, chambres d'hôtes, logements de vacances, restaurants, salles, caves"}}</script>
+{{FONTS}}
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{INC:base.css}}
+/* v20 : le héros plein écran sur la démo Les Grèves, le titre posé sur l'image */
+.vh{position:relative;min-height:calc(100svh - var(--hh,64px));display:flex;align-items:flex-end;color:#fff;background:#0E1420;padding-block:0;overflow:hidden}
+.vh-img{position:absolute;inset:0}.vh-img img{width:100%;height:100%;object-fit:cover;display:block}
+.vh::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,20,.72) 0%,rgba(8,12,20,.35) 45%,rgba(8,12,20,0) 75%),linear-gradient(0deg,rgba(8,12,20,.55),rgba(8,12,20,0) 45%)}
+.vh-t{position:relative;z-index:1;width:100%;padding-block:clamp(56px,9vh,120px)}
+.vh .mono{color:rgba(255,255,255,.75)}
+.vh h1{color:#fff;max-width:11ch;margin:16px 0 0}
+.vh .lede{color:rgba(255,255,255,.86);max-width:26em;margin-top:24px}
+.vh .act{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:clamp(32px,4vw,48px)}
+.vh .lnk{color:#fff}
+.vh :focus-visible{outline-color:#fff}
+.vh-cap{position:absolute;z-index:1;right:max(20px,calc((100vw - 1280px)/2 + 24px));bottom:20px;margin:0;font-size:13px;color:rgba(255,255,255,.8);display:flex;gap:10px;align-items:center}
+@media (max-width:760px){.vh{min-height:calc(100svh - 120px)}.vh::after{background:linear-gradient(0deg,rgba(8,12,20,.85) 0%,rgba(8,12,20,.5) 55%,rgba(8,12,20,.1) 100%)}.vh .act .btn{width:100%}.vh-cap{left:20px;right:auto;top:16px;bottom:auto}}
+/* l'écran collant : l'image reste, trois phrases défilent */
+.sk-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(32px,5vw,80px)}
+.sk-v{position:sticky;top:calc(var(--hh,64px) + 8vh);align-self:start;aspect-ratio:16/10;border-radius:14px;overflow:hidden;box-shadow:0 40px 80px -48px rgba(17,19,24,.45);order:2}
+.sk-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s var(--ez)}
+.sk-v img.on{opacity:1}
+.sk-s{min-height:62vh;display:flex;flex-direction:column;justify-content:center}
+.sk-s:first-of-type{min-height:40vh;justify-content:flex-start}
+.sk-s h3{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;margin:0}
+.sk-s p{margin-top:20px;color:var(--soft);font-size:clamp(19px,1.7vw,24px);line-height:1.4;max-width:22em}
+@media (max-width:860px){.sk-g{grid-template-columns:minmax(0,1fr);gap:0}.sk-v{order:0;top:calc(var(--hh,56px) + 12px);z-index:1}.sk-s{min-height:55svh}.sk-s:first-of-type{min-height:auto;padding-top:48px}}
+@media (prefers-reduced-motion:reduce){.sk-v img{transition:none}}
+/* le calendrier, seul, en grand */
+.cal2{margin:clamp(48px,6vw,80px) auto 0;max-width:560px;background:#fff;border-radius:14px;box-shadow:0 40px 80px -48px rgba(17,19,24,.45);padding:clamp(20px,3vw,36px);text-align:left}
+.cal2 .ck{display:flex;justify-content:space-between;align-items:center;gap:12px;font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted)}
+.cal2 .w-days{gap:6px;margin-top:20px;font-size:16px}.cal2 .w-days b{font-size:11px}.cal2 .w-days span{padding:10px 0;border-radius:8px}
+.cal2 .w-n{margin-top:18px;font-size:14px;color:var(--muted)}
+/* le prix, en un écran */
+.pz{font:600 clamp(48px,6.4vw,80px)/1 var(--sans);letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin-top:clamp(32px,4vw,48px)}
+.pz small{font-size:.3em;font-weight:500;letter-spacing:0;color:var(--muted);margin-right:.3em;vertical-align:.9em}
+#prix .lede{margin-top:28px}#prix .micro{margin:24px auto 0;max-width:40em;color:var(--muted)}#prix .go{margin-top:28px}
+{{INC:pub.css}}
+{{INC:demo.css}}
+.v-demo .w-ph{grid-template-columns:minmax(0,1fr)}
+@container (max-width:640px){.w-ph{display:none}}
+</style>
+
+<a class="skip" href="#demo">Aller au contenu</a>
+<header class="nav">
+ <div class="in">
+  <a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a>
+  <nav aria-label="Pages" id="navL">{{NAV:visite}}<a class="nav-wa" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a></nav>
+  <a class="btn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span class="l">Recevoir mon aperçu 3D</span><span class="s">WhatsApp</span></a>
+ </div>
+</header>
+
+<main id="top">
+<section class="vh" data-hero aria-labelledby="h1">
+ <picture class="vh-img"><source media="(max-width: 760px)" srcset="img/greves/m/f000.webp"><img src="img/greves/d/f000.webp" width="1280" height="800" alt="Démo Les Grèves : une maison en bois au bord du lac, à l'heure bleue" fetchpriority="high"></picture>
+ <div class="in vh-t">
+  <p class="mono">L’entrée 3D · la visite complète</p>
+  <h1 class="h-xl" id="h1">Un site qui s'ouvre sur votre lieu.</h1>
+  <p class="lede">En faisant défiler, vos clients passent votre porte. Puis ils trouvent vos prix, vos horaires et WhatsApp.</p>
+  <div class="act"><a class="btn inv" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="#demo">Entrer ↓</a></div>
+ </div>
+ <p class="vh-cap"><i class="dtag">Démo</i> Les Grèves, Rolle · logement inventé</p>
+</section>
+
+<section id="demo" class="v-demo" aria-label="Démo Les Grèves">
+ <div class="walk" id="walk">
+  <div class="w-stage" id="wStage">
+   <div class="in">
+    <div class="frame w-frame">
+     <div class="w-view" id="wView" role="group" aria-label="Démo : le site Les Grèves">
+      <div class="w-scene">
+       <picture class="w-poster"><source media="(prefers-reduced-motion: reduce) and (max-width: 760px)" srcset="img/greves/m/f071.webp"><source media="(prefers-reduced-motion: reduce)" srcset="img/greves/d/f095.webp"><source media="(max-width: 760px)" srcset="img/greves/m/f000.webp"><img src="img/greves/d/f000.webp" width="1280" height="800" alt="Démo Les Grèves : une maison en bois au bord du lac, à l'heure bleue, fenêtres allumées" decoding="async" fetchpriority="high"></picture>
+       <canvas class="w-cv" id="wCv" aria-hidden="true"></canvas>
+       <div class="w-shade"></div>
+       <div class="w-ch c1" data-in="-1" data-out=".12"><p class="w-eb">Maison au bord du lac · Rolle</p><p class="w-h">Au bord du Léman.</p><p class="w-hint" aria-hidden="true">FAITES DÉFILER POUR ENTRER ↓</p></div>
+       <div class="w-ch c2" data-in=".30" data-out=".50"><p class="w-eb">02 — Le salon</p><p class="w-h">Un salon face aux Alpes.</p><p class="w-p">Un canapé tourné vers le lac et une baie vitrée de huit mètres.</p></div>
+       <div class="w-ch c3" data-in=".57" data-out="9"><p class="w-eb">03 — La vue</p><p class="w-h">Le lac, <i>depuis le canapé.</i></p>
+        <div class="w-btns"><button type="button" class="w-b1" data-book>Réserver un séjour</button><button type="button" class="w-b2" data-go="1">Voir les dates</button><span class="w-price">dès <b>180.–</b> la nuit</span></div></div>
+       <div class="w-prog" aria-hidden="true"><span data-k="1">01 L’ARRIVÉE</span><span data-k="2">02 LE SALON</span><span data-k="3">03 LA VUE</span><span class="w-pb"><i id="wFill"></i></span></div>
+      </div>
+      <div class="w-bar" id="wBar"><button type="button" class="w-logo" data-go="0">Les Grèves <small>DÉMO</small></button>
+       <nav aria-label="Menu du site Les Grèves"><button type="button" data-go="1">Le logement</button><button type="button" data-go="1">Dates</button><button type="button" data-go=".66">La vue</button></nav>
+       <div class="w-r"><span class="w-lang" aria-hidden="true">FR · EN</span><button type="button" class="w-book" data-book>Réserver</button><span class="w-burger" aria-hidden="true"></span></div></div>
+      <div class="w-site" id="wSite">
+       <div class="w-top"><div><p class="w-eb">Le logement</p><p class="w-t">Plain-pied, posé<br>au bord de l’eau.</p>
+         <p class="w-facts"><span><b>4</b>voyageurs</span><span><b>2</b>chambres</span><span><b>62</b>m²</span><span><b>25</b>m² de terrasse</span></p></div>
+        <div class="w-card"><p class="w-k">TARIF (DÉMO)</p><p class="w-v">dès 180.– <small>la nuit</small></p><button type="button" class="w-go" data-book>Réserver en direct</button><p class="w-n">Sans commission · 2 nuits minimum</p></div></div>
+       <div class="w-ph"><figure><img src="img/greves/salon-l.jpg" width="1280" height="800" alt="" loading="lazy" decoding="async"><figcaption>Le salon et la terrasse, côté lac</figcaption></figure></div>
+      </div>
+      <div class="w-toast" id="wToast" role="dialog" aria-label="Réservation" hidden><button type="button" class="w-x" id="wX" aria-label="Fermer">×</button><b>Ici, vos clients réservent.</b>C’est une démo : sur votre site, ce bouton vous envoie la demande avec les dates, par WhatsApp ou par e-mail, sans commission.<br><a class="btn" id="wWa" href="{{WA_DEMO}}" data-wa="demo" target="_blank" rel="noopener">{{WA_ICON}}Je veux ça pour mon lieu</a></div>
+     </div>
+    </div>
+    <p class="w-cap"><span><b>Démo : Les Grèves, Rolle.</b> Logement inventé, ici avec la visite complète.</span><a href="#pourquoi">Sauter la démo ↓</a></p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="bg-paper sk" id="pourquoi" aria-labelledby="hW">
+ <div class="in sk-g">
+  <div class="sk-v" aria-hidden="true"><img class="on" src="img/greves/d/f015.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><img src="img/greves/d/f035.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"><img src="img/greves/d/f055.webp" width="1280" height="800" alt="" loading="lazy" decoding="async"></div>
+  <div class="sk-l">
+   <h2 class="sr" id="hW">Ce que l’entrée 3D fait pour vous</h2>
+   <div class="sk-s"><h3>La façade.</h3><p>Votre site s’ouvre devant chez vous. On sait tout de suite où on va, et on a envie d’y aller.</p></div>
+   <div class="sk-s"><h3>La porte.</h3><p>On fait défiler, on entre. Un site qu’on remarque, et qu’on partage sur Instagram.</p></div>
+   <div class="sk-s"><h3>Le salon.</h3><p>Puis tout ce qu’un site doit faire : vos prix, vos horaires, le bouton WhatsApp et votre fiche Google.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="bg-white c" id="dates" aria-labelledby="hD">
+ <div class="in">
+  <h2 id="hD" class="rv">Vos dates, à jour toutes seules.</h2>
+  <p class="lede rv" style="margin-top:24px">Les nuits prises sur Booking ou Airbnb se grisent sur votre site. Vos clients réservent le reste en direct, sans commission.</p>
+  <div class="cal2 rv" role="img" aria-label="Démo : calendrier de novembre 2026, nuits déjà réservées barrées"><p class="ck"><span>NOVEMBRE 2026</span><i class="dtag">Démo</i></p><div class="w-days" aria-hidden="true"><b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b>{{CAL}}</div><p class="w-n">Dates barrées : déjà réservées ailleurs, mises à jour toutes seules.</p></div>
+ </div>
+</section>
+
+<section class="bg-paper c" id="prix" aria-labelledby="hP">
+ <div class="in">
+  <h2 id="hP" class="rv">Tout votre lieu, pièce par pièce.</h2>
+  <p class="pz rv">{{PX:pre_m}}<small>/mois</small></p>
+  <p class="lede rv">La formule Premium : on vient tourner chez vous, pour une entrée et une visite 100 % réelles. {{PX:pre_f}} ; sans engagement, résiliable chaque mois.</p>
+  <p class="micro rv">Logement : avec votre calendrier Booking ou Airbnb, et le site en anglais ; hôtel sur devis. Essentiel, d’après vos photos et sans tournage : {{PX:ess_m}} par mois, {{PX:ess_f_court}}.</p>
+  <p class="go rv"><a class="lnk" href="{{SITES}}#prix">Comparer les trois formules <i class="ar">→</i></a></p>
+ </div>
+</section>
+
+<section class="bg-white" id="questions" aria-labelledby="hQ">
+ <div class="in qa">
+  <h2 class="h-m" id="hQ">Vos questions.</h2>
+  <div class="faq">
+   <details><summary>C'est quoi, l'entrée 3D, concrètement ?</summary><div class="fa"><div><p>Quand on ouvre votre site, on est devant chez vous ; on fait défiler, on passe la porte, on découvre votre salle, et votre nom s'affiche avec le bouton pour vous écrire ou réserver. Ensuite, le site continue comme un site normal : vos prix, vos horaires, vos photos, votre contact.</p></div></div></details>
+   <details><summary>Mes clients verront un dessin ou mon vrai lieu ?</summary><div class="fa"><div><p>Votre vrai lieu, reconstruit en 3D d'après nos photos : votre façade, votre porte, votre salle. Pour la visite complète, on peut aussi le filmer ; la démo Les Grèves, elle, est un lieu inventé.</p></div></div></details>
+   <details><summary>J'ai un logement : et Booking, Airbnb ?</summary><div class="fa"><div><p>Vous gardez vos annonces et vos réservations où elles sont ; le site affiche votre calendrier, en français et en anglais, et vos clients réservent aussi en direct, sans commission. Les dates prises ailleurs se grisent toutes seules, et c'est vous qui confirmez chaque demande.</p></div></div></details>
+   <details><summary>Mes hôtes paient comment ?</summary><div class="fa"><div><p>Comme aujourd'hui : le bouton Réserver vous envoie la demande avec les dates, vous confirmez et demandez l'acompte par virement ou TWINT. Un paiement en ligne est possible, sur devis.</p></div></div></details>
+   <details><summary>Ça coûte combien, et c'est prêt quand ?</summary><div class="fa"><div><p>Essentiel {{PX:ess_m}}, Pro avec l’assistant {{PX:pro_m}}, Premium avec la visite filmée {{PX:pre_m}} par mois, sans engagement ; un hôtel se fait sur devis. Le délai est écrit dans l’offre, à côté du prix : dites-nous votre date, on vous dit si elle est tenable.</p></div></div></details>
+  </div>
+ </div>
+</section>
+
+<section class="bg-ink end" id="contact" aria-labelledby="finalH"><div class="in">
+ <h2 id="finalH" class="rv">Parlez-nous de votre lieu.</h2>
+ <div class="act rv"><a class="btn inv" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a><a class="lnk" href="{{SITES}}#prix">Voir les trois formules <i class="ar">→</i></a></div>
+</div></section>
+</main>
+<nav class="mbar" id="mbar" aria-label="Contact rapide"><a class="btn" id="mbarBtn" href="{{WA_IMM}}" data-wa="imm" target="_blank" rel="noopener">{{WA_ICON}}<span>Recevoir mon aperçu 3D</span></a></nav>
+
+<footer><div class="in">
+ <div class="fl"><a class="logo" href="{{HOME}}" aria-label="OONDE, accueil">{{LOGO}}</a><nav aria-label="Plan du site">{{FNAV:visite}}<a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="conditions.html">Conditions générales</a></nav></div>
+ <div class="ft-tel">{{TELDEMO}}</div>
+ <div class="fq"><p class="also2">Aussi : <a href="https://wa.me/41779283540" target="_blank" rel="noopener">077 928 35 40 (WhatsApp)</a> · <a href="mailto:oonde.contact@gmail.com" data-mail="imm">oonde.contact@gmail.com</a> · <a href="https://www.instagram.com/oonde_studio" target="_blank" rel="noopener">Instagram</a> · <a href="{{WA_LIEU}}" data-wa="lieu" target="_blank" rel="noopener">Venez voir mon lieu</a></p><div class="qr" aria-hidden="true">{{QR_IMM}}<span>Sur ordinateur ? Scannez pour nous écrire depuis votre téléphone.</span></div></div>
+ <p class="seo">L’entrée 3D : sites avec une entrée en 3D pour les restaurants, salons de coiffure, ongleries, boutiques, cabinets, hôtels, chambres d'hôtes et salles, et visite complète du lieu en option, de Genève à Montreux. © 2026 OONDE.</p>
+</div></footer>
+
+<script>
+{{INC:core.js}}
+{{INC:demo.js}}
+/* l'écran collant : l'image suit la phrase lue */
+(()=>{const im=document.querySelectorAll('.sk-v img'),st=document.querySelectorAll('.sk-s');if(!im.length||!('IntersectionObserver' in window))return;
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const i=[...st].indexOf(e.target);im.forEach((x,j)=>x.classList.toggle('on',j===i))}}),{rootMargin:'-45% 0px -45% 0px'});st.forEach(x=>io.observe(x))})();
+</script>

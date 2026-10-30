@@ -1,0 +1,16 @@
+/* v44 · Le calculateur des appels manqués (retour d'Alexandre du 26.10) : deux champs côte à côte, l'hypothèse réglable et visible, le résultat en grand. */
+.calc{margin-top:clamp(28px,4vw,48px);display:grid;gap:18px;max-width:720px;padding:clamp(20px,3vw,32px);border-radius:28px;background:var(--card);border:1px solid var(--line)}
+.calc-in{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.calc-in label{grid-template-rows:1fr auto;align-items:end}
+.calc label{display:grid;gap:8px;font-size:14px;line-height:1.3;color:var(--soft);font-weight:500}
+.calc input[type=number]{width:100%;font:600 clamp(24px,3vw,32px)/1 var(--sans);letter-spacing:-.02em;padding:14px 14px;border:1px solid var(--line);border-radius:14px;background:#F5F5F7;color:var(--ink);-moz-appearance:textfield;appearance:textfield}
+.calc input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.calc input[type=number]:focus{outline:2px solid var(--klein);outline-offset:1px;background:#fff}
+.calc-r{display:flex;align-items:center;gap:14px}
+.calc-r input{flex:1;accent-color:var(--klein);height:28px}
+.calc-r output{flex:none;min-width:5.6em;text-align:right;font:600 15px var(--sans);color:var(--ink)}
+.calc-out{padding-top:16px;border-top:1px solid var(--line)}
+.calc-v{margin-top:6px;font:600 clamp(48px,8vw,84px)/1 var(--sans);letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.calc-f{margin-top:8px;font-size:14px;color:var(--muted)}
+.calc-x{color:var(--muted)}
+@media (max-width:420px){.calc label{font-size:13px}}
