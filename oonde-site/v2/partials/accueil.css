@@ -1,0 +1,90 @@
+/* v44 · L'accueil repensé (30.10, Alexandre : « mal présenté sur iPhone, tout à la ligne », « trop d'écriture », « ce que je vends c'est un assistant téléphone »).
+   Page blanche, sections grises #F5F5F7, une idée par section, et des COLONNES aussi sur téléphone : la fiche et ses trois points côte à côte,
+   les deux champs du calcul, les trois étapes, les forfaits comparés en trois colonnes (comme « Comparer les modèles » chez Apple), les deux visages. */
+body{background:#fff}
+.bg-g{background:#F5F5F7}
+.ac h2{font-size:clamp(34px,5.4vw,68px);letter-spacing:-.045em;line-height:1.02;max-width:15ch}
+.ac .ey{font:600 15px/1.3 var(--sans);color:var(--klein);margin-bottom:12px;letter-spacing:-.01em}
+.ac .sub{margin-top:14px;font-size:clamp(17px,1.8vw,21px);line-height:1.4;color:var(--muted);max-width:34ch;font-weight:500}
+.ac .act{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:28px}
+.ac .act .tel-rev{flex-basis:100%}
+.hon{margin-top:14px;font-size:13px;line-height:1.45;color:var(--muted);max-width:44ch}
+.ac>section:not(.lac):not(.pp){padding-block:clamp(72px,10vw,140px)}
+/* la fiche : l'écran des commandes et trois points, côte à côte */
+.fi-g{margin-top:clamp(32px,5vw,64px);display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(18px,5vw,80px);align-items:center}
+.fi-g figure{margin:0}
+.fi-g figure picture{display:block;border-radius:clamp(16px,2.4vw,28px);overflow:hidden;box-shadow:0 40px 80px -44px rgba(17,19,24,.5),0 0 0 1px rgba(17,19,24,.07);background:#fff}
+.fi-g figure img{width:100%;height:auto}
+.fi-g figcaption{margin-top:12px;font-size:13px;color:var(--muted)}
+.fi-l{list-style:none;margin:0;padding:0;display:grid;gap:clamp(18px,3vw,36px)}
+.fi-l li{display:grid;gap:4px}
+.fi-l b{font-size:clamp(17px,2.2vw,28px);letter-spacing:-.025em;line-height:1.12}
+.fi-l span{font-size:clamp(14px,1.5vw,18px);line-height:1.4;color:var(--muted)}
+.fi-l i{display:block;width:30px;height:30px;border-radius:9px;background:rgba(32,56,236,.09);color:var(--klein);font:600 14px/30px var(--sans);text-align:center;font-style:normal;margin-bottom:6px}
+.fi-l .w i{background:#FBEFD9;color:#8A5A00}
+/* les trois étapes, en trois colonnes partout */
+.st3{list-style:none;margin:clamp(32px,5vw,56px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,2vw,24px)}
+.st3 li{background:#fff;border-radius:clamp(18px,2.4vw,28px);padding:clamp(16px,2.6vw,32px);display:grid;gap:6px;align-content:start}
+.st3 i{font:600 clamp(28px,4vw,48px)/1 var(--sans);font-style:normal;letter-spacing:-.04em;color:var(--klein)}
+.st3 b{margin-top:clamp(10px,2vw,28px);font-size:clamp(15px,2vw,24px);letter-spacing:-.02em;line-height:1.15}
+.st3 span{font-size:clamp(13px,1.4vw,16px);line-height:1.4;color:var(--muted)}
+/* les forfaits comparés : trois colonnes, les lignes avec leur titre au-dessus (lisible même à 390 px) */
+.cmp{margin-top:clamp(32px,5vw,64px);max-width:1000px}
+.cmp-h{position:sticky;top:var(--hh);z-index:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,2vw,24px);background:rgba(245,245,247,.88);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);padding:14px 0;border-bottom:1px solid var(--line)}
+.cmp-h>div{display:grid;justify-items:center;text-align:center;gap:4px}
+.cmp-h h3{font-size:clamp(17px,2.2vw,28px);letter-spacing:-.03em}
+.cmp-h .bd{font:600 11px/1 var(--sans);color:var(--klein);text-transform:uppercase;letter-spacing:.06em;min-height:11px}
+.cmp-h .px{font:600 clamp(20px,2.6vw,32px)/1 var(--sans);letter-spacing:-.03em}
+.cmp-h .px small{font-size:.5em;font-weight:500;color:var(--muted);letter-spacing:0}
+.cmp-h .pd{font-size:12px;color:var(--muted);min-height:15px}
+.cmp-h a{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px clamp(10px,1.6vw,18px);border-radius:999px;background:var(--klein);color:#fff;font:600 clamp(12.5px,1.3vw,15px)/1.15 var(--sans);text-decoration:none;text-align:center}
+.cmp-h a:hover{background:#1A2FC9}
+.cmp-h .k h3{color:var(--klein)}
+.cmp-r{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px clamp(8px,2vw,24px);padding:18px 0;border-bottom:1px solid var(--line);text-align:center}
+.cmp-r>p{grid-column:1/-1;font:500 12px/1.3 var(--sans);color:var(--muted);letter-spacing:.01em;margin-bottom:4px}
+.cmp-r>span{font-size:clamp(14px,1.6vw,18px);line-height:1.3;font-weight:500}
+.cmp-r>span small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+.cmp-r .y{color:var(--klein);font-size:20px;line-height:1}
+.cmp-r .n{color:#B4B7BD}
+.cmp-n{margin-top:22px;display:grid;gap:8px;font-size:14px;color:var(--muted);max-width:60em}
+.cmp-n b{color:var(--ink)}
+/* l'équipe : deux visages côte à côte, trois promesses en trois colonnes */
+.eq-g{margin-top:clamp(32px,5vw,56px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2.4vw,28px);max-width:880px}
+.eq-g figure{margin:0;display:grid;gap:12px}
+.eq-g picture{display:block;border-radius:clamp(18px,2.4vw,28px);overflow:hidden;aspect-ratio:4/5;background:#E8E8EC}
+.eq-g img{width:100%;height:100%;object-fit:cover}
+.eq-g b{display:block;font-size:clamp(16px,2vw,24px);letter-spacing:-.02em;line-height:1.15}
+.eq-g figcaption span{display:block;margin-top:4px;font-size:clamp(13px,1.4vw,16px);line-height:1.4;color:var(--muted)}
+.pr3{list-style:none;margin:clamp(40px,6vw,72px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,2vw,24px)}
+.pr3 li{border-top:2px solid var(--ink);padding-top:14px;display:grid;gap:6px;align-content:start}
+.pr3 b{font-size:clamp(15px,1.9vw,22px);letter-spacing:-.02em;line-height:1.15}
+.pr3 span{font-size:clamp(13px,1.4vw,16px);line-height:1.4;color:var(--muted)}
+/* et aussi : deux tuiles, côte à côte */
+.ax-g{margin-top:clamp(28px,4vw,48px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,24px)}
+.ax{position:relative;display:grid;align-content:start;background:#fff;border-radius:clamp(18px,2.4vw,28px);overflow:hidden;text-decoration:none;color:inherit}
+.ax figure{margin:0;aspect-ratio:4/3;overflow:hidden;background:#2A2433;position:relative}
+.ax figure picture,.ax figure img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.ax figure .dtag{position:absolute;left:10px;top:10px;margin:0;background:rgba(255,255,255,.9);color:var(--ink)}
+.ax div{padding:clamp(14px,2vw,24px);display:grid;gap:6px}
+.ax b{font-size:clamp(15px,1.9vw,22px);letter-spacing:-.02em;line-height:1.15}
+.ax span{font-size:clamp(13px,1.4vw,16px);color:var(--klein);font-weight:600}
+@media (hover:hover){.ax:hover figure img{transform:scale(1.04)}}
+/* questions */
+.ac .faq{margin-top:clamp(24px,3vw,40px);max-width:760px}
+/* la fin */
+.fin{text-align:center}
+.fin h2{margin-inline:auto;font-size:clamp(48px,9vw,120px)}
+.fin .sub{margin-inline:auto}
+.fin .act{justify-content:center}
+.fin .hon{margin-inline:auto}
+@media (max-width:760px){
+ .fi-g{grid-template-columns:minmax(0,1fr);gap:22px}
+ .fi-l{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+ .fi-l b{font-size:15px}.fi-l span{font-size:13px}
+ .st3 b{margin-top:10px}
+ .cmp-h{top:var(--hh);padding:10px 0}
+ .cmp-r{padding:14px 0}
+ .pr3{grid-template-columns:1fr;gap:18px}
+ .pr3 li{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px;padding-top:12px}
+}
+@media (max-width:360px){.cmp-h a{padding:8px 8px;font-size:12px}}

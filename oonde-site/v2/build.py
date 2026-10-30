@@ -175,7 +175,7 @@ def fnav(cur):
     """{{FNAV:page}} : v31, le plan du site du pied de page, le même partout (les pages légales suivent, écrites dans chaque page)."""
     cu = ' aria-current="page"'
     return ''.join(f'<a href="{{{{{t}}}}}"{cu if k == cur else ""}>{n}</a>' for k, t, n in
-                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites internet'), ('videos', 'VIDEOS', 'Vidéos &amp; pubs'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète'), ('contact', 'CONTACT', 'Contact')))
+                   (('index', 'HOME', 'Le téléphone'), ('sites', 'SITES', 'Sites internet'), ('videos', 'VIDEOS', 'Vidéos &amp; pubs'), ('assistant', 'ASSISTANT', 'L’assistant'), ('visite', 'VISITE', 'La visite complète'), ('contact', 'CONTACT', 'Contact'), ('calcul', 'CALCUL', 'Appels manqués : le calcul')))
 
 # v24 · Le Fil : les vidéos de démo, nommées pour la commerçante (ce qui sort sur son fil), et non par nos ateliers.
 # Fichiers web 720×1280 : video/fil/ (exemples de commerces) et video/demos/ (une démo par façon de faire ; les noms restent stables).
@@ -367,7 +367,7 @@ def slim(html):
     return re.sub(r'<script((?:\s[^>]*)?)>(.*?)</script>', lambda m: m.group(0) if 'type=' in m.group(1) or 'src=' in m.group(1) else f'<script{m.group(1)}>{strip_js(m.group(2))}</script>', html, flags=re.S)
 
 def externalize(html, o, name):
-    crit = name in ('index', 'sites')   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé. v31 : l'accueil (le téléphone) et /sites (l'entrée 3D)
+    crit = name in ('index', 'intro', 'sites')   # v22.1 : l'accueil garde son CSS dans la page (un aller-retour de moins avant l'affiche) ; son script part en tête, différé. v31 : l'accueil (le téléphone) et /sites (l'entrée 3D)
     """dist : les gros blocs <style> et <script> en ligne partent dans assets/<empreinte>.css|js, en cache long (le HTML,
     lui, est revalidé à chaque visite). Les petits restent en ligne (le script de tête qui pose .js, les polices, le JSON-LD).
     Même position, même ordre d'exécution (script classique, sans defer). L'aperçu claude.ai garde tout en ligne."""
@@ -403,7 +403,12 @@ TELDEMO = ('<p class="ftel"><span class="ftag">Démo</span> Elle répond au tél
           '<p class="tel-rev" id="telRevF" hidden><b>021 539 01 22</b>{{QR_021}}<span>Scannez avec votre téléphone, l’appel part. Dites votre métier : elle répond comme chez vous.</span></p>')
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
 # v31 : l'accueil est le téléphone (home.html, l'ancienne page /telephone) ; l'entrée 3D et les formules du site passent sur /sites (sites.html, l'ancien accueil)
-docs = {'index': (D / 'home.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text(), 'contact': (D / 'contact.html').read_text()}
+HOME = (D / 'home.html').read_text()
+def variant(s, keep):   # v44 : deux versions de l'accueil. A (l'accueil) : la scène du téléphone en ouverture ; B (/intro) : l'entrée du lac, jouée seule, puis la scène
+    drop = 'B' if keep == 'A' else 'A'
+    s = re.sub(r'<!--%s-->.*?<!--/%s-->\n?' % (drop, drop), '', s, flags=re.S)
+    return re.sub(r'<!--/?%s-->\n?' % keep, '', s)
+docs = {'index': variant(HOME, 'A'), 'intro': variant(HOME, 'B'), 'appels-manques': (D / 'appels-manques.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text(), 'contact': (D / 'contact.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -412,8 +417,8 @@ for k, (title, desc, cur) in PAGES.items():
 
 # Netlify sert /visite depuis visite.html ; l'aperçu claude.ai a besoin du nom complet
 # v31 : {{SITES}} (l'entrée 3D, les formules du site) ; {{TELEPHONE}} et {{EXEMPLES}} disparaissent (le téléphone est l'accueil, les exemples sont sur /sites)
-LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos', '{{CONTACT}}': 'contact'},
-         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html', '{{CONTACT}}': 'contact.html'}}
+LINKS = {'dist': {'{{VISITE}}': 'visite', '{{APERCU}}': 'apercu', '{{HOME}}': './', '{{SITES}}': 'sites', '{{ASSISTANT}}': 'assistant', '{{VIDEOS}}': 'videos', '{{CONTACT}}': 'contact', '{{CALCUL}}': 'appels-manques'},
+         'preview': {'{{VISITE}}': 'visite.html', '{{APERCU}}': 'apercu.html', '{{HOME}}': 'index.html', '{{SITES}}': 'sites.html', '{{ASSISTANT}}': 'assistant.html', '{{VIDEOS}}': 'videos.html', '{{CONTACT}}': 'contact.html', '{{CALCUL}}': 'appels-manques.html'}}
 for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # v22 : l'aperçu sert aussi ses polices (plus de connexion à Google Fonts sur iPhone)
     o = D / out; shutil.rmtree(o, ignore_errors=True); o.mkdir(); built = {}; whole = {}
     for k, s in docs.items():
@@ -421,7 +426,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         for k2 in ('m', 'd'):   # v22.1 : l'affiche floue (≈ 0,5 Ko), dans la page : la rue est là dès le premier affichage
             s = s.replace('{{PVB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'e3d' / 'v' / k2 / 'blur.webp').read_bytes()).decode())
             s = s.replace('{{LACB_%s}}' % k2.upper(), 'data:image/webp;base64,' + base64.b64encode((D / 'img' / 'lac' / k2 / 'blur.webp').read_bytes()).decode())   # v34 : le lac, flou, avant l'image du ponton
-        if out == 'dist' and k in ('index', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'videos', 'contact'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
+        if out == 'dist' and k in ('index', 'intro', 'appels-manques', 'sites', 'exemples', 'visite', 'apercu', 'assistant', 'videos', 'contact'): s = s.replace('</title>', '</title>\n' + UMAMI_JS, 1)
         assert '{{' not in s, (k, s[s.index('{{'):s.index('{{') + 20])
         s = slim(s)   # v28.1 : sans les commentaires du CSS et du JS
         built[k] = full(s, base='/' if k == '404' else '') if (wrap or k != 'index') else s   # la 404 est servie à n'importe quelle profondeur
@@ -477,7 +482,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n'
             '  Strict-Transport-Security: max-age=31536000\n  X-Frame-Options: DENY\n  Cross-Origin-Opener-Policy: same-origin\n'
             f'  Content-Security-Policy: {csp}\n'
-            '\n/apercu\n  X-Robots-Tag: noindex\n/apercu.html\n  X-Robots-Tag: noindex\n'
+            '\n/intro\n  X-Robots-Tag: noindex\n/intro.html\n  X-Robots-Tag: noindex\n/apercu\n  X-Robots-Tag: noindex\n/apercu.html\n  X-Robots-Tag: noindex\n'
             '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
@@ -489,7 +494,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / '_redirects').write_text('/telephone  /  301\n/telephone.html  /  301\n/vitrine  /sites#prix  301\n/vitrine.html  /sites#prix  301\n/exemples  /sites  301\n'
             '/ig     /?s=ig     302\n/tt     /?s=tt     302\n/carte  /?s=carte  302\n/g      /?s=gbp    302\n/pub    /videos  301\n/pub.html /videos 301\n/reseaux /videos  301\n/reseaux.html /videos 301\n/fil    /videos  301\n/fil.html /videos 301\n')
         (o / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://oonde.ch/sitemap.xml\n')
-        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'sites', 'videos', 'assistant', 'visite', 'contact')) + '</urlset>\n')
+        (o / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>https://oonde.ch/{u}</loc></url>\n' for u in ('', 'appels-manques', 'sites', 'videos', 'assistant', 'visite', 'contact')) + '</urlset>\n')
     # l'aperçu claude.ai ne sert que les fichiers publiés : chaque chemin local cité par une page doit exister
     for k, h in whole.items():
         for f in set(re.findall(r'(?:src|href|srcset|poster|data-src|data-v)="([^"#?:]+?)"', h)) | set(re.findall(r"'((?:img|video)/[\w./-]+\.(?:jpe?g|png|webp|mp4|json|txt))'", h)) | set(re.findall(r'url\(["\']?((?:img|video|fonts)/[^"\')]+)', h)):

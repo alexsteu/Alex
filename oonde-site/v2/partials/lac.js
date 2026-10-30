@@ -88,6 +88,7 @@
  vA.addEventListener('error',()=>{if(hFb(vA)){if(st==='c1'){primed=ready=false;play(vA)}else if(st==='a')play(vA);return}if(st==='c1'||st==='a')flat()});   /* le film manque : l'image et le texte, en page normale */
  let tO=0,oOn=false;
  function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);   /* A s'amorce caché (il joue, se pose) ; refusé : prêt quand il est là */
+  if('auto' in u.dataset)setTimeout(()=>{if(st==='c1')startA()},1300);   /* v44 (version B, « l'intro plus courte ») : pas de geste à faire, le film A part seul */
   setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
  if(deep||scrollY>40){stop(vO);vO.removeAttribute('src');try{vO.load()}catch(e){}toEnd();return}
  state('o');pin(true);

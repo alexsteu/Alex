@@ -62,6 +62,7 @@
  vA.addEventListener('error',()=>{if(hFb(vA)){if(st==='c1'){primed=ready=false;play(vA)}else if(st==='a')play(vA);return}if(st==='c1'||st==='a')flat()});
  let tO=0,oOn=false;
  function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);
+  if('auto' in u.dataset)setTimeout(()=>{if(st==='c1')startA()},1300);
   setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
  if(deep||scrollY>40){stop(vO);vO.removeAttribute('src');try{vO.load()}catch(e){}toEnd();return}
  state('o');pin(true);
@@ -81,11 +82,21 @@
  addEventListener('keydown',e=>{if(e.key==='Escape')close(-1)});
  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
  u.classList.add('live');
- const bs=[...u.querySelectorAll('.pp-bt[data-b]')],ms=[...u.querySelectorAll('.pp-chat p')];let s=-1,raf=0;
- function set(n,p){if(n!==s){s=n;u.dataset.s=n;bs.forEach(b=>b.classList.toggle('off',+b.dataset.b!==n));if(n!==3)close(-1)}
-  const k=n>1?ms.length:n<1?0:Math.ceil(Math.min(1,Math.max(0,(p-.25)/.25))*ms.length);ms.forEach((m,i)=>m.classList.toggle('on',i<k))}
+ const bs=[...u.querySelectorAll('.pp-bt[data-b]')],ms=[...u.querySelectorAll('.pp-tr p')],tm=u.querySelector('.pp-tm');let s=-1,raf=0;
+ function set(n,p){if(n!==s){s=n;u.dataset.s=n;bs.forEach(b=>{const off=+b.dataset.b!==n;b.classList.toggle('off',off);if(off)b.setAttribute('inert','');else b.removeAttribute('inert')});if(n!==3)close(-1);fit()}
+  const q=Math.min(1,Math.max(0,(p-.2)/.3));
+  const k=n>1?ms.length:n<1?0:Math.ceil(q*ms.length);ms.forEach((m,i)=>m.classList.toggle('on',i<k));
+  if(tm){const t=n<1?0:n>1?38:Math.round(4+q*34);tm.textContent=n>1?'Appel terminé · 0:38':'En appel · 0:'+String(t).padStart(2,'0')}}
+ const fit=()=>{const b=bs.find(x=>+x.dataset.b===s);if(b)u.style.setProperty('--bh',b.offsetHeight+'px')};addEventListener('resize',fit);
  function tick(){raf=0;const r=u.getBoundingClientRect(),span=u.offsetHeight-innerHeight;const p=Math.min(1,Math.max(0,-r.top/span));
-  set(p<.22?0:p<.52?1:p<.74?2:3,p)}
+  set(p<.2?0:p<.5?1:p<.72?2:3,p)}
  const req=()=>{if(!raf)raf=requestAnimationFrame(tick)};
  let on=false;new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on)req()}).observe(u);
  addEventListener('scroll',()=>{if(on)req()},{passive:true});addEventListener('resize',req);tick()})();
+(()=>{const f=document.getElementById('calc');if(!f)return;
+ const n=document.getElementById('cN'),pz=document.getElementById('cP'),r=document.getElementById('cR'),ro=document.getElementById('cRo'),v=document.getElementById('cV'),fx=document.getElementById('cF');
+ const chf=x=>String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+'.–';
+ const num=el=>{const x=parseFloat(String(el.value).replace(',','.'));return isFinite(x)&&x>0?x:0};
+ function go(){const a=num(n),b=num(pz),k=+r.value;ro.textContent=k+' sur 10';
+  v.textContent=chf(a*k/10*b*4.33);fx.textContent=(Math.round(a)||0)+' appels × '+k+' sur 10 × '+chf(b)+' × 4,33 semaines'}
+ f.addEventListener('input',go);f.addEventListener('submit',e=>e.preventDefault());go()})();
