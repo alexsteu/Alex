@@ -66,7 +66,9 @@
 .pp.live .pp-bts{height:var(--bh,auto);transition:height .6s var(--ease)}
 .pp.live .pp-bt{grid-area:1/1;align-self:start;transition:opacity .6s var(--ease),filter .6s var(--ease),scale .6s var(--ease)}
 .pp.live .pp-bt.off{opacity:0;filter:blur(8px);scale:.98;pointer-events:none;visibility:hidden;transition:opacity .6s var(--ease),filter .6s var(--ease),scale .6s var(--ease),visibility 0s .6s}
-.pp.live .pp-ph{height:min(56svh,600px);width:auto;max-width:64vw;align-self:start}
+.pp.live .pp-ph{height:min(66svh,760px);width:auto;max-width:64vw;align-self:start;transition:height .6s var(--ease)}
+.pp-hon{font-size:13px;color:var(--muted);margin-top:4px}
+@media (min-width:761px){.pp.live[data-s="3"] .pp-ph{height:min(54svh,600px)}}
 .pp.live[data-s="0"] .pp-ring{animation:ppRing 1.4s var(--ease) infinite}
 .pp.live:not([data-s="0"]) .pp-call{opacity:0;filter:blur(6px)}
 .pp.live[data-s="1"] .pp-in{opacity:1}.pp.live[data-s="2"] .pp-in,.pp.live[data-s="3"] .pp-in{opacity:.25}
@@ -85,9 +87,11 @@
  .pp-bt{gap:10px}.pp-bt .mono{font-size:11px}
  .pp-bt p{font-size:17px}
  .pp-ph,.pp.live .pp-ph{aspect-ratio:9/16.5}.pp.live .pp-ph{height:min(44svh,480px);max-width:78vw;transition:height .6s var(--ease),translate .6s var(--ease)}
+ .pp-call{padding-top:58px}.pp-ring{margin-top:16px}.pp-hon{font-size:12.5px;margin-top:0}
  .pp-tr p{font-size:11.5px}.pp-sum b{font-size:13px}.pp-sum ul{font-size:12px}
  .pp-bt .act{gap:14px}.pp-bt .act .btn{min-height:46px;padding:11px 18px}
  /* dernière étape : deux colonnes, le téléphone à gauche, les légendes à droite */
+ .pp.live[data-s="1"] .pp-ph,.pp.live[data-s="2"] .pp-ph{height:min(58svh,540px)}
  .pp.live[data-s="3"] .pp-ph{height:min(40svh,380px);translate:calc(-50vw + 50% + max(16px,env(safe-area-inset-left,0px))) 0}
  .pp.live .pp-cs{inset:0 auto 0 calc(100% + 14px);width:calc(100vw - 100% - 46px);display:flex;flex-direction:column;justify-content:center;gap:8px}
  .pp.live .pp-c,.pp.live .pp-c.l{position:static;translate:none;flex-direction:row;text-align:left;align-items:flex-start;font-size:13px;width:100%}
