@@ -6,6 +6,8 @@
    se pose aussitôt. Mouvement réduit : l'image et le texte, sans film. Un film qui tarde (réseau lent) : l'image de l'arrêt, sans attendre plus de 2,5 s. */
 (()=>{const u=$('lac');if(!u)return;
  const vO=$('lacO'),vA=$('lacA'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ /* v44.3 (31.10, Alexandre : « accélère l'animation du lac en vitesse 1.3x ») : les deux films lus à 1,3x ; un nouveau src garde la vitesse par défaut */
+ const SPD=1.3;for(const v of [vO,vA]){v.defaultPlaybackRate=SPD;v.playbackRate=SPD;v.addEventListener('playing',()=>{if(v.playbackRate!==SPD)v.playbackRate=SPD})}
  const blocks={c1:$('lac1'),c2:$('lac2')},COARSE=matchMedia('(pointer:coarse)').matches,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
  /* v38.2 : le format le plus léger que le navigateur lit : HEVC (.h.mp4 : iPhone, Mac, Chrome avec décodage matériel), sinon H.264, sinon VP9 ; un film HEVC qui échoue → H.264 */
@@ -88,7 +90,7 @@
  vA.addEventListener('error',()=>{if(hFb(vA)){if(st==='c1'){primed=ready=false;play(vA)}else if(st==='a')play(vA);return}if(st==='c1'||st==='a')flat()});   /* le film manque : l'image et le texte, en page normale */
  let tO=0,oOn=false;
  function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);   /* A s'amorce caché (il joue, se pose) ; refusé : prêt quand il est là */
-  if('auto' in u.dataset)setTimeout(()=>{if(st==='c1')startA()},1300);   /* v44 (version B, « l'intro plus courte ») : pas de geste à faire, le film A part seul */
+  if('auto' in u.dataset)setTimeout(()=>{if(st==='c1')startA()},1000);   /* v44 (version B, « l'intro plus courte ») : pas de geste à faire, le film A part seul */
   setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
  if(deep||scrollY>40){stop(vO);vO.removeAttribute('src');try{vO.load()}catch(e){}toEnd();return}
  state('o');pin(true);

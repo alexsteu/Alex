@@ -1,5 +1,6 @@
 (()=>{const u=$('lac');if(!u)return;
  const vO=$('lacO'),vA=$('lacA'),hold=$('lacH'),stg=$('lacSt'),ld=u.querySelector('.lac-load'),skip=$('lacSkip'),go=$('lacGo');
+ const SPD=1.3;for(const v of [vO,vA]){v.defaultPlaybackRate=SPD;v.playbackRate=SPD;v.addEventListener('playing',()=>{if(v.playbackRate!==SPD)v.playbackRate=SPD})}
  const blocks={c1:$('lac1'),c2:$('lac2')},COARSE=matchMedia('(pointer:coarse)').matches,WAIT_MS=2500;
  const K=()=>innerWidth<=innerHeight?'m':'d';let set=K();
  let VX=(()=>{try{const v=document.createElement('video'),h=v.canPlayType('video/mp4; codecs="hvc1.1.6.L93.B0"');return h==='probably'?'h.mp4':v.canPlayType('video/mp4; codecs="avc1.64002A"')?'mp4':v.canPlayType('video/webm; codecs="vp09.00.40.08"')?'webm':'mp4'}catch(e){return 'mp4'}})();
@@ -62,7 +63,7 @@
  vA.addEventListener('error',()=>{if(hFb(vA)){if(st==='c1'){primed=ready=false;play(vA)}else if(st==='a')play(vA);return}if(st==='c1'||st==='a')flat()});
  let tO=0,oOn=false;
  function toC1(){clearTimeout(tO);if(st!=='o')return;u.classList.remove('pre');holdTo('c1').then(()=>flag(vO,'on',false));state('c1');loadA();play(vA);
-  if('auto' in u.dataset)setTimeout(()=>{if(st==='c1')startA()},1300);
+  if('auto' in u.dataset)setTimeout(()=>{if(st==='c1')startA()},1000);
   setTimeout(()=>{if(ready||st!=='c1')return;const ok=()=>{if(!ready&&st==='c1'&&(vA.readyState>=3)){ready=true;stop(vA);if(want)startA()}};ok();vA.addEventListener('canplaythrough',ok);vA.addEventListener('loadeddata',ok)},1200)}
  if(deep||scrollY>40){stop(vO);vO.removeAttribute('src');try{vO.load()}catch(e){}toEnd();return}
  state('o');pin(true);
