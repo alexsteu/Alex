@@ -166,10 +166,10 @@ def nav(cur):
     et = (f'<span class="nav-sub opt3"><button type="button" class="nav-sb"{" data-cur" if sub else ""} aria-expanded="false" aria-controls="navS">Et aussi</button><span class="nav-sl" id="navS"><a href="{{{{ASSISTANT}}}}"{a("assistant")}>L’assistant</a><a href="{{{{VISITE}}}}"{a("visite")}>La visite complète</a></span></span>')
     if cur == 'sites':
         return ('<a href="#choix">La démo</a><a href="#prix">Sites et prix</a><a href="{{HOME}}">Le téléphone</a><a class="opt" href="{{VIDEOS}}">Vidéos &amp; pubs</a>'
-                + et + '<a class="opt2" href="#questions">Questions</a><a href="{{CONTACT}}">Contact</a>')
+                + '<a class="opt2" href="#questions">Questions</a><a href="{{CONTACT}}">Contact</a>')
     H = '' if cur == 'index' else '{{HOME}}'
     return (f'<a href="{H}#demo">La démo</a><a href="{H}#prix">Forfaits</a><a href="{{{{SITES}}}}">Sites internet</a><a class="opt" href="{{{{VIDEOS}}}}"{a("videos")}>Vidéos &amp; pubs</a>'
-            + et + f'<a class="opt2" href="{H}#questions">Questions</a><a href="{{{{CONTACT}}}}"{a("contact")}>Contact</a>')
+            + f'<a class="opt2" href="{H}#questions">Questions</a><a href="{{{{CONTACT}}}}"{a("contact")}>Contact</a>')
 
 def fnav(cur):
     """{{FNAV:page}} : v31, le plan du site du pied de page, le même partout (les pages légales suivent, écrites dans chaque page)."""
@@ -404,11 +404,11 @@ TELDEMO = ('<p class="ftel"><span class="ftag">Démo</span> Elle répond au tél
 QR_021 = '<img class="tel-qr" src="img/qr-021.svg" width="112" height="112" alt="Code QR : appeler le 021 539 01 22" loading="lazy" decoding="async">'
 # v31 : l'accueil est le téléphone (home.html, l'ancienne page /telephone) ; l'entrée 3D et les formules du site passent sur /sites (sites.html, l'ancien accueil)
 HOME = (D / 'home.html').read_text()
-def variant(s, keep):   # v44 : deux versions de l'accueil. A (l'accueil) : la scène du téléphone en ouverture ; B (/intro) : l'entrée du lac, jouée seule, puis la scène
+def variant(s, keep):   # v44 : deux versions de l'accueil (A : la scène du téléphone en ouverture ; B : l'entrée du lac, jouée seule, puis la scène). 31.10, Alexandre : on garde B
     drop = 'B' if keep == 'A' else 'A'
     s = re.sub(r'<!--%s-->.*?<!--/%s-->\n?' % (drop, drop), '', s, flags=re.S)
     return re.sub(r'<!--/?%s-->\n?' % keep, '', s)
-docs = {'index': variant(HOME, 'A'), 'intro': variant(HOME, 'B'), 'appels-manques': (D / 'appels-manques.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text(), 'contact': (D / 'contact.html').read_text()}
+docs = {'index': variant(HOME, 'B'), 'appels-manques': (D / 'appels-manques.html').read_text(), 'sites': (D / 'sites.html').read_text(), 'exemples': (D / 'exemples.html').read_text(), 'visite': (D / 'visite.html').read_text(), 'apercu': (D / 'apercu.html').read_text(), 'assistant': (D / 'assistant.html').read_text(), 'videos': (D / 'videos.html').read_text(), 'contact': (D / 'contact.html').read_text()}
 for k, (title, desc, cur) in PAGES.items():
     s = layout.replace('{{TITLE}}', title).replace('{{DESC}}', desc).replace('{{BODY}}', BODY404 if k == '404' else (D / 'legal' / f'{k}.html').read_text())
     for c in 'MCG':
@@ -482,7 +482,7 @@ for out, fonts, wrap in [('dist', LOCAL, True), ('preview', LOCAL, False)]:   # 
         (o / '_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()\n'
             '  Strict-Transport-Security: max-age=31536000\n  X-Frame-Options: DENY\n  Cross-Origin-Opener-Policy: same-origin\n'
             f'  Content-Security-Policy: {csp}\n'
-            '\n/intro\n  X-Robots-Tag: noindex\n/intro.html\n  X-Robots-Tag: noindex\n/apercu\n  X-Robots-Tag: noindex\n/apercu.html\n  X-Robots-Tag: noindex\n'
+            '\n/apercu\n  X-Robots-Tag: noindex\n/apercu.html\n  X-Robots-Tag: noindex\n'
             '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n'
             '\n/img/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n'
