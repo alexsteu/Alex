@@ -1,0 +1,157 @@
+{
+ "duration": 16.64,
+ "bpm": 78.947,
+ "mood": "bright",
+ "seed": 7,
+ "beat_from": 2.26,
+ "beat_until": 14.44,
+ "events": [
+  {
+   "t": 0.05,
+   "type": "tick",
+   "gain": 0.6,
+   "note": 86
+  },
+  {
+   "t": 1.48,
+   "type": "tick",
+   "gain": 0.3,
+   "note": 93
+  },
+  {
+   "t": 2.28,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 76
+  },
+  {
+   "t": 3.04,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 77
+  },
+  {
+   "t": 3.8,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 79
+  },
+  {
+   "t": 3.9,
+   "type": "swipe",
+   "gain": 0.6
+  },
+  {
+   "t": 4.56,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 81
+  },
+  {
+   "t": 4.61,
+   "type": "swipe",
+   "gain": 0.5
+  },
+  {
+   "t": 5.32,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 83
+  },
+  {
+   "t": 6.08,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 84
+  },
+  {
+   "t": 6.84,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 86
+  },
+  {
+   "t": 7.6,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 88
+  },
+  {
+   "t": 8.36,
+   "type": "tick",
+   "gain": 0.8,
+   "note": 89
+  },
+  {
+   "t": 8.56,
+   "type": "thump",
+   "gain": 0.45
+  },
+  {
+   "t": 10.285,
+   "type": "whoosh",
+   "d": 0.5,
+   "gain": 0.6
+  },
+  {
+   "t": 11.02,
+   "type": "pop"
+  },
+  {
+   "t": 11.12,
+   "type": "swipe",
+   "gain": 0.6
+  },
+  {
+   "t": 11.78,
+   "type": "pop"
+  },
+  {
+   "t": 11.88,
+   "type": "droplet",
+   "gain": 0.6
+  },
+  {
+   "t": 12.54,
+   "type": "tick",
+   "note": 86,
+   "gain": 0.8
+  },
+  {
+   "t": 12.615,
+   "type": "whoosh",
+   "d": 0.5,
+   "gain": 0.6
+  },
+  {
+   "t": 12.94,
+   "type": "tick",
+   "note": 91,
+   "gain": 0.8
+  },
+  {
+   "t": 12.94,
+   "type": "pop",
+   "gain": 0.6
+  },
+  {
+   "t": 14.44,
+   "type": "whoosh",
+   "d": 0.6,
+   "gain": 1.0
+  },
+  {
+   "t": 14.44,
+   "type": "thump"
+  },
+  {
+   "t": 14.66,
+   "type": "pop",
+   "gain": 0.7
+  },
+  {
+   "t": 15.14,
+   "type": "end"
+  }
+ ]
+}

@@ -1,0 +1,235 @@
+/* OONDE · base commune aux pages (accueil, La Visite, aperçu). Papier, encre, un accent. Grille 1 144 px, filets 1 px, rayons 8/10/14. */
+@font-face{font-family:'Instrument Repli';src:local('Arial'),local('Helvetica Neue'),local('Helvetica');size-adjust:106%;ascent-override:91%;descent-override:23.5%;line-gap-override:0%}
+:root{
+ --paper:#F7F7F4;--ink:#111318;--muted:#5C6169;--soft:#3A3F47;--line:#DCDED8;--card:#FFFFFF;--klein:#2038EC;--wa:#14803C;--night:#141826;--cream:#F4EFE7;
+ --pad:clamp(20px,4vw,48px);--hh:64px;
+ --sans:'Instrument Sans','Instrument Repli',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+ --ease:cubic-bezier(.22,.61,.2,1);
+}
+@media (max-width:700px){:root{--hh:56px}}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{scroll-padding-top:84px;color-scheme:light;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,summary,select{-webkit-tap-highlight-color:transparent}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (max-width:700px){html{scroll-padding-bottom:90px}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+@media (max-width:760px){body{font-size:16px;line-height:1.5}}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+p{margin:0;text-wrap:pretty}
+.in{max-width:1240px;margin:0 auto;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
+/* trois niveaux de titre : l'accueil, les sections clés, les sections secondaires */
+.h-xl{font-size:clamp(40px,5.6vw,78px);line-height:.98;letter-spacing:-.035em}
+h2{font-size:clamp(32px,4vw,54px);max-width:18ch}
+.h-m{font-size:clamp(26px,2.6vw,36px);max-width:22ch}
+h3{font-size:clamp(19px,1.8vw,22px);letter-spacing:-.02em;line-height:1.15}
+.mono{font:500 13px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{padding-block:clamp(64px,9vw,128px)}
+section.sec2{padding-block:clamp(56px,6.5vw,88px)}
+.bg-paper{background:var(--paper)}.bg-white{background:var(--card)}.bg-ink{background:var(--ink);color:#fff}
+.bg-paper+.bg-paper{border-top:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--klein);outline-offset:3px}
+.bg-ink :focus-visible{outline-color:#fff}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:12px;top:12px;z-index:40;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;text-decoration:none;transform:translateY(-200%)}
+.skip:focus-visible{transform:none}
+.lede{color:var(--soft);font-size:18px;max-width:36em}
+@media (max-width:760px){.lede{font-size:16.5px}}
+
+/* Boutons : un seul bouton plein (encre) par écran ; le reste en liens soulignés */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px var(--sans);text-decoration:none;border-radius:10px;padding:15px 22px;min-height:52px;background:var(--ink);color:#fff;border:1px solid var(--ink);transition:background-color .12s,border-color .12s;cursor:pointer;white-space:nowrap;max-width:100%;position:relative;overflow:hidden}
+.btn span{overflow:hidden;text-overflow:ellipsis}
+.btn:hover{background:#262B33}
+.btn:active{background:#000;transform:translateY(1px);transition-duration:.06s}
+.btn svg{flex:none;color:#5ED489}
+.btn.light{background:var(--card);color:var(--ink);border-color:var(--line)}
+.btn.light:hover{border-color:var(--ink)}
+.btn.light svg{color:var(--wa)}
+.btn.inv{background:#fff;color:var(--ink);border-color:#fff}.btn.inv:hover{background:#ECEEF0}.btn.inv svg{color:var(--wa)}
+/* v28 : boutons vivants, sans kitsch : un reflet qui passe toutes les 7 s sur les boutons principaux (à l'écran seulement, .sh posé par core.js),
+   la flèche qui avance de 3 px au survol, le bouton WhatsApp collant qui respire (1 → 1,03 toutes les 5 s). Rien en mouvement réduit ; rien ne bouge la mise en page. */
+.btn::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:38%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.22) 50%,rgba(255,255,255,0));transform:translateX(-170%) skewX(-14deg);pointer-events:none}
+.btn.inv::after{background:linear-gradient(100deg,rgba(17,19,24,0),rgba(17,19,24,.07) 50%,rgba(17,19,24,0))}
+.btn.light::after{display:none}
+.ar{display:inline-block;font-style:normal;transition:transform .2s var(--ease)}
+@media (prefers-reduced-motion:no-preference){.btn.sh::after{animation:sheen 7s linear infinite}.mbar.on .btn,.nav .btn{animation:breath 5s ease-in-out infinite}a:focus-visible .ar{transform:translateX(3px)}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){a:hover .ar{transform:translateX(3px)}}
+@keyframes sheen{0%{transform:translateX(-170%) skewX(-14deg)}17%,100%{transform:translateX(440%) skewX(-14deg)}}
+@keyframes breath{0%,12%,100%{transform:none}6%{transform:scale(1.03)}}
+/* v28 : « Tester la démo » à la souris : le numéro de la ligne de démo, en grand */
+.tel-rev{margin-top:18px;display:grid;grid-template-columns:auto 1fr;column-gap:18px;align-items:center;max-width:34em}.tel-rev[hidden]{display:none}.tel-rev b,.tel-rev span{grid-column:2}.tel-qr{grid-column:1;grid-row:1/3;width:112px;height:112px;background:#fff;border-radius:8px;padding:8px;box-sizing:content-box;border:1px solid rgba(17,19,24,.12)}@media (max-width:520px){.tel-rev{display:block}.tel-qr{display:none}}.tel-rev b{display:block;font:600 clamp(30px,4vw,46px)/1 var(--sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}.tel-rev span{display:block;margin-top:8px;font-size:15px;color:var(--muted);max-width:30em}
+.bg-ink .tel-rev span{color:rgba(255,255,255,.7)}
+.lnk{font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px;display:inline-block}
+.lnk:hover{color:var(--klein)}
+.bg-ink .lnk:hover{color:#fff;opacity:.8}
+.act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
+.micro{font-size:14px;color:var(--muted);line-height:1.45}
+
+/* En-tête fixe */
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(247,247,244,.96);border-bottom:1px solid var(--line)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
+.logo{display:flex;align-items:center;text-decoration:none;color:var(--ink);padding-block:11px;margin-block:-11px}
+.logo svg{height:22px;width:auto;display:block}
+.nav nav{display:flex;gap:26px;font-size:15px;margin-left:auto}
+.nav nav a{text-decoration:none;color:var(--muted);padding:12px 0;white-space:nowrap}.nav nav a:hover,.nav nav a[aria-current]{color:var(--ink)}
+.nav .btn{flex:none;padding:10px 14px;font-size:14px;min-height:44px;transition:opacity .2s,visibility 0s,background-color .12s}
+.nav .btn .s{display:none}
+   /* un bouton WhatsApp plein est déjà à l'écran : celui de la barre passe en contour, sans bouger les liens */
+/* « Autres services » : l'assistant et les vidéos, rangés sous un seul bouton (ouvert au clic, Échap le ferme) */
+.nav-sub{position:relative;display:flex}
+.nav-sb{appearance:none;border:0;background:none;font:inherit;color:var(--muted);padding:12px 0;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-sb::after{content:"";width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.nav-sb[aria-expanded="true"]::after{transform:translateY(1px) rotate(-135deg)}
+.nav-sb:hover,.nav-sb[data-cur],.nav-sb[aria-expanded="true"]{color:var(--ink)}
+.nav-sl{display:none;position:absolute;top:100%;left:-14px;z-index:40;flex-direction:column;min-width:190px;padding:6px;background:var(--card,#fff);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -22px rgba(17,19,24,.45)}
+.nav-sub.open .nav-sl{display:flex}
+.nav nav .nav-sl a{padding:11px 12px;border-radius:8px;min-height:44px;box-sizing:border-box;display:flex;align-items:center}.nav nav .nav-sl a:hover{background:rgba(17,19,24,.05)}
+@media (max-width:860px){.nav nav a.opt,.nav nav .nav-sub.opt{display:none}}
+@media (max-width:480px){.nav nav a.opt2{display:none}}
+/* v24 : le bouton de l'en-tête suit l'étage (« Un exemple pour mon commerce ») : entre 701 et 1180 px, « Et aussi » puis « Questions » cèdent la place (ils restent dans le pied de page et sur l'accueil) */
+@media (min-width:701px) and (max-width:1180px){.nav nav .nav-sub.opt3{display:none}}
+@media (min-width:701px) and (max-width:1000px){.nav nav a.opt2{display:none}}
+@media (min-width:701px) and (max-width:860px){.nav nav{gap:20px}}
+@media (max-width:700px){.logo svg{height:20px}.nav nav{gap:18px}.nav .btn .l{display:none}.nav .btn .s{display:inline}
+ .nav .btn{max-width:160px;overflow:hidden;transition:opacity .18s,max-width .22s var(--ease),padding .22s var(--ease),margin .22s var(--ease),visibility 0s}
+ body.cta-in .nav .btn,body.mbar-on .nav .btn{opacity:0;max-width:0;padding-inline:0;margin-left:-16px;border-width:0;visibility:hidden}}
+main{padding-top:var(--hh)}
+
+/* Cadre de navigateur */
+.frame{border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:0 30px 60px -40px rgba(17,19,24,.35);overflow:hidden}
+
+/* Prix : un chemin dans le temps (0.– aujourd'hui, la mise en ligne si elle vous plaît, l'abonnement ensuite) */
+.path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
+.path li{padding-top:22px}
+.path .when{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.amt{display:flex;align-items:baseline;gap:8px;margin:14px 0 18px;font-size:clamp(34px,3.6vw,48px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.amt small{font-size:15px;font-weight:500;letter-spacing:0;color:var(--muted)}
+.path h3{font-size:19px;margin-bottom:6px}
+.path p{font-size:15.5px;color:var(--muted);max-width:26em}
+@media (max-width:760px){
+ .path{grid-template-columns:minmax(0,1fr)}
+ .path li{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+ .path .when{grid-column:1/-1}
+ .path h3{grid-column:1;grid-row:2;margin:10px 0 0;align-self:end}
+ .amt{grid-column:2;grid-row:2;margin:6px 0 0;font-size:30px;flex-direction:column;align-items:flex-end;gap:3px}
+ .amt small{font-size:13px}
+ .path p{grid-column:1/-1;margin-top:6px}
+}
+.guar{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guar li{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:var(--paper)}
+.guar b{display:flex;gap:10px;align-items:baseline;font-size:17px;letter-spacing:-.01em;line-height:1.3}
+.guar b::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--klein);transform:translateY(-1px)}
+.guar span{display:block;margin-top:6px;font-size:14.5px;color:var(--muted);padding-left:19px}
+@media (max-width:860px){.guar{grid-template-columns:minmax(0,1fr)}}
+.small{font-size:13.5px;color:var(--muted);margin-top:22px}
+.small a{color:var(--ink)}
+
+/* Questions */
+.faq{border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;font-weight:600;font-size:17px;padding:17px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;line-height:1;font-weight:400;flex:none;transition:transform .22s var(--ease)}
+details.is summary::after{transform:rotate(45deg)}
+.fa{display:grid;grid-template-rows:1fr}
+.js .fa{grid-template-rows:0fr;transition:grid-template-rows .22s var(--ease)}
+.js details.is .fa{grid-template-rows:1fr}
+html:not(.js) details[open] summary::after{transform:rotate(45deg)}
+.fa>div{overflow:hidden}
+.fa p{margin:0 0 18px;color:var(--muted);font-size:15.5px;max-width:40em}
+.fa a{color:var(--ink)}
+.qa{display:grid;gap:28px}
+@media (min-width:901px){.qa{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start}.qa>:first-child{grid-column:1/6}.qa>.faq{grid-column:6/13}}
+
+/* Nous, avec le contact */
+.close{display:grid;gap:clamp(32px,5vw,88px);align-items:start}
+@media (min-width:901px){.close{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}.close>:first-child{grid-column:1/7}}
+.qr{display:none}
+@media (min-width:901px) and (hover:hover){.qr{display:flex;gap:16px;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:rgba(255,255,255,.7)}.qr img{width:84px;height:84px;flex:none;background:#fff;border-radius:6px;padding:6px}}
+
+/* Pied de page et barre mobile */
+footer{padding-block:36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+footer .in{display:flex;flex-direction:column;gap:20px}
+.fl{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
+footer .logo svg{height:18px}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 20px}
+footer nav a{padding-block:12px;margin-block:-12px}
+footer a{text-decoration:none}footer a:hover{color:var(--ink);text-decoration:underline}
+footer .seo{max-width:62em;font-size:13.5px}
+footer .ftel{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:15px;color:var(--ink)}footer .ftag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--soft);background:var(--card)}footer .ftel a{font-weight:600;color:var(--klein);text-decoration:underline;text-underline-offset:3px;padding-block:12px;margin-block:-12px}footer .tel-rev b{color:var(--ink)}
+.mbar{display:none}
+@media (max-width:700px){body{padding-bottom:78px}}
+/* le menu sur téléphone : un bouton, les quatre liens dessous */
+.nav-m{display:none;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:500 14.5px var(--sans);cursor:pointer;margin-left:auto}
+.nav-m i{display:block;width:14px;height:1.5px;background:currentColor;box-shadow:0 -4.5px 0 currentColor,0 4.5px 0 currentColor}
+@media (max-width:700px){.nav-m{display:inline-flex}
+ .nav .in>nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 16px 14px;background:rgba(247,247,244,.98);border-bottom:1px solid var(--line);box-shadow:0 20px 30px -24px rgba(17,19,24,.4)}
+ .nav.open .in>nav{display:flex}
+ .nav .in>nav a,.nav .in>nav a.opt,.nav .in>nav a.opt2{display:block;padding:14px 0;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
+ .nav .in>nav a:last-child{border-bottom:0}
+ .nav .in>nav .nav-sub,.nav .in>nav .nav-sub.opt{display:block;border-bottom:1px solid var(--line)}
+ .nav .in>nav .nav-sb{width:100%;justify-content:space-between;padding:14px 0;font-size:17px;color:var(--ink);min-height:48px}
+ .nav .in>nav .nav-sl{position:static;min-width:0;padding:0 0 8px 14px;border:0;border-radius:0;box-shadow:none;background:none}
+ .nav .in>nav .nav-sl a{border-bottom:0;padding:12px 0;font-size:16px}
+ .nav.open .in>nav a.nav-wa{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;min-height:48px;padding:12px 16px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:600}.nav-wa svg{width:18px;height:18px;color:#5ED489}}
+.nav nav a.nav-wa{display:none}   /* le WhatsApp du menu : seulement dans le menu du téléphone (le bouton de l'en-tête suffit ailleurs) */
+@media (max-width:700px){.mbar{display:flex;align-items:center;gap:14px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:rgba(247,247,244,.96);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .3s var(--ease)}.mbar.on{transform:none}.mbar .btn{flex:1;min-width:0}footer{padding-bottom:110px}}
+@media (prefers-reduced-motion:reduce){[hidden]{display:none!important}
+*{transition:none!important;animation:none!important}}
+
+/* ── v20 · « Apple minimal » (jury v20 § 2) : une idée par écran, typographie grande, palette calme, ni filet ni carte décoratifs ── */
+:root{--muted:#6B7078;--ez:cubic-bezier(.16,1,.3,1)}
+body{font-size:19px;line-height:1.5}
+@media (max-width:760px){body{font-size:17px}}
+.in{max-width:1280px}
+.txt{max-width:980px}.c{text-align:center}.c h2,.c .lede{margin-inline:auto}
+section{padding-block:clamp(96px,11vw,160px)}
+section.sec2{padding-block:clamp(88px,9vw,128px)}
+.bg-paper+.bg-paper{border-top:0}
+.h-xl{font-size:clamp(48px,7.2vw,112px);line-height:1;letter-spacing:-.04em}
+h2{font-size:clamp(36px,5vw,72px);line-height:1.04;letter-spacing:-.035em;max-width:16ch}
+.h-m{font-size:clamp(30px,3.4vw,48px);line-height:1.06;letter-spacing:-.03em;max-width:18ch}
+@media (max-width:760px){.h-xl{font-size:clamp(42px,11.5vw,48px)}h2{font-size:clamp(32px,9.2vw,38px)}.h-m{font-size:clamp(28px,8vw,34px)}}
+.lede{font-size:clamp(19px,1.9vw,26px);line-height:1.4;max-width:34em;color:var(--soft)}
+.mono{font-size:12px;letter-spacing:.14em}
+@media (max-width:760px){.mono{font-size:11px}}
+.micro{font-size:14px}
+.btn{border-radius:999px;padding:15px 26px}
+.nav .btn{border-radius:999px;padding:10px 16px}
+.nav{border-bottom:0;box-shadow:0 1px 0 rgba(17,19,24,.06)}
+.lnk{border-bottom:0;padding-bottom:0;color:var(--klein);text-decoration:none;display:inline-block;padding-block:10px;margin-block:-10px}
+.lnk:hover{color:var(--klein);text-decoration:underline;text-underline-offset:4px}
+.bg-ink .lnk{color:#fff}
+footer{border-top:0}
+/* entrée : fondu + 12 px, une fois, à 20 % de visibilité (core.js) ; mouvement réduit : tout est là */
+.js .rv{opacity:0;translate:0 12px;transition:opacity .5s var(--ez),translate .5s var(--ez)}
+.js .rv.on{opacity:1;translate:none}
+/* v43 · titres à la façon Apple : ils arrivent flous et se mettent au point */
+.js h2.rv,.js h3.rv{filter:blur(8px);scale:.985;transition:opacity .7s var(--ez),translate .7s var(--ez),filter .7s var(--ez),scale .7s var(--ez)}.js h2.rv.on,.js h3.rv.on{filter:none;scale:none}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;translate:none;transition:none;filter:none;scale:none}}
+@media print{.js .rv{opacity:1;translate:none;filter:none;scale:none}}
+/* trois temps, en très grand */
+.t3{list-style:none;margin:clamp(48px,6vw,80px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,64px)}
+.t3 i{font:500 12px var(--mono);letter-spacing:.14em;color:var(--muted);font-style:normal;display:block;margin-bottom:16px}
+.t3 b{display:block;font:600 clamp(28px,3vw,44px)/1.06 var(--sans);letter-spacing:-.03em}
+.t3 span{display:block;margin-top:14px;color:var(--soft);font-size:18px;line-height:1.45;max-width:22em}
+@media (max-width:760px){.t3{grid-template-columns:minmax(0,1fr)}.t3 span{font-size:17px}}
+/* quatre puces, sans filet */
+.l4{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+.l4 li{padding-left:28px;position:relative;line-height:1.4}
+.l4 li::before{content:"";position:absolute;left:2px;top:.42em;width:11px;height:6px;border:solid var(--klein);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+/* une ligne de garanties */
+.g3{display:flex;flex-wrap:wrap;gap:8px 32px;margin-top:clamp(40px,5vw,64px);font-size:clamp(17px,1.5vw,20px);font-weight:500;letter-spacing:-.01em}
+.g3 span{display:inline-flex;gap:10px;align-items:baseline}.g3 span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--klein);flex:none;transform:translateY(-2px)}
+/* le dernier écran : encre, un titre, un bouton blanc */
+.end h2{font-size:clamp(36px,5vw,72px);max-width:15ch}
+.end .act{margin-top:clamp(32px,3.6vw,48px)}
+.end :focus-visible{outline-color:#fff}
+.also2{font-size:14px;color:var(--muted)}.also2 a{display:inline-block;padding-block:12px;margin-block:-12px}
+/* pied de page : « Aussi » et le QR (ordinateur seulement) */
+.fq{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
+.fq .qr{border-top:0;padding-top:0;margin-top:0;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);max-width:22em}.fq .qr img{width:84px;height:84px;flex:none}
+@media (max-width:900px){.fq .qr{display:none}}

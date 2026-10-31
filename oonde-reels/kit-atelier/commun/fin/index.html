@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Atelier OONDE · fin</title>
+<link rel="icon" href="data:,">
+<style>
+/* Fin commune « L'atelier OONDE » : 4,0 s. Paramètres d'URL : safe (zone sûre) */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+:root{--paper:#F7F7F4;--ink:#111318;--soft:#3A3F47;--klein:#2038EC}
+html,body{margin:0;overflow:hidden;background:var(--paper)}
+#stage{position:relative;overflow:hidden;background:var(--paper);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:var(--ink)}
+#rings{position:absolute;left:0;top:0}
+.t{position:absolute;font-weight:600;letter-spacing:-.025em;line-height:1.02;white-space:nowrap;text-shadow:0 0 14px var(--paper),0 0 14px var(--paper),0 0 6px var(--paper)}
+.t.s{font-weight:500;letter-spacing:-.005em;color:var(--soft)}
+.k{color:var(--klein)}
+#logo{position:absolute}
+#veil{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--paper);opacity:0}
+#safe{position:absolute;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="rings" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="t" id="l1">Écris <span class="k">MAQUETTE</span></div>
+  <div class="t" id="l2">en commentaire</div>
+  <div class="t s" id="l3">ta maquette gratuite arrive en DM</div>
+  <img id="logo" src="/_kit/brand/logo.svg" alt="">
+  <div id="veil"></div>
+  <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = { out: t => 1 - Math.pow(1 - t, 3), inOut: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2 };
+const q = new URLSearchParams(location.search);
+const W = innerWidth, H = innerHeight, V = H > W;
+window.DURATION = 4.0;
+// Chronologie (s) : 0,00 point bleu · 0,15 anneaux partent · 0,50 « Écris MAQUETTE » · 0,95 « en commentaire »
+// 1,35 sous-ligne · 1,9 logo · 3,70 fondu vers le papier (0,3 s). VOIX d'Alexandre : de 0,30 à ~3,4 s. Musique : après la voix.
+const T = { l1: .5, l2: .95, l3: 1.35, logo: 1.9, fade: 3.7 };
+
+const st = $('#stage'); st.style.width = W + 'px'; st.style.height = H + 'px';
+document.body.style.width = W + 'px'; document.body.style.height = H + 'px';
+const R = $('#rings'); R.setAttribute('width', W); R.setAttribute('height', H);
+// mise en page
+let cx, cy, tx, align, fs1, fs2, fs3, logoH, logoX, logoY, tw;
+if (V) { cx = W / 2; cy = 640; fs1 = 128; fs2 = 96; fs3 = 48; logoH = 64; align = 'center'; }
+else   { cx = 480; cy = H / 2; fs1 = 96; fs2 = 80; fs3 = 42; logoH = 56; align = 'left'; }
+function place(el, size, top) {
+  el.style.fontSize = size + 'px'; el.style.top = top + 'px';
+  if (V) { el.style.left = '0'; el.style.width = W + 'px'; el.style.textAlign = 'center'; }
+  else { el.style.left = '900px'; }
+}
+if (V) { place($('#l1'), fs1, 1010); place($('#l2'), fs2, 1010 + fs1 * 1.12); place($('#l3'), fs3, 1010 + fs1 * 1.12 + fs2 * 1.2); logoY = 1390; }
+else   { place($('#l1'), fs1, 330); place($('#l2'), fs2, 330 + fs1 * 1.12); place($('#l3'), fs3, 330 + fs1 * 1.12 + fs2 * 1.2 + 6); logoY = 760; }
+const lg = $('#logo'); lg.style.height = logoH + 'px';
+lg.style.top = logoY + 'px'; lg.style.left = V ? ((W - logoH * 5.35) / 2) + 'px' : '900px';
+if (q.has('safe')) { document.body.classList.add('show-safe'); Object.assign($('#safe').style, V ? { left: '60px', top: '250px', width: '880px', height: '1250px' } : { left: '96px', top: '54px', width: '1728px', height: '972px' }); }
+
+// anneaux : 4 cercles qui partent du point, fins, encre, qui s'effacent en grandissant
+const NR = 4, RMAX = Math.hypot(W, H) * 0.62;
+let html = '';
+for (let i = 0; i < NR; i++) html += `<circle id="r${i}" cx="${cx}" cy="${cy}" r="0" fill="none" stroke="#111318" stroke-width="3" opacity="0"/>`;
+html += `<circle id="pt" cx="${cx}" cy="${cy}" r="0" fill="#2038EC"/>`;
+R.innerHTML = html;
+
+function rise(el, t, a, dy = 14, d = .4) { const p = E.out(seg(t, a, a + d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; }
+function render(t) {
+  // point bleu : apparition 0 → 0,25 s (léger dépassement), reste jusqu'au bout
+  const pp = seg(t, 0, .25), over = 1 + .25 * Math.sin(Math.PI * pp) * (1 - pp);
+  $('#pt').setAttribute('r', 16 * E.out(pp) * over);
+  for (let i = 0; i < NR; i++) {
+    const p = seg(t, .15 + i * .32, .15 + i * .32 + 1.9);
+    const e = E.out(p);
+    const el = $('#r' + i);
+    el.setAttribute('r', 16 + (RMAX - 16) * e);
+    el.setAttribute('opacity', p > 0 ? (0.55 * Math.pow(1 - p, 1.6)).toFixed(3) : 0);
+    el.setAttribute('stroke-width', (3.5 - 1.5 * p).toFixed(2));
+  }
+  rise($('#l1'), t, T.l1); rise($('#l2'), t, T.l2); rise($('#l3'), t, T.l3, 10); rise($('#logo'), t, T.logo, 8);
+  $('#veil').style.opacity = E.inOut(seg(t, T.fade, 4.0));
+}
+window.render = render;
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 40px IS')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>

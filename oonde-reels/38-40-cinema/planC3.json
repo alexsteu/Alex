@@ -1,0 +1,130 @@
+{
+ "fps": 30,
+ "fonts": "/home/user/k2/fonts",
+ "plans": [
+  {
+   "src": "garage.mp4",
+   "in": 0.5,
+   "out": 4.25
+  },
+  {
+   "src": "garext.mp4",
+   "in": 3.0,
+   "out": 5.0,
+   "speed": 0.5
+  },
+  {
+   "card": true,
+   "dur": 5.25,
+   "entree": "noir"
+  }
+ ],
+ "dyn": [
+  {
+   "type": "osd",
+   "t0": 0,
+   "t1": 3.75,
+   "v0": 96,
+   "stop": 3.3,
+   "tc0": 3
+  }
+ ],
+ "textes": [
+  {
+   "t": "Tout ça… pour une vidange.",
+   "font": "instrument-sans-latin-500-normal.woff2",
+   "size": 50,
+   "y": 1250,
+   "t0": 3.85,
+   "t1": 5.5,
+   "pill": true
+  },
+  {
+   "t": "Même une vidange,\nfilmée comme un film d'action.",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 66,
+   "y": 520,
+   "t0": 5.7,
+   "t1": 13.0
+  },
+  {
+   "t": "Écris MAQUETTE\nen commentaire",
+   "font": "instrument-sans-latin-600-normal.woff2",
+   "size": 96,
+   "y": 820,
+   "t0": 9.1,
+   "t1": 13.0
+  },
+  {
+   "t": "ta maquette gratuite arrive en DM",
+   "font": "instrument-sans-latin-500-normal.woff2",
+   "size": 48,
+   "y": 1080,
+   "t0": 9.5,
+   "t1": 13.0,
+   "color": [
+    220,
+    222,
+    216
+   ]
+  },
+  {
+   "img": "logo.png",
+   "w": 360,
+   "y": 1300,
+   "t0": 9.7,
+   "t1": 13.0
+  }
+ ],
+ "audio": [
+  {
+   "src": "m_garage.m4a",
+   "in": 0.5,
+   "out": 4.25,
+   "t": 0,
+   "gain": 1.0,
+   "fo": 0.04
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/whoosh.wav",
+   "t": 1.4,
+   "gain": 0.8
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/whoosh.wav",
+   "t": 2.8,
+   "gain": 0.7
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/tick.wav",
+   "t": 3.45,
+   "gain": 0.4
+  },
+  {
+   "src": "vo/l9.mp3",
+   "t": 3.85
+  },
+  {
+   "src": "/home/user/k2/hybride/sons/whoosh.wav",
+   "t": 7.7,
+   "gain": 0.5
+  },
+  {
+   "src": "m_garage.m4a",
+   "in": 8.0,
+   "out": 16.5,
+   "t": 3.75,
+   "gain": 0.5,
+   "fi": 0.3,
+   "fo": 1.0
+  },
+  {
+   "src": "vo/l8.mp3",
+   "t": 5.7
+  },
+  {
+   "src": "vo/l7.mp3",
+   "t": 9.1
+  }
+ ]
+}

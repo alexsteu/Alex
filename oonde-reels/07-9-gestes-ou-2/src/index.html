@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · 07 · 9 gestes ou 2 ?</title>
+<link rel="icon" href="data:,">
+<style>
+/* Kit Reels OONDE : DA v7. Polices et logos servis par render.cjs sous /_kit/ */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:CG;src:url(/_kit/fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2');font-style:italic}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+#stage *{box-sizing:border-box}
+.abs{position:absolute}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+.cover #eyebrow{top:1446px}
+
+/* ---------- en-tête ---------- */
+#eyebrow{left:0;top:262px;width:1080px;text-align:center;font-size:30px;letter-spacing:.11em;color:var(--muted)}
+#head{left:0;top:300px;width:1080px;height:236px}
+#hLead{left:0;top:18px;width:1080px;text-align:center;font:500 58px/70px IS;letter-spacing:-.015em;color:var(--soft)}
+#hBig{left:0;top:84px;width:1080px;text-align:center;font:600 124px/136px IS;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+.cap{left:0;top:26px;width:1080px;text-align:center;font:600 84px/116px IS;letter-spacing:-.025em;color:var(--ink);white-space:nowrap;opacity:0}
+#sub9{left:0;top:146px;width:1080px;text-align:center;font:500 54px/70px IS;letter-spacing:-.015em;color:var(--soft);white-space:nowrap;opacity:0}
+
+/* ---------- colonnes : étiquette + compteur ---------- */
+.lab{top:566px;width:480px;text-align:center;font-size:30px;color:var(--muted);display:flex;justify-content:center;align-items:center;gap:14px}
+.lab i{display:block;width:12px;height:12px;border-radius:6px;background:#B9BCC2}
+#labR i{background:var(--ink)}
+.cnt{top:600px;width:480px;height:176px;transform-origin:240px 146px}
+.dg{position:absolute;left:104px;top:0;width:120px;height:154px;overflow:hidden}
+.dg span{position:absolute;left:0;top:0;width:120px;text-align:right;font:600 166px/176px IS;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.wd{position:absolute;left:240px;top:96px;font:500 48px/1 IS;letter-spacing:-.02em;color:var(--soft);white-space:nowrap}
+
+/* ---------- téléphones ---------- */
+.ph{top:776px;width:352px;height:716px;transform-origin:0 0}
+.ph .body{left:0;top:0;width:352px;height:716px;border-radius:56px;background:#16181D;
+  box-shadow:0 0 0 2px #2B2E35 inset,0 0 0 5px #0E0F12 inset,0 36px 70px rgba(17,19,24,.14),0 12px 26px rgba(17,19,24,.09)}
+.ph .scr{left:10px;top:10px;width:332px;height:696px;border-radius:46px;overflow:hidden;background:#fff}
+.sc{position:absolute;left:0;top:0;width:280px;height:587px;transform-origin:0 0;transform:scale(1.185714)}
+.v{position:absolute;left:0;top:0;width:280px;height:587px;overflow:hidden}
+.sc .abs{position:absolute}
+
+/* barre d'état */
+.sbar{left:0;top:0;width:280px;height:32px;background:#fff;z-index:6}
+.sbar .tm{left:24px;top:11px;font:600 12.5px/1 IS;letter-spacing:-.01em;color:#000}
+.sbar .isl{left:98px;top:8px;width:84px;height:24px;border-radius:12px;background:#000}
+.sbar svg{position:absolute;top:12px}
+.sbar.dark{background:transparent}
+.sbar.dark .tm{color:#fff}
+.sbar.dark svg{fill:#fff;color:#fff!important}
+/* barre Safari (schématique, sans nom de domaine) */
+.sf{left:0;top:540px;width:280px;height:47px;background:#F3F3F1;border-top:1px solid #DEDED9;z-index:4}
+.sf .bk{left:10px;top:5px;width:26px;height:26px;border-radius:13px}
+.sf .pill{left:70px;top:6px;width:140px;height:26px;border-radius:13px;background:#E4E4E0}
+.sf .pill i{position:absolute;left:44px;top:10px;width:58px;height:6px;border-radius:3px;background:#BDBDB8}
+.sf .pill b{position:absolute;left:32px;top:8px;width:7px;height:9px;border-radius:2px;background:#9C9C97}
+.home{left:90px;top:578px;width:100px;height:4px;border-radius:2px;background:#111;z-index:9}
+
+/* ---------- ancien site ---------- */
+.old{background:#fff;font-family:'Liberation Serif','DejaVu Serif',serif;color:#333}
+.old .bnr{left:0;top:32px;width:280px;height:52px;background:linear-gradient(#F4EBE1,#E4D4C3);border-bottom:1px solid #C7B29C}
+.old .bnr b{position:absolute;left:12px;top:9px;font:italic 400 21px/1 'Liberation Serif',serif;color:#7B4A5C}
+.old .bnr span{position:absolute;left:13px;top:35px;font:400 8px/1 'Liberation Sans',sans-serif;color:#8A7766}
+.old .nav{left:0;top:84px;width:280px;height:26px;background:#8B5D6E}
+.mbtn{left:8px;top:4px;height:18px;padding:0 8px 0 7px;background:#6F4656;display:flex;align-items:center;gap:5px;
+  font:400 10.5px/1 'Liberation Sans',sans-serif;color:#fff}
+.mbtn i{display:block;width:10px;height:8px;border-top:1.6px solid #fff;border-bottom:1.6px solid #fff;position:relative}
+.mbtn i:after{content:'';position:absolute;left:0;top:1.6px;width:10px;height:1.6px;background:#fff}
+.ct{left:0;top:110px;width:280px;height:430px}
+.ct h1{position:absolute;margin:0;left:12px;top:14px;font:400 23px/1 'Liberation Serif',serif;color:#7B4A5C}
+.ct h2{position:absolute;margin:0;left:12px;font:700 13.5px/1 'Liberation Serif',serif;color:#7B4A5C}
+.ct p{position:absolute;margin:0;left:12px;width:256px;font:400 9.6px/1.36 'Liberation Serif',serif}
+.ct hr{position:absolute;margin:0;border:0;height:1px;background:#D3C2AF;left:12px;width:256px}
+.ct .thumb{left:12px;top:50px;width:88px;height:62px;border:2px solid #fff;box-shadow:0 0 0 1px #B9B0A4;object-fit:cover}
+.ct .capt{left:12px;top:116px;width:88px;font:italic 8px/1 'Liberation Serif',serif;color:#8A7766;text-align:center}
+.ct .foot{left:0;top:396px;width:280px;height:34px;background:#E4D4C3;border-top:1px solid #C7B29C;
+  font:400 7.4px/34px 'Liberation Sans',sans-serif;color:#7A6A5A;text-align:center}
+.pdfl{left:10px;top:80px;display:flex;align-items:center;gap:5px;font:400 10.5px/1 'Liberation Serif',serif;padding:2px 3px;border-radius:3px}
+.pdfl em{font-style:normal;color:#1B4FA8;text-decoration:underline}
+.pdfl small{color:#8A7766;font-size:8.6px}
+.ico{width:12px;height:15px;background:#fff;border:1px solid #B33;position:relative;flex:none}
+.ico:after{content:'PDF';position:absolute;left:-1px;bottom:1px;width:12px;background:#C33;color:#fff;font:700 4.4px/6px 'Liberation Sans',sans-serif;text-align:center}
+.telr{left:10px;top:94px;display:flex;align-items:baseline;gap:5px;font:400 12px/1 'Liberation Serif',serif;padding:3px 3px;border-radius:3px}
+.telr em{font-style:normal;color:#1B4FA8;text-decoration:underline;font-size:13.5px}
+/* menu déroulant */
+.menu{left:0;top:110px;width:280px;height:128px;background:#8B5D6E;box-shadow:0 10px 18px rgba(0,0,0,.18);z-index:3}
+.menu div{height:32px;padding-left:14px;font:400 13px/32px 'Liberation Serif',serif;color:#fff;border-bottom:1px solid rgba(255,255,255,.16)}
+/* lecteur PDF */
+.pdfv{left:0;top:32px;width:280px;height:508px;background:#D5D5D9;overflow:hidden;z-index:2}
+.pdfp{left:30px;top:28px;width:220px;height:311px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.14);transform-origin:46px 200px;font-family:'Liberation Serif',serif;color:#333}
+.pdfp .t1{left:16px;top:16px;font:italic 400 14px/1 'Liberation Serif',serif;color:#7B4A5C}
+.pdfp .t2{left:16px;top:35px;font:400 6px/1 'Liberation Sans',sans-serif;color:#8A7766;letter-spacing:.04em}
+.pdfp .rw{left:16px;width:188px;height:12px;font:400 7px/12px 'Liberation Serif',serif;display:flex;gap:4px}
+.pdfp .rw i{flex:1;border-bottom:1px dotted #9A9A9A;height:9px}
+.pdfp .hh{left:16px;top:160px;font:700 9px/1 'Liberation Serif',serif;color:#7B4A5C}
+.pdfp .hl{left:16px;font:400 7px/1 'Liberation Serif',serif}
+.pdfp .bar{left:16px;height:4px;border-radius:2px;background:#E2E2E2}
+.pdfnum{left:12px;top:10px;padding:3px 7px;border-radius:7px;background:rgba(60,60,64,.55);color:#fff;font:500 8px/1 IS;z-index:3}
+/* fenêtre d'appel iOS (schématique) */
+.dim{left:0;top:0;width:280px;height:587px;background:rgba(10,10,14,.34);z-index:7}
+.alert{left:35px;top:222px;width:210px;height:104px;border-radius:14px;background:rgba(246,246,248,.98);z-index:8;overflow:hidden}
+.alert .num{left:0;top:22px;width:210px;text-align:center;font:600 13.5px/1 IS;color:#000}
+.alert .sub{left:0;top:40px;width:210px;text-align:center;font:400 9px/1 IS;color:#6B7078}
+.alert .hl{left:0;top:58px;width:210px;height:1px;background:#D6D6DA}
+.alert .vl{left:105px;top:58px;width:1px;height:46px;background:#D6D6DA}
+.alert .b1,.alert .b2{top:59px;width:105px;height:45px;text-align:center;font:400 13px/45px IS;color:#111}
+.alert .b1{left:0}
+.alert .b2{left:105px;font-weight:600}
+/* écran d'appel */
+.call{left:0;top:0;width:280px;height:587px;background:linear-gradient(#3B3D43,#17181C);z-index:10}
+.call .tmw{left:24px;top:11px;font:600 12.5px/1 IS;color:#fff}
+.call .n{left:0;top:104px;width:280px;text-align:center;font:400 23px/1 IS;color:#fff;letter-spacing:-.01em}
+.call .nm2{left:0;top:134px;width:280px;text-align:center;font:400 11px/1 IS;color:#AEB1B7}
+.call .s{left:0;top:156px;width:280px;text-align:center;font:400 11px/1 IS;color:#AEB1B7}
+.call .o{width:46px;height:46px;border-radius:23px;background:rgba(255,255,255,.13)}
+.call .end{left:113px;top:452px;width:54px;height:54px;border-radius:27px;background:#E5484D;display:flex;align-items:center;justify-content:center}
+
+/* ---------- nouveau site ---------- */
+.nw{background:#fff;font-family:IS,sans-serif;color:var(--ink)}
+.nw .hdr{left:0;top:32px;width:280px;height:40px}
+.nw .hdr b{position:absolute;left:16px;top:10px;font:400 19px/1 CG;color:var(--ink)}
+.nw .hdr i{position:absolute;left:248px;width:16px;height:1.5px;background:var(--ink);border-radius:1px}
+.nw .photo{left:0;top:72px;width:280px;height:150px;overflow:hidden;background:#ddd}
+.nw .photo img{position:absolute;left:0;top:-20px;width:280px;height:200px;object-fit:cover;object-position:42% 50%}
+.nw .eb{left:16px;top:236px;font-size:7px;color:var(--muted);letter-spacing:.16em}
+.nw .nm{left:15px;top:247px;font:400 33px/1 CG;letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
+.nw .tg{left:16px;top:287px;font:500 12.5px/1.2 IS;color:var(--soft);letter-spacing:-.01em}
+.nw .btn{left:16px;top:312px;width:248px;height:46px;border-radius:12px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:8px;font:600 13px/1 IS;letter-spacing:-.01em}
+.nw .btn svg{width:19px;height:19px}
+.nw .hrs{left:16px;top:372px;width:248px;height:104px;border-radius:12px;box-shadow:0 0 0 1px var(--line) inset;padding:11px 12px}
+.nw .hrs .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.nw .hrs .h b{font:600 11.5px/1 IS}
+.nw .hrs .h span{font:500 9.5px/1 IS;color:var(--soft)}
+.nw .row{display:flex;justify-content:space-between;font:400 10.5px/24px IS;color:var(--soft);border-top:1px solid #EEEFEB}
+.nw .row b{font-weight:500;color:var(--ink)}
+.nw .sec{left:16px;top:492px;font:600 11.5px/1 IS}
+.nw .chips{left:16px;top:510px;width:260px;display:flex;gap:6px}
+.nw .chips span{font:500 10px/1 IS;padding:7px 9px;border-radius:8px;box-shadow:0 0 0 1px var(--line) inset;color:var(--soft)}
+/* discussion (schématique, sans logo) */
+.chat{left:0;top:0;width:280px;height:587px;background:#EFEBE3;z-index:5;font-family:IS,sans-serif}
+.chat .hd{left:0;top:32px;width:280px;height:50px;background:#F6F6F3;border-bottom:1px solid #E2E2DD}
+.chat .av{left:28px;top:9px;width:32px;height:32px;border-radius:16px;background:#EDE3DA;text-align:center;font:400 20px/32px CG;color:#7B4A5C}
+.chat .nmc{left:68px;top:11px;font:600 12.5px/1 IS;color:var(--ink)}
+.chat .sbc{left:68px;top:29px;font:500 8.5px/1 IS;color:var(--muted)}
+.chat .day{left:105px;top:96px;width:70px;height:17px;border-radius:6px;background:#fff;text-align:center;font:500 8px/17px IS;color:var(--muted)}
+.chat .in{left:0;top:315px;width:280px;height:56px;background:#F6F6F3;border-top:1px solid #E2E2DD}
+.chat .fld{left:10px;top:7px;width:216px;height:40px;border-radius:20px;background:#fff;box-shadow:0 0 0 1px #E0E0DB inset;
+  padding:6px 12px;font:400 10.5px/1.3 IS;color:var(--ink)}
+.chat .snd{left:234px;top:9px;width:36px;height:36px;border-radius:18px;background:var(--wa);display:flex;align-items:center;justify-content:center}
+.chat .bub{right:10px;top:256px;width:178px;padding:7px 9px 6px 10px;border-radius:13px 13px 4px 13px;background:var(--wa);color:#fff;
+  font:400 10.5px/1.3 IS;transform-origin:100% 100%;opacity:0;box-shadow:0 2px 5px rgba(0,0,0,.08)}
+.chat .meta{display:flex;justify-content:flex-end;align-items:center;gap:3px;margin-top:2px;font:500 7.5px/1 IS;color:rgba(255,255,255,.78)}
+
+.chat .kb{left:0;top:371px;width:280px;height:216px;background:#D3D5DB}
+.chat .ky{position:absolute;height:36px;border-radius:5px;background:#FCFCFD;box-shadow:0 1px 0 rgba(0,0,0,.28);text-align:center;font:400 13.5px/36px IS;color:#111}
+.chat .ky.g{background:#ABB0BA;font-size:10.5px}
+/* toucher */
+.tch{width:34px;height:34px;border-radius:17px;border:2.5px solid var(--klein);background:rgba(32,56,236,.14);opacity:0;z-index:20;
+  box-shadow:0 0 0 2px rgba(255,255,255,.75)}
+.rng{width:34px;height:34px;border-radius:17px;border:2px solid var(--klein);opacity:0;z-index:20}
+
+/* ---------- récapitulatif (coupe franche) ---------- */
+.rc{top:500px;width:480px;height:300px;display:none;justify-content:center;align-items:baseline;gap:14px;transform-origin:50% 70%}
+.rc b{font:600 290px/300px IS;letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.rc span{font:500 54px/1 IS;letter-spacing:-.02em;color:var(--soft)}
+
+/* ---------- fin ---------- */
+#end{left:0;top:0;width:1080px;height:1920px;background:var(--paper);display:none}
+.em{position:absolute;left:0;width:1080px;height:128px;overflow:hidden}
+.em div{position:absolute;left:0;top:0;width:1080px;text-align:center;font:600 100px/124px IS;letter-spacing:-.03em;white-space:nowrap}
+#e1{top:680px}
+#cta{top:880px;height:110px;border-radius:55px;background:#fff;padding:0 36px 0 28px;display:flex;align-items:center;gap:16px;
+  font:600 46px/1 IS;letter-spacing:-.02em;color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset,0 18px 40px rgba(17,19,24,.08);white-space:nowrap}
+#cta svg{width:54px;height:54px}
+#elogo{left:0;top:1120px;width:1080px;text-align:center}
+#elogo img{height:64px}
+#ehandle{left:0;top:1218px;width:1080px;text-align:center;font-size:32px;color:var(--muted)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="wa" viewBox="0 0 24 24"><path fill="#14803C" d="M12 1.6a10.4 10.4 0 0 0-9 15.6L1.6 22.4l5.4-1.4A10.4 10.4 0 1 0 12 1.6z"/><path fill="#fff" d="M8.4 6.9c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .6.4l.9 2c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.4.7 1 1.4 1.7 2 .7.6 1.3.9 1.6 1 .2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1 1-.2 1.7-.3.7-1.7 1.4-2.3 1.4-.6 0-1.4.2-4.3-1.1-2.6-1.2-4.3-3.9-4.4-4.1-.1-.2-1.1-1.4-1.1-2.6s.6-1.9.9-2.2z"/></symbol>
+    <symbol id="sig" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="5" width="3" height="6" rx="1"/><rect x="9.2" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></symbol>
+    <symbol id="wifi" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0z M3.6 7a6.2 6.2 0 0 1 8.8 0l-1.3 1.3a4.4 4.4 0 0 0-6.2 0z M1.5 4.9a9.2 9.2 0 0 1 13 0l-1.3 1.3a7.4 7.4 0 0 0-10.4 0z"/></symbol>
+    <symbol id="bat" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="currentColor" stroke-opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="1.8"/><rect x="22.6" y="4" width="1.6" height="4" rx=".8" fill-opacity=".45"/></symbol>
+    <symbol id="chev" viewBox="0 0 12 20"><path d="M10 2 2 10l8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+<div id="stage">
+ <div id="main" class="abs" style="left:0;top:0;width:1080px;height:1920px">
+
+  <div id="eyebrow" class="abs mono">Démo · lieu fictif · Salon Mirabelle</div>
+
+  <div id="head" class="abs">
+    <div id="hLead" class="abs">Prendre rendez-vous&nbsp;:</div>
+    <div id="hBig" class="abs">9 gestes ou <span class="k">2</span>&nbsp;?</div>
+    <div id="caps"></div>
+    <div id="sub9" class="abs">aux heures d’ouverture.</div>
+  </div>
+
+  <div id="labL" class="abs lab mono" style="left:60px"><i></i>Ancien site</div>
+  <div id="labR" class="abs lab mono" style="left:540px"><i></i>Nouveau site</div>
+
+  <div id="cntL" class="abs cnt" style="left:60px"><div class="dg"><span class="d0">0</span><span class="d1">0</span></div><div class="wd">geste</div></div>
+  <div id="cntR" class="abs cnt" style="left:540px"><div class="dg"><span class="d0">0</span><span class="d1">0</span></div><div class="wd">geste</div></div>
+
+  <div id="rcL" class="abs rc" style="left:60px"><b>9</b><span>gestes</span></div>
+  <div id="rcR" class="abs rc" style="left:526px"><b>2</b><span>gestes</span></div>
+
+  <!-- TÉLÉPHONE GAUCHE : ancien site -->
+  <div id="phL" class="abs ph" style="left:124px">
+    <div class="abs body"></div>
+    <div class="abs scr"><div class="sc">
+      <div class="v old">
+        <div class="abs bnr"><b>Salon Mirabelle</b><span>Coiffure dames &amp; messieurs</span></div>
+        <div class="abs nav"><div class="abs mbtn" id="mbtn"><i></i>Menu</div></div>
+        <!-- accueil -->
+        <div class="abs ct" id="pgHome">
+          <h1>Bienvenue</h1>
+          <img class="abs thumb" src="t-coiffure.jpg" alt="">
+          <div class="abs capt">Notre salon</div>
+          <p style="left:108px;top:48px;width:160px;text-align:justify">Bienvenue sur le site du Salon Mirabelle&#8239;! Notre équipe vous accueille dans une ambiance chaleureuse et conviviale, du mardi au samedi.</p>
+          <hr style="top:134px">
+          <h2 style="top:146px">Actualités</h2>
+          <p style="top:166px">Fermeture annuelle du 1er au 15 août. Merci de votre compréhension.</p>
+          <hr style="top:200px">
+          <h2 style="top:212px">Nos coordonnées</h2>
+          <p style="top:232px">Voir la page Contact.</p>
+          <div class="abs foot">© Salon Mirabelle · Dernière mise à jour&#8239;: 12.03.2014</div>
+        </div>
+        <!-- prestations -->
+        <div class="abs ct" id="pgPrest" style="display:none">
+          <h1>Prestations</h1>
+          <p style="top:50px">La liste de nos prestations et nos horaires sont disponibles ici&#8239;:</p>
+          <div class="abs pdfl" id="pdfl"><span class="ico"></span><em>prestations_2014.pdf</em><small>(1,8 Mo)</small></div>
+          <hr style="top:110px">
+          <p style="top:122px">Pour prendre rendez-vous, merci de nous téléphoner (voir la page Contact).</p>
+          <hr style="top:158px">
+          <h2 style="top:170px">Cartes cadeaux</h2>
+          <p style="top:190px">Disponibles au salon.</p>
+          <div class="abs foot">© Salon Mirabelle · Dernière mise à jour&#8239;: 12.03.2014</div>
+        </div>
+        <!-- contact -->
+        <div class="abs ct" id="pgContact" style="display:none">
+          <h1>Contact</h1>
+          <p style="top:50px;font-weight:700">Salon Mirabelle</p>
+          <p style="top:64px">Coiffure dames &amp; messieurs · Montreux</p>
+          <div class="abs telr" id="telr"><span>Tél.</span><em>021 000 00 00</em></div>
+          <p style="top:124px">Horaires&#8239;: voir la brochure (PDF).</p>
+          <p style="top:140px">Rendez-vous uniquement par téléphone.</p>
+          <hr style="top:166px">
+          <h2 style="top:178px">Plan d’accès</h2>
+          <div class="abs" style="left:12px;top:198px;width:256px;height:90px;background:#ECE7DF;box-shadow:0 0 0 1px #D3C2AF inset"></div>
+          <div class="abs foot">© Salon Mirabelle · Dernière mise à jour&#8239;: 12.03.2014</div>
+        </div>
+        <!-- menu -->
+        <div class="abs menu" id="menu"><div>Accueil</div><div>Le salon</div><div id="miP">Prestations</div><div id="miC">Contact</div></div>
+        <!-- PDF -->
+        <div class="abs pdfv" id="pdfv">
+          <div class="abs pdfnum">1 sur 3</div>
+          <div class="abs pdfp" id="pdfp">
+            <div class="abs t1">Salon Mirabelle</div>
+            <div class="abs t2">PRESTATIONS &amp; HORAIRES · 2014</div>
+            <div class="abs bar" style="top:48px;width:188px;height:1px;background:#D3C2AF"></div>
+            <div class="abs rw" style="top:56px"><span>Coupe dames</span><i></i></div>
+            <div class="abs rw" style="top:69px"><span>Coupe messieurs</span><i></i></div>
+            <div class="abs rw" style="top:82px"><span>Brushing</span><i></i></div>
+            <div class="abs rw" style="top:95px"><span>Couleur</span><i></i></div>
+            <div class="abs rw" style="top:108px"><span>Mèches</span><i></i></div>
+            <div class="abs rw" style="top:121px"><span>Soin</span><i></i></div>
+            <div class="abs rw" style="top:134px"><span>Chignon</span><i></i></div>
+            <div class="abs hh">Horaires</div>
+            <div class="abs hl" style="top:174px">Mardi – vendredi&#8239;: 9 h – 18 h 30</div>
+            <div class="abs hl" style="top:185px">Samedi&#8239;: 8 h – 16 h</div>
+            <div class="abs hl" style="top:196px">Dimanche, lundi&#8239;: fermé</div>
+            <div class="abs hl" id="pdfRdv" style="top:214px;font-style:italic">Rendez-vous par téléphone uniquement.</div>
+            <div class="abs" id="pdfU" style="left:16px;top:223px;height:.8px;width:0;background:var(--klein)"></div>
+            <div class="abs bar" style="top:236px;width:180px"></div>
+            <div class="abs bar" style="top:246px;width:160px"></div>
+            <div class="abs bar" style="top:256px;width:172px"></div>
+            <div class="abs bar" style="top:274px;width:120px"></div>
+          </div>
+        </div>
+        <!-- confirmation d'appel -->
+        <div class="abs dim" id="dim"></div>
+        <div class="abs alert" id="alert"><div class="abs num">021 000 00 00</div><div class="abs sub">Salon Mirabelle</div><div class="abs hl"></div><div class="abs vl"></div><div class="abs b1">Annuler</div><div class="abs b2" id="b2">Appeler</div></div>
+        <!-- écran d'appel -->
+        <div class="abs call" id="call">
+          <div class="abs n">021 000 00 00</div>
+          <div class="abs nm2">Salon Mirabelle</div>
+          <div class="abs s" id="callS">appel…</div>
+          <div class="abs o" style="left:47px;top:300px"></div><div class="abs o" style="left:117px;top:300px"></div><div class="abs o" style="left:187px;top:300px"></div>
+          <div class="abs o" style="left:47px;top:364px"></div><div class="abs o" style="left:117px;top:364px"></div><div class="abs o" style="left:187px;top:364px"></div>
+          <div class="abs end"><svg width="26" height="26" viewBox="0 0 24 24"><path fill="#fff" transform="rotate(135 12 12)" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></div>
+        </div>
+        <!-- Safari -->
+        <div class="abs sf" id="sfL"><div class="abs bk" id="bkL"></div>
+          <svg class="abs" style="left:17px;top:9px;color:#111" width="11" height="18"><use href="#chev"/></svg>
+          <svg class="abs" style="left:44px;top:9px;color:#B5B5B0;transform:scaleX(-1)" width="11" height="18"><use href="#chev"/></svg>
+          <div class="abs pill"><b></b><i></i></div>
+          <div class="abs" style="left:228px;top:11px;width:13px;height:15px;border:1.6px solid #111;border-top:0;border-radius:0 0 2px 2px"></div>
+          <div class="abs" style="left:253px;top:11px;width:14px;height:14px;border:1.6px solid #111;border-radius:3px"></div>
+        </div>
+        <div class="abs sbar" id="sbL"><div class="abs tm">09:41</div><div class="abs isl"></div>
+          <svg style="left:205px" width="17" height="11"><use href="#sig"/></svg><svg style="left:226px;top:11px" width="15" height="11"><use href="#wifi"/></svg><svg style="left:246px;color:#000" width="25" height="12"><use href="#bat"/></svg></div>
+        <div class="abs home" id="homeL"></div>
+        <div class="abs tch" id="tL"></div><div class="abs rng" id="rL"></div>
+        <div class="abs tch" id="tL2"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- TÉLÉPHONE DROIT : nouveau site -->
+  <div id="phR" class="abs ph" style="left:604px">
+    <div class="abs body"></div>
+    <div class="abs scr"><div class="sc">
+      <div class="v nw">
+        <div class="abs hdr"><b>Mirabelle</b><i style="top:17px"></i><i style="top:23px"></i></div>
+        <div class="abs photo"><img src="t-coiffure.jpg" alt=""></div>
+        <div class="abs eb mono">Coiffure · Montreux</div>
+        <div class="abs nm">Salon Mirabelle</div>
+        <div class="abs tg">Coupe, couleur, brushing.</div>
+        <div class="abs btn" id="btnR"><svg><use href="#wa"/></svg>Réserver sur WhatsApp</div>
+        <div class="abs hrs">
+          <div class="h"><b>Horaires</b><span>Mardi – samedi</span></div>
+          <div class="row"><b>Mardi – vendredi</b><span>9 h – 18 h 30</span></div>
+          <div class="row"><b>Samedi</b><span>8 h – 16 h</span></div>
+          <div class="row"><b>Dimanche, lundi</b><span>Fermé</span></div>
+        </div>
+        <div class="abs sec">Prestations</div>
+        <div class="abs chips"><span>Coupe</span><span>Couleur</span><span>Brushing</span><span>Mèches</span></div>
+        <div class="abs sf"><div class="abs bk"></div>
+          <svg class="abs" style="left:17px;top:9px;color:#111" width="11" height="18"><use href="#chev"/></svg>
+          <svg class="abs" style="left:44px;top:9px;color:#B5B5B0;transform:scaleX(-1)" width="11" height="18"><use href="#chev"/></svg>
+          <div class="abs pill"><b></b><i></i></div>
+          <div class="abs" style="left:228px;top:11px;width:13px;height:15px;border:1.6px solid #111;border-top:0;border-radius:0 0 2px 2px"></div>
+          <div class="abs" style="left:253px;top:11px;width:14px;height:14px;border:1.6px solid #111;border-radius:3px"></div>
+        </div>
+        <!-- discussion -->
+        <div class="abs chat" id="chat">
+          <div class="abs hd">
+            <svg class="abs" style="left:10px;top:16px;color:#111" width="10" height="17"><use href="#chev"/></svg>
+            <div class="abs av">M</div>
+            <div class="abs nmc">Salon Mirabelle</div>
+            <div class="abs sbc">Démo · lieu fictif</div>
+          </div>
+          <div class="abs day">Aujourd’hui</div>
+          <div class="abs bub" id="bub">Bonjour, je souhaite prendre rendez-vous.<div class="meta">09:41<svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4.2 3.6 6.6 9 1.2" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="abs in">
+            <div class="abs fld" id="fld">Bonjour, je souhaite prendre rendez-vous.</div>
+            <div class="abs snd" id="snd"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 13V3.4M3.6 7.6 8 3.2l4.4 4.4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="abs kb" id="kb"></div>
+        </div>
+        <div class="abs sbar"><div class="abs tm">09:41</div><div class="abs isl"></div>
+          <svg style="left:205px" width="17" height="11"><use href="#sig"/></svg><svg style="left:226px;top:11px" width="15" height="11"><use href="#wifi"/></svg><svg style="left:246px;color:#000" width="25" height="12"><use href="#bat"/></svg></div>
+        <div class="abs home"></div>
+        <div class="abs tch" id="tR"></div><div class="abs rng" id="rR"></div>
+      </div>
+    </div></div>
+  </div>
+ </div>
+
+ <!-- ÉCRAN FINAL -->
+ <div id="end" class="abs">
+  <div id="e1" class="em"><div id="e1t">Et chez <span class="k">vous</span>&nbsp;?</div></div>
+  <div id="cta" class="abs"><svg><use href="#wa"/></svg>Maquette offerte sur WhatsApp</div>
+  <div id="elogo" class="abs"><img src="/_kit/brand/logo.svg" alt=""></div>
+  <div id="ehandle" class="abs mono">@oonde_studio</div>
+ </div>
+
+ <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  in: t => t * t * t,
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  back: t => { const c = 1.4; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
+};
+function rise(el, t, a, d = .45, dy = 40) { const p = E.out(seg(t, a, a + d)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; }
+const show = (el, on) => { el.style.display = on ? 'block' : 'none'; };
+
+// ---------- minutage ----------
+const STEP = 0.76;                          // un temps de musique (79 BPM)
+const S = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => +(2.28 + STEP * i).toFixed(2));   // 9 gestes, ancien site
+const C = S.map(s => s + 0.08);                                                  // changement d'écran
+const HOOK = 1.94;                          // sortie de l'accroche (fondu 0,12 s, sans masque)
+const SUB9 = S[8] + 0.20;                   // « aux heures d'ouverture. »
+const SW = 10.21;                           // bascule du focus vers la droite
+const R1 = 11.02, R2 = 11.78;               // 2 gestes, nouveau site (sur les demi-temps)
+const G = 12.54;                            // récapitulatif : « 9 gestes » seul
+const G2 = G + 0.40;                        // coupe : « 2 gestes » s'allume
+const END = 14.44;                          // écran final
+window.DURATION = 16.64;
+
+// légendes (une à la fois, coupe franche)
+const NB = ' ';
+const CAPS = [
+  [S[0] - .14, 'Ouvrir le menu'],
+  [S[1] - .14, `«${NB}Prestations${NB}»`],
+  [S[2] - .14, 'PDF des horaires'],
+  [S[3] - .14, 'Zoomer pour lire'],
+  [S[4] - .14, 'Revenir'],
+  [S[5] - .14, 'Rouvrir le menu'],
+  [S[6] - .14, `«${NB}Contact${NB}»`],
+  [S[7] - .14, 'Toucher le numéro'],
+  [S[8] - .14, 'Appeler'],
+  [SW + .13, `Toucher «${NB}Réserver${NB}»`],
+  [R2 - .14, 'Envoyer sur WhatsApp'],
+  [G, 'Réserver en 2 gestes.'],
+];
+const capBox = $('#caps');
+const capEls = CAPS.map(([, txt]) => { const d = document.createElement('div'); d.className = 'abs cap'; d.textContent = txt; capBox.appendChild(d); return d; });
+capEls[10].style.fontSize = '78px';   // « Envoyer sur WhatsApp » : 862 px à 84 px → 78 px
+
+// clavier QWERTZ (Suisse) schématique
+(() => {
+  const kb = $('#kb'), W = 24.2, Gp = 3.2;
+  const key = (x, y, w, txt, g) => { const d = document.createElement('div'); d.className = 'ky' + (g ? ' g' : ''); d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.width = w + 'px'; d.textContent = txt; kb.appendChild(d); };
+  const row = (letters, y) => { const tw = letters.length * W + (letters.length - 1) * Gp, x0 = (280 - tw) / 2; [...letters].forEach((c, i) => key(x0 + i * (W + Gp), y, W, c)); };
+  row('qwertzuiop', 8); row('asdfghjkl', 53); row('yxcvbnm', 98);
+  key(4.6, 98, 34, '⇧', 1); key(241.4, 98, 34, '⌫', 1);
+  key(4.6, 143, 60, '123', 1); key(67.8, 143, 145, 'espace'); key(216, 143, 59.4, 'retour', 1);
+})();
+
+// gestes (coordonnées dans la page 280 × 587 du téléphone)
+const TAPS_L = [
+  { T: S[0], x: 36, y: 97, a: S[0] - .82 },
+  { T: S[1], x: 60, y: 190 },
+  { T: S[2], x: 82, y: 197 },
+  null,                                   // pincement
+  { T: S[4], x: 23, y: 562 },
+  { T: S[5], x: 36, y: 97 },
+  { T: S[6], x: 50, y: 222 },
+  { T: S[7], x: 84, y: 213 },
+  { T: S[8], x: 192, y: 303 },
+];
+const TAPS_R = [{ T: R1, x: 140, y: 335, a: R1 - .34 }, { T: R2, x: 252, y: 342 }];
+const PINCH = { x: 140, y: 440 };          // doigts sous le texte agrandi
+
+function touch(dot, ring, taps, t) {
+  let tp = null;
+  for (const k of taps) { if (!k) continue; const a = k.a ?? k.T - .24; if (t >= a && t < k.T + .45) tp = { ...k, a }; }
+  if (!tp) { dot.style.opacity = 0; ring.style.opacity = 0; return; }
+  const pin = E.out(seg(t, tp.a, tp.a + .16));
+  const press = seg(t, tp.T - .05, tp.T) * (1 - seg(t, tp.T + .07, tp.T + .16));
+  const out = seg(t, tp.T + .16, tp.T + .32);
+  const s = lerp(1.4, 1, pin) * (1 - .2 * press);
+  dot.style.opacity = pin * (1 - out);
+  dot.style.transform = `translate(${tp.x - 17}px,${tp.y - 17}px) scale(${s})`;
+  const rp = seg(t, tp.T, tp.T + .4);
+  ring.style.opacity = rp > 0 && rp < 1 ? .85 * (1 - rp) : 0;
+  ring.style.transform = `translate(${tp.x - 17}px,${tp.y - 17}px) scale(${1 + 1.3 * E.out(rp)})`;
+}
+
+// compteur : chiffre qui roule ; couleur : gris avant le 1er geste, puis Klein (actif) ou encre
+function counter(el, changes, t, col, grow) {
+  let v = 0, last = -9;
+  for (const c of changes) if (t >= c) { v++; last = c; }
+  const p = E.out(seg(t, last, last + .26));
+  const d0 = el.querySelector('.d0'), d1 = el.querySelector('.d1');
+  d1.textContent = v; d0.textContent = Math.max(0, v - 1);
+  d1.style.transform = `translateY(${(1 - p) * 154}px)`;
+  d0.style.transform = `translateY(${-p * 154}px)`;
+  d0.style.opacity = v > 0 && p < 1 ? 1 - seg(p, 0, .45) : 0;
+  d0.style.color = d1.style.color = col;
+  el.querySelector('.wd').textContent = (p < .5 ? v - 1 : v) > 1 ? 'gestes' : 'geste';
+  // la pénibilité s'accumule : +3 % par geste (1,00 → 1,24 au 9e)
+  const k = grow ? Math.max(0, (v - 1) - (1 - p)) : 0;
+  el.style.transform = `scale(${1 + .03 * k})`;
+  if (grow) $('#labL').style.translate = `0 ${(-1.2 * k).toFixed(2)}px`;
+}
+
+// téléphones : échelle de base B, focus (actif 1,04 / inactif 0,94, désaturé, 35 %), poussée lente
+const B = 0.88, PX = 10, PS = 1.185714;     // page → téléphone : x_tel = 10 + x × 1,1857
+const toPh = (x, y) => [PX + x * PS, PX + y * PS];
+const TGT = TAPS_L.map((k, i) => k ? toPh(k.x, k.y) : toPh(PINCH.x, PINCH.y - 80));
+function trackL(t) {                         // point visé, lissé (E.inOut, 0,3 s par changement de cible)
+  let [x, y] = TGT[0];
+  for (let i = 1; i < 9; i++) {
+    const q = E.inOut(seg(t, S[i] - .34, S[i] - .04));
+    x = lerp(x, TGT[i][0], q); y = lerp(y, TGT[i][1], q);
+  }
+  return [x, y];
+}
+function place(el, left, s, ox, oy, op, sat, box) {
+  let x0 = left + ox * (1 - s), y0 = 776 + oy * (1 - s);
+  x0 = clamp(x0, box[0], box[1] - 352 * s); y0 = clamp(y0, box[2], box[3] - 716 * s);
+  el.style.transform = `translate(${(x0 - left).toFixed(2)}px,${(y0 - 776).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  el.style.opacity = op;
+  el.style.filter = sat < .999 ? `saturate(${sat.toFixed(3)})` : '';
+}
+
+function render(t) {
+  const fin = t >= END, rec = t >= G && !fin;
+  show($('#main'), !fin); show($('#end'), fin);
+
+  if (!fin) {
+    // ----- en-tête : accroche puis légendes -----
+    const ho = E.in(seg(t, HOOK, HOOK + .12));
+    for (const id of ['#hLead', '#hBig']) { $(id).style.opacity = 1 - ho; $(id).style.transform = `translateY(${-30 * ho}px)`; }
+    let cur = -1;
+    CAPS.forEach(([a], i) => { if (t >= a) cur = i; });
+    capEls.forEach((el, i) => {
+      if (i !== cur) { el.style.opacity = 0; return; }
+      const p = E.out(seg(t, CAPS[i][0], CAPS[i][0] + .16));
+      el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * 34}px)`;
+    });
+    const s9 = (t >= SUB9 && t < CAPS[9][0]) ? E.out(seg(t, SUB9, SUB9 + .22)) : 0;
+    $('#sub9').style.opacity = s9; $('#sub9').style.transform = `translateY(${(1 - s9) * 26}px)`;
+
+    // ----- compteurs -----
+    const GRAY = '#B9BCC2', K = 'var(--klein)', INK = 'var(--ink)';
+    counter($('#cntL'), S.map(s => s + .05), t, t < S[0] + .05 ? GRAY : t < SW ? K : INK, true);
+    counter($('#cntR'), [R1 + .05, R2 + .05], t, t < R1 + .05 ? GRAY : K, false);
+    show($('#cntL'), !rec); show($('#cntR'), !rec);
+
+    // ----- focus -----
+    const f1 = E.inOut(seg(t, 1.74, 2.06)), f2 = E.inOut(seg(t, SW, SW + .32));
+    const aL = f1 * (1 - f2), dL = f2, dR = f1 * (1 - f2), aR = f2;
+    const push = E.inOut(seg(t, S[0] - .3, S[8] + .1));          // 1,04 → 1,16 pendant les 9 gestes
+    if (!rec) {
+      const [tx, ty] = trackL(t);
+      const sL = B * (1 + aL * (.04 + .12 * push) - .06 * dL);
+      place($('#phL'), 124, sL, lerp(176, tx, aL), lerp(0, ty, aL), 1 - .65 * dL, 1 - dL, [60, 566, 758, 1500]);
+      const sR = B * (1 + .04 * aR - .06 * dR);
+      place($('#phR'), 604, sR, 176, 0, 1 - .65 * dR, 1 - dR, [574, 940, 758, 1500]);
+      $('#labL').style.transform = $('#labR').style.transform = '';
+    } else {
+      // ----- récapitulatif : coupes franches -----
+      const on2 = t >= G2;
+      place($('#phL'), 124, .82, 176, 0, 1, 1, [60, 940, 800, 1460]);
+      place($('#phR'), 604, .82, 176, 0, on2 ? 1 : .35, on2 ? 1 : 0, [60, 930, 800, 1460]);
+      $('#labL').style.transform = $('#labR').style.transform = 'translateY(-84px)';
+      $('#labR').style.opacity = on2 ? 1 : .35;
+      const rL = $('#rcL'), rR = $('#rcR');
+      rL.style.display = rR.style.display = 'flex';
+      rR.style.opacity = on2 ? 1 : .35;
+      rR.querySelector('b').style.color = on2 ? 'var(--klein)' : 'var(--ink)';
+      const pp = on2 ? E.out(seg(t, G2, G2 + .24)) : 1;
+      rR.style.transform = `scale(${on2 ? lerp(1.14, 1, pp) : 1})`;
+    }
+    if (!rec) { $('#rcL').style.display = $('#rcR').style.display = 'none'; $('#labR').style.opacity = 1; }
+
+    // ----- ancien site -----
+    show($('#pgHome'), t < C[1]);
+    show($('#pgPrest'), t >= C[1] && t < C[6]);
+    show($('#pgContact'), t >= C[6]);
+    const m1 = (t >= C[0] && t < C[1]) ? E.out(seg(t, C[0], C[0] + .18)) : 0;
+    const m2 = (t >= C[5] && t < C[6]) ? E.out(seg(t, C[5], C[5] + .18)) : 0;
+    const m = Math.max(m1, m2);
+    show($('#menu'), m > 0);
+    $('#menu').style.clipPath = `inset(0 0 ${(1 - m) * 100}% 0)`;
+    $('#miP').style.background = (t >= S[1] - .04 && t < C[1]) ? '#5A3646' : '';
+    $('#miC').style.background = (t >= S[6] - .04 && t < C[6]) ? '#5A3646' : '';
+    $('#mbtn').style.background = (m > 0 || (t >= S[0] - .04 && t < C[0]) || (t >= S[5] - .04 && t < C[5])) ? '#4E2E3C' : '';
+    $('#pdfl').style.background = (t >= S[2] - .04 && t < C[2] + .1) ? '#DCE3F2' : '';
+    $('#telr').style.background = (t >= S[7] - .04 && t < C[7] + .1) ? '#DCE3F2' : '';
+    $('#bkL').style.background = (t >= S[4] - .04 && t < C[4] + .04) ? '#DDDDD8' : '';
+    // PDF : monte, puis pincement (zoom ×2,2 centré sur « Horaires / Rendez-vous par téléphone »)
+    const pdfOn = t >= C[2] && t < C[4];
+    show($('#pdfv'), pdfOn);
+    if (pdfOn) {
+      $('#pdfv').style.transform = `translateY(${(1 - E.out(seg(t, C[2], C[2] + .3))) * 508}px)`;
+      const z = 1 + 1.2 * E.inOut(seg(t, S[3] + .02, S[3] + .44));
+      $('#pdfp').style.transform = `scale(${z})`;
+      $('#pdfU').style.width = (E.out(seg(t, S[3] + .44, S[3] + .62)) * $('#pdfRdv').offsetWidth) + 'px';
+    }
+    // pincement : deux doigts qui s'écartent, sous le texte
+    const pa = S[3] - .22, pz = E.inOut(seg(t, S[3] + .02, S[3] + .44));
+    const pon = t >= pa && t < S[3] + .62;
+    const pop = pon ? E.out(seg(t, pa, pa + .14)) * (1 - seg(t, S[3] + .46, S[3] + .62)) : 0;
+    const off = lerp(16, 56, pz);
+    $('#tL2').style.opacity = pop;
+    if (pon) {
+      $('#tL').style.opacity = pop; $('#rL').style.opacity = 0;
+      $('#tL').style.transform = `translate(${PINCH.x - off - 17}px,${PINCH.y + off * .6 - 17}px)`;
+      $('#tL2').style.transform = `translate(${PINCH.x + off - 17}px,${PINCH.y - off * .6 - 17}px)`;
+    } else touch($('#tL'), $('#rL'), TAPS_L, t);
+    // confirmation d'appel
+    const al = (t >= C[7] && t < C[8]) ? E.out(seg(t, C[7], C[7] + .2)) : 0;
+    show($('#dim'), al > 0); show($('#alert'), al > 0);
+    $('#dim').style.opacity = al;
+    $('#alert').style.opacity = al; $('#alert').style.transform = `scale(${lerp(1.12, 1, al)})`;
+    $('#b2').style.background = (t >= S[8] - .04 && t < C[8]) ? '#E2E2E6' : '';
+    // écran d'appel : l'île et la barre d'état restent au-dessus, icônes en blanc
+    const ca = t >= C[8] ? E.out(seg(t, C[8], C[8] + .24)) : 0;
+    show($('#call'), ca > 0); $('#call').style.opacity = ca;
+    $('#sbL').style.zIndex = ca > 0 ? 11 : '';
+    $('#sbL').classList.toggle('dark', ca > .5);
+    show($('#homeL'), true);
+    $('#homeL').style.zIndex = ca > 0 ? 11 : '';
+    $('#homeL').style.background = ca > .5 ? '#fff' : '#111';
+    $('#callS').textContent = 'appel' + '.'.repeat(1 + Math.floor(Math.max(0, t - C[8]) * 3) % 3);
+
+    // ----- nouveau site -----
+    const ch = t >= R1 + .08 ? E.out(seg(t, R1 + .08, R1 + .36)) : 0;
+    show($('#chat'), ch > 0);
+    $('#chat').style.opacity = ch; $('#chat').style.transform = `scale(${lerp(.94, 1, ch)})`;
+    $('#btnR').style.transform = (t >= R1 - .04 && t < R1 + .12) ? 'scale(.97)' : '';
+    $('#btnR').style.background = (t >= R1 - .04 && t < R1 + .12) ? '#2A2D33' : '';
+    const sent = t >= R2 + .08;
+    const b = sent ? E.out(seg(t, R2 + .08, R2 + .38)) : 0;
+    $('#bub').style.opacity = clamp(b * 2.2);
+    $('#bub').style.transform = `translateY(${(1 - b) * 56}px) scale(${lerp(.86, 1, b)})`;
+    $('#fld').textContent = sent ? 'Message' : 'Bonjour, je souhaite prendre rendez-vous.';
+    $('#fld').style.color = sent ? '#9A9DA2' : '';
+    $('#fld').style.paddingTop = sent ? '13px' : '';
+    $('#snd').style.background = sent ? '#C9CCD0' : '';
+    $('#snd').style.transform = (t >= R2 - .04 && t < R2 + .1) ? 'scale(.9)' : '';
+    $('#bub .meta svg').style.opacity = seg(t, R2 + .5, R2 + .62);
+    touch($('#tR'), $('#rR'), TAPS_R, t);
+  } else {
+    // ----- écran final : tout est posé à END + 0,66 -----
+    const l1 = E.out(seg(t, END, END + .34));
+    $('#e1t').style.transform = `translateY(${(1 - l1) * 128}px)`;
+    const ct = $('#cta');
+    ct.style.left = (540 - ct.offsetWidth / 2) + 'px';
+    rise(ct, t, END + .22, .32, 28);
+    rise($('#elogo'), t, END + .30, .32, 24);
+    rise($('#ehandle'), t, END + .34, .32, 24);
+  }
+}
+window.render = render;
+
+const q = new URLSearchParams(location.search);
+if (q.has('safe')) document.body.classList.add('show-safe');
+if (q.has('cover')) document.body.classList.add('cover');   // couverture : mention démo sous les téléphones (dans la grille 1080×1350)
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('400 40px IS'), document.fonts.load('500 40px IS'), document.fonts.load('400 30px CG')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => { render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>

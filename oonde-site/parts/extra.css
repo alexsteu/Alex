@@ -1,0 +1,40 @@
+/* OONDE : étude, qui sommes-nous, reel, contact direct */
+.study-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 40px;align-items:baseline;border-top:1px solid var(--line);padding-top:28px}
+.study-head p{margin:0;color:var(--muted);max-width:46em}
+.study-head b{color:var(--ink)}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:28px}
+.fig{padding:4px 24px 4px 0}
+.fig+.fig{padding-left:24px;border-left:1px solid var(--line)}
+.fig b{font-family:var(--display);font-size:clamp(40px,5.4vw,60px);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.fig b small{font-size:.45em;color:var(--sun)}
+.fig p{margin:10px 0 0;color:var(--muted);font-size:15px}
+.src{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin:24px 0 0}
+@media (max-width:760px){.study-head{grid-template-columns:1fr}.figs{grid-template-columns:1fr;gap:20px}.fig+.fig{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:20px}}
+.nous{background:var(--card);border-block:1px solid var(--line)}
+.nous-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+@media (max-width:900px){.nous-grid{grid-template-columns:1fr;gap:36px}}
+.nous-txt p{color:var(--muted);max-width:34em}
+.nous-txt h2+p{margin-top:20px}
+.people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:26px}
+@media (max-width:560px){.people{grid-template-columns:1fr}}
+.person{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--paper)}
+.person .avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:#fff;background:#2038EC}
+.person .avatar.ink{background:#0E1116;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.person b{display:block;font-family:var(--display);font-size:17px;line-height:1.2}
+.person div span{color:var(--muted);font-size:14px}
+.reel{margin:0;display:grid;gap:14px;justify-items:center}
+.frame{position:relative;width:min(300px,78vw);aspect-ratio:9/16;border-radius:30px;overflow:hidden;background:#0E1116;border:6px solid #0E1116;box-shadow:0 30px 60px -20px rgba(14,17,22,.4)}
+.frame video{width:100%;height:100%;object-fit:cover;display:block}
+.sound{position:absolute;right:10px;bottom:10px;background:rgba(14,17,22,.72);color:#fff;border:0;border-radius:999px;padding:8px 12px;font:600 13px var(--body);cursor:pointer}
+.reel figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:300px}
+.reel figcaption a{color:var(--sun);font-weight:600}
+.direct{font-size:14px;color:var(--muted);line-height:1.7}
+.direct a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+.direct a:hover{border-color:var(--sun)}
+.cbox{background:#0E1116;color:#fff}
+.cbox button{background:#2038EC;color:#fff;border-radius:12px;transition:background .3s}
+.cbox button:hover{background:#3a50f0}
+.cbox input:focus{outline:2px solid #8B9BFF}
+.cbox .direct{color:rgba(255,255,255,.7)}
+.cbox .direct a{color:#fff;border-color:rgba(255,255,255,.25)}
+.cbox .direct a:hover{border-color:#8B9BFF}

@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Reel OONDE · 08 · 3 détails qui datent votre site</title>
+<link rel="icon" href="data:,">
+<style>
+/* Kit Reels OONDE : DA v7. Polices et logos servis par render.cjs sous /_kit/ */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+:root{--paper:#F7F7F4;--card:#FFFFFF;--ink:#111318;--soft:#3A3F47;--muted:#6B7078;--line:#DCDED8;--klein:#2038EC;--wa:#14803C;
+  --old:#6E4426}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+body{color:var(--ink);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--paper)}
+#stage *{box-sizing:border-box}
+.abs{position:absolute}
+.mono{font-family:PM,monospace;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.k{color:var(--klein)}
+#safe{position:absolute;left:60px;top:250px;width:880px;height:1250px;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+#all{left:0;top:0;width:1080px;height:1920px}
+
+/* ---------- titres ---------- */
+#eyebrow{left:0;top:546px;height:64px;line-height:64px;font-size:30px;color:var(--muted);white-space:nowrap}  /* sur la ligne de l'étiquette AVANT/APRÈS */
+.ttl{position:absolute;left:0;top:304px;width:1080px;text-align:center;font:600 98px/1.04 IS;letter-spacing:-.025em;color:var(--ink);white-space:nowrap}
+.ttl .n{color:var(--klein)}
+.ttl.s{font-size:92px}
+#t0{font-size:88px}
+#t3{font-size:90px}
+
+/* ---------- étiquette AVANT / APRÈS ---------- */
+#chip{left:0;top:546px;height:64px;border-radius:32px;padding:0 28px 0 24px;display:flex;align-items:center;gap:14px;
+  font-size:32px;white-space:nowrap;background:var(--ink);color:#fff}
+#chip i{display:block;width:12px;height:12px;border-radius:6px;background:#B9BCC2}
+#chip.after i{background:var(--klein);box-shadow:0 0 0 3px rgba(32,56,236,.32)}
+
+/* ---------- téléphone ---------- */
+#rig{left:0;top:0;width:1080px;height:1920px}
+#phone{left:166px;top:640px;width:748px;height:1420px;border-radius:78px;background:#16181D;
+  box-shadow:0 0 0 2px #2B2E35 inset,0 0 0 6px #0E0F12 inset,0 50px 100px rgba(17,19,24,.16),0 16px 36px rgba(17,19,24,.10)}
+#screen{left:180px;top:654px;width:720px;height:1392px;border-radius:64px;overflow:hidden;background:#fff}
+.scale{position:absolute;left:0;top:0;width:360px;height:700px;transform-origin:0 0;transform:scale(2)}
+#wrapB{position:absolute;left:0;top:0;width:720px;height:1392px;overflow:hidden}
+.page{position:absolute;left:0;top:0;width:360px;height:1800px}
+.page .abs{position:absolute}
+
+/* barre d'état iOS (commune) */
+#sb{z-index:5}
+#sb .bg{left:0;top:0;width:360px;height:50px;background:#fff}
+#sb .time{left:34px;top:18px;font:600 15.5px/1 IS;letter-spacing:-.01em;color:#000}
+#sb .island{left:119px;top:11px;width:122px;height:34px;border-radius:17px;background:#000}
+
+/* AVANT : site daté mais crédible */
+#pageA{background:#E8E0D2;font-family:'Liberation Serif','DejaVu Serif',serif;color:#3A3330}
+#pageA .col{left:7px;top:50px;width:346px;height:1000px;background:#fff;box-shadow:0 0 0 1px #CDBFA8}
+#pageA .bnr{left:7px;top:50px;width:346px;height:66px;background:linear-gradient(#F4EADB,#E1CDB0);border-bottom:1px solid #C2A98A}
+#pageA .bnr b{position:absolute;left:16px;top:11px;font:italic 700 26px/1 'Liberation Serif',serif;color:var(--old);text-shadow:1px 1px 0 #fff}
+#pageA .bnr span{position:absolute;left:17px;top:44px;font:italic 400 12px/1 'Liberation Serif',serif;color:#8A6F55}
+#pageA .nav{left:7px;top:116px;width:346px;height:25px;background:#7A5232;display:flex;align-items:center;
+  font:400 11px/1 'Liberation Sans',sans-serif;color:#fff;padding-left:8px}
+#pageA .nav u{text-decoration:none;padding:7px 8px}
+#pageA .nav u.on{background:#5E3D24}
+#pageA .nav s{text-decoration:none;color:#BFA088}
+#pageA h1{margin:0;left:22px;top:158px;width:316px;font:400 30px/1.12 'Liberation Serif',serif;color:var(--old)}
+#pageA .p{left:22px;width:316px;font:400 13.5px/1.4 'Liberation Serif',serif;text-align:justify}
+#pageA .upd{left:22px;font:italic 400 11px/1 'Liberation Serif',serif;color:#8A7766}
+#pageA hr{position:absolute;margin:0;border:0;height:1px;background:#D3C2AF;left:22px;width:316px}
+#pageA h2{margin:0;left:22px;font:700 19px/1 'Liberation Serif',serif;color:var(--old)}
+#pageA .doc{left:24px;top:402px;width:60px;height:78px;background:#fff;border:1.5px solid #B9B2A8;border-radius:2px;overflow:hidden}
+#pageA .doc:before{content:'';position:absolute;right:-1px;top:-1px;width:16px;height:16px;background:linear-gradient(225deg,#E8E0D2 50%,#D6CCBC 50%)}
+#pageA .doc i{position:absolute;left:8px;height:2.5px;background:#D5D0C8;border-radius:1px}
+#pageA .doc b{position:absolute;left:0;bottom:0;width:100%;height:26px;background:#C8302C;color:#fff;font:700 17px/26px 'Liberation Sans',sans-serif;text-align:center;letter-spacing:.02em}
+#pageA .lnk{left:98px;top:414px;font:400 22px/1 'Liberation Serif',serif;color:#1A4FA8;text-decoration:underline;text-underline-offset:3px}
+#pageA .lnk2{left:99px;top:446px;font:400 13px/1 'Liberation Serif',serif;color:#8A7766}
+#pageA .tel{left:22px;top:592px;width:316px;height:82px;border:4px double #A77B4F;background:linear-gradient(135deg,#F7ECDA,#E2C9A2);
+  display:flex;align-items:center;justify-content:center}
+#pageA .tel span{font:italic 700 25px/1 'Liberation Serif',serif;color:var(--old);text-shadow:1px 1px 0 rgba(255,255,255,.8);filter:blur(.45px);letter-spacing:.01em}
+#pageA .foot{left:7px;top:1016px;width:346px;height:34px;background:#E1CDB0;border-top:1px solid #C2A98A;
+  font:400 10px/34px 'Liberation Sans',sans-serif;color:#7A6A5A;text-align:center}
+#pageA .map{left:22px;top:778px;width:316px;height:210px;background:#E9E7E1;border:1px solid #C9C3B8;overflow:hidden}
+#pageA .map i{position:absolute;background:#fff;box-shadow:0 0 0 1px #DAD6CE}
+#pageA .map .r1{left:-20px;top:92px;width:400px;height:12px;transform:rotate(-8deg)}
+#pageA .map .r2{left:120px;top:-20px;width:12px;height:260px;transform:rotate(14deg)}
+#pageA .map .r3{left:-20px;top:170px;width:400px;height:8px;transform:rotate(4deg);background:#CFE0EE}
+#pageA .map b{position:absolute;left:150px;top:70px;width:18px;height:18px;border-radius:9px 9px 9px 0;transform:rotate(-45deg);background:#C8302C}
+/* cadre « 01 / 02 / 03 » (système des posts) */
+.ring{border:2px solid var(--klein);border-radius:9px;opacity:0}
+.ring b{position:absolute;right:10px;top:-13px;height:24px;padding:0 7px;border-radius:6px;background:var(--klein);color:#fff;
+  font:600 15px/24px PM;letter-spacing:.06em}
+.ring em{position:absolute;right:10px;bottom:-15px;height:28px;padding:0 8px;border-radius:6px;background:var(--ink);color:#fff;
+  font:500 16px/28px PM;letter-spacing:.08em;text-transform:uppercase;font-style:normal;white-space:nowrap;opacity:0}
+
+/* APRÈS : site propre */
+#pageB{background:#fff;font-family:IS,sans-serif;color:var(--ink)}
+#pageB .hdr{left:0;top:50px;width:360px;height:52px;border-bottom:1px solid #EEEFEB}
+#pageB .hdr b{position:absolute;left:22px;top:17px;font:600 17px/1 IS;letter-spacing:-.02em}
+#pageB .hdr i{position:absolute;right:22px;width:20px;height:1.6px;background:var(--ink);border-radius:1px}
+#pageB .nm{left:21px;top:140px;font:600 40px/1 IS;letter-spacing:-.035em;white-space:nowrap}
+#pageB .tg{left:22px;top:194px;width:316px;font:500 24px/1.24 IS;letter-spacing:-.02em;color:var(--soft)}
+#pageB .tg span{background:linear-gradient(var(--klein),var(--klein)) no-repeat 0 100%;background-size:0% 2.5px;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-bottom:2px}
+#pageB .b1{left:22px;top:284px;height:46px;padding:0 18px;border-radius:12px;background:var(--ink);color:#fff;font:600 15px/46px IS;letter-spacing:-.01em}
+#pageB .b2{left:152px;top:284px;height:46px;padding:0 18px;border-radius:12px;box-shadow:0 0 0 1px var(--line) inset;color:var(--ink);font:600 15px/46px IS;letter-spacing:-.01em}
+#pageB .tile{top:352px;width:74px;height:64px;border-radius:8px;overflow:hidden}
+#pageB .tile span{position:absolute;left:4px;bottom:4px;height:14px;padding:0 3px;border-radius:3px;background:rgba(255,255,255,.92);font:500 9px/14px PM;letter-spacing:.1em;color:var(--ink)}
+#pageB h2{margin:0;left:22px;font:600 26px/1 IS;letter-spacing:-.025em}
+#pageB .lab{left:22px;font-size:11.5px;color:var(--muted)}
+#pageB .list{left:22px;top:512px;width:316px}
+#pageB .list div{height:50px;border-top:1px solid #ECEDE8;font:500 22px/50px IS;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:center}
+#pageB .list div small{font:500 13px/1 IS;color:var(--muted);letter-spacing:0}
+#pageB .p{left:22px;width:316px;font:400 17px/1.35 IS;color:var(--soft)}
+#pageB .wa{left:22px;top:1188px;width:316px;height:64px;border-radius:14px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:11px;font:600 22px/1 IS;letter-spacing:-.02em}
+#pageB .wa svg{width:28px;height:28px}
+#pageB .hrs{left:22px;top:1360px;width:316px;height:150px;border-radius:14px;box-shadow:0 0 0 1px var(--line) inset;padding:14px 16px}
+#pageB .hrs .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+#pageB .hrs .h b{font:600 16px/1 IS;letter-spacing:-.015em}
+#pageB .hrs .h span{font:500 12.5px/1 IS;color:var(--soft);display:flex;align-items:center;gap:6px}
+#pageB .hrs .h span:before{content:'';width:6px;height:6px;border-radius:3px;background:var(--ink)}
+#pageB .row{display:flex;justify-content:space-between;font:400 14px/31px IS;color:var(--soft);border-top:1px solid #EEEFEB}
+#pageB .row b{font-weight:500;color:var(--ink)}
+.touch{left:0;top:0;width:34px;height:34px;border-radius:17px;opacity:0;background:rgba(110,112,118,.38);box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+.tring{left:0;top:0;width:34px;height:34px;border-radius:17px;opacity:0;box-shadow:0 0 0 1.5px rgba(110,112,118,.9) inset}
+#bub{right:30px;top:520px;padding:18px 26px 20px;border-radius:28px 28px 8px 28px;background:var(--wa);color:#fff;
+  font:500 44px/1.18 IS;letter-spacing:-.015em;white-space:nowrap;box-shadow:0 14px 30px rgba(17,19,24,.18);transform-origin:100% 100%;opacity:0}
+
+/* trait de comparaison */
+#fx{left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#handle{left:0;top:0;width:76px;height:76px;border-radius:38px;background:#fff;
+  box-shadow:0 0 0 3px var(--klein),0 10px 24px rgba(17,19,24,.18);display:flex;align-items:center;justify-content:center}
+
+/* ---------- question ---------- */
+#qt{top:470px}
+.qc{left:130px;width:820px;height:152px;border-radius:14px;background:#fff;box-shadow:0 0 0 1.5px var(--line) inset,0 14px 34px rgba(17,19,24,.06);
+  display:flex;align-items:center;padding:0 40px 0 36px;gap:32px;opacity:0}
+.qc .cb{margin-left:auto;width:58px;height:58px;border-radius:12px;box-shadow:0 0 0 2.5px #C9CCC4 inset;flex:none}
+.qc .cb.on{box-shadow:0 0 0 2.5px var(--ink) inset}
+.qc .n{width:46px;font:600 68px/1 IS;letter-spacing:-.03em;color:var(--klein);text-align:center;flex:none}
+.qc .q1{font:italic 400 46px/1 'Liberation Serif',serif;color:var(--old);white-space:nowrap}
+.qc .q2{display:flex;align-items:center;gap:22px;font:400 46px/1 'Liberation Serif',serif;color:#1A4FA8;text-decoration:underline;text-underline-offset:6px;white-space:nowrap}
+.qc .q2 i{display:block;width:56px;height:72px;border:2px solid #B9B2A8;border-radius:3px;position:relative;background:#fff;flex:none}
+.qc .q2 i b{position:absolute;left:0;bottom:0;width:100%;height:24px;background:#C8302C;color:#fff;font:700 15px/24px 'Liberation Sans',sans-serif;text-align:center;font-style:normal}
+.qc .q3{height:92px;padding:0 28px;border:5px double #A77B4F;background:linear-gradient(135deg,#F7ECDA,#E2C9A2);display:flex;align-items:center;
+  font:italic 700 46px/1 'Liberation Serif',serif;color:var(--old);white-space:nowrap}
+.qc .q3 span{filter:blur(.6px)}
+
+/* ---------- fin ---------- */
+#endT{top:600px}
+#cta{top:800px;height:112px;border-radius:56px;background:#fff;padding:0 46px 0 34px;display:flex;align-items:center;gap:22px;
+  font:600 46px/1 IS;letter-spacing:-.02em;color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset,0 18px 40px rgba(17,19,24,.08);white-space:nowrap;opacity:0}
+#cta svg{width:58px;height:58px}
+#logo{left:0;top:1090px;width:1080px;text-align:center;opacity:0}
+#logo img{height:66px}
+#handleTxt{left:0;top:1192px;width:1080px;text-align:center;font-size:32px;color:var(--muted);opacity:0}
+</style>
+</head>
+<body>
+<div id="stage"><div id="all" class="abs">
+
+  <div id="eyebrow" class="abs mono">Démo · lieu fictif</div>
+
+  <div class="ttl" id="t0"><span class="n">3</span> détails<br>qui datent votre site.</div>
+  <div class="ttl s" id="t1" style="opacity:0"><span class="n">1.</span> Dites<br>ce que vous faites.</div>
+  <div class="ttl s" id="t2" style="opacity:0"><span class="n">2.</span> Une carte lisible,<br>sans PDF.</div>
+  <div class="ttl s" id="t3" style="opacity:0"><span class="n">3.</span> Qu’on vous écrive<br>en un geste.</div>
+  <div class="ttl" id="qt" style="opacity:0">Et le vôtre&#8239;:<br>1, 2 ou 3&#8239;?</div>
+  <div class="ttl" id="endT" style="opacity:0">Maquette offerte.</div>
+
+  <div id="chip" class="abs mono"><i></i><span id="chipTxt">Avant</span></div>
+
+  <div id="rig" class="abs">
+    <div id="phone" class="abs"></div>
+    <div id="screen" class="abs">
+      <!-- AVANT -->
+      <div class="scale"><div id="pageA" class="page">
+        <div class="abs col"></div>
+        <div class="abs bnr"><b>Café Brindille</b><span>~ Le goût du fait maison ~</span></div>
+        <div class="abs nav"><u class="on">Accueil</u><s>|</s><u>Notre carte</u><s>|</s><u>Contact</u></div>
+        <h1 class="abs">Bienvenue sur notre site&#8239;!</h1>
+        <div class="abs ring" id="r1" style="left:12px;top:146px;width:336px;height:60px"><b>01</b></div>
+        <div class="abs p" style="top:244px">Nous sommes heureux de vous accueillir sur notre site internet. Bonne visite et à bientôt&#8239;!</div>
+        <div class="abs upd" style="top:306px">Dernière mise à jour&#8239;: 14.02.2015</div>
+        <hr style="top:330px">
+        <h2 class="abs" style="top:346px">Notre carte</h2>
+        <div class="abs p" style="top:374px">Téléchargez notre carte ci-dessous&#8239;:</div>
+        <div class="abs doc"><i style="top:10px;width:30px"></i><i style="top:18px;width:42px"></i><i style="top:26px;width:38px"></i><i style="top:34px;width:42px"></i><i style="top:42px;width:26px"></i><b>PDF</b></div>
+        <div class="abs lnk">carte_2019.pdf</div>
+        <div class="abs lnk2">(document PDF, 4,2 Mo)</div>
+        <div class="abs ring" id="r2" style="left:12px;top:392px;width:336px;height:98px"><b>02</b></div>
+        <hr style="top:520px">
+        <h2 class="abs" style="top:536px">Contact</h2>
+        <div class="abs p" style="top:563px">Pour réserver, appelez-nous&#8239;:</div>
+        <div class="abs tel"><span>Tél. 021 000 00 00</span></div>
+        <div class="abs ring" id="r3" style="left:12px;top:582px;width:336px;height:102px"><b>03</b><em id="imgTag">Image · rien ne se passe</em></div>
+        <div class="abs p" style="top:700px">Horaires&#8239;: voir notre carte (PDF).</div>
+        <hr style="top:732px">
+        <h2 class="abs" style="top:748px">Plan d’accès</h2>
+        <div class="abs map"><i class="r1"></i><i class="r2"></i><i class="r3"></i><b></b></div>
+        <div class="abs foot">© Café Brindille · Tous droits réservés</div>
+        <div class="abs touch" id="tA"></div><div class="abs tring" id="trA"></div>
+      </div></div>
+
+      <!-- APRÈS -->
+      <div id="wrapB"><div class="scale"><div id="pageB" class="page">
+        <div class="abs hdr"><b>Brindille</b><i style="top:21px"></i><i style="top:29px"></i></div>
+        <div class="abs nm">Café Brindille</div>
+        <div class="abs tg"><span id="ul">Boulangerie et brunch, à&nbsp;Vevey.</span></div>
+        <div class="abs b1">Voir la carte</div>
+        <div class="abs b2">Itinéraire</div>
+        <div class="abs tile" style="left:22px;background:#D9CBB5"><span>Vitrine</span></div>
+        <div class="abs tile" style="left:102px;background:#B8A68A"><span>Comptoir</span></div>
+        <div class="abs tile" style="left:182px;background:#E3D7C5"><span>Pain</span></div>
+        <div class="abs tile" style="left:262px;background:#C9B79A"><span>Équipe</span></div>
+        <h2 class="abs" style="top:448px">La carte</h2>
+        <div class="abs lab mono" style="top:488px">Le matin</div>
+        <div class="abs list">
+          <div>Croissant au beurre</div>
+          <div>Pain au levain</div>
+          <div>Tartine avocat-feta</div>
+          <div>Granola maison</div>
+          <div>Café, thé, chocolat</div>
+          <div>Tresse du samedi</div>
+        </div>
+        <div class="abs lab mono" style="top:844px">Le midi</div>
+        <div class="abs list" style="top:868px">
+          <div>Soupe du jour</div>
+          <div>Quiche maison</div>
+          <div>Salade de saison</div>
+          <div>Tarte aux fruits</div>
+        </div>
+        <h2 class="abs" style="top:1108px">Contact</h2>
+        <div class="abs p" style="top:1148px">Une question, une commande&#8239;?</div>
+        <div class="abs wa" id="wa"><svg viewBox="0 0 24 24"><path fill="#14803C" d="M12 1.6a10.4 10.4 0 0 0-9 15.6L1.6 22.4l5.4-1.4A10.4 10.4 0 1 0 12 1.6z"/><path fill="#fff" d="M8.4 6.9c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .6.4l.9 2c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.4.7 1 1.4 1.7 2 .7.6 1.3.9 1.6 1 .2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1 1-.2 1.7-.3.7-1.7 1.4-2.3 1.4-.6 0-1.4.2-4.3-1.1-2.6-1.2-4.3-3.9-4.4-4.1-.1-.2-1.1-1.4-1.1-2.6s.6-1.9.9-2.2z"/></svg>Écrire sur WhatsApp</div>
+        <div class="abs hrs"><div class="h"><b>Horaires</b><span>Ouvert aujourd’hui</span></div><div class="row"><b>Mardi – vendredi</b><span>7 h – 18 h 30</span></div><div class="row"><b>Samedi, dimanche</b><span>8 h – 17 h</span></div><div class="row"><b>Lundi</b><span>Fermé</span></div></div>
+        <div class="abs touch" id="tB"></div><div class="abs tring" id="trB"></div>
+      </div></div>
+        <div class="abs" id="bub">Une tresse pour<br>samedi&#8239;?</div>
+      </div>
+
+      <!-- barre d'état commune -->
+      <div class="scale" id="sb"><div class="abs bg"></div><div class="abs time">09:41</div><div class="abs island"></div>
+        <svg class="abs" style="left:268px;top:20px" width="17" height="11" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#000"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#000"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#000"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg class="abs" style="left:290px;top:20px" width="15" height="11" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0z M3.6 7a6.2 6.2 0 0 1 8.8 0l-1.3 1.3a4.4 4.4 0 0 0-6.2 0z M1.5 4.9a9.2 9.2 0 0 1 13 0l-1.3 1.3a7.4 7.4 0 0 0-10.4 0z" fill="#000"/></svg>
+        <svg class="abs" style="left:311px;top:19px" width="26" height="12.5" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="#000" opacity=".4"/><rect x="2" y="2" width="18" height="9" rx="2" fill="#000"/><rect x="25" y="4.5" width="1.6" height="4" rx=".8" fill="#000" opacity=".45"/></svg>
+      </div>
+    </div>
+
+    <!-- trait de comparaison : un seul curseur pour les trois détails -->
+    <svg id="fx" class="abs" viewBox="0 0 1080 1920"><line id="ln" x1="892" y1="754" x2="892" y2="1940" stroke="#2038EC" stroke-width="3" stroke-linecap="round"/></svg>
+    <div id="handle" class="abs"><svg width="40" height="22" viewBox="0 0 40 22"><path d="M12 3 4 11l8 8M28 3l8 8-8 8" fill="none" stroke="#111318" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- question -->
+  <div class="abs qc" id="q1" style="top:756px"><div class="n">1</div><div class="q1">«&#8239;Bienvenue sur notre site&#8239;!&#8239;»</div><div class="cb"></div></div>
+  <div class="abs qc" id="q2" style="top:932px"><div class="n">2</div><div class="q2"><i><b>PDF</b></i>carte_2019.pdf</div><div class="cb"></div></div>
+  <div class="abs qc" id="q3" style="top:1108px"><div class="n">3</div><div class="q3"><span>Tél. 021 000 00 00</span></div><div class="cb"></div></div>
+
+  <!-- fin -->
+  <div id="cta" class="abs"><svg viewBox="0 0 24 24"><path fill="#14803C" d="M12 1.6a10.4 10.4 0 0 0-9 15.6L1.6 22.4l5.4-1.4A10.4 10.4 0 1 0 12 1.6z"/><path fill="#fff" d="M8.4 6.9c.2-.4.4-.4.7-.4h.6c.2 0 .4 0 .6.4l.9 2c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.4.7 1 1.4 1.7 2 .7.6 1.3.9 1.6 1 .2.1.4.1.5-.1l.8-.9c.2-.2.3-.2.6-.1l1.9.9c.2.1.4.2.4.3.1.2.1 1-.2 1.7-.3.7-1.7 1.4-2.3 1.4-.6 0-1.4.2-4.3-1.1-2.6-1.2-4.3-3.9-4.4-4.1-.1-.2-1.1-1.4-1.1-2.6s.6-1.9.9-2.2z"/></svg>Écrivez-nous sur WhatsApp</div>
+  <div id="logo" class="abs"><img src="/_kit/brand/logo.svg" alt=""></div>
+  <div id="handleTxt" class="abs mono">@oonde_studio</div>
+
+</div><div id="safe"></div></div>
+<script>
+const $ = s => document.querySelector(s);
+const q = new URLSearchParams(location.search);
+const COVER = q.has('cover');
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  out: t => 1 - Math.pow(1 - t, 3),
+  out5: t => 1 - Math.pow(1 - t, 5),
+  in: t => t * t * t,
+  inOut: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  // arrivée avec un léger dépassement (ressort doux)
+  backS: t => { const c = .9; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); },
+};
+const spring = (t, k = 9, z = 5.5) => t <= 0 ? 0 : 1 - Math.exp(-z * t) * Math.cos(k * t);
+const show = (el, o, y = 0, s = 1) => { el.style.opacity = o; el.style.transform = `translateY(${y}px) scale(${s})`; };
+function rise(el, t, a, d = .45, dy = 36) { const p = E.out(seg(t, a, a + d)); show(el, p, (1 - p) * dy); return p; }
+
+// ---------- minutage ----------
+const X0 = 892, XL = 188, HY = 1076, SX = 180;           // trait : repos AVANT / APRÈS, 8 px à l'intérieur de l'écran (720 px, x 180–900)
+const SW = [[2.75, 3.45], [6.55, 7.25], [10.06, 10.76]];  // balayages droite → gauche (l'après apparaît)
+const RW = [5.3, 8.5], SL = .32;                          // l'après sort d'un bloc vers le haut (0,32 s) ; l'avant suivant est déjà dessous
+const TT = [0, 2.4, 5.3, 8.5];                            // changements de titre
+const TAP_A = 9.36, TAP_B = 11.06, BUB = 11.21;
+const T_OUT = 12.46, T_Q = T_OUT + .22, T_END = 15.5;
+const CARDS = [T_OUT + .42, T_OUT + .59, T_OUT + .76], PULSE = [14.1, 14.3, 14.5];
+const BLANK = 17.59;                                      // 3 dernières images : papier vide (raccord de boucle)
+window.DURATION = 17.7;
+
+function lineX(t) {
+  if (t < .95) return X0;
+  if (t < 1.4) { const u = seg(t, .95, 1.4); const k = u < .35 ? E.out(u / .35) : 1 - E.inOut((u - .35) / .65); return X0 - 26 * k; } // « tirez-moi »
+  let x = X0;
+  for (let i = 0; i < 3; i++) {
+    const [a, b] = SW[i];
+    if (t >= a) x = lerp(X0, XL, E.backS(seg(t, a, b)));
+    if (i < 2) { const c = RW[i]; if (t >= c) x = t < c + .1 ? XL - 50 * E.in(seg(t, c, c + .1)) : X0; }
+  }
+  return x;
+}
+// [opacité du trait, échelle de la poignée] : il sort à gauche en 0,1 s puis réapparaît à droite avec un pop
+function lineVis(t) {
+  for (const c of RW) {
+    if (t >= c && t < c + .1) { const u = E.in(seg(t, c, c + .1)); return [1 - u, 1 - .4 * u]; }
+    if (t >= c + .1 && t < c + .2) return [0, .6];
+    if (t >= c + .2 && t < c + .4) return [1, .6 + .4 * E.out(seg(t, c + .2, c + .4))];
+  }
+  return [1, 1];
+}
+// l'étiquette repasse à AVANT quand l'avant occupe la plus grande partie de l'écran
+function isAfter(t) {
+  for (const c of RW) if (t >= c && t < c + .24) return true;
+  return lineX(t) < 540;
+}
+function slideB(t) { for (const c of RW) if (t >= c && t < c + SL) return E.in(seg(t, c, c + SL)); return -1; }
+// défilement des pages (px CSS) ; les sauts ont lieu quand la page est entièrement cachée
+const scrollA = t => (t >= 4.9 ? 240 : 0) + (t >= 8.1 ? 190 : 0);
+function scrollB(t) {
+  if (t < RW[0] + SL) return 12 * E.inOut(seg(t, 3.6, 5.3));
+  if (t < RW[1] + SL) return 366 + 70 * E.inOut(seg(t, 7.35, 8.45));   // la liste défile jusqu'à « LE MIDI »
+  return 1008;
+}
+let CROSS = [], ICON = [69, 1220];
+
+function render(t) {
+  const X = lineX(t);
+
+  // ---- titres : l'ancien a disparu (a + 0,18) avant que le nouveau entre (a + 0,20) ----
+  const ids = ['#t0', '#t1', '#t2', '#t3'];
+  for (let i = 0; i < 4; i++) {
+    const el = $(ids[i]);
+    const a = TT[i], b = i < 3 ? TT[i + 1] : T_OUT;
+    let o = 1, y = 0;
+    if (i > 0) { const p = E.out(seg(t, a + .20, a + .62)); o = p; y = (1 - p) * 44; }
+    if (t >= b) { const p = E.in(seg(t, b, b + .18)); o = 1 - p; y = -36 * p; }
+    if (t < a) o = 0;
+    show(el, o, y);
+  }
+  // ---- étiquettes ----
+  const pd = E.in(seg(t, T_OUT, T_OUT + .38));            // sortie du téléphone
+  $('#eyebrow').style.transform = `translateY(${pd * 1400}px)`;   // « Démo · lieu fictif » part avec le téléphone
+  const after = isAfter(t);
+  const chip = $('#chip');
+  chip.classList.toggle('after', after);
+  const ct = $('#chipTxt'); const want = after ? 'Après' : 'Avant'; if (ct.textContent !== want) ct.textContent = want;
+  let bump = 0; for (const c of CROSS) if (t > c) { const u = t - c; bump += Math.exp(-u * 8) * Math.sin(u * 20); }
+  const cOut = E.in(seg(t, T_OUT, T_OUT + .12));
+  chip.style.opacity = 1 - cOut;
+  chip.style.transform = `translateY(${-30 * cOut}px) scale(${1 + .06 * bump})`;
+
+  // ---- cadres 01 / 02 / 03 ----
+  const ring = (el, a) => { const p = E.out(seg(t, a, a + .32)); el.style.opacity = p; el.style.transform = `scale(${1 + .06 * (1 - p)})`; };
+  ring($('#r1'), COVER ? 0 : .35); ring($('#r2'), 5.82); ring($('#r3'), 8.98);
+  if (t >= 4.9) $('#r1').style.opacity = 0;
+  if (t >= 8.1) $('#r2').style.opacity = 0;
+  const it = E.out(seg(t, TAP_A + .1, TAP_A + .28));
+  $('#imgTag').style.opacity = it; $('#imgTag').style.transform = `translateY(${(1 - it) * 6}px)`;
+  // le numéro est une image : il refuse le toucher (3 oscillations amorties, ±6 px CSS)
+  const su = t - (TAP_A + .03);
+  $('.tel').style.transform = su > 0 && su < .3 ? `translateX(${6 * Math.exp(-10 * su) * Math.sin(20 * Math.PI * su)}px)` : '';
+
+  // ---- pages ----
+  $('#pageA').style.transform = `translateY(${-scrollA(t)}px)`;
+  $('#pageB').style.transform = `translateY(${-scrollB(t)}px)`;
+  const wb = $('#wrapB'), sl = slideB(t);
+  if (sl >= 0) { wb.style.clipPath = 'none'; wb.style.transform = `translateY(${-1440 * sl}px)`; wb.style.boxShadow = '0 18px 40px rgba(17,19,24,.16)'; }
+  else { wb.style.clipPath = `inset(0 0 0 ${clamp((X - XL) / (X0 - XL) * 720, 0, 730)}px)`; wb.style.transform = ''; wb.style.boxShadow = ''; }
+  $('#ul').style.backgroundSize = `${100 * E.inOut(seg(t, 3.55, 4.05))}% 2.5px`;
+
+  // doigts : sur l'image (rien ne se passe), puis sur l'icône WhatsApp (le mot reste lisible)
+  const tap = (dot, rg, x, y, a) => {
+    const o = seg(t, a - .12, a) * (1 - seg(t, a + .35, a + .55));
+    const pr = E.out(seg(t, a, a + .12)) * (1 - E.out(seg(t, a + .2, a + .4)));
+    dot.style.opacity = o; dot.style.transform = `translate(${x - 17}px,${y - 17}px) scale(${1 - .12 * pr})`;
+    const rs = E.out(seg(t, a, a + .4));
+    rg.style.opacity = t >= a ? .7 * (1 - rs) : 0; rg.style.transform = `translate(${x - 17}px,${y - 17}px) scale(${1 + .8 * rs})`;
+  };
+  tap($('#tA'), $('#trA'), 214, 633, TAP_A);
+  tap($('#tB'), $('#trB'), ICON[0], ICON[1], TAP_B);
+  const wp = t < TAP_B + .12 ? E.out(seg(t, TAP_B, TAP_B + .12)) : 1 - spring(t - TAP_B - .12, 14, 7);
+  $('#wa').style.transform = `scale(${1 - .04 * wp})`;
+  $('#wa').style.background = wp > 0 ? `rgb(${17 + 26 * wp},${19 + 27 * wp},${24 + 30 * wp})` : '';
+  const bp = E.out(seg(t, BUB, BUB + .35));
+  $('#bub').style.opacity = bp;
+  $('#bub').style.transform = `translateY(${(1 - bp) * 40}px) scale(${.94 + .06 * spring(t - BUB, 12, 7)})`;
+
+  // ---- trait + poignée ----
+  const ln = $('#ln'), [lo, hs] = lineVis(t);
+  const vel = Math.abs(lineX(t + .005) - lineX(t - .005)) / .01;
+  ln.setAttribute('x1', X); ln.setAttribute('x2', X);
+  ln.setAttribute('stroke-width', 3 + clamp(vel / 1600));
+  ln.style.opacity = lo;
+  const hd = $('#handle');
+  let hb = 0; for (const [, b] of SW) if (t > b) { const u = t - b; hb += Math.exp(-u * 7) * Math.sin(u * 16); }
+  hd.style.opacity = lo;
+  hd.style.transform = `translate(${X - 38}px,${HY - 38}px) scale(${hs * (1 + .05 * hb)})`;
+
+  // ---- sortie du téléphone (il quitte le cadre, sans fondu) ----
+  $('#rig').style.transform = `translateY(${pd * 1400}px)`;
+
+  // ---- question : « Et le vôtre : 1, 2 ou 3 ? » + 3 cartes ----
+  const qo = t < T_END ? 1 : 1 - E.in(seg(t, T_END, T_END + .14));
+  const qp = E.out(seg(t, T_Q, T_Q + .45));
+  show($('#qt'), t < T_END ? qp : qo, t < T_END ? (1 - qp) * 44 : -40 * (1 - qo));
+  [$('#q1'), $('#q2'), $('#q3')].forEach((el, i) => {
+    const a = CARDS[i];
+    const p = E.out(seg(t, a, a + .32)), s = .94 + .06 * spring(t - a, 13, 7.5);
+    if (t < T_END) show(el, p, (1 - p) * 30, s); else show(el, qo, -40 * (1 - qo));
+    // les cases pulsent l'une après l'autre (invitation à répondre 1, 2 ou 3)
+    const cb = el.querySelector('.cb'), u = seg(t, PULSE[i], PULSE[i] + .2);
+    cb.classList.toggle('on', t >= PULSE[i]);
+    cb.style.transform = `scale(${1 + .12 * Math.sin(Math.PI * u)})`;
+  });
+
+  // ---- fin ----
+  rise($('#endT'), t, T_END + .16, .42, 40);                          // après la sortie complète de la question (pas de fondu enchaîné)
+  const c = E.out(seg(t, T_END + .3, T_END + .68)), cs = spring(t - T_END - .3, 11, 6.5);
+  $('#cta').style.opacity = c;
+  $('#cta').style.transform = `translateY(${(1 - c) * 30}px) scale(${.94 + .06 * cs})`;
+  rise($('#logo'), t, T_END + .42, .36, 24);
+  rise($('#handleTxt'), t, T_END + .48, .36, 24);
+  // boucle : 3 images de papier vide, puis l'accroche (coupe nette)
+  $('#all').style.visibility = t >= BLANK ? 'hidden' : '';
+}
+window.render = render;
+
+if (q.has('safe')) document.body.classList.add('show-safe');
+if (COVER) $('#all').style.transform = 'translateY(46px)';
+Promise.all([document.fonts.load('600 40px IS'), document.fonts.load('500 20px PM'), document.fonts.load('600 20px PM'), document.fonts.load('400 40px IS'),
+  document.fonts.load('500 40px IS')])
+  .then(() => Promise.all([...document.images].map(i => i.decode().catch(() => {}))))
+  .then(() => {
+    // étiquette AVANT/APRÈS + « Démo · lieu fictif » sur la même ligne, groupe centré
+    const ch = $('#chip'), eb = $('#eyebrow'), g = 22, x0 = 540 - (ch.offsetWidth + g + eb.offsetWidth) / 2;
+    ch.style.left = x0 + 'px'; eb.style.left = (x0 + ch.offsetWidth + g) + 'px';
+    const c = $('#cta'); c.style.left = (540 - c.offsetWidth / 2) + 'px';
+    const wr = $('#wa').getBoundingClientRect(), ir = $('#wa svg').getBoundingClientRect(); ICON = [22 + (ir.left - wr.left + ir.width / 2) / 2, 1188 + 32];   // centre de l'icône verte (px CSS de la page)
+    // instants où l'étiquette change (petit rebond)
+    let prev = isAfter(0);
+    for (let i = 1; i <= window.DURATION * 300; i++) { const tt = i / 300, a = isAfter(tt); if (a !== prev) CROSS.push(tt); prev = a; }
+    window.CROSS = CROSS;
+    render(q.has('t') ? +q.get('t') : 0); window.READY = true;
+  });
+</script>
+</body>
+</html>

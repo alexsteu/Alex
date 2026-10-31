@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Atelier OONDE · ouverture</title>
+<link rel="icon" href="data:,">
+<style>
+/* Ouverture commune « L'atelier OONDE » : 1,5 s. Paramètres d'URL (render.cjs --q) :
+   n=01..06  numéro affiché   |   slot=0  masque la zone repère (plan filmé à insérer)   |   safe  zone sûre */
+@font-face{font-family:IS;src:url(/_kit/fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:PM;src:url(/_kit/fonts/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+:root{--paper:#F7F7F4;--ink:#111318;--muted:#6B7078;--line:#C9CCC4;--klein:#2038EC}
+html,body{margin:0;overflow:hidden;background:var(--paper)}
+#stage{position:relative;overflow:hidden;background:var(--paper);font-family:IS,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#slot{position:absolute;background:#EFEFEA;border:3px dashed var(--line);box-sizing:border-box}
+#slot .cross{position:absolute;background:var(--line)}
+#phone{position:absolute;border:4px dashed var(--muted);border-radius:56px;box-sizing:border-box}
+#slotnote{position:absolute;left:0;right:0;text-align:center;font:500 34px/1.5 PM,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+#pill{position:absolute;display:flex;align-items:center;gap:22px;background:var(--paper);border:2px solid var(--line);border-radius:999px;color:var(--ink);
+  font:600 56px/1 PM,monospace;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;padding:28px 52px 28px 44px}
+#dot{width:20px;height:20px;border-radius:50%;background:var(--klein);flex:none}
+#safe{position:absolute;outline:3px dashed #19b34a;pointer-events:none;display:none;z-index:99}
+.show-safe #safe{display:block}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="slot">
+    <div class="cross" id="cx"></div><div class="cross" id="cy"></div>
+    <div id="phone"></div>
+    <div id="slotnote">Zone du plan filmé<br>La main pose le téléphone<br>Vue de dessus · « tac » ici</div>
+  </div>
+  <div id="pill"><span id="dot"></span><span id="lab">ATELIER · 01</span></div>
+  <div id="safe"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const E = { out: t => 1 - Math.pow(1 - t, 3) };
+const q = new URLSearchParams(location.search);
+const NUM = (q.get('n') || '01').padStart(2, '0');
+const W = innerWidth, H = innerHeight, V = H > W;     // V = vertical 9:16
+const TAC = 0.5;                                      // instant du « tac » (s), aussi dans audio.py
+window.DURATION = 1.5;
+
+const st = $('#stage'); st.style.width = W + 'px'; st.style.height = H + 'px';
+document.body.style.width = W + 'px'; document.body.style.height = H + 'px';
+$('#lab').textContent = 'ATELIER · ' + NUM;
+// zone repère : plein cadre moins une marge
+const m = V ? 40 : 40, S = $('#slot');
+Object.assign(S.style, { left: m + 'px', top: m + 'px', width: (W - 2 * m) + 'px', height: (H - 2 * m) + 'px' });
+Object.assign($('#cx').style, { left: '0', top: '50%', width: '100%', height: '2px' });
+Object.assign($('#cy').style, { left: '50%', top: '0', width: '2px', height: '100%' });
+const pw = V ? 340 : 220, ph = V ? 700 : 400;
+Object.assign($('#phone').style, { width: pw + 'px', height: ph + 'px', left: ((W - 2 * m) / 2 - pw / 2) + 'px', top: ((H - 2 * m) / 2 - ph / 2) + 'px' });
+Object.assign($('#slotnote').style, { top: ((H - 2 * m) / 2 + ph / 2 + 30) + 'px' });
+if (q.get('slot') === '0') S.style.display = 'none';
+// pastille : dans la zone sûre (9:16 : y ≥ 250), centrée
+const P = $('#pill'); P.style.fontSize = V ? '56px' : '52px';
+const baseTop = V ? 310 : 100;
+if (q.has('safe')) { document.body.classList.add('show-safe'); Object.assign($('#safe').style, V ? { left: '60px', top: '250px', width: '880px', height: '1250px' } : { left: '96px', top: '54px', width: '1728px', height: '972px' }); }
+
+function render(t) {
+  // entrée : fondu court + glissement de 8 px (0 → 0,2 s) ; « tac » : appui de 5 px puis retour
+  const a = E.out(seg(t, 0.0, 0.2));
+  const press = Math.sin(Math.PI * seg(t, TAC, TAC + 0.16)) * 5;
+  const settle = t > TAC + 0.16 ? Math.sin((t - TAC - 0.16) * 38) * 1.5 * Math.exp(-(t - TAC - 0.16) * 16) : 0;
+  P.style.opacity = a;
+  const x = (W - P.offsetWidth) / 2;
+  P.style.left = x + 'px'; P.style.top = (baseTop + (1 - a) * -8 + press + settle) + 'px';
+  $('#dot').style.transform = `scale(${1 + 0.55 * Math.sin(Math.PI * seg(t, TAC, TAC + 0.22))})`;
+  // repère du plan : le contour du téléphone se plein au « tac »
+  const hit = t >= TAC ? 1 - seg(t, TAC, TAC + 0.3) : 0;
+  $('#phone').style.borderColor = hit > 0 ? `rgba(32,56,236,${0.2 + 0.8 * hit})` : '';
+}
+window.render = render;
+Promise.all([document.fonts.load('600 40px PM'), document.fonts.load('500 40px PM'), document.fonts.load('500 40px IS')])
+  .then(() => { render(q.has('t') ? +q.get('t') : 0); window.READY = true; });
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<form class="calc" id="calc" aria-label="Calculateur des appels manqués">
+ <div class="calc-in">
+  <label><span>Appels manqués par semaine</span><input type="number" inputmode="numeric" min="0" max="999" step="1" value="10" id="cN"></label>
+  <label><span>Panier moyen, en francs</span><input type="number" inputmode="decimal" min="0" max="9999" step="1" value="35" id="cP"></label>
+ </div>
+ <label class="calc-h"><span>Hypothèse, à régler : sur 10 appels manqués, combien auraient commandé ?</span><span class="calc-r"><input type="range" min="1" max="10" step="1" value="3" id="cR"><output id="cRo" for="cR">3 sur 10</output></span></label>
+ <div class="calc-out" aria-live="polite"><p class="mono">Estimation par mois</p><p class="calc-v" id="cV">455.–</p><p class="calc-f" id="cF">10 appels × 3 sur 10 × 35.– × 4,33 semaines</p></div>
+ <p class="calc-x micro">Un calcul avec vos chiffres, fait sur votre appareil : rien n’est envoyé. Les valeurs de départ sont un exemple, pas une statistique.</p>
+</form>
