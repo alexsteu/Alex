@@ -1,0 +1,42 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Titre,Inter Display Black,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,2,0,3,16,0,8,40,40,250,1
+Style: Pari,Inter Display Black,66,&H00000000,&H00000000,&H00FFFFFF,&H50000000,0,0,0,0,100,100,0,0,3,22,6,2,40,40,330,1
+Style: Legal,Inter Display Black,30,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,3,14,0,2,30,30,110,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:02.00,Titre,,0,0,0,,{\3c&H00000000\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}47 DÉFAITES D'AFFILÉE
+Dialogue: 0,0:00:02.00,0:00:06.00,Titre,,0,0,0,,{\3c&H00000000\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}3 TICKETS
+Dialogue: 1,0:00:02.25,0:00:06.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}FACILE · COSTAUD · FOU
+Dialogue: 0,0:00:06.00,0:00:17.00,Titre,,0,0,0,,{\3c&H0054B91D\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FACILE
+Dialogue: 1,0:00:06.25,0:00:17.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}REAL GAGNE  {\c&H0054B91D}@ 1,40
+Dialogue: 0,0:00:17.00,0:00:23.00,Titre,,0,0,0,,{\3c&H00008AFF\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET COSTAUD
+Dialogue: 1,0:00:17.25,0:00:23.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}CITY GAGNE  {\c&H00008AFF}@ 1,60
+Dialogue: 0,0:00:23.00,0:00:26.00,Titre,,0,0,0,,{\3c&H00008AFF\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET COSTAUD
+Dialogue: 1,0:00:23.25,0:00:26.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}ARSENAL GAGNE  {\c&H00008AFF}@ 1,65
+Dialogue: 0,0:00:26.00,0:00:28.00,Titre,,0,0,0,,{\3c&H00008AFF\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}COMBINÉ x2
+Dialogue: 1,0:00:26.25,0:00:28.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}COTE TOTALE  {\c&H00008AFF}@ 2,65
+Dialogue: 0,0:00:28.00,0:00:30.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FOU
+Dialogue: 1,0:00:28.25,0:00:30.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}LA VILLA OU LE RSA
+Dialogue: 0,0:00:30.00,0:00:35.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FOU
+Dialogue: 1,0:00:30.25,0:00:35.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}PSG GAGNE  {\c&H003539E5}@ 1,45
+Dialogue: 0,0:00:35.00,0:00:38.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FOU
+Dialogue: 1,0:00:35.25,0:00:38.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}BARÇA GAGNE À SABAH  {\c&H003539E5}@ 1,20
+Dialogue: 0,0:00:38.00,0:00:42.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FOU
+Dialogue: 1,0:00:38.25,0:00:42.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}LILLE-BAYERN +3,5 BUTS  {\c&H003539E5}@ 2,10
+Dialogue: 0,0:00:42.00,0:00:46.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FOU
+Dialogue: 1,0:00:42.25,0:00:46.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}LIVERPOOL GAGNE  {\c&H003539E5}@ 1,75
+Dialogue: 0,0:00:46.00,0:00:49.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TICKET FOU
+Dialogue: 1,0:00:46.25,0:00:49.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}MBAPPÉ BUTEUR  {\c&H003539E5}@ 1,50
+Dialogue: 0,0:00:49.00,0:00:52.00,Titre,,0,0,0,,{\3c&H003539E5\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}COMBINÉ x5
+Dialogue: 1,0:00:49.25,0:00:52.00,Pari,,0,0,0,,{\frz2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}COTE TOTALE  {\c&H003539E5}@ ~9,6
+Dialogue: 0,0:00:52.00,0:00:59.00,Titre,,0,0,0,,{\3c&H00000000\frz-2\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}TON TICKET EN COMMENTAIRE
+Dialogue: 0,0:00:59.00,0:01:02.00,Titre,,0,0,0,,{\3c&H00000000\fscx0\fscy0\t(0,140,\fscx112\fscy112)\t(140,240,\fscx100\fscy100)}18+  ·  COTES INDICATIVES
+Dialogue: 0,0:00:59.00,0:01:02.00,Legal,,0,0,0,,{\fad(150,0)}Jouer comporte des risques : endettement, isolement, dépendance.\NPour être aidé, appelez le 09 74 75 13 13 (appel non surtaxé).
